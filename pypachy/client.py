@@ -83,12 +83,12 @@ class PfsClient(object):
                                                           to_branch=to_branch))
 
     def put_file(self, commit, path, file_type, value=None, delimiter=LINE, url='', recursive=False):
-        self.stub.PutFile(PutFileRequest(file=File(commit=_commit_from(commit), path=path),
-                                         file_type=file_type,
-                                         value=value,
-                                         delimiter=delimiter,
-                                         url=url,
-                                         recursive=recursive))
+        self.stub.PutFile(iter([PutFileRequest(file=File(commit=_commit_from(commit), path=path),
+                                               file_type=file_type,
+                                               value=value,
+                                               delimiter=delimiter,
+                                               url=url,
+                                               recursive=recursive)]))
 
     def get_file(self, repo_name, commit_id, path, from_commit_id=None, full_file=False):
 
