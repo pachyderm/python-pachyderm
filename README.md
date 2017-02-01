@@ -1,5 +1,4 @@
-PyPachy
-=======
+# PyPachy
 
 A python client wrapper for [Pachyderm](https://www.pachyderm.io/) API.
 
