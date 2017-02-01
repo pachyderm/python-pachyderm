@@ -12,8 +12,9 @@ def _commit_from(src):
         "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
 
 
-def _diff_method(from_commit_id, repo_name, full_file):
-    return None if from_commit_id is None else DiffMethod(from_commit=Commit(repo=Repo(name=repo_name),
+def _diff_method(from_commit_id, commit, full_file):
+    c = _commit_from(commit)
+    return None if from_commit_id is None else DiffMethod(from_commit=Commit(repo=c.repo,
                                                                              id=from_commit_id),
                                                           full_file=full_file)
 
@@ -38,9 +39,9 @@ class PfsClient(object):
     def start_commit(self, repo_name, parent):
         return self.stub.StartCommit(StartCommitRequest(parent=Commit(repo=Repo(name=repo_name), id=parent)))
 
-    def fork_commit(self, repo_name, parent_commit, branch_name):
+    def fork_commit(self, commit, branch_name):
         return self.stub.ForkCommit(
-            ForkCommitRequest(commit=Commit(repo=Repo(repo_name), id=parent_commit), branch=branch_name))
+            ForkCommitRequest(commit=_commit_from(commit), branch=branch_name))
 
     def finish_commit(self, commit):
         self.stub.FinishCommit(
@@ -90,30 +91,30 @@ class PfsClient(object):
                                                url=url,
                                                recursive=recursive)]))
 
-    def get_file(self, repo_name, commit_id, path, from_commit_id=None, full_file=False):
+    def get_file(self, commit, path, from_commit_id=None, full_file=False):
 
-        return self.stub.GetFile(GetFileRequest(file=File(commit=Commit(repo=Repo(name=repo_name), id=commit_id),
+        return self.stub.GetFile(GetFileRequest(file=File(commit=_commit_from(commit),
                                                           path=path),
                                                 offset_bytes=0,
                                                 size_bytes=0,
                                                 shard=Shard(),
-                                                diff_method=_diff_method(from_commit_id, repo_name, full_file)))
+                                                diff_method=_diff_method(from_commit_id, commit, full_file)))
 
-    def inspect_file(self, repo_name, commit_id, path, from_commit_id=None, full_file=False):
-        return self.stub.InspectFile(InspectFileRequest(file=File(commit=Commit(repo=Repo(name=repo_name), id=commit_id),
+    def inspect_file(self, commit, path, from_commit_id=None, full_file=False):
+        return self.stub.InspectFile(InspectFileRequest(file=File(commit=_commit_from(commit),
                                                                   path=path),
                                                         shard=Shard(),
-                                                        diff_method=_diff_method(from_commit_id, repo_name, full_file)))
+                                                        diff_method=_diff_method(from_commit_id, commit, full_file)))
 
-    def list_file(self, repo_name, commit_id, path, mode=ListFile_NORMAL, from_commit_id=None, full_file=False):
-        return self.stub.ListFile(ListFileRequest(file=File(commit=Commit(repo=Repo(name=repo_name), id=commit_id),
+    def list_file(self, commit, path, mode=ListFile_NORMAL, from_commit_id=None, full_file=False):
+        return self.stub.ListFile(ListFileRequest(file=File(commit=_commit_from(commit),
                                                             path=path),
                                                   shard=Shard(),
-                                                  diff_method=_diff_method(from_commit_id, repo_name, full_file),
+                                                  diff_method=_diff_method(from_commit_id, commit, full_file),
                                                   mode=mode))
 
-    def delete_file(self, repo_name, commit_id, path):
-        self.stub.DeleteFile(DeleteFileRequest(file=File(commit=Commit(repo=Repo(name=repo_name), id=commit_id),
+    def delete_file(self, commit, path):
+        self.stub.DeleteFile(DeleteFileRequest(file=File(commit=_commit_from(commit),
                                                          path=path)))
 
     def delete_all(self):

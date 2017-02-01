@@ -4,7 +4,14 @@ A python client wrapper for [Pachyderm](https://www.pachyderm.io/) API.
 
 Currently implements only the PFS interface.
 
-Usage:
+## Instructions
+The functions correspond closely to the Go client implementation and are very similar to the
+`pachctl` interface as well.
+
+In any place where a `commit` is expected you can either put a sequence in the form of `(repo_name, branch/commit_id)` or 
+a string in the form of `repo/branch/commit_id`. 
+
+Usage example:
 
 ```python
 
@@ -19,9 +26,9 @@ repo {
 id: "master/0"
 
 >>> client.put_file('test/master/0', 'test', pypachy.FILE_TYPE_DIR)
->>> client.put_file('test3/master/0', 'test/text.txt', pypachy.FILE_TYPE_REGULAR, value=b'Hello')
+>>> client.put_file('test/master/0', 'test/text.txt', pypachy.FILE_TYPE_REGULAR, value=b'Hello')
 >>> client.finish_commit('test/master/0')
->>> list(client.get_file('test', 'master/0', 'test/text.txt' ))
+>>> list(client.get_file('test/master/0', 'test/text.txt' ))
 [value: "Hello"]
 ```
 
