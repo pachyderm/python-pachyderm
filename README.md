@@ -4,6 +4,14 @@ A python client wrapper for [Pachyderm](https://www.pachyderm.io/) API.
 
 Currently implements only the PFS interface.
 
+## Installing
+
+```bash
+$ git clone https://github.com/kalugny/pypachy.git
+$ cd pypachy
+$ python setup.py install
+```
+
 ## Instructions
 The functions correspond closely to the Go client implementation and are very similar to the
 `pachctl` interface as well.
