@@ -9,9 +9,9 @@ Installing
 ----------
 
 ```bash
-$ git clone https://github.com/kalugny/pypachy.git
-$ cd pypachy
-$ python setup.py install
+    $ git clone https://github.com/kalugny/pypachy.git
+    $ cd pypachy
+    $ python setup.py install
 ```
 
 Instructions
@@ -25,22 +25,21 @@ a string in the form of ``repo/branch/commit_id``.
 Usage example:
 
 ```python
-
->>> import pypachy
-
->>> client = pypachy.PfsClient()
->>> client.create_repo('test')
->>> client.start_commit('test', 'master')
-repo {
-  name: "test"
-}
-id: "master/0"
-
->>> client.put_file('test/master/0', 'test', pypachy.FILE_TYPE_DIR)
->>> client.put_file('test/master/0', 'test/text.txt', pypachy.FILE_TYPE_REGULAR, value=b'Hello')
->>> client.finish_commit('test/master/0')
->>> list(client.get_file('test/master/0', 'test/text.txt' ))
-[value: "Hello"]
+    >>> import pypachy
+    
+    >>> client = pypachy.PfsClient()
+    >>> client.create_repo('test')
+    >>> client.start_commit('test', 'master')
+    repo {
+      name: "test"
+    }
+    id: "master/0"
+    
+    >>> client.put_file('test/master/0', 'test', pypachy.FILE_TYPE_DIR)
+    >>> client.put_file('test/master/0', 'test/text.txt', pypachy.FILE_TYPE_REGULAR, value=b'Hello')
+    >>> client.finish_commit('test/master/0')
+    >>> list(client.get_file('test/master/0', 'test/text.txt' ))
+    [value: "Hello"]
 ```
 
 TODO
