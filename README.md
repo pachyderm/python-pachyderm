@@ -9,9 +9,7 @@ Installing
 ----------
 
 ```bash
-    $ git clone https://github.com/kalugny/pypachy.git
-    $ cd pypachy
-    $ python setup.py install
+    $ pip install pypachy
 ```
 
 Instructions
