@@ -20,8 +20,8 @@ def _diff_method(from_commit_id, commit, full_file):
 
 
 class PfsClient(object):
-    def __init__(self, port=30650):
-        self.channel = grpc.insecure_channel('localhost:{}'.format(port))
+    def __init__(self, host="localhost", port=30650):
+        self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
         self.stub = APIStub(self.channel)
 
     def create_repo(self, repo_name):
