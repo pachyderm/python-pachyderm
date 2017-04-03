@@ -1,15 +1,19 @@
+import collections
+
 from .pfs_pb2 import *
 from .pfs_pb2_grpc import *
 
 
-def _commit_from(src):
+def _commit_from(src, allow_just_repo=False):
     if type(src) in (tuple, list) and len(src) == 2:
         return Commit(repo=Repo(name=src[0]), id=src[1])
     elif type(src) is str:
         repo_name, commit_id = src.split('/', 1)
         return Commit(repo=Repo(name=repo_name), id=commit_id)
-    raise ValueError(
-        "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
+    if not allow_just_repo:
+        raise ValueError(
+            "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
+    return Commit(repo=Repo(name=src))
 
 
 def _diff_method(from_commit_id, commit, full_file):
@@ -57,13 +61,19 @@ class PfsClient(object):
     def inspect_commit(self, commit):
         return self.stub.InspectCommit(InspectRepoRequest(commit=_commit_from(commit)))
 
-    def list_commit(self, exclude, include, provenance, commit_type, status, block=False):
-        return self.stub.ListCommit(exclude=[_commit_from(e) for e in exclude],
-                                    include=[_commit_from(i) for i in include],
-                                    provenance=[_commit_from(p) for p in provenance],
-                                    commit_type=commit_type,
-                                    status=status,
-                                    block=block)
+    def list_commit(self, include, exclude=tuple(), provenance=tuple(), commit_type=COMMIT_TYPE_NONE,
+                    status=ALL, block=False):
+        # if `include` is not iterable, put it in a list
+        if isinstance(include, (str, bytes)) or not isinstance(include, collections.Iterable):
+            include = [include]
+        return self.stub.ListCommit(
+            ListCommitRequest(
+                exclude=[_commit_from(e, True) for e in exclude],
+                include=[_commit_from(i, True) for i in include],
+                provenance=[_commit_from(p) for p in provenance],
+                commit_type=commit_type,
+                status=status,
+                block=block))
 
     def delete_commit(self, commit):
         self.stub.DeleteCommit(DeleteCommitRequest(commit=_commit_from(commit)))
@@ -91,14 +101,25 @@ class PfsClient(object):
                                                url=url,
                                                recursive=recursive)]))
 
-    def get_file(self, commit, path, from_commit_id=None, full_file=False):
+    def get_file(self, commit, path, from_commit_id=None, full_file=False, get_bytes=True):
 
-        return self.stub.GetFile(GetFileRequest(file=File(commit=_commit_from(commit),
-                                                          path=path),
-                                                offset_bytes=0,
-                                                size_bytes=0,
-                                                shard=Shard(),
-                                                diff_method=_diff_method(from_commit_id, commit, full_file)))
+        r = self.stub.GetFile(GetFileRequest(file=File(commit=_commit_from(commit),
+                                                       path=path),
+                                             offset_bytes=0,
+                                             size_bytes=0,
+                                             shard=Shard(),
+                                             diff_method=_diff_method(from_commit_id, commit, full_file)))
+        if not get_bytes:
+            return r
+        return r.next().value
+
+    def get_files(self, commit, paths, from_commit_id=None, full_file=False, get_bytes=True, recursive=False):
+        filtered_file_infos = sum([self.list_file(commit, path, from_commit_id=from_commit_id, full_file=full_file,
+                                                  recursive=recursive)
+                                   for path in paths], [])
+        filtered_paths = [fi.file.path for fi in filtered_file_infos if fi.file_type == FILE_TYPE_REGULAR]
+
+        return {path: self.get_file(commit, path, from_commit_id, full_file, get_bytes) for path in filtered_paths}
 
     def inspect_file(self, commit, path, from_commit_id=None, full_file=False):
         return self.stub.InspectFile(InspectFileRequest(file=File(commit=_commit_from(commit),
@@ -106,12 +127,19 @@ class PfsClient(object):
                                                         shard=Shard(),
                                                         diff_method=_diff_method(from_commit_id, commit, full_file)))
 
-    def list_file(self, commit, path, mode=ListFile_NORMAL, from_commit_id=None, full_file=False):
-        return self.stub.ListFile(ListFileRequest(file=File(commit=_commit_from(commit),
-                                                            path=path),
-                                                  shard=Shard(),
-                                                  diff_method=_diff_method(from_commit_id, commit, full_file),
-                                                  mode=mode))
+    def list_file(self, commit, path, mode=ListFile_NORMAL, from_commit_id=None, full_file=False, recursive=False):
+        file_infos = self.stub.ListFile(ListFileRequest(file=File(commit=_commit_from(commit),
+                                                                  path=path),
+                                                        shard=Shard(),
+                                                        diff_method=_diff_method(from_commit_id, commit, full_file),
+                                                        mode=mode)).file_info
+        if recursive:
+            dirs = [f for f in file_infos if f.file_type == FILE_TYPE_DIR]
+            files = [f for f in file_infos if f.file_type == FILE_TYPE_REGULAR]
+            return sum([self.list_file(commit, d.file.path, mode, from_commit_id, full_file, recursive) for d in dirs],
+                       files)
+
+        return list(file_infos)
 
     def delete_file(self, commit, path):
         self.stub.DeleteFile(DeleteFileRequest(file=File(commit=_commit_from(commit),
