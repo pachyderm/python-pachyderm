@@ -36,12 +36,13 @@ Usage example:
     >>> client.put_file('test/master/0', 'test', pypachy.FILE_TYPE_DIR)
     >>> client.put_file('test/master/0', 'test/text.txt', pypachy.FILE_TYPE_REGULAR, value=b'Hello')
     >>> client.finish_commit('test/master/0')
-    >>> list(client.get_file('test/master/0', 'test/text.txt' ))
-    [value: "Hello"]
+    >>> client.get_files('test/master/0', ['test/text.txt'])
+    {'test/test.txt': b"Hello"}
 ```
 
 TODO
 ====
-* Make the output more Pythonic - especially for "stream" types like ``get_file``
-* Add support for ``BlockAPI``
+* Test, test, test!
+* Make the output more Pythonic
+* Add support for ``BlockAPI`` and ``ObjectAPI``
 * Add support for ``PPS``, ``Version``, etc
