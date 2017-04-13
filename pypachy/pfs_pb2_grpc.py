@@ -5,7 +5,7 @@ from grpc.framework.interfaces.face import utilities as face_utilities
 
 import google.protobuf.empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import google.protobuf.wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
-import pypachy.pfs_pb2 as pfs__pb2
+from . import pfs_pb2 as pfs__pb2
 
 
 class APIStub(object):
@@ -41,19 +41,9 @@ class APIStub(object):
         request_serializer=pfs__pb2.StartCommitRequest.SerializeToString,
         response_deserializer=pfs__pb2.Commit.FromString,
         )
-    self.ForkCommit = channel.unary_unary(
-        '/pfs.API/ForkCommit',
-        request_serializer=pfs__pb2.ForkCommitRequest.SerializeToString,
-        response_deserializer=pfs__pb2.Commit.FromString,
-        )
     self.FinishCommit = channel.unary_unary(
         '/pfs.API/FinishCommit',
         request_serializer=pfs__pb2.FinishCommitRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.ArchiveCommit = channel.unary_unary(
-        '/pfs.API/ArchiveCommit',
-        request_serializer=pfs__pb2.ArchiveCommitRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.InspectCommit = channel.unary_unary(
@@ -71,25 +61,35 @@ class APIStub(object):
         request_serializer=pfs__pb2.DeleteCommitRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.FlushCommit = channel.unary_unary(
+    self.FlushCommit = channel.unary_stream(
         '/pfs.API/FlushCommit',
         request_serializer=pfs__pb2.FlushCommitRequest.SerializeToString,
-        response_deserializer=pfs__pb2.CommitInfos.FromString,
+        response_deserializer=pfs__pb2.CommitInfo.FromString,
+        )
+    self.SubscribeCommit = channel.unary_stream(
+        '/pfs.API/SubscribeCommit',
+        request_serializer=pfs__pb2.SubscribeCommitRequest.SerializeToString,
+        response_deserializer=pfs__pb2.CommitInfo.FromString,
+        )
+    self.BuildCommit = channel.unary_unary(
+        '/pfs.API/BuildCommit',
+        request_serializer=pfs__pb2.BuildCommitRequest.SerializeToString,
+        response_deserializer=pfs__pb2.Commit.FromString,
         )
     self.ListBranch = channel.unary_unary(
         '/pfs.API/ListBranch',
         request_serializer=pfs__pb2.ListBranchRequest.SerializeToString,
         response_deserializer=pfs__pb2.Branches.FromString,
         )
-    self.SquashCommit = channel.unary_unary(
-        '/pfs.API/SquashCommit',
-        request_serializer=pfs__pb2.SquashCommitRequest.SerializeToString,
+    self.SetBranch = channel.unary_unary(
+        '/pfs.API/SetBranch',
+        request_serializer=pfs__pb2.SetBranchRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.ReplayCommit = channel.unary_unary(
-        '/pfs.API/ReplayCommit',
-        request_serializer=pfs__pb2.ReplayCommitRequest.SerializeToString,
-        response_deserializer=pfs__pb2.Commits.FromString,
+    self.DeleteBranch = channel.unary_unary(
+        '/pfs.API/DeleteBranch',
+        request_serializer=pfs__pb2.DeleteBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.PutFile = channel.stream_unary(
         '/pfs.API/PutFile',
@@ -111,6 +111,11 @@ class APIStub(object):
         request_serializer=pfs__pb2.ListFileRequest.SerializeToString,
         response_deserializer=pfs__pb2.FileInfos.FromString,
         )
+    self.GlobFile = channel.unary_unary(
+        '/pfs.API/GlobFile',
+        request_serializer=pfs__pb2.GlobFileRequest.SerializeToString,
+        response_deserializer=pfs__pb2.FileInfos.FromString,
+        )
     self.DeleteFile = channel.unary_unary(
         '/pfs.API/DeleteFile',
         request_serializer=pfs__pb2.DeleteFileRequest.SerializeToString,
@@ -118,11 +123,6 @@ class APIStub(object):
         )
     self.DeleteAll = channel.unary_unary(
         '/pfs.API/DeleteAll',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.ArchiveAll = channel.unary_unary(
-        '/pfs.API/ArchiveAll',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
@@ -168,22 +168,8 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ForkCommit(self, request, context):
-    """Fork creates a commit on a new branch.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def FinishCommit(self, request, context):
     """FinishCommit turns a write commit into a read commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ArchiveCommit(self, request, context):
-    """ArchiveCommit marks commits as archived, it will be excluded from ListCommit.
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -217,6 +203,20 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def SubscribeCommit(self, request, context):
+    """SubscribeCommit subscribes for new commits on a given branch
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def BuildCommit(self, request, context):
+    """BuildCommit builds a commit that's backed by the given tree
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def ListBranch(self, request, context):
     """ListBranch returns info about the heads of branches.
     """
@@ -224,15 +224,15 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def SquashCommit(self, request, context):
-    """Squash returns the head of the commit of the merge
+  def SetBranch(self, request, context):
+    """SetBranch assigns a commit and its ancestors to a branch.
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ReplayCommit(self, request, context):
-    """Replay returns the head of the commit of the merge
+  def DeleteBranch(self, request, context):
+    """DeleteBranch deletes a branch; note that the commits still exist.
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -267,6 +267,13 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GlobFile(self, request, context):
+    """GlobFile returns info about all files.
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def DeleteFile(self, request, context):
     """DeleteFile deletes a file.
     """
@@ -276,13 +283,6 @@ class APIServicer(object):
 
   def DeleteAll(self, request, context):
     """DeleteAll deletes everything
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ArchiveAll(self, request, context):
-    """ArchiveAll archives everything
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -316,19 +316,9 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=pfs__pb2.StartCommitRequest.FromString,
           response_serializer=pfs__pb2.Commit.SerializeToString,
       ),
-      'ForkCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.ForkCommit,
-          request_deserializer=pfs__pb2.ForkCommitRequest.FromString,
-          response_serializer=pfs__pb2.Commit.SerializeToString,
-      ),
       'FinishCommit': grpc.unary_unary_rpc_method_handler(
           servicer.FinishCommit,
           request_deserializer=pfs__pb2.FinishCommitRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'ArchiveCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.ArchiveCommit,
-          request_deserializer=pfs__pb2.ArchiveCommitRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'InspectCommit': grpc.unary_unary_rpc_method_handler(
@@ -346,25 +336,35 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=pfs__pb2.DeleteCommitRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'FlushCommit': grpc.unary_unary_rpc_method_handler(
+      'FlushCommit': grpc.unary_stream_rpc_method_handler(
           servicer.FlushCommit,
           request_deserializer=pfs__pb2.FlushCommitRequest.FromString,
-          response_serializer=pfs__pb2.CommitInfos.SerializeToString,
+          response_serializer=pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      'SubscribeCommit': grpc.unary_stream_rpc_method_handler(
+          servicer.SubscribeCommit,
+          request_deserializer=pfs__pb2.SubscribeCommitRequest.FromString,
+          response_serializer=pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      'BuildCommit': grpc.unary_unary_rpc_method_handler(
+          servicer.BuildCommit,
+          request_deserializer=pfs__pb2.BuildCommitRequest.FromString,
+          response_serializer=pfs__pb2.Commit.SerializeToString,
       ),
       'ListBranch': grpc.unary_unary_rpc_method_handler(
           servicer.ListBranch,
           request_deserializer=pfs__pb2.ListBranchRequest.FromString,
           response_serializer=pfs__pb2.Branches.SerializeToString,
       ),
-      'SquashCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.SquashCommit,
-          request_deserializer=pfs__pb2.SquashCommitRequest.FromString,
+      'SetBranch': grpc.unary_unary_rpc_method_handler(
+          servicer.SetBranch,
+          request_deserializer=pfs__pb2.SetBranchRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'ReplayCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.ReplayCommit,
-          request_deserializer=pfs__pb2.ReplayCommitRequest.FromString,
-          response_serializer=pfs__pb2.Commits.SerializeToString,
+      'DeleteBranch': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteBranch,
+          request_deserializer=pfs__pb2.DeleteBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'PutFile': grpc.stream_unary_rpc_method_handler(
           servicer.PutFile,
@@ -386,6 +386,11 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=pfs__pb2.ListFileRequest.FromString,
           response_serializer=pfs__pb2.FileInfos.SerializeToString,
       ),
+      'GlobFile': grpc.unary_unary_rpc_method_handler(
+          servicer.GlobFile,
+          request_deserializer=pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=pfs__pb2.FileInfos.SerializeToString,
+      ),
       'DeleteFile': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteFile,
           request_deserializer=pfs__pb2.DeleteFileRequest.FromString,
@@ -396,18 +401,13 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'ArchiveAll': grpc.unary_unary_rpc_method_handler(
-          servicer.ArchiveAll,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
       'pfs.API', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class BlockAPIStub(object):
+class ObjectAPIStub(object):
 
   def __init__(self, channel):
     """Constructor.
@@ -415,89 +415,134 @@ class BlockAPIStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.PutBlock = channel.stream_unary(
-        '/pfs.BlockAPI/PutBlock',
-        request_serializer=pfs__pb2.PutBlockRequest.SerializeToString,
-        response_deserializer=pfs__pb2.BlockRefs.FromString,
+    self.PutObject = channel.stream_unary(
+        '/pfs.ObjectAPI/PutObject',
+        request_serializer=pfs__pb2.PutObjectRequest.SerializeToString,
+        response_deserializer=pfs__pb2.Object.FromString,
         )
-    self.GetBlock = channel.unary_stream(
-        '/pfs.BlockAPI/GetBlock',
-        request_serializer=pfs__pb2.GetBlockRequest.SerializeToString,
+    self.GetObject = channel.unary_stream(
+        '/pfs.ObjectAPI/GetObject',
+        request_serializer=pfs__pb2.Object.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
         )
-    self.DeleteBlock = channel.unary_unary(
-        '/pfs.BlockAPI/DeleteBlock',
-        request_serializer=pfs__pb2.DeleteBlockRequest.SerializeToString,
+    self.GetObjects = channel.unary_stream(
+        '/pfs.ObjectAPI/GetObjects',
+        request_serializer=pfs__pb2.GetObjectsRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.TagObject = channel.unary_unary(
+        '/pfs.ObjectAPI/TagObject',
+        request_serializer=pfs__pb2.TagObjectRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.InspectBlock = channel.unary_unary(
-        '/pfs.BlockAPI/InspectBlock',
-        request_serializer=pfs__pb2.InspectBlockRequest.SerializeToString,
-        response_deserializer=pfs__pb2.BlockInfo.FromString,
+    self.InspectObject = channel.unary_unary(
+        '/pfs.ObjectAPI/InspectObject',
+        request_serializer=pfs__pb2.Object.SerializeToString,
+        response_deserializer=pfs__pb2.ObjectInfo.FromString,
         )
-    self.ListBlock = channel.unary_unary(
-        '/pfs.BlockAPI/ListBlock',
-        request_serializer=pfs__pb2.ListBlockRequest.SerializeToString,
-        response_deserializer=pfs__pb2.BlockInfos.FromString,
+    self.GetTag = channel.unary_stream(
+        '/pfs.ObjectAPI/GetTag',
+        request_serializer=pfs__pb2.Tag.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.InspectTag = channel.unary_unary(
+        '/pfs.ObjectAPI/InspectTag',
+        request_serializer=pfs__pb2.Tag.SerializeToString,
+        response_deserializer=pfs__pb2.ObjectInfo.FromString,
+        )
+    self.Compact = channel.unary_unary(
+        '/pfs.ObjectAPI/Compact',
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class BlockAPIServicer(object):
+class ObjectAPIServicer(object):
 
-  def PutBlock(self, request_iterator, context):
+  def PutObject(self, request_iterator, context):
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetBlock(self, request, context):
+  def GetObject(self, request, context):
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def DeleteBlock(self, request, context):
+  def GetObjects(self, request, context):
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def InspectBlock(self, request, context):
+  def TagObject(self, request, context):
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ListBlock(self, request, context):
+  def InspectObject(self, request, context):
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetTag(self, request, context):
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def InspectTag(self, request, context):
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def Compact(self, request, context):
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
 
-def add_BlockAPIServicer_to_server(servicer, server):
+def add_ObjectAPIServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'PutBlock': grpc.stream_unary_rpc_method_handler(
-          servicer.PutBlock,
-          request_deserializer=pfs__pb2.PutBlockRequest.FromString,
-          response_serializer=pfs__pb2.BlockRefs.SerializeToString,
+      'PutObject': grpc.stream_unary_rpc_method_handler(
+          servicer.PutObject,
+          request_deserializer=pfs__pb2.PutObjectRequest.FromString,
+          response_serializer=pfs__pb2.Object.SerializeToString,
       ),
-      'GetBlock': grpc.unary_stream_rpc_method_handler(
-          servicer.GetBlock,
-          request_deserializer=pfs__pb2.GetBlockRequest.FromString,
+      'GetObject': grpc.unary_stream_rpc_method_handler(
+          servicer.GetObject,
+          request_deserializer=pfs__pb2.Object.FromString,
           response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ),
-      'DeleteBlock': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteBlock,
-          request_deserializer=pfs__pb2.DeleteBlockRequest.FromString,
+      'GetObjects': grpc.unary_stream_rpc_method_handler(
+          servicer.GetObjects,
+          request_deserializer=pfs__pb2.GetObjectsRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      'TagObject': grpc.unary_unary_rpc_method_handler(
+          servicer.TagObject,
+          request_deserializer=pfs__pb2.TagObjectRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'InspectBlock': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectBlock,
-          request_deserializer=pfs__pb2.InspectBlockRequest.FromString,
-          response_serializer=pfs__pb2.BlockInfo.SerializeToString,
+      'InspectObject': grpc.unary_unary_rpc_method_handler(
+          servicer.InspectObject,
+          request_deserializer=pfs__pb2.Object.FromString,
+          response_serializer=pfs__pb2.ObjectInfo.SerializeToString,
       ),
-      'ListBlock': grpc.unary_unary_rpc_method_handler(
-          servicer.ListBlock,
-          request_deserializer=pfs__pb2.ListBlockRequest.FromString,
-          response_serializer=pfs__pb2.BlockInfos.SerializeToString,
+      'GetTag': grpc.unary_stream_rpc_method_handler(
+          servicer.GetTag,
+          request_deserializer=pfs__pb2.Tag.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      'InspectTag': grpc.unary_unary_rpc_method_handler(
+          servicer.InspectTag,
+          request_deserializer=pfs__pb2.Tag.FromString,
+          response_serializer=pfs__pb2.ObjectInfo.SerializeToString,
+      ),
+      'Compact': grpc.unary_unary_rpc_method_handler(
+          servicer.Compact,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'pfs.BlockAPI', rpc_method_handlers)
+      'pfs.ObjectAPI', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
