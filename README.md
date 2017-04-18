@@ -4,7 +4,9 @@ PyPachy
 A python client wrapper for *Pachyderm* <https://www.pachyderm.io/> API.
 
 *NOTES*
+
 1. Currently implements only the PFS interface.
+
 2. Supports Pachyderm versions 1.4 and up
 
 

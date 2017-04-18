@@ -156,8 +156,11 @@ class PfsClient(object):
                     all commits that match the aforementioned criteria are returned.
         :return: A list of CommitInfo objects
         """
-        req = ListCommitRequest(repo=Repo(name=repo_name), number=number, to=to_commit)
-        req.__dict__['from'] = from_commit
+        req = ListCommitRequest(repo=Repo(name=repo_name), number=number)
+        if to_commit is not None:
+            req.to.CopyFrom(_commit_from(to_commit))
+        if from_commit is not None:
+            getattr(req, 'from').CopyFrom(_commit_from(from_commit))
         x = self.stub.ListCommit(req)
         if hasattr(x, 'commit_info'):
             return x.commit_info
@@ -204,7 +207,7 @@ class PfsClient(object):
         repo = Repo(name=repo_name)
         req = SubscribeCommitRequest(repo=repo, branch=branch)
         if from_commit_id is not None:
-            req.__dict__['from'] = Commit(repo=repo, id=from_commit_id)
+            getattr(req, 'from').CopyFrom(Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req)
 
     def list_branch(self, repo_name):
