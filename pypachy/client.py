@@ -1,4 +1,5 @@
 import collections
+import os
 from builtins import object
 from contextlib import contextmanager
 
@@ -40,8 +41,14 @@ def _make_list(x):
     return x
 
 
+def _is_iterator(x):
+    return hasattr(x, 'next') or hasattr(x, '__next__')
+
+
 class PfsClient(object):
-    def __init__(self, host="localhost", port=30650):
+    def __init__(self,
+                 host=os.environ.get('PACHD_SERVICE_HOST', 'localhost'),
+                 port=os.environ.get('PACHD_SERVICE_PORT_API_GRPC_PORT', 30650)):
         """
         Creates a client to connect to Pfs
         :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
@@ -132,8 +139,14 @@ class PfsClient(object):
         A context manager for doing stuff inside a commit
         """
         commit = self.start_commit(repo_name, branch, parent)
-        yield commit
-        self.finish_commit(commit)
+        try:
+            yield commit
+        except Exception as e:
+            print("An exception occurred during an open commit. "
+                  "Trying to finish it (Currently a commit can't be cancelled)")
+            raise e
+        finally:
+            self.finish_commit(commit)
 
     def inspect_commit(self, commit):
         """
@@ -247,7 +260,7 @@ class PfsClient(object):
         Uploads a binary bytes array as file(s) in a certain path
         :param commit: A tuple or string representing the commit 
         :param path: Path in the repo the file(s) will be written to
-        :param value: The data bytes array 
+        :param value: The data bytes array, or an iterator returning chunked byte arrays 
         :param delimiter: Optional. causes data to be broken up into separate files with `path`
                 as a prefix.
         :param target_file_datums: Optional. specifies the target number of datums in each written
@@ -257,15 +270,27 @@ class PfsClient(object):
                 file, files may have more or fewer bytes than the target. 
         """
 
-        def _blocks():
-            for i in range(0, len(value), BUFFER_SIZE):
+        if _is_iterator(value):
+            def _wrap(v):
+                for x in v:
+                    yield PutFileRequest(file=File(commit=_commit_from(commit), path=path),
+                                         value=x,
+                                         delimiter=delimiter,
+                                         target_file_datums=target_file_datums,
+                                         target_file_bytes=target_file_bytes)
+
+            self.stub.PutFile(_wrap(value))
+            return
+
+        def _blocks(v):
+            for i in range(0, len(v), BUFFER_SIZE):
                 yield PutFileRequest(file=File(commit=_commit_from(commit), path=path),
-                                     value=value[i:i + BUFFER_SIZE],
+                                     value=v[i:i + BUFFER_SIZE],
                                      delimiter=delimiter,
                                      target_file_datums=target_file_datums,
                                      target_file_bytes=target_file_bytes)
 
-        self.stub.PutFile(_blocks())
+        self.stub.PutFile(_blocks(value))
 
     def put_file_url(self, commit, path, url, recursive=False):
         """
@@ -382,4 +407,3 @@ class PfsClient(object):
 
     def delete_all(self):
         self.stub.DeleteAll()
-
