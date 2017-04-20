@@ -19,11 +19,13 @@ Installing
 
 Instructions
 ------------
-The functions correspond closely to the Go client implementation and are very similar to the
-``pachctl`` interface as well.
+All of the PFS functions used in ``pachctl`` are supported (almost) as-is.
+There are some helper functions that help make things more pythonic:
+* ``commit`` which is a context manager wrapper for ``start_commit`` and ``finish_commit``
+* ``get_files`` which supports getting the data from multiple files
 
 Naming commits
-==============
+--------------
 
 All functions that accept a ``commit`` argument will accept a tuple of ``(repo, branch)`` or ``(repo, commit_id)``,
 a string like ``repo/branch`` or ``repo/commit_id`` and a Commit object.
@@ -37,15 +39,9 @@ e.g:
     >>> client.list_file(c, '/')                        # and use it directly
 ```
 
-Contents
-========
-All of the PFS functions used in ``pachctl`` are supported (almost) as-is.
-There are some helper functions that help make things more pythonic:
-* ``commit`` which is a context manager wrapper for ``start_commit`` and ``finish_commit``
-* ``get_files`` which supports getting the data from multiple files
 
 Basic usage example
-===================
+-------------------
 
 ```python
     >>> import pypachy
@@ -62,7 +58,7 @@ Basic usage example
 ```
 
 TODO
-====
+----
 * Test, test, test!
 * Add support for ``ObjectAPI``
 * Add support for ``PPS``, ``Version``, etc
