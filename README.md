@@ -66,6 +66,10 @@ TODO
 
 Changelog
 ---------
+``0.1.3``
+- Fixed: ``inspect_commit`` was broken
+- Added: ``provenances_for_repo`` function gives all the provenances for the commits in the repo
+
 ``0.1.2``
 - Added: ``PfsClient`` default parameters now use the environment variables for pachd
 - Added: ``put_file_bytes`` can accept an iterator

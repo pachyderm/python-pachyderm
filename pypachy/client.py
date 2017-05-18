@@ -154,7 +154,14 @@ class PfsClient(object):
         :param commit: A tuple or string representing the commit
         :return: CommitInfo object
         """
-        return self.stub.InspectCommit(InspectRepoRequest(commit=_commit_from(commit)))
+        return self.stub.InspectCommit(InspectCommitRequest(commit=_commit_from(commit)))
+
+    def provenances_for_repo(self, repo_name):
+        provenances = {}
+        for c in self.list_commit(repo_name):
+            for p in c.provenance:
+                provenances[p.id] = c.commit.id
+        return provenances
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
