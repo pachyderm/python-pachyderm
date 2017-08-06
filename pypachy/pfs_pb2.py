@@ -23,10 +23,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='pfs.proto',
   package='pfs',
   syntax='proto3',
-  serialized_pb=_b('\n\tpfs.proto\x12\x03pfs\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x14\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\"-\n\x06\x43ommit\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\n\n\x02id\x18\x02 \x01(\t\"&\n\x07\x43ommits\x12\x1b\n\x06\x63ommit\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\"1\n\x06\x42ranch\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x04head\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\")\n\x08\x42ranches\x12\x1d\n\x08\x62ranches\x18\x01 \x03(\x0b\x32\x0b.pfs.Branch\"1\n\x04\x46ile\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\"\x15\n\x05\x42lock\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x16\n\x06Object\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x13\n\x03Tag\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x83\x01\n\x08RepoInfo\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x1d\n\nprovenance\x18\x04 \x03(\x0b\x32\t.pfs.Repo\"-\n\tRepoInfos\x12 \n\trepo_info\x18\x01 \x03(\x0b\x32\r.pfs.RepoInfo\"\xf8\x01\n\nCommitInfo\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\"\n\rparent_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12+\n\x07started\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x05 \x01(\x04\x12\x1f\n\nprovenance\x18\x06 \x03(\x0b\x32\x0b.pfs.Commit\x12\x19\n\x04tree\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\"3\n\x0b\x43ommitInfos\x12$\n\x0b\x63ommit_info\x18\x01 \x03(\x0b\x32\x0f.pfs.CommitInfo\"y\n\x08\x46ileInfo\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12 \n\tfile_type\x18\x02 \x01(\x0e\x32\r.pfs.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x10\n\x08\x63hildren\x18\x06 \x03(\t\x12\x0c\n\x04hash\x18\x07 \x01(\x0c\"-\n\tFileInfos\x12 \n\tfile_info\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\")\n\tByteRange\x12\r\n\x05lower\x18\x01 \x01(\x04\x12\r\n\x05upper\x18\x02 \x01(\x04\"D\n\x08\x42lockRef\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\x1d\n\x05range\x18\x02 \x01(\x0b\x32\x0e.pfs.ByteRange\"K\n\nObjectInfo\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"K\n\x11\x43reateRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x1d\n\nprovenance\x18\x02 \x03(\x0b\x32\t.pfs.Repo\"-\n\x12InspectRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"0\n\x0fListRepoRequest\x12\x1d\n\nprovenance\x18\x01 \x03(\x0b\x32\t.pfs.Repo\";\n\x11\x44\x65leteRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"b\n\x12StartCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x1f\n\nprovenance\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\"}\n\x12\x42uildCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\t\x12\x1f\n\nprovenance\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\"2\n\x13\x46inishCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"3\n\x14InspectCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"p\n\x11ListCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x19\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x17\n\x02to\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\",\n\x11ListBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"?\n\x10SetBranchRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\">\n\x13\x44\x65leteBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\"2\n\x13\x44\x65leteCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"O\n\x12\x46lushCommitRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x08to_repos\x18\x02 \x03(\x0b\x32\t.pfs.Repo\"\\\n\x16SubscribeCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12\x19\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\"S\n\x0eGetFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x03\x12\x12\n\nsize_bytes\x18\x03 \x01(\x03\"\xb8\x01\n\x0ePutFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\r\n\x05value\x18\x03 \x01(\x0c\x12\x0b\n\x03url\x18\x05 \x01(\t\x12\x11\n\trecursive\x18\x06 \x01(\x08\x12!\n\tdelimiter\x18\x07 \x01(\x0e\x32\x0e.pfs.Delimiter\x12\x1a\n\x12target_file_datums\x18\x08 \x01(\x03\x12\x19\n\x11target_file_bytes\x18\t \x01(\x03J\x04\x08\x02\x10\x03\"-\n\x12InspectFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"*\n\x0fListFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"?\n\x0fGlobFileRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\",\n\x11\x44\x65leteFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"9\n\x10PutObjectRequest\x12\r\n\x05value\x18\x01 \x01(\x0c\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"[\n\x11GetObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\"G\n\x10TagObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"\xe0\x01\n\x0bObjectIndex\x12.\n\x07objects\x18\x01 \x03(\x0b\x32\x1d.pfs.ObjectIndex.ObjectsEntry\x12(\n\x04tags\x18\x02 \x03(\x0b\x32\x1a.pfs.ObjectIndex.TagsEntry\x1a=\n\x0cObjectsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef:\x02\x38\x01\x1a\x38\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.pfs.Object:\x02\x38\x01*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*)\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02*L\n\x0cListFileMode\x12\x13\n\x0fListFile_NORMAL\x10\x00\x12\x11\n\rListFile_FAST\x10\x01\x12\x14\n\x10ListFile_RECURSE\x10\x02\x32\xb9\n\n\x03\x41PI\x12>\n\nCreateRepo\x12\x16.pfs.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x37\n\x0bInspectRepo\x12\x17.pfs.InspectRepoRequest\x1a\r.pfs.RepoInfo\"\x00\x12\x32\n\x08ListRepo\x12\x14.pfs.ListRepoRequest\x1a\x0e.pfs.RepoInfos\"\x00\x12>\n\nDeleteRepo\x12\x16.pfs.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x0bStartCommit\x12\x17.pfs.StartCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x46inishCommit\x12\x18.pfs.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectCommit\x12\x19.pfs.InspectCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x12\x38\n\nListCommit\x12\x16.pfs.ListCommitRequest\x1a\x10.pfs.CommitInfos\"\x00\x12\x42\n\x0c\x44\x65leteCommit\x12\x18.pfs.DeleteCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0b\x46lushCommit\x12\x17.pfs.FlushCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x43\n\x0fSubscribeCommit\x12\x1b.pfs.SubscribeCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x35\n\x0b\x42uildCommit\x12\x17.pfs.BuildCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x35\n\nListBranch\x12\x16.pfs.ListBranchRequest\x1a\r.pfs.Branches\"\x00\x12<\n\tSetBranch\x12\x15.pfs.SetBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x44\x65leteBranch\x12\x18.pfs.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x07PutFile\x12\x13.pfs.PutFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12?\n\x07GetFile\x12\x13.pfs.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x37\n\x0bInspectFile\x12\x17.pfs.InspectFileRequest\x1a\r.pfs.FileInfo\"\x00\x12\x32\n\x08ListFile\x12\x14.pfs.ListFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x32\n\x08GlobFile\x12\x14.pfs.GlobFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12>\n\nDeleteFile\x12\x16.pfs.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x32\xce\x03\n\tObjectAPI\x12\x33\n\tPutObject\x12\x15.pfs.PutObjectRequest\x1a\x0b.pfs.Object\"\x00(\x01\x12\x39\n\tGetObject\x12\x0b.pfs.Object\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetObjects\x12\x16.pfs.GetObjectsRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12<\n\tTagObject\x12\x15.pfs.TagObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\rInspectObject\x12\x0b.pfs.Object\x1a\x0f.pfs.ObjectInfo\"\x00\x12\x33\n\x06GetTag\x12\x08.pfs.Tag\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12)\n\nInspectTag\x12\x08.pfs.Tag\x1a\x0f.pfs.ObjectInfo\"\x00\x12;\n\x07\x43ompact\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tpfs.proto\x12\x03pfs\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x14\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\"-\n\x06\x43ommit\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\n\n\x02id\x18\x02 \x01(\t\"&\n\x07\x43ommits\x12\x1b\n\x06\x63ommit\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\"5\n\nBranchInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x04head\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\"3\n\x0b\x42ranchInfos\x12$\n\x0b\x62ranch_info\x18\x01 \x03(\x0b\x32\x0f.pfs.BranchInfo\"1\n\x04\x46ile\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\"\x15\n\x05\x42lock\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x16\n\x06Object\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x13\n\x03Tag\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x98\x01\n\x08RepoInfo\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x1d\n\nprovenance\x18\x04 \x03(\x0b\x32\t.pfs.Repo\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\"-\n\tRepoInfos\x12 \n\trepo_info\x18\x01 \x03(\x0b\x32\r.pfs.RepoInfo\"\xf8\x01\n\nCommitInfo\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\"\n\rparent_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12+\n\x07started\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x05 \x01(\x04\x12\x1f\n\nprovenance\x18\x06 \x03(\x0b\x32\x0b.pfs.Commit\x12\x19\n\x04tree\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\"3\n\x0b\x43ommitInfos\x12$\n\x0b\x63ommit_info\x18\x01 \x03(\x0b\x32\x0f.pfs.CommitInfo\"\x97\x01\n\x08\x46ileInfo\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12 \n\tfile_type\x18\x02 \x01(\x0e\x32\r.pfs.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x10\n\x08\x63hildren\x18\x06 \x03(\t\x12\x1c\n\x07objects\x18\x08 \x03(\x0b\x32\x0b.pfs.Object\x12\x0c\n\x04hash\x18\x07 \x01(\x0c\"-\n\tFileInfos\x12 \n\tfile_info\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\")\n\tByteRange\x12\r\n\x05lower\x18\x01 \x01(\x04\x12\r\n\x05upper\x18\x02 \x01(\x04\"D\n\x08\x42lockRef\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\x1d\n\x05range\x18\x02 \x01(\x0b\x32\x0e.pfs.ByteRange\"K\n\nObjectInfo\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"p\n\x11\x43reateRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x1d\n\nprovenance\x18\x02 \x03(\x0b\x32\t.pfs.Repo\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06update\x18\x04 \x01(\x08\"-\n\x12InspectRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"0\n\x0fListRepoRequest\x12\x1d\n\nprovenance\x18\x01 \x03(\x0b\x32\t.pfs.Repo\"H\n\x11\x44\x65leteRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"b\n\x12StartCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x1f\n\nprovenance\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\"}\n\x12\x42uildCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\t\x12\x1f\n\nprovenance\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\"2\n\x13\x46inishCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"3\n\x14InspectCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"p\n\x11ListCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x19\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x17\n\x02to\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\",\n\x11ListBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"?\n\x10SetBranchRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\">\n\x13\x44\x65leteBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\"2\n\x13\x44\x65leteCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"O\n\x12\x46lushCommitRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x08to_repos\x18\x02 \x03(\x0b\x32\t.pfs.Repo\"\\\n\x16SubscribeCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12\x19\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\"S\n\x0eGetFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x03\x12\x12\n\nsize_bytes\x18\x03 \x01(\x03\"\xb8\x01\n\x0ePutFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\r\n\x05value\x18\x03 \x01(\x0c\x12\x0b\n\x03url\x18\x05 \x01(\t\x12\x11\n\trecursive\x18\x06 \x01(\x08\x12!\n\tdelimiter\x18\x07 \x01(\x0e\x32\x0e.pfs.Delimiter\x12\x1a\n\x12target_file_datums\x18\x08 \x01(\x03\x12\x19\n\x11target_file_bytes\x18\t \x01(\x03J\x04\x08\x02\x10\x03\"-\n\x12InspectFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"*\n\x0fListFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"?\n\x0fGlobFileRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\"\\\n\x0f\x44iffFileRequest\x12\x1b\n\x08new_file\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x08old_file\x18\x02 \x01(\x0b\x32\t.pfs.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"V\n\x10\x44iffFileResponse\x12 \n\tnew_files\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\x12 \n\told_files\x18\x02 \x03(\x0b\x32\r.pfs.FileInfo\",\n\x11\x44\x65leteFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"9\n\x10PutObjectRequest\x12\r\n\x05value\x18\x01 \x01(\x0c\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"[\n\x11GetObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\"G\n\x10TagObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"\x14\n\x12ListObjectsRequest\"8\n\x0fListTagsRequest\x12\x0e\n\x06prefix\x18\x01 \x01(\t\x12\x15\n\rincludeObject\x18\x02 \x01(\x08\"<\n\x10ListTagsResponse\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x1b\n\x06object\x18\x02 \x01(\x0b\x32\x0b.pfs.Object\"4\n\x14\x44\x65leteObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\"\x17\n\x15\x44\x65leteObjectsResponse\"!\n\x11\x44\x65leteTagsRequest\x12\x0c\n\x04tags\x18\x01 \x03(\t\"\x14\n\x12\x44\x65leteTagsResponse\"1\n\x12\x43heckObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\"%\n\x13\x43heckObjectResponse\x12\x0e\n\x06\x65xists\x18\x01 \x01(\x08\"\xe0\x01\n\x0bObjectIndex\x12.\n\x07objects\x18\x01 \x03(\x0b\x32\x1d.pfs.ObjectIndex.ObjectsEntry\x12(\n\x04tags\x18\x02 \x03(\x0b\x32\x1a.pfs.ObjectIndex.TagsEntry\x1a=\n\x0cObjectsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef:\x02\x38\x01\x1a\x38\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.pfs.Object:\x02\x38\x01*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*)\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02*L\n\x0cListFileMode\x12\x13\n\x0fListFile_NORMAL\x10\x00\x12\x11\n\rListFile_FAST\x10\x01\x12\x14\n\x10ListFile_RECURSE\x10\x02\x32\xf7\n\n\x03\x41PI\x12>\n\nCreateRepo\x12\x16.pfs.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x37\n\x0bInspectRepo\x12\x17.pfs.InspectRepoRequest\x1a\r.pfs.RepoInfo\"\x00\x12\x32\n\x08ListRepo\x12\x14.pfs.ListRepoRequest\x1a\x0e.pfs.RepoInfos\"\x00\x12>\n\nDeleteRepo\x12\x16.pfs.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x0bStartCommit\x12\x17.pfs.StartCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x46inishCommit\x12\x18.pfs.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectCommit\x12\x19.pfs.InspectCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x12\x38\n\nListCommit\x12\x16.pfs.ListCommitRequest\x1a\x10.pfs.CommitInfos\"\x00\x12\x42\n\x0c\x44\x65leteCommit\x12\x18.pfs.DeleteCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0b\x46lushCommit\x12\x17.pfs.FlushCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x43\n\x0fSubscribeCommit\x12\x1b.pfs.SubscribeCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x35\n\x0b\x42uildCommit\x12\x17.pfs.BuildCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x38\n\nListBranch\x12\x16.pfs.ListBranchRequest\x1a\x10.pfs.BranchInfos\"\x00\x12<\n\tSetBranch\x12\x15.pfs.SetBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x44\x65leteBranch\x12\x18.pfs.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x07PutFile\x12\x13.pfs.PutFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12?\n\x07GetFile\x12\x13.pfs.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x37\n\x0bInspectFile\x12\x17.pfs.InspectFileRequest\x1a\r.pfs.FileInfo\"\x00\x12\x32\n\x08ListFile\x12\x14.pfs.ListFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x32\n\x08GlobFile\x12\x14.pfs.GlobFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x39\n\x08\x44iffFile\x12\x14.pfs.DiffFileRequest\x1a\x15.pfs.DiffFileResponse\"\x00\x12>\n\nDeleteFile\x12\x16.pfs.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x32\x93\x06\n\tObjectAPI\x12\x33\n\tPutObject\x12\x15.pfs.PutObjectRequest\x1a\x0b.pfs.Object\"\x00(\x01\x12\x39\n\tGetObject\x12\x0b.pfs.Object\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetObjects\x12\x16.pfs.GetObjectsRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12<\n\tTagObject\x12\x15.pfs.TagObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\rInspectObject\x12\x0b.pfs.Object\x1a\x0f.pfs.ObjectInfo\"\x00\x12\x42\n\x0b\x43heckObject\x12\x17.pfs.CheckObjectRequest\x1a\x18.pfs.CheckObjectResponse\"\x00\x12\x37\n\x0bListObjects\x12\x17.pfs.ListObjectsRequest\x1a\x0b.pfs.Object\"\x00\x30\x01\x12H\n\rDeleteObjects\x12\x19.pfs.DeleteObjectsRequest\x1a\x1a.pfs.DeleteObjectsResponse\"\x00\x12\x33\n\x06GetTag\x12\x08.pfs.Tag\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12)\n\nInspectTag\x12\x08.pfs.Tag\x1a\x0f.pfs.ObjectInfo\"\x00\x12;\n\x08ListTags\x12\x14.pfs.ListTagsRequest\x1a\x15.pfs.ListTagsResponse\"\x00\x30\x01\x12?\n\nDeleteTags\x12\x16.pfs.DeleteTagsRequest\x1a\x17.pfs.DeleteTagsResponse\"\x00\x12;\n\x07\x43ompact\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _FILETYPE = _descriptor.EnumDescriptor(
   name='FileType',
@@ -49,8 +48,8 @@ _FILETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3288,
-  serialized_end=3331,
+  serialized_start=3954,
+  serialized_end=3997,
 )
 _sym_db.RegisterEnumDescriptor(_FILETYPE)
 
@@ -76,8 +75,8 @@ _DELIMITER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3333,
-  serialized_end=3374,
+  serialized_start=3999,
+  serialized_end=4040,
 )
 _sym_db.RegisterEnumDescriptor(_DELIMITER)
 
@@ -103,8 +102,8 @@ _LISTFILEMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3376,
-  serialized_end=3452,
+  serialized_start=4042,
+  serialized_end=4118,
 )
 _sym_db.RegisterEnumDescriptor(_LISTFILEMODE)
 
@@ -221,22 +220,22 @@ _COMMITS = _descriptor.Descriptor(
 )
 
 
-_BRANCH = _descriptor.Descriptor(
-  name='Branch',
-  full_name='pfs.Branch',
+_BRANCHINFO = _descriptor.Descriptor(
+  name='BranchInfo',
+  full_name='pfs.BranchInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='pfs.Branch.name', index=0,
+      name='name', full_name='pfs.BranchInfo.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='head', full_name='pfs.Branch.head', index=1,
+      name='head', full_name='pfs.BranchInfo.head', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -255,19 +254,19 @@ _BRANCH = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=221,
-  serialized_end=270,
+  serialized_end=274,
 )
 
 
-_BRANCHES = _descriptor.Descriptor(
-  name='Branches',
-  full_name='pfs.Branches',
+_BRANCHINFOS = _descriptor.Descriptor(
+  name='BranchInfos',
+  full_name='pfs.BranchInfos',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='branches', full_name='pfs.Branches.branches', index=0,
+      name='branch_info', full_name='pfs.BranchInfos.branch_info', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -285,8 +284,8 @@ _BRANCHES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=272,
-  serialized_end=313,
+  serialized_start=276,
+  serialized_end=327,
 )
 
 
@@ -323,8 +322,8 @@ _FILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=315,
-  serialized_end=364,
+  serialized_start=329,
+  serialized_end=378,
 )
 
 
@@ -354,8 +353,8 @@ _BLOCK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=366,
-  serialized_end=387,
+  serialized_start=380,
+  serialized_end=401,
 )
 
 
@@ -385,8 +384,8 @@ _OBJECT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=389,
-  serialized_end=411,
+  serialized_start=403,
+  serialized_end=425,
 )
 
 
@@ -416,8 +415,8 @@ _TAG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=413,
-  serialized_end=432,
+  serialized_start=427,
+  serialized_end=446,
 )
 
 
@@ -456,6 +455,13 @@ _REPOINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='description', full_name='pfs.RepoInfo.description', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -468,8 +474,8 @@ _REPOINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=435,
-  serialized_end=566,
+  serialized_start=449,
+  serialized_end=601,
 )
 
 
@@ -499,8 +505,8 @@ _REPOINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=568,
-  serialized_end=613,
+  serialized_start=603,
+  serialized_end=648,
 )
 
 
@@ -572,8 +578,8 @@ _COMMITINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=616,
-  serialized_end=864,
+  serialized_start=651,
+  serialized_end=899,
 )
 
 
@@ -603,8 +609,8 @@ _COMMITINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=866,
-  serialized_end=917,
+  serialized_start=901,
+  serialized_end=952,
 )
 
 
@@ -644,7 +650,14 @@ _FILEINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='hash', full_name='pfs.FileInfo.hash', index=4,
+      name='objects', full_name='pfs.FileInfo.objects', index=4,
+      number=8, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='hash', full_name='pfs.FileInfo.hash', index=5,
       number=7, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
@@ -662,8 +675,8 @@ _FILEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=919,
-  serialized_end=1040,
+  serialized_start=955,
+  serialized_end=1106,
 )
 
 
@@ -693,8 +706,8 @@ _FILEINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1042,
-  serialized_end=1087,
+  serialized_start=1108,
+  serialized_end=1153,
 )
 
 
@@ -731,8 +744,8 @@ _BYTERANGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1089,
-  serialized_end=1130,
+  serialized_start=1155,
+  serialized_end=1196,
 )
 
 
@@ -769,8 +782,8 @@ _BLOCKREF = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1132,
-  serialized_end=1200,
+  serialized_start=1198,
+  serialized_end=1266,
 )
 
 
@@ -807,8 +820,8 @@ _OBJECTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1202,
-  serialized_end=1277,
+  serialized_start=1268,
+  serialized_end=1343,
 )
 
 
@@ -833,6 +846,20 @@ _CREATEREPOREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='description', full_name='pfs.CreateRepoRequest.description', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='update', full_name='pfs.CreateRepoRequest.update', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -845,8 +872,8 @@ _CREATEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1279,
-  serialized_end=1354,
+  serialized_start=1345,
+  serialized_end=1457,
 )
 
 
@@ -876,8 +903,8 @@ _INSPECTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1356,
-  serialized_end=1401,
+  serialized_start=1459,
+  serialized_end=1504,
 )
 
 
@@ -907,8 +934,8 @@ _LISTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1403,
-  serialized_end=1451,
+  serialized_start=1506,
+  serialized_end=1554,
 )
 
 
@@ -933,6 +960,13 @@ _DELETEREPOREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='all', full_name='pfs.DeleteRepoRequest.all', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -945,8 +979,8 @@ _DELETEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1453,
-  serialized_end=1512,
+  serialized_start=1556,
+  serialized_end=1628,
 )
 
 
@@ -990,8 +1024,8 @@ _STARTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1514,
-  serialized_end=1612,
+  serialized_start=1630,
+  serialized_end=1728,
 )
 
 
@@ -1042,8 +1076,8 @@ _BUILDCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1614,
-  serialized_end=1739,
+  serialized_start=1730,
+  serialized_end=1855,
 )
 
 
@@ -1073,8 +1107,8 @@ _FINISHCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1741,
-  serialized_end=1791,
+  serialized_start=1857,
+  serialized_end=1907,
 )
 
 
@@ -1104,8 +1138,8 @@ _INSPECTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1793,
-  serialized_end=1844,
+  serialized_start=1909,
+  serialized_end=1960,
 )
 
 
@@ -1156,8 +1190,8 @@ _LISTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1846,
-  serialized_end=1958,
+  serialized_start=1962,
+  serialized_end=2074,
 )
 
 
@@ -1187,8 +1221,8 @@ _LISTBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1960,
-  serialized_end=2004,
+  serialized_start=2076,
+  serialized_end=2120,
 )
 
 
@@ -1225,8 +1259,8 @@ _SETBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2006,
-  serialized_end=2069,
+  serialized_start=2122,
+  serialized_end=2185,
 )
 
 
@@ -1263,8 +1297,8 @@ _DELETEBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2071,
-  serialized_end=2133,
+  serialized_start=2187,
+  serialized_end=2249,
 )
 
 
@@ -1294,8 +1328,8 @@ _DELETECOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2135,
-  serialized_end=2185,
+  serialized_start=2251,
+  serialized_end=2301,
 )
 
 
@@ -1332,8 +1366,8 @@ _FLUSHCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2187,
-  serialized_end=2266,
+  serialized_start=2303,
+  serialized_end=2382,
 )
 
 
@@ -1377,8 +1411,8 @@ _SUBSCRIBECOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2268,
-  serialized_end=2360,
+  serialized_start=2384,
+  serialized_end=2476,
 )
 
 
@@ -1422,8 +1456,8 @@ _GETFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2362,
-  serialized_end=2445,
+  serialized_start=2478,
+  serialized_end=2561,
 )
 
 
@@ -1495,8 +1529,8 @@ _PUTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2448,
-  serialized_end=2632,
+  serialized_start=2564,
+  serialized_end=2748,
 )
 
 
@@ -1526,8 +1560,8 @@ _INSPECTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2634,
-  serialized_end=2679,
+  serialized_start=2750,
+  serialized_end=2795,
 )
 
 
@@ -1557,8 +1591,8 @@ _LISTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2681,
-  serialized_end=2723,
+  serialized_start=2797,
+  serialized_end=2839,
 )
 
 
@@ -1595,8 +1629,91 @@ _GLOBFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2725,
-  serialized_end=2788,
+  serialized_start=2841,
+  serialized_end=2904,
+)
+
+
+_DIFFFILEREQUEST = _descriptor.Descriptor(
+  name='DiffFileRequest',
+  full_name='pfs.DiffFileRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='new_file', full_name='pfs.DiffFileRequest.new_file', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='old_file', full_name='pfs.DiffFileRequest.old_file', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='shallow', full_name='pfs.DiffFileRequest.shallow', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2906,
+  serialized_end=2998,
+)
+
+
+_DIFFFILERESPONSE = _descriptor.Descriptor(
+  name='DiffFileResponse',
+  full_name='pfs.DiffFileResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='new_files', full_name='pfs.DiffFileResponse.new_files', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='old_files', full_name='pfs.DiffFileResponse.old_files', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3000,
+  serialized_end=3086,
 )
 
 
@@ -1626,8 +1743,8 @@ _DELETEFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2790,
-  serialized_end=2834,
+  serialized_start=3088,
+  serialized_end=3132,
 )
 
 
@@ -1664,8 +1781,8 @@ _PUTOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2836,
-  serialized_end=2893,
+  serialized_start=3134,
+  serialized_end=3191,
 )
 
 
@@ -1709,8 +1826,8 @@ _GETOBJECTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2895,
-  serialized_end=2986,
+  serialized_start=3193,
+  serialized_end=3284,
 )
 
 
@@ -1747,8 +1864,280 @@ _TAGOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2988,
-  serialized_end=3059,
+  serialized_start=3286,
+  serialized_end=3357,
+)
+
+
+_LISTOBJECTSREQUEST = _descriptor.Descriptor(
+  name='ListObjectsRequest',
+  full_name='pfs.ListObjectsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3359,
+  serialized_end=3379,
+)
+
+
+_LISTTAGSREQUEST = _descriptor.Descriptor(
+  name='ListTagsRequest',
+  full_name='pfs.ListTagsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='prefix', full_name='pfs.ListTagsRequest.prefix', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='includeObject', full_name='pfs.ListTagsRequest.includeObject', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3381,
+  serialized_end=3437,
+)
+
+
+_LISTTAGSRESPONSE = _descriptor.Descriptor(
+  name='ListTagsResponse',
+  full_name='pfs.ListTagsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='tag', full_name='pfs.ListTagsResponse.tag', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='object', full_name='pfs.ListTagsResponse.object', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3439,
+  serialized_end=3499,
+)
+
+
+_DELETEOBJECTSREQUEST = _descriptor.Descriptor(
+  name='DeleteObjectsRequest',
+  full_name='pfs.DeleteObjectsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='objects', full_name='pfs.DeleteObjectsRequest.objects', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3501,
+  serialized_end=3553,
+)
+
+
+_DELETEOBJECTSRESPONSE = _descriptor.Descriptor(
+  name='DeleteObjectsResponse',
+  full_name='pfs.DeleteObjectsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3555,
+  serialized_end=3578,
+)
+
+
+_DELETETAGSREQUEST = _descriptor.Descriptor(
+  name='DeleteTagsRequest',
+  full_name='pfs.DeleteTagsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='pfs.DeleteTagsRequest.tags', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3580,
+  serialized_end=3613,
+)
+
+
+_DELETETAGSRESPONSE = _descriptor.Descriptor(
+  name='DeleteTagsResponse',
+  full_name='pfs.DeleteTagsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3615,
+  serialized_end=3635,
+)
+
+
+_CHECKOBJECTREQUEST = _descriptor.Descriptor(
+  name='CheckObjectRequest',
+  full_name='pfs.CheckObjectRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='object', full_name='pfs.CheckObjectRequest.object', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3637,
+  serialized_end=3686,
+)
+
+
+_CHECKOBJECTRESPONSE = _descriptor.Descriptor(
+  name='CheckObjectResponse',
+  full_name='pfs.CheckObjectResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='exists', full_name='pfs.CheckObjectResponse.exists', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3688,
+  serialized_end=3725,
 )
 
 
@@ -1785,8 +2174,8 @@ _OBJECTINDEX_OBJECTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3167,
-  serialized_end=3228,
+  serialized_start=3833,
+  serialized_end=3894,
 )
 
 _OBJECTINDEX_TAGSENTRY = _descriptor.Descriptor(
@@ -1822,8 +2211,8 @@ _OBJECTINDEX_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3230,
-  serialized_end=3286,
+  serialized_start=3896,
+  serialized_end=3952,
 )
 
 _OBJECTINDEX = _descriptor.Descriptor(
@@ -1859,14 +2248,14 @@ _OBJECTINDEX = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3062,
-  serialized_end=3286,
+  serialized_start=3728,
+  serialized_end=3952,
 )
 
 _COMMIT.fields_by_name['repo'].message_type = _REPO
 _COMMITS.fields_by_name['commit'].message_type = _COMMIT
-_BRANCH.fields_by_name['head'].message_type = _COMMIT
-_BRANCHES.fields_by_name['branches'].message_type = _BRANCH
+_BRANCHINFO.fields_by_name['head'].message_type = _COMMIT
+_BRANCHINFOS.fields_by_name['branch_info'].message_type = _BRANCHINFO
 _FILE.fields_by_name['commit'].message_type = _COMMIT
 _REPOINFO.fields_by_name['repo'].message_type = _REPO
 _REPOINFO.fields_by_name['created'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -1881,6 +2270,7 @@ _COMMITINFO.fields_by_name['tree'].message_type = _OBJECT
 _COMMITINFOS.fields_by_name['commit_info'].message_type = _COMMITINFO
 _FILEINFO.fields_by_name['file'].message_type = _FILE
 _FILEINFO.fields_by_name['file_type'].enum_type = _FILETYPE
+_FILEINFO.fields_by_name['objects'].message_type = _OBJECT
 _FILEINFOS.fields_by_name['file_info'].message_type = _FILEINFO
 _BLOCKREF.fields_by_name['block'].message_type = _BLOCK
 _BLOCKREF.fields_by_name['range'].message_type = _BYTERANGE
@@ -1915,11 +2305,18 @@ _PUTFILEREQUEST.fields_by_name['delimiter'].enum_type = _DELIMITER
 _INSPECTFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _LISTFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _GLOBFILEREQUEST.fields_by_name['commit'].message_type = _COMMIT
+_DIFFFILEREQUEST.fields_by_name['new_file'].message_type = _FILE
+_DIFFFILEREQUEST.fields_by_name['old_file'].message_type = _FILE
+_DIFFFILERESPONSE.fields_by_name['new_files'].message_type = _FILEINFO
+_DIFFFILERESPONSE.fields_by_name['old_files'].message_type = _FILEINFO
 _DELETEFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _PUTOBJECTREQUEST.fields_by_name['tags'].message_type = _TAG
 _GETOBJECTSREQUEST.fields_by_name['objects'].message_type = _OBJECT
 _TAGOBJECTREQUEST.fields_by_name['object'].message_type = _OBJECT
 _TAGOBJECTREQUEST.fields_by_name['tags'].message_type = _TAG
+_LISTTAGSRESPONSE.fields_by_name['object'].message_type = _OBJECT
+_DELETEOBJECTSREQUEST.fields_by_name['objects'].message_type = _OBJECT
+_CHECKOBJECTREQUEST.fields_by_name['object'].message_type = _OBJECT
 _OBJECTINDEX_OBJECTSENTRY.fields_by_name['value'].message_type = _BLOCKREF
 _OBJECTINDEX_OBJECTSENTRY.containing_type = _OBJECTINDEX
 _OBJECTINDEX_TAGSENTRY.fields_by_name['value'].message_type = _OBJECT
@@ -1929,8 +2326,8 @@ _OBJECTINDEX.fields_by_name['tags'].message_type = _OBJECTINDEX_TAGSENTRY
 DESCRIPTOR.message_types_by_name['Repo'] = _REPO
 DESCRIPTOR.message_types_by_name['Commit'] = _COMMIT
 DESCRIPTOR.message_types_by_name['Commits'] = _COMMITS
-DESCRIPTOR.message_types_by_name['Branch'] = _BRANCH
-DESCRIPTOR.message_types_by_name['Branches'] = _BRANCHES
+DESCRIPTOR.message_types_by_name['BranchInfo'] = _BRANCHINFO
+DESCRIPTOR.message_types_by_name['BranchInfos'] = _BRANCHINFOS
 DESCRIPTOR.message_types_by_name['File'] = _FILE
 DESCRIPTOR.message_types_by_name['Block'] = _BLOCK
 DESCRIPTOR.message_types_by_name['Object'] = _OBJECT
@@ -1964,14 +2361,26 @@ DESCRIPTOR.message_types_by_name['PutFileRequest'] = _PUTFILEREQUEST
 DESCRIPTOR.message_types_by_name['InspectFileRequest'] = _INSPECTFILEREQUEST
 DESCRIPTOR.message_types_by_name['ListFileRequest'] = _LISTFILEREQUEST
 DESCRIPTOR.message_types_by_name['GlobFileRequest'] = _GLOBFILEREQUEST
+DESCRIPTOR.message_types_by_name['DiffFileRequest'] = _DIFFFILEREQUEST
+DESCRIPTOR.message_types_by_name['DiffFileResponse'] = _DIFFFILERESPONSE
 DESCRIPTOR.message_types_by_name['DeleteFileRequest'] = _DELETEFILEREQUEST
 DESCRIPTOR.message_types_by_name['PutObjectRequest'] = _PUTOBJECTREQUEST
 DESCRIPTOR.message_types_by_name['GetObjectsRequest'] = _GETOBJECTSREQUEST
 DESCRIPTOR.message_types_by_name['TagObjectRequest'] = _TAGOBJECTREQUEST
+DESCRIPTOR.message_types_by_name['ListObjectsRequest'] = _LISTOBJECTSREQUEST
+DESCRIPTOR.message_types_by_name['ListTagsRequest'] = _LISTTAGSREQUEST
+DESCRIPTOR.message_types_by_name['ListTagsResponse'] = _LISTTAGSRESPONSE
+DESCRIPTOR.message_types_by_name['DeleteObjectsRequest'] = _DELETEOBJECTSREQUEST
+DESCRIPTOR.message_types_by_name['DeleteObjectsResponse'] = _DELETEOBJECTSRESPONSE
+DESCRIPTOR.message_types_by_name['DeleteTagsRequest'] = _DELETETAGSREQUEST
+DESCRIPTOR.message_types_by_name['DeleteTagsResponse'] = _DELETETAGSRESPONSE
+DESCRIPTOR.message_types_by_name['CheckObjectRequest'] = _CHECKOBJECTREQUEST
+DESCRIPTOR.message_types_by_name['CheckObjectResponse'] = _CHECKOBJECTRESPONSE
 DESCRIPTOR.message_types_by_name['ObjectIndex'] = _OBJECTINDEX
 DESCRIPTOR.enum_types_by_name['FileType'] = _FILETYPE
 DESCRIPTOR.enum_types_by_name['Delimiter'] = _DELIMITER
 DESCRIPTOR.enum_types_by_name['ListFileMode'] = _LISTFILEMODE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Repo = _reflection.GeneratedProtocolMessageType('Repo', (_message.Message,), dict(
   DESCRIPTOR = _REPO,
@@ -1994,19 +2403,19 @@ Commits = _reflection.GeneratedProtocolMessageType('Commits', (_message.Message,
   ))
 _sym_db.RegisterMessage(Commits)
 
-Branch = _reflection.GeneratedProtocolMessageType('Branch', (_message.Message,), dict(
-  DESCRIPTOR = _BRANCH,
+BranchInfo = _reflection.GeneratedProtocolMessageType('BranchInfo', (_message.Message,), dict(
+  DESCRIPTOR = _BRANCHINFO,
   __module__ = 'pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs.Branch)
+  # @@protoc_insertion_point(class_scope:pfs.BranchInfo)
   ))
-_sym_db.RegisterMessage(Branch)
+_sym_db.RegisterMessage(BranchInfo)
 
-Branches = _reflection.GeneratedProtocolMessageType('Branches', (_message.Message,), dict(
-  DESCRIPTOR = _BRANCHES,
+BranchInfos = _reflection.GeneratedProtocolMessageType('BranchInfos', (_message.Message,), dict(
+  DESCRIPTOR = _BRANCHINFOS,
   __module__ = 'pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs.Branches)
+  # @@protoc_insertion_point(class_scope:pfs.BranchInfos)
   ))
-_sym_db.RegisterMessage(Branches)
+_sym_db.RegisterMessage(BranchInfos)
 
 File = _reflection.GeneratedProtocolMessageType('File', (_message.Message,), dict(
   DESCRIPTOR = _FILE,
@@ -2239,6 +2648,20 @@ GlobFileRequest = _reflection.GeneratedProtocolMessageType('GlobFileRequest', (_
   ))
 _sym_db.RegisterMessage(GlobFileRequest)
 
+DiffFileRequest = _reflection.GeneratedProtocolMessageType('DiffFileRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DIFFFILEREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DiffFileRequest)
+  ))
+_sym_db.RegisterMessage(DiffFileRequest)
+
+DiffFileResponse = _reflection.GeneratedProtocolMessageType('DiffFileResponse', (_message.Message,), dict(
+  DESCRIPTOR = _DIFFFILERESPONSE,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DiffFileResponse)
+  ))
+_sym_db.RegisterMessage(DiffFileResponse)
+
 DeleteFileRequest = _reflection.GeneratedProtocolMessageType('DeleteFileRequest', (_message.Message,), dict(
   DESCRIPTOR = _DELETEFILEREQUEST,
   __module__ = 'pfs_pb2'
@@ -2266,6 +2689,69 @@ TagObjectRequest = _reflection.GeneratedProtocolMessageType('TagObjectRequest', 
   # @@protoc_insertion_point(class_scope:pfs.TagObjectRequest)
   ))
 _sym_db.RegisterMessage(TagObjectRequest)
+
+ListObjectsRequest = _reflection.GeneratedProtocolMessageType('ListObjectsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _LISTOBJECTSREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.ListObjectsRequest)
+  ))
+_sym_db.RegisterMessage(ListObjectsRequest)
+
+ListTagsRequest = _reflection.GeneratedProtocolMessageType('ListTagsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _LISTTAGSREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.ListTagsRequest)
+  ))
+_sym_db.RegisterMessage(ListTagsRequest)
+
+ListTagsResponse = _reflection.GeneratedProtocolMessageType('ListTagsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _LISTTAGSRESPONSE,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.ListTagsResponse)
+  ))
+_sym_db.RegisterMessage(ListTagsResponse)
+
+DeleteObjectsRequest = _reflection.GeneratedProtocolMessageType('DeleteObjectsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DELETEOBJECTSREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DeleteObjectsRequest)
+  ))
+_sym_db.RegisterMessage(DeleteObjectsRequest)
+
+DeleteObjectsResponse = _reflection.GeneratedProtocolMessageType('DeleteObjectsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _DELETEOBJECTSRESPONSE,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DeleteObjectsResponse)
+  ))
+_sym_db.RegisterMessage(DeleteObjectsResponse)
+
+DeleteTagsRequest = _reflection.GeneratedProtocolMessageType('DeleteTagsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DELETETAGSREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DeleteTagsRequest)
+  ))
+_sym_db.RegisterMessage(DeleteTagsRequest)
+
+DeleteTagsResponse = _reflection.GeneratedProtocolMessageType('DeleteTagsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _DELETETAGSRESPONSE,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.DeleteTagsResponse)
+  ))
+_sym_db.RegisterMessage(DeleteTagsResponse)
+
+CheckObjectRequest = _reflection.GeneratedProtocolMessageType('CheckObjectRequest', (_message.Message,), dict(
+  DESCRIPTOR = _CHECKOBJECTREQUEST,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.CheckObjectRequest)
+  ))
+_sym_db.RegisterMessage(CheckObjectRequest)
+
+CheckObjectResponse = _reflection.GeneratedProtocolMessageType('CheckObjectResponse', (_message.Message,), dict(
+  DESCRIPTOR = _CHECKOBJECTRESPONSE,
+  __module__ = 'pfs_pb2'
+  # @@protoc_insertion_point(class_scope:pfs.CheckObjectResponse)
+  ))
+_sym_db.RegisterMessage(CheckObjectResponse)
 
 ObjectIndex = _reflection.GeneratedProtocolMessageType('ObjectIndex', (_message.Message,), dict(
 
@@ -2299,13 +2785,15 @@ try:
   # THESE ELEMENTS WILL BE DEPRECATED.
   # Please use the generated *_pb2_grpc.py files instead.
   import grpc
-  from grpc.framework.common import cardinality
-  from grpc.framework.interfaces.face import utilities as face_utilities
   from grpc.beta import implementations as beta_implementations
   from grpc.beta import interfaces as beta_interfaces
+  from grpc.framework.common import cardinality
+  from grpc.framework.interfaces.face import utilities as face_utilities
 
 
   class APIStub(object):
+    # missing associated documentation comment in .proto file
+    pass
 
     def __init__(self, channel):
       """Constructor.
@@ -2376,7 +2864,7 @@ try:
       self.ListBranch = channel.unary_unary(
           '/pfs.API/ListBranch',
           request_serializer=ListBranchRequest.SerializeToString,
-          response_deserializer=Branches.FromString,
+          response_deserializer=BranchInfos.FromString,
           )
       self.SetBranch = channel.unary_unary(
           '/pfs.API/SetBranch',
@@ -2413,6 +2901,11 @@ try:
           request_serializer=GlobFileRequest.SerializeToString,
           response_deserializer=FileInfos.FromString,
           )
+      self.DiffFile = channel.unary_unary(
+          '/pfs.API/DiffFile',
+          request_serializer=DiffFileRequest.SerializeToString,
+          response_deserializer=DiffFileResponse.FromString,
+          )
       self.DeleteFile = channel.unary_unary(
           '/pfs.API/DeleteFile',
           request_serializer=DeleteFileRequest.SerializeToString,
@@ -2426,6 +2919,8 @@ try:
 
 
   class APIServicer(object):
+    # missing associated documentation comment in .proto file
+    pass
 
     def CreateRepo(self, request, context):
       """Repo rpcs
@@ -2566,6 +3061,13 @@ try:
 
     def GlobFile(self, request, context):
       """GlobFile returns info about all files.
+      """
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def DiffFile(self, request, context):
+      """DiffFile returns the differences between 2 paths at 2 commits.
       """
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
@@ -2651,7 +3153,7 @@ try:
         'ListBranch': grpc.unary_unary_rpc_method_handler(
             servicer.ListBranch,
             request_deserializer=ListBranchRequest.FromString,
-            response_serializer=Branches.SerializeToString,
+            response_serializer=BranchInfos.SerializeToString,
         ),
         'SetBranch': grpc.unary_unary_rpc_method_handler(
             servicer.SetBranch,
@@ -2688,6 +3190,11 @@ try:
             request_deserializer=GlobFileRequest.FromString,
             response_serializer=FileInfos.SerializeToString,
         ),
+        'DiffFile': grpc.unary_unary_rpc_method_handler(
+            servicer.DiffFile,
+            request_deserializer=DiffFileRequest.FromString,
+            response_serializer=DiffFileResponse.SerializeToString,
+        ),
         'DeleteFile': grpc.unary_unary_rpc_method_handler(
             servicer.DeleteFile,
             request_deserializer=DeleteFileRequest.FromString,
@@ -2705,6 +3212,8 @@ try:
 
 
   class ObjectAPIStub(object):
+    # missing associated documentation comment in .proto file
+    pass
 
     def __init__(self, channel):
       """Constructor.
@@ -2737,6 +3246,21 @@ try:
           request_serializer=Object.SerializeToString,
           response_deserializer=ObjectInfo.FromString,
           )
+      self.CheckObject = channel.unary_unary(
+          '/pfs.ObjectAPI/CheckObject',
+          request_serializer=CheckObjectRequest.SerializeToString,
+          response_deserializer=CheckObjectResponse.FromString,
+          )
+      self.ListObjects = channel.unary_stream(
+          '/pfs.ObjectAPI/ListObjects',
+          request_serializer=ListObjectsRequest.SerializeToString,
+          response_deserializer=Object.FromString,
+          )
+      self.DeleteObjects = channel.unary_unary(
+          '/pfs.ObjectAPI/DeleteObjects',
+          request_serializer=DeleteObjectsRequest.SerializeToString,
+          response_deserializer=DeleteObjectsResponse.FromString,
+          )
       self.GetTag = channel.unary_stream(
           '/pfs.ObjectAPI/GetTag',
           request_serializer=Tag.SerializeToString,
@@ -2747,6 +3271,16 @@ try:
           request_serializer=Tag.SerializeToString,
           response_deserializer=ObjectInfo.FromString,
           )
+      self.ListTags = channel.unary_stream(
+          '/pfs.ObjectAPI/ListTags',
+          request_serializer=ListTagsRequest.SerializeToString,
+          response_deserializer=ListTagsResponse.FromString,
+          )
+      self.DeleteTags = channel.unary_unary(
+          '/pfs.ObjectAPI/DeleteTags',
+          request_serializer=DeleteTagsRequest.SerializeToString,
+          response_deserializer=DeleteTagsResponse.FromString,
+          )
       self.Compact = channel.unary_unary(
           '/pfs.ObjectAPI/Compact',
           request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -2755,43 +3289,97 @@ try:
 
 
   class ObjectAPIServicer(object):
+    # missing associated documentation comment in .proto file
+    pass
 
     def PutObject(self, request_iterator, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def GetObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def GetObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def TagObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def InspectObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def CheckObject(self, request, context):
+      """CheckObject checks if an object exists in the blob store without
+      actually reading the object.
+      """
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def ListObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def DeleteObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def GetTag(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def InspectTag(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def ListTags(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
+
+    def DeleteTags(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
 
     def Compact(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.set_code(grpc.StatusCode.UNIMPLEMENTED)
       context.set_details('Method not implemented!')
       raise NotImplementedError('Method not implemented!')
@@ -2824,6 +3412,21 @@ try:
             request_deserializer=Object.FromString,
             response_serializer=ObjectInfo.SerializeToString,
         ),
+        'CheckObject': grpc.unary_unary_rpc_method_handler(
+            servicer.CheckObject,
+            request_deserializer=CheckObjectRequest.FromString,
+            response_serializer=CheckObjectResponse.SerializeToString,
+        ),
+        'ListObjects': grpc.unary_stream_rpc_method_handler(
+            servicer.ListObjects,
+            request_deserializer=ListObjectsRequest.FromString,
+            response_serializer=Object.SerializeToString,
+        ),
+        'DeleteObjects': grpc.unary_unary_rpc_method_handler(
+            servicer.DeleteObjects,
+            request_deserializer=DeleteObjectsRequest.FromString,
+            response_serializer=DeleteObjectsResponse.SerializeToString,
+        ),
         'GetTag': grpc.unary_stream_rpc_method_handler(
             servicer.GetTag,
             request_deserializer=Tag.FromString,
@@ -2833,6 +3436,16 @@ try:
             servicer.InspectTag,
             request_deserializer=Tag.FromString,
             response_serializer=ObjectInfo.SerializeToString,
+        ),
+        'ListTags': grpc.unary_stream_rpc_method_handler(
+            servicer.ListTags,
+            request_deserializer=ListTagsRequest.FromString,
+            response_serializer=ListTagsResponse.SerializeToString,
+        ),
+        'DeleteTags': grpc.unary_unary_rpc_method_handler(
+            servicer.DeleteTags,
+            request_deserializer=DeleteTagsRequest.FromString,
+            response_serializer=DeleteTagsResponse.SerializeToString,
         ),
         'Compact': grpc.unary_unary_rpc_method_handler(
             servicer.Compact,
@@ -2851,6 +3464,8 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
+    # missing associated documentation comment in .proto file
+    pass
     def CreateRepo(self, request, context):
       """Repo rpcs
       CreateRepo creates a new repo.
@@ -2935,6 +3550,10 @@ try:
       """GlobFile returns info about all files.
       """
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def DiffFile(self, request, context):
+      """DiffFile returns the differences between 2 paths at 2 commits.
+      """
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def DeleteFile(self, request, context):
       """DeleteFile deletes a file.
       """
@@ -2951,6 +3570,8 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
+    # missing associated documentation comment in .proto file
+    pass
     def CreateRepo(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
       """Repo rpcs
       CreateRepo creates a new repo.
@@ -3052,6 +3673,11 @@ try:
       """
       raise NotImplementedError()
     GlobFile.future = None
+    def DiffFile(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      """DiffFile returns the differences between 2 paths at 2 commits.
+      """
+      raise NotImplementedError()
+    DiffFile.future = None
     def DeleteFile(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
       """DeleteFile deletes a file.
       """
@@ -3078,6 +3704,7 @@ try:
       ('pfs.API', 'DeleteCommit'): DeleteCommitRequest.FromString,
       ('pfs.API', 'DeleteFile'): DeleteFileRequest.FromString,
       ('pfs.API', 'DeleteRepo'): DeleteRepoRequest.FromString,
+      ('pfs.API', 'DiffFile'): DiffFileRequest.FromString,
       ('pfs.API', 'FinishCommit'): FinishCommitRequest.FromString,
       ('pfs.API', 'FlushCommit'): FlushCommitRequest.FromString,
       ('pfs.API', 'GetFile'): GetFileRequest.FromString,
@@ -3102,6 +3729,7 @@ try:
       ('pfs.API', 'DeleteCommit'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ('pfs.API', 'DeleteFile'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ('pfs.API', 'DeleteRepo'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ('pfs.API', 'DiffFile'): DiffFileResponse.SerializeToString,
       ('pfs.API', 'FinishCommit'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ('pfs.API', 'FlushCommit'): CommitInfo.SerializeToString,
       ('pfs.API', 'GetFile'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
@@ -3109,7 +3737,7 @@ try:
       ('pfs.API', 'InspectCommit'): CommitInfo.SerializeToString,
       ('pfs.API', 'InspectFile'): FileInfo.SerializeToString,
       ('pfs.API', 'InspectRepo'): RepoInfo.SerializeToString,
-      ('pfs.API', 'ListBranch'): Branches.SerializeToString,
+      ('pfs.API', 'ListBranch'): BranchInfos.SerializeToString,
       ('pfs.API', 'ListCommit'): CommitInfos.SerializeToString,
       ('pfs.API', 'ListFile'): FileInfos.SerializeToString,
       ('pfs.API', 'ListRepo'): RepoInfos.SerializeToString,
@@ -3126,6 +3754,7 @@ try:
       ('pfs.API', 'DeleteCommit'): face_utilities.unary_unary_inline(servicer.DeleteCommit),
       ('pfs.API', 'DeleteFile'): face_utilities.unary_unary_inline(servicer.DeleteFile),
       ('pfs.API', 'DeleteRepo'): face_utilities.unary_unary_inline(servicer.DeleteRepo),
+      ('pfs.API', 'DiffFile'): face_utilities.unary_unary_inline(servicer.DiffFile),
       ('pfs.API', 'FinishCommit'): face_utilities.unary_unary_inline(servicer.FinishCommit),
       ('pfs.API', 'FlushCommit'): face_utilities.unary_stream_inline(servicer.FlushCommit),
       ('pfs.API', 'GetFile'): face_utilities.unary_stream_inline(servicer.GetFile),
@@ -3160,6 +3789,7 @@ try:
       ('pfs.API', 'DeleteCommit'): DeleteCommitRequest.SerializeToString,
       ('pfs.API', 'DeleteFile'): DeleteFileRequest.SerializeToString,
       ('pfs.API', 'DeleteRepo'): DeleteRepoRequest.SerializeToString,
+      ('pfs.API', 'DiffFile'): DiffFileRequest.SerializeToString,
       ('pfs.API', 'FinishCommit'): FinishCommitRequest.SerializeToString,
       ('pfs.API', 'FlushCommit'): FlushCommitRequest.SerializeToString,
       ('pfs.API', 'GetFile'): GetFileRequest.SerializeToString,
@@ -3184,6 +3814,7 @@ try:
       ('pfs.API', 'DeleteCommit'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
       ('pfs.API', 'DeleteFile'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
       ('pfs.API', 'DeleteRepo'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+      ('pfs.API', 'DiffFile'): DiffFileResponse.FromString,
       ('pfs.API', 'FinishCommit'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
       ('pfs.API', 'FlushCommit'): CommitInfo.FromString,
       ('pfs.API', 'GetFile'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
@@ -3191,7 +3822,7 @@ try:
       ('pfs.API', 'InspectCommit'): CommitInfo.FromString,
       ('pfs.API', 'InspectFile'): FileInfo.FromString,
       ('pfs.API', 'InspectRepo'): RepoInfo.FromString,
-      ('pfs.API', 'ListBranch'): Branches.FromString,
+      ('pfs.API', 'ListBranch'): BranchInfos.FromString,
       ('pfs.API', 'ListCommit'): CommitInfos.FromString,
       ('pfs.API', 'ListFile'): FileInfos.FromString,
       ('pfs.API', 'ListRepo'): RepoInfos.FromString,
@@ -3208,6 +3839,7 @@ try:
       'DeleteCommit': cardinality.Cardinality.UNARY_UNARY,
       'DeleteFile': cardinality.Cardinality.UNARY_UNARY,
       'DeleteRepo': cardinality.Cardinality.UNARY_UNARY,
+      'DiffFile': cardinality.Cardinality.UNARY_UNARY,
       'FinishCommit': cardinality.Cardinality.UNARY_UNARY,
       'FlushCommit': cardinality.Cardinality.UNARY_STREAM,
       'GetFile': cardinality.Cardinality.UNARY_STREAM,
@@ -3234,21 +3866,60 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
+    # missing associated documentation comment in .proto file
+    pass
     def PutObject(self, request_iterator, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def GetObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def GetObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def TagObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def InspectObject(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def CheckObject(self, request, context):
+      """CheckObject checks if an object exists in the blob store without
+      actually reading the object.
+      """
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def ListObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def DeleteObjects(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def GetTag(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def InspectTag(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def ListTags(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
+    def DeleteTags(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def Compact(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
       context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
 
 
@@ -3258,25 +3929,67 @@ try:
     It is recommended to use the GA API (classes and functions in this
     file not marked beta) for all further purposes. This class was generated
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
+    # missing associated documentation comment in .proto file
+    pass
     def PutObject(self, request_iterator, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     PutObject.future = None
     def GetObject(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     def GetObjects(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     def TagObject(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     TagObject.future = None
     def InspectObject(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     InspectObject.future = None
+    def CheckObject(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      """CheckObject checks if an object exists in the blob store without
+      actually reading the object.
+      """
+      raise NotImplementedError()
+    CheckObject.future = None
+    def ListObjects(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
+      raise NotImplementedError()
+    def DeleteObjects(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
+      raise NotImplementedError()
+    DeleteObjects.future = None
     def GetTag(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     def InspectTag(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     InspectTag.future = None
+    def ListTags(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
+      raise NotImplementedError()
+    def DeleteTags(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
+      raise NotImplementedError()
+    DeleteTags.future = None
     def Compact(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
       raise NotImplementedError()
     Compact.future = None
 
@@ -3288,32 +4001,47 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
+      ('pfs.ObjectAPI', 'CheckObject'): CheckObjectRequest.FromString,
       ('pfs.ObjectAPI', 'Compact'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+      ('pfs.ObjectAPI', 'DeleteObjects'): DeleteObjectsRequest.FromString,
+      ('pfs.ObjectAPI', 'DeleteTags'): DeleteTagsRequest.FromString,
       ('pfs.ObjectAPI', 'GetObject'): Object.FromString,
       ('pfs.ObjectAPI', 'GetObjects'): GetObjectsRequest.FromString,
       ('pfs.ObjectAPI', 'GetTag'): Tag.FromString,
       ('pfs.ObjectAPI', 'InspectObject'): Object.FromString,
       ('pfs.ObjectAPI', 'InspectTag'): Tag.FromString,
+      ('pfs.ObjectAPI', 'ListObjects'): ListObjectsRequest.FromString,
+      ('pfs.ObjectAPI', 'ListTags'): ListTagsRequest.FromString,
       ('pfs.ObjectAPI', 'PutObject'): PutObjectRequest.FromString,
       ('pfs.ObjectAPI', 'TagObject'): TagObjectRequest.FromString,
     }
     response_serializers = {
+      ('pfs.ObjectAPI', 'CheckObject'): CheckObjectResponse.SerializeToString,
       ('pfs.ObjectAPI', 'Compact'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ('pfs.ObjectAPI', 'DeleteObjects'): DeleteObjectsResponse.SerializeToString,
+      ('pfs.ObjectAPI', 'DeleteTags'): DeleteTagsResponse.SerializeToString,
       ('pfs.ObjectAPI', 'GetObject'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ('pfs.ObjectAPI', 'GetObjects'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ('pfs.ObjectAPI', 'GetTag'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ('pfs.ObjectAPI', 'InspectObject'): ObjectInfo.SerializeToString,
       ('pfs.ObjectAPI', 'InspectTag'): ObjectInfo.SerializeToString,
+      ('pfs.ObjectAPI', 'ListObjects'): Object.SerializeToString,
+      ('pfs.ObjectAPI', 'ListTags'): ListTagsResponse.SerializeToString,
       ('pfs.ObjectAPI', 'PutObject'): Object.SerializeToString,
       ('pfs.ObjectAPI', 'TagObject'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
     }
     method_implementations = {
+      ('pfs.ObjectAPI', 'CheckObject'): face_utilities.unary_unary_inline(servicer.CheckObject),
       ('pfs.ObjectAPI', 'Compact'): face_utilities.unary_unary_inline(servicer.Compact),
+      ('pfs.ObjectAPI', 'DeleteObjects'): face_utilities.unary_unary_inline(servicer.DeleteObjects),
+      ('pfs.ObjectAPI', 'DeleteTags'): face_utilities.unary_unary_inline(servicer.DeleteTags),
       ('pfs.ObjectAPI', 'GetObject'): face_utilities.unary_stream_inline(servicer.GetObject),
       ('pfs.ObjectAPI', 'GetObjects'): face_utilities.unary_stream_inline(servicer.GetObjects),
       ('pfs.ObjectAPI', 'GetTag'): face_utilities.unary_stream_inline(servicer.GetTag),
       ('pfs.ObjectAPI', 'InspectObject'): face_utilities.unary_unary_inline(servicer.InspectObject),
       ('pfs.ObjectAPI', 'InspectTag'): face_utilities.unary_unary_inline(servicer.InspectTag),
+      ('pfs.ObjectAPI', 'ListObjects'): face_utilities.unary_stream_inline(servicer.ListObjects),
+      ('pfs.ObjectAPI', 'ListTags'): face_utilities.unary_stream_inline(servicer.ListTags),
       ('pfs.ObjectAPI', 'PutObject'): face_utilities.stream_unary_inline(servicer.PutObject),
       ('pfs.ObjectAPI', 'TagObject'): face_utilities.unary_unary_inline(servicer.TagObject),
     }
@@ -3328,32 +4056,47 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
+      ('pfs.ObjectAPI', 'CheckObject'): CheckObjectRequest.SerializeToString,
       ('pfs.ObjectAPI', 'Compact'): google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ('pfs.ObjectAPI', 'DeleteObjects'): DeleteObjectsRequest.SerializeToString,
+      ('pfs.ObjectAPI', 'DeleteTags'): DeleteTagsRequest.SerializeToString,
       ('pfs.ObjectAPI', 'GetObject'): Object.SerializeToString,
       ('pfs.ObjectAPI', 'GetObjects'): GetObjectsRequest.SerializeToString,
       ('pfs.ObjectAPI', 'GetTag'): Tag.SerializeToString,
       ('pfs.ObjectAPI', 'InspectObject'): Object.SerializeToString,
       ('pfs.ObjectAPI', 'InspectTag'): Tag.SerializeToString,
+      ('pfs.ObjectAPI', 'ListObjects'): ListObjectsRequest.SerializeToString,
+      ('pfs.ObjectAPI', 'ListTags'): ListTagsRequest.SerializeToString,
       ('pfs.ObjectAPI', 'PutObject'): PutObjectRequest.SerializeToString,
       ('pfs.ObjectAPI', 'TagObject'): TagObjectRequest.SerializeToString,
     }
     response_deserializers = {
+      ('pfs.ObjectAPI', 'CheckObject'): CheckObjectResponse.FromString,
       ('pfs.ObjectAPI', 'Compact'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+      ('pfs.ObjectAPI', 'DeleteObjects'): DeleteObjectsResponse.FromString,
+      ('pfs.ObjectAPI', 'DeleteTags'): DeleteTagsResponse.FromString,
       ('pfs.ObjectAPI', 'GetObject'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
       ('pfs.ObjectAPI', 'GetObjects'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
       ('pfs.ObjectAPI', 'GetTag'): google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
       ('pfs.ObjectAPI', 'InspectObject'): ObjectInfo.FromString,
       ('pfs.ObjectAPI', 'InspectTag'): ObjectInfo.FromString,
+      ('pfs.ObjectAPI', 'ListObjects'): Object.FromString,
+      ('pfs.ObjectAPI', 'ListTags'): ListTagsResponse.FromString,
       ('pfs.ObjectAPI', 'PutObject'): Object.FromString,
       ('pfs.ObjectAPI', 'TagObject'): google_dot_protobuf_dot_empty__pb2.Empty.FromString,
     }
     cardinalities = {
+      'CheckObject': cardinality.Cardinality.UNARY_UNARY,
       'Compact': cardinality.Cardinality.UNARY_UNARY,
+      'DeleteObjects': cardinality.Cardinality.UNARY_UNARY,
+      'DeleteTags': cardinality.Cardinality.UNARY_UNARY,
       'GetObject': cardinality.Cardinality.UNARY_STREAM,
       'GetObjects': cardinality.Cardinality.UNARY_STREAM,
       'GetTag': cardinality.Cardinality.UNARY_STREAM,
       'InspectObject': cardinality.Cardinality.UNARY_UNARY,
       'InspectTag': cardinality.Cardinality.UNARY_UNARY,
+      'ListObjects': cardinality.Cardinality.UNARY_STREAM,
+      'ListTags': cardinality.Cardinality.UNARY_STREAM,
       'PutObject': cardinality.Cardinality.STREAM_UNARY,
       'TagObject': cardinality.Cardinality.UNARY_UNARY,
     }

@@ -20,13 +20,13 @@ message Commits {
   repeated Commit commit = 1;
 }
 
-message Branch {
+message BranchInfo {
   string name = 1;
   Commit head = 2;
 }
 
-message Branches {
-  repeated Branch branches = 1;
+message BranchInfos {
+  repeated BranchInfo branch_info = 1;
 }
 
 message File {
@@ -51,6 +51,7 @@ message RepoInfo {
   google.protobuf.Timestamp created = 2;
   uint64 size_bytes = 3;
   repeated Repo provenance = 4;
+  string description = 5;
 }
 
 message RepoInfos {
@@ -86,6 +87,7 @@ message FileInfo {
   // the base names (i.e. just the filenames, not the full paths) of
   // the children
   repeated string children = 6;
+  repeated Object objects = 8;
   bytes hash = 7;
 }
 
@@ -111,6 +113,8 @@ message ObjectInfo {
 message CreateRepoRequest {
   Repo repo = 1;
   repeated Repo provenance = 2;
+  string description = 3;
+  bool update = 4;
 }
 
 message InspectRepoRequest {
@@ -124,6 +128,7 @@ message ListRepoRequest {
 message DeleteRepoRequest {
   Repo repo = 1;
   bool force = 2;
+  bool all = 3;
 }
 
 message StartCommitRequest {
@@ -236,6 +241,19 @@ message GlobFileRequest {
   string pattern = 2;
 }
 
+message DiffFileRequest {
+  File new_file = 1;
+  // OldFile may be left nil in which case the same path in the parent of
+  // NewFile's commit will be used.
+  File old_file = 2;
+  bool shallow = 3;
+}
+
+message DiffFileResponse {
+  repeated FileInfo new_files = 1;
+  repeated FileInfo old_files = 2;
+}
+
 message DeleteFileRequest {
   File file = 1;
 }
@@ -271,7 +289,7 @@ service API {
   rpc BuildCommit(BuildCommitRequest) returns (Commit) {}
 
   // ListBranch returns info about the heads of branches.
-  rpc ListBranch(ListBranchRequest) returns (Branches) {}
+  rpc ListBranch(ListBranchRequest) returns (BranchInfos) {}
   // SetBranch assigns a commit and its ancestors to a branch.
   rpc SetBranch(SetBranchRequest) returns (google.protobuf.Empty) {}
   // DeleteBranch deletes a branch; note that the commits still exist.
@@ -288,6 +306,8 @@ service API {
   rpc ListFile(ListFileRequest) returns (FileInfos) {}
   // GlobFile returns info about all files.
   rpc GlobFile(GlobFileRequest) returns (FileInfos) {}
+  // DiffFile returns the differences between 2 paths at 2 commits.
+  rpc DiffFile(DiffFileRequest) returns (DiffFileResponse) {}
   // DeleteFile deletes a file.
   rpc DeleteFile(DeleteFileRequest) returns (google.protobuf.Empty) {}
 
@@ -311,14 +331,53 @@ message TagObjectRequest {
   repeated Tag tags = 2;
 }
 
+message ListObjectsRequest {}
+
+message ListTagsRequest {
+  string prefix = 1;
+  bool includeObject = 2;
+}
+
+message ListTagsResponse {
+  string tag = 1;
+  Object object = 2;
+}
+
+message DeleteObjectsRequest {
+  repeated Object objects = 1;
+}
+
+message DeleteObjectsResponse {}
+
+message DeleteTagsRequest {
+  repeated string tags = 1;
+}
+
+message DeleteTagsResponse {}
+
+message CheckObjectRequest {
+  Object object = 1;
+}
+
+message CheckObjectResponse {
+  bool exists = 1;
+}
+
 service ObjectAPI {
   rpc PutObject(stream PutObjectRequest) returns (Object) {}
   rpc GetObject(Object) returns (stream google.protobuf.BytesValue) {}
   rpc GetObjects(GetObjectsRequest) returns (stream google.protobuf.BytesValue) {}
   rpc TagObject(TagObjectRequest) returns (google.protobuf.Empty) {}
   rpc InspectObject(Object) returns (ObjectInfo) {}
+  // CheckObject checks if an object exists in the blob store without
+  // actually reading the object.
+  rpc CheckObject(CheckObjectRequest) returns (CheckObjectResponse) {}
+  rpc ListObjects(ListObjectsRequest) returns (stream Object) {}
+  rpc DeleteObjects(DeleteObjectsRequest) returns (DeleteObjectsResponse) {}
   rpc GetTag(Tag) returns (stream google.protobuf.BytesValue) {}
   rpc InspectTag(Tag) returns (ObjectInfo) {}
+  rpc ListTags(ListTagsRequest) returns (stream ListTagsResponse) {}
+  rpc DeleteTags(DeleteTagsRequest) returns (DeleteTagsResponse) {}
   rpc Compact(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
 

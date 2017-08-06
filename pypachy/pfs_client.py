@@ -57,15 +57,16 @@ class PfsClient(object):
         self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
         self.stub = APIStub(self.channel)
 
-    def create_repo(self, repo_name):
+    def create_repo(self, repo_name, description=None):
         """
         Creates a new Repo object in pfs with the given name. Repos are
         the top level data object in pfs and should be used to store data of a
         similar type. For example rather than having a single Repo for an entire
         project you might have seperate Repos for logs, metrics, database dumps etc.
         :param repo_name: Name of the repo
+        :param description: Repo description
         """
-        self.stub.CreateRepo(CreateRepoRequest(repo=Repo(name=repo_name)))
+        self.stub.CreateRepo(CreateRepoRequest(repo=Repo(name=repo_name), description=description))
 
     def inspect_repo(self, repo_name):
         """
@@ -88,7 +89,7 @@ class PfsClient(object):
             return x.repo_info
         return []
 
-    def delete_repo(self, repo_name, force=False):
+    def delete_repo(self, repo_name, force=False, all=False):
         """
         Deletes a repo and reclaims the storage space it was using. Note
         that as of 1.0 we do not reclaim the blocks that the Repo was referencing,
@@ -98,8 +99,12 @@ class PfsClient(object):
         :param repo_name: The name of the repo
         :param force: if set to true, the repo will be removed regardless of errors.
                       This argument should be used with care.
+        :param all: Delete all repos
         """
-        self.stub.DeleteRepo(DeleteRepoRequest(repo=Repo(name=repo_name), force=force))
+        if not all:
+            self.stub.DeleteRepo(DeleteRepoRequest(repo=Repo(name=repo_name), force=force))
+        else:
+            self.stub.DeleteRepo(DeleteRepoRequest(force=force, all=all))
 
     def start_commit(self, repo_name, branch, parent=None):
         """
@@ -158,7 +163,10 @@ class PfsClient(object):
 
     def provenances_for_repo(self, repo_name):
         provenances = {}
-        for c in self.list_commit(repo_name):
+        commits = self.list_commit(repo_name)
+        sorted_commits = [x[0] for x in
+                          sorted([(c.commit.id, c.finished.seconds) for c in commits], key=lambda x: x[1])]
+        for c in sorted_commits:
             for p in c.provenance:
                 provenances[p.id] = c.commit.id
         return provenances
@@ -237,8 +245,8 @@ class PfsClient(object):
         :return: A list of Branch objects
         """
         x = self.stub.ListBranch(ListBranchRequest(repo=Repo(name=repo_name)))
-        if hasattr(x, 'branches'):
-            return x.branches
+        if hasattr(x, 'branch_info'):
+            return x.branch_info
         return []
 
     def set_branch(self, commit, branch_name):
@@ -413,4 +421,4 @@ class PfsClient(object):
                                                          path=path)))
 
     def delete_all(self):
-        self.stub.DeleteAll()
+        self.stub.DeleteAll(None)
