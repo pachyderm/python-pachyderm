@@ -421,4 +421,4 @@ class PfsClient(object):
                                                          path=path)))
 
     def delete_all(self):
-        self.stub.DeleteAll(None)
+        self.stub.DeleteAll(google_dot_protobuf_dot_empty__pb2.Empty())
