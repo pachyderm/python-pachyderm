@@ -72,6 +72,9 @@ TODO
 
 Changelog
 ---------
+``0.1.5``
+- Bug fixes
+
 ``0.1.4``
 - Added: Alpha support for PPS
 - Changed: Adapted for Pachyderm ``1.5.2``
