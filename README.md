@@ -57,15 +57,25 @@ Basic usage example
      '/dir_b/icon.png': b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08...'}
 ```
 
+As of version 0.1.4, there is also limited support for PPS:
+```python
+    >>> pps_client = pypachy.PpsClient()
+    >>> pps_client.list_pipeline()
+    ...
+```
+
 TODO
 ----
 * Test, test, test!
 * Add support for ``ObjectAPI``
-* Add support for ``PPS``, ``Version``, etc
 
 
 Changelog
 ---------
+``0.1.4``
+- Added: Alpha support for PPS
+- Changed: Adapted for Pachyderm ``1.5.2``
+
 ``0.1.3``
 - Fixed: ``inspect_commit`` was broken
 - Added: ``provenances_for_repo`` function gives all the provenances for the commits in the repo
