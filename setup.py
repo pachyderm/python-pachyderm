@@ -79,6 +79,9 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['protobuf', 'grpcio'],
+    install_requires=['protobuf', 'grpcio', 'future>=0.14'],
 
+    test_suite='tests',
+    tests_require=['pytest'],
+    setup_requires=['pytest-runner'],
 )
