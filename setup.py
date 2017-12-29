@@ -81,4 +81,7 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=['protobuf', 'grpcio'],
 
+    test_suite='tests',
+    tests_require=['pytest'],
+    setup_requires=['pytest-runner'],
 )
