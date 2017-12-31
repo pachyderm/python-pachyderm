@@ -1,32 +1,25 @@
 ========
-Overview
+PyPachy
 ========
-
 
 .. start-badges
 
-.. list-table::
-    :stub-columns: 1
 
-    * - package
-      - | |version| |wheel| |supported-versions|
-        | |commits-since|
-
-.. |version| image:: https://img.shields.io/pypi/v/pypachy.svg
+.. image:: https://img.shields.io/pypi/v/pypachy.svg
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/pypachy
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/kalugny/pypachy/v0.1.5.svg
-    :alt: Commits since latest release
-    :target: https://github.com/kalugny/pypachy/compare/v0.1.5...master
-
-.. |wheel| image:: https://img.shields.io/pypi/wheel/pypachy.svg
+.. image:: https://img.shields.io/pypi/wheel/pypachy.svg
     :alt: PyPI Wheel
     :target: https://pypi.python.org/pypi/pypachy
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/pypachy.svg
+.. image:: https://img.shields.io/pypi/pyversions/pypachy.svg
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/pypachy
+
+.. image:: https://img.shields.io/github/commits-since/kalugny/pypachy/v0.1.5.svg
+    :alt: Commits since latest release
+    :target: https://github.com/kalugny/pypachy/compare/v0.1.5...master
 
 
 .. end-badges
