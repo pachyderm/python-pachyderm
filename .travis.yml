@@ -1,10 +1,22 @@
+dist: trusty
+sudo: required
 language: python
 python:
-  - 3.5
   - 2.7
+  - 3.5
 
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox-travis
+# Download and install Kubernetes and Pachyderm binaries
+before_install:
+  - ci/before_install.sh
 
-# command to run tests, e.g. python setup.py test
-script: tox
+# Install dependencies
+install:
+  - pip install -U tox-travis
+
+# Launch Minikube and deploy Pachyderm
+before_script:
+  - ci/before_script.sh
+
+# Run tests
+script:
+  - tox
