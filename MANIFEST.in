@@ -1,3 +1,5 @@
+include .bumpversion.cfg
+
 include CHANGELOG.rst
 include LICENSE
 include README.rst
