@@ -1,4 +1,5 @@
 include .bumpversion.cfg
+include .editorconfig
 
 include CHANGELOG.rst
 include LICENSE
