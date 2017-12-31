@@ -1,26 +1,53 @@
+========
 PyPachy
-=======
+========
 
-A python client wrapper for *Pachyderm* <https://www.pachyderm.io/> API.
-
-*NOTES*
-
-1. Currently implements only the PFS interface.
-
-2. Supports Pachyderm versions 1.4 and up
+.. start-badges
 
 
-Installing
-----------
+.. image:: https://img.shields.io/pypi/v/pypachy.svg
+    :alt: PyPI Package latest release
+    :target: https://pypi.python.org/pypi/pypachy
 
-```bash
-    $ pip install pypachy
-```
+.. image:: https://img.shields.io/pypi/wheel/pypachy.svg
+    :alt: PyPI Wheel
+    :target: https://pypi.python.org/pypi/pypachy
 
-Instructions
-------------
+.. image:: https://img.shields.io/pypi/pyversions/pypachy.svg
+    :alt: Supported versions
+    :target: https://pypi.python.org/pypi/pypachy
+
+.. image:: https://img.shields.io/github/commits-since/kalugny/pypachy/v0.1.5.svg
+    :alt: Commits since latest release
+    :target: https://github.com/kalugny/pypachy/compare/v0.1.5...master
+
+
+.. end-badges
+
+Python Pachyderm Client
+
+A python client wrapper for the Pachyderm_ API.
+
+*Notes*:
+
+* Currently implements the PFS interface and only alpha support for the PPS interface.
+
+* Supports Pachyderm versions 1.4 and up.
+
+Installation
+============
+
+.. code:: bash
+
+    pip install pypachy
+
+Usage and options
+=================
+
 All of the PFS functions used in ``pachctl`` are supported (almost) as-is.
+
 There are some helper functions that help make things more pythonic:
+
 * ``commit`` which is a context manager wrapper for ``start_commit`` and ``finish_commit``
 * ``get_files`` which supports getting the data from multiple files
 
@@ -32,18 +59,20 @@ a string like ``repo/branch`` or ``repo/commit_id`` and a Commit object.
 
 e.g:
 
-```python
+.. code:: python
+
     >>> client.list_file(('my_repo', 'branch'), '/')    # tuple
     >>> client.list_file('my_repo/commit_id', '/')      # string
     >>> c = client.list_commit('my_repo')[0]            # get some commit
     >>> client.list_file(c, '/')                        # and use it directly
-```
+
 
 
 Basic usage example
 -------------------
 
-```python
+.. code:: python
+
     >>> import pypachy
     
     >>> client = pypachy.PfsClient()
@@ -55,36 +84,24 @@ Basic usage example
     >>> client.get_files('test/master', '/', recursive=True)
     {'/dir_a/data': b'DATA',
      '/dir_b/icon.png': b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08...'}
-```
 
 As of version 0.1.4, there is also limited support for PPS:
-```python
+
+.. code:: python
+
     >>> pps_client = pypachy.PpsClient()
     >>> pps_client.list_pipeline()
     ...
-```
 
-TODO
-----
+To Do
+=====
+
 * Test, test, test!
 * Add support for ``ObjectAPI``
 
-
 Changelog
----------
-``0.1.5``
-- Bug fixes
+=========
 
-``0.1.4``
-- Added: Alpha support for PPS
-- Changed: Adapted for Pachyderm ``1.5.2``
+See `CHANGELOG.rst <https://github.com/kalugny/pypachy/blob/master/CHANGELOG.rst>`_.
 
-``0.1.3``
-- Fixed: ``inspect_commit`` was broken
-- Added: ``provenances_for_repo`` function gives all the provenances for the commits in the repo
-
-``0.1.2``
-- Added: ``PfsClient`` default parameters now use the environment variables for pachd
-- Added: ``put_file_bytes`` can accept an iterator
-- Changed: ``commit`` now tries to close the commit if an error occurred inside the context
-- Added: More examples and a changelog to README
+.. _Pachyderm: https://pachyderm.io/
