@@ -124,7 +124,7 @@ class PfsClient(object):
         you can write to the Commit with PutFile and when all the data has been
         written you must finish the Commit with FinishCommit. NOTE, data is not
         persisted until FinishCommit is called.
-        :param repo_name: 
+        :param repo_name: The name of the repo
         :param branch: is a more convenient way to build linear chains of commits. When a
                     commit is started with a non empty branch the value of branch becomes an
                     alias for the created Commit. This enables a more intuitive access pattern.
