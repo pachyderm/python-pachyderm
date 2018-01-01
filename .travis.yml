@@ -20,3 +20,9 @@ before_script:
 # Run tests
 script:
   - tox
+
+# Only email on failure
+notifications:
+  email:
+    on_success: never
+    on_failure: always
