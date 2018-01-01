@@ -51,16 +51,15 @@ def test_pfs_client_init_with_default_host_port():
     assert client.channel._channel.target() == b'localhost:30650'
 
 
-# Temporarily disable test until this issue is solved: https://github.com/pytest-dev/pytest/issues/3071
-# def test_pfs_client_init_with_env_vars(monkeypatch):
-#     # GIVEN a Pachyderm deployment
-#     # WHEN environment variables are set for Pachyderm host and port
-#     monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
-#     monkeypatch.setenv('PACHD_SERVICE_PORT_API_GRPC_PORT', '12345')
-#     #   AND a client is created without specifying a host or port
-#     client = pypachy.PfsClient()
-#     # THEN the GRPC channel should reflect the host and port specified in the environment variables
-#     assert client.channel._channel.target() == b'pachd.example.com:12345'
+def test_pfs_client_init_with_env_vars(monkeypatch):
+    # GIVEN a Pachyderm deployment
+    # WHEN environment variables are set for Pachyderm host and port
+    monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
+    monkeypatch.setenv('PACHD_SERVICE_PORT_API_GRPC_PORT', '12345')
+    #   AND a client is created without specifying a host or port
+    client = pypachy.PfsClient()
+    # THEN the GRPC channel should reflect the host and port specified in the environment variables
+    assert client.channel._channel.target() == b'pachd.example.com:12345'
 
 
 def test_pfs_client_init_with_args():

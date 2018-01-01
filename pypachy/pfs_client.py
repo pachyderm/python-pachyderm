@@ -48,14 +48,18 @@ def _is_iterator(x):
 
 
 class PfsClient(object):
-    def __init__(self,
-                 host=os.environ.get('PACHD_SERVICE_HOST', 'localhost'),
-                 port=os.environ.get('PACHD_SERVICE_PORT_API_GRPC_PORT', 30650)):
+    def __init__(self, host=None, port=None):
         """
         Creates a client to connect to Pfs
         :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
         :param port: The port to connect to. Default is 30650
         """
+        # If a host or port is not specified, then try to set using environment variables or use the defaults.
+        if host is None:
+            host = os.environ.get('PACHD_SERVICE_HOST', 'localhost')
+        if port is None:
+            port = os.environ.get('PACHD_SERVICE_PORT_API_GRPC_PORT', '30650')
+
         self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
         self.stub = APIStub(self.channel)
 

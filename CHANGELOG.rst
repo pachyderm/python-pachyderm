@@ -6,13 +6,14 @@ Unreleased
 ----------
 
 * Added: Test automation tools pytest, tox, and Travis CI.
-* Added: Minikube and Pachyderm deployment to Travis CI.
+* Added: Minikube and Pachyderm deployment to Travis CI config.
 * Fixed: Python 2.7 incompability issues.
 * Changed: Switched docs to reStructuredText.
 * Added: Separate CHANGELOG file.
 * Added: PfsClient tests for init, list_repo, create_repo, and delete_repo.
 * Changed: Modified PfsClient() delete_repo() method error handling to match Go client behavior.
 * Added: Bumpversion for tagging releases and semantic versioning.
+* Fixed: PfsClient() initialization ignored pachd host and port environment variables.
 
 0.1.5 (2017-08-06)
 ------------------
