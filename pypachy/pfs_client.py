@@ -118,7 +118,7 @@ class PfsClient(object):
             else:
                 raise ValueError("Cannot specify a repo_name if all=True")
 
-    def start_commit(self, repo_name, branch, parent=None):
+    def start_commit(self, repo_name, branch=None, parent=None):
         """
         Begins the process of committing data to a Repo. Once started
         you can write to the Commit with PutFile and when all the data has been

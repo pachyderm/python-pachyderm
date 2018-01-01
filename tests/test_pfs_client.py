@@ -214,3 +214,114 @@ def test_pfs_delete_all_repos_with_name_raises(pfs_client):
     assert exception_msg == 'Cannot specify a repo_name if all=True'
     #   AND both repositories should remain
     assert len(client.list_repo()) == 2
+
+
+def test_pfs_start_commit(pfs_client):
+    """ Start a commit in repo `test` on branch `master`. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    # WHEN calling start_commit() with the repo_name and branch specified
+    branch = 'master'
+    commit = client.start_commit(repo_name, branch)
+    # THEN a commit should be started with the specified repo_name
+    assert commit.repo.name == repo_name
+    #   AND a string ID value should be present
+    assert isinstance(commit.id, str)
+
+
+def test_pfs_start_commit_missing_branch(pfs_client):
+    """ Start a new commit in repo `test-repo-1` that's not on any branch. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new, empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    # WHEN calling start_commit() without specifying a branch
+    commit = client.start_commit(repo_name)
+    # THEN a commit should be started with the specified repo_name
+    assert commit.repo.name == repo_name
+    #   AND a commit ID should be returned
+    assert isinstance(commit.id, str)
+
+
+def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
+    """ Trying to start a commit without specifying a repo name should raise an error. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    # WHEN calling start_commit() without specifying a repo_name
+    with pytest.raises(TypeError) as excinfo:
+        client.start_commit()
+    # THEN the error message should indicate that a repo_name must be specified
+    assert excinfo.match('missing 1 required positional argument')
+
+
+def test_pfs_start_commit_with_parent_no_branch(pfs_client):
+    """ Start a commit with an existing commit ID as the parent in repo `test-repo-1`, not on any branch. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new, empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    #   AND a previously finished commit
+    commit1 = client.start_commit(repo_name)
+    client.finish_commit((repo_name, commit1.id))
+    # WHEN calling start_commit() with a parent commit specified, not on any branch
+    commit2 = client.start_commit(repo_name, parent=commit1.id)
+    # THEN a commit should be started with the specified repo_name
+    assert commit2.repo.name == repo_name
+    #   AND a commit ID should be returned
+    assert isinstance(commit2.id, str)
+
+
+def test_pfs_start_commit_on_branch_with_parent(pfs_client):
+    """ Start a commit with XXX as the parent in repo `test-repo-1`, on the `master` branch. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new, empty repo
+    repo_name = 'test-repo-1'
+    branch = 'master'
+    client.create_repo(repo_name)
+    #   AND a previously finished commit on the master branch
+    commit1 = client.start_commit(repo_name, branch=branch)
+    client.finish_commit((repo_name, commit1.id))
+    # WHEN calling start_commit() with a parent commit specified on the master branch
+    commit2 = client.start_commit(repo_name, branch=branch, parent=commit1.id)
+    # THEN a commit should be started with the specified repo_name
+    assert commit2.repo.name == repo_name
+    #   AND a commit ID should be returned
+    assert isinstance(commit2.id, str)
+
+
+def test_pfs_start_commit_fork(pfs_client):
+    """
+    Start a commit with `master` as the parent in repo `test-repo-1`, on a new branch `patch`;
+    essentially a fork.
+    """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new, empty repo
+    repo_name = 'test-repo-1'
+    branch1 = 'master'
+    client.create_repo(repo_name)
+    #   AND a previously finished commit on the master branch
+    commit1 = client.start_commit(repo_name, branch=branch1)
+    client.finish_commit((repo_name, commit1.id))
+    # WHEN calling start_commit() with the master branch as the parent on the patch branch
+    branch2 = 'patch'
+    commit2 = client.start_commit(repo_name, branch=branch2, parent=branch1)
+    # THEN a commit should be started with the specified repo_name
+    assert commit2.repo.name == repo_name
+    #   AND a commit ID should be returned
+    assert isinstance(commit2.id, str)
+    #   AND both branches exist in the repo
+    branches = [branch_info.name for branch_info in client.list_branch(repo_name)]
+    assert (branch1 in branches) and (branch2 in branches)
