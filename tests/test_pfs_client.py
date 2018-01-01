@@ -31,7 +31,7 @@ repos_to_test = (Repo(name='test', description='This is a test repository'),
 
 
 @pytest.fixture(scope='function', params=repos_to_test)
-def pfs_client_with_repos(request):
+def pfs_client_with_repo(request):
     """Connect to Pachyderm before tests and reset to initial state after tests."""
     # Setup : create a PfsClient instance and create a repository
     client = pypachy.PfsClient()
@@ -124,11 +124,10 @@ def test_pfs_create_repo_with_description(pfs_client):
     assert len(repo_info[0].provenance) == 0
 
 
-def test_pfs_inspect_repo(pfs_client_with_repos):
-    # GIVEN a Pachyderm deployment in its initial state
+def test_pfs_inspect_repo(pfs_client_with_repo):
+    # GIVEN a Pachyderm deployment with one existing repo
     #   AND a connected PFS client
-    client, test_repo = pfs_client_with_repos
-    #   AND an existing repository with a name but no description
+    client, test_repo = pfs_client_with_repo
     # WHEN calling inspect_repo() with a name but no description
     client.inspect_repo(test_repo.name)
     #   AND calling list_repo()
@@ -144,3 +143,75 @@ def test_pfs_inspect_repo(pfs_client_with_repos):
     #   AND provenance should be empty
     assert len(repo_info[0].provenance) == 0
 
+
+def test_pfs_delete_repo(pfs_client_with_repo):
+    # GIVEN a Pachyderm deployment
+    #   AND a connected PFS client
+    client, test_repo = pfs_client_with_repo
+    #   AND one existing repo
+    assert len(client.list_repo()) == 1
+    # WHEN calling delete_repo() with the repo_name of the existing repo
+    client.delete_repo(test_repo.name)
+    # THEN no repositories should remain
+    assert len(client.list_repo()) == 0
+
+
+def test_pfs_delete_repo_raises(pfs_client_with_repo):
+    # GIVEN a Pachyderm deployment
+    #   AND a connected PFS client
+    client, test_repo = pfs_client_with_repo
+    #   AND one existing repo
+    assert len(client.list_repo()) == 1
+    # WHEN calling delete_repo() without specifying a repo_name
+    with pytest.raises(ValueError) as excinfo:
+        client.delete_repo()
+    exception_msg = excinfo.value.args[0]
+    # THEN the error message should indicate that a repo_name cannot be specified when calling with all=True
+    assert exception_msg == 'Either a repo_name or all=True needs to be provided'
+
+
+def test_pfs_delete_non_existant_repo_raises(pfs_client_with_repo):
+    # GIVEN a Pachyderm deployment
+    #   AND a connected PFS client
+    client, test_repo = pfs_client_with_repo
+    #   AND one existing repo
+    assert len(client.list_repo()) == 1
+    # WHEN calling delete_repo() with a non-existant repo_name
+    with pytest.raises(Exception) as excinfo:
+        client.delete_repo('BOGUS_NAME')
+    # THEN a grpc._channel._Rendezvous exception should be raised
+    assert excinfo.typename == '_Rendezvous'
+    #   AND the error message should indicate that the repo does not exist
+    assert excinfo.match('cannot delete "BOGUS_NAME" as it does not exist')
+
+
+def test_pfs_delete_all_repos(pfs_client):
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND two existing repos
+    client.create_repo('test-repo-1')
+    client.create_repo('test-repo-2')
+    assert len(client.list_repo()) == 2
+    # WHEN calling delete_repo() with all=True
+    client.delete_repo(all=True)
+    # THEN no repositories should remain
+    assert len(client.list_repo()) == 0
+
+
+def test_pfs_delete_all_repos_with_name_raises(pfs_client):
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND two existing repos
+    client.create_repo('test-repo-1')
+    client.create_repo('test-repo-2')
+    assert len(client.list_repo()) == 2
+    # WHEN calling delete_repo() with a repo_name and all=True
+    with pytest.raises(ValueError) as excinfo:
+        client.delete_repo('test-repo-1', all=True)
+    exception_msg = excinfo.value.args[0]
+    # THEN the error message should indicate that a repo_name cannot be specified when calling with all=True
+    assert exception_msg == 'Cannot specify a repo_name if all=True'
+    #   AND both repositories should remain
+    assert len(client.list_repo()) == 2

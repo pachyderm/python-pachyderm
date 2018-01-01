@@ -91,7 +91,7 @@ class PfsClient(object):
             return x.repo_info
         return []
 
-    def delete_repo(self, repo_name, force=False, all=False):
+    def delete_repo(self, repo_name=None, force=False, all=False):
         """
         Deletes a repo and reclaims the storage space it was using. Note
         that as of 1.0 we do not reclaim the blocks that the Repo was referencing,
@@ -104,9 +104,15 @@ class PfsClient(object):
         :param all: Delete all repos
         """
         if not all:
-            self.stub.DeleteRepo(DeleteRepoRequest(repo=Repo(name=repo_name), force=force))
+            if repo_name:
+                self.stub.DeleteRepo(DeleteRepoRequest(repo=Repo(name=repo_name), force=force))
+            else:
+                raise ValueError("Either a repo_name or all=True needs to be provided")
         else:
-            self.stub.DeleteRepo(DeleteRepoRequest(force=force, all=all))
+            if not repo_name:
+                self.stub.DeleteRepo(DeleteRepoRequest(force=force, all=all))
+            else:
+                raise ValueError("Cannot specify a repo_name if all=True")
 
     def start_commit(self, repo_name, branch, parent=None):
         """
