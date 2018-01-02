@@ -6,7 +6,6 @@
 
 from builtins import str
 from collections import namedtuple
-import os
 import pytest
 import pypachy
 
