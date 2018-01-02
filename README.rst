@@ -66,8 +66,6 @@ e.g:
     >>> c = client.list_commit('my_repo')[0]            # get some commit
     >>> client.list_file(c, '/')                        # and use it directly
 
-
-
 Basic usage example
 -------------------
 
@@ -96,7 +94,8 @@ As of version 0.1.4, there is also limited support for PPS:
 To Do
 =====
 
-* Test, test, test!
+* Achieve full test coverage for PFS and PPS.
+* Add support for ``description`` field in ``Commit``.
 * Add support for ``ObjectAPI``
 
 Changelog

@@ -4,6 +4,7 @@
 """Tests for the `PfsClient` class of the `pypachy` package."""
 
 
+from builtins import str
 from collections import namedtuple
 import os
 import pytest
@@ -26,8 +27,8 @@ def pfs_client():
 Repo = namedtuple('Repo', ['name', 'description'])
 
 # Repository test examples
-repos_to_test = (Repo(name='test', description='This is a test repository'),
-                 Repo(name='test2', description=''))
+repos_to_test = (Repo(name='test-repo-1', description='This is a test repository'),
+                 Repo(name='test-repo-1', description=''))
 
 
 @pytest.fixture(scope='function', params=repos_to_test)
@@ -85,7 +86,7 @@ def test_pfs_create_repo(pfs_client):
     #   AND a connected PFS client
     client = pfs_client
     # WHEN calling create_repo() with a name but no description
-    repo_name = 'test'
+    repo_name = 'test-repo-1'
     client.create_repo(repo_name)
     #   AND calling list_repo()
     repo_info = client.list_repo()
@@ -106,7 +107,7 @@ def test_pfs_create_repo_with_description(pfs_client):
     #   AND a connected PFS client
     client = pfs_client
     # WHEN calling create_repo() with a name and description
-    repo_name = 'test'
+    repo_name = 'test-repo-1'
     repo_description = 'This is a test repository'
     client.create_repo(repo_name, repo_description)
     #   AND calling list_repo()
@@ -217,7 +218,7 @@ def test_pfs_delete_all_repos_with_name_raises(pfs_client):
 
 
 def test_pfs_start_commit(pfs_client):
-    """ Start a commit in repo `test` on branch `master`. """
+    """ Start a commit in repo `test-repo-1` on branch `master`. """
     # GIVEN a Pachyderm deployment in its initial state
     #   AND a connected PFS client
     client = pfs_client
@@ -255,10 +256,9 @@ def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
     #   AND a connected PFS client
     client = pfs_client
     # WHEN calling start_commit() without specifying a repo_name
+    # THEN a TypeError should be raised
     with pytest.raises(TypeError) as excinfo:
         client.start_commit()
-    # THEN the error message should indicate that a repo_name must be specified
-    assert excinfo.match('missing 1 required positional argument')
 
 
 def test_pfs_start_commit_with_parent_no_branch(pfs_client):
@@ -281,7 +281,7 @@ def test_pfs_start_commit_with_parent_no_branch(pfs_client):
 
 
 def test_pfs_start_commit_on_branch_with_parent(pfs_client):
-    """ Start a commit with XXX as the parent in repo `test-repo-1`, on the `master` branch. """
+    """ Start a commit with a previous commit as the parent in repo `test-repo-1`, on the `master` branch. """
     # GIVEN a Pachyderm deployment in its initial state
     #   AND a connected PFS client
     client = pfs_client
@@ -325,3 +325,32 @@ def test_pfs_start_commit_fork(pfs_client):
     #   AND both branches exist in the repo
     branches = [branch_info.name for branch_info in client.list_branch(repo_name)]
     assert (branch1 in branches) and (branch2 in branches)
+
+
+@pytest.mark.parametrize('commit_arg', ['commit_obj', 'repo/commit_id', '(repo, commit_id)'])
+def test_pfs_finish_commit(pfs_client, commit_arg):
+    """ Finish a new commit in repo `test-repo-1` that's not on any branch. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new, empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    #   AND a started commit
+    commit = client.start_commit(repo_name)
+    # WHEN calling finish_commit() with a Commit object, 'repo/commit_id', or (repo, commid_id)
+    if commit_arg == 'commit_obj':
+        client.finish_commit(commit)
+    elif commit_arg == 'repo/commit_id':
+        client.finish_commit('{}/{}'.format(repo_name, commit.id))
+    elif commit_arg == '(repo, commit_id)':
+        client.finish_commit((repo_name, commit.id))
+    # THEN a single commit should exist in the repo
+    commit_infos = client.list_commit(repo_name)
+    assert len(commit_infos) == 1
+    #   AND the commit ID should match the previously started commit
+    assert commit_infos[0].commit.id == commit.id
+    #   AND the 'finished' field should have non-zero time values (indicating that the commit finished)
+    commit_match_count = len([c for c in commit_infos if c.commit.id == commit.id and c.finished.seconds != 0])
+    assert commit_infos[0].finished.seconds != 0
+    assert commit_infos[0].finished.nanos != 0
