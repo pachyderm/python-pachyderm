@@ -143,7 +143,7 @@ class PfsClient(object):
 
     def finish_commit(self, commit):
         """
-        ends the process of committing data to a Repo and persists the
+        Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and future
         attempts to write to it with PutFile will error.
         :param commit: A tuple or string representing the commit

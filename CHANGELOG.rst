@@ -10,7 +10,7 @@ Unreleased
 * Fixed: Python 2.7 incompability issues.
 * Changed: Switched docs to reStructuredText.
 * Added: Separate CHANGELOG file.
-* Added: PfsClient tests for init, list_repo, create_repo, and delete_repo.
+* Added: PfsClient tests for init, list_repo, create_repo, delete_repo, start_commit, and finish_commit methods.
 * Changed: Modified PfsClient() delete_repo() method error handling to match Go client behavior.
 * Added: Bumpversion for tagging releases and semantic versioning.
 * Fixed: PfsClient() initialization ignored pachd host and port environment variables.
