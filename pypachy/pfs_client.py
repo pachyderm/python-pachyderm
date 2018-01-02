@@ -151,7 +151,7 @@ class PfsClient(object):
         self.stub.FinishCommit(FinishCommitRequest(commit=_commit_from(commit)))
 
     @contextmanager
-    def commit(self, repo_name, branch, parent=None):
+    def commit(self, repo_name, branch=None, parent=None):
         """
         A context manager for doing stuff inside a commit
         """

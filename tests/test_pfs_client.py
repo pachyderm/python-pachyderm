@@ -353,3 +353,21 @@ def test_pfs_finish_commit(pfs_client, commit_arg):
     commit_match_count = len([c for c in commit_infos if c.commit.id == commit.id and c.finished.seconds != 0])
     assert commit_infos[0].finished.seconds != 0
     assert commit_infos[0].finished.nanos != 0
+
+
+def test_pfs_commit_context_mgr_missing_branch(pfs_client):
+    """ Start and finish a commit using a context manager. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    # WHEN calling the commit() context manager without specifying a branch
+    with client.commit(repo_name) as c:
+        pass
+    # THEN a single commit should exist in the repo
+    commit_infos = client.list_commit(repo_name)
+    assert len(commit_infos) == 1
+    #   AND the commit ID should match the finished commit
+    assert commit_infos[0].commit.id == c.id
