@@ -216,19 +216,23 @@ def test_pfs_delete_all_repos_with_name_raises(pfs_client):
     assert len(client.list_repo()) == 2
 
 
-def test_pfs_start_commit(pfs_client):
+@pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
+    ('test-repo-1', 'test-repo-1', 'master'),
+    ('test-repo-1', 'test-repo-1', None),
+    pytest.param('test-repo-1', 'non-existant-repo', 'master',
+                 marks=[pytest.mark.basic, pytest.mark.xfail(strict=True)])
+])
+def test_pfs_start_commit(pfs_client, repo_to_create, repo_to_commit_to, branch):
     """ Start a commit in repo `test-repo-1` on branch `master`. """
     # GIVEN a Pachyderm deployment in its initial state
     #   AND a connected PFS client
     client = pfs_client
     #   AND an new empty repo
-    repo_name = 'test-repo-1'
-    client.create_repo(repo_name)
+    client.create_repo(repo_to_create)
     # WHEN calling start_commit() with the repo_name and branch specified
-    branch = 'master'
-    commit = client.start_commit(repo_name, branch)
+    commit = client.start_commit(repo_to_commit_to, branch)
     # THEN a commit should be started with the specified repo_name
-    assert commit.repo.name == repo_name
+    assert commit.repo.name == repo_to_commit_to
     #   AND a string ID value should be present
     assert isinstance(commit.id, str)
 
@@ -355,6 +359,29 @@ def test_pfs_finish_commit(pfs_client, commit_arg):
     assert commit_infos[0].finished.nanos != 0
 
 
+@pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
+    ('test-repo-1', 'test-repo-1', 'master'),
+    ('test-repo-1', 'test-repo-1', None),
+    pytest.param('test-repo-1', 'non-existant-repo', 'master',
+                 marks=[pytest.mark.basic, pytest.mark.xfail(strict=True)])
+])
+def test_pfs_commit_context_mgr(pfs_client, repo_to_create, repo_to_commit_to, branch):
+    """ Start and finish a commit using a context manager. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new empty repo
+    client.create_repo(repo_to_create)
+    # WHEN calling the commit() context manager with the repo_name and branch specified
+    with client.commit(repo_to_commit_to, branch) as c:
+        pass
+    # THEN a single commit should exist in the repo
+    commit_infos = client.list_commit(repo_to_commit_to)
+    assert len(commit_infos) == 1
+    #   AND the commit ID should match the finished commit
+    assert commit_infos[0].commit.id == c.id
+
+
 def test_pfs_commit_context_mgr_missing_branch(pfs_client):
     """ Start and finish a commit using a context manager. """
     # GIVEN a Pachyderm deployment in its initial state
@@ -371,3 +398,24 @@ def test_pfs_commit_context_mgr_missing_branch(pfs_client):
     assert len(commit_infos) == 1
     #   AND the commit ID should match the finished commit
     assert commit_infos[0].commit.id == c.id
+
+
+def test_pfs_commit_context_mgr_put_file_bytes(pfs_client):
+    """ Start and finish a commit using a context manager while putting a file. """
+    # GIVEN a Pachyderm deployment in its initial state
+    #   AND a connected PFS client
+    client = pfs_client
+    #   AND an new empty repo
+    repo_name = 'test-repo-1'
+    client.create_repo(repo_name)
+    # WHEN calling the commit() context manager without specifying a branch
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'file.dat', b'DATA')
+    # THEN a single commit should exist in the repo
+    commit_infos = client.list_commit(repo_name)
+    assert len(commit_infos) == 1
+    #   AND the commit ID should match the finished commit
+    assert commit_infos[0].commit.id == c.id
+    #   AND a single file should exist in the repo
+    files = client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    assert len(files) == 1
