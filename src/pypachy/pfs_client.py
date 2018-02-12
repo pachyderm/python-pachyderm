@@ -434,3 +434,31 @@ class PfsClient(object):
 
     def delete_all(self):
         self.stub.DeleteAll(google_dot_protobuf_dot_empty__pb2.Empty())
+        
+    def diff_file(self, new_commit, path, old_commit=None, shallow=False):
+        '''
+        Show the changes made to a given path across commits.
+        
+        diff_file returns the difference between 2 paths, old path may be omitted in
+        which case the parent of the new path will be used. diff_file return 2 values
+        (unless it returns an error) the first value is files present under new
+        path, the second is files present under old path, files which are under both
+        paths and have identical content are omitted.
+        
+        :param new_commit: A tuple or string representing the commit to diff.
+        :param path: The path to the directory
+        :param old_commit: (optional) A tuple or string representing the commit from which to diff. DefaultL: parent of `new_commit`.
+        :param shallow: If True, diff sub-directories. Default: False.
+        :return: A DiffFileResponse object with properties `new_files` and `old_files` containing FileInfo objects.
+        '''
+        new_file_commit = _commit_from(new_commit)
+        new_file = File(commit=new_file_commit, path=path)
+
+        if old_commit is not None:
+            old_file_commit = _commit_from(old_commit)
+            old_file = File(commit=old_file_commit, path=path)
+            req = DiffFileRequest(new_file=new_file, old_file=old_file, shallow=shallow)
+        else:
+            req = DiffFileRequest(new_file=new_file, shallow=shallow)
+
+        return self.stub.DiffFile(req)
