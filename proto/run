@@ -1,0 +1,13 @@
+#!/bin/sh
+
+tar xf /dev/stdin
+
+OUTDIR=python_pachyderm
+mkdir -p $OUTDIR
+
+for i in $(find proto -name "*.proto"); do \
+    python3 -m grpc_tools.protoc -I./proto --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
+done
+
+find $OUTDIR -regex ".*pb2.*py" | xargs tar cf -
+

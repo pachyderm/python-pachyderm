@@ -1,6 +1,12 @@
 ========
-PyPachy
+Python Pachyderm
 ========
+
+Official Python Pachyderm Client
+
+Created by [kalugny](https://github.com/kalugny)
+
+(Formerly kalugny/pypachy)
 
 .. start-badges
 
