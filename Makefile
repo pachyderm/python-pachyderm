@@ -26,3 +26,10 @@ ci-setup:
 		docker version && \
 		make launch-dev && \
 	popd
+
+ci-ssh:
+	ssh-keygen -t rsa -b 4096 -C "buildbot@pachyderm.io" -f $${HOME}/.ssh/id_rsa -N ''
+	echo "generated ssh keys:"
+	ls ~/.ssh
+	cat ~/.ssh/id_rsa.pub
+
