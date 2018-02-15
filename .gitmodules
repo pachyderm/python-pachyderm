@@ -1,3 +1,3 @@
 [submodule "etc/pachyderm"]
 	path = etc/pachyderm
-	url = git@github.com:pachyderm/pachyderm.git
+	url = https://github.com/pachyderm/pachyderm.git
