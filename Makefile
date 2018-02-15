@@ -23,4 +23,4 @@ test:
 	@#PYTHONPATH="$$PYTHONPATH:$$PWD:$$PWD/python_pachyderm:$$PWD/python_pachyderm/google" ./tests/test_pfs_client.py
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
-	PYTHONPATH="$$PYTHONPATH:$$PWD/python_pachyderm" pytest
+	PYTHONPATH="$$PYTHONPATH:$$PWD/src/python_pachyderm" pytest
