@@ -17,8 +17,8 @@ test:
 	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm" pytest
 
 ci-setup:
-	pushd etc/pachyderm && \
-		sudo etc/pachyderm/etc/testing/ci/before_install.sh && \
+	pushd proto/pachyderm && \
+		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/$$(cat VERSION)/pachctl_$$(cat VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
 		make launch-kube && \
