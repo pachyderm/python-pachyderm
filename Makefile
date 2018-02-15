@@ -24,3 +24,14 @@ test:
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
 	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm" pytest
+
+ci-setup:
+	sudo etc/pachyderm/etc/testing/ci/before_install.sh
+	curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/$$(cat VERSION)/pachctl_$$(cat VERSION)_amd64.deb \
+	  && sudo dpkg -i /tmp/pachctl.deb
+	which pachctl
+	pushd etc/pachyderm && \
+		make launch-kube && \
+		docker version && \
+		make launch-dev && \
+	popd

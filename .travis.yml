@@ -4,22 +4,10 @@ language: python
 python:
   - 2.7
   - 3.5
-
-# Download and install Kubernetes and Pachyderm binaries
-before_install:
-  - ci/before_install.sh
-
-# Install dependencies
-install:
-  - pip install -U tox-travis
-
-# Launch Minikube and deploy Pachyderm
 before_script:
-  - ci/before_script.sh
-
-# Run tests
+- make ci-setup
 script:
-  - tox
+- make test
 
 # Only email on failure
 notifications:
