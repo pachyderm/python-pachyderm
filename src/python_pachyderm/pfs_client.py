@@ -23,7 +23,7 @@ class ExtractValueIterator(object):
 
 
 def _commit_from(src, allow_just_repo=False):
-    if type(src) == Commit:
+    if src.__class__.__name__ == "Commit":
         return src
     elif type(src) in (tuple, list) and len(src) == 2:
         return Commit(repo=Repo(name=src[0]), id=src[1])
