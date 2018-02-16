@@ -25,7 +25,7 @@ init:
 ci-setup:
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
-		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
+		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
 		make launch-kube && \
 		docker version && \
@@ -34,7 +34,7 @@ ci-setup:
 
 sync:
 	# NOTE: This task must be run like:
-	# PACHYDERM_VERSION=v1.2.3 make sync
+	# PACHYDERM_VERSION=1.2.3 make sync
 	if [[ -z "$$PACHYDERM_VERSION" ]]; then \
 		exit 1; \
 	fi
