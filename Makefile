@@ -15,6 +15,7 @@ test:
 	pip uninstall google || true
 	pip install google
 	pip install protobuf
+	pip install -r proto/requirements.txt
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
