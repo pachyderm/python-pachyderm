@@ -4,7 +4,7 @@ docker-build-proto:
 	pushd proto && \
 		docker build -t pachyderm_python_proto .
 
-proto: docker-build-proto init
+proto: docker-build-proto
 	find ./proto/pachyderm/src/client -maxdepth 2 -regex ".*\.proto" \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
@@ -42,7 +42,7 @@ sync:
 	# Will update the protos to match the VERSION file
 	pushd proto/pachyderm && \
 		git fetch --all && \
-		git checkout $$(cat VERSION) && \
+		git checkout $$(cat ../../VERSION) && \
 		popd
 	# Rebuild w latest proto files
 	make proto
