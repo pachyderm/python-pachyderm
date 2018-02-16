@@ -4,8 +4,6 @@ language: python
 python:
     #  - 2.7 #TODO - Right now the tests require 'builtin' import, so we'll need to import this from the future module
   - 3.5
-before_install:
-- make ci-ssh
 before_script:
 - make ci-setup
 script:

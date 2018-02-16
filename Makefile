@@ -4,17 +4,23 @@ docker-build-proto:
 	pushd proto && \
 		docker build -t pachyderm_python_proto .
 
-proto: docker-build-proto
-	find ./proto -regex ".*\.proto" \
+proto: docker-build-proto init
+	find ./proto/pachyderm/src/client -maxdepth 2 -regex ".*\.proto" \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
 
 test:
-	@#PYTHONPATH="$$PYTHONPATH:$$PWD:$$PWD/python_pachyderm:$$PWD/python_pachyderm/google" ./tests/test_pfs_client.py
+	# Need to temporarily remove the pachyderm code base, otherwise pytest
+	# complains about python files in there
+	rm -rf proto/pachyderm || true
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
-	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm" pytest
+	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto" pytest
+	make init
+
+init:
+	git submodule update --init
 
 ci-setup:
 	pushd proto/pachyderm && \
@@ -25,3 +31,5 @@ ci-setup:
 		docker version && \
 		make launch-dev && \
 	popd
+
+.PHONY: test
