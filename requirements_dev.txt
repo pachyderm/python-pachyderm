@@ -9,4 +9,7 @@ Sphinx==1.6.5
 
 pytest==3.3.1
 pytest-runner==2.11.1
-google
+
+google==2.0.1
+grpcio==1.9.1
+protobuf==3.5.1

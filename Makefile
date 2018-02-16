@@ -14,11 +14,9 @@ test:
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
+	# Modify the python path for the test harness
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
-	echo "$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto"
-	echo "list of installed stuff:"
-	pip3 freeze
 	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto" pytest
 	mv proto/.pachyderm proto/pachyderm
 
@@ -29,9 +27,7 @@ ci-setup:
 	@# For some reason, I have to install these libs this way for CI
 	pip uninstall protobuf || true
 	pip uninstall google || true
-	pip install google
-	pip install protobuf
-	pip install -r proto/requirements.txt
+	pip install -r requirements_dev.txt
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
