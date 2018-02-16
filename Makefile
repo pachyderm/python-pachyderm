@@ -17,6 +17,9 @@ test:
 	mv proto/pachyderm proto/.pachyderm || true
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
+	echo "$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto"
+	echo "list of installed stuff:"
+	pip3 freeze
 	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto" pytest
 	mv proto/.pachyderm proto/pachyderm
 
