@@ -17,7 +17,7 @@ test:
 	# Modify the python path for the test harness
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
-	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto" pytest
+	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm" pytest
 	mv proto/.pachyderm proto/pachyderm
 
 init:

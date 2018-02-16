@@ -2,7 +2,7 @@
 
 tar xf /dev/stdin
 
-OUTDIR=src/python_pachyderm/proto
+OUTDIR=src/python_pachyderm/
 mkdir -p $OUTDIR
 
 for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \

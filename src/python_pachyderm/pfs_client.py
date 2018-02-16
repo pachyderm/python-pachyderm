@@ -5,8 +5,8 @@ import os
 from builtins import object
 from contextlib import contextmanager
 
-from .proto.client.pfs.pfs_pb2 import *
-from .proto.client.pfs.pfs_pb2_grpc import *
+from .client.pfs.pfs_pb2 import *
+from .client.pfs.pfs_pb2_grpc import *
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
