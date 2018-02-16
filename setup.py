@@ -21,19 +21,22 @@ def read(*names, **kwargs):
         encoding=kwargs.get('encoding', 'utf8')
     ).read()
 
+def get_version():
+    f = open("VERSION","r")
+    return f.read().strip()
 
 setup(
     name='pypachy',
-    version='0.1.5',
-    license='MIT license',
+    version=get_version(),
+    license='Apache 2.0',
     description='Python Pachyderm Client',
     long_description='%s\n%s' % (
         re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
         re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
     ),
-    author='Yuval Kalugny',
-    author_email='kalugny@gmail.com',
-    url='https://github.com/kalugny/pypachy',
+    author='Joe Doliner',
+    author_email='jdoliner@pachyderm.io',
+    url='https://github.com/pachyderm/python-pachyderm',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
