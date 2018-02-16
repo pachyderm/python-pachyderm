@@ -11,7 +11,7 @@ proto: docker-build-proto
 	| tar xf -
 
 test:
-	pip3 install -r requirements_dev.txt
+	pip install -r requirements_dev.txt
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
