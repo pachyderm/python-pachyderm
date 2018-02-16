@@ -8,6 +8,9 @@ include CHANGELOG.rst
 include LICENSE
 include README.rst
 
+include VERSION
+include BUILD
+
 include tox.ini .travis.yml
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib

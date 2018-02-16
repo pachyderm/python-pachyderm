@@ -23,7 +23,10 @@ def read(*names, **kwargs):
 
 def get_version():
     f = open("VERSION","r")
-    return f.read().strip()
+    version = f.read().strip()
+    f = open("BUILD","r")
+    build = f.read().strip()
+    return version + "-" + build
 
 setup(
     name='python-pachyderm',

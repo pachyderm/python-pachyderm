@@ -56,6 +56,8 @@ sync:
 	make proto
 
 release:
+	# Bump the version
+	expr $$(cat BUILD) + 1 > BUILD
 	python setup.py sdist
 	twine upload dist/*
 
