@@ -11,18 +11,11 @@ for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
     sed -i 's/\[.*gogoproto.*\]//' $i
     # We need to do this in a pass before compilation because it's not guaranteed we
     # traverse the proto files in order of dependence
-
 done
 
 for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
     python3 -m grpc_tools.protoc -I./proto/pachyderm/src --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
 done
-
-# Since we want a flat output path structure, we copy the results out to the top level
-#find $OUTDIR -regex ".*pb2.*py" | while read file; do cp $file $OUTDIR/$(basename $file); done
-
-# Then we can remove the nested code
-#rm -rf $OUTDIR/client
 
 find $OUTDIR -maxdepth 3 -regex ".*pb2.*py" | xargs tar cf -
 
