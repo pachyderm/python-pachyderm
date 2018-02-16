@@ -26,7 +26,7 @@ def get_version():
     return f.read().strip()
 
 setup(
-    name='pypachy',
+    name='python-pachyderm',
     version=get_version(),
     license='Apache 2.0',
     description='Python Pachyderm Client',

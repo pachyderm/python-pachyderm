@@ -33,10 +33,10 @@ ci-setup:
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
 		make launch-kube && \
-		docker version && \
-		which pachctl && \
-		( pachctl deploy local --dry-run | kubectl create -f - ) && \
-	popd
+		popd
+	docker version
+	which pachctl
+	pachctl deploy local --dry-run | kubectl create -f -
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
 
@@ -56,8 +56,7 @@ sync:
 	make proto
 
 release:
-	python setup.py register -r pypi
-	python setup.py sdist upload -r pypi
-
+	python setup.py sdist
+	twine upload dist/*
 
 .PHONY: test
