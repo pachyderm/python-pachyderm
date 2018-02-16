@@ -11,11 +11,6 @@ proto: docker-build-proto
 	| tar xf -
 
 test:
-	pip uninstall protobuf || true
-	pip uninstall google || true
-	pip install google
-	pip install protobuf
-	pip install -r proto/requirements.txt
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
@@ -31,6 +26,12 @@ init:
 	git submodule update --init
 
 ci-setup:
+	@# For some reason, I have to install these libs this way for CI
+	pip uninstall protobuf || true
+	pip uninstall google || true
+	pip install google
+	pip install protobuf
+	pip install -r proto/requirements.txt
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
