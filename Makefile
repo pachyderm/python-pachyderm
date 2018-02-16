@@ -13,11 +13,11 @@ proto: docker-build-proto init
 test:
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
-	rm -rf proto/pachyderm || true
+	mv proto/pachyderm proto/.pachyderm || true
 	# This is hacky, but the alternative seems to be hacking a grpc generated file,
 	# which is a no-no
 	PYTHONPATH="$$PYTHONPATH:$$PWD/src:$$PWD/src/python_pachyderm:$$PWD/src/python_pachyderm/proto" pytest
-	make init
+	mv proto/.pachyderm proto/pachyderm
 
 init:
 	git submodule update --init
@@ -31,5 +31,25 @@ ci-setup:
 		docker version && \
 		make launch-dev && \
 	popd
+
+sync:
+	# NOTE: This task must be run like:
+	# PACHYDERM_VERSION=v1.2.3 make sync
+	if [[ -z "$$PACHYDERM_VERSION" ]]; then \
+		exit 1; \
+	fi
+	echo $$PACHYDERM_VERSION > VERSION
+	# Will update the protos to match the VERSION file
+	pushd proto/pachyderm && \
+		git fetch --all && \
+		git checkout $$(cat VERSION) && \
+		popd
+	# Rebuild w latest proto files
+	make proto
+
+release:
+	python setup.py register -r pypi
+	python setup.py sdist upload -r pypi
+
 
 .PHONY: test
