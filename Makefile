@@ -29,7 +29,9 @@ ci-setup:
 		sudo dpkg -i /tmp/pachctl.deb && \
 		make launch-kube && \
 		docker version && \
-		pachctl deploy local --dry-run | kubectl create -f - && \
+		echo "pachctl location:" && \
+		which pachctl && \
+		( pachctl deploy local --dry-run | kubectl create -f - ) && \
 		until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done && \
 	popd
 
