@@ -10,7 +10,9 @@ proto: docker-build-proto
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
 
-test:
+test: proto
+	@# Re-build the protos just to make sure the process succeeds,
+	@# as its fragile to the python directory structure in this package
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
