@@ -11,7 +11,10 @@ proto: docker-build-proto
 	| tar xf -
 
 test:
-	pip install -r requirements_dev.txt
+	pip uninstall protobuf || true
+	pip uninstall google || true
+	pip install google
+	pip install protobuf
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
 	# complains about python files in there
 	mv proto/pachyderm proto/.pachyderm || true
