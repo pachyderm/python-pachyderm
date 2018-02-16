@@ -36,7 +36,7 @@ ci-setup:
 		popd
 	docker version
 	which pachctl
-	./deploy.sh
+	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
 
