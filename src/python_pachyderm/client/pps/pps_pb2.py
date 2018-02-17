@@ -17,7 +17,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
-from client.pfs import pfs_pb2 as client_dot_pfs_dot_pfs__pb2
+from python_pachyderm.client.pfs import pfs_pb2 as client_dot_pfs_dot_pfs__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(

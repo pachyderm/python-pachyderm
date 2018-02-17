@@ -17,5 +17,11 @@ for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
     python3 -m grpc_tools.protoc -I./proto/pachyderm/src --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
 done
 
+for i in $(find $OUTDIR -maxdepth 3 -regex ".*pb2.*py"); do
+    # Fix the imports so they work once this is packaged by pypi
+    sed -i 's/from client\./from python_pachyderm\.client\./' $i
+done
+
+
 find $OUTDIR -maxdepth 3 -regex ".*pb2.*py" | xargs tar cf -
 

@@ -7,6 +7,7 @@ python:
 before_script:
 - make ci-setup
 script:
+- make proto
 - make test
 
 # Only email on failure
