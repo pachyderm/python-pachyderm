@@ -30,7 +30,6 @@ def get_version():
 
 setup(
     name='python-pachyderm',
-    namespace_packages=['client'],
     version=get_version(),
     license='Apache 2.0',
     description='Python Pachyderm Client',
