@@ -11,21 +11,21 @@ Created by [kalugny](https://github.com/kalugny)
 .. start-badges
 
 
-.. image:: https://img.shields.io/pypi/v/pypachy.svg
+.. image:: https://img.shields.io/pypi/v/python-pachyderm.svg
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/pypachy
+    :target: https://pypi.python.org/pypi/python-pachyderm
 
-.. image:: https://img.shields.io/pypi/wheel/pypachy.svg
+.. image:: https://img.shields.io/pypi/wheel/python-pachyderm.svg
     :alt: PyPI Wheel
-    :target: https://pypi.python.org/pypi/pypachy
+    :target: https://pypi.python.org/pypi/python-pachyderm
 
-.. image:: https://img.shields.io/pypi/pyversions/pypachy.svg
+.. image:: https://img.shields.io/pypi/pyversions/python-pachyderm.svg
     :alt: Supported versions
-    :target: https://pypi.python.org/pypi/pypachy
+    :target: https://pypi.python.org/pypi/python-pachyderm
 
-.. image:: https://img.shields.io/github/commits-since/kalugny/pypachy/v0.1.5.svg
+.. image:: https://img.shields.io/github/commits-since/pachyderm/python-pachyderm/v0.1.5.svg
     :alt: Commits since latest release
-    :target: https://github.com/kalugny/pypachy/compare/v0.1.5...master
+    :target: https://github.com/pachyderm/python-pachyderm/compare/v0.1.5...master
 
 
 .. end-badges
@@ -45,7 +45,7 @@ Installation
 
 .. code:: bash
 
-    pip install pypachy
+    pip install python-pachyderm
 
 Usage and options
 =================
@@ -77,9 +77,9 @@ Basic usage example
 
 .. code:: python
 
-    >>> import pypachy
+    >>> import python_pachyderm
     
-    >>> client = pypachy.PfsClient()
+    >>> client = python_pachyderm.PfsClient()
     >>> client.create_repo('test')
     >>> with client.commit('test', 'master') as c:
     ...:     client.put_file_bytes(c, '/dir_a/data', b'DATA')
@@ -93,7 +93,7 @@ As of version 0.1.4, there is also limited support for PPS:
 
 .. code:: python
 
-    >>> pps_client = pypachy.PpsClient()
+    >>> pps_client = python_pachyderm.PpsClient()
     >>> pps_client.list_pipeline()
     ...
 
@@ -107,6 +107,6 @@ To Do
 Changelog
 =========
 
-See `CHANGELOG.rst <https://github.com/kalugny/pypachy/blob/master/CHANGELOG.rst>`_.
+See `CHANGELOG.rst <https://github.com/pachyderm/python_pachyderm/blob/master/CHANGELOG.rst>`_.
 
 .. _Pachyderm: https://pachyderm.io/
