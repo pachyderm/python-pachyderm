@@ -4,7 +4,7 @@ Python Pachyderm
 
 Official Python Pachyderm Client
 
-Created by [kalugny](https://github.com/kalugny)
+Created by `kalugny <https://github.com/kalugny>`_
 
 (Formerly kalugny/pypachy)
 
