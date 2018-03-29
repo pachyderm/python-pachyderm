@@ -5,8 +5,8 @@ import os
 from builtins import object
 from contextlib import contextmanager
 
-from .pfs_pb2 import *
-from .pfs_pb2_grpc import *
+from .client.pfs.pfs_pb2 import *
+from .client.pfs.pfs_pb2_grpc import *
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
@@ -23,7 +23,7 @@ class ExtractValueIterator(object):
 
 
 def _commit_from(src, allow_just_repo=False):
-    if type(src) == Commit:
+    if src.__class__.__name__ == "Commit":
         return src
     elif type(src) in (tuple, list) and len(src) == 2:
         return Commit(repo=Repo(name=src[0]), id=src[1])

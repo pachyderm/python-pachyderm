@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for the `PfsClient` class of the `pypachy` package."""
+"""Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
 
 from builtins import str
 from collections import namedtuple
 import pytest
-import pypachy
-
+import python_pachyderm
 
 @pytest.fixture(scope='function')
 def pfs_client():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
     # Setup : create a PfsClient instance
-    client = pypachy.PfsClient()
+    client = python_pachyderm.PfsClient()
 
     yield client  # this is where the testing happens
 
@@ -34,7 +33,7 @@ repos_to_test = (Repo(name='test-repo-1', description='This is a test repository
 def pfs_client_with_repo(request):
     """Connect to Pachyderm before tests and reset to initial state after tests."""
     # Setup : create a PfsClient instance and create a repository
-    client = pypachy.PfsClient()
+    client = python_pachyderm.PfsClient()
     client.create_repo(request.param.name, request.param.description)
 
     yield client, request.param  # this is where the testing happens
@@ -46,7 +45,7 @@ def pfs_client_with_repo(request):
 def test_pfs_client_init_with_default_host_port():
     # GIVEN a Pachyderm deployment
     # WHEN a client is created without specifying a host or port
-    client = pypachy.PfsClient()
+    client = python_pachyderm.PfsClient()
     # THEN the GRPC channel should reflect the default of localhost and port 30650
     assert client.channel._channel.target() == b'localhost:30650'
 
@@ -57,7 +56,7 @@ def test_pfs_client_init_with_env_vars(monkeypatch):
     monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
     monkeypatch.setenv('PACHD_SERVICE_PORT_API_GRPC_PORT', '12345')
     #   AND a client is created without specifying a host or port
-    client = pypachy.PfsClient()
+    client = python_pachyderm.PfsClient()
     # THEN the GRPC channel should reflect the host and port specified in the environment variables
     assert client.channel._channel.target() == b'pachd.example.com:12345'
 
@@ -65,7 +64,7 @@ def test_pfs_client_init_with_env_vars(monkeypatch):
 def test_pfs_client_init_with_args():
     # GIVEN a Pachyderm deployment
     # WHEN a client is created with host and port arguments
-    client = pypachy.PfsClient(host='pachd.example.com', port=54321)
+    client = python_pachyderm.PfsClient(host='pachd.example.com', port=54321)
     # THEN the GRPC channel should reflect the host and port specified in the arguments
     assert client.channel._channel.target() == b'pachd.example.com:54321'
 

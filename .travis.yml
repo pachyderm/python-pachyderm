@@ -2,24 +2,13 @@ dist: trusty
 sudo: required
 language: python
 python:
-  - 2.7
+    #  - 2.7 #TODO - Right now the tests require 'builtin' import, so we'll need to import this from the future module
   - 3.5
-
-# Download and install Kubernetes and Pachyderm binaries
-before_install:
-  - ci/before_install.sh
-
-# Install dependencies
-install:
-  - pip install -U tox-travis
-
-# Launch Minikube and deploy Pachyderm
 before_script:
-  - ci/before_script.sh
-
-# Run tests
+- make ci-setup
 script:
-  - tox
+- make proto
+- make test
 
 # Only email on failure
 notifications:

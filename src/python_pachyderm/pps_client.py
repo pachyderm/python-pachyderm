@@ -3,8 +3,8 @@
 import os
 from builtins import object
 
-from .pps_pb2 import *
-from .pps_pb2_grpc import *
+from .client.pps.pps_pb2 import *
+from .client.pps.pps_pb2_grpc import *
 
 
 class PpsClient(object):
