@@ -69,10 +69,15 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.SetACLRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.SetACLResponse.FromString,
         )
-    self.GetCapability = channel.unary_unary(
-        '/auth.API/GetCapability',
-        request_serializer=client_dot_auth_dot_auth__pb2.GetCapabilityRequest.SerializeToString,
-        response_deserializer=client_dot_auth_dot_auth__pb2.GetCapabilityResponse.FromString,
+    self.GetAuthToken = channel.unary_unary(
+        '/auth.API/GetAuthToken',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetAuthTokenRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetAuthTokenResponse.FromString,
+        )
+    self.ExtendAuthToken = channel.unary_unary(
+        '/auth.API/ExtendAuthToken',
+        request_serializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenResponse.FromString,
         )
     self.RevokeAuthToken = channel.unary_unary(
         '/auth.API/RevokeAuthToken',
@@ -164,7 +169,14 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetCapability(self, request, context):
+  def GetAuthToken(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ExtendAuthToken(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -236,10 +248,15 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_auth_dot_auth__pb2.SetACLRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.SetACLResponse.SerializeToString,
       ),
-      'GetCapability': grpc.unary_unary_rpc_method_handler(
-          servicer.GetCapability,
-          request_deserializer=client_dot_auth_dot_auth__pb2.GetCapabilityRequest.FromString,
-          response_serializer=client_dot_auth_dot_auth__pb2.GetCapabilityResponse.SerializeToString,
+      'GetAuthToken': grpc.unary_unary_rpc_method_handler(
+          servicer.GetAuthToken,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetAuthTokenRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetAuthTokenResponse.SerializeToString,
+      ),
+      'ExtendAuthToken': grpc.unary_unary_rpc_method_handler(
+          servicer.ExtendAuthToken,
+          request_deserializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenResponse.SerializeToString,
       ),
       'RevokeAuthToken': grpc.unary_unary_rpc_method_handler(
           servicer.RevokeAuthToken,

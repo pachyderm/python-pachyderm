@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/auth/auth.proto',
   package='auth',
   syntax='proto3',
-  serialized_pb=_b('\n\x16\x63lient/auth/auth.proto\x12\x04\x61uth\"@\n\x0f\x41\x63tivateRequest\x12\x17\n\x0fgithub_username\x18\x02 \x01(\t\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x12\n\x10GetAdminsRequest\"#\n\x11GetAdminsResponse\x12\x0e\n\x06\x61\x64mins\x18\x01 \x03(\t\"2\n\x13ModifyAdminsRequest\x12\x0b\n\x03\x61\x64\x64\x18\x01 \x03(\t\x12\x0e\n\x06remove\x18\x02 \x03(\t\"\x16\n\x14ModifyAdminsResponse\"n\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\x12!\n\x04type\x18\x02 \x01(\x0e\x32\x13.auth.User.UserType\"1\n\x08UserType\x12\x0b\n\x07INVALID\x10\x00\x12\n\n\x06GITHUB\x10\x01\x12\x0c\n\x08PIPELINE\x10\x02\"D\n\x13\x41uthenticateRequest\x12\x17\n\x0fgithub_username\x18\x02 \x01(\t\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"4\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08is_admin\x18\x02 \x01(\x08\"k\n\x03\x41\x43L\x12\'\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x16.auth.ACL.EntriesEntry\x1a;\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0e\x32\x0b.auth.Scope:\x02\x38\x01\"<\n\x10\x41uthorizeRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"\'\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\"2\n\x0fGetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05repos\x18\x02 \x03(\t\"/\n\x10GetScopeResponse\x12\x1b\n\x06scopes\x18\x01 \x03(\x0e\x32\x0b.auth.Scope\"M\n\x0fSetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x1a\n\x05scope\x18\x03 \x01(\x0e\x32\x0b.auth.Scope\"\x12\n\x10SetScopeResponse\"\x1d\n\rGetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\"8\n\x08\x41\x43LEntry\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"1\n\x0eGetACLResponse\x12\x1f\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x0e.auth.ACLEntry\">\n\rSetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1f\n\x07\x65ntries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\"\x10\n\x0eSetACLResponse\"\x16\n\x14GetCapabilityRequest\"+\n\x15GetCapabilityResponse\x12\x12\n\ncapability\x18\x01 \x01(\t\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse*4\n\x05Scope\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06READER\x10\x01\x12\n\n\x06WRITER\x10\x02\x12\t\n\x05OWNER\x10\x03\x32\xd4\x06\n\x03\x41PI\x12;\n\x08\x41\x63tivate\x12\x15.auth.ActivateRequest\x1a\x16.auth.ActivateResponse\"\x00\x12\x41\n\nDeactivate\x12\x17.auth.DeactivateRequest\x1a\x18.auth.DeactivateResponse\"\x00\x12>\n\tGetAdmins\x12\x16.auth.GetAdminsRequest\x1a\x17.auth.GetAdminsResponse\"\x00\x12G\n\x0cModifyAdmins\x12\x19.auth.ModifyAdminsRequest\x1a\x1a.auth.ModifyAdminsResponse\"\x00\x12G\n\x0c\x41uthenticate\x12\x19.auth.AuthenticateRequest\x1a\x1a.auth.AuthenticateResponse\"\x00\x12>\n\tAuthorize\x12\x16.auth.AuthorizeRequest\x1a\x17.auth.AuthorizeResponse\"\x00\x12\x35\n\x06WhoAmI\x12\x13.auth.WhoAmIRequest\x1a\x14.auth.WhoAmIResponse\"\x00\x12;\n\x08GetScope\x12\x15.auth.GetScopeRequest\x1a\x16.auth.GetScopeResponse\"\x00\x12;\n\x08SetScope\x12\x15.auth.SetScopeRequest\x1a\x16.auth.SetScopeResponse\"\x00\x12\x35\n\x06GetACL\x12\x13.auth.GetACLRequest\x1a\x14.auth.GetACLResponse\"\x00\x12\x35\n\x06SetACL\x12\x13.auth.SetACLRequest\x1a\x14.auth.SetACLResponse\"\x00\x12J\n\rGetCapability\x12\x1a.auth.GetCapabilityRequest\x1a\x1b.auth.GetCapabilityResponse\"\x00\x12P\n\x0fRevokeAuthToken\x12\x1c.auth.RevokeAuthTokenRequest\x1a\x1d.auth.RevokeAuthTokenResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x63lient/auth/auth.proto\x12\x04\x61uth\"\'\n\x0f\x41\x63tivateRequest\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x12\n\x10GetAdminsRequest\"#\n\x11GetAdminsResponse\x12\x0e\n\x06\x61\x64mins\x18\x01 \x03(\t\"2\n\x13ModifyAdminsRequest\x12\x0b\n\x03\x61\x64\x64\x18\x01 \x03(\t\x12\x0e\n\x06remove\x18\x02 \x03(\t\"\x16\n\x14ModifyAdminsResponse\"\x86\x01\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12+\n\x06source\x18\x02 \x01(\x0e\x32\x1b.auth.TokenInfo.TokenSource\";\n\x0bTokenSource\x12\x0b\n\x07INVALID\x10\x00\x12\x10\n\x0c\x41UTHENTICATE\x10\x01\x12\r\n\tGET_TOKEN\x10\x02\"+\n\x13\x41uthenticateRequest\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"4\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08is_admin\x18\x02 \x01(\x08\"k\n\x03\x41\x43L\x12\'\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x16.auth.ACL.EntriesEntry\x1a;\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0e\x32\x0b.auth.Scope:\x02\x38\x01\"<\n\x10\x41uthorizeRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"\'\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\"2\n\x0fGetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05repos\x18\x02 \x03(\t\"/\n\x10GetScopeResponse\x12\x1b\n\x06scopes\x18\x01 \x03(\x0e\x32\x0b.auth.Scope\"M\n\x0fSetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x1a\n\x05scope\x18\x03 \x01(\x0e\x32\x0b.auth.Scope\"\x12\n\x10SetScopeResponse\"\x1d\n\rGetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\"8\n\x08\x41\x43LEntry\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"X\n\x0eGetACLResponse\x12\x1f\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x0e.auth.ACLEntry\x12%\n\rrobot_entries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\">\n\rSetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1f\n\x07\x65ntries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\"\x10\n\x0eSetACLResponse\"3\n\x13GetAuthTokenRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"%\n\x14GetAuthTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"4\n\x16\x45xtendAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"\x19\n\x17\x45xtendAuthTokenResponse\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse*4\n\x05Scope\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06READER\x10\x01\x12\n\n\x06WRITER\x10\x02\x12\t\n\x05OWNER\x10\x03\x32\xa3\x07\n\x03\x41PI\x12;\n\x08\x41\x63tivate\x12\x15.auth.ActivateRequest\x1a\x16.auth.ActivateResponse\"\x00\x12\x41\n\nDeactivate\x12\x17.auth.DeactivateRequest\x1a\x18.auth.DeactivateResponse\"\x00\x12>\n\tGetAdmins\x12\x16.auth.GetAdminsRequest\x1a\x17.auth.GetAdminsResponse\"\x00\x12G\n\x0cModifyAdmins\x12\x19.auth.ModifyAdminsRequest\x1a\x1a.auth.ModifyAdminsResponse\"\x00\x12G\n\x0c\x41uthenticate\x12\x19.auth.AuthenticateRequest\x1a\x1a.auth.AuthenticateResponse\"\x00\x12>\n\tAuthorize\x12\x16.auth.AuthorizeRequest\x1a\x17.auth.AuthorizeResponse\"\x00\x12\x35\n\x06WhoAmI\x12\x13.auth.WhoAmIRequest\x1a\x14.auth.WhoAmIResponse\"\x00\x12;\n\x08GetScope\x12\x15.auth.GetScopeRequest\x1a\x16.auth.GetScopeResponse\"\x00\x12;\n\x08SetScope\x12\x15.auth.SetScopeRequest\x1a\x16.auth.SetScopeResponse\"\x00\x12\x35\n\x06GetACL\x12\x13.auth.GetACLRequest\x1a\x14.auth.GetACLResponse\"\x00\x12\x35\n\x06SetACL\x12\x13.auth.SetACLRequest\x1a\x14.auth.SetACLResponse\"\x00\x12G\n\x0cGetAuthToken\x12\x19.auth.GetAuthTokenRequest\x1a\x1a.auth.GetAuthTokenResponse\"\x00\x12P\n\x0f\x45xtendAuthToken\x12\x1c.auth.ExtendAuthTokenRequest\x1a\x1d.auth.ExtendAuthTokenResponse\"\x00\x12P\n\x0fRevokeAuthToken\x12\x1c.auth.RevokeAuthTokenRequest\x1a\x1d.auth.RevokeAuthTokenResponse\"\x00\x62\x06proto3')
 )
 
 _SCOPE = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _SCOPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1382,
-  serialized_end=1434,
+  serialized_start=1500,
+  serialized_end=1552,
 )
 _sym_db.RegisterEnumDescriptor(_SCOPE)
 
@@ -60,9 +60,9 @@ WRITER = 2
 OWNER = 3
 
 
-_USER_USERTYPE = _descriptor.EnumDescriptor(
-  name='UserType',
-  full_name='auth.User.UserType',
+_TOKENINFO_TOKENSOURCE = _descriptor.EnumDescriptor(
+  name='TokenSource',
+  full_name='auth.TokenInfo.TokenSource',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -71,20 +71,20 @@ _USER_USERTYPE = _descriptor.EnumDescriptor(
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='GITHUB', index=1, number=1,
+      name='AUTHENTICATE', index=1, number=1,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='PIPELINE', index=2, number=2,
+      name='GET_TOKEN', index=2, number=2,
       options=None,
       type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=375,
+  serialized_start=365,
   serialized_end=424,
 )
-_sym_db.RegisterEnumDescriptor(_USER_USERTYPE)
+_sym_db.RegisterEnumDescriptor(_TOKENINFO_TOKENSOURCE)
 
 
 _ACTIVATEREQUEST = _descriptor.Descriptor(
@@ -95,14 +95,7 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='github_username', full_name='auth.ActivateRequest.github_username', index=0,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='github_token', full_name='auth.ActivateRequest.github_token', index=1,
+      name='github_token', full_name='auth.ActivateRequest.github_token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -121,7 +114,7 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=32,
-  serialized_end=96,
+  serialized_end=71,
 )
 
 
@@ -151,8 +144,8 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=98,
-  serialized_end=136,
+  serialized_start=73,
+  serialized_end=111,
 )
 
 
@@ -175,8 +168,8 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=138,
-  serialized_end=157,
+  serialized_start=113,
+  serialized_end=132,
 )
 
 
@@ -199,8 +192,8 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=159,
-  serialized_end=179,
+  serialized_start=134,
+  serialized_end=154,
 )
 
 
@@ -223,8 +216,8 @@ _GETADMINSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=181,
-  serialized_end=199,
+  serialized_start=156,
+  serialized_end=174,
 )
 
 
@@ -254,8 +247,8 @@ _GETADMINSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=201,
-  serialized_end=236,
+  serialized_start=176,
+  serialized_end=211,
 )
 
 
@@ -292,8 +285,8 @@ _MODIFYADMINSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=238,
-  serialized_end=288,
+  serialized_start=213,
+  serialized_end=263,
 )
 
 
@@ -316,27 +309,27 @@ _MODIFYADMINSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=290,
-  serialized_end=312,
+  serialized_start=265,
+  serialized_end=287,
 )
 
 
-_USER = _descriptor.Descriptor(
-  name='User',
-  full_name='auth.User',
+_TOKENINFO = _descriptor.Descriptor(
+  name='TokenInfo',
+  full_name='auth.TokenInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='username', full_name='auth.User.username', index=0,
+      name='subject', full_name='auth.TokenInfo.subject', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='type', full_name='auth.User.type', index=1,
+      name='source', full_name='auth.TokenInfo.source', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -347,7 +340,7 @@ _USER = _descriptor.Descriptor(
   ],
   nested_types=[],
   enum_types=[
-    _USER_USERTYPE,
+    _TOKENINFO_TOKENSOURCE,
   ],
   options=None,
   is_extendable=False,
@@ -355,7 +348,7 @@ _USER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=314,
+  serialized_start=290,
   serialized_end=424,
 )
 
@@ -368,14 +361,7 @@ _AUTHENTICATEREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='github_username', full_name='auth.AuthenticateRequest.github_username', index=0,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='github_token', full_name='auth.AuthenticateRequest.github_token', index=1,
+      name='github_token', full_name='auth.AuthenticateRequest.github_token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -394,7 +380,7 @@ _AUTHENTICATEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=426,
-  serialized_end=494,
+  serialized_end=469,
 )
 
 
@@ -424,8 +410,8 @@ _AUTHENTICATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=496,
-  serialized_end=538,
+  serialized_start=471,
+  serialized_end=513,
 )
 
 
@@ -448,8 +434,8 @@ _WHOAMIREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=540,
-  serialized_end=555,
+  serialized_start=515,
+  serialized_end=530,
 )
 
 
@@ -486,8 +472,8 @@ _WHOAMIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=557,
-  serialized_end=609,
+  serialized_start=532,
+  serialized_end=584,
 )
 
 
@@ -524,8 +510,8 @@ _ACL_ENTRIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=659,
-  serialized_end=718,
+  serialized_start=634,
+  serialized_end=693,
 )
 
 _ACL = _descriptor.Descriptor(
@@ -554,8 +540,8 @@ _ACL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=611,
-  serialized_end=718,
+  serialized_start=586,
+  serialized_end=693,
 )
 
 
@@ -592,8 +578,8 @@ _AUTHORIZEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=720,
-  serialized_end=780,
+  serialized_start=695,
+  serialized_end=755,
 )
 
 
@@ -623,8 +609,8 @@ _AUTHORIZERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=782,
-  serialized_end=821,
+  serialized_start=757,
+  serialized_end=796,
 )
 
 
@@ -661,8 +647,8 @@ _GETSCOPEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=823,
-  serialized_end=873,
+  serialized_start=798,
+  serialized_end=848,
 )
 
 
@@ -692,8 +678,8 @@ _GETSCOPERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=875,
-  serialized_end=922,
+  serialized_start=850,
+  serialized_end=897,
 )
 
 
@@ -737,8 +723,8 @@ _SETSCOPEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=924,
-  serialized_end=1001,
+  serialized_start=899,
+  serialized_end=976,
 )
 
 
@@ -761,8 +747,8 @@ _SETSCOPERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1003,
-  serialized_end=1021,
+  serialized_start=978,
+  serialized_end=996,
 )
 
 
@@ -792,8 +778,8 @@ _GETACLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1023,
-  serialized_end=1052,
+  serialized_start=998,
+  serialized_end=1027,
 )
 
 
@@ -830,8 +816,8 @@ _ACLENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1054,
-  serialized_end=1110,
+  serialized_start=1029,
+  serialized_end=1085,
 )
 
 
@@ -849,6 +835,13 @@ _GETACLRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='robot_entries', full_name='auth.GetACLResponse.robot_entries', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -861,8 +854,8 @@ _GETACLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1112,
-  serialized_end=1161,
+  serialized_start=1087,
+  serialized_end=1175,
 )
 
 
@@ -899,8 +892,8 @@ _SETACLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1163,
-  serialized_end=1225,
+  serialized_start=1177,
+  serialized_end=1239,
 )
 
 
@@ -923,18 +916,32 @@ _SETACLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1227,
-  serialized_end=1243,
+  serialized_start=1241,
+  serialized_end=1257,
 )
 
 
-_GETCAPABILITYREQUEST = _descriptor.Descriptor(
-  name='GetCapabilityRequest',
-  full_name='auth.GetCapabilityRequest',
+_GETAUTHTOKENREQUEST = _descriptor.Descriptor(
+  name='GetAuthTokenRequest',
+  full_name='auth.GetAuthTokenRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='subject', full_name='auth.GetAuthTokenRequest.subject', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ttl', full_name='auth.GetAuthTokenRequest.ttl', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -947,20 +954,20 @@ _GETCAPABILITYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1245,
-  serialized_end=1267,
+  serialized_start=1259,
+  serialized_end=1310,
 )
 
 
-_GETCAPABILITYRESPONSE = _descriptor.Descriptor(
-  name='GetCapabilityResponse',
-  full_name='auth.GetCapabilityResponse',
+_GETAUTHTOKENRESPONSE = _descriptor.Descriptor(
+  name='GetAuthTokenResponse',
+  full_name='auth.GetAuthTokenResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='capability', full_name='auth.GetCapabilityResponse.capability', index=0,
+      name='token', full_name='auth.GetAuthTokenResponse.token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -978,8 +985,70 @@ _GETCAPABILITYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1269,
-  serialized_end=1312,
+  serialized_start=1312,
+  serialized_end=1349,
+)
+
+
+_EXTENDAUTHTOKENREQUEST = _descriptor.Descriptor(
+  name='ExtendAuthTokenRequest',
+  full_name='auth.ExtendAuthTokenRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='token', full_name='auth.ExtendAuthTokenRequest.token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ttl', full_name='auth.ExtendAuthTokenRequest.ttl', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1351,
+  serialized_end=1403,
+)
+
+
+_EXTENDAUTHTOKENRESPONSE = _descriptor.Descriptor(
+  name='ExtendAuthTokenResponse',
+  full_name='auth.ExtendAuthTokenResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1405,
+  serialized_end=1430,
 )
 
 
@@ -1009,8 +1078,8 @@ _REVOKEAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1314,
-  serialized_end=1353,
+  serialized_start=1432,
+  serialized_end=1471,
 )
 
 
@@ -1033,12 +1102,12 @@ _REVOKEAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1355,
-  serialized_end=1380,
+  serialized_start=1473,
+  serialized_end=1498,
 )
 
-_USER.fields_by_name['type'].enum_type = _USER_USERTYPE
-_USER_USERTYPE.containing_type = _USER
+_TOKENINFO.fields_by_name['source'].enum_type = _TOKENINFO_TOKENSOURCE
+_TOKENINFO_TOKENSOURCE.containing_type = _TOKENINFO
 _ACL_ENTRIESENTRY.fields_by_name['value'].enum_type = _SCOPE
 _ACL_ENTRIESENTRY.containing_type = _ACL
 _ACL.fields_by_name['entries'].message_type = _ACL_ENTRIESENTRY
@@ -1047,6 +1116,7 @@ _GETSCOPERESPONSE.fields_by_name['scopes'].enum_type = _SCOPE
 _SETSCOPEREQUEST.fields_by_name['scope'].enum_type = _SCOPE
 _ACLENTRY.fields_by_name['scope'].enum_type = _SCOPE
 _GETACLRESPONSE.fields_by_name['entries'].message_type = _ACLENTRY
+_GETACLRESPONSE.fields_by_name['robot_entries'].message_type = _ACLENTRY
 _SETACLREQUEST.fields_by_name['entries'].message_type = _ACLENTRY
 DESCRIPTOR.message_types_by_name['ActivateRequest'] = _ACTIVATEREQUEST
 DESCRIPTOR.message_types_by_name['ActivateResponse'] = _ACTIVATERESPONSE
@@ -1056,7 +1126,7 @@ DESCRIPTOR.message_types_by_name['GetAdminsRequest'] = _GETADMINSREQUEST
 DESCRIPTOR.message_types_by_name['GetAdminsResponse'] = _GETADMINSRESPONSE
 DESCRIPTOR.message_types_by_name['ModifyAdminsRequest'] = _MODIFYADMINSREQUEST
 DESCRIPTOR.message_types_by_name['ModifyAdminsResponse'] = _MODIFYADMINSRESPONSE
-DESCRIPTOR.message_types_by_name['User'] = _USER
+DESCRIPTOR.message_types_by_name['TokenInfo'] = _TOKENINFO
 DESCRIPTOR.message_types_by_name['AuthenticateRequest'] = _AUTHENTICATEREQUEST
 DESCRIPTOR.message_types_by_name['AuthenticateResponse'] = _AUTHENTICATERESPONSE
 DESCRIPTOR.message_types_by_name['WhoAmIRequest'] = _WHOAMIREQUEST
@@ -1073,8 +1143,10 @@ DESCRIPTOR.message_types_by_name['ACLEntry'] = _ACLENTRY
 DESCRIPTOR.message_types_by_name['GetACLResponse'] = _GETACLRESPONSE
 DESCRIPTOR.message_types_by_name['SetACLRequest'] = _SETACLREQUEST
 DESCRIPTOR.message_types_by_name['SetACLResponse'] = _SETACLRESPONSE
-DESCRIPTOR.message_types_by_name['GetCapabilityRequest'] = _GETCAPABILITYREQUEST
-DESCRIPTOR.message_types_by_name['GetCapabilityResponse'] = _GETCAPABILITYRESPONSE
+DESCRIPTOR.message_types_by_name['GetAuthTokenRequest'] = _GETAUTHTOKENREQUEST
+DESCRIPTOR.message_types_by_name['GetAuthTokenResponse'] = _GETAUTHTOKENRESPONSE
+DESCRIPTOR.message_types_by_name['ExtendAuthTokenRequest'] = _EXTENDAUTHTOKENREQUEST
+DESCRIPTOR.message_types_by_name['ExtendAuthTokenResponse'] = _EXTENDAUTHTOKENRESPONSE
 DESCRIPTOR.message_types_by_name['RevokeAuthTokenRequest'] = _REVOKEAUTHTOKENREQUEST
 DESCRIPTOR.message_types_by_name['RevokeAuthTokenResponse'] = _REVOKEAUTHTOKENRESPONSE
 DESCRIPTOR.enum_types_by_name['Scope'] = _SCOPE
@@ -1136,12 +1208,12 @@ ModifyAdminsResponse = _reflection.GeneratedProtocolMessageType('ModifyAdminsRes
   ))
 _sym_db.RegisterMessage(ModifyAdminsResponse)
 
-User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dict(
-  DESCRIPTOR = _USER,
+TokenInfo = _reflection.GeneratedProtocolMessageType('TokenInfo', (_message.Message,), dict(
+  DESCRIPTOR = _TOKENINFO,
   __module__ = 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.User)
+  # @@protoc_insertion_point(class_scope:auth.TokenInfo)
   ))
-_sym_db.RegisterMessage(User)
+_sym_db.RegisterMessage(TokenInfo)
 
 AuthenticateRequest = _reflection.GeneratedProtocolMessageType('AuthenticateRequest', (_message.Message,), dict(
   DESCRIPTOR = _AUTHENTICATEREQUEST,
@@ -1263,19 +1335,33 @@ SetACLResponse = _reflection.GeneratedProtocolMessageType('SetACLResponse', (_me
   ))
 _sym_db.RegisterMessage(SetACLResponse)
 
-GetCapabilityRequest = _reflection.GeneratedProtocolMessageType('GetCapabilityRequest', (_message.Message,), dict(
-  DESCRIPTOR = _GETCAPABILITYREQUEST,
+GetAuthTokenRequest = _reflection.GeneratedProtocolMessageType('GetAuthTokenRequest', (_message.Message,), dict(
+  DESCRIPTOR = _GETAUTHTOKENREQUEST,
   __module__ = 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetCapabilityRequest)
+  # @@protoc_insertion_point(class_scope:auth.GetAuthTokenRequest)
   ))
-_sym_db.RegisterMessage(GetCapabilityRequest)
+_sym_db.RegisterMessage(GetAuthTokenRequest)
 
-GetCapabilityResponse = _reflection.GeneratedProtocolMessageType('GetCapabilityResponse', (_message.Message,), dict(
-  DESCRIPTOR = _GETCAPABILITYRESPONSE,
+GetAuthTokenResponse = _reflection.GeneratedProtocolMessageType('GetAuthTokenResponse', (_message.Message,), dict(
+  DESCRIPTOR = _GETAUTHTOKENRESPONSE,
   __module__ = 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetCapabilityResponse)
+  # @@protoc_insertion_point(class_scope:auth.GetAuthTokenResponse)
   ))
-_sym_db.RegisterMessage(GetCapabilityResponse)
+_sym_db.RegisterMessage(GetAuthTokenResponse)
+
+ExtendAuthTokenRequest = _reflection.GeneratedProtocolMessageType('ExtendAuthTokenRequest', (_message.Message,), dict(
+  DESCRIPTOR = _EXTENDAUTHTOKENREQUEST,
+  __module__ = 'client.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth.ExtendAuthTokenRequest)
+  ))
+_sym_db.RegisterMessage(ExtendAuthTokenRequest)
+
+ExtendAuthTokenResponse = _reflection.GeneratedProtocolMessageType('ExtendAuthTokenResponse', (_message.Message,), dict(
+  DESCRIPTOR = _EXTENDAUTHTOKENRESPONSE,
+  __module__ = 'client.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth.ExtendAuthTokenResponse)
+  ))
+_sym_db.RegisterMessage(ExtendAuthTokenResponse)
 
 RevokeAuthTokenRequest = _reflection.GeneratedProtocolMessageType('RevokeAuthTokenRequest', (_message.Message,), dict(
   DESCRIPTOR = _REVOKEAUTHTOKENREQUEST,
@@ -1301,8 +1387,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=1437,
-  serialized_end=2289,
+  serialized_start=1555,
+  serialized_end=2486,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',
@@ -1404,18 +1490,27 @@ _API = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='GetCapability',
-    full_name='auth.API.GetCapability',
+    name='GetAuthToken',
+    full_name='auth.API.GetAuthToken',
     index=11,
     containing_service=None,
-    input_type=_GETCAPABILITYREQUEST,
-    output_type=_GETCAPABILITYRESPONSE,
+    input_type=_GETAUTHTOKENREQUEST,
+    output_type=_GETAUTHTOKENRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ExtendAuthToken',
+    full_name='auth.API.ExtendAuthToken',
+    index=12,
+    containing_service=None,
+    input_type=_EXTENDAUTHTOKENREQUEST,
+    output_type=_EXTENDAUTHTOKENRESPONSE,
     options=None,
   ),
   _descriptor.MethodDescriptor(
     name='RevokeAuthToken',
     full_name='auth.API.RevokeAuthToken',
-    index=12,
+    index=13,
     containing_service=None,
     input_type=_REVOKEAUTHTOKENREQUEST,
     output_type=_REVOKEAUTHTOKENRESPONSE,
