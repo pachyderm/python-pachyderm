@@ -15,7 +15,7 @@ git checkout -b v1.2.3
 e.g.
 
 ```
-PACHYDERM_VERSION="v1.2.3." make sync
+make PACHYDERM_VERSION="1.2.3" sync
 ```
 
 This will update the protos based on the latest pachyderm changes.
