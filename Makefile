@@ -10,7 +10,7 @@ proto: docker-build-proto
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
 
-test: 
+test:
 	@# Re-build the protos just to make sure the process succeeds,
 	@# as its fragile to the python directory structure in this package
 	# Need to temporarily remove the pachyderm code base, otherwise pytest
@@ -59,7 +59,7 @@ sync:
 
 release:
 	# Bump the version
-	expr $$(cat BUILD) + 1 > BUILD
+	expr $$(cat BUILD) + 1 > BUILD_NUMBER
 	python setup.py sdist
 	twine upload dist/*
 

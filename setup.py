@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 def get_version():
     f = open("VERSION","r")
     version = f.read().strip()
-    f = open("BUILD","r")
+    f = open("BUILD_NUMBER","r")
     build = f.read().strip()
     return version + "-" + build
 
