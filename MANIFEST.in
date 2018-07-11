@@ -9,7 +9,7 @@ include LICENSE
 include README.rst
 
 include VERSION
-include BUILD
+include BUILD_NUMBER
 
 include tox.ini .travis.yml
 
