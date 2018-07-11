@@ -59,7 +59,7 @@ sync:
 
 release:
 	# Bump the version
-	expr $$(cat BUILD) + 1 > BUILD_NUMBER
+	expr $$(cat BUILD_NUMBER_NUMBER) + 1 > BUILD_NUMBER_NUMBER
 	python setup.py sdist
 	twine upload dist/*
 
