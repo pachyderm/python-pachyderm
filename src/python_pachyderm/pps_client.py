@@ -4,8 +4,8 @@ from __future__ import absolute_import
 
 import os
 
-from .client.pps.pps_pb2 import *
-from .client.pps.pps_pb2_grpc import *
+from python_pachyderm.client.pps.pps_pb2 import *
+from python_pachyderm.client.pps.pps_pb2_grpc import *
 
 
 class PpsClient(object):

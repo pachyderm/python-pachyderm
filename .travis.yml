@@ -2,8 +2,11 @@ dist: trusty
 sudo: required
 language: python
 python:
-    #  - 2.7 #TODO - Right now the tests require 'builtin' import, so we'll need to import this from the future module
-  - 3.5
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - '3.6'
+  - '3.7-dev'   # Change to "3.7" once Travis gets it on their machines
 before_script:
 - make ci-setup
 script:

@@ -6,8 +6,8 @@ import collections
 import os
 from contextlib import contextmanager
 
-from .client.pfs.pfs_pb2 import *
-from .client.pfs.pfs_pb2_grpc import *
+from python_pachyderm.client.pfs.pfs_pb2 import *
+from python_pachyderm.client.pfs.pfs_pb2_grpc import *
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
