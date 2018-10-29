@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import os
-from builtins import object
 
 from .client.pps.pps_pb2 import *
 from .client.pps.pps_pb2_grpc import *

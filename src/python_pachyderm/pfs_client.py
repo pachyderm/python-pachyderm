@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import collections
 import os
-from builtins import object
 from contextlib import contextmanager
 
 from .client.pfs.pfs_pb2 import *
@@ -186,7 +187,7 @@ class PfsClient(object):
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
         Lists commits.
-         
+
         :param repo_name: If only `repo_name` is given, all commits in the repo are returned.
         :param to_commit: optional. only the ancestors of `to`, including `to` itself,
                         are considered.
@@ -239,7 +240,7 @@ class PfsClient(object):
         they come in.
 
         :param repo_name: Name of the repo
-        :param branch: Branch to subscribe to 
+        :param branch: Branch to subscribe to
         :param from_commit_id: Optional. only commits created since this commit are returned
 
         :return: Iterator of Commit objects
@@ -264,7 +265,7 @@ class PfsClient(object):
     def set_branch(self, commit, branch_name):
         """
         sets a commit and its ancestors as a branch
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param branch_name: The name for the branch to set
         """
         self.stub.SetBranch(SetBranchRequest(commit=_commit_from(commit),
@@ -275,8 +276,8 @@ class PfsClient(object):
         deletes a branch, but leaves the commits themselves intact.
         In other words, those commits can still be accessed via commit IDs and
         other branches they happen to be on.
-        :param repo_name: The name of the repo 
-        :param branch_name: The name of the branch to delete 
+        :param repo_name: The name of the repo
+        :param branch_name: The name of the branch to delete
         """
         self.stub.DeleteBranch(DeleteBranchRequest(repo=Repo(name=repo_name),
                                                    branch=branch_name))
@@ -285,16 +286,16 @@ class PfsClient(object):
                        target_file_datums=0, target_file_bytes=0):
         """
         Uploads a binary bytes array as file(s) in a certain path
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param path: Path in the repo the file(s) will be written to
-        :param value: The data bytes array, or an iterator returning chunked byte arrays 
+        :param value: The data bytes array, or an iterator returning chunked byte arrays
         :param delimiter: Optional. causes data to be broken up into separate files with `path`
                 as a prefix.
         :param target_file_datums: Optional. specifies the target number of datums in each written
                 file it may be lower if data does not split evenly, but will never be
                 higher, unless the value is 0.
         :param target_file_bytes: specifies the target number of bytes in each written
-                file, files may have more or fewer bytes than the target. 
+                file, files may have more or fewer bytes than the target.
         """
 
         if _is_iterator(value):
@@ -324,7 +325,7 @@ class PfsClient(object):
         puts a file using the content found at a URL.
         The URL is sent to the server which performs the request.
 
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param path: The path to the file
         :param url: The url to download
         :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.
@@ -337,13 +338,13 @@ class PfsClient(object):
         """
         returns the contents of a file at a specific Commit.
 
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param path: The path of the file
-        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file. 
+        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file.
         :param size_bytes: Optional. limits the total amount of data returned, note you will get fewer bytes
                 than size if you pass a value larger than the size of the file.
                 If size is set to 0 then all of the data will be returned.
-        :param extract_value: If True, then an ExtractValueIterator will be return, which 
+        :param extract_value: If True, then an ExtractValueIterator will be return, which
                     will iterate over the bytes of the file. If False, then the Protobuf
                     response iterator will return
         :return: An iterator over the file or an iterator over the protobuf responses
@@ -360,7 +361,7 @@ class PfsClient(object):
         """
         returns the contents of a list of files at a specific Commit.
 
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param paths: A list of paths to retrieve
         :param recursive: If True, will go into each directory in the list recursively
         :return: A dictionary of file paths and data
@@ -380,7 +381,7 @@ class PfsClient(object):
     def inspect_file(self, commit, path):
         """
         returns info about a specific file.
-        :param commit: A tuple or string representing the commit 
+        :param commit: A tuple or string representing the commit
         :param path: Path to file
         :return: A FileInfo object
         """
@@ -408,8 +409,8 @@ class PfsClient(object):
     def glob_file(self, commit, pattern):
         """
         ?
-        :param commit: 
-        :param pattern: 
+        :param commit:
+        :param pattern:
         :return: A list of FileInfo objects
         """
         r = self.stub.GlobFile(GlobFileRequest(commit=_commit_from(commit),

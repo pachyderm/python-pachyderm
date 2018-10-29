@@ -4,7 +4,6 @@
 """Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
 
-from builtins import str
 from collections import namedtuple
 import pytest
 import python_pachyderm
