@@ -81,15 +81,20 @@ class APIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
         response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
         )
+    self.CreateBranch = channel.unary_unary(
+        '/pfs.API/CreateBranch',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectBranch = channel.unary_unary(
+        '/pfs.API/InspectBranch',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
+        )
     self.ListBranch = channel.unary_unary(
         '/pfs.API/ListBranch',
         request_serializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
         response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
-        )
-    self.SetBranch = channel.unary_unary(
-        '/pfs.API/SetBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.SetBranchRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.DeleteBranch = channel.unary_unary(
         '/pfs.API/DeleteBranch',
@@ -252,15 +257,22 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ListBranch(self, request, context):
-    """ListBranch returns info about the heads of branches.
+  def CreateBranch(self, request, context):
+    """CreateBranch creates a new branch
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def SetBranch(self, request, context):
-    """SetBranch assigns a commit and its ancestors to a branch.
+  def InspectBranch(self, request, context):
+    """InspectBranch returns info about a branch.
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListBranch(self, request, context):
+    """ListBranch returns info about the heads of branches.
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -425,15 +437,20 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.FromString,
           response_serializer=client_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
       ),
+      'CreateBranch': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateBranch,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'InspectBranch': grpc.unary_unary_rpc_method_handler(
+          servicer.InspectBranch,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
+      ),
       'ListBranch': grpc.unary_unary_rpc_method_handler(
           servicer.ListBranch,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
           response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
-      ),
-      'SetBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.SetBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.SetBranchRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'DeleteBranch': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteBranch,
