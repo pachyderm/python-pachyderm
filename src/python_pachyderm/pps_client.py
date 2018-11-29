@@ -54,8 +54,8 @@ class PpsClient(object):
                         reprocess, batch):
         self.stub.CreatePipeline(
             CreatePipelineRequest(pipeline=pipeline, transform=transform, parallelism_spec=parallelism_spec,
-                                  inputs=inputs, egress=egress, update=update, output_branch=output_branch,
-                                  scale_down_threshold=scale_down_threshold, resource_spec=resource_spec, input=input,
+                                  egress=egress, update=update, output_branch=output_branch,
+                                  scale_down_threshold=scale_down_threshold, input=input,
                                   description=description, incremental=incremental, cache_size=cache_size,
                                   enable_stats=enable_stats, reprocess=reprocess, batch=batch))
 

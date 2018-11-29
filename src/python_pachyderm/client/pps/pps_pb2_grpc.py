@@ -35,6 +35,11 @@ class APIStub(object):
         request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
         response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
         )
+    self.FlushJob = channel.unary_stream(
+        '/pps.API/FlushJob',
+        request_serializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
+        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
+        )
     self.DeleteJob = channel.unary_unary(
         '/pps.API/DeleteJob',
         request_serializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
@@ -115,6 +120,11 @@ class APIStub(object):
         request_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.SerializeToString,
         response_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.FromString,
         )
+    self.ActivateAuth = channel.unary_unary(
+        '/pps.API/ActivateAuth',
+        request_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
+        response_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
+        )
 
 
 class APIServicer(object):
@@ -146,6 +156,13 @@ class APIServicer(object):
   def ListJobStream(self, request, context):
     """ListJobStream returns information about current and past Pachyderm jobs.
     """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def FlushJob(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -263,6 +280,14 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ActivateAuth(self, request, context):
+    """An internal call that causes PPS to put itself into an auth-enabled state
+    (all pipeline have tokens, correct permissions, etcd)
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -284,6 +309,11 @@ def add_APIServicer_to_server(servicer, server):
       'ListJobStream': grpc.unary_stream_rpc_method_handler(
           servicer.ListJobStream,
           request_deserializer=client_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
+          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
+      ),
+      'FlushJob': grpc.unary_stream_rpc_method_handler(
+          servicer.FlushJob,
+          request_deserializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.FromString,
           response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
       ),
       'DeleteJob': grpc.unary_unary_rpc_method_handler(
@@ -365,6 +395,11 @@ def add_APIServicer_to_server(servicer, server):
           servicer.GarbageCollect,
           request_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.FromString,
           response_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.SerializeToString,
+      ),
+      'ActivateAuth': grpc.unary_unary_rpc_method_handler(
+          servicer.ActivateAuth,
+          request_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.FromString,
+          response_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
