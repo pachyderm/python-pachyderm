@@ -40,7 +40,7 @@ ci-setup:
 	which pachctl
 	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
-	pachctl version
+	ADDRESS=$$(minikube ip):30650 pachctl version
 
 sync:
 	# NOTE: This task must be run like:
