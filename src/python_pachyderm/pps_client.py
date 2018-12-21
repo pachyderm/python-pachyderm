@@ -49,15 +49,15 @@ class PpsClient(object):
     def restart_datum(self, job_id, data_filters=tuple()):
         self.stub.RestartDatum(RestartDatumRequest(job=Job(id=job_id, data_filters=data_filters)))
 
-    def create_pipeline(self, pipeline, transform, parallelism_spec, inputs, egress, update, output_branch,
+    def create_pipeline(self, pipeline, transform, parallelism_spec, egress, update, output_branch,
                         scale_down_threshold, resource_spec, input, description, incremental, cache_size, enable_stats,
-                        reprocess, batch):
+                        reprocess, batch, scheduling_spec):
         self.stub.CreatePipeline(
             CreatePipelineRequest(pipeline=pipeline, transform=transform, parallelism_spec=parallelism_spec,
                                   egress=egress, update=update, output_branch=output_branch,
-                                  scale_down_threshold=scale_down_threshold, input=input,
+                                  scale_down_threshold=scale_down_threshold, input=input, standby=True,
                                   description=description, incremental=incremental, cache_size=cache_size,
-                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch))
+                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch, scheduling_spec=scheduling_spec))
 
     def inspect_pipeline(self, pipeline_name):
         return self.stub.InspectPipeline(InspectPipelineRequest(pipeline=Pipeline(name=pipeline_name)))
