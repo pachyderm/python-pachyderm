@@ -8,6 +8,18 @@ Created by `kalugny <https://github.com/kalugny>`_
 
 (Formerly kalugny/pypachy)
 
+## Community
+Keep up to date and get Pachyderm support via:
+- [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/pachydermio.svg?style=social&label=Follow%20%40pachydermio)](http://twitter.com/pachydermio) Follow us on Twitter.
+- [![Slack Status](http://slack.pachyderm.io/badge.svg)](http://slack.pachyderm.io) Join our community [Slack Channel](http://slack.pachyderm.io) to get help from the Pachyderm team and other users.
+
+### Contributing
+
+This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our slack channel and we'd love to give you additionnal guidance. 
+
+To get started, sign the [Contributor License Agreement](https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement).
+
+
 .. start-badges
 
 
