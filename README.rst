@@ -13,7 +13,7 @@ Contributing
 
 This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our `slack channel <slack.pachyderm.io>`_ and we'd love to give you additionnal guidance. 
 
-To get started, sign the `_Contributor License Agreement <https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement>`_.
+To get started, sign the `Contributor License Agreement <https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement>`_.
 
 
 .. start-badges
