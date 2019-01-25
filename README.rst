@@ -8,14 +8,6 @@ Created by `kalugny <https://github.com/kalugny>`_
 
 (Formerly kalugny/pypachy)
 
-Contributing
-~~~~~~~~~~~~
-
-This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our `slack channel <slack.pachyderm.io>`_ and we'd love to give you additionnal guidance. 
-
-To get started, sign the `Contributor License Agreement <https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement>`_.
-
-
 .. start-badges
 
 
@@ -47,6 +39,14 @@ A python client wrapper for the Pachyderm_ API.
 * Currently implements the PFS interface and only alpha support for the PPS interface.
 
 * Supports Pachyderm versions 1.4 and up.
+
+Contributing
+~~~~~~~~~~~~
+
+This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our `slack channel <slack.pachyderm.io>`_ and we'd love to give you additionnal guidance. 
+
+To get started, sign the `Contributor License Agreement <https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement>`_.
+
 
 Installation
 ============
