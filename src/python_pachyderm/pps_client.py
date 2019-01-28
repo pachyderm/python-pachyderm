@@ -51,13 +51,13 @@ class PpsClient(object):
 
     def create_pipeline(self, pipeline, transform, parallelism_spec, egress, update, output_branch,
                         scale_down_threshold, resource_spec, input, description, incremental, cache_size, enable_stats,
-                        reprocess, batch, scheduling_spec, standby):
+                        reprocess, batch, scheduling_spec, standby, service):
         self.stub.CreatePipeline(
             CreatePipelineRequest(pipeline=pipeline, transform=transform, parallelism_spec=parallelism_spec,
                                   egress=egress, update=update, output_branch=output_branch,
                                   scale_down_threshold=scale_down_threshold, input=input, standby=standby,
                                   description=description, incremental=incremental, cache_size=cache_size,
-                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch, scheduling_spec=scheduling_spec))
+                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch, scheduling_spec=scheduling_spec, service=service))
 
     def inspect_pipeline(self, pipeline_name):
         return self.stub.InspectPipeline(InspectPipelineRequest(pipeline=Pipeline(name=pipeline_name)))
