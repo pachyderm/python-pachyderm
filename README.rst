@@ -1,6 +1,4 @@
-========
-Python Pachyderm
-========
+# Python Pachyderm
 
 Official Python Pachyderm Client
 
@@ -40,23 +38,13 @@ A python client wrapper for the Pachyderm_ API.
 
 * Supports Pachyderm versions 1.4 and up.
 
-Contributing
-~~~~~~~~~~~~
-
-This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our `slack channel <slack.pachyderm.io>`_ and we'd love to give you additionnal guidance. 
-
-To get started, sign the `Contributor License Agreement <https://pachyderm.wufoo.com/forms/pachyderm-contributor-license-agreement>`_.
-
-
-Installation
-============
+## Installation
 
 .. code:: bash
 
     pip install python-pachyderm
 
-Usage and options
-=================
+## Usage and options
 
 All of the PFS functions used in ``pachctl`` are supported (almost) as-is.
 
@@ -65,8 +53,7 @@ There are some helper functions that help make things more pythonic:
 * ``commit`` which is a context manager wrapper for ``start_commit`` and ``finish_commit``
 * ``get_files`` which supports getting the data from multiple files
 
-Naming commits
---------------
+### Naming commits
 
 All functions that accept a ``commit`` argument will accept a tuple of ``(repo, branch)`` or ``(repo, commit_id)``,
 a string like ``repo/branch`` or ``repo/commit_id`` and a Commit object.
@@ -80,8 +67,7 @@ e.g:
     >>> c = client.list_commit('my_repo')[0]            # get some commit
     >>> client.list_file(c, '/')                        # and use it directly
 
-Basic usage example
--------------------
+### Basic usage example
 
 .. code:: python
 
@@ -105,15 +91,26 @@ As of version 0.1.4, there is also limited support for PPS:
     >>> pps_client.list_pipeline()
     ...
 
-To Do
-=====
+## Contributing
+
+This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Join our `slack channel <slack.pachyderm.io>`_ and we'd love to give you additional guidance.
+
+### Getting started
+
+To run tests, clone the repo, then run:
+
+```
+make init
+tox
+```
+
+## TODO
 
 * Achieve full test coverage for PFS and PPS.
 * Add support for ``description`` field in ``Commit``.
 * Add support for ``ObjectAPI``
 
-Changelog
-=========
+## Changelog
 
 See `CHANGELOG.rst <https://github.com/pachyderm/python_pachyderm/blob/master/CHANGELOG.rst>`_.
 
