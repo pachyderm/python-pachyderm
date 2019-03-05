@@ -14,10 +14,6 @@ init:
 	git submodule update --init
 
 ci-setup:
-	@# For some reason, I have to install these libs this way for CI
-	pip uninstall protobuf || true
-	pip uninstall google || true
-	pip install -r requirements_dev.txt
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
