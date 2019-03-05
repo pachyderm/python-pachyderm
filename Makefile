@@ -10,18 +10,6 @@ proto: docker-build-proto
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
 
-test:
-	@# Re-build the protos just to make sure the process succeeds,
-	@# as its fragile to the python directory structure in this package
-	# Need to temporarily remove the pachyderm code base, otherwise pytest
-	# complains about python files in there
-	mv proto/pachyderm proto/.pachyderm || true
-	# Modify the python path for the test harness
-	# This is hacky, but the alternative seems to be hacking a grpc generated file,
-	# which is a no-no
-	PYTHONPATH="$$PYTHONPATH:$$PWD/src" pytest
-	mv proto/.pachyderm proto/pachyderm
-
 init:
 	git submodule update --init
 

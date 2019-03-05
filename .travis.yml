@@ -8,7 +8,7 @@ before_script:
 - make ci-setup
 script:
 - make proto
-- make test
+- tox
 
 # Only email on failure
 notifications:
