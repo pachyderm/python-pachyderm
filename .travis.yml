@@ -14,7 +14,7 @@ env:
   global:
     - PATH=$HOME/cached-deps:$PATH
 
-before_install:
+install:
 - make ci-install
 before_script:
 - make ci-setup
