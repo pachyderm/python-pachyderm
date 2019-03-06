@@ -6,6 +6,8 @@
 
 Official Python Pachyderm client. Created by [kalugny](https://github.com/kalugny) (formerly kalugny/pypachy.)
 
+See the [API docs](https://htmlpreview.github.io/?https://github.com/pachyderm/python-pachyderm/blob/master/docs/python_pachyderm/index.html).
+
 ## Installation
 
 ```bash
