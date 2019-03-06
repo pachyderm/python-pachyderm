@@ -1,5 +1,9 @@
 SHELL := /bin/bash
 
+docs:
+	python3 setup.py clean build install
+	pdoc --html --html-dir ./docs ./src/python_pachyderm
+
 docker-build-proto:
 	pushd proto && \
 		docker build -t pachyderm_python_proto .
@@ -52,4 +56,4 @@ release:
 	python setup.py sdist
 	twine upload dist/*
 
-.PHONY: test
+.PHONY: docker-build-proto init ci-install ci-setup sync release
