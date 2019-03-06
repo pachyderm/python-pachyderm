@@ -19,8 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/health/health.proto',
   package='health',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x1a\x63lient/health/health.proto\x12\x06health\x1a\x1bgoogle/protobuf/empty.proto2D\n\x06Health\x12:\n\x06Health\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x62\x06proto3')
+  serialized_options=_b('Z0github.com/pachyderm/pachyderm/src/client/health'),
+  serialized_pb=_b('\n\x1a\x63lient/health/health.proto\x12\x06health\x1a\x1bgoogle/protobuf/empty.proto2D\n\x06Health\x12:\n\x06Health\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x42\x32Z0github.com/pachyderm/pachyderm/src/client/healthb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -29,6 +29,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
+DESCRIPTOR._options = None
 
 _HEALTH = _descriptor.ServiceDescriptor(
   name='Health',

@@ -24,6 +24,16 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.DeactivateRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.DeactivateResponse.FromString,
         )
+    self.GetConfiguration = channel.unary_unary(
+        '/auth.API/GetConfiguration',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetConfigurationRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetConfigurationResponse.FromString,
+        )
+    self.SetConfiguration = channel.unary_unary(
+        '/auth.API/SetConfiguration',
+        request_serializer=client_dot_auth_dot_auth__pb2.SetConfigurationRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.SetConfigurationResponse.FromString,
+        )
     self.GetAdmins = channel.unary_unary(
         '/auth.API/GetAdmins',
         request_serializer=client_dot_auth_dot_auth__pb2.GetAdminsRequest.SerializeToString,
@@ -69,15 +79,45 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.SetACLRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.SetACLResponse.FromString,
         )
-    self.GetCapability = channel.unary_unary(
-        '/auth.API/GetCapability',
-        request_serializer=client_dot_auth_dot_auth__pb2.GetCapabilityRequest.SerializeToString,
-        response_deserializer=client_dot_auth_dot_auth__pb2.GetCapabilityResponse.FromString,
+    self.GetAuthToken = channel.unary_unary(
+        '/auth.API/GetAuthToken',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetAuthTokenRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetAuthTokenResponse.FromString,
+        )
+    self.ExtendAuthToken = channel.unary_unary(
+        '/auth.API/ExtendAuthToken',
+        request_serializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenResponse.FromString,
         )
     self.RevokeAuthToken = channel.unary_unary(
         '/auth.API/RevokeAuthToken',
         request_serializer=client_dot_auth_dot_auth__pb2.RevokeAuthTokenRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.RevokeAuthTokenResponse.FromString,
+        )
+    self.SetGroupsForUser = channel.unary_unary(
+        '/auth.API/SetGroupsForUser',
+        request_serializer=client_dot_auth_dot_auth__pb2.SetGroupsForUserRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.SetGroupsForUserResponse.FromString,
+        )
+    self.ModifyMembers = channel.unary_unary(
+        '/auth.API/ModifyMembers',
+        request_serializer=client_dot_auth_dot_auth__pb2.ModifyMembersRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.ModifyMembersResponse.FromString,
+        )
+    self.GetGroups = channel.unary_unary(
+        '/auth.API/GetGroups',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetGroupsRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetGroupsResponse.FromString,
+        )
+    self.GetUsers = channel.unary_unary(
+        '/auth.API/GetUsers',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetUsersRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetUsersResponse.FromString,
+        )
+    self.GetOneTimePassword = channel.unary_unary(
+        '/auth.API/GetOneTimePassword',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.FromString,
         )
 
 
@@ -95,6 +135,20 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def Deactivate(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetConfiguration(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SetConfiguration(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -164,7 +218,14 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetCapability(self, request, context):
+  def GetAuthToken(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ExtendAuthToken(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -172,6 +233,41 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def RevokeAuthToken(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SetGroupsForUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ModifyMembers(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetGroups(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetUsers(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetOneTimePassword(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -190,6 +286,16 @@ def add_APIServicer_to_server(servicer, server):
           servicer.Deactivate,
           request_deserializer=client_dot_auth_dot_auth__pb2.DeactivateRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.DeactivateResponse.SerializeToString,
+      ),
+      'GetConfiguration': grpc.unary_unary_rpc_method_handler(
+          servicer.GetConfiguration,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetConfigurationRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetConfigurationResponse.SerializeToString,
+      ),
+      'SetConfiguration': grpc.unary_unary_rpc_method_handler(
+          servicer.SetConfiguration,
+          request_deserializer=client_dot_auth_dot_auth__pb2.SetConfigurationRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.SetConfigurationResponse.SerializeToString,
       ),
       'GetAdmins': grpc.unary_unary_rpc_method_handler(
           servicer.GetAdmins,
@@ -236,15 +342,45 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_auth_dot_auth__pb2.SetACLRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.SetACLResponse.SerializeToString,
       ),
-      'GetCapability': grpc.unary_unary_rpc_method_handler(
-          servicer.GetCapability,
-          request_deserializer=client_dot_auth_dot_auth__pb2.GetCapabilityRequest.FromString,
-          response_serializer=client_dot_auth_dot_auth__pb2.GetCapabilityResponse.SerializeToString,
+      'GetAuthToken': grpc.unary_unary_rpc_method_handler(
+          servicer.GetAuthToken,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetAuthTokenRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetAuthTokenResponse.SerializeToString,
+      ),
+      'ExtendAuthToken': grpc.unary_unary_rpc_method_handler(
+          servicer.ExtendAuthToken,
+          request_deserializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.ExtendAuthTokenResponse.SerializeToString,
       ),
       'RevokeAuthToken': grpc.unary_unary_rpc_method_handler(
           servicer.RevokeAuthToken,
           request_deserializer=client_dot_auth_dot_auth__pb2.RevokeAuthTokenRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.RevokeAuthTokenResponse.SerializeToString,
+      ),
+      'SetGroupsForUser': grpc.unary_unary_rpc_method_handler(
+          servicer.SetGroupsForUser,
+          request_deserializer=client_dot_auth_dot_auth__pb2.SetGroupsForUserRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.SetGroupsForUserResponse.SerializeToString,
+      ),
+      'ModifyMembers': grpc.unary_unary_rpc_method_handler(
+          servicer.ModifyMembers,
+          request_deserializer=client_dot_auth_dot_auth__pb2.ModifyMembersRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.ModifyMembersResponse.SerializeToString,
+      ),
+      'GetGroups': grpc.unary_unary_rpc_method_handler(
+          servicer.GetGroups,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetGroupsRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetGroupsResponse.SerializeToString,
+      ),
+      'GetUsers': grpc.unary_unary_rpc_method_handler(
+          servicer.GetUsers,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetUsersRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetUsersResponse.SerializeToString,
+      ),
+      'GetOneTimePassword': grpc.unary_unary_rpc_method_handler(
+          servicer.GetOneTimePassword,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

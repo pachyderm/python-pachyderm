@@ -24,6 +24,11 @@ class APIStub(object):
         request_serializer=client_dot_enterprise_dot_enterprise__pb2.GetStateRequest.SerializeToString,
         response_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetStateResponse.FromString,
         )
+    self.Deactivate = channel.unary_unary(
+        '/enterprise.API/Deactivate',
+        request_serializer=client_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
+        response_deserializer=client_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.FromString,
+        )
 
 
 class APIServicer(object):
@@ -45,6 +50,19 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def Deactivate(self, request, context):
+    """Deactivate is a testing API. It removes a cluster's enterprise activation
+    token and sets its enterprise state to NONE (normally, once a cluster has
+    been activated, the only reachable state is EXPIRED).
+
+    NOTE: This endpoint also calls DeleteAll (and deletes all Pachyderm data in
+    its cluster). This is to avoid dealing with invalid, intermediate states
+    (e.g. auth is activated but enterprise state is NONE)
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -57,6 +75,11 @@ def add_APIServicer_to_server(servicer, server):
           servicer.GetState,
           request_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetStateRequest.FromString,
           response_serializer=client_dot_enterprise_dot_enterprise__pb2.GetStateResponse.SerializeToString,
+      ),
+      'Deactivate': grpc.unary_unary_rpc_method_handler(
+          servicer.Deactivate,
+          request_deserializer=client_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.FromString,
+          response_serializer=client_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

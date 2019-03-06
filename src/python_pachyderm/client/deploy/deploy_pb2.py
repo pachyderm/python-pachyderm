@@ -18,8 +18,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/deploy/deploy.proto',
   package='deploy',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x1a\x63lient/deploy/deploy.proto\x12\x06\x64\x65ploy\"\x8e\x01\n\x1a\x44\x65ployStorageSecretRequest\x12@\n\x07secrets\x18\x01 \x03(\x0b\x32/.deploy.DeployStorageSecretRequest.SecretsEntry\x1a.\n\x0cSecretsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"\x1d\n\x1b\x44\x65ployStorageSecretResponse2g\n\x03\x41PI\x12`\n\x13\x44\x65ployStorageSecret\x12\".deploy.DeployStorageSecretRequest\x1a#.deploy.DeployStorageSecretResponse\"\x00\x62\x06proto3')
+  serialized_options=_b('Z0github.com/pachyderm/pachyderm/src/client/deploy'),
+  serialized_pb=_b('\n\x1a\x63lient/deploy/deploy.proto\x12\x06\x64\x65ploy\"\x8e\x01\n\x1a\x44\x65ployStorageSecretRequest\x12@\n\x07secrets\x18\x01 \x03(\x0b\x32/.deploy.DeployStorageSecretRequest.SecretsEntry\x1a.\n\x0cSecretsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"\x1d\n\x1b\x44\x65ployStorageSecretResponse2g\n\x03\x41PI\x12`\n\x13\x44\x65ployStorageSecret\x12\".deploy.DeployStorageSecretRequest\x1a#.deploy.DeployStorageSecretResponse\"\x00\x42\x32Z0github.com/pachyderm/pachyderm/src/client/deployb\x06proto3')
 )
 
 
@@ -145,6 +145,7 @@ DeployStorageSecretResponse = _reflection.GeneratedProtocolMessageType('DeploySt
 _sym_db.RegisterMessage(DeployStorageSecretResponse)
 
 
+DESCRIPTOR._options = None
 _DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY._options = None
 
 _API = _descriptor.ServiceDescriptor(
