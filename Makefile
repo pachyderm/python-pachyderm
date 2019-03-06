@@ -24,7 +24,9 @@ ci-install:
 ci-setup:
 	docker version
 	which pachctl
-	make launch-kube
+	pushd proto/pachyderm && \
+		make launch-kube && \
+		popd
 	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
