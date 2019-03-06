@@ -13,15 +13,18 @@ proto: docker-build-proto
 init:
 	git submodule update --init
 
-ci-setup:
+ci-install:
 	pushd proto/pachyderm && \
 		sudo ./etc/testing/travis_before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
-		make launch-kube && \
 		popd
+	pip install tox
+
+ci-setup:
 	docker version
 	which pachctl
+	make launch-kube
 	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
