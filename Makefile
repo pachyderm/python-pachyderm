@@ -5,7 +5,7 @@ docker-build-proto:
 		docker build -t pachyderm_python_proto .
 
 proto: docker-build-proto
-	find ./proto/pachyderm/src/client -maxdepth 2 -regex ".*\.proto" \
+	find ./proto/pachyderm/src/client -maxdepth 4 -regex ".*\.proto" \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
