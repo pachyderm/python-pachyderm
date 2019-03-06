@@ -83,14 +83,14 @@ class PpsClient(object):
     def delete_all(self):
         self.stub.DeleteAll(google_dot_protobuf_dot_empty__pb2.Empty())
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), input_file_id='', master=False):
+    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
         pipeline = Pipeline(name=pipeline_name) if pipeline_name else None
         job = Job(id=job_id) if job_id else None
         if pipeline is None and job is None:
             raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
         return list(self.stub.GetLogs(
             GetLogsRequest(pipeline=pipeline, job=job, data_filters=data_filters,
-                           input_file_id=input_file_id, master=master)))
+                           master=master)))
 
     def garbage_collect(self):
         return GarbageCollectResponse(self.stub.GarbageCollect(GarbageCollectRequest()))
