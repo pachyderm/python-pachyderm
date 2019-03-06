@@ -83,7 +83,7 @@ class PfsClient(object):
         """
         return self.stub.InspectRepo(InspectRepoRequest(repo=Repo(name=repo_name)))
 
-    def list_repo(self, provenance=tuple()):
+    def list_repo(self):
         """
         Returns info about all Repos.
 
@@ -91,7 +91,7 @@ class PfsClient(object):
         the specified repos as provenance will be returned.
         :return: A list of RepoInfo objects
         """
-        x = self.stub.ListRepo(ListRepoRequest(provenance=[Repo(name=p) for p in provenance]))
+        x = self.stub.ListRepo(ListRepoRequest())
         if hasattr(x, 'repo_info'):
             return x.repo_info
         return []
