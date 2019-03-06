@@ -36,7 +36,7 @@ sync:
 	# Will update the protos to match the VERSION file
 	pushd proto/pachyderm && \
 		git fetch --all && \
-		git checkout $$(cat ../../VERSION) && \
+		git checkout v$$(cat ../../VERSION) && \
 		popd
 	# Rebuild w latest proto files
 	make proto
