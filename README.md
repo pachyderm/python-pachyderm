@@ -4,11 +4,7 @@
 [![Supported versions](https://img.shields.io/pypi/pyversions/python-pachyderm.svg)](https://pypi.python.org/pypi/python-pachyderm)
 [![Slack Status](http://slack.pachyderm.io/badge.svg)](http://slack.pachyderm.io)
 
-Official Python Pachyderm Client
-
-Created by [kalugny](https://github.com/kalugny)
-
-(Formerly kalugny/pypachy)
+Official Python Pachyderm client. Created by [kalugny](https://github.com/kalugny) (formerly kalugny/pypachy.)
 
 ## Installation
 
@@ -72,7 +68,3 @@ To run tests, clone the repo, then run:
 make init
 tox
 ```
-
-## Changelog
-
-See `CHANGELOG.rst <https://github.com/pachyderm/python_pachyderm/blob/master/CHANGELOG.rst>`.
