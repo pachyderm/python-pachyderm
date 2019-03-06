@@ -69,16 +69,6 @@ def test_pfs_client_init_with_args():
     assert client.channel._channel.target() == b'pachd.example.com:54321'
 
 
-def test_pfs_list_repo(pfs_client):
-    # GIVEN a Pachyderm deployment in its initial state
-    #   AND a connected PFS client
-    client = pfs_client
-    # WHEN calling list_repo()
-    repo_info = client.list_repo()
-    # THEN an empty list should be returned
-    assert list(repo_info) == []
-
-
 def test_pfs_create_repo(pfs_client):
     # GIVEN a Pachyderm deployment in its initial state
     #   AND a connected PFS client
@@ -96,8 +86,6 @@ def test_pfs_create_repo(pfs_client):
     assert repo_info[0].description == ''
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_create_repo_with_description(pfs_client):
@@ -118,8 +106,6 @@ def test_pfs_create_repo_with_description(pfs_client):
     assert repo_info[0].description == repo_description
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_inspect_repo(pfs_client_with_repo):
@@ -138,8 +124,6 @@ def test_pfs_inspect_repo(pfs_client_with_repo):
     assert repo_info[0].description == test_repo.description
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_delete_repo(pfs_client_with_repo):
