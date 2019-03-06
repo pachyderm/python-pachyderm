@@ -69,16 +69,6 @@ def test_pfs_client_init_with_args():
     assert client.channel._channel.target() == b'pachd.example.com:54321'
 
 
-def test_pfs_list_repo(pfs_client):
-    # GIVEN a Pachyderm deployment in its initial state
-    #   AND a connected PFS client
-    client = pfs_client
-    # WHEN calling list_repo()
-    repo_info = client.list_repo()
-    # THEN an empty list should be returned
-    assert list(repo_info) == []
-
-
 def test_pfs_create_repo(pfs_client):
     # GIVEN a Pachyderm deployment in its initial state
     #   AND a connected PFS client
@@ -96,8 +86,6 @@ def test_pfs_create_repo(pfs_client):
     assert repo_info[0].description == ''
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_create_repo_with_description(pfs_client):
@@ -118,8 +106,6 @@ def test_pfs_create_repo_with_description(pfs_client):
     assert repo_info[0].description == repo_description
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_inspect_repo(pfs_client_with_repo):
@@ -138,8 +124,6 @@ def test_pfs_inspect_repo(pfs_client_with_repo):
     assert repo_info[0].description == test_repo.description
     #   AND the size in Bytes should be 0
     assert repo_info[0].size_bytes == 0
-    #   AND provenance should be empty
-    assert len(repo_info[0].provenance) == 0
 
 
 def test_pfs_delete_repo(pfs_client_with_repo):
@@ -168,19 +152,15 @@ def test_pfs_delete_repo_raises(pfs_client_with_repo):
     assert exception_msg == 'Either a repo_name or all=True needs to be provided'
 
 
-def test_pfs_delete_non_existant_repo_raises(pfs_client_with_repo):
+def test_pfs_delete_non_existent_repo_raises(pfs_client_with_repo):
     # GIVEN a Pachyderm deployment
     #   AND a connected PFS client
     client, test_repo = pfs_client_with_repo
     #   AND one existing repo
     assert len(client.list_repo()) == 1
-    # WHEN calling delete_repo() with a non-existant repo_name
-    with pytest.raises(Exception) as excinfo:
-        client.delete_repo('BOGUS_NAME')
-    # THEN a grpc._channel._Rendezvous exception should be raised
-    assert excinfo.typename == '_Rendezvous'
-    #   AND the error message should indicate that the repo does not exist
-    assert excinfo.match('cannot delete "BOGUS_NAME" as it does not exist')
+    # THEN calling delete_repo() with a non-existent repo_name should be a
+    # no-op
+    client.delete_repo('BOGUS_NAME')
 
 
 def test_pfs_delete_all_repos(pfs_client):
@@ -218,7 +198,7 @@ def test_pfs_delete_all_repos_with_name_raises(pfs_client):
 @pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
     ('test-repo-1', 'test-repo-1', 'master'),
     ('test-repo-1', 'test-repo-1', None),
-    pytest.param('test-repo-1', 'non-existant-repo', 'master',
+    pytest.param('test-repo-1', 'non-existent-repo', 'master',
                  marks=[pytest.mark.basic, pytest.mark.xfail(strict=True)])
 ])
 def test_pfs_start_commit(pfs_client, repo_to_create, repo_to_commit_to, branch):
@@ -361,7 +341,7 @@ def test_pfs_finish_commit(pfs_client, commit_arg):
 @pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
     ('test-repo-1', 'test-repo-1', 'master'),
     ('test-repo-1', 'test-repo-1', None),
-    pytest.param('test-repo-1', 'non-existant-repo', 'master',
+    pytest.param('test-repo-1', 'non-existent-repo', 'master',
                  marks=[pytest.mark.basic, pytest.mark.xfail(strict=True)])
 ])
 def test_pfs_commit_context_mgr(pfs_client, repo_to_create, repo_to_commit_to, branch):
