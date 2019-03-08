@@ -16,11 +16,9 @@ class ExtractValueIterator(object):
     def __init__(self, r):
         self._iter = r
 
-    def __next__(self):
-        return next(self._iter).value
-
     def __iter__(self):
-        return self
+        for item in self._iter:
+            yield item.value
 
 
 def _commit_from(src, allow_just_repo=False):
