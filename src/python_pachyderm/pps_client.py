@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import os
-from builtins import object
+from __future__ import absolute_import
 
-from .client.pps.pps_pb2 import *
-from .client.pps.pps_pb2_grpc import *
+import os
+
+from python_pachyderm.client.pps.pps_pb2 import *
+from python_pachyderm.client.pps.pps_pb2_grpc import *
 
 
 class PpsClient(object):

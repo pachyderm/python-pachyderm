@@ -23,7 +23,7 @@ ci-install:
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
 		popd
-	pip install tox
+	pip install tox tox-travis
 
 ci-setup:
 	docker version

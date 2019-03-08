@@ -4,9 +4,11 @@
 """Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
 
-from builtins import str
 from collections import namedtuple
+
+import six
 import pytest
+
 import python_pachyderm
 
 @pytest.fixture(scope='function')
@@ -213,7 +215,7 @@ def test_pfs_start_commit(pfs_client, repo_to_create, repo_to_commit_to, branch)
     # THEN a commit should be started with the specified repo_name
     assert commit.repo.name == repo_to_commit_to
     #   AND a string ID value should be present
-    assert isinstance(commit.id, str)
+    assert isinstance(commit.id, six.string_types)
 
 
 def test_pfs_start_commit_missing_branch(pfs_client):
@@ -229,7 +231,7 @@ def test_pfs_start_commit_missing_branch(pfs_client):
     # THEN a commit should be started with the specified repo_name
     assert commit.repo.name == repo_name
     #   AND a commit ID should be returned
-    assert isinstance(commit.id, str)
+    assert isinstance(commit.id, six.string_types)
 
 
 def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
@@ -259,7 +261,7 @@ def test_pfs_start_commit_with_parent_no_branch(pfs_client):
     # THEN a commit should be started with the specified repo_name
     assert commit2.repo.name == repo_name
     #   AND a commit ID should be returned
-    assert isinstance(commit2.id, str)
+    assert isinstance(commit2.id, six.string_types)
 
 
 def test_pfs_start_commit_on_branch_with_parent(pfs_client):
@@ -279,7 +281,7 @@ def test_pfs_start_commit_on_branch_with_parent(pfs_client):
     # THEN a commit should be started with the specified repo_name
     assert commit2.repo.name == repo_name
     #   AND a commit ID should be returned
-    assert isinstance(commit2.id, str)
+    assert isinstance(commit2.id, six.string_types)
 
 
 def test_pfs_start_commit_fork(pfs_client):
@@ -303,7 +305,7 @@ def test_pfs_start_commit_fork(pfs_client):
     # THEN a commit should be started with the specified repo_name
     assert commit2.repo.name == repo_name
     #   AND a commit ID should be returned
-    assert isinstance(commit2.id, str)
+    assert isinstance(commit2.id, six.string_types)
     #   AND both branches exist in the repo
     branches = [branch_info.name for branch_info in client.list_branch(repo_name)]
     assert (branch1 in branches) and (branch2 in branches)
