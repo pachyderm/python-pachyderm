@@ -5,7 +5,7 @@ tar xf /dev/stdin
 OUTDIR=src/python_pachyderm/
 mkdir -p $OUTDIR
 
-for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+for i in $(find ./proto/pachyderm/src/client -maxdepth 4 -name "*.proto"); do \
     # Make sure to remove the gogoproto line, as that is go specific
     sed -i s/import.*gogo.proto.*\;// $i
     sed -i 's/\[.*gogoproto.*\]//' $i
@@ -13,15 +13,15 @@ for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
     # traverse the proto files in order of dependence
 done
 
-for i in $(find ./proto/pachyderm/src/client -maxdepth 2 -name "*.proto"); do \
+for i in $(find ./proto/pachyderm/src/client -maxdepth 4 -name "*.proto"); do \
     python3 -m grpc_tools.protoc -I./proto/pachyderm/src --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
 done
 
-for i in $(find $OUTDIR -maxdepth 3 -regex ".*pb2.*py"); do
+for i in $(find $OUTDIR -maxdepth 4 -regex ".*pb2.*py"); do
     # Fix the imports so they work once this is packaged by pypi
     sed -i 's/from client\./from python_pachyderm\.client\./' $i
 done
 
 
-find $OUTDIR -maxdepth 3 -regex ".*pb2.*py" | xargs tar cf -
+find $OUTDIR -maxdepth 4 -regex ".*pb2.*py" | xargs tar cf -
 

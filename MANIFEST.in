@@ -6,7 +6,7 @@ include .editorconfig
 
 include CHANGELOG.rst
 include LICENSE
-include README.rst
+include README.md
 
 include VERSION
 include BUILD_NUMBER

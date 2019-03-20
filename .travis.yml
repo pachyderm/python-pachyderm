@@ -1,17 +1,26 @@
-dist: trusty
+dist: xenial
 sudo: required
+services:
+- docker
+cache:
+  directories:
+    - $HOME/.cache/go-build
+    - $HOME/cached-deps
 language: python
 python:
-    #  - 2.7 #TODO - Right now the tests require 'builtin' import, so we'll need to import this from the future module
-  - 3.5
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - '3.6'
+  - '3.7'
+env:
+  global:
+    - PATH=$HOME/cached-deps:$PATH
+
+install:
+- make ci-install
 before_script:
 - make ci-setup
 script:
 - make proto
-- make test
-
-# Only email on failure
-notifications:
-  email:
-    on_success: never
-    on_failure: always
+- tox

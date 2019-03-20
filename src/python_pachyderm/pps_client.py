@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import os
-from builtins import object
+from __future__ import absolute_import
 
-from .client.pps.pps_pb2 import *
-from .client.pps.pps_pb2_grpc import *
+import os
+
+from python_pachyderm.client.pps.pps_pb2 import *
+from python_pachyderm.client.pps.pps_pb2_grpc import *
 
 
 class PpsClient(object):
@@ -49,15 +50,16 @@ class PpsClient(object):
     def restart_datum(self, job_id, data_filters=tuple()):
         self.stub.RestartDatum(RestartDatumRequest(job=Job(id=job_id, data_filters=data_filters)))
 
-    def create_pipeline(self, pipeline, transform, parallelism_spec, inputs, egress, update, output_branch,
+    def create_pipeline(self, pipeline, transform, parallelism_spec, egress, update, output_branch,
                         scale_down_threshold, resource_spec, input, description, incremental, cache_size, enable_stats,
-                        reprocess, batch):
+                        reprocess, batch, scheduling_spec, standby, service, pod_spec):
         self.stub.CreatePipeline(
             CreatePipelineRequest(pipeline=pipeline, transform=transform, parallelism_spec=parallelism_spec,
                                   egress=egress, update=update, output_branch=output_branch,
-                                  scale_down_threshold=scale_down_threshold, input=input,
+                                  scale_down_threshold=scale_down_threshold, input=input, standby=standby,
                                   description=description, incremental=incremental, cache_size=cache_size,
-                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch))
+                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch, scheduling_spec=scheduling_spec, service=service,datum_tries=1,
+                                  pod_spec=pod_spec))
 
     def inspect_pipeline(self, pipeline_name):
         return self.stub.InspectPipeline(InspectPipelineRequest(pipeline=Pipeline(name=pipeline_name)))
@@ -83,14 +85,14 @@ class PpsClient(object):
     def delete_all(self):
         self.stub.DeleteAll(google_dot_protobuf_dot_empty__pb2.Empty())
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), input_file_id='', master=False):
+    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
         pipeline = Pipeline(name=pipeline_name) if pipeline_name else None
         job = Job(id=job_id) if job_id else None
         if pipeline is None and job is None:
             raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
         return list(self.stub.GetLogs(
             GetLogsRequest(pipeline=pipeline, job=job, data_filters=data_filters,
-                           input_file_id=input_file_id, master=master)))
+                           master=master)))
 
     def garbage_collect(self):
         return GarbageCollectResponse(self.stub.GarbageCollect(GarbageCollectRequest()))
