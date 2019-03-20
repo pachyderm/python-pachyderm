@@ -13,15 +13,17 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/auth/auth.proto',
   package='auth',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x16\x63lient/auth/auth.proto\x12\x04\x61uth\"8\n\x0f\x41\x63tivateRequest\x12\x0f\n\x07subject\x18\x02 \x01(\t\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x80\x01\n\nIDProvider\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12*\n\x04saml\x18\x03 \x01(\x0b\x32\x1c.auth.IDProvider.SAMLOptions\x1a#\n\x0bSAMLOptions\x12\x14\n\x0cmetadata_url\x18\x02 \x01(\t\"\xcd\x01\n\nAuthConfig\x12\x1b\n\x13live_config_version\x18\x01 \x01(\x03\x12&\n\x0cid_providers\x18\x02 \x03(\x0b\x32\x10.auth.IDProvider\x12=\n\x10saml_svc_options\x18\x03 \x01(\x0b\x32#.auth.AuthConfig.SAMLServiceOptions\x1a;\n\x12SAMLServiceOptions\x12\x0f\n\x07\x61\x63s_url\x18\x01 \x01(\t\x12\x14\n\x0cmetadata_url\x18\x02 \x01(\t\"\x19\n\x17GetConfigurationRequest\"C\n\x18GetConfigurationResponse\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.AuthConfig\"B\n\x17SetConfigurationRequest\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.AuthConfig\"\x1a\n\x18SetConfigurationResponse\"\x12\n\x10GetAdminsRequest\"#\n\x11GetAdminsResponse\x12\x0e\n\x06\x61\x64mins\x18\x01 \x03(\t\"2\n\x13ModifyAdminsRequest\x12\x0b\n\x03\x61\x64\x64\x18\x01 \x03(\t\x12\x0e\n\x06remove\x18\x02 \x03(\t\"\x16\n\x14ModifyAdminsResponse\"\x86\x01\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12+\n\x06source\x18\x02 \x01(\x0e\x32\x1b.auth.TokenInfo.TokenSource\";\n\x0bTokenSource\x12\x0b\n\x07INVALID\x10\x00\x12\x10\n\x0c\x41UTHENTICATE\x10\x01\x12\r\n\tGET_TOKEN\x10\x02\"M\n\x13\x41uthenticateRequest\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\x12 \n\x18pach_authentication_code\x18\x02 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"A\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08is_admin\x18\x02 \x01(\x08\x12\x0b\n\x03ttl\x18\x03 \x01(\x03\"k\n\x03\x41\x43L\x12\'\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x16.auth.ACL.EntriesEntry\x1a;\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0e\x32\x0b.auth.Scope:\x02\x38\x01\"h\n\x05Users\x12-\n\tusernames\x18\x01 \x03(\x0b\x32\x1a.auth.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"a\n\x06Groups\x12(\n\x06groups\x18\x01 \x03(\x0b\x32\x18.auth.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"<\n\x10\x41uthorizeRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"\'\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\"2\n\x0fGetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05repos\x18\x02 \x03(\t\"/\n\x10GetScopeResponse\x12\x1b\n\x06scopes\x18\x01 \x03(\x0e\x32\x0b.auth.Scope\"M\n\x0fSetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x1a\n\x05scope\x18\x03 \x01(\x0e\x32\x0b.auth.Scope\"\x12\n\x10SetScopeResponse\"\x1d\n\rGetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\"8\n\x08\x41\x43LEntry\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"X\n\x0eGetACLResponse\x12\x1f\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x0e.auth.ACLEntry\x12%\n\rrobot_entries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\">\n\rSetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1f\n\x07\x65ntries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\"\x10\n\x0eSetACLResponse\"3\n\x13GetAuthTokenRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"6\n\x14GetAuthTokenResponse\x12\x0f\n\x07subject\x18\x02 \x01(\t\x12\r\n\x05token\x18\x01 \x01(\t\"4\n\x16\x45xtendAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"\x19\n\x17\x45xtendAuthTokenResponse\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"$\n\x10GetGroupsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\"\x1e\n\x1cGetAuthenticationCodeRequest\"-\n\x1dGetAuthenticationCodeResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t*4\n\x05Scope\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06READER\x10\x01\x12\n\n\x06WRITER\x10\x02\x12\t\n\x05OWNER\x10\x03\x32\xcf\x0b\n\x03\x41PI\x12;\n\x08\x41\x63tivate\x12\x15.auth.ActivateRequest\x1a\x16.auth.ActivateResponse\"\x00\x12\x41\n\nDeactivate\x12\x17.auth.DeactivateRequest\x1a\x18.auth.DeactivateResponse\"\x00\x12S\n\x10GetConfiguration\x12\x1d.auth.GetConfigurationRequest\x1a\x1e.auth.GetConfigurationResponse\"\x00\x12S\n\x10SetConfiguration\x12\x1d.auth.SetConfigurationRequest\x1a\x1e.auth.SetConfigurationResponse\"\x00\x12>\n\tGetAdmins\x12\x16.auth.GetAdminsRequest\x1a\x17.auth.GetAdminsResponse\"\x00\x12G\n\x0cModifyAdmins\x12\x19.auth.ModifyAdminsRequest\x1a\x1a.auth.ModifyAdminsResponse\"\x00\x12G\n\x0c\x41uthenticate\x12\x19.auth.AuthenticateRequest\x1a\x1a.auth.AuthenticateResponse\"\x00\x12>\n\tAuthorize\x12\x16.auth.AuthorizeRequest\x1a\x17.auth.AuthorizeResponse\"\x00\x12\x35\n\x06WhoAmI\x12\x13.auth.WhoAmIRequest\x1a\x14.auth.WhoAmIResponse\"\x00\x12;\n\x08GetScope\x12\x15.auth.GetScopeRequest\x1a\x16.auth.GetScopeResponse\"\x00\x12;\n\x08SetScope\x12\x15.auth.SetScopeRequest\x1a\x16.auth.SetScopeResponse\"\x00\x12\x35\n\x06GetACL\x12\x13.auth.GetACLRequest\x1a\x14.auth.GetACLResponse\"\x00\x12\x35\n\x06SetACL\x12\x13.auth.SetACLRequest\x1a\x14.auth.SetACLResponse\"\x00\x12G\n\x0cGetAuthToken\x12\x19.auth.GetAuthTokenRequest\x1a\x1a.auth.GetAuthTokenResponse\"\x00\x12P\n\x0f\x45xtendAuthToken\x12\x1c.auth.ExtendAuthTokenRequest\x1a\x1d.auth.ExtendAuthTokenResponse\"\x00\x12P\n\x0fRevokeAuthToken\x12\x1c.auth.RevokeAuthTokenRequest\x1a\x1d.auth.RevokeAuthTokenResponse\"\x00\x12S\n\x10SetGroupsForUser\x12\x1d.auth.SetGroupsForUserRequest\x1a\x1e.auth.SetGroupsForUserResponse\"\x00\x12J\n\rModifyMembers\x12\x1a.auth.ModifyMembersRequest\x1a\x1b.auth.ModifyMembersResponse\"\x00\x12>\n\tGetGroups\x12\x16.auth.GetGroupsRequest\x1a\x17.auth.GetGroupsResponse\"\x00\x12;\n\x08GetUsers\x12\x15.auth.GetUsersRequest\x1a\x16.auth.GetUsersResponse\"\x00\x12\x62\n\x15GetAuthenticationCode\x12\".auth.GetAuthenticationCodeRequest\x1a#.auth.GetAuthenticationCodeResponse\"\x00\x62\x06proto3')
-)
+  serialized_options=_b('Z.github.com/pachyderm/pachyderm/src/client/auth'),
+  serialized_pb=_b('\n\x16\x63lient/auth/auth.proto\x12\x04\x61uth\x1a\x1fgoogle/protobuf/timestamp.proto\"8\n\x0f\x41\x63tivateRequest\x12\x0f\n\x07subject\x18\x02 \x01(\t\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\xaf\x01\n\nIDProvider\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12*\n\x04saml\x18\x03 \x01(\x0b\x32\x1c.auth.IDProvider.SAMLOptions\x1aR\n\x0bSAMLOptions\x12\x14\n\x0cmetadata_url\x18\x01 \x01(\t\x12\x14\n\x0cmetadata_xml\x18\x02 \x01(\x0c\x12\x17\n\x0fgroup_attribute\x18\x03 \x01(\t\"\x90\x02\n\nAuthConfig\x12\x1b\n\x13live_config_version\x18\x01 \x01(\x03\x12&\n\x0cid_providers\x18\x02 \x03(\x0b\x32\x10.auth.IDProvider\x12=\n\x10saml_svc_options\x18\x03 \x01(\x0b\x32#.auth.AuthConfig.SAMLServiceOptions\x1a~\n\x12SAMLServiceOptions\x12\x0f\n\x07\x61\x63s_url\x18\x01 \x01(\t\x12\x14\n\x0cmetadata_url\x18\x02 \x01(\t\x12\x10\n\x08\x64\x61sh_url\x18\x03 \x01(\t\x12\x18\n\x10session_duration\x18\x04 \x01(\t\x12\x15\n\rdebug_logging\x18\x05 \x01(\x08\"\x19\n\x17GetConfigurationRequest\"C\n\x18GetConfigurationResponse\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.AuthConfig\"B\n\x17SetConfigurationRequest\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.AuthConfig\"\x1a\n\x18SetConfigurationResponse\"\x12\n\x10GetAdminsRequest\"#\n\x11GetAdminsResponse\x12\x0e\n\x06\x61\x64mins\x18\x01 \x03(\t\"2\n\x13ModifyAdminsRequest\x12\x0b\n\x03\x61\x64\x64\x18\x01 \x03(\t\x12\x0e\n\x06remove\x18\x02 \x03(\t\"\x16\n\x14ModifyAdminsResponse\"R\n\x07OTPInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\x36\n\x12session_expiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x86\x01\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12+\n\x06source\x18\x02 \x01(\x0e\x32\x1b.auth.TokenInfo.TokenSource\";\n\x0bTokenSource\x12\x0b\n\x07INVALID\x10\x00\x12\x10\n\x0c\x41UTHENTICATE\x10\x01\x12\r\n\tGET_TOKEN\x10\x02\"F\n\x13\x41uthenticateRequest\x12\x14\n\x0cgithub_token\x18\x01 \x01(\t\x12\x19\n\x11one_time_password\x18\x02 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"A\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08is_admin\x18\x02 \x01(\x08\x12\x0b\n\x03ttl\x18\x03 \x01(\x03\"k\n\x03\x41\x43L\x12\'\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x16.auth.ACL.EntriesEntry\x1a;\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0e\x32\x0b.auth.Scope:\x02\x38\x01\"h\n\x05Users\x12-\n\tusernames\x18\x01 \x03(\x0b\x32\x1a.auth.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"a\n\x06Groups\x12(\n\x06groups\x18\x01 \x03(\x0b\x32\x18.auth.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"<\n\x10\x41uthorizeRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"\'\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\"2\n\x0fGetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05repos\x18\x02 \x03(\t\"/\n\x10GetScopeResponse\x12\x1b\n\x06scopes\x18\x01 \x03(\x0e\x32\x0b.auth.Scope\"M\n\x0fSetScopeRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x1a\n\x05scope\x18\x03 \x01(\x0e\x32\x0b.auth.Scope\"\x12\n\x10SetScopeResponse\"\x1d\n\rGetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\"8\n\x08\x41\x43LEntry\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x1a\n\x05scope\x18\x02 \x01(\x0e\x32\x0b.auth.Scope\"X\n\x0eGetACLResponse\x12\x1f\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x0e.auth.ACLEntry\x12%\n\rrobot_entries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\">\n\rSetACLRequest\x12\x0c\n\x04repo\x18\x01 \x01(\t\x12\x1f\n\x07\x65ntries\x18\x02 \x03(\x0b\x32\x0e.auth.ACLEntry\"\x10\n\x0eSetACLResponse\"3\n\x13GetAuthTokenRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"6\n\x14GetAuthTokenResponse\x12\x0f\n\x07subject\x18\x02 \x01(\t\x12\r\n\x05token\x18\x01 \x01(\t\"4\n\x16\x45xtendAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"\x19\n\x17\x45xtendAuthTokenResponse\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"$\n\x10GetGroupsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\",\n\x19GetOneTimePasswordRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\"*\n\x1aGetOneTimePasswordResponse\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t*4\n\x05Scope\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06READER\x10\x01\x12\n\n\x06WRITER\x10\x02\x12\t\n\x05OWNER\x10\x03\x32\xc6\x0b\n\x03\x41PI\x12;\n\x08\x41\x63tivate\x12\x15.auth.ActivateRequest\x1a\x16.auth.ActivateResponse\"\x00\x12\x41\n\nDeactivate\x12\x17.auth.DeactivateRequest\x1a\x18.auth.DeactivateResponse\"\x00\x12S\n\x10GetConfiguration\x12\x1d.auth.GetConfigurationRequest\x1a\x1e.auth.GetConfigurationResponse\"\x00\x12S\n\x10SetConfiguration\x12\x1d.auth.SetConfigurationRequest\x1a\x1e.auth.SetConfigurationResponse\"\x00\x12>\n\tGetAdmins\x12\x16.auth.GetAdminsRequest\x1a\x17.auth.GetAdminsResponse\"\x00\x12G\n\x0cModifyAdmins\x12\x19.auth.ModifyAdminsRequest\x1a\x1a.auth.ModifyAdminsResponse\"\x00\x12G\n\x0c\x41uthenticate\x12\x19.auth.AuthenticateRequest\x1a\x1a.auth.AuthenticateResponse\"\x00\x12>\n\tAuthorize\x12\x16.auth.AuthorizeRequest\x1a\x17.auth.AuthorizeResponse\"\x00\x12\x35\n\x06WhoAmI\x12\x13.auth.WhoAmIRequest\x1a\x14.auth.WhoAmIResponse\"\x00\x12;\n\x08GetScope\x12\x15.auth.GetScopeRequest\x1a\x16.auth.GetScopeResponse\"\x00\x12;\n\x08SetScope\x12\x15.auth.SetScopeRequest\x1a\x16.auth.SetScopeResponse\"\x00\x12\x35\n\x06GetACL\x12\x13.auth.GetACLRequest\x1a\x14.auth.GetACLResponse\"\x00\x12\x35\n\x06SetACL\x12\x13.auth.SetACLRequest\x1a\x14.auth.SetACLResponse\"\x00\x12G\n\x0cGetAuthToken\x12\x19.auth.GetAuthTokenRequest\x1a\x1a.auth.GetAuthTokenResponse\"\x00\x12P\n\x0f\x45xtendAuthToken\x12\x1c.auth.ExtendAuthTokenRequest\x1a\x1d.auth.ExtendAuthTokenResponse\"\x00\x12P\n\x0fRevokeAuthToken\x12\x1c.auth.RevokeAuthTokenRequest\x1a\x1d.auth.RevokeAuthTokenResponse\"\x00\x12S\n\x10SetGroupsForUser\x12\x1d.auth.SetGroupsForUserRequest\x1a\x1e.auth.SetGroupsForUserResponse\"\x00\x12J\n\rModifyMembers\x12\x1a.auth.ModifyMembersRequest\x1a\x1b.auth.ModifyMembersResponse\"\x00\x12>\n\tGetGroups\x12\x16.auth.GetGroupsRequest\x1a\x17.auth.GetGroupsResponse\"\x00\x12;\n\x08GetUsers\x12\x15.auth.GetUsersRequest\x1a\x16.auth.GetUsersResponse\"\x00\x12Y\n\x12GetOneTimePassword\x12\x1f.auth.GetOneTimePasswordRequest\x1a .auth.GetOneTimePasswordResponse\"\x00\x42\x30Z.github.com/pachyderm/pachyderm/src/client/authb\x06proto3')
+  ,
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 _SCOPE = _descriptor.EnumDescriptor(
   name='Scope',
@@ -48,8 +50,8 @@ _SCOPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2726,
-  serialized_end=2778,
+  serialized_start=2961,
+  serialized_end=3013,
 )
 _sym_db.RegisterEnumDescriptor(_SCOPE)
 
@@ -81,8 +83,8 @@ _TOKENINFO_TOKENSOURCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=913,
-  serialized_end=972,
+  serialized_start=1144,
+  serialized_end=1203,
 )
 _sym_db.RegisterEnumDescriptor(_TOKENINFO_TOKENSOURCE)
 
@@ -120,8 +122,8 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32,
-  serialized_end=88,
+  serialized_start=65,
+  serialized_end=121,
 )
 
 
@@ -151,8 +153,8 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=90,
-  serialized_end=128,
+  serialized_start=123,
+  serialized_end=161,
 )
 
 
@@ -175,8 +177,8 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=130,
-  serialized_end=149,
+  serialized_start=163,
+  serialized_end=182,
 )
 
 
@@ -199,8 +201,8 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=151,
-  serialized_end=171,
+  serialized_start=184,
+  serialized_end=204,
 )
 
 
@@ -213,7 +215,21 @@ _IDPROVIDER_SAMLOPTIONS = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='metadata_url', full_name='auth.IDProvider.SAMLOptions.metadata_url', index=0,
-      number=2, type=9, cpp_type=9, label=1,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata_xml', full_name='auth.IDProvider.SAMLOptions.metadata_xml', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='group_attribute', full_name='auth.IDProvider.SAMLOptions.group_attribute', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -230,8 +246,8 @@ _IDPROVIDER_SAMLOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=267,
-  serialized_end=302,
+  serialized_start=300,
+  serialized_end=382,
 )
 
 _IDPROVIDER = _descriptor.Descriptor(
@@ -274,8 +290,8 @@ _IDPROVIDER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=174,
-  serialized_end=302,
+  serialized_start=207,
+  serialized_end=382,
 )
 
 
@@ -300,6 +316,27 @@ _AUTHCONFIG_SAMLSERVICEOPTIONS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='dash_url', full_name='auth.AuthConfig.SAMLServiceOptions.dash_url', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='session_duration', full_name='auth.AuthConfig.SAMLServiceOptions.session_duration', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='debug_logging', full_name='auth.AuthConfig.SAMLServiceOptions.debug_logging', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -312,8 +349,8 @@ _AUTHCONFIG_SAMLSERVICEOPTIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=451,
-  serialized_end=510,
+  serialized_start=531,
+  serialized_end=657,
 )
 
 _AUTHCONFIG = _descriptor.Descriptor(
@@ -356,8 +393,8 @@ _AUTHCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=305,
-  serialized_end=510,
+  serialized_start=385,
+  serialized_end=657,
 )
 
 
@@ -380,8 +417,8 @@ _GETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=512,
-  serialized_end=537,
+  serialized_start=659,
+  serialized_end=684,
 )
 
 
@@ -411,8 +448,8 @@ _GETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=539,
-  serialized_end=606,
+  serialized_start=686,
+  serialized_end=753,
 )
 
 
@@ -442,8 +479,8 @@ _SETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=608,
-  serialized_end=674,
+  serialized_start=755,
+  serialized_end=821,
 )
 
 
@@ -466,8 +503,8 @@ _SETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=676,
-  serialized_end=702,
+  serialized_start=823,
+  serialized_end=849,
 )
 
 
@@ -490,8 +527,8 @@ _GETADMINSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=704,
-  serialized_end=722,
+  serialized_start=851,
+  serialized_end=869,
 )
 
 
@@ -521,8 +558,8 @@ _GETADMINSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=724,
-  serialized_end=759,
+  serialized_start=871,
+  serialized_end=906,
 )
 
 
@@ -559,8 +596,8 @@ _MODIFYADMINSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=761,
-  serialized_end=811,
+  serialized_start=908,
+  serialized_end=958,
 )
 
 
@@ -583,8 +620,46 @@ _MODIFYADMINSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=813,
-  serialized_end=835,
+  serialized_start=960,
+  serialized_end=982,
+)
+
+
+_OTPINFO = _descriptor.Descriptor(
+  name='OTPInfo',
+  full_name='auth.OTPInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='subject', full_name='auth.OTPInfo.subject', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='session_expiration', full_name='auth.OTPInfo.session_expiration', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=984,
+  serialized_end=1066,
 )
 
 
@@ -622,8 +697,8 @@ _TOKENINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=838,
-  serialized_end=972,
+  serialized_start=1069,
+  serialized_end=1203,
 )
 
 
@@ -642,7 +717,7 @@ _AUTHENTICATEREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='pach_authentication_code', full_name='auth.AuthenticateRequest.pach_authentication_code', index=1,
+      name='one_time_password', full_name='auth.AuthenticateRequest.one_time_password', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -660,8 +735,8 @@ _AUTHENTICATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=974,
-  serialized_end=1051,
+  serialized_start=1205,
+  serialized_end=1275,
 )
 
 
@@ -691,8 +766,8 @@ _AUTHENTICATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1053,
-  serialized_end=1095,
+  serialized_start=1277,
+  serialized_end=1319,
 )
 
 
@@ -715,8 +790,8 @@ _WHOAMIREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1097,
-  serialized_end=1112,
+  serialized_start=1321,
+  serialized_end=1336,
 )
 
 
@@ -760,8 +835,8 @@ _WHOAMIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1114,
-  serialized_end=1179,
+  serialized_start=1338,
+  serialized_end=1403,
 )
 
 
@@ -798,8 +873,8 @@ _ACL_ENTRIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1229,
-  serialized_end=1288,
+  serialized_start=1453,
+  serialized_end=1512,
 )
 
 _ACL = _descriptor.Descriptor(
@@ -828,8 +903,8 @@ _ACL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1181,
-  serialized_end=1288,
+  serialized_start=1405,
+  serialized_end=1512,
 )
 
 
@@ -866,8 +941,8 @@ _USERS_USERNAMESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1346,
-  serialized_end=1394,
+  serialized_start=1570,
+  serialized_end=1618,
 )
 
 _USERS = _descriptor.Descriptor(
@@ -896,8 +971,8 @@ _USERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1290,
-  serialized_end=1394,
+  serialized_start=1514,
+  serialized_end=1618,
 )
 
 
@@ -934,8 +1009,8 @@ _GROUPS_GROUPSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1448,
-  serialized_end=1493,
+  serialized_start=1672,
+  serialized_end=1717,
 )
 
 _GROUPS = _descriptor.Descriptor(
@@ -964,8 +1039,8 @@ _GROUPS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1396,
-  serialized_end=1493,
+  serialized_start=1620,
+  serialized_end=1717,
 )
 
 
@@ -1002,8 +1077,8 @@ _AUTHORIZEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1495,
-  serialized_end=1555,
+  serialized_start=1719,
+  serialized_end=1779,
 )
 
 
@@ -1033,8 +1108,8 @@ _AUTHORIZERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1557,
-  serialized_end=1596,
+  serialized_start=1781,
+  serialized_end=1820,
 )
 
 
@@ -1071,8 +1146,8 @@ _GETSCOPEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1598,
-  serialized_end=1648,
+  serialized_start=1822,
+  serialized_end=1872,
 )
 
 
@@ -1102,8 +1177,8 @@ _GETSCOPERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1650,
-  serialized_end=1697,
+  serialized_start=1874,
+  serialized_end=1921,
 )
 
 
@@ -1147,8 +1222,8 @@ _SETSCOPEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1699,
-  serialized_end=1776,
+  serialized_start=1923,
+  serialized_end=2000,
 )
 
 
@@ -1171,8 +1246,8 @@ _SETSCOPERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1778,
-  serialized_end=1796,
+  serialized_start=2002,
+  serialized_end=2020,
 )
 
 
@@ -1202,8 +1277,8 @@ _GETACLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1798,
-  serialized_end=1827,
+  serialized_start=2022,
+  serialized_end=2051,
 )
 
 
@@ -1240,8 +1315,8 @@ _ACLENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1829,
-  serialized_end=1885,
+  serialized_start=2053,
+  serialized_end=2109,
 )
 
 
@@ -1278,8 +1353,8 @@ _GETACLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1887,
-  serialized_end=1975,
+  serialized_start=2111,
+  serialized_end=2199,
 )
 
 
@@ -1316,8 +1391,8 @@ _SETACLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1977,
-  serialized_end=2039,
+  serialized_start=2201,
+  serialized_end=2263,
 )
 
 
@@ -1340,8 +1415,8 @@ _SETACLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2041,
-  serialized_end=2057,
+  serialized_start=2265,
+  serialized_end=2281,
 )
 
 
@@ -1378,8 +1453,8 @@ _GETAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2059,
-  serialized_end=2110,
+  serialized_start=2283,
+  serialized_end=2334,
 )
 
 
@@ -1416,8 +1491,8 @@ _GETAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2112,
-  serialized_end=2166,
+  serialized_start=2336,
+  serialized_end=2390,
 )
 
 
@@ -1454,8 +1529,8 @@ _EXTENDAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2168,
-  serialized_end=2220,
+  serialized_start=2392,
+  serialized_end=2444,
 )
 
 
@@ -1478,8 +1553,8 @@ _EXTENDAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2222,
-  serialized_end=2247,
+  serialized_start=2446,
+  serialized_end=2471,
 )
 
 
@@ -1509,8 +1584,8 @@ _REVOKEAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2249,
-  serialized_end=2288,
+  serialized_start=2473,
+  serialized_end=2512,
 )
 
 
@@ -1533,8 +1608,8 @@ _REVOKEAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2290,
-  serialized_end=2315,
+  serialized_start=2514,
+  serialized_end=2539,
 )
 
 
@@ -1571,8 +1646,8 @@ _SETGROUPSFORUSERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2317,
-  serialized_end=2376,
+  serialized_start=2541,
+  serialized_end=2600,
 )
 
 
@@ -1595,8 +1670,8 @@ _SETGROUPSFORUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2378,
-  serialized_end=2404,
+  serialized_start=2602,
+  serialized_end=2628,
 )
 
 
@@ -1640,8 +1715,8 @@ _MODIFYMEMBERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2406,
-  serialized_end=2472,
+  serialized_start=2630,
+  serialized_end=2696,
 )
 
 
@@ -1664,8 +1739,8 @@ _MODIFYMEMBERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2474,
-  serialized_end=2497,
+  serialized_start=2698,
+  serialized_end=2721,
 )
 
 
@@ -1695,8 +1770,8 @@ _GETGROUPSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2499,
-  serialized_end=2535,
+  serialized_start=2723,
+  serialized_end=2759,
 )
 
 
@@ -1726,8 +1801,8 @@ _GETGROUPSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2537,
-  serialized_end=2572,
+  serialized_start=2761,
+  serialized_end=2796,
 )
 
 
@@ -1757,8 +1832,8 @@ _GETUSERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2574,
-  serialized_end=2606,
+  serialized_start=2798,
+  serialized_end=2830,
 )
 
 
@@ -1788,44 +1863,20 @@ _GETUSERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2608,
-  serialized_end=2645,
+  serialized_start=2832,
+  serialized_end=2869,
 )
 
 
-_GETAUTHENTICATIONCODEREQUEST = _descriptor.Descriptor(
-  name='GetAuthenticationCodeRequest',
-  full_name='auth.GetAuthenticationCodeRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2647,
-  serialized_end=2677,
-)
-
-
-_GETAUTHENTICATIONCODERESPONSE = _descriptor.Descriptor(
-  name='GetAuthenticationCodeResponse',
-  full_name='auth.GetAuthenticationCodeResponse',
+_GETONETIMEPASSWORDREQUEST = _descriptor.Descriptor(
+  name='GetOneTimePasswordRequest',
+  full_name='auth.GetOneTimePasswordRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='code', full_name='auth.GetAuthenticationCodeResponse.code', index=0,
+      name='subject', full_name='auth.GetOneTimePasswordRequest.subject', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1843,8 +1894,39 @@ _GETAUTHENTICATIONCODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2679,
-  serialized_end=2724,
+  serialized_start=2871,
+  serialized_end=2915,
+)
+
+
+_GETONETIMEPASSWORDRESPONSE = _descriptor.Descriptor(
+  name='GetOneTimePasswordResponse',
+  full_name='auth.GetOneTimePasswordResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='code', full_name='auth.GetOneTimePasswordResponse.code', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2917,
+  serialized_end=2959,
 )
 
 _IDPROVIDER_SAMLOPTIONS.containing_type = _IDPROVIDER
@@ -1854,6 +1936,7 @@ _AUTHCONFIG.fields_by_name['id_providers'].message_type = _IDPROVIDER
 _AUTHCONFIG.fields_by_name['saml_svc_options'].message_type = _AUTHCONFIG_SAMLSERVICEOPTIONS
 _GETCONFIGURATIONRESPONSE.fields_by_name['configuration'].message_type = _AUTHCONFIG
 _SETCONFIGURATIONREQUEST.fields_by_name['configuration'].message_type = _AUTHCONFIG
+_OTPINFO.fields_by_name['session_expiration'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _TOKENINFO.fields_by_name['source'].enum_type = _TOKENINFO_TOKENSOURCE
 _TOKENINFO_TOKENSOURCE.containing_type = _TOKENINFO
 _ACL_ENTRIESENTRY.fields_by_name['value'].enum_type = _SCOPE
@@ -1884,6 +1967,7 @@ DESCRIPTOR.message_types_by_name['GetAdminsRequest'] = _GETADMINSREQUEST
 DESCRIPTOR.message_types_by_name['GetAdminsResponse'] = _GETADMINSRESPONSE
 DESCRIPTOR.message_types_by_name['ModifyAdminsRequest'] = _MODIFYADMINSREQUEST
 DESCRIPTOR.message_types_by_name['ModifyAdminsResponse'] = _MODIFYADMINSRESPONSE
+DESCRIPTOR.message_types_by_name['OTPInfo'] = _OTPINFO
 DESCRIPTOR.message_types_by_name['TokenInfo'] = _TOKENINFO
 DESCRIPTOR.message_types_by_name['AuthenticateRequest'] = _AUTHENTICATEREQUEST
 DESCRIPTOR.message_types_by_name['AuthenticateResponse'] = _AUTHENTICATERESPONSE
@@ -1917,8 +2001,8 @@ DESCRIPTOR.message_types_by_name['GetGroupsRequest'] = _GETGROUPSREQUEST
 DESCRIPTOR.message_types_by_name['GetGroupsResponse'] = _GETGROUPSRESPONSE
 DESCRIPTOR.message_types_by_name['GetUsersRequest'] = _GETUSERSREQUEST
 DESCRIPTOR.message_types_by_name['GetUsersResponse'] = _GETUSERSRESPONSE
-DESCRIPTOR.message_types_by_name['GetAuthenticationCodeRequest'] = _GETAUTHENTICATIONCODEREQUEST
-DESCRIPTOR.message_types_by_name['GetAuthenticationCodeResponse'] = _GETAUTHENTICATIONCODERESPONSE
+DESCRIPTOR.message_types_by_name['GetOneTimePasswordRequest'] = _GETONETIMEPASSWORDREQUEST
+DESCRIPTOR.message_types_by_name['GetOneTimePasswordResponse'] = _GETONETIMEPASSWORDRESPONSE
 DESCRIPTOR.enum_types_by_name['Scope'] = _SCOPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -2035,6 +2119,13 @@ ModifyAdminsResponse = _reflection.GeneratedProtocolMessageType('ModifyAdminsRes
   # @@protoc_insertion_point(class_scope:auth.ModifyAdminsResponse)
   ))
 _sym_db.RegisterMessage(ModifyAdminsResponse)
+
+OTPInfo = _reflection.GeneratedProtocolMessageType('OTPInfo', (_message.Message,), dict(
+  DESCRIPTOR = _OTPINFO,
+  __module__ = 'client.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth.OTPInfo)
+  ))
+_sym_db.RegisterMessage(OTPInfo)
 
 TokenInfo = _reflection.GeneratedProtocolMessageType('TokenInfo', (_message.Message,), dict(
   DESCRIPTOR = _TOKENINFO,
@@ -2291,21 +2382,22 @@ GetUsersResponse = _reflection.GeneratedProtocolMessageType('GetUsersResponse', 
   ))
 _sym_db.RegisterMessage(GetUsersResponse)
 
-GetAuthenticationCodeRequest = _reflection.GeneratedProtocolMessageType('GetAuthenticationCodeRequest', (_message.Message,), dict(
-  DESCRIPTOR = _GETAUTHENTICATIONCODEREQUEST,
+GetOneTimePasswordRequest = _reflection.GeneratedProtocolMessageType('GetOneTimePasswordRequest', (_message.Message,), dict(
+  DESCRIPTOR = _GETONETIMEPASSWORDREQUEST,
   __module__ = 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetAuthenticationCodeRequest)
+  # @@protoc_insertion_point(class_scope:auth.GetOneTimePasswordRequest)
   ))
-_sym_db.RegisterMessage(GetAuthenticationCodeRequest)
+_sym_db.RegisterMessage(GetOneTimePasswordRequest)
 
-GetAuthenticationCodeResponse = _reflection.GeneratedProtocolMessageType('GetAuthenticationCodeResponse', (_message.Message,), dict(
-  DESCRIPTOR = _GETAUTHENTICATIONCODERESPONSE,
+GetOneTimePasswordResponse = _reflection.GeneratedProtocolMessageType('GetOneTimePasswordResponse', (_message.Message,), dict(
+  DESCRIPTOR = _GETONETIMEPASSWORDRESPONSE,
   __module__ = 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetAuthenticationCodeResponse)
+  # @@protoc_insertion_point(class_scope:auth.GetOneTimePasswordResponse)
   ))
-_sym_db.RegisterMessage(GetAuthenticationCodeResponse)
+_sym_db.RegisterMessage(GetOneTimePasswordResponse)
 
 
+DESCRIPTOR._options = None
 _ACL_ENTRIESENTRY._options = None
 _USERS_USERNAMESENTRY._options = None
 _GROUPS_GROUPSENTRY._options = None
@@ -2316,8 +2408,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=2781,
-  serialized_end=4268,
+  serialized_start=3016,
+  serialized_end=4494,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',
@@ -2500,12 +2592,12 @@ _API = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='GetAuthenticationCode',
-    full_name='auth.API.GetAuthenticationCode',
+    name='GetOneTimePassword',
+    full_name='auth.API.GetOneTimePassword',
     index=20,
     containing_service=None,
-    input_type=_GETAUTHENTICATIONCODEREQUEST,
-    output_type=_GETAUTHENTICATIONCODERESPONSE,
+    input_type=_GETONETIMEPASSWORDREQUEST,
+    output_type=_GETONETIMEPASSWORDRESPONSE,
     serialized_options=None,
   ),
 ])

@@ -13,6 +13,8 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from python_pachyderm.client.admin.1_7.pfs import pfs_pb2 as client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2
+from python_pachyderm.client.admin.1_7.pps import pps_pb2 as client_dot_admin_dot_1__7_dot_pps_dot_pps__pb2
 from python_pachyderm.client.pfs import pfs_pb2 as client_dot_pfs_dot_pfs__pb2
 from python_pachyderm.client.pps import pps_pb2 as client_dot_pps_dot_pps__pb2
 
@@ -21,10 +23,10 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/admin/admin.proto',
   package='admin',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x18\x63lient/admin/admin.proto\x12\x05\x61\x64min\x1a\x1bgoogle/protobuf/empty.proto\x1a\x14\x63lient/pfs/pfs.proto\x1a\x14\x63lient/pps/pps.proto\"\xf9\x01\n\x05Op1_7\x12%\n\x06object\x18\x02 \x01(\x0b\x32\x15.pfs.PutObjectRequest\x12\"\n\x03tag\x18\x03 \x01(\x0b\x32\x15.pfs.TagObjectRequest\x12$\n\x04repo\x18\x04 \x01(\x0b\x32\x16.pfs.CreateRepoRequest\x12\'\n\x06\x63ommit\x18\x05 \x01(\x0b\x32\x17.pfs.BuildCommitRequest\x12(\n\x06\x62ranch\x18\x06 \x01(\x0b\x32\x18.pfs.CreateBranchRequest\x12,\n\x08pipeline\x18\x07 \x01(\x0b\x32\x1a.pps.CreatePipelineRequest\"!\n\x02Op\x12\x1b\n\x05op1_7\x18\x01 \x01(\x0b\x32\x0c.admin.Op1_7\"Y\n\x0e\x45xtractRequest\x12\x0b\n\x03URL\x18\x01 \x01(\t\x12\x12\n\nno_objects\x18\x02 \x01(\x08\x12\x10\n\x08no_repos\x18\x03 \x01(\x08\x12\x14\n\x0cno_pipelines\x18\x04 \x01(\x08\"9\n\x16\x45xtractPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"4\n\x0eRestoreRequest\x12\x15\n\x02op\x18\x01 \x01(\x0b\x32\t.admin.Op\x12\x0b\n\x03URL\x18\x02 \x01(\t\"\x19\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t2\xf3\x01\n\x03\x41PI\x12/\n\x07\x45xtract\x12\x15.admin.ExtractRequest\x1a\t.admin.Op\"\x00\x30\x01\x12=\n\x0f\x45xtractPipeline\x12\x1d.admin.ExtractPipelineRequest\x1a\t.admin.Op\"\x00\x12<\n\x07Restore\x12\x15.admin.RestoreRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12>\n\x0eInspectCluster\x12\x16.google.protobuf.Empty\x1a\x12.admin.ClusterInfo\"\x00\x62\x06proto3')
+  serialized_options=_b('Z/github.com/pachyderm/pachyderm/src/client/admin'),
+  serialized_pb=_b('\n\x18\x63lient/admin/admin.proto\x12\x05\x61\x64min\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1e\x63lient/admin/1_7/pfs/pfs.proto\x1a\x1e\x63lient/admin/1_7/pps/pps.proto\x1a\x14\x63lient/pfs/pfs.proto\x1a\x14\x63lient/pps/pps.proto\"\x91\x02\n\x05Op1_7\x12)\n\x06object\x18\x02 \x01(\x0b\x32\x19.pfs_1_7.PutObjectRequest\x12&\n\x03tag\x18\x03 \x01(\x0b\x32\x19.pfs_1_7.TagObjectRequest\x12(\n\x04repo\x18\x04 \x01(\x0b\x32\x1a.pfs_1_7.CreateRepoRequest\x12+\n\x06\x63ommit\x18\x05 \x01(\x0b\x32\x1b.pfs_1_7.BuildCommitRequest\x12,\n\x06\x62ranch\x18\x06 \x01(\x0b\x32\x1c.pfs_1_7.CreateBranchRequest\x12\x30\n\x08pipeline\x18\x07 \x01(\x0b\x32\x1e.pps_1_7.CreatePipelineRequest\"\xf9\x01\n\x05Op1_8\x12%\n\x06object\x18\x02 \x01(\x0b\x32\x15.pfs.PutObjectRequest\x12\"\n\x03tag\x18\x03 \x01(\x0b\x32\x15.pfs.TagObjectRequest\x12$\n\x04repo\x18\x04 \x01(\x0b\x32\x16.pfs.CreateRepoRequest\x12\'\n\x06\x63ommit\x18\x05 \x01(\x0b\x32\x17.pfs.BuildCommitRequest\x12(\n\x06\x62ranch\x18\x06 \x01(\x0b\x32\x18.pfs.CreateBranchRequest\x12,\n\x08pipeline\x18\x07 \x01(\x0b\x32\x1a.pps.CreatePipelineRequest\">\n\x02Op\x12\x1b\n\x05op1_7\x18\x01 \x01(\x0b\x32\x0c.admin.Op1_7\x12\x1b\n\x05op1_8\x18\x02 \x01(\x0b\x32\x0c.admin.Op1_8\"Y\n\x0e\x45xtractRequest\x12\x0b\n\x03URL\x18\x01 \x01(\t\x12\x12\n\nno_objects\x18\x02 \x01(\x08\x12\x10\n\x08no_repos\x18\x03 \x01(\x08\x12\x14\n\x0cno_pipelines\x18\x04 \x01(\x08\"9\n\x16\x45xtractPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"4\n\x0eRestoreRequest\x12\x15\n\x02op\x18\x01 \x01(\x0b\x32\t.admin.Op\x12\x0b\n\x03URL\x18\x02 \x01(\t\"\x19\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t2\xf3\x01\n\x03\x41PI\x12/\n\x07\x45xtract\x12\x15.admin.ExtractRequest\x1a\t.admin.Op\"\x00\x30\x01\x12=\n\x0f\x45xtractPipeline\x12\x1d.admin.ExtractPipelineRequest\x1a\t.admin.Op\"\x00\x12<\n\x07Restore\x12\x15.admin.RestoreRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12>\n\x0eInspectCluster\x12\x16.google.protobuf.Empty\x1a\x12.admin.ClusterInfo\"\x00\x42\x31Z/github.com/pachyderm/pachyderm/src/client/adminb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,client_dot_pfs_dot_pfs__pb2.DESCRIPTOR,client_dot_pps_dot_pps__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2.DESCRIPTOR,client_dot_admin_dot_1__7_dot_pps_dot_pps__pb2.DESCRIPTOR,client_dot_pfs_dot_pfs__pb2.DESCRIPTOR,client_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
 
 
@@ -90,8 +92,74 @@ _OP1_7 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=109,
-  serialized_end=358,
+  serialized_start=173,
+  serialized_end=446,
+)
+
+
+_OP1_8 = _descriptor.Descriptor(
+  name='Op1_8',
+  full_name='admin.Op1_8',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='object', full_name='admin.Op1_8.object', index=0,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tag', full_name='admin.Op1_8.tag', index=1,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='repo', full_name='admin.Op1_8.repo', index=2,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='commit', full_name='admin.Op1_8.commit', index=3,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='branch', full_name='admin.Op1_8.branch', index=4,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='admin.Op1_8.pipeline', index=5,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=449,
+  serialized_end=698,
 )
 
 
@@ -109,6 +177,13 @@ _OP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='op1_8', full_name='admin.Op.op1_8', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -121,8 +196,8 @@ _OP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=360,
-  serialized_end=393,
+  serialized_start=700,
+  serialized_end=762,
 )
 
 
@@ -173,8 +248,8 @@ _EXTRACTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=395,
-  serialized_end=484,
+  serialized_start=764,
+  serialized_end=853,
 )
 
 
@@ -204,8 +279,8 @@ _EXTRACTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=486,
-  serialized_end=543,
+  serialized_start=855,
+  serialized_end=912,
 )
 
 
@@ -242,8 +317,8 @@ _RESTOREREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=545,
-  serialized_end=597,
+  serialized_start=914,
+  serialized_end=966,
 )
 
 
@@ -273,20 +348,28 @@ _CLUSTERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=599,
-  serialized_end=624,
+  serialized_start=968,
+  serialized_end=993,
 )
 
-_OP1_7.fields_by_name['object'].message_type = client_dot_pfs_dot_pfs__pb2._PUTOBJECTREQUEST
-_OP1_7.fields_by_name['tag'].message_type = client_dot_pfs_dot_pfs__pb2._TAGOBJECTREQUEST
-_OP1_7.fields_by_name['repo'].message_type = client_dot_pfs_dot_pfs__pb2._CREATEREPOREQUEST
-_OP1_7.fields_by_name['commit'].message_type = client_dot_pfs_dot_pfs__pb2._BUILDCOMMITREQUEST
-_OP1_7.fields_by_name['branch'].message_type = client_dot_pfs_dot_pfs__pb2._CREATEBRANCHREQUEST
-_OP1_7.fields_by_name['pipeline'].message_type = client_dot_pps_dot_pps__pb2._CREATEPIPELINEREQUEST
+_OP1_7.fields_by_name['object'].message_type = client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2._PUTOBJECTREQUEST
+_OP1_7.fields_by_name['tag'].message_type = client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2._TAGOBJECTREQUEST
+_OP1_7.fields_by_name['repo'].message_type = client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2._CREATEREPOREQUEST
+_OP1_7.fields_by_name['commit'].message_type = client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2._BUILDCOMMITREQUEST
+_OP1_7.fields_by_name['branch'].message_type = client_dot_admin_dot_1__7_dot_pfs_dot_pfs__pb2._CREATEBRANCHREQUEST
+_OP1_7.fields_by_name['pipeline'].message_type = client_dot_admin_dot_1__7_dot_pps_dot_pps__pb2._CREATEPIPELINEREQUEST
+_OP1_8.fields_by_name['object'].message_type = client_dot_pfs_dot_pfs__pb2._PUTOBJECTREQUEST
+_OP1_8.fields_by_name['tag'].message_type = client_dot_pfs_dot_pfs__pb2._TAGOBJECTREQUEST
+_OP1_8.fields_by_name['repo'].message_type = client_dot_pfs_dot_pfs__pb2._CREATEREPOREQUEST
+_OP1_8.fields_by_name['commit'].message_type = client_dot_pfs_dot_pfs__pb2._BUILDCOMMITREQUEST
+_OP1_8.fields_by_name['branch'].message_type = client_dot_pfs_dot_pfs__pb2._CREATEBRANCHREQUEST
+_OP1_8.fields_by_name['pipeline'].message_type = client_dot_pps_dot_pps__pb2._CREATEPIPELINEREQUEST
 _OP.fields_by_name['op1_7'].message_type = _OP1_7
+_OP.fields_by_name['op1_8'].message_type = _OP1_8
 _EXTRACTPIPELINEREQUEST.fields_by_name['pipeline'].message_type = client_dot_pps_dot_pps__pb2._PIPELINE
 _RESTOREREQUEST.fields_by_name['op'].message_type = _OP
 DESCRIPTOR.message_types_by_name['Op1_7'] = _OP1_7
+DESCRIPTOR.message_types_by_name['Op1_8'] = _OP1_8
 DESCRIPTOR.message_types_by_name['Op'] = _OP
 DESCRIPTOR.message_types_by_name['ExtractRequest'] = _EXTRACTREQUEST
 DESCRIPTOR.message_types_by_name['ExtractPipelineRequest'] = _EXTRACTPIPELINEREQUEST
@@ -300,6 +383,13 @@ Op1_7 = _reflection.GeneratedProtocolMessageType('Op1_7', (_message.Message,), d
   # @@protoc_insertion_point(class_scope:admin.Op1_7)
   ))
 _sym_db.RegisterMessage(Op1_7)
+
+Op1_8 = _reflection.GeneratedProtocolMessageType('Op1_8', (_message.Message,), dict(
+  DESCRIPTOR = _OP1_8,
+  __module__ = 'client.admin.admin_pb2'
+  # @@protoc_insertion_point(class_scope:admin.Op1_8)
+  ))
+_sym_db.RegisterMessage(Op1_8)
 
 Op = _reflection.GeneratedProtocolMessageType('Op', (_message.Message,), dict(
   DESCRIPTOR = _OP,
@@ -337,6 +427,7 @@ ClusterInfo = _reflection.GeneratedProtocolMessageType('ClusterInfo', (_message.
 _sym_db.RegisterMessage(ClusterInfo)
 
 
+DESCRIPTOR._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
@@ -344,8 +435,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=627,
-  serialized_end=870,
+  serialized_start=996,
+  serialized_end=1239,
   methods=[
   _descriptor.MethodDescriptor(
     name='Extract',

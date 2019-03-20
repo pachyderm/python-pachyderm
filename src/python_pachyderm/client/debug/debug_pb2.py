@@ -19,8 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='client/debug/debug.proto',
   package='debug',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\"\x1f\n\x0b\x44umpRequest\x12\x10\n\x08recursed\x18\x01 \x01(\x08\x32\x44\n\x05\x44\x65\x62ug\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x62\x06proto3')
+  serialized_options=_b('Z/github.com/pachyderm/pachyderm/src/client/debug'),
+  serialized_pb=_b('\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\"\x1f\n\x0b\x44umpRequest\x12\x10\n\x08recursed\x18\x01 \x01(\x08\x32\x44\n\x05\x44\x65\x62ug\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42\x31Z/github.com/pachyderm/pachyderm/src/client/debugb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -68,6 +68,7 @@ DumpRequest = _reflection.GeneratedProtocolMessageType('DumpRequest', (_message.
 _sym_db.RegisterMessage(DumpRequest)
 
 
+DESCRIPTOR._options = None
 
 _DEBUG = _descriptor.ServiceDescriptor(
   name='Debug',

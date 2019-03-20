@@ -114,10 +114,10 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.GetUsersRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.GetUsersResponse.FromString,
         )
-    self.GetAuthenticationCode = channel.unary_unary(
-        '/auth.API/GetAuthenticationCode',
-        request_serializer=client_dot_auth_dot_auth__pb2.GetAuthenticationCodeRequest.SerializeToString,
-        response_deserializer=client_dot_auth_dot_auth__pb2.GetAuthenticationCodeResponse.FromString,
+    self.GetOneTimePassword = channel.unary_unary(
+        '/auth.API/GetOneTimePassword',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.FromString,
         )
 
 
@@ -267,7 +267,7 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetAuthenticationCode(self, request, context):
+  def GetOneTimePassword(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -377,10 +377,10 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_auth_dot_auth__pb2.GetUsersRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.GetUsersResponse.SerializeToString,
       ),
-      'GetAuthenticationCode': grpc.unary_unary_rpc_method_handler(
-          servicer.GetAuthenticationCode,
-          request_deserializer=client_dot_auth_dot_auth__pb2.GetAuthenticationCodeRequest.FromString,
-          response_serializer=client_dot_auth_dot_auth__pb2.GetAuthenticationCodeResponse.SerializeToString,
+      'GetOneTimePassword': grpc.unary_unary_rpc_method_handler(
+          servicer.GetOneTimePassword,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

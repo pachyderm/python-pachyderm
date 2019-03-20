@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import collections
 import os
-from builtins import object
 from contextlib import contextmanager
 
-from .client.pfs.pfs_pb2 import *
-from .client.pfs.pfs_pb2_grpc import *
+import six
+
+from python_pachyderm.client.pfs.pfs_pb2 import *
+from python_pachyderm.client.pfs.pfs_pb2_grpc import *
+
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
@@ -15,11 +19,9 @@ class ExtractValueIterator(object):
     def __init__(self, r):
         self._iter = r
 
-    def __next__(self):
-        return next(self._iter).value
-
     def __iter__(self):
-        return self
+        for item in self._iter:
+            yield item.value
 
 
 def _commit_from(src, allow_just_repo=False):
@@ -38,7 +40,7 @@ def _commit_from(src, allow_just_repo=False):
 
 def _make_list(x):
     # if `x` is not iterable, put it in a list
-    if isinstance(x, (str, bytes)) or not isinstance(x, collections.Iterable):
+    if isinstance(x, six.string_types + six.binary_type) or not isinstance(x, collections.Iterable):
         x = [x]
     return x
 
@@ -82,7 +84,7 @@ class PfsClient(object):
         """
         return self.stub.InspectRepo(InspectRepoRequest(repo=Repo(name=repo_name)))
 
-    def list_repo(self, provenance=tuple()):
+    def list_repo(self):
         """
         Returns info about all Repos.
 

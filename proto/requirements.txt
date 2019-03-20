@@ -1,2 +1,2 @@
-grpcio
-grpcio-tools
+grpcio==1.19.0
+grpcio-tools==1.19.0
