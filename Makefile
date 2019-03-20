@@ -19,7 +19,7 @@ init:
 
 ci-install:
 	pushd proto/pachyderm && \
-		sudo ./etc/testing/travis_before_install.sh && \
+		sudo ./etc/testing/ci/before_install.sh && \
 		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(cat ../../VERSION)/pachctl_$$(cat ../../VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb && \
 		popd
