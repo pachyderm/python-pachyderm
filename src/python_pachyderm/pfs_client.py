@@ -39,10 +39,6 @@ def _commit_from(src, allow_just_repo=False):
     return Commit(repo=Repo(name=src))
 
 
-def _is_iterator(x):
-    return hasattr(x, 'next') or hasattr(x, '__next__')
-
-
 class PfsClient(object):
     def __init__(self, host=None, port=None):
         """
