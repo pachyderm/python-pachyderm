@@ -6,7 +6,7 @@ import os
 
 from python_pachyderm.client.pps.pps_pb2 import *
 from python_pachyderm.client.pps.pps_pb2_grpc import *
-from python_pachyderm.util import get_address
+from python_pachyderm.util import commit_from, get_address
 
 
 class PpsClient(object):
@@ -38,7 +38,7 @@ class PpsClient(object):
         return self.stub.InspectJob(InspectJobRequest(job=Job(id=job_id), block_state=block_state))
 
     def list_job(self, pipeline=None, input_commit=None):
-        return self.stub.ListJob(ListJobRequest(pipeline=pipeline, input_commit=input_commit))
+        return self.stub.ListJob(ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit)))
 
     def delete_job(self, job_id):
         self.stub.DeleteJob(DeleteJobRequest(job=Job(id=job_id)))

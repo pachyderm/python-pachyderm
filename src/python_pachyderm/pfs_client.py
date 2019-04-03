@@ -10,7 +10,7 @@ import six
 
 from python_pachyderm.client.pfs.pfs_pb2 import *
 from python_pachyderm.client.pfs.pfs_pb2_grpc import *
-from python_pachyderm.util import get_address
+from python_pachyderm.util import commit_from, get_address
 
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
@@ -23,20 +23,6 @@ class ExtractValueIterator(object):
     def __iter__(self):
         for item in self._iter:
             yield item.value
-
-
-def _commit_from(src, allow_just_repo=False):
-    if src.__class__.__name__ == "Commit":
-        return src
-    elif type(src) in (tuple, list) and len(src) == 2:
-        return Commit(repo=Repo(name=src[0]), id=src[1])
-    elif type(src) is str:
-        repo_name, commit_id = src.split('/', 1)
-        return Commit(repo=Repo(name=repo_name), id=commit_id)
-    if not allow_just_repo:
-        raise ValueError(
-            "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
-    return Commit(repo=Repo(name=src))
 
 
 class PfsClient(object):
@@ -136,7 +122,7 @@ class PfsClient(object):
         attempts to write to it with PutFile will error.
         :param commit: A tuple or string representing the commit
         """
-        self.stub.FinishCommit(FinishCommitRequest(commit=_commit_from(commit)))
+        self.stub.FinishCommit(FinishCommitRequest(commit=commit_from(commit)))
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None):
@@ -159,7 +145,7 @@ class PfsClient(object):
         :param commit: A tuple or string representing the commit
         :return: CommitInfo object
         """
-        return self.stub.InspectCommit(InspectCommitRequest(commit=_commit_from(commit)))
+        return self.stub.InspectCommit(InspectCommitRequest(commit=commit_from(commit)))
 
     def provenances_for_repo(self, repo_name):
         provenances = {}
@@ -186,9 +172,9 @@ class PfsClient(object):
         """
         req = ListCommitRequest(repo=Repo(name=repo_name), number=number)
         if to_commit is not None:
-            req.to.CopyFrom(_commit_from(to_commit))
+            req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
-            getattr(req, 'from').CopyFrom(_commit_from(from_commit))
+            getattr(req, 'from').CopyFrom(commit_from(from_commit))
         x = self.stub.ListCommit(req)
         if hasattr(x, 'commit_info'):
             return x.commit_info
@@ -200,7 +186,7 @@ class PfsClient(object):
         Note it is currently not implemented.
         :param commit: A tuple or string representing the commit
         """
-        self.stub.DeleteCommit(DeleteCommitRequest(commit=_commit_from(commit)))
+        self.stub.DeleteCommit(DeleteCommitRequest(commit=commit_from(commit)))
 
     def flush_commit(self, commits, repos=tuple()):
         """
@@ -218,7 +204,7 @@ class PfsClient(object):
                     will be considered, otherwise all repos are considered.
         :return: An iterator of CommitInfo objects
         """
-        return self.stub.FlushCommit(FlushCommitRequest(commit=[_commit_from(c) for c in commits],
+        return self.stub.FlushCommit(FlushCommitRequest(commit=[commit_from(c) for c in commits],
                                                         to_repo=[Repo(name=r) for r in repos]))
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
@@ -255,7 +241,7 @@ class PfsClient(object):
         :param commit: A tuple or string representing the commit
         :param branch_name: The name for the branch to set
         """
-        self.stub.SetBranch(SetBranchRequest(commit=_commit_from(commit),
+        self.stub.SetBranch(SetBranchRequest(commit=commit_from(commit),
                                              branch=branch_name))
 
     def delete_branch(self, repo_name, branch_name):
@@ -288,7 +274,7 @@ class PfsClient(object):
         if _is_iterator(value):
             def _wrap(v):
                 for x in v:
-                    yield PutFileRequest(file=File(commit=_commit_from(commit), path=path),
+                    yield PutFileRequest(file=File(commit=commit_from(commit), path=path),
                                          value=x,
                                          delimiter=delimiter,
                                          target_file_datums=target_file_datums,
@@ -299,7 +285,7 @@ class PfsClient(object):
 
         def _blocks(v):
             for i in range(0, len(v), BUFFER_SIZE):
-                yield PutFileRequest(file=File(commit=_commit_from(commit), path=path),
+                yield PutFileRequest(file=File(commit=commit_from(commit), path=path),
                                      value=v[i:i + BUFFER_SIZE],
                                      delimiter=delimiter,
                                      target_file_datums=target_file_datums,
@@ -317,7 +303,7 @@ class PfsClient(object):
         :param url: The url to download
         :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.
         """
-        self.stub.PutFile(iter([PutFileRequest(file=File(commit=_commit_from(commit), path=path),
+        self.stub.PutFile(iter([PutFileRequest(file=File(commit=commit_from(commit), path=path),
                                                url=url,
                                                recursive=recursive)]))
 
@@ -336,7 +322,7 @@ class PfsClient(object):
                     response iterator will return
         :return: An iterator over the file or an iterator over the protobuf responses
         """
-        r = self.stub.GetFile(GetFileRequest(file=File(commit=_commit_from(commit),
+        r = self.stub.GetFile(GetFileRequest(file=File(commit=commit_from(commit),
                                                        path=path),
                                              offset_bytes=offset_bytes,
                                              size_bytes=size_bytes))
@@ -372,7 +358,7 @@ class PfsClient(object):
         :param path: Path to file
         :return: A FileInfo object
         """
-        return self.stub.InspectFile(InspectFileRequest(file=File(commit=_commit_from(commit),
+        return self.stub.InspectFile(InspectFileRequest(file=File(commit=commit_from(commit),
                                                                   path=path)))
 
     def list_file(self, commit, path, recursive=False):
@@ -383,7 +369,7 @@ class PfsClient(object):
         :param recursive: If True, continue listing the files for sub-directories
         :return: A list of FileInfo objects
         """
-        file_infos = self.stub.ListFile(ListFileRequest(file=File(commit=_commit_from(commit),
+        file_infos = self.stub.ListFile(ListFileRequest(file=File(commit=commit_from(commit),
                                                                   path=path))).file_info
         if recursive:
             dirs = [f for f in file_infos if f.file_type == DIR]
@@ -400,7 +386,7 @@ class PfsClient(object):
         :param pattern:
         :return: A list of FileInfo objects
         """
-        r = self.stub.GlobFile(GlobFileRequest(commit=_commit_from(commit),
+        r = self.stub.GlobFile(GlobFileRequest(commit=commit_from(commit),
                                                pattern=pattern))
         if hasattr(r, 'file_info'):
             return r.file_info
@@ -417,7 +403,7 @@ class PfsClient(object):
         :param commit: A tuple or string representing the commit
         :param path: The path to the file
         """
-        self.stub.DeleteFile(DeleteFileRequest(file=File(commit=_commit_from(commit),
+        self.stub.DeleteFile(DeleteFileRequest(file=File(commit=commit_from(commit),
                                                          path=path)))
 
     def delete_all(self):
