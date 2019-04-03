@@ -59,7 +59,7 @@ class PfsClient(object):
         """
         # If a host or port is not specified, then try to set using environment variables or use the defaults.
         address = get_address(host, port)
-        self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
+        self.channel = grpc.insecure_channel(address)
         self.stub = APIStub(self.channel)
 
     def create_repo(self, repo_name, description=None):
