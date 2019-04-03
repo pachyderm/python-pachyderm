@@ -10,6 +10,7 @@ import six
 
 from python_pachyderm.client.pfs.pfs_pb2 import *
 from python_pachyderm.client.pfs.pfs_pb2_grpc import *
+from python_pachyderm.util import get_address
 
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
@@ -57,11 +58,7 @@ class PfsClient(object):
         :param port: The port to connect to. Default is 30650
         """
         # If a host or port is not specified, then try to set using environment variables or use the defaults.
-        if host is None:
-            host = os.environ.get('PACHD_SERVICE_HOST', 'localhost')
-        if port is None:
-            port = os.environ.get('PACHD_SERVICE_PORT_API_GRPC_PORT', '30650')
-
+        address = get_address(host, port)
         self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
         self.stub = APIStub(self.channel)
 

@@ -6,18 +6,19 @@ import os
 
 from python_pachyderm.client.pps.pps_pb2 import *
 from python_pachyderm.client.pps.pps_pb2_grpc import *
+from python_pachyderm.util import get_address
 
 
 class PpsClient(object):
-    def __init__(self,
-                 host=os.environ.get('PACHD_SERVICE_HOST', 'localhost'),
-                 port=os.environ.get('PACHD_SERVICE_PORT_API_GRPC_PORT', 30650)):
+    def __init__(self, host=None, port=None):
         """
         Creates a client to connect to Pfs
         :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
         :param port: The port to connect to. Default is 30650
         """
-        self.channel = grpc.insecure_channel('{}:{}'.format(host, port))
+
+        address = get_address(host, port)
+        self.channel = grpc.insecure_channel(address)
         self.stub = APIStub(self.channel)
 
     def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
