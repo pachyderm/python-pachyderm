@@ -23,12 +23,16 @@ class PpsClient(object):
 
     def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
                    output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
-        return self.stub.CreateJob(
-            CreateJobRequest(transform=transform, pipeline=pipeline, pipeline_version=pipeline_version,
-                             parallelism_spec=parallelism_spec, inputs=inputs, egress=egress, service=service,
-                             output_repo=output_repo, output_branch=output_branch, parent_job=parent_job,
-                             resource_spec=resource_spec, input=input, new_branch=new_branch, incremental=incremental,
-                             enable_stats=enable_stats, salt=salt, batch=batch))
+        return self.stub.CreateJob(CreateJobRequest(
+            transform=transform, pipeline=pipeline,
+            pipeline_version=pipeline_version,
+            parallelism_spec=parallelism_spec, inputs=inputs,
+            egress=egress, service=service, output_repo=output_repo,
+            output_branch=output_branch, parent_job=parent_job,
+            resource_spec=resource_spec, input=input, new_branch=new_branch,
+            incremental=incremental, enable_stats=enable_stats, salt=salt,
+            batch=batch
+        ))
 
     def inspect_job(self, job_id, block_state=False):
         return self.stub.InspectJob(InspectJobRequest(job=Job(id=job_id), block_state=block_state))
@@ -51,16 +55,29 @@ class PpsClient(object):
     def restart_datum(self, job_id, data_filters=tuple()):
         self.stub.RestartDatum(RestartDatumRequest(job=Job(id=job_id, data_filters=data_filters)))
 
-    def create_pipeline(self, pipeline, transform, parallelism_spec, egress, update, output_branch,
-                        scale_down_threshold, resource_spec, input, description, incremental, cache_size, enable_stats,
-                        reprocess, batch, scheduling_spec, standby, service, pod_spec):
-        self.stub.CreatePipeline(
-            CreatePipelineRequest(pipeline=pipeline, transform=transform, parallelism_spec=parallelism_spec,
-                                  egress=egress, update=update, output_branch=output_branch,
-                                  scale_down_threshold=scale_down_threshold, input=input, standby=standby,
-                                  description=description, incremental=incremental, cache_size=cache_size,
-                                  enable_stats=enable_stats, reprocess=reprocess, batch=batch, scheduling_spec=scheduling_spec, service=service,datum_tries=1,
-                                  pod_spec=pod_spec))
+    def create_pipeline(self, pipeline, transform, parallelism_spec,
+                        hashtree_spec, egress, update, output_branch,
+                        scale_down_threshold, resource_requests,
+                        resource_limits, input, description, cache_size,
+                        enable_stats, reprocess, batch, max_queue_size,
+                        service, chunk_spec, datum_timeout,
+                        job_timeout, salt, standby, datum_tries,
+                        scheduling_spec, pod_spec, pod_patch):
+        self.stub.CreatePipeline(CreatePipelineRequest(
+            pipeline=pipeline, transform=transform,
+            parallelism_spec=parallelism_spec, hashtree_spec=hashtree_spec,
+            egress=egress, update=update, output_branch=output_branch,
+            scale_down_threshold=scale_down_threshold,
+            resource_requests=resource_requests,
+            resource_limits=resource_limits, input=input,
+            description=description, cache_size=cache_size,
+            enable_stats=enable_stats, reprocess=reprocess, batch=batch,
+            max_queue_size=max_queue_size, service=service,
+            chunk_spec=chunk_spec, datum_timeout=datum_timeout,
+            job_timeout=job_timeout, salt=salt, standby=standby,
+            datum_tries=datum_tries, scheduling_spec=scheduling_spec,
+            pod_spec=pod_spec, pod_patch=pod_patch
+        ))
 
     def inspect_pipeline(self, pipeline_name):
         return self.stub.InspectPipeline(InspectPipelineRequest(pipeline=Pipeline(name=pipeline_name)))
