@@ -3,7 +3,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>python_pachyderm.client API documentation</title>
+    <title>python_pachyderm.util API documentation</title>
     <meta name="description" content="" />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
@@ -970,21 +970,16 @@ table {
     <h1>Index</h1>
     <ul id="index">
 
+    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.util.commit_from">commit_from</a></li>
+    <li class="mono"><a href="#python_pachyderm.util.get_address">get_address</a></li>
+  </ul>
 
-
-    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
-      <ul>
-        <li class="mono"><a href="admin/index.html">python_pachyderm.client.admin</a></li>
-        <li class="mono"><a href="auth/index.html">python_pachyderm.client.auth</a></li>
-        <li class="mono"><a href="debug/index.html">python_pachyderm.client.debug</a></li>
-        <li class="mono"><a href="deploy/index.html">python_pachyderm.client.deploy</a></li>
-        <li class="mono"><a href="enterprise/index.html">python_pachyderm.client.enterprise</a></li>
-        <li class="mono"><a href="health/index.html">python_pachyderm.client.health</a></li>
-        <li class="mono"><a href="pfs/index.html">python_pachyderm.client.pfs</a></li>
-        <li class="mono"><a href="pkg/index.html">python_pachyderm.client.pkg</a></li>
-        <li class="mono"><a href="pps/index.html">python_pachyderm.client.pps</a></li>
-      </ul>
     </li>
+
+
     </ul>
   </div>
 
@@ -996,18 +991,52 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.util</span> module</h1>
   
   
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client" class="source">
-    <pre><code># this is a namespace package
-try:
-    import pkg_resources
-    pkg_resources.declare_namespace(__name__)
-except ImportError:
-    import pkgutil
-    __path__ = pkgutil.extend_path(__path__, __name__)
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.util', this);">Show source &equiv;</a></p>
+  <div id="source-python_pachyderm.util" class="source">
+    <pre><code>import os
+
+import six
+
+from python_pachyderm.client.pfs import pfs_pb2 as pfs_proto
+
+
+def get_address(host=None, port=None):
+    if host is None or port is None:
+        env_old_host = os.environ.get("PACHD_SERVICE_HOST")
+
+        if env_old_host is not None:
+            import warnings
+            warnings.warn("The environment variable `PACHD_SERVICE_HOST` is deprecated; either explicitly set the host, or use `PACHD_ADDRESS`", DeprecationWarning)
+            host = env_old_host
+
+    if port is None:
+        env_old_port = os.environ.get("PACHD_SERVICE_PORT_API_GRPC_PORT")
+
+        if env_old_port is not None:
+            import warnings
+            warnings.warn("The environment variable `PACHD_SERVICE_PORT_API_GRPC_PORT` is deprecated; either explicitly set the host, or use `PACHD_ADDRESS`", DeprecationWarning)
+            port = env_old_port
+
+    if host is not None and port is not None:
+        return "{}:{}".format(host, port)
+    else:
+        return os.environ.get("PACHD_ADDRESS", "localhost:30650")
+
+def commit_from(src, allow_just_repo=False):
+    if isinstance(src, pfs_proto.Commit):
+        return src
+    elif isinstance(src, (tuple, list)) and len(src) == 2:
+        return pfs_proto.Commit(repo=pfs_proto.Repo(name=src[0]), id=src[1])
+    elif isinstance(src, six.string_types):
+        repo_name, commit_id = src.split('/', 1)
+        return pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=commit_id)
+    if not allow_just_repo:
+        raise ValueError(
+            "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
+    return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
 </code></pre>
   </div>
 
@@ -1015,63 +1044,78 @@ except ImportError:
 
   <section id="section-items">
 
-
-
-    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
-      <div class="item">
-      <p class="name"><a href="admin/index.html">python_pachyderm.client.admin</a></p>
+    <h2 class="section-title" id="header-functions">Functions</h2>
       
+  <div class="item">
+    <div class="name def" id="python_pachyderm.util.commit_from">
+    <p>def <span class="ident">commit_from</span>(</p><p>src, allow_just_repo=False)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.util.commit_from', this);">Show source &equiv;</a></p>
+  <div id="source-python_pachyderm.util.commit_from" class="source">
+    <pre><code>def commit_from(src, allow_just_repo=False):
+    if isinstance(src, pfs_proto.Commit):
+        return src
+    elif isinstance(src, (tuple, list)) and len(src) == 2:
+        return pfs_proto.Commit(repo=pfs_proto.Repo(name=src[0]), id=src[1])
+    elif isinstance(src, six.string_types):
+        repo_name, commit_id = src.split('/', 1)
+        return pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=commit_id)
+    if not allow_just_repo:
+        raise ValueError(
+            "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
+    return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.util.get_address">
+    <p>def <span class="ident">get_address</span>(</p><p>host=None, port=None)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.util.get_address', this);">Show source &equiv;</a></p>
+  <div id="source-python_pachyderm.util.get_address" class="source">
+    <pre><code>def get_address(host=None, port=None):
+    if host is None or port is None:
+        env_old_host = os.environ.get("PACHD_SERVICE_HOST")
+
+        if env_old_host is not None:
+            import warnings
+            warnings.warn("The environment variable `PACHD_SERVICE_HOST` is deprecated; either explicitly set the host, or use `PACHD_ADDRESS`", DeprecationWarning)
+            host = env_old_host
+
+    if port is None:
+        env_old_port = os.environ.get("PACHD_SERVICE_PORT_API_GRPC_PORT")
+
+        if env_old_port is not None:
+            import warnings
+            warnings.warn("The environment variable `PACHD_SERVICE_PORT_API_GRPC_PORT` is deprecated; either explicitly set the host, or use `PACHD_ADDRESS`", DeprecationWarning)
+            port = env_old_port
+
+    if host is not None and port is not None:
+        return "{}:{}".format(host, port)
+    else:
+        return os.environ.get("PACHD_ADDRESS", "localhost:30650")
+</code></pre>
+  </div>
+</div>
+
+  </div>
   
 
-      </div>
-      <div class="item">
-      <p class="name"><a href="auth/index.html">python_pachyderm.client.auth</a></p>
-      
-  
 
-      </div>
-      <div class="item">
-      <p class="name"><a href="debug/index.html">python_pachyderm.client.debug</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="deploy/index.html">python_pachyderm.client.deploy</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="enterprise/index.html">python_pachyderm.client.enterprise</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="health/index.html">python_pachyderm.client.health</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="pfs/index.html">python_pachyderm.client.pfs</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="pkg/index.html">python_pachyderm.client.pkg</a></p>
-      
-  
-
-      </div>
-      <div class="item">
-      <p class="name"><a href="pps/index.html">python_pachyderm.client.pps</a></p>
-      
-  
-
-      </div>
   </section>
 
     </article>
