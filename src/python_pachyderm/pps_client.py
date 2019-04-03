@@ -55,7 +55,7 @@ class PpsClient(object):
     def restart_datum(self, job_id, data_filters=tuple()):
         self.stub.RestartDatum(RestartDatumRequest(job=Job(id=job_id, data_filters=data_filters)))
 
-    def create_pipeline(self, pipeline, transform=None, parallelism_spec=None,
+    def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
                         hashtree_spec=None, egress=None, update=None, output_branch=None,
                         scale_down_threshold=None, resource_requests=None,
                         resource_limits=None, input=None, description=None, cache_size=None,
@@ -64,13 +64,12 @@ class PpsClient(object):
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
                         scheduling_spec=None, pod_spec=None, pod_patch=None):
         self.stub.CreatePipeline(CreatePipelineRequest(
-            pipeline=pipeline, transform=transform,
-            parallelism_spec=parallelism_spec, hashtree_spec=hashtree_spec,
-            egress=egress, update=update, output_branch=output_branch,
-            scale_down_threshold=scale_down_threshold,
-            resource_requests=resource_requests,
-            resource_limits=resource_limits, input=input,
-            description=description, cache_size=cache_size,
+            pipeline=Pipeline(name=pipeline_name),
+            transform=transform, parallelism_spec=parallelism_spec,
+            hashtree_spec=hashtree_spec, egress=egress, update=update,
+            output_branch=output_branch, scale_down_threshold=scale_down_threshold,
+            resource_requests=resource_requests, resource_limits=resource_limits,
+            input=input, description=description, cache_size=cache_size,
             enable_stats=enable_stats, reprocess=reprocess, batch=batch,
             max_queue_size=max_queue_size, service=service,
             chunk_spec=chunk_spec, datum_timeout=datum_timeout,
