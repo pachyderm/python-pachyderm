@@ -55,8 +55,7 @@ def test_pfs_client_init_with_default_host_port():
 def test_pfs_client_init_with_env_vars(monkeypatch):
     # GIVEN a Pachyderm deployment
     # WHEN environment variables are set for Pachyderm host and port
-    monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
-    monkeypatch.setenv('PACHD_SERVICE_PORT_API_GRPC_PORT', '12345')
+    monkeypatch.setenv('PACHD_ADDRESS', 'pachd.example.com:12345')
     #   AND a client is created without specifying a host or port
     client = python_pachyderm.PfsClient()
     # THEN the GRPC channel should reflect the host and port specified in the environment variables
