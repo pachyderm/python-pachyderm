@@ -39,13 +39,6 @@ def _commit_from(src, allow_just_repo=False):
     return Commit(repo=Repo(name=src))
 
 
-def _make_list(x):
-    # if `x` is not iterable, put it in a list
-    if isinstance(x, six.string_types + six.binary_type) or not isinstance(x, collections.Iterable):
-        x = [x]
-    return x
-
-
 def _is_iterator(x):
     return hasattr(x, 'next') or hasattr(x, '__next__')
 
