@@ -3,6 +3,11 @@ import os
 import six
 
 from python_pachyderm.client.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm.client.version.versionpb.version_pb2_grpc import (
+        google_dot_protobuf_dot_empty__pb2 as pb_empty,
+        APIStub as VersionStub,
+        grpc)
+from contextlib import closing
 
 
 def get_address(host=None, port=None):
@@ -23,3 +28,9 @@ def commit_from(src, allow_just_repo=False):
         raise ValueError(
             "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
     return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
+
+def get_remote_version(host=None, port=None):
+    with closing(grpc.insecure_channel(get_address(host, port))) as channel:
+        stub = VersionStub(channel)
+        version = stub.GetVersion(pb_empty.Empty())
+        return version
