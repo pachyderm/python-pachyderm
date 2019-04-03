@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import io
-import re
 from glob import glob
 from os.path import basename
 from os.path import dirname
@@ -33,10 +32,8 @@ setup(
     version=get_version(),
     license='Apache 2.0',
     description='Python Pachyderm Client',
-    long_description='%s\n%s' % (
-        re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.md')),
-        re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
-    ),
+    long_description_content_type='text/markdown',
+    long_description=read('README.md'),
     author='Joe Doliner',
     author_email='jdoliner@pachyderm.io',
     url='https://github.com/pachyderm/python-pachyderm',
