@@ -1383,13 +1383,18 @@ table {
   <div id="source-python_pachyderm.pfs_client" class="source">
     <div class="codehilite"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 
-<span class="kn">from</span> <span class="nn">.client.pfs.pfs_pb2</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.client.pfs.pfs_pb2_grpc</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.client.pfs.pfs_pb2</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.client.pfs.pfs_pb2_grpc</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.util</span> <span class="kn">import</span> <span class="n">get_address</span>
+
 
 <span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>  <span class="c1"># 3MB TODO: Base this on some grpc value</span>
 
@@ -1398,11 +1403,9 @@ table {
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="n">r</span>
 
-    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
-
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">item</span><span class="o">.</span><span class="n">value</span>
 
 
 <span class="k">def</span> <span class="nf">_commit_from</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">allow_just_repo</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -1419,13 +1422,6 @@ table {
     <span class="k">return</span> <span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">src</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">_make_list</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="c1"># if `x` is not iterable, put it in a list</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">x</span>
-
-
 <span class="k">def</span> <span class="nf">_is_iterator</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;next&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">)</span>
 
@@ -1438,12 +1434,8 @@ table {
 <span class="sd">        :param port: The port to connect to. Default is 30650</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># If a host or port is not specified, then try to set using environment variables or use the defaults.</span>
-        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_HOST&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_PORT_API_GRPC_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;30650&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="s1">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="n">get_address</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span> <span class="o">=</span> <span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -1569,7 +1561,7 @@ table {
     <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">to_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">from_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists commits.</span>
-<span class="sd">         </span>
+
 <span class="sd">        :param repo_name: If only `repo_name` is given, all commits in the repo are returned.</span>
 <span class="sd">        :param to_commit: optional. only the ancestors of `to`, including `to` itself,</span>
 <span class="sd">                        are considered.</span>
@@ -1622,7 +1614,7 @@ table {
 <span class="sd">        they come in.</span>
 
 <span class="sd">        :param repo_name: Name of the repo</span>
-<span class="sd">        :param branch: Branch to subscribe to </span>
+<span class="sd">        :param branch: Branch to subscribe to</span>
 <span class="sd">        :param from_commit_id: Optional. only commits created since this commit are returned</span>
 
 <span class="sd">        :return: Iterator of Commit objects</span>
@@ -1647,7 +1639,7 @@ table {
     <span class="k">def</span> <span class="nf">set_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        sets a commit and its ancestors as a branch</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param branch_name: The name for the branch to set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">SetBranch</span><span class="p">(</span><span class="n">SetBranchRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -1658,8 +1650,8 @@ table {
 <span class="sd">        deletes a branch, but leaves the commits themselves intact.</span>
 <span class="sd">        In other words, those commits can still be accessed via commit IDs and</span>
 <span class="sd">        other branches they happen to be on.</span>
-<span class="sd">        :param repo_name: The name of the repo </span>
-<span class="sd">        :param branch_name: The name of the branch to delete </span>
+<span class="sd">        :param repo_name: The name of the repo</span>
+<span class="sd">        :param branch_name: The name of the branch to delete</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">DeleteBranch</span><span class="p">(</span><span class="n">DeleteBranchRequest</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
                                                    <span class="n">branch</span><span class="o">=</span><span class="n">branch_name</span><span class="p">))</span>
@@ -1668,16 +1660,16 @@ table {
                        <span class="n">target_file_datums</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_file_bytes</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads a binary bytes array as file(s) in a certain path</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: Path in the repo the file(s) will be written to</span>
-<span class="sd">        :param value: The data bytes array, or an iterator returning chunked byte arrays </span>
+<span class="sd">        :param value: The data bytes array, or an iterator returning chunked byte arrays</span>
 <span class="sd">        :param delimiter: Optional. causes data to be broken up into separate files with `path`</span>
 <span class="sd">                as a prefix.</span>
 <span class="sd">        :param target_file_datums: Optional. specifies the target number of datums in each written</span>
 <span class="sd">                file it may be lower if data does not split evenly, but will never be</span>
 <span class="sd">                higher, unless the value is 0.</span>
 <span class="sd">        :param target_file_bytes: specifies the target number of bytes in each written</span>
-<span class="sd">                file, files may have more or fewer bytes than the target. </span>
+<span class="sd">                file, files may have more or fewer bytes than the target.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">_is_iterator</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
@@ -1707,7 +1699,7 @@ table {
 <span class="sd">        puts a file using the content found at a URL.</span>
 <span class="sd">        The URL is sent to the server which performs the request.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: The path to the file</span>
 <span class="sd">        :param url: The url to download</span>
 <span class="sd">        :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.</span>
@@ -1720,13 +1712,13 @@ table {
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns the contents of a file at a specific Commit.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: The path of the file</span>
-<span class="sd">        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file. </span>
+<span class="sd">        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file.</span>
 <span class="sd">        :param size_bytes: Optional. limits the total amount of data returned, note you will get fewer bytes</span>
 <span class="sd">                than size if you pass a value larger than the size of the file.</span>
 <span class="sd">                If size is set to 0 then all of the data will be returned.</span>
-<span class="sd">        :param extract_value: If True, then an ExtractValueIterator will be return, which </span>
+<span class="sd">        :param extract_value: If True, then an ExtractValueIterator will be return, which</span>
 <span class="sd">                    will iterate over the bytes of the file. If False, then the Protobuf</span>
 <span class="sd">                    response iterator will return</span>
 <span class="sd">        :return: An iterator over the file or an iterator over the protobuf responses</span>
@@ -1743,7 +1735,7 @@ table {
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns the contents of a list of files at a specific Commit.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param paths: A list of paths to retrieve</span>
 <span class="sd">        :param recursive: If True, will go into each directory in the list recursively</span>
 <span class="sd">        :return: A dictionary of file paths and data</span>
@@ -1763,7 +1755,7 @@ table {
     <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns info about a specific file.</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: Path to file</span>
 <span class="sd">        :return: A FileInfo object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1791,8 +1783,8 @@ table {
     <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ?</span>
-<span class="sd">        :param commit: </span>
-<span class="sd">        :param pattern: </span>
+<span class="sd">        :param commit:</span>
+<span class="sd">        :param pattern:</span>
 <span class="sd">        :return: A list of FileInfo objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">GlobFile</span><span class="p">(</span><span class="n">GlobFileRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -3650,11 +3642,9 @@ table {
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="n">r</span>
 
-    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
-
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">item</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 
   </div>
@@ -5374,12 +5364,8 @@ table {
 <span class="sd">        :param port: The port to connect to. Default is 30650</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># If a host or port is not specified, then try to set using environment variables or use the defaults.</span>
-        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_HOST&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_PORT_API_GRPC_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;30650&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="s1">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="n">get_address</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span> <span class="o">=</span> <span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -5505,7 +5491,7 @@ table {
     <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">to_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">from_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists commits.</span>
-<span class="sd">         </span>
+
 <span class="sd">        :param repo_name: If only `repo_name` is given, all commits in the repo are returned.</span>
 <span class="sd">        :param to_commit: optional. only the ancestors of `to`, including `to` itself,</span>
 <span class="sd">                        are considered.</span>
@@ -5558,7 +5544,7 @@ table {
 <span class="sd">        they come in.</span>
 
 <span class="sd">        :param repo_name: Name of the repo</span>
-<span class="sd">        :param branch: Branch to subscribe to </span>
+<span class="sd">        :param branch: Branch to subscribe to</span>
 <span class="sd">        :param from_commit_id: Optional. only commits created since this commit are returned</span>
 
 <span class="sd">        :return: Iterator of Commit objects</span>
@@ -5583,7 +5569,7 @@ table {
     <span class="k">def</span> <span class="nf">set_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        sets a commit and its ancestors as a branch</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param branch_name: The name for the branch to set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">SetBranch</span><span class="p">(</span><span class="n">SetBranchRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -5594,8 +5580,8 @@ table {
 <span class="sd">        deletes a branch, but leaves the commits themselves intact.</span>
 <span class="sd">        In other words, those commits can still be accessed via commit IDs and</span>
 <span class="sd">        other branches they happen to be on.</span>
-<span class="sd">        :param repo_name: The name of the repo </span>
-<span class="sd">        :param branch_name: The name of the branch to delete </span>
+<span class="sd">        :param repo_name: The name of the repo</span>
+<span class="sd">        :param branch_name: The name of the branch to delete</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">DeleteBranch</span><span class="p">(</span><span class="n">DeleteBranchRequest</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
                                                    <span class="n">branch</span><span class="o">=</span><span class="n">branch_name</span><span class="p">))</span>
@@ -5604,16 +5590,16 @@ table {
                        <span class="n">target_file_datums</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_file_bytes</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads a binary bytes array as file(s) in a certain path</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: Path in the repo the file(s) will be written to</span>
-<span class="sd">        :param value: The data bytes array, or an iterator returning chunked byte arrays </span>
+<span class="sd">        :param value: The data bytes array, or an iterator returning chunked byte arrays</span>
 <span class="sd">        :param delimiter: Optional. causes data to be broken up into separate files with `path`</span>
 <span class="sd">                as a prefix.</span>
 <span class="sd">        :param target_file_datums: Optional. specifies the target number of datums in each written</span>
 <span class="sd">                file it may be lower if data does not split evenly, but will never be</span>
 <span class="sd">                higher, unless the value is 0.</span>
 <span class="sd">        :param target_file_bytes: specifies the target number of bytes in each written</span>
-<span class="sd">                file, files may have more or fewer bytes than the target. </span>
+<span class="sd">                file, files may have more or fewer bytes than the target.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">_is_iterator</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
@@ -5643,7 +5629,7 @@ table {
 <span class="sd">        puts a file using the content found at a URL.</span>
 <span class="sd">        The URL is sent to the server which performs the request.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: The path to the file</span>
 <span class="sd">        :param url: The url to download</span>
 <span class="sd">        :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.</span>
@@ -5656,13 +5642,13 @@ table {
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns the contents of a file at a specific Commit.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: The path of the file</span>
-<span class="sd">        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file. </span>
+<span class="sd">        :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file.</span>
 <span class="sd">        :param size_bytes: Optional. limits the total amount of data returned, note you will get fewer bytes</span>
 <span class="sd">                than size if you pass a value larger than the size of the file.</span>
 <span class="sd">                If size is set to 0 then all of the data will be returned.</span>
-<span class="sd">        :param extract_value: If True, then an ExtractValueIterator will be return, which </span>
+<span class="sd">        :param extract_value: If True, then an ExtractValueIterator will be return, which</span>
 <span class="sd">                    will iterate over the bytes of the file. If False, then the Protobuf</span>
 <span class="sd">                    response iterator will return</span>
 <span class="sd">        :return: An iterator over the file or an iterator over the protobuf responses</span>
@@ -5679,7 +5665,7 @@ table {
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns the contents of a list of files at a specific Commit.</span>
 
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param paths: A list of paths to retrieve</span>
 <span class="sd">        :param recursive: If True, will go into each directory in the list recursively</span>
 <span class="sd">        :return: A dictionary of file paths and data</span>
@@ -5699,7 +5685,7 @@ table {
     <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns info about a specific file.</span>
-<span class="sd">        :param commit: A tuple or string representing the commit </span>
+<span class="sd">        :param commit: A tuple or string representing the commit</span>
 <span class="sd">        :param path: Path to file</span>
 <span class="sd">        :return: A FileInfo object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -5727,8 +5713,8 @@ table {
     <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ?</span>
-<span class="sd">        :param commit: </span>
-<span class="sd">        :param pattern: </span>
+<span class="sd">        :param commit:</span>
+<span class="sd">        :param pattern:</span>
 <span class="sd">        :return: A list of FileInfo objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">GlobFile</span><span class="p">(</span><span class="n">GlobFileRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -5788,11 +5774,8 @@ table {
 <span class="sd">    :param port: The port to connect to. Default is 30650</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># If a host or port is not specified, then try to set using environment variables or use the defaults.</span>
-    <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_HOST&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PACHD_SERVICE_PORT_API_GRPC_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;30650&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="s1">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">get_address</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">stub</span> <span class="o">=</span> <span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
 </pre></div>
 
@@ -5903,7 +5886,7 @@ project you might have seperate Repos for logs, metrics, database dumps etc.
     <div class="desc"><p>deletes a branch, but leaves the commits themselves intact.
 In other words, those commits can still be accessed via commit IDs and
 other branches they happen to be on.
-:param repo_name: The name of the repo 
+:param repo_name: The name of the repo
 :param branch_name: The name of the branch to delete</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pfs_client.PfsClient.delete_branch', this);">Show source &equiv;</a></p>
@@ -5913,8 +5896,8 @@ other branches they happen to be on.
 <span class="sd">    deletes a branch, but leaves the commits themselves intact.</span>
 <span class="sd">    In other words, those commits can still be accessed via commit IDs and</span>
 <span class="sd">    other branches they happen to be on.</span>
-<span class="sd">    :param repo_name: The name of the repo </span>
-<span class="sd">    :param branch_name: The name of the branch to delete </span>
+<span class="sd">    :param repo_name: The name of the repo</span>
+<span class="sd">    :param branch_name: The name of the branch to delete</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">DeleteBranch</span><span class="p">(</span><span class="n">DeleteBranchRequest</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
                                                <span class="n">branch</span><span class="o">=</span><span class="n">branch_name</span><span class="p">))</span>
@@ -6133,13 +6116,13 @@ see their output once they do.
     
   
     <div class="desc"><p>returns the contents of a file at a specific Commit.</p>
-<p>:param commit: A tuple or string representing the commit 
+<p>:param commit: A tuple or string representing the commit
 :param path: The path of the file
-:param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file. 
+:param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file.
 :param size_bytes: Optional. limits the total amount of data returned, note you will get fewer bytes
         than size if you pass a value larger than the size of the file.
         If size is set to 0 then all of the data will be returned.
-:param extract_value: If True, then an ExtractValueIterator will be return, which 
+:param extract_value: If True, then an ExtractValueIterator will be return, which
             will iterate over the bytes of the file. If False, then the Protobuf
             response iterator will return
 :return: An iterator over the file or an iterator over the protobuf responses</p></div>
@@ -6149,13 +6132,13 @@ see their output once they do.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">offset_bytes</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size_bytes</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">extract_value</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    returns the contents of a file at a specific Commit.</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param path: The path of the file</span>
-<span class="sd">    :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file. </span>
+<span class="sd">    :param offset_bytes: Optional. specifies a number of bytes that should be skipped in the beginning of the file.</span>
 <span class="sd">    :param size_bytes: Optional. limits the total amount of data returned, note you will get fewer bytes</span>
 <span class="sd">            than size if you pass a value larger than the size of the file.</span>
 <span class="sd">            If size is set to 0 then all of the data will be returned.</span>
-<span class="sd">    :param extract_value: If True, then an ExtractValueIterator will be return, which </span>
+<span class="sd">    :param extract_value: If True, then an ExtractValueIterator will be return, which</span>
 <span class="sd">                will iterate over the bytes of the file. If False, then the Protobuf</span>
 <span class="sd">                response iterator will return</span>
 <span class="sd">    :return: An iterator over the file or an iterator over the protobuf responses</span>
@@ -6184,7 +6167,7 @@ see their output once they do.
     
   
     <div class="desc"><p>returns the contents of a list of files at a specific Commit.</p>
-<p>:param commit: A tuple or string representing the commit 
+<p>:param commit: A tuple or string representing the commit
 :param paths: A list of paths to retrieve
 :param recursive: If True, will go into each directory in the list recursively
 :return: A dictionary of file paths and data</p></div>
@@ -6194,7 +6177,7 @@ see their output once they do.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    returns the contents of a list of files at a specific Commit.</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param paths: A list of paths to retrieve</span>
 <span class="sd">    :param recursive: If True, will go into each directory in the list recursively</span>
 <span class="sd">    :return: A dictionary of file paths and data</span>
@@ -6225,8 +6208,8 @@ see their output once they do.
     
   
     <div class="desc"><p>?
-:param commit: 
-:param pattern: 
+:param commit:
+:param pattern:
 :return: A list of FileInfo objects</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pfs_client.PfsClient.glob_file', this);">Show source &equiv;</a></p>
@@ -6234,8 +6217,8 @@ see their output once they do.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ?</span>
-<span class="sd">    :param commit: </span>
-<span class="sd">    :param pattern: </span>
+<span class="sd">    :param commit:</span>
+<span class="sd">    :param pattern:</span>
 <span class="sd">    :return: A list of FileInfo objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">GlobFile</span><span class="p">(</span><span class="n">GlobFileRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -6289,7 +6272,7 @@ see their output once they do.
     
   
     <div class="desc"><p>returns info about a specific file.
-:param commit: A tuple or string representing the commit 
+:param commit: A tuple or string representing the commit
 :param path: Path to file
 :return: A FileInfo object</p></div>
   <div class="source_cont">
@@ -6298,7 +6281,7 @@ see their output once they do.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    returns info about a specific file.</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param path: Path to file</span>
 <span class="sd">    :return: A FileInfo object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -6396,7 +6379,6 @@ see their output once they do.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">to_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">from_commit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lists commits.</span>
-<span class="sd">     </span>
 <span class="sd">    :param repo_name: If only `repo_name` is given, all commits in the repo are returned.</span>
 <span class="sd">    :param to_commit: optional. only the ancestors of `to`, including `to` itself,</span>
 <span class="sd">                    are considered.</span>
@@ -6534,9 +6516,9 @@ the specified repos as provenance will be returned.
     
   
     <div class="desc"><p>Uploads a binary bytes array as file(s) in a certain path
-:param commit: A tuple or string representing the commit 
+:param commit: A tuple or string representing the commit
 :param path: Path in the repo the file(s) will be written to
-:param value: The data bytes array, or an iterator returning chunked byte arrays 
+:param value: The data bytes array, or an iterator returning chunked byte arrays
 :param delimiter: Optional. causes data to be broken up into separate files with <code>path</code>
         as a prefix.
 :param target_file_datums: Optional. specifies the target number of datums in each written
@@ -6551,16 +6533,16 @@ the specified repos as provenance will be returned.
                    <span class="n">target_file_datums</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_file_bytes</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uploads a binary bytes array as file(s) in a certain path</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param path: Path in the repo the file(s) will be written to</span>
-<span class="sd">    :param value: The data bytes array, or an iterator returning chunked byte arrays </span>
+<span class="sd">    :param value: The data bytes array, or an iterator returning chunked byte arrays</span>
 <span class="sd">    :param delimiter: Optional. causes data to be broken up into separate files with `path`</span>
 <span class="sd">            as a prefix.</span>
 <span class="sd">    :param target_file_datums: Optional. specifies the target number of datums in each written</span>
 <span class="sd">            file it may be lower if data does not split evenly, but will never be</span>
 <span class="sd">            higher, unless the value is 0.</span>
 <span class="sd">    :param target_file_bytes: specifies the target number of bytes in each written</span>
-<span class="sd">            file, files may have more or fewer bytes than the target. </span>
+<span class="sd">            file, files may have more or fewer bytes than the target.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">_is_iterator</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
@@ -6598,7 +6580,7 @@ the specified repos as provenance will be returned.
   
     <div class="desc"><p>puts a file using the content found at a URL.
 The URL is sent to the server which performs the request.</p>
-<p>:param commit: A tuple or string representing the commit 
+<p>:param commit: A tuple or string representing the commit
 :param path: The path to the file
 :param url: The url to download
 :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.</p></div>
@@ -6609,7 +6591,7 @@ The URL is sent to the server which performs the request.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    puts a file using the content found at a URL.</span>
 <span class="sd">    The URL is sent to the server which performs the request.</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param path: The path to the file</span>
 <span class="sd">    :param url: The url to download</span>
 <span class="sd">    :param recursive: allow for recursive scraping of some types URLs for example on s3:// urls.</span>
@@ -6634,7 +6616,7 @@ The URL is sent to the server which performs the request.</p>
     
   
     <div class="desc"><p>sets a commit and its ancestors as a branch
-:param commit: A tuple or string representing the commit 
+:param commit: A tuple or string representing the commit
 :param branch_name: The name for the branch to set</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pfs_client.PfsClient.set_branch', this);">Show source &equiv;</a></p>
@@ -6642,7 +6624,7 @@ The URL is sent to the server which performs the request.</p>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    sets a commit and its ancestors as a branch</span>
-<span class="sd">    :param commit: A tuple or string representing the commit </span>
+<span class="sd">    :param commit: A tuple or string representing the commit</span>
 <span class="sd">    :param branch_name: The name for the branch to set</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">SetBranch</span><span class="p">(</span><span class="n">SetBranchRequest</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">_commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
@@ -6723,7 +6705,7 @@ persisted until FinishCommit is called.
     <div class="desc"><p>SubscribeCommit is like ListCommit but it keeps listening for commits as
 they come in.</p>
 <p>:param repo_name: Name of the repo
-:param branch: Branch to subscribe to 
+:param branch: Branch to subscribe to
 :param from_commit_id: Optional. only commits created since this commit are returned</p>
 <p>:return: Iterator of Commit objects</p></div>
   <div class="source_cont">
@@ -6734,7 +6716,7 @@ they come in.</p>
 <span class="sd">    SubscribeCommit is like ListCommit but it keeps listening for commits as</span>
 <span class="sd">    they come in.</span>
 <span class="sd">    :param repo_name: Name of the repo</span>
-<span class="sd">    :param branch: Branch to subscribe to </span>
+<span class="sd">    :param branch: Branch to subscribe to</span>
 <span class="sd">    :param from_commit_id: Optional. only commits created since this commit are returned</span>
 <span class="sd">    :return: Iterator of Commit objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
