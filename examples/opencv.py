@@ -79,5 +79,11 @@ def main():
         pod_patch=None,
     )
 
+    pfs_client.put_file_url(commit=("images", "master"), path="46Q8nDz.jpg", url="http://imgur.com/46Q8nDz.jpg")
+
+    with pfs_client.commit("images", "master") as commit:
+        pfs_client.put_file_url(commit=commit, path="g2QnNqa.jpg", url="http://imgur.com/g2QnNqa.jpg")
+        pfs_client.put_file_url(commit=commit, path="8MN9Kg0.jpg", url="http://imgur.com/8MN9Kg0.jpg")
+
 if __name__ == '__main__':
     main()
