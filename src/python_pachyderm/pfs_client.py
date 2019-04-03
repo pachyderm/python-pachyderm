@@ -271,27 +271,24 @@ class PfsClient(object):
                 file, files may have more or fewer bytes than the target.
         """
 
-        if _is_iterator(value):
-            def _wrap(v):
+        if isinstance(value, collections.Iterable) and not isinstance(value, (six.string_types, six.binary_type)):
+            def wrap(v):
                 for x in v:
                     yield PutFileRequest(file=File(commit=commit_from(commit), path=path),
                                          value=x,
                                          delimiter=delimiter,
                                          target_file_datums=target_file_datums,
                                          target_file_bytes=target_file_bytes)
+        else:
+            def wrap(v):
+                for i in range(0, len(v), BUFFER_SIZE):
+                    yield PutFileRequest(file=File(commit=commit_from(commit), path=path),
+                                         value=v[i:i + BUFFER_SIZE],
+                                         delimiter=delimiter,
+                                         target_file_datums=target_file_datums,
+                                         target_file_bytes=target_file_bytes)
 
-            self.stub.PutFile(_wrap(value))
-            return
-
-        def _blocks(v):
-            for i in range(0, len(v), BUFFER_SIZE):
-                yield PutFileRequest(file=File(commit=commit_from(commit), path=path),
-                                     value=v[i:i + BUFFER_SIZE],
-                                     delimiter=delimiter,
-                                     target_file_datums=target_file_datums,
-                                     target_file_bytes=target_file_bytes)
-
-        self.stub.PutFile(_blocks(value))
+        self.stub.PutFile(wrap(value))
 
     def put_file_url(self, commit, path, url, recursive=False):
         """
