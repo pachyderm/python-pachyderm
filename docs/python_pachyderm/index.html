@@ -969,33 +969,6 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.DIR">DIR</a></li>
-    <li class="mono"><a href="#python_pachyderm.FAILED">FAILED</a></li>
-    <li class="mono"><a href="#python_pachyderm.FILE">FILE</a></li>
-    <li class="mono"><a href="#python_pachyderm.JOB_FAILURE">JOB_FAILURE</a></li>
-    <li class="mono"><a href="#python_pachyderm.JOB_KILLED">JOB_KILLED</a></li>
-    <li class="mono"><a href="#python_pachyderm.JOB_RUNNING">JOB_RUNNING</a></li>
-    <li class="mono"><a href="#python_pachyderm.JOB_STARTING">JOB_STARTING</a></li>
-    <li class="mono"><a href="#python_pachyderm.JOB_SUCCESS">JOB_SUCCESS</a></li>
-    <li class="mono"><a href="#python_pachyderm.JSON">JSON</a></li>
-    <li class="mono"><a href="#python_pachyderm.LINE">LINE</a></li>
-    <li class="mono"><a href="#python_pachyderm.NONE">NONE</a></li>
-    <li class="mono"><a href="#python_pachyderm.PIPELINE_FAILURE">PIPELINE_FAILURE</a></li>
-    <li class="mono"><a href="#python_pachyderm.PIPELINE_PAUSED">PIPELINE_PAUSED</a></li>
-    <li class="mono"><a href="#python_pachyderm.PIPELINE_RESTARTING">PIPELINE_RESTARTING</a></li>
-    <li class="mono"><a href="#python_pachyderm.PIPELINE_RUNNING">PIPELINE_RUNNING</a></li>
-    <li class="mono"><a href="#python_pachyderm.PIPELINE_STARTING">PIPELINE_STARTING</a></li>
-    <li class="mono"><a href="#python_pachyderm.POD_FAILED">POD_FAILED</a></li>
-    <li class="mono"><a href="#python_pachyderm.POD_RUNNING">POD_RUNNING</a></li>
-    <li class="mono"><a href="#python_pachyderm.POD_SUCCESS">POD_SUCCESS</a></li>
-    <li class="mono"><a href="#python_pachyderm.SKIPPED">SKIPPED</a></li>
-    <li class="mono"><a href="#python_pachyderm.SUCCESS">SUCCESS</a></li>
-  </ul>
-
-    </li>
 
 
 
@@ -1029,10 +1002,8 @@ from __future__ import absolute_import
 
 __version__ = '0.1.5'
 
-from .pfs_client import PfsClient, DIR, FILE, NONE, JSON, LINE
-from .pps_client import PpsClient, JOB_FAILURE, JOB_KILLED, JOB_RUNNING, JOB_STARTING, JOB_SUCCESS, FAILED, SUCCESS, \
-    SKIPPED, POD_SUCCESS, POD_FAILED, POD_RUNNING, PIPELINE_FAILURE, PIPELINE_PAUSED, PIPELINE_RESTARTING, \
-    PIPELINE_RUNNING, PIPELINE_STARTING
+from .pfs_client import PfsClient
+from .pps_client import PpsClient
 from grpc import RpcError
 </code></pre>
   </div>
@@ -1040,175 +1011,6 @@ from grpc import RpcError
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="python_pachyderm.DIR" class="name">var <span class="ident">DIR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.FAILED" class="name">var <span class="ident">FAILED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.FILE" class="name">var <span class="ident">FILE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JOB_FAILURE" class="name">var <span class="ident">JOB_FAILURE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JOB_KILLED" class="name">var <span class="ident">JOB_KILLED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JOB_RUNNING" class="name">var <span class="ident">JOB_RUNNING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JOB_STARTING" class="name">var <span class="ident">JOB_STARTING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JOB_SUCCESS" class="name">var <span class="ident">JOB_SUCCESS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.JSON" class="name">var <span class="ident">JSON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.LINE" class="name">var <span class="ident">LINE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.NONE" class="name">var <span class="ident">NONE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.PIPELINE_FAILURE" class="name">var <span class="ident">PIPELINE_FAILURE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.PIPELINE_PAUSED" class="name">var <span class="ident">PIPELINE_PAUSED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.PIPELINE_RESTARTING" class="name">var <span class="ident">PIPELINE_RESTARTING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.PIPELINE_RUNNING" class="name">var <span class="ident">PIPELINE_RUNNING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.PIPELINE_STARTING" class="name">var <span class="ident">PIPELINE_STARTING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.POD_FAILED" class="name">var <span class="ident">POD_FAILED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.POD_RUNNING" class="name">var <span class="ident">POD_RUNNING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.POD_SUCCESS" class="name">var <span class="ident">POD_SUCCESS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.SKIPPED" class="name">var <span class="ident">SKIPPED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.SUCCESS" class="name">var <span class="ident">SUCCESS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
 
 
