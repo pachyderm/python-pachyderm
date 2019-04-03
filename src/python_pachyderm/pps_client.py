@@ -55,14 +55,14 @@ class PpsClient(object):
     def restart_datum(self, job_id, data_filters=tuple()):
         self.stub.RestartDatum(RestartDatumRequest(job=Job(id=job_id, data_filters=data_filters)))
 
-    def create_pipeline(self, pipeline, transform, parallelism_spec,
-                        hashtree_spec, egress, update, output_branch,
-                        scale_down_threshold, resource_requests,
-                        resource_limits, input, description, cache_size,
-                        enable_stats, reprocess, batch, max_queue_size,
-                        service, chunk_spec, datum_timeout,
-                        job_timeout, salt, standby, datum_tries,
-                        scheduling_spec, pod_spec, pod_patch):
+    def create_pipeline(self, pipeline, transform=None, parallelism_spec=None,
+                        hashtree_spec=None, egress=None, update=None, output_branch=None,
+                        scale_down_threshold=None, resource_requests=None,
+                        resource_limits=None, input=None, description=None, cache_size=None,
+                        enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
+                        service=None, chunk_spec=None, datum_timeout=None,
+                        job_timeout=None, salt=None, standby=None, datum_tries=None,
+                        scheduling_spec=None, pod_spec=None, pod_patch=None):
         self.stub.CreatePipeline(CreatePipelineRequest(
             pipeline=pipeline, transform=transform,
             parallelism_spec=parallelism_spec, hashtree_spec=hashtree_spec,
