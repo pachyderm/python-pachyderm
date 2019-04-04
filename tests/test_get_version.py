@@ -11,6 +11,6 @@ def test_pfs_client_init_with_default_host_port():
     remote_version = "{}.{}.{}\n".format(
             version_pb.major, version_pb.minor, version_pb.micro)
     # THEN remote version should match the pachctl version which deployed it
-    with open("../VERSION") as version_file:
+    with open("VERSION") as version_file:
         local_version = version_file.read()
     assert remote_version == local_version
