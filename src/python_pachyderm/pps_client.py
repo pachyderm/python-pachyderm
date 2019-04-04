@@ -39,35 +39,35 @@ class PpsClient(object):
             incremental=incremental, enable_stats=enable_stats, salt=salt,
             batch=batch
         )
-        return self.stub.CreateJob.with_call(req, metadata=self.metadata)
+        return self.stub.CreateJob(req, metadata=self.metadata)
 
     def inspect_job(self, job_id, block_state=False):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
-        return self.stub.InspectJob.with_call(req, metadata=self.metadata)
+        return self.stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline=None, input_commit=None):
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit))
-        return self.stub.ListJob.with_call(req, metadata=self.metadata)
+        return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
         req = proto.DeleteJobRequest(job=proto.Job(id=job_id))
-        self.stub.DeleteJob.with_call(req, metadata=self.metadata)
+        self.stub.DeleteJob(req, metadata=self.metadata)
 
     def stop_job(self, job_id):
         req = proto.StopJobRequest(job=proto.Job(id=job_id))
-        self.stub.StopJob.with_call(req, metadata=self.metadata)
+        self.stub.StopJob(req, metadata=self.metadata)
 
     def inspect_datum(self, datum):
         req = proto.InspectDatumRequest(datum=datum)
-        return self.stub.InspectDatum.with_call(req, metadata=self.metadata)
+        return self.stub.InspectDatum(req, metadata=self.metadata)
 
     def list_datum(self, job_id):
         req = proto.ListDatumRequest(job=proto.Job(id=job_id))
-        return self.stub.ListDatum.with_call(req, metadata=self.metadata)
+        return self.stub.ListDatum(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=tuple()):
         req = proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters))
-        self.stub.RestartDatum.with_call(req, metadata=self.metadata)
+        self.stub.RestartDatum(req, metadata=self.metadata)
 
     def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
                         hashtree_spec=None, egress=None, update=None, output_branch=None,
@@ -91,15 +91,15 @@ class PpsClient(object):
             datum_tries=datum_tries, scheduling_spec=scheduling_spec,
             pod_spec=pod_spec, pod_patch=pod_patch
         )
-        self.stub.CreatePipeline.with_call(req, metadata=self.metadata)
+        self.stub.CreatePipeline(req, metadata=self.metadata)
 
     def inspect_pipeline(self, pipeline_name):
         req = proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
-        return self.stub.InspectPipeline.with_call(req, metadata=self.metadata)
+        return self.stub.InspectPipeline(req, metadata=self.metadata)
 
     def list_pipeline(self):
         req = proto.ListPipelineRequest()
-        return self.stub.ListPipeline.with_call(req, metadata=self.metadata)
+        return self.stub.ListPipeline(req, metadata=self.metadata)
 
     def delete_pipeline(self, pipeline_name, delete_jobs=False, delete_repo=False, all=False):
         req = proto.DeletePipelineRequest(
@@ -108,15 +108,15 @@ class PpsClient(object):
             delete_repo=delete_repo,
             all=all
         )
-        self.stub.DeletePipeline.with_call(req, metadata=self.metadata)
+        self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def start_pipeline(self, pipeline_name):
         req = proto.StartPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
-        self.stub.StartPipeline.with_call(req, metadata=self.metadata)
+        self.stub.StartPipeline(req, metadata=self.metadata)
 
     def stop_pipeline(self, pipeline_name):
         req = proto.StopPipelineRequest(pipeline=proto.Pipeline(pipeline_name))
-        self.stub.StopPipeline.with_call(req, metadata=self.metadata)
+        self.stub.StopPipeline(req, metadata=self.metadata)
 
     def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
         req = proto.RerunPipelineRequest(
@@ -124,11 +124,11 @@ class PpsClient(object):
             exclude=exclude,
             include=include
         )
-        self.stub.RerunPipeline.with_call(req, metadata=self.metadata)
+        self.stub.RerunPipeline(req, metadata=self.metadata)
 
     def delete_all(self):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
-        self.stub.DeleteAll.with_call(req, metadata=self.metadata)
+        self.stub.DeleteAll(req, metadata=self.metadata)
 
     def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
         pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
@@ -141,8 +141,8 @@ class PpsClient(object):
             pipeline=pipeline, job=job, data_filters=data_filters,
             master=master
         )
-        return list(self.stub.GetLogs.with_call(req, metadata=self.metadata))
+        return list(self.stub.GetLogs(req, metadata=self.metadata))
 
     def garbage_collect(self):
         req = self.stub.GarbageCollect(proto.GarbageCollectRequest())
-        return proto.GarbageCollectResponse.with_call(req, metadata=self.metadata)
+        return proto.GarbageCollectResponse(req, metadata=self.metadata)
