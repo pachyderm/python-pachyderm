@@ -352,8 +352,7 @@ class PfsClient(object):
             offset_bytes=offset_bytes,
             size_bytes=size_bytes
         )
-        # TODO: for some reason, `GetFile` doesn't support `with_call`
-        res = self.stub.GetFile(req)
+        res = self.stub.GetFile(req, metadata=self.metadata)
         if extract_value:
             return ExtractValueIterator(res)
         return res
