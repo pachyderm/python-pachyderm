@@ -13,6 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
+from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='debug',
   syntax='proto3',
   serialized_options=_b('Z/github.com/pachyderm/pachyderm/src/client/debug'),
-  serialized_pb=_b('\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\"\x1f\n\x0b\x44umpRequest\x12\x10\n\x08recursed\x18\x01 \x01(\x08\x32\x44\n\x05\x44\x65\x62ug\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42\x31Z/github.com/pachyderm/pachyderm/src/client/debugb\x06proto3')
+  serialized_pb=_b('\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\"\x1f\n\x0b\x44umpRequest\x12\x10\n\x08recursed\x18\x01 \x01(\x08\"N\n\x0eProfileRequest\x12\x0f\n\x07profile\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x0f\n\rBinaryRequest2\xc8\x01\n\x05\x44\x65\x62ug\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x41\n\x07Profile\x12\x15.debug.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12?\n\x06\x42inary\x12\x14.debug.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42\x31Z/github.com/pachyderm/pachyderm/src/client/debugb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,])
 
 
 
@@ -53,11 +54,76 @@ _DUMPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=67,
-  serialized_end=98,
+  serialized_start=99,
+  serialized_end=130,
 )
 
+
+_PROFILEREQUEST = _descriptor.Descriptor(
+  name='ProfileRequest',
+  full_name='debug.ProfileRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='profile', full_name='debug.ProfileRequest.profile', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='duration', full_name='debug.ProfileRequest.duration', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=132,
+  serialized_end=210,
+)
+
+
+_BINARYREQUEST = _descriptor.Descriptor(
+  name='BinaryRequest',
+  full_name='debug.BinaryRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=212,
+  serialized_end=227,
+)
+
+_PROFILEREQUEST.fields_by_name['duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 DESCRIPTOR.message_types_by_name['DumpRequest'] = _DUMPREQUEST
+DESCRIPTOR.message_types_by_name['ProfileRequest'] = _PROFILEREQUEST
+DESCRIPTOR.message_types_by_name['BinaryRequest'] = _BINARYREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DumpRequest = _reflection.GeneratedProtocolMessageType('DumpRequest', (_message.Message,), dict(
@@ -66,6 +132,20 @@ DumpRequest = _reflection.GeneratedProtocolMessageType('DumpRequest', (_message.
   # @@protoc_insertion_point(class_scope:debug.DumpRequest)
   ))
 _sym_db.RegisterMessage(DumpRequest)
+
+ProfileRequest = _reflection.GeneratedProtocolMessageType('ProfileRequest', (_message.Message,), dict(
+  DESCRIPTOR = _PROFILEREQUEST,
+  __module__ = 'client.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug.ProfileRequest)
+  ))
+_sym_db.RegisterMessage(ProfileRequest)
+
+BinaryRequest = _reflection.GeneratedProtocolMessageType('BinaryRequest', (_message.Message,), dict(
+  DESCRIPTOR = _BINARYREQUEST,
+  __module__ = 'client.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug.BinaryRequest)
+  ))
+_sym_db.RegisterMessage(BinaryRequest)
 
 
 DESCRIPTOR._options = None
@@ -76,8 +156,8 @@ _DEBUG = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=100,
-  serialized_end=168,
+  serialized_start=230,
+  serialized_end=430,
   methods=[
   _descriptor.MethodDescriptor(
     name='Dump',
@@ -85,6 +165,24 @@ _DEBUG = _descriptor.ServiceDescriptor(
     index=0,
     containing_service=None,
     input_type=_DUMPREQUEST,
+    output_type=google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Profile',
+    full_name='debug.Debug.Profile',
+    index=1,
+    containing_service=None,
+    input_type=_PROFILEREQUEST,
+    output_type=google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Binary',
+    full_name='debug.Debug.Binary',
+    index=2,
+    containing_service=None,
+    input_type=_BINARYREQUEST,
     output_type=google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE,
     serialized_options=None,
   ),

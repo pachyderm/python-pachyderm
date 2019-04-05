@@ -21,11 +21,15 @@ def read(*names, **kwargs):
     ).read()
 
 def get_version():
-    f = open("VERSION","r")
-    version = f.read().strip()
-    f = open("BUILD_NUMBER","r")
-    build = f.read().strip()
-    return version + "-" + build
+    with open("VERSION", "r") as f:
+        version = f.read().strip()
+    with open("BUILD_NUMBER", "r") as f:
+        build = f.read().strip()
+
+    if build != "1":
+        return version + "-" + build
+    else:
+        return version
 
 setup(
     name='python-pachyderm',

@@ -42,6 +42,7 @@ sync:
 		exit 1; \
 	fi
 	echo $$PACHYDERM_VERSION > VERSION
+	echo 0 > BUILD_NUMBER
 	# Will update the protos to match the VERSION file
 	pushd proto/pachyderm && \
 		git fetch --all && \
