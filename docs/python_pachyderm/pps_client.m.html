@@ -3,13 +3,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>python_pachyderm.pps_client API documentation</title>
-    <meta name="description" content="" />
+  
+  <title>python_pachyderm.pps_client API documentation</title>
+  <meta name="description" content="" />
 
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
   <style type="text/css">
-  
 * {
   box-sizing: border-box;
 }
@@ -546,11 +547,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-  </style>
-
+</style>
   <style type="text/css">
-  
   html, body {
     margin: 0;
     padding: 0;
@@ -634,7 +632,9 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-
+  p, pre {
+    white-space: pre-wrap;
+  }
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -848,12 +848,79 @@ table {
   }
 
   /*****************************/
-
-  </style>
-
-
+</style>
   <style type="text/css">
-  
+  .codehilite .hll { background-color: #ffffcc }
+.codehilite  { background: #f8f8f8; }
+.codehilite .c { color: #408080; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+.codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #FF0000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888888 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #7D9029 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #A0A000 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+  </style>
+  <style type="text/css">
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
@@ -942,8 +1009,7 @@ table {
         page-break-after: avoid;
     }
 }
-
-  </style>
+</style>
 
   <script type="text/javascript">
   function toggle(id, $link) {
@@ -962,13 +1028,35 @@ table {
 </head>
 <body>
 <a href="#" id="top">Top</a>
-
 <div id="container">
-    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
+    <li class="set"><h3>Super-module</h3>
+      <ul>
+        <li class="mono"><a href="index.html">python_pachyderm</a></li>
+      </ul>
+    </li>
 
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
@@ -1006,8 +1094,7 @@ table {
     </ul>
   </div>
 
-    <article id="content">
-      
+<article id="content">
   
 
   
@@ -1015,138 +1102,9 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">python_pachyderm.pps_client</span> module</h1>
+  <p></p>
+
   
-  
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client" class="source">
-    <pre><code># -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
-
-import os
-
-from python_pachyderm.client.pps import pps_pb2 as proto
-from python_pachyderm.client.pps import pps_pb2_grpc as grpc
-from python_pachyderm.util import commit_from, get_address
-
-
-class PpsClient(object):
-    def __init__(self, host=None, port=None):
-        """
-        Creates a client to connect to Pfs
-        :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
-        :param port: The port to connect to. Default is 30650
-        """
-
-        address = get_address(host, port)
-        self.channel = grpc.grpc.insecure_channel(address)
-        self.stub = grpc.APIStub(self.channel)
-
-    def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
-                   output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
-        return self.stub.CreateJob(proto.CreateJobRequest(
-            transform=transform, pipeline=pipeline,
-            pipeline_version=pipeline_version,
-            parallelism_spec=parallelism_spec, inputs=inputs,
-            egress=egress, service=service, output_repo=output_repo,
-            output_branch=output_branch, parent_job=parent_job,
-            resource_spec=resource_spec, input=input, new_branch=new_branch,
-            incremental=incremental, enable_stats=enable_stats, salt=salt,
-            batch=batch
-        ))
-
-    def inspect_job(self, job_id, block_state=False):
-        return self.stub.InspectJob(proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state))
-
-    def list_job(self, pipeline=None, input_commit=None):
-        return self.stub.ListJob(proto.ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit)))
-
-    def delete_job(self, job_id):
-        self.stub.DeleteJob(proto.DeleteJobRequest(job=proto.Job(id=job_id)))
-
-    def stop_job(self, job_id):
-        self.stub.StopJob(proto.StopJobRequest(job=proto.Job(id=job_id)))
-
-    def inspect_datum(self, datum):
-        return self.stub.InspectDatum(proto.InspectDatumRequest(datum=datum))
-
-    def list_datum(self, job_id):
-        return self.stub.ListDatum(proto.ListDatumRequest(job=proto.Job(id=job_id)))
-
-    def restart_datum(self, job_id, data_filters=tuple()):
-        self.stub.RestartDatum(proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters)))
-
-    def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
-                        hashtree_spec=None, egress=None, update=None, output_branch=None,
-                        scale_down_threshold=None, resource_requests=None,
-                        resource_limits=None, input=None, description=None, cache_size=None,
-                        enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
-                        service=None, chunk_spec=None, datum_timeout=None,
-                        job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_spec=None, pod_patch=None):
-        self.stub.CreatePipeline(proto.CreatePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            transform=transform, parallelism_spec=parallelism_spec,
-            hashtree_spec=hashtree_spec, egress=egress, update=update,
-            output_branch=output_branch, scale_down_threshold=scale_down_threshold,
-            resource_requests=resource_requests, resource_limits=resource_limits,
-            input=input, description=description, cache_size=cache_size,
-            enable_stats=enable_stats, reprocess=reprocess, batch=batch,
-            max_queue_size=max_queue_size, service=service,
-            chunk_spec=chunk_spec, datum_timeout=datum_timeout,
-            job_timeout=job_timeout, salt=salt, standby=standby,
-            datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-            pod_spec=pod_spec, pod_patch=pod_patch
-        ))
-
-    def inspect_pipeline(self, pipeline_name):
-        return self.stub.InspectPipeline(proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-
-    def list_pipeline(self):
-        return self.stub.ListPipeline(proto.ListPipelineRequest())
-
-    def delete_pipeline(self, pipeline_name, delete_jobs=False, delete_repo=False, all=False):
-        self.stub.DeletePipeline(proto.DeletePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            delete_jobs=delete_jobs,
-            delete_repo=delete_repo,
-            all=all
-        ))
-
-    def start_pipeline(self, pipeline_name):
-        self.stub.StartPipeline(proto.StartPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-
-    def stop_pipeline(self, pipeline_name):
-        self.stub.StopPipeline(proto.StopPipelineRequest(pipeline=proto.Pipeline(pipeline_name)))
-
-    def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
-        self.stub.RerunPipeline(proto.RerunPipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            exclude=exclude,
-            include=include
-        ))
-
-    def delete_all(self):
-        self.stub.DeleteAll(proto.google_dot_protobuf_dot_empty__pb2.Empty())
-
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
-        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
-        job = proto.Job(id=job_id) if job_id else None
-        
-        if pipeline is None and job is None:
-            raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
-        
-        return list(self.stub.GetLogs(
-            proto.GetLogsRequest(
-                pipeline=pipeline, job=job, data_filters=data_filters,
-                master=master
-            )
-        ))
-
-    def garbage_collect(self):
-        return proto.GarbageCollectResponse(self.stub.GarbageCollect(proto.GarbageCollectRequest()))
-</code></pre>
-  </div>
 
   </header>
 
@@ -1160,161 +1118,27 @@ class PpsClient(object):
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient" class="source">
-    <pre><code>class PpsClient(object):
-    def __init__(self, host=None, port=None):
-        """
-        Creates a client to connect to Pfs
-        :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
-        :param port: The port to connect to. Default is 30650
-        """
-
-        address = get_address(host, port)
-        self.channel = grpc.grpc.insecure_channel(address)
-        self.stub = grpc.APIStub(self.channel)
-
-    def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
-                   output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
-        return self.stub.CreateJob(proto.CreateJobRequest(
-            transform=transform, pipeline=pipeline,
-            pipeline_version=pipeline_version,
-            parallelism_spec=parallelism_spec, inputs=inputs,
-            egress=egress, service=service, output_repo=output_repo,
-            output_branch=output_branch, parent_job=parent_job,
-            resource_spec=resource_spec, input=input, new_branch=new_branch,
-            incremental=incremental, enable_stats=enable_stats, salt=salt,
-            batch=batch
-        ))
-
-    def inspect_job(self, job_id, block_state=False):
-        return self.stub.InspectJob(proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state))
-
-    def list_job(self, pipeline=None, input_commit=None):
-        return self.stub.ListJob(proto.ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit)))
-
-    def delete_job(self, job_id):
-        self.stub.DeleteJob(proto.DeleteJobRequest(job=proto.Job(id=job_id)))
-
-    def stop_job(self, job_id):
-        self.stub.StopJob(proto.StopJobRequest(job=proto.Job(id=job_id)))
-
-    def inspect_datum(self, datum):
-        return self.stub.InspectDatum(proto.InspectDatumRequest(datum=datum))
-
-    def list_datum(self, job_id):
-        return self.stub.ListDatum(proto.ListDatumRequest(job=proto.Job(id=job_id)))
-
-    def restart_datum(self, job_id, data_filters=tuple()):
-        self.stub.RestartDatum(proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters)))
-
-    def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
-                        hashtree_spec=None, egress=None, update=None, output_branch=None,
-                        scale_down_threshold=None, resource_requests=None,
-                        resource_limits=None, input=None, description=None, cache_size=None,
-                        enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
-                        service=None, chunk_spec=None, datum_timeout=None,
-                        job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_spec=None, pod_patch=None):
-        self.stub.CreatePipeline(proto.CreatePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            transform=transform, parallelism_spec=parallelism_spec,
-            hashtree_spec=hashtree_spec, egress=egress, update=update,
-            output_branch=output_branch, scale_down_threshold=scale_down_threshold,
-            resource_requests=resource_requests, resource_limits=resource_limits,
-            input=input, description=description, cache_size=cache_size,
-            enable_stats=enable_stats, reprocess=reprocess, batch=batch,
-            max_queue_size=max_queue_size, service=service,
-            chunk_spec=chunk_spec, datum_timeout=datum_timeout,
-            job_timeout=job_timeout, salt=salt, standby=standby,
-            datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-            pod_spec=pod_spec, pod_patch=pod_patch
-        ))
-
-    def inspect_pipeline(self, pipeline_name):
-        return self.stub.InspectPipeline(proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-
-    def list_pipeline(self):
-        return self.stub.ListPipeline(proto.ListPipelineRequest())
-
-    def delete_pipeline(self, pipeline_name, delete_jobs=False, delete_repo=False, all=False):
-        self.stub.DeletePipeline(proto.DeletePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            delete_jobs=delete_jobs,
-            delete_repo=delete_repo,
-            all=all
-        ))
-
-    def start_pipeline(self, pipeline_name):
-        self.stub.StartPipeline(proto.StartPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-
-    def stop_pipeline(self, pipeline_name):
-        self.stub.StopPipeline(proto.StopPipelineRequest(pipeline=proto.Pipeline(pipeline_name)))
-
-    def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
-        self.stub.RerunPipeline(proto.RerunPipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            exclude=exclude,
-            include=include
-        ))
-
-    def delete_all(self):
-        self.stub.DeleteAll(proto.google_dot_protobuf_dot_empty__pb2.Empty())
-
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
-        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
-        job = proto.Job(id=job_id) if job_id else None
-        
-        if pipeline is None and job is None:
-            raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
-        
-        return list(self.stub.GetLogs(
-            proto.GetLogsRequest(
-                pipeline=pipeline, job=job, data_filters=data_filters,
-                master=master
-            )
-        ))
-
-    def garbage_collect(self):
-        return proto.GarbageCollectResponse(self.stub.GarbageCollect(proto.GarbageCollectRequest()))
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.pps_client.PpsClient">PpsClient</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.pps_client.PpsClient.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, host=None, port=None)</p>
+    <p>def <span class="ident">__init__</span>(</p><p>self, host=None, port=None, auth_token=None)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Creates a client to connect to Pfs
-:param host: The pachd host. Default is 'localhost', which is used with <code>pachctl port-forward</code>
-:param port: The port to connect to. Default is 30650</p></div>
+    <div class="desc"><p>Creates a client to connect to PPS.</p>
+
+<p>host: The pachd host. Default is 'localhost', which is used with <code>pachctl port-forward</code>
+port: The port to connect to. Default is 30650
+auth_token: The authentication token; used if authentication is enabled on the cluster. Default to <code>None</code>.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.__init__" class="source">
-    <pre><code>def __init__(self, host=None, port=None):
-    """
-    Creates a client to connect to Pfs
-    :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
-    :param port: The port to connect to. Default is 30650
-    """
-    address = get_address(host, port)
-    self.channel = grpc.grpc.insecure_channel(address)
-    self.stub = grpc.APIStub(self.channel)
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1329,22 +1153,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.create_job', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.create_job" class="source">
-    <pre><code>def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
-               output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
-    return self.stub.CreateJob(proto.CreateJobRequest(
-        transform=transform, pipeline=pipeline,
-        pipeline_version=pipeline_version,
-        parallelism_spec=parallelism_spec, inputs=inputs,
-        egress=egress, service=service, output_repo=output_repo,
-        output_branch=output_branch, parent_job=parent_job,
-        resource_spec=resource_spec, input=input, new_branch=new_branch,
-        incremental=incremental, enable_stats=enable_stats, salt=salt,
-        batch=batch
-    ))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1359,32 +1167,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.create_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.create_pipeline" class="source">
-    <pre><code>def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
-                    hashtree_spec=None, egress=None, update=None, output_branch=None,
-                    scale_down_threshold=None, resource_requests=None,
-                    resource_limits=None, input=None, description=None, cache_size=None,
-                    enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
-                    service=None, chunk_spec=None, datum_timeout=None,
-                    job_timeout=None, salt=None, standby=None, datum_tries=None,
-                    scheduling_spec=None, pod_spec=None, pod_patch=None):
-    self.stub.CreatePipeline(proto.CreatePipelineRequest(
-        pipeline=proto.Pipeline(name=pipeline_name),
-        transform=transform, parallelism_spec=parallelism_spec,
-        hashtree_spec=hashtree_spec, egress=egress, update=update,
-        output_branch=output_branch, scale_down_threshold=scale_down_threshold,
-        resource_requests=resource_requests, resource_limits=resource_limits,
-        input=input, description=description, cache_size=cache_size,
-        enable_stats=enable_stats, reprocess=reprocess, batch=batch,
-        max_queue_size=max_queue_size, service=service,
-        chunk_spec=chunk_spec, datum_timeout=datum_timeout,
-        job_timeout=job_timeout, salt=salt, standby=standby,
-        datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-        pod_spec=pod_spec, pod_patch=pod_patch
-    ))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1399,12 +1181,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.delete_all', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.delete_all" class="source">
-    <pre><code>def delete_all(self):
-    self.stub.DeleteAll(proto.google_dot_protobuf_dot_empty__pb2.Empty())
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1419,12 +1195,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.delete_job', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.delete_job" class="source">
-    <pre><code>def delete_job(self, job_id):
-    self.stub.DeleteJob(proto.DeleteJobRequest(job=proto.Job(id=job_id)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1439,17 +1209,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.delete_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.delete_pipeline" class="source">
-    <pre><code>def delete_pipeline(self, pipeline_name, delete_jobs=False, delete_repo=False, all=False):
-    self.stub.DeletePipeline(proto.DeletePipelineRequest(
-        pipeline=proto.Pipeline(name=pipeline_name),
-        delete_jobs=delete_jobs,
-        delete_repo=delete_repo,
-        all=all
-    ))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1464,12 +1223,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.garbage_collect', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.garbage_collect" class="source">
-    <pre><code>def garbage_collect(self):
-    return proto.GarbageCollectResponse(self.stub.GarbageCollect(proto.GarbageCollectRequest()))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1484,23 +1237,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.get_logs', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.get_logs" class="source">
-    <pre><code>def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
-    pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
-    job = proto.Job(id=job_id) if job_id else None
-    
-    if pipeline is None and job is None:
-        raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
-    
-    return list(self.stub.GetLogs(
-        proto.GetLogsRequest(
-            pipeline=pipeline, job=job, data_filters=data_filters,
-            master=master
-        )
-    ))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1515,12 +1251,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.inspect_datum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.inspect_datum" class="source">
-    <pre><code>def inspect_datum(self, datum):
-    return self.stub.InspectDatum(proto.InspectDatumRequest(datum=datum))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1535,12 +1265,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.inspect_job', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.inspect_job" class="source">
-    <pre><code>def inspect_job(self, job_id, block_state=False):
-    return self.stub.InspectJob(proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1555,12 +1279,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.inspect_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.inspect_pipeline" class="source">
-    <pre><code>def inspect_pipeline(self, pipeline_name):
-    return self.stub.InspectPipeline(proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1575,12 +1293,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.list_datum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.list_datum" class="source">
-    <pre><code>def list_datum(self, job_id):
-    return self.stub.ListDatum(proto.ListDatumRequest(job=proto.Job(id=job_id)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1595,12 +1307,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.list_job', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.list_job" class="source">
-    <pre><code>def list_job(self, pipeline=None, input_commit=None):
-    return self.stub.ListJob(proto.ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1615,12 +1321,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.list_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.list_pipeline" class="source">
-    <pre><code>def list_pipeline(self):
-    return self.stub.ListPipeline(proto.ListPipelineRequest())
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1635,16 +1335,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.rerun_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.rerun_pipeline" class="source">
-    <pre><code>def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
-    self.stub.RerunPipeline(proto.RerunPipelineRequest(
-        pipeline=proto.Pipeline(name=pipeline_name),
-        exclude=exclude,
-        include=include
-    ))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1659,12 +1349,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.restart_datum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.restart_datum" class="source">
-    <pre><code>def restart_datum(self, job_id, data_filters=tuple()):
-    self.stub.RestartDatum(proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1679,12 +1363,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.start_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.start_pipeline" class="source">
-    <pre><code>def start_pipeline(self, pipeline_name):
-    self.stub.StartPipeline(proto.StartPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1699,12 +1377,6 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.stop_job', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.stop_job" class="source">
-    <pre><code>def stop_job(self, job_id):
-    self.stub.StopJob(proto.StopJobRequest(job=proto.Job(id=job_id)))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1719,54 +1391,20 @@ class PpsClient(object):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.pps_client.PpsClient.stop_pipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.pps_client.PpsClient.stop_pipeline" class="source">
-    <pre><code>def stop_pipeline(self, pipeline_name):
-    self.stub.StopPipeline(proto.StopPipelineRequest(pipeline=proto.Pipeline(pipeline_name)))
-</code></pre>
-  </div>
 </div>
 
   </div>
   
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.pps_client.PpsClient.channel" class="name">var <span class="ident">channel</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.pps_client.PpsClient.stub" class="name">var <span class="ident">stub</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
       </div>
       </div>
 
   </section>
-
-    </article>
+</article>
   <div class="clear"> </div>
   <footer id="footer">
     <p>
-      Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      Generated by <a href="https://github.com/mitmproxy/pdoc">pdoc 0.3.2</a>
     </p>
-
-    <p>pdoc is in the public domain with the
-      <a href="http://unlicense.org">UNLICENSE</a></p>
-
-    <p>Design by <a href="http://nadh.in">Kailash Nadh</a></p>
   </footer>
 </div>
 </body>

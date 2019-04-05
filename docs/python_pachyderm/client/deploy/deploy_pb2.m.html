@@ -3,13 +3,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>python_pachyderm.client.deploy.deploy_pb2 API documentation</title>
-    <meta name="description" content="" />
+  
+  <title>python_pachyderm.client.deploy.deploy_pb2 API documentation</title>
+  <meta name="description" content="" />
 
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
   <style type="text/css">
-  
 * {
   box-sizing: border-box;
 }
@@ -546,11 +547,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-  </style>
-
+</style>
   <style type="text/css">
-  
   html, body {
     margin: 0;
     padding: 0;
@@ -634,7 +632,9 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-
+  p, pre {
+    white-space: pre-wrap;
+  }
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -848,12 +848,79 @@ table {
   }
 
   /*****************************/
-
-  </style>
-
-
+</style>
   <style type="text/css">
-  
+  .codehilite .hll { background-color: #ffffcc }
+.codehilite  { background: #f8f8f8; }
+.codehilite .c { color: #408080; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+.codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #FF0000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888888 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #7D9029 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #A0A000 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+  </style>
+  <style type="text/css">
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
@@ -942,8 +1009,7 @@ table {
         page-break-after: avoid;
     }
 }
-
-  </style>
+</style>
 
   <script type="text/javascript">
   function toggle(id, $link) {
@@ -962,13 +1028,35 @@ table {
 </head>
 <body>
 <a href="#" id="top">Top</a>
-
 <div id="container">
-    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
+    <li class="set"><h3>Super-module</h3>
+      <ul>
+        <li class="mono"><a href="index.html">python_pachyderm.client.deploy</a></li>
+      </ul>
+    </li>
     <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
@@ -983,62 +1071,10 @@ table {
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest">DeployStorageSecretRequest</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.__init__">__init__</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ByteSize">ByteSize</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Clear">Clear</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearExtension">ClearExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearField">ClearField</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.CopyFrom">CopyFrom</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.DiscardUnknownFields">DiscardUnknownFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FindInitializationErrors">FindInitializationErrors</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FromString">FromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasExtension">HasExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasField">HasField</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.IsInitialized">IsInitialized</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ListFields">ListFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFrom">MergeFrom</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFromString">MergeFromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ParseFromString">ParseFromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.RegisterExtension">RegisterExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializePartialToString">SerializePartialToString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializeToString">SerializeToString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SetInParent">SetInParent</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.UnknownFields">UnknownFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.WhichOneof">WhichOneof</a></li>
-  </ul>
-
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse">DeployStorageSecretResponse</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.__init__">__init__</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ByteSize">ByteSize</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Clear">Clear</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearExtension">ClearExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearField">ClearField</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.CopyFrom">CopyFrom</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.DiscardUnknownFields">DiscardUnknownFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FindInitializationErrors">FindInitializationErrors</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FromString">FromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasExtension">HasExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasField">HasField</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.IsInitialized">IsInitialized</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ListFields">ListFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFrom">MergeFrom</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFromString">MergeFromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ParseFromString">ParseFromString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.RegisterExtension">RegisterExtension</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializePartialToString">SerializePartialToString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializeToString">SerializeToString</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SetInParent">SetInParent</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.UnknownFields">UnknownFields</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.WhichOneof">WhichOneof</a></li>
-  </ul>
-
         </li>
       </ul>
     </li>
@@ -1046,8 +1082,7 @@ table {
     </ul>
   </div>
 
-    <article id="content">
-      
+<article id="content">
   
 
   
@@ -1055,186 +1090,9 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">python_pachyderm.client.deploy.deploy_pb2</span> module</h1>
+  <p></p>
+
   
-  
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2" class="source">
-    <pre><code># Generated by the protocol buffer compiler.  DO NOT EDIT!
-# source: client/deploy/deploy.proto
-
-import sys
-_b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
-from google.protobuf import descriptor as _descriptor
-from google.protobuf import message as _message
-from google.protobuf import reflection as _reflection
-from google.protobuf import symbol_database as _symbol_database
-# @@protoc_insertion_point(imports)
-
-_sym_db = _symbol_database.Default()
-
-
-
-
-DESCRIPTOR = _descriptor.FileDescriptor(
-  name='client/deploy/deploy.proto',
-  package='deploy',
-  syntax='proto3',
-  serialized_options=_b('Z0github.com/pachyderm/pachyderm/src/client/deploy'),
-  serialized_pb=_b('\n\x1a\x63lient/deploy/deploy.proto\x12\x06\x64\x65ploy\"\x8e\x01\n\x1a\x44\x65ployStorageSecretRequest\x12@\n\x07secrets\x18\x01 \x03(\x0b\x32/.deploy.DeployStorageSecretRequest.SecretsEntry\x1a.\n\x0cSecretsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"\x1d\n\x1b\x44\x65ployStorageSecretResponse2g\n\x03\x41PI\x12`\n\x13\x44\x65ployStorageSecret\x12\".deploy.DeployStorageSecretRequest\x1a#.deploy.DeployStorageSecretResponse\"\x00\x42\x32Z0github.com/pachyderm/pachyderm/src/client/deployb\x06proto3')
-)
-
-
-
-
-_DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY = _descriptor.Descriptor(
-  name='SecretsEntry',
-  full_name='deploy.DeployStorageSecretRequest.SecretsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='deploy.DeployStorageSecretRequest.SecretsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='deploy.DeployStorageSecretRequest.SecretsEntry.value', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b(""),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=_b('8\001'),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=135,
-  serialized_end=181,
-)
-
-_DEPLOYSTORAGESECRETREQUEST = _descriptor.Descriptor(
-  name='DeployStorageSecretRequest',
-  full_name='deploy.DeployStorageSecretRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='secrets', full_name='deploy.DeployStorageSecretRequest.secrets', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[_DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=39,
-  serialized_end=181,
-)
-
-
-_DEPLOYSTORAGESECRETRESPONSE = _descriptor.Descriptor(
-  name='DeployStorageSecretResponse',
-  full_name='deploy.DeployStorageSecretResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=183,
-  serialized_end=212,
-)
-
-_DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY.containing_type = _DEPLOYSTORAGESECRETREQUEST
-_DEPLOYSTORAGESECRETREQUEST.fields_by_name['secrets'].message_type = _DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY
-DESCRIPTOR.message_types_by_name['DeployStorageSecretRequest'] = _DEPLOYSTORAGESECRETREQUEST
-DESCRIPTOR.message_types_by_name['DeployStorageSecretResponse'] = _DEPLOYSTORAGESECRETRESPONSE
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-DeployStorageSecretRequest = _reflection.GeneratedProtocolMessageType('DeployStorageSecretRequest', (_message.Message,), dict(
-
-  SecretsEntry = _reflection.GeneratedProtocolMessageType('SecretsEntry', (_message.Message,), dict(
-    DESCRIPTOR = _DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY,
-    __module__ = 'client.deploy.deploy_pb2'
-    # @@protoc_insertion_point(class_scope:deploy.DeployStorageSecretRequest.SecretsEntry)
-    ))
-  ,
-  DESCRIPTOR = _DEPLOYSTORAGESECRETREQUEST,
-  __module__ = 'client.deploy.deploy_pb2'
-  # @@protoc_insertion_point(class_scope:deploy.DeployStorageSecretRequest)
-  ))
-_sym_db.RegisterMessage(DeployStorageSecretRequest)
-_sym_db.RegisterMessage(DeployStorageSecretRequest.SecretsEntry)
-
-DeployStorageSecretResponse = _reflection.GeneratedProtocolMessageType('DeployStorageSecretResponse', (_message.Message,), dict(
-  DESCRIPTOR = _DEPLOYSTORAGESECRETRESPONSE,
-  __module__ = 'client.deploy.deploy_pb2'
-  # @@protoc_insertion_point(class_scope:deploy.DeployStorageSecretResponse)
-  ))
-_sym_db.RegisterMessage(DeployStorageSecretResponse)
-
-
-DESCRIPTOR._options = None
-_DEPLOYSTORAGESECRETREQUEST_SECRETSENTRY._options = None
-
-_API = _descriptor.ServiceDescriptor(
-  name='API',
-  full_name='deploy.API',
-  file=DESCRIPTOR,
-  index=0,
-  serialized_options=None,
-  serialized_start=214,
-  serialized_end=317,
-  methods=[
-  _descriptor.MethodDescriptor(
-    name='DeployStorageSecret',
-    full_name='deploy.API.DeployStorageSecret',
-    index=0,
-    containing_service=None,
-    input_type=_DEPLOYSTORAGESECRETREQUEST,
-    output_type=_DEPLOYSTORAGESECRETRESPONSE,
-    serialized_options=None,
-  ),
-])
-_sym_db.RegisterServiceDescriptor(_API)
-
-DESCRIPTOR.services_by_name['API'] = _API
-
-# @@protoc_insertion_point(module_scope)
-</code></pre>
-  </div>
 
   </header>
 
@@ -1256,17 +1114,8 @@ DESCRIPTOR.services_by_name['API'] = _API
       <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest" class="name">class <span class="ident">DeployStorageSecretRequest</span></p>
       
   
-    <div class="desc"><p>Abstract base class for protocol messages.</p>
-<p>Protocol message classes are almost always generated by the protocol
-compiler.  These generated types subclass Message and implement the methods
-shown below.</p>
-<p>TODO(robinson): Link to an HTML document here.</p>
-<p>TODO(robinson): Document that instances of this class will also
-have an Extensions attribute with <strong>getitem</strong> and <strong>setitem</strong>.
-Again, not sure how to best convey this.</p>
-<p>TODO(robinson): Document that the class must also have a static
-  RegisterExtension(extension_field) method.
-  Not sure how to best express at this point.</p></div>
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
@@ -1274,9 +1123,8 @@ Again, not sure how to best convey this.</p>
       <div class="class">
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
-          <li><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest">DeployStorageSecretRequest</a></li>
-          <li>google.protobuf.message.Message</li>
-          <li>builtins.object</li>
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -1290,7 +1138,7 @@ Again, not sure how to best convey this.</p>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SECRETS_FIELD_NUMBER" class="name">var <span class="ident">SECRETS_FIELD_NUMBER</span></p>
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -1309,773 +1157,6 @@ Again, not sure how to best convey this.</p>
 </div>
 
             </div>
-          <h3>Static methods</h3>
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.__init__" class="source">
-    <pre><code>def init(self, **kwargs):
-  self._cached_byte_size = 0
-  self._cached_byte_size_dirty = len(kwargs) > 0
-  self._fields = {}
-  # Contains a mapping from oneof field descriptors to the descriptor
-  # of the currently set field in that oneof field.
-  self._oneofs = {}
-  # _unknown_fields is () when empty for efficiency, and will be turned into
-  # a list if fields are added.
-  self._unknown_fields = ()
-  # _unknown_field_set is None when empty for efficiency, and will be
-  # turned into UnknownFieldSet struct if fields are added.
-  self._unknown_field_set = None      # pylint: disable=protected-access
-  self._is_present_in_parent = False
-  self._listener = message_listener_mod.NullMessageListener()
-  self._listener_for_children = _Listener(self)
-  for field_name, field_value in kwargs.items():
-    field = _GetFieldByName(message_descriptor, field_name)
-    if field is None:
-      raise TypeError('%s() got an unexpected keyword argument "%s"' %
-                      (message_descriptor.name, field_name))
-    if field_value is None:
-      # field=None is the same as no field at all.
-      continue
-    if field.label == _FieldDescriptor.LABEL_REPEATED:
-      copy = field._default_constructor(self)
-      if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:  # Composite
-        if _IsMapField(field):
-          if _IsMessageMapField(field):
-            for key in field_value:
-              copy[key].MergeFrom(field_value[key])
-          else:
-            copy.update(field_value)
-        else:
-          for val in field_value:
-            if isinstance(val, dict):
-              copy.add(**val)
-            else:
-              copy.add().MergeFrom(val)
-      else:  # Scalar
-        if field.cpp_type == _FieldDescriptor.CPPTYPE_ENUM:
-          field_value = [_GetIntegerEnumValue(field.enum_type, val)
-                         for val in field_value]
-        copy.extend(field_value)
-      self._fields[field] = copy
-    elif field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      copy = field._default_constructor(self)
-      new_val = field_value
-      if isinstance(field_value, dict):
-        new_val = field.message_type._concrete_class(**field_value)
-      try:
-        copy.MergeFrom(new_val)
-      except TypeError:
-        _ReraiseTypeErrorWithFieldName(message_descriptor.name, field_name)
-      self._fields[field] = copy
-    else:
-      if field.cpp_type == _FieldDescriptor.CPPTYPE_ENUM:
-        field_value = _GetIntegerEnumValue(field.enum_type, field_value)
-      try:
-        setattr(self, field_name, field_value)
-      except TypeError:
-        _ReraiseTypeErrorWithFieldName(message_descriptor.name, field_name)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ByteSize">
-    <p>def <span class="ident">ByteSize</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ByteSize', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ByteSize" class="source">
-    <pre><code>def ByteSize(self):
-  if not self._cached_byte_size_dirty:
-    return self._cached_byte_size
-  size = 0
-  descriptor = self.DESCRIPTOR
-  if descriptor.GetOptions().map_entry:
-    # Fields of map entry should always be serialized.
-    size = descriptor.fields_by_name['key']._sizer(self.key)
-    size += descriptor.fields_by_name['value']._sizer(self.value)
-  else:
-    for field_descriptor, field_value in self.ListFields():
-      size += field_descriptor._sizer(field_value)
-    for tag_bytes, value_bytes in self._unknown_fields:
-      size += len(tag_bytes) + len(value_bytes)
-  self._cached_byte_size = size
-  self._cached_byte_size_dirty = False
-  self._listener_for_children.dirty = False
-  return size
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Clear">
-    <p>def <span class="ident">Clear</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Clear', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Clear" class="source">
-    <pre><code>def _Clear(self):
-  # Clear fields.
-  self._fields = {}
-  self._unknown_fields = ()
-  # pylint: disable=protected-access
-  if self._unknown_field_set is not None:
-    self._unknown_field_set._clear()
-    self._unknown_field_set = None
-
-  self._oneofs = {}
-  self._Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearExtension">
-    <p>def <span class="ident">ClearExtension</span>(</p><p>self, extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearExtension" class="source">
-    <pre><code>def ClearExtension(self, extension_handle):
-  raise NotImplementedError
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearField">
-    <p>def <span class="ident">ClearField</span>(</p><p>self, field_name)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearField', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ClearField" class="source">
-    <pre><code>def ClearField(self, field_name):
-  try:
-    field = message_descriptor.fields_by_name[field_name]
-  except KeyError:
-    try:
-      field = message_descriptor.oneofs_by_name[field_name]
-      if field in self._oneofs:
-        field = self._oneofs[field]
-      else:
-        return
-    except KeyError:
-      raise ValueError('Protocol message %s has no "%s" field.' %
-                       (message_descriptor.name, field_name))
-  if field in self._fields:
-    # To match the C++ implementation, we need to invalidate iterators
-    # for map fields when ClearField() happens.
-    if hasattr(self._fields[field], 'InvalidateIterators'):
-      self._fields[field].InvalidateIterators()
-    # Note:  If the field is a sub-message, its listener will still point
-    #   at us.  That's fine, because the worst than can happen is that it
-    #   will call _Modified() and invalidate our byte size.  Big deal.
-    del self._fields[field]
-    if self._oneofs.get(field.containing_oneof, None) is field:
-      del self._oneofs[field.containing_oneof]
-  # Always call _Modified() -- even if nothing was changed, this is
-  # a mutating method, and thus calling it should cause the field to become
-  # present in the parent message.
-  self._Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.CopyFrom">
-    <p>def <span class="ident">CopyFrom</span>(</p><p>self, other_msg)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Copies the content of the specified message into the current message.</p>
-<p>The method clears the current message and then merges the specified
-message using MergeFrom.</p>
-<p>Args:
-  other_msg: Message to copy into the current one.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.CopyFrom', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.CopyFrom" class="source">
-    <pre><code>def CopyFrom(self, other_msg):
-  """Copies the content of the specified message into the current message.
-  The method clears the current message and then merges the specified
-  message using MergeFrom.
-  Args:
-    other_msg: Message to copy into the current one.
-  """
-  if self is other_msg:
-    return
-  self.Clear()
-  self.MergeFrom(other_msg)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.DiscardUnknownFields">
-    <p>def <span class="ident">DiscardUnknownFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.DiscardUnknownFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.DiscardUnknownFields" class="source">
-    <pre><code>def _DiscardUnknownFields(self):
-  self._unknown_fields = []
-  self._unknown_field_set = None      # pylint: disable=protected-access
-  for field, value in self.ListFields():
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if _IsMapField(field):
-        if _IsMessageMapField(field):
-          for key in value:
-            value[key].DiscardUnknownFields()
-      elif field.label == _FieldDescriptor.LABEL_REPEATED:
-        for sub_message in value:
-          sub_message.DiscardUnknownFields()
-      else:
-        value.DiscardUnknownFields()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FindInitializationErrors">
-    <p>def <span class="ident">FindInitializationErrors</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Finds required fields which are not initialized.</p>
-<p>Returns:
-  A list of strings.  Each string is a path to an uninitialized field from
-  the top-level message, e.g. "foo.bar[5].baz".</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FindInitializationErrors', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FindInitializationErrors" class="source">
-    <pre><code>def FindInitializationErrors(self):
-  """Finds required fields which are not initialized.
-  Returns:
-    A list of strings.  Each string is a path to an uninitialized field from
-    the top-level message, e.g. "foo.bar[5].baz".
-  """
-  errors = []  # simplify things
-  for field in required_fields:
-    if not self.HasField(field.name):
-      errors.append(field.name)
-  for field, value in self.ListFields():
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if field.is_extension:
-        name = '(%s)' % field.full_name
-      else:
-        name = field.name
-      if _IsMapField(field):
-        if _IsMessageMapField(field):
-          for key in value:
-            element = value[key]
-            prefix = '%s[%s].' % (name, key)
-            sub_errors = element.FindInitializationErrors()
-            errors += [prefix + error for error in sub_errors]
-        else:
-          # ScalarMaps can't have any initialization errors.
-          pass
-      elif field.label == _FieldDescriptor.LABEL_REPEATED:
-        for i in range(len(value)):
-          element = value[i]
-          prefix = '%s[%d].' % (name, i)
-          sub_errors = element.FindInitializationErrors()
-          errors += [prefix + error for error in sub_errors]
-      else:
-        prefix = name + '.'
-        sub_errors = value.FindInitializationErrors()
-        errors += [prefix + error for error in sub_errors]
-  return errors
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FromString">
-    <p>def <span class="ident">FromString</span>(</p><p>s)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.FromString" class="source">
-    <pre><code>def FromString(s):
-  message = cls()
-  message.MergeFromString(s)
-  return message
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasExtension">
-    <p>def <span class="ident">HasExtension</span>(</p><p>self, extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasExtension" class="source">
-    <pre><code>def HasExtension(self, extension_handle):
-  raise NotImplementedError
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasField">
-    <p>def <span class="ident">HasField</span>(</p><p>self, field_name)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasField', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.HasField" class="source">
-    <pre><code>def HasField(self, field_name):
-  try:
-    field = hassable_fields[field_name]
-  except KeyError:
-    raise ValueError(error_msg % (message_descriptor.full_name, field_name))
-  if isinstance(field, descriptor_mod.OneofDescriptor):
-    try:
-      return HasField(self, self._oneofs[field].name)
-    except KeyError:
-      return False
-  else:
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      value = self._fields.get(field)
-      return value is not None and value._is_present_in_parent
-    else:
-      return field in self._fields
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.IsInitialized">
-    <p>def <span class="ident">IsInitialized</span>(</p><p>self, errors=None)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Checks if all required fields of a message are set.</p>
-<p>Args:
-  errors:  A list which, if provided, will be populated with the field
-           paths of all missing required fields.</p>
-<p>Returns:
-  True iff the specified message has all required fields set.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.IsInitialized', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.IsInitialized" class="source">
-    <pre><code>def IsInitialized(self, errors=None):
-  """Checks if all required fields of a message are set.
-  Args:
-    errors:  A list which, if provided, will be populated with the field
-             paths of all missing required fields.
-  Returns:
-    True iff the specified message has all required fields set.
-  """
-  # Performance is critical so we avoid HasField() and ListFields().
-  for field in required_fields:
-    if (field not in self._fields or
-        (field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE and
-         not self._fields[field]._is_present_in_parent)):
-      if errors is not None:
-        errors.extend(self.FindInitializationErrors())
-      return False
-  for field, value in list(self._fields.items()):  # dict can change size!
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if field.label == _FieldDescriptor.LABEL_REPEATED:
-        if (field.message_type.has_options and
-            field.message_type.GetOptions().map_entry):
-          continue
-        for element in value:
-          if not element.IsInitialized():
-            if errors is not None:
-              errors.extend(self.FindInitializationErrors())
-            return False
-      elif value._is_present_in_parent and not value.IsInitialized():
-        if errors is not None:
-          errors.extend(self.FindInitializationErrors())
-        return False
-  return True
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ListFields">
-    <p>def <span class="ident">ListFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ListFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ListFields" class="source">
-    <pre><code>def ListFields(self):
-  all_fields = [item for item in self._fields.items() if _IsPresent(item)]
-  all_fields.sort(key = lambda item: item[0].number)
-  return all_fields
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFrom">
-    <p>def <span class="ident">MergeFrom</span>(</p><p>self, msg)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFrom', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFrom" class="source">
-    <pre><code>def MergeFrom(self, msg):
-  if not isinstance(msg, cls):
-    raise TypeError(
-        'Parameter to MergeFrom() must be instance of same class: '
-        'expected %s got %s.' % (cls.__name__, msg.__class__.__name__))
-  assert msg is not self
-  self._Modified()
-  fields = self._fields
-  for field, value in msg._fields.items():
-    if field.label == LABEL_REPEATED:
-      field_value = fields.get(field)
-      if field_value is None:
-        # Construct a new object to represent this field.
-        field_value = field._default_constructor(self)
-        fields[field] = field_value
-      field_value.MergeFrom(value)
-    elif field.cpp_type == CPPTYPE_MESSAGE:
-      if value._is_present_in_parent:
-        field_value = fields.get(field)
-        if field_value is None:
-          # Construct a new object to represent this field.
-          field_value = field._default_constructor(self)
-          fields[field] = field_value
-        field_value.MergeFrom(value)
-    else:
-      self._fields[field] = value
-      if field.containing_oneof:
-        self._UpdateOneofState(field)
-  if msg._unknown_fields:
-    if not self._unknown_fields:
-      self._unknown_fields = []
-    self._unknown_fields.extend(msg._unknown_fields)
-    # pylint: disable=protected-access
-    if self._unknown_field_set is None:
-      self._unknown_field_set = containers.UnknownFieldSet()
-    self._unknown_field_set._extend(msg._unknown_field_set)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFromString">
-    <p>def <span class="ident">MergeFromString</span>(</p><p>self, serialized)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.MergeFromString" class="source">
-    <pre><code>def MergeFromString(self, serialized):
-  if isinstance(serialized, memoryview) and six.PY2:
-    raise TypeError(
-        'memoryview not supported in Python 2 with the pure Python proto '
-        'implementation: this is to maintain compatibility with the C++ '
-        'implementation')
-  serialized = memoryview(serialized)
-  length = len(serialized)
-  try:
-    if self._InternalParse(serialized, 0, length) != length:
-      # The only reason _InternalParse would return early is if it
-      # encountered an end-group tag.
-      raise message_mod.DecodeError('Unexpected end-group tag.')
-  except (IndexError, TypeError):
-    # Now ord(buf[p:p+1]) == ord('') gets TypeError.
-    raise message_mod.DecodeError('Truncated message.')
-  except struct.error as e:
-    raise message_mod.DecodeError(e)
-  return length   # Return this for legacy reasons.
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ParseFromString">
-    <p>def <span class="ident">ParseFromString</span>(</p><p>self, serialized)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Parse serialized protocol buffer data into this message.</p>
-<p>Like MergeFromString(), except we clear the object first.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ParseFromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.ParseFromString" class="source">
-    <pre><code>def ParseFromString(self, serialized):
-  """Parse serialized protocol buffer data into this message.
-  Like MergeFromString(), except we clear the object first.
-  """
-  self.Clear()
-  return self.MergeFromString(serialized)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.RegisterExtension">
-    <p>def <span class="ident">RegisterExtension</span>(</p><p>extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.RegisterExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.RegisterExtension" class="source">
-    <pre><code>def RegisterExtension(extension_handle):
-  extension_handle.containing_type = cls.DESCRIPTOR
-  # TODO(amauryfa): Use cls.MESSAGE_FACTORY.pool when available.
-  cls.DESCRIPTOR.file.pool.AddExtensionDescriptor(extension_handle)
-  _AttachFieldHelpers(cls, extension_handle)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializePartialToString">
-    <p>def <span class="ident">SerializePartialToString</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializePartialToString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializePartialToString" class="source">
-    <pre><code>def SerializePartialToString(self, **kwargs):
-  out = BytesIO()
-  self._InternalSerialize(out.write, **kwargs)
-  return out.getvalue()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializeToString">
-    <p>def <span class="ident">SerializeToString</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializeToString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SerializeToString" class="source">
-    <pre><code>def SerializeToString(self, **kwargs):
-  # Check if the message has all of its required fields set.
-  errors = []
-  if not self.IsInitialized():
-    raise message_mod.EncodeError(
-        'Message %s is missing required fields: %s' % (
-        self.DESCRIPTOR.full_name, ','.join(self.FindInitializationErrors())))
-  return self.SerializePartialToString(**kwargs)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SetInParent">
-    <p>def <span class="ident">SetInParent</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Sets the _cached_byte_size_dirty bit to true,
-and propagates this to our listener iff this was a state change.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SetInParent', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SetInParent" class="source">
-    <pre><code>def Modified(self):
-  """Sets the _cached_byte_size_dirty bit to true,
-  and propagates this to our listener iff this was a state change.
-  """
-  # Note:  Some callers check _cached_byte_size_dirty before calling
-  #   _Modified() as an extra optimization.  So, if this method is ever
-  #   changed such that it does stuff even when _cached_byte_size_dirty is
-  #   already true, the callers need to be updated.
-  if not self._cached_byte_size_dirty:
-    self._cached_byte_size_dirty = True
-    self._listener_for_children.dirty = True
-    self._is_present_in_parent = True
-    self._listener.Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.UnknownFields">
-    <p>def <span class="ident">UnknownFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.UnknownFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.UnknownFields" class="source">
-    <pre><code>def _UnknownFields(self):
-  if self._unknown_field_set is None:  # pylint: disable=protected-access
-    # pylint: disable=protected-access
-    self._unknown_field_set = containers.UnknownFieldSet()
-  return self._unknown_field_set    # pylint: disable=protected-access
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.WhichOneof">
-    <p>def <span class="ident">WhichOneof</span>(</p><p>self, oneof_name)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns the name of the currently set field inside a oneof, or None.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.WhichOneof', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.WhichOneof" class="source">
-    <pre><code>def WhichOneof(self, oneof_name):
-  """Returns the name of the currently set field inside a oneof, or None."""
-  try:
-    field = message_descriptor.oneofs_by_name[oneof_name]
-  except KeyError:
-    raise ValueError(
-        'Protocol message has no oneof "%s" field.' % oneof_name)
-  nested_field = self._oneofs.get(field, None)
-  if nested_field is not None and self.HasField(nested_field.name):
-    return nested_field.name
-  else:
-    return None
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-          <h3>Instance variables</h3>
             <div class="item">
             <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.secrets" class="name">var <span class="ident">secrets</span></p>
             
@@ -2093,17 +1174,8 @@ and propagates this to our listener iff this was a state change.</p></div>
       <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse" class="name">class <span class="ident">DeployStorageSecretResponse</span></p>
       
   
-    <div class="desc"><p>Abstract base class for protocol messages.</p>
-<p>Protocol message classes are almost always generated by the protocol
-compiler.  These generated types subclass Message and implement the methods
-shown below.</p>
-<p>TODO(robinson): Link to an HTML document here.</p>
-<p>TODO(robinson): Document that instances of this class will also
-have an Extensions attribute with <strong>getitem</strong> and <strong>setitem</strong>.
-Again, not sure how to best convey this.</p>
-<p>TODO(robinson): Document that the class must also have a static
-  RegisterExtension(extension_field) method.
-  Not sure how to best express at this point.</p></div>
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
@@ -2111,9 +1183,8 @@ Again, not sure how to best convey this.</p>
       <div class="class">
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
-          <li><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse">DeployStorageSecretResponse</a></li>
-          <li>google.protobuf.message.Message</li>
-          <li>builtins.object</li>
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -2126,789 +1197,26 @@ Again, not sure how to best convey this.</p>
 </div>
 
             </div>
-          <h3>Static methods</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
 
-    
+            
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.__init__" class="source">
-    <pre><code>def init(self, **kwargs):
-  self._cached_byte_size = 0
-  self._cached_byte_size_dirty = len(kwargs) > 0
-  self._fields = {}
-  # Contains a mapping from oneof field descriptors to the descriptor
-  # of the currently set field in that oneof field.
-  self._oneofs = {}
-  # _unknown_fields is () when empty for efficiency, and will be turned into
-  # a list if fields are added.
-  self._unknown_fields = ()
-  # _unknown_field_set is None when empty for efficiency, and will be
-  # turned into UnknownFieldSet struct if fields are added.
-  self._unknown_field_set = None      # pylint: disable=protected-access
-  self._is_present_in_parent = False
-  self._listener = message_listener_mod.NullMessageListener()
-  self._listener_for_children = _Listener(self)
-  for field_name, field_value in kwargs.items():
-    field = _GetFieldByName(message_descriptor, field_name)
-    if field is None:
-      raise TypeError('%s() got an unexpected keyword argument "%s"' %
-                      (message_descriptor.name, field_name))
-    if field_value is None:
-      # field=None is the same as no field at all.
-      continue
-    if field.label == _FieldDescriptor.LABEL_REPEATED:
-      copy = field._default_constructor(self)
-      if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:  # Composite
-        if _IsMapField(field):
-          if _IsMessageMapField(field):
-            for key in field_value:
-              copy[key].MergeFrom(field_value[key])
-          else:
-            copy.update(field_value)
-        else:
-          for val in field_value:
-            if isinstance(val, dict):
-              copy.add(**val)
-            else:
-              copy.add().MergeFrom(val)
-      else:  # Scalar
-        if field.cpp_type == _FieldDescriptor.CPPTYPE_ENUM:
-          field_value = [_GetIntegerEnumValue(field.enum_type, val)
-                         for val in field_value]
-        copy.extend(field_value)
-      self._fields[field] = copy
-    elif field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      copy = field._default_constructor(self)
-      new_val = field_value
-      if isinstance(field_value, dict):
-        new_val = field.message_type._concrete_class(**field_value)
-      try:
-        copy.MergeFrom(new_val)
-      except TypeError:
-        _ReraiseTypeErrorWithFieldName(message_descriptor.name, field_name)
-      self._fields[field] = copy
-    else:
-      if field.cpp_type == _FieldDescriptor.CPPTYPE_ENUM:
-        field_value = _GetIntegerEnumValue(field.enum_type, field_value)
-      try:
-        setattr(self, field_name, field_value)
-      except TypeError:
-        _ReraiseTypeErrorWithFieldName(message_descriptor.name, field_name)
-</code></pre>
-  </div>
 </div>
 
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ByteSize">
-    <p>def <span class="ident">ByteSize</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ByteSize', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ByteSize" class="source">
-    <pre><code>def ByteSize(self):
-  if not self._cached_byte_size_dirty:
-    return self._cached_byte_size
-  size = 0
-  descriptor = self.DESCRIPTOR
-  if descriptor.GetOptions().map_entry:
-    # Fields of map entry should always be serialized.
-    size = descriptor.fields_by_name['key']._sizer(self.key)
-    size += descriptor.fields_by_name['value']._sizer(self.value)
-  else:
-    for field_descriptor, field_value in self.ListFields():
-      size += field_descriptor._sizer(field_value)
-    for tag_bytes, value_bytes in self._unknown_fields:
-      size += len(tag_bytes) + len(value_bytes)
-  self._cached_byte_size = size
-  self._cached_byte_size_dirty = False
-  self._listener_for_children.dirty = False
-  return size
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Clear">
-    <p>def <span class="ident">Clear</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Clear', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Clear" class="source">
-    <pre><code>def _Clear(self):
-  # Clear fields.
-  self._fields = {}
-  self._unknown_fields = ()
-  # pylint: disable=protected-access
-  if self._unknown_field_set is not None:
-    self._unknown_field_set._clear()
-    self._unknown_field_set = None
-
-  self._oneofs = {}
-  self._Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearExtension">
-    <p>def <span class="ident">ClearExtension</span>(</p><p>self, extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearExtension" class="source">
-    <pre><code>def ClearExtension(self, extension_handle):
-  raise NotImplementedError
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearField">
-    <p>def <span class="ident">ClearField</span>(</p><p>self, field_name)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearField', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ClearField" class="source">
-    <pre><code>def ClearField(self, field_name):
-  try:
-    field = message_descriptor.fields_by_name[field_name]
-  except KeyError:
-    try:
-      field = message_descriptor.oneofs_by_name[field_name]
-      if field in self._oneofs:
-        field = self._oneofs[field]
-      else:
-        return
-    except KeyError:
-      raise ValueError('Protocol message %s has no "%s" field.' %
-                       (message_descriptor.name, field_name))
-  if field in self._fields:
-    # To match the C++ implementation, we need to invalidate iterators
-    # for map fields when ClearField() happens.
-    if hasattr(self._fields[field], 'InvalidateIterators'):
-      self._fields[field].InvalidateIterators()
-    # Note:  If the field is a sub-message, its listener will still point
-    #   at us.  That's fine, because the worst than can happen is that it
-    #   will call _Modified() and invalidate our byte size.  Big deal.
-    del self._fields[field]
-    if self._oneofs.get(field.containing_oneof, None) is field:
-      del self._oneofs[field.containing_oneof]
-  # Always call _Modified() -- even if nothing was changed, this is
-  # a mutating method, and thus calling it should cause the field to become
-  # present in the parent message.
-  self._Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.CopyFrom">
-    <p>def <span class="ident">CopyFrom</span>(</p><p>self, other_msg)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Copies the content of the specified message into the current message.</p>
-<p>The method clears the current message and then merges the specified
-message using MergeFrom.</p>
-<p>Args:
-  other_msg: Message to copy into the current one.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.CopyFrom', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.CopyFrom" class="source">
-    <pre><code>def CopyFrom(self, other_msg):
-  """Copies the content of the specified message into the current message.
-  The method clears the current message and then merges the specified
-  message using MergeFrom.
-  Args:
-    other_msg: Message to copy into the current one.
-  """
-  if self is other_msg:
-    return
-  self.Clear()
-  self.MergeFrom(other_msg)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.DiscardUnknownFields">
-    <p>def <span class="ident">DiscardUnknownFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.DiscardUnknownFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.DiscardUnknownFields" class="source">
-    <pre><code>def _DiscardUnknownFields(self):
-  self._unknown_fields = []
-  self._unknown_field_set = None      # pylint: disable=protected-access
-  for field, value in self.ListFields():
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if _IsMapField(field):
-        if _IsMessageMapField(field):
-          for key in value:
-            value[key].DiscardUnknownFields()
-      elif field.label == _FieldDescriptor.LABEL_REPEATED:
-        for sub_message in value:
-          sub_message.DiscardUnknownFields()
-      else:
-        value.DiscardUnknownFields()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FindInitializationErrors">
-    <p>def <span class="ident">FindInitializationErrors</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Finds required fields which are not initialized.</p>
-<p>Returns:
-  A list of strings.  Each string is a path to an uninitialized field from
-  the top-level message, e.g. "foo.bar[5].baz".</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FindInitializationErrors', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FindInitializationErrors" class="source">
-    <pre><code>def FindInitializationErrors(self):
-  """Finds required fields which are not initialized.
-  Returns:
-    A list of strings.  Each string is a path to an uninitialized field from
-    the top-level message, e.g. "foo.bar[5].baz".
-  """
-  errors = []  # simplify things
-  for field in required_fields:
-    if not self.HasField(field.name):
-      errors.append(field.name)
-  for field, value in self.ListFields():
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if field.is_extension:
-        name = '(%s)' % field.full_name
-      else:
-        name = field.name
-      if _IsMapField(field):
-        if _IsMessageMapField(field):
-          for key in value:
-            element = value[key]
-            prefix = '%s[%s].' % (name, key)
-            sub_errors = element.FindInitializationErrors()
-            errors += [prefix + error for error in sub_errors]
-        else:
-          # ScalarMaps can't have any initialization errors.
-          pass
-      elif field.label == _FieldDescriptor.LABEL_REPEATED:
-        for i in range(len(value)):
-          element = value[i]
-          prefix = '%s[%d].' % (name, i)
-          sub_errors = element.FindInitializationErrors()
-          errors += [prefix + error for error in sub_errors]
-      else:
-        prefix = name + '.'
-        sub_errors = value.FindInitializationErrors()
-        errors += [prefix + error for error in sub_errors]
-  return errors
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FromString">
-    <p>def <span class="ident">FromString</span>(</p><p>s)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.FromString" class="source">
-    <pre><code>def FromString(s):
-  message = cls()
-  message.MergeFromString(s)
-  return message
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasExtension">
-    <p>def <span class="ident">HasExtension</span>(</p><p>self, extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasExtension" class="source">
-    <pre><code>def HasExtension(self, extension_handle):
-  raise NotImplementedError
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasField">
-    <p>def <span class="ident">HasField</span>(</p><p>self, field_name)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasField', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.HasField" class="source">
-    <pre><code>def HasField(self, field_name):
-  try:
-    field = hassable_fields[field_name]
-  except KeyError:
-    raise ValueError(error_msg % (message_descriptor.full_name, field_name))
-  if isinstance(field, descriptor_mod.OneofDescriptor):
-    try:
-      return HasField(self, self._oneofs[field].name)
-    except KeyError:
-      return False
-  else:
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      value = self._fields.get(field)
-      return value is not None and value._is_present_in_parent
-    else:
-      return field in self._fields
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.IsInitialized">
-    <p>def <span class="ident">IsInitialized</span>(</p><p>self, errors=None)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Checks if all required fields of a message are set.</p>
-<p>Args:
-  errors:  A list which, if provided, will be populated with the field
-           paths of all missing required fields.</p>
-<p>Returns:
-  True iff the specified message has all required fields set.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.IsInitialized', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.IsInitialized" class="source">
-    <pre><code>def IsInitialized(self, errors=None):
-  """Checks if all required fields of a message are set.
-  Args:
-    errors:  A list which, if provided, will be populated with the field
-             paths of all missing required fields.
-  Returns:
-    True iff the specified message has all required fields set.
-  """
-  # Performance is critical so we avoid HasField() and ListFields().
-  for field in required_fields:
-    if (field not in self._fields or
-        (field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE and
-         not self._fields[field]._is_present_in_parent)):
-      if errors is not None:
-        errors.extend(self.FindInitializationErrors())
-      return False
-  for field, value in list(self._fields.items()):  # dict can change size!
-    if field.cpp_type == _FieldDescriptor.CPPTYPE_MESSAGE:
-      if field.label == _FieldDescriptor.LABEL_REPEATED:
-        if (field.message_type.has_options and
-            field.message_type.GetOptions().map_entry):
-          continue
-        for element in value:
-          if not element.IsInitialized():
-            if errors is not None:
-              errors.extend(self.FindInitializationErrors())
-            return False
-      elif value._is_present_in_parent and not value.IsInitialized():
-        if errors is not None:
-          errors.extend(self.FindInitializationErrors())
-        return False
-  return True
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ListFields">
-    <p>def <span class="ident">ListFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ListFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ListFields" class="source">
-    <pre><code>def ListFields(self):
-  all_fields = [item for item in self._fields.items() if _IsPresent(item)]
-  all_fields.sort(key = lambda item: item[0].number)
-  return all_fields
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFrom">
-    <p>def <span class="ident">MergeFrom</span>(</p><p>self, msg)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFrom', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFrom" class="source">
-    <pre><code>def MergeFrom(self, msg):
-  if not isinstance(msg, cls):
-    raise TypeError(
-        'Parameter to MergeFrom() must be instance of same class: '
-        'expected %s got %s.' % (cls.__name__, msg.__class__.__name__))
-  assert msg is not self
-  self._Modified()
-  fields = self._fields
-  for field, value in msg._fields.items():
-    if field.label == LABEL_REPEATED:
-      field_value = fields.get(field)
-      if field_value is None:
-        # Construct a new object to represent this field.
-        field_value = field._default_constructor(self)
-        fields[field] = field_value
-      field_value.MergeFrom(value)
-    elif field.cpp_type == CPPTYPE_MESSAGE:
-      if value._is_present_in_parent:
-        field_value = fields.get(field)
-        if field_value is None:
-          # Construct a new object to represent this field.
-          field_value = field._default_constructor(self)
-          fields[field] = field_value
-        field_value.MergeFrom(value)
-    else:
-      self._fields[field] = value
-      if field.containing_oneof:
-        self._UpdateOneofState(field)
-  if msg._unknown_fields:
-    if not self._unknown_fields:
-      self._unknown_fields = []
-    self._unknown_fields.extend(msg._unknown_fields)
-    # pylint: disable=protected-access
-    if self._unknown_field_set is None:
-      self._unknown_field_set = containers.UnknownFieldSet()
-    self._unknown_field_set._extend(msg._unknown_field_set)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFromString">
-    <p>def <span class="ident">MergeFromString</span>(</p><p>self, serialized)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.MergeFromString" class="source">
-    <pre><code>def MergeFromString(self, serialized):
-  if isinstance(serialized, memoryview) and six.PY2:
-    raise TypeError(
-        'memoryview not supported in Python 2 with the pure Python proto '
-        'implementation: this is to maintain compatibility with the C++ '
-        'implementation')
-  serialized = memoryview(serialized)
-  length = len(serialized)
-  try:
-    if self._InternalParse(serialized, 0, length) != length:
-      # The only reason _InternalParse would return early is if it
-      # encountered an end-group tag.
-      raise message_mod.DecodeError('Unexpected end-group tag.')
-  except (IndexError, TypeError):
-    # Now ord(buf[p:p+1]) == ord('') gets TypeError.
-    raise message_mod.DecodeError('Truncated message.')
-  except struct.error as e:
-    raise message_mod.DecodeError(e)
-  return length   # Return this for legacy reasons.
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ParseFromString">
-    <p>def <span class="ident">ParseFromString</span>(</p><p>self, serialized)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Parse serialized protocol buffer data into this message.</p>
-<p>Like MergeFromString(), except we clear the object first.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ParseFromString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.ParseFromString" class="source">
-    <pre><code>def ParseFromString(self, serialized):
-  """Parse serialized protocol buffer data into this message.
-  Like MergeFromString(), except we clear the object first.
-  """
-  self.Clear()
-  return self.MergeFromString(serialized)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.RegisterExtension">
-    <p>def <span class="ident">RegisterExtension</span>(</p><p>extension_handle)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.RegisterExtension', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.RegisterExtension" class="source">
-    <pre><code>def RegisterExtension(extension_handle):
-  extension_handle.containing_type = cls.DESCRIPTOR
-  # TODO(amauryfa): Use cls.MESSAGE_FACTORY.pool when available.
-  cls.DESCRIPTOR.file.pool.AddExtensionDescriptor(extension_handle)
-  _AttachFieldHelpers(cls, extension_handle)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializePartialToString">
-    <p>def <span class="ident">SerializePartialToString</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializePartialToString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializePartialToString" class="source">
-    <pre><code>def SerializePartialToString(self, **kwargs):
-  out = BytesIO()
-  self._InternalSerialize(out.write, **kwargs)
-  return out.getvalue()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializeToString">
-    <p>def <span class="ident">SerializeToString</span>(</p><p>self, **kwargs)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializeToString', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SerializeToString" class="source">
-    <pre><code>def SerializeToString(self, **kwargs):
-  # Check if the message has all of its required fields set.
-  errors = []
-  if not self.IsInitialized():
-    raise message_mod.EncodeError(
-        'Message %s is missing required fields: %s' % (
-        self.DESCRIPTOR.full_name, ','.join(self.FindInitializationErrors())))
-  return self.SerializePartialToString(**kwargs)
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SetInParent">
-    <p>def <span class="ident">SetInParent</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Sets the _cached_byte_size_dirty bit to true,
-and propagates this to our listener iff this was a state change.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SetInParent', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.SetInParent" class="source">
-    <pre><code>def Modified(self):
-  """Sets the _cached_byte_size_dirty bit to true,
-  and propagates this to our listener iff this was a state change.
-  """
-  # Note:  Some callers check _cached_byte_size_dirty before calling
-  #   _Modified() as an extra optimization.  So, if this method is ever
-  #   changed such that it does stuff even when _cached_byte_size_dirty is
-  #   already true, the callers need to be updated.
-  if not self._cached_byte_size_dirty:
-    self._cached_byte_size_dirty = True
-    self._listener_for_children.dirty = True
-    self._is_present_in_parent = True
-    self._listener.Modified()
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.UnknownFields">
-    <p>def <span class="ident">UnknownFields</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.UnknownFields', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.UnknownFields" class="source">
-    <pre><code>def _UnknownFields(self):
-  if self._unknown_field_set is None:  # pylint: disable=protected-access
-    # pylint: disable=protected-access
-    self._unknown_field_set = containers.UnknownFieldSet()
-  return self._unknown_field_set    # pylint: disable=protected-access
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.WhichOneof">
-    <p>def <span class="ident">WhichOneof</span>(</p><p>self, oneof_name)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns the name of the currently set field inside a oneof, or None.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.WhichOneof', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.WhichOneof" class="source">
-    <pre><code>def WhichOneof(self, oneof_name):
-  """Returns the name of the currently set field inside a oneof, or None."""
-  try:
-    field = message_descriptor.oneofs_by_name[oneof_name]
-  except KeyError:
-    raise ValueError(
-        'Protocol message has no oneof "%s" field.' % oneof_name)
-  nested_field = self._oneofs.get(field, None)
-  if nested_field is not None and self.HasField(nested_field.name):
-    return nested_field.name
-  else:
-    return None
-</code></pre>
-  </div>
-</div>
-
-  </div>
-  
+            </div>
       </div>
       </div>
 
   </section>
-
-    </article>
+</article>
   <div class="clear"> </div>
   <footer id="footer">
     <p>
-      Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      Generated by <a href="https://github.com/mitmproxy/pdoc">pdoc 0.3.2</a>
     </p>
-
-    <p>pdoc is in the public domain with the
-      <a href="http://unlicense.org">UNLICENSE</a></p>
-
-    <p>Design by <a href="http://nadh.in">Kailash Nadh</a></p>
   </footer>
 </div>
 </body>

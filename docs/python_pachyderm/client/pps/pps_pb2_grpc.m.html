@@ -3,13 +3,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>python_pachyderm.client.pps.pps_pb2_grpc API documentation</title>
-    <meta name="description" content="" />
+  
+  <title>python_pachyderm.client.pps.pps_pb2_grpc API documentation</title>
+  <meta name="description" content="" />
 
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
   <style type="text/css">
-  
 * {
   box-sizing: border-box;
 }
@@ -546,11 +547,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-  </style>
-
+</style>
   <style type="text/css">
-  
   html, body {
     margin: 0;
     padding: 0;
@@ -634,7 +632,9 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-
+  p, pre {
+    white-space: pre-wrap;
+  }
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -848,12 +848,79 @@ table {
   }
 
   /*****************************/
-
-  </style>
-
-
+</style>
   <style type="text/css">
-  
+  .codehilite .hll { background-color: #ffffcc }
+.codehilite  { background: #f8f8f8; }
+.codehilite .c { color: #408080; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+.codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #FF0000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888888 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #7D9029 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #A0A000 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+  </style>
+  <style type="text/css">
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
@@ -942,8 +1009,7 @@ table {
         page-break-after: avoid;
     }
 }
-
-  </style>
+</style>
 
   <script type="text/javascript">
   function toggle(id, $link) {
@@ -962,13 +1028,35 @@ table {
 </head>
 <body>
 <a href="#" id="top">Top</a>
-
 <div id="container">
-    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
+    <li class="set"><h3>Super-module</h3>
+      <ul>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pps</a></li>
+      </ul>
+    </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
@@ -1025,8 +1113,7 @@ table {
     </ul>
   </div>
 
-    <article id="content">
-      
+<article id="content">
   
 
   
@@ -1034,419 +1121,9 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">python_pachyderm.client.pps.pps_pb2_grpc</span> module</h1>
+  <p></p>
+
   
-  
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc" class="source">
-    <pre><code># Generated by the gRPC Python protocol compiler plugin. DO NOT EDIT!
-import grpc
-
-from python_pachyderm.client.pps import pps_pb2 as client_dot_pps_dot_pps__pb2
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-
-
-class APIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.CreateJob = channel.unary_unary(
-        '/pps.API/CreateJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.Job.FromString,
-        )
-    self.InspectJob = channel.unary_unary(
-        '/pps.API/InspectJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.ListJob = channel.unary_unary(
-        '/pps.API/ListJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfos.FromString,
-        )
-    self.ListJobStream = channel.unary_stream(
-        '/pps.API/ListJobStream',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.FlushJob = channel.unary_stream(
-        '/pps.API/FlushJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.DeleteJob = channel.unary_unary(
-        '/pps.API/DeleteJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StopJob = channel.unary_unary(
-        '/pps.API/StopJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectDatum = channel.unary_unary(
-        '/pps.API/InspectDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.DatumInfo.FromString,
-        )
-    self.ListDatum = channel.unary_unary(
-        '/pps.API/ListDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumResponse.FromString,
-        )
-    self.ListDatumStream = channel.unary_stream(
-        '/pps.API/ListDatumStream',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumStreamResponse.FromString,
-        )
-    self.RestartDatum = channel.unary_unary(
-        '/pps.API/RestartDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.CreatePipeline = channel.unary_unary(
-        '/pps.API/CreatePipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectPipeline = channel.unary_unary(
-        '/pps.API/InspectPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
-        )
-    self.ListPipeline = channel.unary_unary(
-        '/pps.API/ListPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
-        )
-    self.DeletePipeline = channel.unary_unary(
-        '/pps.API/DeletePipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StartPipeline = channel.unary_unary(
-        '/pps.API/StartPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StopPipeline = channel.unary_unary(
-        '/pps.API/StopPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.RerunPipeline = channel.unary_unary(
-        '/pps.API/RerunPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.DeleteAll = channel.unary_unary(
-        '/pps.API/DeleteAll',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetLogs = channel.unary_stream(
-        '/pps.API/GetLogs',
-        request_serializer=client_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.LogMessage.FromString,
-        )
-    self.GarbageCollect = channel.unary_unary(
-        '/pps.API/GarbageCollect',
-        request_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.FromString,
-        )
-    self.ActivateAuth = channel.unary_unary(
-        '/pps.API/ActivateAuth',
-        request_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
-        )
-
-
-class APIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def CreateJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListJob(self, request, context):
-    """ListJob returns information about current and past Pachyderm jobs. This is
-    deprecated in favor of ListJobStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListJobStream(self, request, context):
-    """ListJobStream returns information about current and past Pachyderm jobs.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FlushJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StopJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectDatum(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListDatum(self, request, context):
-    """ListDatum returns information about each datum fed to a Pachyderm job. This
-    is deprecated in favor of ListDatumStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListDatumStream(self, request, context):
-    """ListDatumStream returns information about each datum fed to a Pachyderm job
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def RestartDatum(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CreatePipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeletePipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StartPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StopPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def RerunPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteAll(self, request, context):
-    """DeleteAll deletes everything
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetLogs(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GarbageCollect(self, request, context):
-    """Garbage collection
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ActivateAuth(self, request, context):
-    """An internal call that causes PPS to put itself into an auth-enabled state
-    (all pipeline have tokens, correct permissions, etcd)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-
-def add_APIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'CreateJob': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.CreateJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.Job.SerializeToString,
-      ),
-      'InspectJob': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'ListJob': grpc.unary_unary_rpc_method_handler(
-          servicer.ListJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfos.SerializeToString,
-      ),
-      'ListJobStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListJobStream,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'FlushJob': grpc.unary_stream_rpc_method_handler(
-          servicer.FlushJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'DeleteJob': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StopJob': grpc.unary_unary_rpc_method_handler(
-          servicer.StopJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StopJobRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.DatumInfo.SerializeToString,
-      ),
-      'ListDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.ListDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ListDatumResponse.SerializeToString,
-      ),
-      'ListDatumStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListDatumStream,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ListDatumStreamResponse.SerializeToString,
-      ),
-      'RestartDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.RestartDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.RestartDatumRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'CreatePipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.CreatePipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.CreatePipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectPipelineRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.PipelineInfo.SerializeToString,
-      ),
-      'ListPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.ListPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListPipelineRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.PipelineInfos.SerializeToString,
-      ),
-      'DeletePipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.DeletePipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.DeletePipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StartPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.StartPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StartPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StopPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.StopPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'RerunPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.RerunPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'DeleteAll': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteAll,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetLogs': grpc.unary_stream_rpc_method_handler(
-          servicer.GetLogs,
-          request_deserializer=client_dot_pps_dot_pps__pb2.GetLogsRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.LogMessage.SerializeToString,
-      ),
-      'GarbageCollect': grpc.unary_unary_rpc_method_handler(
-          servicer.GarbageCollect,
-          request_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.SerializeToString,
-      ),
-      'ActivateAuth': grpc.unary_unary_rpc_method_handler(
-          servicer.ActivateAuth,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pps.API', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-</code></pre>
-  </div>
 
   </header>
 
@@ -1463,126 +1140,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server" class="source">
-    <pre><code>def add_APIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'CreateJob': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.CreateJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.Job.SerializeToString,
-      ),
-      'InspectJob': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'ListJob': grpc.unary_unary_rpc_method_handler(
-          servicer.ListJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfos.SerializeToString,
-      ),
-      'ListJobStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListJobStream,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'FlushJob': grpc.unary_stream_rpc_method_handler(
-          servicer.FlushJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
-      ),
-      'DeleteJob': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StopJob': grpc.unary_unary_rpc_method_handler(
-          servicer.StopJob,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StopJobRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.DatumInfo.SerializeToString,
-      ),
-      'ListDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.ListDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ListDatumResponse.SerializeToString,
-      ),
-      'ListDatumStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListDatumStream,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ListDatumStreamResponse.SerializeToString,
-      ),
-      'RestartDatum': grpc.unary_unary_rpc_method_handler(
-          servicer.RestartDatum,
-          request_deserializer=client_dot_pps_dot_pps__pb2.RestartDatumRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'CreatePipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.CreatePipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.CreatePipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.InspectPipelineRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.PipelineInfo.SerializeToString,
-      ),
-      'ListPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.ListPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ListPipelineRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.PipelineInfos.SerializeToString,
-      ),
-      'DeletePipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.DeletePipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.DeletePipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StartPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.StartPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StartPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StopPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.StopPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'RerunPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.RerunPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'DeleteAll': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteAll,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetLogs': grpc.unary_stream_rpc_method_handler(
-          servicer.GetLogs,
-          request_deserializer=client_dot_pps_dot_pps__pb2.GetLogsRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.LogMessage.SerializeToString,
-      ),
-      'GarbageCollect': grpc.unary_unary_rpc_method_handler(
-          servicer.GarbageCollect,
-          request_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.SerializeToString,
-      ),
-      'ActivateAuth': grpc.unary_unary_rpc_method_handler(
-          servicer.ActivateAuth,
-          request_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.FromString,
-          response_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pps.API', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1595,180 +1152,11 @@ def add_APIServicer_to_server(servicer, server):
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer" class="source">
-    <pre><code>class APIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def CreateJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListJob(self, request, context):
-    """ListJob returns information about current and past Pachyderm jobs. This is
-    deprecated in favor of ListJobStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListJobStream(self, request, context):
-    """ListJobStream returns information about current and past Pachyderm jobs.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FlushJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StopJob(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectDatum(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListDatum(self, request, context):
-    """ListDatum returns information about each datum fed to a Pachyderm job. This
-    is deprecated in favor of ListDatumStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListDatumStream(self, request, context):
-    """ListDatumStream returns information about each datum fed to a Pachyderm job
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def RestartDatum(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CreatePipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeletePipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StartPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StopPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def RerunPipeline(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteAll(self, request, context):
-    """DeleteAll deletes everything
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetLogs(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GarbageCollect(self, request, context):
-    """Garbage collection
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ActivateAuth(self, request, context):
-    """An internal call that causes PPS to put itself into an auth-enabled state
-    (all pipeline have tokens, correct permissions, etcd)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer">APIServicer</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth">
@@ -1779,19 +1167,9 @@ def add_APIServicer_to_server(servicer, server):
     
   
     <div class="desc"><p>An internal call that causes PPS to put itself into an auth-enabled state
-(all pipeline have tokens, correct permissions, etcd)</p></div>
+(all pipeline have tokens, correct permissions, etcd)</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth" class="source">
-    <pre><code>def ActivateAuth(self, request, context):
-  """An internal call that causes PPS to put itself into an auth-enabled state
-  (all pipeline have tokens, correct permissions, etcd)
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1806,16 +1184,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob" class="source">
-    <pre><code>def CreateJob(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1830,16 +1198,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline" class="source">
-    <pre><code>def CreatePipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1853,18 +1211,9 @@ def add_APIServicer_to_server(servicer, server):
 
     
   
-    <div class="desc"><p>DeleteAll deletes everything</p></div>
+    <div class="desc"><p>DeleteAll deletes everything</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll" class="source">
-    <pre><code>def DeleteAll(self, request, context):
-  """DeleteAll deletes everything
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1879,16 +1228,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob" class="source">
-    <pre><code>def DeleteJob(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1903,16 +1242,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline" class="source">
-    <pre><code>def DeletePipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1927,16 +1256,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob" class="source">
-    <pre><code>def FlushJob(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1950,18 +1269,9 @@ def add_APIServicer_to_server(servicer, server):
 
     
   
-    <div class="desc"><p>Garbage collection</p></div>
+    <div class="desc"><p>Garbage collection</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect" class="source">
-    <pre><code>def GarbageCollect(self, request, context):
-  """Garbage collection
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -1976,16 +1286,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs" class="source">
-    <pre><code>def GetLogs(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2000,16 +1300,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum" class="source">
-    <pre><code>def InspectDatum(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2024,16 +1314,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob" class="source">
-    <pre><code>def InspectJob(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2048,16 +1328,6 @@ def add_APIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline" class="source">
-    <pre><code>def InspectPipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2072,19 +1342,9 @@ def add_APIServicer_to_server(servicer, server):
     
   
     <div class="desc"><p>ListDatum returns information about each datum fed to a Pachyderm job. This
-is deprecated in favor of ListDatumStream</p></div>
+is deprecated in favor of ListDatumStream</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum" class="source">
-    <pre><code>def ListDatum(self, request, context):
-  """ListDatum returns information about each datum fed to a Pachyderm job. This
-  is deprecated in favor of ListDatumStream
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2098,18 +1358,9 @@ is deprecated in favor of ListDatumStream</p></div>
 
     
   
-    <div class="desc"><p>ListDatumStream returns information about each datum fed to a Pachyderm job</p></div>
+    <div class="desc"><p>ListDatumStream returns information about each datum fed to a Pachyderm job</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream" class="source">
-    <pre><code>def ListDatumStream(self, request, context):
-  """ListDatumStream returns information about each datum fed to a Pachyderm job
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2124,19 +1375,9 @@ is deprecated in favor of ListDatumStream</p></div>
     
   
     <div class="desc"><p>ListJob returns information about current and past Pachyderm jobs. This is
-deprecated in favor of ListJobStream</p></div>
+deprecated in favor of ListJobStream</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob" class="source">
-    <pre><code>def ListJob(self, request, context):
-  """ListJob returns information about current and past Pachyderm jobs. This is
-  deprecated in favor of ListJobStream
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2150,18 +1391,9 @@ deprecated in favor of ListJobStream</p></div>
 
     
   
-    <div class="desc"><p>ListJobStream returns information about current and past Pachyderm jobs.</p></div>
+    <div class="desc"><p>ListJobStream returns information about current and past Pachyderm jobs.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream" class="source">
-    <pre><code>def ListJobStream(self, request, context):
-  """ListJobStream returns information about current and past Pachyderm jobs.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2176,16 +1408,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline" class="source">
-    <pre><code>def ListPipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2200,16 +1422,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RerunPipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RerunPipeline" class="source">
-    <pre><code>def RerunPipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2224,16 +1436,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum" class="source">
-    <pre><code>def RestartDatum(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2248,16 +1450,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline" class="source">
-    <pre><code>def StartPipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2272,16 +1464,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob" class="source">
-    <pre><code>def StopJob(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2296,16 +1478,6 @@ deprecated in favor of ListJobStream</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline" class="source">
-    <pre><code>def StopPipeline(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2318,140 +1490,11 @@ deprecated in favor of ListJobStream</p></div>
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIStub', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIStub" class="source">
-    <pre><code>class APIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.CreateJob = channel.unary_unary(
-        '/pps.API/CreateJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.Job.FromString,
-        )
-    self.InspectJob = channel.unary_unary(
-        '/pps.API/InspectJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.ListJob = channel.unary_unary(
-        '/pps.API/ListJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfos.FromString,
-        )
-    self.ListJobStream = channel.unary_stream(
-        '/pps.API/ListJobStream',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.FlushJob = channel.unary_stream(
-        '/pps.API/FlushJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-        )
-    self.DeleteJob = channel.unary_unary(
-        '/pps.API/DeleteJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StopJob = channel.unary_unary(
-        '/pps.API/StopJob',
-        request_serializer=client_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectDatum = channel.unary_unary(
-        '/pps.API/InspectDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.DatumInfo.FromString,
-        )
-    self.ListDatum = channel.unary_unary(
-        '/pps.API/ListDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumResponse.FromString,
-        )
-    self.ListDatumStream = channel.unary_stream(
-        '/pps.API/ListDatumStream',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumStreamResponse.FromString,
-        )
-    self.RestartDatum = channel.unary_unary(
-        '/pps.API/RestartDatum',
-        request_serializer=client_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.CreatePipeline = channel.unary_unary(
-        '/pps.API/CreatePipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectPipeline = channel.unary_unary(
-        '/pps.API/InspectPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
-        )
-    self.ListPipeline = channel.unary_unary(
-        '/pps.API/ListPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
-        )
-    self.DeletePipeline = channel.unary_unary(
-        '/pps.API/DeletePipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StartPipeline = channel.unary_unary(
-        '/pps.API/StartPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StopPipeline = channel.unary_unary(
-        '/pps.API/StopPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.RerunPipeline = channel.unary_unary(
-        '/pps.API/RerunPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.DeleteAll = channel.unary_unary(
-        '/pps.API/DeleteAll',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetLogs = channel.unary_stream(
-        '/pps.API/GetLogs',
-        request_serializer=client_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.LogMessage.FromString,
-        )
-    self.GarbageCollect = channel.unary_unary(
-        '/pps.API/GarbageCollect',
-        request_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.FromString,
-        )
-    self.ActivateAuth = channel.unary_unary(
-        '/pps.API/ActivateAuth',
-        request_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
-        response_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
-        )
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIStub">APIStub</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__">
@@ -2462,370 +1505,25 @@ deprecated in favor of ListJobStream</p></div>
     
   
     <div class="desc"><p>Constructor.</p>
+
 <p>Args:
-  channel: A grpc.Channel.</p></div>
+  channel: A grpc.Channel.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__" class="source">
-    <pre><code>def __init__(self, channel):
-  """Constructor.
-  Args:
-    channel: A grpc.Channel.
-  """
-  self.CreateJob = channel.unary_unary(
-      '/pps.API/CreateJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.Job.FromString,
-      )
-  self.InspectJob = channel.unary_unary(
-      '/pps.API/InspectJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-      )
-  self.ListJob = channel.unary_unary(
-      '/pps.API/ListJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.JobInfos.FromString,
-      )
-  self.ListJobStream = channel.unary_stream(
-      '/pps.API/ListJobStream',
-      request_serializer=client_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-      )
-  self.FlushJob = channel.unary_stream(
-      '/pps.API/FlushJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.JobInfo.FromString,
-      )
-  self.DeleteJob = channel.unary_unary(
-      '/pps.API/DeleteJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.StopJob = channel.unary_unary(
-      '/pps.API/StopJob',
-      request_serializer=client_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectDatum = channel.unary_unary(
-      '/pps.API/InspectDatum',
-      request_serializer=client_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.DatumInfo.FromString,
-      )
-  self.ListDatum = channel.unary_unary(
-      '/pps.API/ListDatum',
-      request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumResponse.FromString,
-      )
-  self.ListDatumStream = channel.unary_stream(
-      '/pps.API/ListDatumStream',
-      request_serializer=client_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.ListDatumStreamResponse.FromString,
-      )
-  self.RestartDatum = channel.unary_unary(
-      '/pps.API/RestartDatum',
-      request_serializer=client_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.CreatePipeline = channel.unary_unary(
-      '/pps.API/CreatePipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectPipeline = channel.unary_unary(
-      '/pps.API/InspectPipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
-      )
-  self.ListPipeline = channel.unary_unary(
-      '/pps.API/ListPipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
-      )
-  self.DeletePipeline = channel.unary_unary(
-      '/pps.API/DeletePipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.StartPipeline = channel.unary_unary(
-      '/pps.API/StartPipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.StopPipeline = channel.unary_unary(
-      '/pps.API/StopPipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.RerunPipeline = channel.unary_unary(
-      '/pps.API/RerunPipeline',
-      request_serializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.DeleteAll = channel.unary_unary(
-      '/pps.API/DeleteAll',
-      request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.GetLogs = channel.unary_stream(
-      '/pps.API/GetLogs',
-      request_serializer=client_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.LogMessage.FromString,
-      )
-  self.GarbageCollect = channel.unary_unary(
-      '/pps.API/GarbageCollect',
-      request_serializer=client_dot_pps_dot_pps__pb2.GarbageCollectRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.GarbageCollectResponse.FromString,
-      )
-  self.ActivateAuth = channel.unary_unary(
-      '/pps.API/ActivateAuth',
-      request_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
-      response_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
-      )
-</code></pre>
-  </div>
 </div>
 
   </div>
   
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ActivateAuth" class="name">var <span class="ident">ActivateAuth</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.CreateJob" class="name">var <span class="ident">CreateJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.CreatePipeline" class="name">var <span class="ident">CreatePipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.DeleteAll" class="name">var <span class="ident">DeleteAll</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.DeleteJob" class="name">var <span class="ident">DeleteJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.DeletePipeline" class="name">var <span class="ident">DeletePipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.FlushJob" class="name">var <span class="ident">FlushJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.GarbageCollect" class="name">var <span class="ident">GarbageCollect</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.GetLogs" class="name">var <span class="ident">GetLogs</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.InspectDatum" class="name">var <span class="ident">InspectDatum</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.InspectJob" class="name">var <span class="ident">InspectJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.InspectPipeline" class="name">var <span class="ident">InspectPipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ListDatum" class="name">var <span class="ident">ListDatum</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ListDatumStream" class="name">var <span class="ident">ListDatumStream</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ListJob" class="name">var <span class="ident">ListJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ListJobStream" class="name">var <span class="ident">ListJobStream</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.ListPipeline" class="name">var <span class="ident">ListPipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.RerunPipeline" class="name">var <span class="ident">RerunPipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.RestartDatum" class="name">var <span class="ident">RestartDatum</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.StartPipeline" class="name">var <span class="ident">StartPipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.StopJob" class="name">var <span class="ident">StopJob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.StopPipeline" class="name">var <span class="ident">StopPipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
       </div>
       </div>
 
   </section>
-
-    </article>
+</article>
   <div class="clear"> </div>
   <footer id="footer">
     <p>
-      Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      Generated by <a href="https://github.com/mitmproxy/pdoc">pdoc 0.3.2</a>
     </p>
-
-    <p>pdoc is in the public domain with the
-      <a href="http://unlicense.org">UNLICENSE</a></p>
-
-    <p>Design by <a href="http://nadh.in">Kailash Nadh</a></p>
   </footer>
 </div>
 </body>
