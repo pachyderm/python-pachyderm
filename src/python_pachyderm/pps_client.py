@@ -12,10 +12,11 @@ from python_pachyderm.util import commit_from, get_address, get_metadata
 class PpsClient(object):
     def __init__(self, host=None, port=None, auth_token=None):
         """
-        Creates a client to connect to Pfs
-        :param host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
-        :param port: The port to connect to. Default is 30650
-        :param auth_token: The authentication token; used if authentication is enabled on the cluster. Default to `None`.
+        Creates a client to connect to PPS.
+
+        host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
+        port: The port to connect to. Default is 30650
+        auth_token: The authentication token; used if authentication is enabled on the cluster. Default to `None`.
         """
 
         address = get_address(host, port)
