@@ -13,7 +13,9 @@ for i in $(find ./proto/pachyderm/src/client -maxdepth 4 -name "*.proto"); do \
     # traverse the proto files in order of dependence
 done
 
-for i in $(find ./proto/pachyderm/src/client -maxdepth 4 -name "*.proto"); do \
+# skip admin files because `grpc_tools.protoc` generates invalid python code
+# for them
+for i in $(find ./proto/pachyderm/src/client -maxdepth 4 -name "*.proto" | grep -v "proto/pachyderm/src/client/admin"); do \
     python3 -m grpc_tools.protoc -I./proto/pachyderm/src --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
 done
 
@@ -24,4 +26,3 @@ done
 
 
 find $OUTDIR -maxdepth 4 -regex ".*pb2.*py" | xargs tar cf -
-

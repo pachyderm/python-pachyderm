@@ -3,13 +3,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>python_pachyderm.client.pfs.pfs_pb2_grpc API documentation</title>
-    <meta name="description" content="" />
+  
+  <title>python_pachyderm.client.pfs.pfs_pb2_grpc API documentation</title>
+  <meta name="description" content="" />
 
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
   <style type="text/css">
-  
 * {
   box-sizing: border-box;
 }
@@ -546,11 +547,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
-  </style>
-
+</style>
   <style type="text/css">
-  
   html, body {
     margin: 0;
     padding: 0;
@@ -634,7 +632,9 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-
+  p, pre {
+    white-space: pre-wrap;
+  }
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -848,12 +848,79 @@ table {
   }
 
   /*****************************/
-
-  </style>
-
-
+</style>
   <style type="text/css">
-  
+  .codehilite .hll { background-color: #ffffcc }
+.codehilite  { background: #f8f8f8; }
+.codehilite .c { color: #408080; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+.codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #FF0000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888888 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #7D9029 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #A0A000 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+  </style>
+  <style type="text/css">
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
@@ -942,8 +1009,7 @@ table {
         page-break-after: avoid;
     }
 }
-
-  </style>
+</style>
 
   <script type="text/javascript">
   function toggle(id, $link) {
@@ -962,13 +1028,35 @@ table {
 </head>
 <body>
 <a href="#" id="top">Top</a>
-
 <div id="container">
-    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
+    <li class="set"><h3>Super-module</h3>
+      <ul>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pfs</a></li>
+      </ul>
+    </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
@@ -1066,8 +1154,7 @@ table {
     </ul>
   </div>
 
-    <article id="content">
-      
+<article id="content">
   
 
   
@@ -1075,845 +1162,9 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">python_pachyderm.client.pfs.pfs_pb2_grpc</span> module</h1>
+  <p></p>
+
   
-  
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc" class="source">
-    <pre><code># Generated by the gRPC Python protocol compiler plugin. DO NOT EDIT!
-import grpc
-
-from python_pachyderm.client.pfs import pfs_pb2 as client_dot_pfs_dot_pfs__pb2
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
-
-
-class APIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.CreateRepo = channel.unary_unary(
-        '/pfs.API/CreateRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateRepoRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectRepo = channel.unary_unary(
-        '/pfs.API/InspectRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
-        )
-    self.ListRepo = channel.unary_unary(
-        '/pfs.API/ListRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
-        )
-    self.DeleteRepo = channel.unary_unary(
-        '/pfs.API/DeleteRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StartCommit = channel.unary_unary(
-        '/pfs.API/StartCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-        )
-    self.FinishCommit = channel.unary_unary(
-        '/pfs.API/FinishCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectCommit = channel.unary_unary(
-        '/pfs.API/InspectCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.ListCommit = channel.unary_unary(
-        '/pfs.API/ListCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfos.FromString,
-        )
-    self.ListCommitStream = channel.unary_stream(
-        '/pfs.API/ListCommitStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.DeleteCommit = channel.unary_unary(
-        '/pfs.API/DeleteCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.FlushCommit = channel.unary_stream(
-        '/pfs.API/FlushCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.SubscribeCommit = channel.unary_stream(
-        '/pfs.API/SubscribeCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.BuildCommit = channel.unary_unary(
-        '/pfs.API/BuildCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-        )
-    self.CreateBranch = channel.unary_unary(
-        '/pfs.API/CreateBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectBranch = channel.unary_unary(
-        '/pfs.API/InspectBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
-        )
-    self.ListBranch = channel.unary_unary(
-        '/pfs.API/ListBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
-        )
-    self.DeleteBranch = channel.unary_unary(
-        '/pfs.API/DeleteBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.PutFile = channel.stream_unary(
-        '/pfs.API/PutFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.CopyFile = channel.unary_unary(
-        '/pfs.API/CopyFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetFile = channel.unary_stream(
-        '/pfs.API/GetFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.InspectFile = channel.unary_unary(
-        '/pfs.API/InspectFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.ListFile = channel.unary_unary(
-        '/pfs.API/ListFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-        )
-    self.ListFileStream = channel.unary_stream(
-        '/pfs.API/ListFileStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.WalkFile = channel.unary_stream(
-        '/pfs.API/WalkFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.GlobFile = channel.unary_unary(
-        '/pfs.API/GlobFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-        )
-    self.GlobFileStream = channel.unary_stream(
-        '/pfs.API/GlobFileStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.DiffFile = channel.unary_unary(
-        '/pfs.API/DiffFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponse.FromString,
-        )
-    self.DeleteFile = channel.unary_unary(
-        '/pfs.API/DeleteFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.DeleteAll = channel.unary_unary(
-        '/pfs.API/DeleteAll',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-
-
-class APIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def CreateRepo(self, request, context):
-    """Repo rpcs
-    CreateRepo creates a new repo.
-    An error is returned if the repo already exists.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectRepo(self, request, context):
-    """InspectRepo returns info about a repo.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListRepo(self, request, context):
-    """ListRepo returns info about all repos.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteRepo(self, request, context):
-    """DeleteRepo deletes a repo.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StartCommit(self, request, context):
-    """Commit rpcs
-    StartCommit creates a new write commit from a parent commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FinishCommit(self, request, context):
-    """FinishCommit turns a write commit into a read commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectCommit(self, request, context):
-    """InspectCommit returns the info about a commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListCommit(self, request, context):
-    """ListCommit returns info about all commits. This is deprecated in favor of
-    ListCommitStream.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListCommitStream(self, request, context):
-    """ListCommitStream is like ListCommit, but returns its results in a GRPC stream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteCommit(self, request, context):
-    """DeleteCommit deletes a commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FlushCommit(self, request, context):
-    """FlushCommit waits for downstream commits to finish
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def SubscribeCommit(self, request, context):
-    """SubscribeCommit subscribes for new commits on a given branch
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def BuildCommit(self, request, context):
-    """BuildCommit builds a commit that's backed by the given tree
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CreateBranch(self, request, context):
-    """CreateBranch creates a new branch
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectBranch(self, request, context):
-    """InspectBranch returns info about a branch.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListBranch(self, request, context):
-    """ListBranch returns info about the heads of branches.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteBranch(self, request, context):
-    """DeleteBranch deletes a branch; note that the commits still exist.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutFile(self, request_iterator, context):
-    """File rpcs
-    PutFile writes the specified file to pfs.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CopyFile(self, request, context):
-    """CopyFile copies the contents of one file to another.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetFile(self, request, context):
-    """GetFile returns a byte stream of the contents of the file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectFile(self, request, context):
-    """InspectFile returns info about a file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListFile(self, request, context):
-    """ListFile returns info about all files. This is deprecated in favor of
-    ListFileStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListFileStream(self, request, context):
-    """ListFileStream is a streaming version of ListFile
-    TODO(msteffen): When the dash has been updated to use ListFileStream,
-    replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def WalkFile(self, request, context):
-    """WalkFile walks over all the files under a directory, including children of children.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GlobFile(self, request, context):
-    """GlobFile returns info about all files. This is deprecated in favor of
-    GlobFileStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GlobFileStream(self, request, context):
-    """GlobFileStream is a streaming version of GlobFile
-    TODO(msteffen): When the dash has been updated to use GlobFileStream,
-    replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DiffFile(self, request, context):
-    """DiffFile returns the differences between 2 paths at 2 commits.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteFile(self, request, context):
-    """DeleteFile deletes a file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteAll(self, request, context):
-    """DeleteAll deletes everything
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-
-def add_APIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'CreateRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateRepoRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectRepoRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
-      ),
-      'ListRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.ListRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListRepoRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ListRepoResponse.SerializeToString,
-      ),
-      'DeleteRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StartCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.StartCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.StartCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
-      ),
-      'FinishCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.FinishCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.FinishCommitRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'ListCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.ListCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfos.SerializeToString,
-      ),
-      'ListCommitStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListCommitStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'DeleteCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'FlushCommit': grpc.unary_stream_rpc_method_handler(
-          servicer.FlushCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.FlushCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'SubscribeCommit': grpc.unary_stream_rpc_method_handler(
-          servicer.SubscribeCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'BuildCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.BuildCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
-      ),
-      'CreateBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
-      ),
-      'ListBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.ListBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
-      ),
-      'DeleteBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'PutFile': grpc.stream_unary_rpc_method_handler(
-          servicer.PutFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'CopyFile': grpc.unary_unary_rpc_method_handler(
-          servicer.CopyFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CopyFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetFile': grpc.unary_stream_rpc_method_handler(
-          servicer.GetFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'InspectFile': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'ListFile': grpc.unary_unary_rpc_method_handler(
-          servicer.ListFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
-      ),
-      'ListFileStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListFileStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'WalkFile': grpc.unary_stream_rpc_method_handler(
-          servicer.WalkFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'GlobFile': grpc.unary_unary_rpc_method_handler(
-          servicer.GlobFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
-      ),
-      'GlobFileStream': grpc.unary_stream_rpc_method_handler(
-          servicer.GlobFileStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'DiffFile': grpc.unary_unary_rpc_method_handler(
-          servicer.DiffFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponse.SerializeToString,
-      ),
-      'DeleteFile': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'DeleteAll': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteAll,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pfs.API', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-
-
-class ObjectAPIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.PutObject = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-        )
-    self.PutObjectSplit = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObjectSplit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Objects.FromString,
-        )
-    self.PutObjects = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetObject = channel.unary_stream(
-        '/pfs.ObjectAPI/GetObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.GetObjects = channel.unary_stream(
-        '/pfs.ObjectAPI/GetObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.GetBlocks = channel.unary_stream(
-        '/pfs.ObjectAPI/GetBlocks',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.TagObject = channel.unary_unary(
-        '/pfs.ObjectAPI/TagObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.TagObjectRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectObject = channel.unary_unary(
-        '/pfs.ObjectAPI/InspectObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-        )
-    self.CheckObject = channel.unary_unary(
-        '/pfs.ObjectAPI/CheckObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CheckObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CheckObjectResponse.FromString,
-        )
-    self.ListObjects = channel.unary_stream(
-        '/pfs.ObjectAPI/ListObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-        )
-    self.DeleteObjects = channel.unary_unary(
-        '/pfs.ObjectAPI/DeleteObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.FromString,
-        )
-    self.GetTag = channel.unary_stream(
-        '/pfs.ObjectAPI/GetTag',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.InspectTag = channel.unary_unary(
-        '/pfs.ObjectAPI/InspectTag',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-        )
-    self.ListTags = channel.unary_stream(
-        '/pfs.ObjectAPI/ListTags',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListTagsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ListTagsResponse.FromString,
-        )
-    self.DeleteTags = channel.unary_unary(
-        '/pfs.ObjectAPI/DeleteTags',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.FromString,
-        )
-    self.Compact = channel.unary_unary(
-        '/pfs.ObjectAPI/Compact',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-
-
-class ObjectAPIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def PutObject(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutObjectSplit(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutObjects(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetBlocks(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def TagObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CheckObject(self, request, context):
-    """CheckObject checks if an object exists in the blob store without
-    actually reading the object.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetTag(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectTag(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListTags(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteTags(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def Compact(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-
-def add_ObjectAPIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'PutObject': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      ),
-      'PutObjectSplit': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObjectSplit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Objects.SerializeToString,
-      ),
-      'PutObjects': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetObject': grpc.unary_stream_rpc_method_handler(
-          servicer.GetObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'GetObjects': grpc.unary_stream_rpc_method_handler(
-          servicer.GetObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'GetBlocks': grpc.unary_stream_rpc_method_handler(
-          servicer.GetBlocks,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'TagObject': grpc.unary_unary_rpc_method_handler(
-          servicer.TagObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.TagObjectRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectObject': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
-      ),
-      'CheckObject': grpc.unary_unary_rpc_method_handler(
-          servicer.CheckObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CheckObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CheckObjectResponse.SerializeToString,
-      ),
-      'ListObjects': grpc.unary_stream_rpc_method_handler(
-          servicer.ListObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      ),
-      'DeleteObjects': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.SerializeToString,
-      ),
-      'GetTag': grpc.unary_stream_rpc_method_handler(
-          servicer.GetTag,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Tag.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'InspectTag': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectTag,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Tag.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
-      ),
-      'ListTags': grpc.unary_stream_rpc_method_handler(
-          servicer.ListTags,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListTagsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ListTagsResponse.SerializeToString,
-      ),
-      'DeleteTags': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteTags,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.SerializeToString,
-      ),
-      'Compact': grpc.unary_unary_rpc_method_handler(
-          servicer.Compact,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pfs.ObjectAPI', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-</code></pre>
-  </div>
 
   </header>
 
@@ -1930,161 +1181,6 @@ def add_ObjectAPIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.add_APIServicer_to_server', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.add_APIServicer_to_server" class="source">
-    <pre><code>def add_APIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'CreateRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateRepoRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectRepoRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
-      ),
-      'ListRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.ListRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListRepoRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ListRepoResponse.SerializeToString,
-      ),
-      'DeleteRepo': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteRepo,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'StartCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.StartCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.StartCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
-      ),
-      'FinishCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.FinishCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.FinishCommitRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'ListCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.ListCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfos.SerializeToString,
-      ),
-      'ListCommitStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListCommitStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'DeleteCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'FlushCommit': grpc.unary_stream_rpc_method_handler(
-          servicer.FlushCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.FlushCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'SubscribeCommit': grpc.unary_stream_rpc_method_handler(
-          servicer.SubscribeCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-      ),
-      'BuildCommit': grpc.unary_unary_rpc_method_handler(
-          servicer.BuildCommit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
-      ),
-      'CreateBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
-      ),
-      'ListBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.ListBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
-      ),
-      'DeleteBranch': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteBranch,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'PutFile': grpc.stream_unary_rpc_method_handler(
-          servicer.PutFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'CopyFile': grpc.unary_unary_rpc_method_handler(
-          servicer.CopyFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CopyFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetFile': grpc.unary_stream_rpc_method_handler(
-          servicer.GetFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'InspectFile': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'ListFile': grpc.unary_unary_rpc_method_handler(
-          servicer.ListFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
-      ),
-      'ListFileStream': grpc.unary_stream_rpc_method_handler(
-          servicer.ListFileStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'WalkFile': grpc.unary_stream_rpc_method_handler(
-          servicer.WalkFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'GlobFile': grpc.unary_unary_rpc_method_handler(
-          servicer.GlobFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
-      ),
-      'GlobFileStream': grpc.unary_stream_rpc_method_handler(
-          servicer.GlobFileStream,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
-      ),
-      'DiffFile': grpc.unary_unary_rpc_method_handler(
-          servicer.DiffFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponse.SerializeToString,
-      ),
-      'DeleteFile': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteFile,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'DeleteAll': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteAll,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pfs.API', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2099,96 +1195,6 @@ def add_ObjectAPIServicer_to_server(servicer, server):
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server" class="source">
-    <pre><code>def add_ObjectAPIServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'PutObject': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      ),
-      'PutObjectSplit': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObjectSplit,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Objects.SerializeToString,
-      ),
-      'PutObjects': grpc.stream_unary_rpc_method_handler(
-          servicer.PutObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'GetObject': grpc.unary_stream_rpc_method_handler(
-          servicer.GetObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'GetObjects': grpc.unary_stream_rpc_method_handler(
-          servicer.GetObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'GetBlocks': grpc.unary_stream_rpc_method_handler(
-          servicer.GetBlocks,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'TagObject': grpc.unary_unary_rpc_method_handler(
-          servicer.TagObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.TagObjectRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-      'InspectObject': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
-      ),
-      'CheckObject': grpc.unary_unary_rpc_method_handler(
-          servicer.CheckObject,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.CheckObjectRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.CheckObjectResponse.SerializeToString,
-      ),
-      'ListObjects': grpc.unary_stream_rpc_method_handler(
-          servicer.ListObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      ),
-      'DeleteObjects': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteObjects,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.SerializeToString,
-      ),
-      'GetTag': grpc.unary_stream_rpc_method_handler(
-          servicer.GetTag,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Tag.FromString,
-          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
-      ),
-      'InspectTag': grpc.unary_unary_rpc_method_handler(
-          servicer.InspectTag,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.Tag.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
-      ),
-      'ListTags': grpc.unary_stream_rpc_method_handler(
-          servicer.ListTags,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListTagsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.ListTagsResponse.SerializeToString,
-      ),
-      'DeleteTags': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteTags,
-          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.SerializeToString,
-      ),
-      'Compact': grpc.unary_unary_rpc_method_handler(
-          servicer.Compact,
-          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'pfs.ObjectAPI', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2201,237 +1207,11 @@ def add_ObjectAPIServicer_to_server(servicer, server):
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer" class="source">
-    <pre><code>class APIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def CreateRepo(self, request, context):
-    """Repo rpcs
-    CreateRepo creates a new repo.
-    An error is returned if the repo already exists.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectRepo(self, request, context):
-    """InspectRepo returns info about a repo.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListRepo(self, request, context):
-    """ListRepo returns info about all repos.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteRepo(self, request, context):
-    """DeleteRepo deletes a repo.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StartCommit(self, request, context):
-    """Commit rpcs
-    StartCommit creates a new write commit from a parent commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FinishCommit(self, request, context):
-    """FinishCommit turns a write commit into a read commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectCommit(self, request, context):
-    """InspectCommit returns the info about a commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListCommit(self, request, context):
-    """ListCommit returns info about all commits. This is deprecated in favor of
-    ListCommitStream.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListCommitStream(self, request, context):
-    """ListCommitStream is like ListCommit, but returns its results in a GRPC stream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteCommit(self, request, context):
-    """DeleteCommit deletes a commit.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def FlushCommit(self, request, context):
-    """FlushCommit waits for downstream commits to finish
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def SubscribeCommit(self, request, context):
-    """SubscribeCommit subscribes for new commits on a given branch
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def BuildCommit(self, request, context):
-    """BuildCommit builds a commit that's backed by the given tree
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CreateBranch(self, request, context):
-    """CreateBranch creates a new branch
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectBranch(self, request, context):
-    """InspectBranch returns info about a branch.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListBranch(self, request, context):
-    """ListBranch returns info about the heads of branches.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteBranch(self, request, context):
-    """DeleteBranch deletes a branch; note that the commits still exist.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutFile(self, request_iterator, context):
-    """File rpcs
-    PutFile writes the specified file to pfs.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CopyFile(self, request, context):
-    """CopyFile copies the contents of one file to another.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetFile(self, request, context):
-    """GetFile returns a byte stream of the contents of the file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectFile(self, request, context):
-    """InspectFile returns info about a file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListFile(self, request, context):
-    """ListFile returns info about all files. This is deprecated in favor of
-    ListFileStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListFileStream(self, request, context):
-    """ListFileStream is a streaming version of ListFile
-    TODO(msteffen): When the dash has been updated to use ListFileStream,
-    replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def WalkFile(self, request, context):
-    """WalkFile walks over all the files under a directory, including children of children.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GlobFile(self, request, context):
-    """GlobFile returns info about all files. This is deprecated in favor of
-    GlobFileStream
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GlobFileStream(self, request, context):
-    """GlobFileStream is a streaming version of GlobFile
-    TODO(msteffen): When the dash has been updated to use GlobFileStream,
-    replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DiffFile(self, request, context):
-    """DiffFile returns the differences between 2 paths at 2 commits.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteFile(self, request, context):
-    """DeleteFile deletes a file.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteAll(self, request, context):
-    """DeleteAll deletes everything
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer">APIServicer</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.BuildCommit">
@@ -2441,18 +1221,9 @@ def add_ObjectAPIServicer_to_server(servicer, server):
 
     
   
-    <div class="desc"><p>BuildCommit builds a commit that's backed by the given tree</p></div>
+    <div class="desc"><p>BuildCommit builds a commit that's backed by the given tree</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.BuildCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.BuildCommit" class="source">
-    <pre><code>def BuildCommit(self, request, context):
-  """BuildCommit builds a commit that's backed by the given tree
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2466,18 +1237,9 @@ def add_ObjectAPIServicer_to_server(servicer, server):
 
     
   
-    <div class="desc"><p>CopyFile copies the contents of one file to another.</p></div>
+    <div class="desc"><p>CopyFile copies the contents of one file to another.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CopyFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CopyFile" class="source">
-    <pre><code>def CopyFile(self, request, context):
-  """CopyFile copies the contents of one file to another.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2491,18 +1253,9 @@ def add_ObjectAPIServicer_to_server(servicer, server):
 
     
   
-    <div class="desc"><p>CreateBranch creates a new branch</p></div>
+    <div class="desc"><p>CreateBranch creates a new branch</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateBranch', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateBranch" class="source">
-    <pre><code>def CreateBranch(self, request, context):
-  """CreateBranch creates a new branch
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2518,20 +1271,9 @@ def add_ObjectAPIServicer_to_server(servicer, server):
   
     <div class="desc"><p>Repo rpcs
 CreateRepo creates a new repo.
-An error is returned if the repo already exists.</p></div>
+An error is returned if the repo already exists.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateRepo', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateRepo" class="source">
-    <pre><code>def CreateRepo(self, request, context):
-  """Repo rpcs
-  CreateRepo creates a new repo.
-  An error is returned if the repo already exists.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2545,18 +1287,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DeleteAll deletes everything</p></div>
+    <div class="desc"><p>DeleteAll deletes everything</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteAll', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteAll" class="source">
-    <pre><code>def DeleteAll(self, request, context):
-  """DeleteAll deletes everything
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2570,18 +1303,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DeleteBranch deletes a branch; note that the commits still exist.</p></div>
+    <div class="desc"><p>DeleteBranch deletes a branch; note that the commits still exist.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch" class="source">
-    <pre><code>def DeleteBranch(self, request, context):
-  """DeleteBranch deletes a branch; note that the commits still exist.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2595,18 +1319,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DeleteCommit deletes a commit.</p></div>
+    <div class="desc"><p>DeleteCommit deletes a commit.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit" class="source">
-    <pre><code>def DeleteCommit(self, request, context):
-  """DeleteCommit deletes a commit.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2620,18 +1335,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DeleteFile deletes a file.</p></div>
+    <div class="desc"><p>DeleteFile deletes a file.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteFile" class="source">
-    <pre><code>def DeleteFile(self, request, context):
-  """DeleteFile deletes a file.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2645,18 +1351,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DeleteRepo deletes a repo.</p></div>
+    <div class="desc"><p>DeleteRepo deletes a repo.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo" class="source">
-    <pre><code>def DeleteRepo(self, request, context):
-  """DeleteRepo deletes a repo.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2670,18 +1367,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>DiffFile returns the differences between 2 paths at 2 commits.</p></div>
+    <div class="desc"><p>DiffFile returns the differences between 2 paths at 2 commits.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DiffFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DiffFile" class="source">
-    <pre><code>def DiffFile(self, request, context):
-  """DiffFile returns the differences between 2 paths at 2 commits.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2695,18 +1383,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>FinishCommit turns a write commit into a read commit.</p></div>
+    <div class="desc"><p>FinishCommit turns a write commit into a read commit.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FinishCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FinishCommit" class="source">
-    <pre><code>def FinishCommit(self, request, context):
-  """FinishCommit turns a write commit into a read commit.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2720,18 +1399,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>FlushCommit waits for downstream commits to finish</p></div>
+    <div class="desc"><p>FlushCommit waits for downstream commits to finish</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FlushCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FlushCommit" class="source">
-    <pre><code>def FlushCommit(self, request, context):
-  """FlushCommit waits for downstream commits to finish
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2745,18 +1415,9 @@ An error is returned if the repo already exists.</p></div>
 
     
   
-    <div class="desc"><p>GetFile returns a byte stream of the contents of the file.</p></div>
+    <div class="desc"><p>GetFile returns a byte stream of the contents of the file.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GetFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GetFile" class="source">
-    <pre><code>def GetFile(self, request, context):
-  """GetFile returns a byte stream of the contents of the file.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2771,19 +1432,9 @@ An error is returned if the repo already exists.</p></div>
     
   
     <div class="desc"><p>GlobFile returns info about all files. This is deprecated in favor of
-GlobFileStream</p></div>
+GlobFileStream</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFile" class="source">
-    <pre><code>def GlobFile(self, request, context):
-  """GlobFile returns info about all files. This is deprecated in favor of
-  GlobFileStream
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2799,20 +1450,9 @@ GlobFileStream</p></div>
   
     <div class="desc"><p>GlobFileStream is a streaming version of GlobFile
 TODO(msteffen): When the dash has been updated to use GlobFileStream,
-replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p></div>
+replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream" class="source">
-    <pre><code>def GlobFileStream(self, request, context):
-  """GlobFileStream is a streaming version of GlobFile
-  TODO(msteffen): When the dash has been updated to use GlobFileStream,
-  replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2826,18 +1466,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>InspectBranch returns info about a branch.</p></div>
+    <div class="desc"><p>InspectBranch returns info about a branch.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectBranch', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectBranch" class="source">
-    <pre><code>def InspectBranch(self, request, context):
-  """InspectBranch returns info about a branch.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2851,18 +1482,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>InspectCommit returns the info about a commit.</p></div>
+    <div class="desc"><p>InspectCommit returns the info about a commit.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectCommit" class="source">
-    <pre><code>def InspectCommit(self, request, context):
-  """InspectCommit returns the info about a commit.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2876,18 +1498,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>InspectFile returns info about a file.</p></div>
+    <div class="desc"><p>InspectFile returns info about a file.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectFile" class="source">
-    <pre><code>def InspectFile(self, request, context):
-  """InspectFile returns info about a file.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2901,18 +1514,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>InspectRepo returns info about a repo.</p></div>
+    <div class="desc"><p>InspectRepo returns info about a repo.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectRepo', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectRepo" class="source">
-    <pre><code>def InspectRepo(self, request, context):
-  """InspectRepo returns info about a repo.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2926,18 +1530,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>ListBranch returns info about the heads of branches.</p></div>
+    <div class="desc"><p>ListBranch returns info about the heads of branches.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListBranch', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListBranch" class="source">
-    <pre><code>def ListBranch(self, request, context):
-  """ListBranch returns info about the heads of branches.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2952,19 +1547,9 @@ replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
     
   
     <div class="desc"><p>ListCommit returns info about all commits. This is deprecated in favor of
-ListCommitStream.</p></div>
+ListCommitStream.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommit" class="source">
-    <pre><code>def ListCommit(self, request, context):
-  """ListCommit returns info about all commits. This is deprecated in favor of
-  ListCommitStream.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -2978,18 +1563,9 @@ ListCommitStream.</p></div>
 
     
   
-    <div class="desc"><p>ListCommitStream is like ListCommit, but returns its results in a GRPC stream</p></div>
+    <div class="desc"><p>ListCommitStream is like ListCommit, but returns its results in a GRPC stream</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream" class="source">
-    <pre><code>def ListCommitStream(self, request, context):
-  """ListCommitStream is like ListCommit, but returns its results in a GRPC stream
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3004,19 +1580,9 @@ ListCommitStream.</p></div>
     
   
     <div class="desc"><p>ListFile returns info about all files. This is deprecated in favor of
-ListFileStream</p></div>
+ListFileStream</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFile" class="source">
-    <pre><code>def ListFile(self, request, context):
-  """ListFile returns info about all files. This is deprecated in favor of
-  ListFileStream
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3032,20 +1598,9 @@ ListFileStream</p></div>
   
     <div class="desc"><p>ListFileStream is a streaming version of ListFile
 TODO(msteffen): When the dash has been updated to use ListFileStream,
-replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p></div>
+replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFileStream', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFileStream" class="source">
-    <pre><code>def ListFileStream(self, request, context):
-  """ListFileStream is a streaming version of ListFile
-  TODO(msteffen): When the dash has been updated to use ListFileStream,
-  replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3059,18 +1614,9 @@ replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
 
     
   
-    <div class="desc"><p>ListRepo returns info about all repos.</p></div>
+    <div class="desc"><p>ListRepo returns info about all repos.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListRepo', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListRepo" class="source">
-    <pre><code>def ListRepo(self, request, context):
-  """ListRepo returns info about all repos.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3085,19 +1631,9 @@ replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p
     
   
     <div class="desc"><p>File rpcs
-PutFile writes the specified file to pfs.</p></div>
+PutFile writes the specified file to pfs.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.PutFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.PutFile" class="source">
-    <pre><code>def PutFile(self, request_iterator, context):
-  """File rpcs
-  PutFile writes the specified file to pfs.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3112,19 +1648,9 @@ PutFile writes the specified file to pfs.</p></div>
     
   
     <div class="desc"><p>Commit rpcs
-StartCommit creates a new write commit from a parent commit.</p></div>
+StartCommit creates a new write commit from a parent commit.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.StartCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.StartCommit" class="source">
-    <pre><code>def StartCommit(self, request, context):
-  """Commit rpcs
-  StartCommit creates a new write commit from a parent commit.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3138,18 +1664,9 @@ StartCommit creates a new write commit from a parent commit.</p></div>
 
     
   
-    <div class="desc"><p>SubscribeCommit subscribes for new commits on a given branch</p></div>
+    <div class="desc"><p>SubscribeCommit subscribes for new commits on a given branch</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit" class="source">
-    <pre><code>def SubscribeCommit(self, request, context):
-  """SubscribeCommit subscribes for new commits on a given branch
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3163,18 +1680,9 @@ StartCommit creates a new write commit from a parent commit.</p></div>
 
     
   
-    <div class="desc"><p>WalkFile walks over all the files under a directory, including children of children.</p></div>
+    <div class="desc"><p>WalkFile walks over all the files under a directory, including children of children.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.WalkFile', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.WalkFile" class="source">
-    <pre><code>def WalkFile(self, request, context):
-  """WalkFile walks over all the files under a directory, including children of children.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3187,175 +1695,11 @@ StartCommit creates a new write commit from a parent commit.</p></div>
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub" class="source">
-    <pre><code>class APIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.CreateRepo = channel.unary_unary(
-        '/pfs.API/CreateRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateRepoRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectRepo = channel.unary_unary(
-        '/pfs.API/InspectRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
-        )
-    self.ListRepo = channel.unary_unary(
-        '/pfs.API/ListRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
-        )
-    self.DeleteRepo = channel.unary_unary(
-        '/pfs.API/DeleteRepo',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.StartCommit = channel.unary_unary(
-        '/pfs.API/StartCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-        )
-    self.FinishCommit = channel.unary_unary(
-        '/pfs.API/FinishCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectCommit = channel.unary_unary(
-        '/pfs.API/InspectCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.ListCommit = channel.unary_unary(
-        '/pfs.API/ListCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfos.FromString,
-        )
-    self.ListCommitStream = channel.unary_stream(
-        '/pfs.API/ListCommitStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.DeleteCommit = channel.unary_unary(
-        '/pfs.API/DeleteCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.FlushCommit = channel.unary_stream(
-        '/pfs.API/FlushCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.SubscribeCommit = channel.unary_stream(
-        '/pfs.API/SubscribeCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-        )
-    self.BuildCommit = channel.unary_unary(
-        '/pfs.API/BuildCommit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-        )
-    self.CreateBranch = channel.unary_unary(
-        '/pfs.API/CreateBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectBranch = channel.unary_unary(
-        '/pfs.API/InspectBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
-        )
-    self.ListBranch = channel.unary_unary(
-        '/pfs.API/ListBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
-        )
-    self.DeleteBranch = channel.unary_unary(
-        '/pfs.API/DeleteBranch',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.PutFile = channel.stream_unary(
-        '/pfs.API/PutFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.CopyFile = channel.unary_unary(
-        '/pfs.API/CopyFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetFile = channel.unary_stream(
-        '/pfs.API/GetFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.InspectFile = channel.unary_unary(
-        '/pfs.API/InspectFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.ListFile = channel.unary_unary(
-        '/pfs.API/ListFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-        )
-    self.ListFileStream = channel.unary_stream(
-        '/pfs.API/ListFileStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.WalkFile = channel.unary_stream(
-        '/pfs.API/WalkFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.GlobFile = channel.unary_unary(
-        '/pfs.API/GlobFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-        )
-    self.GlobFileStream = channel.unary_stream(
-        '/pfs.API/GlobFileStream',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-        )
-    self.DiffFile = channel.unary_unary(
-        '/pfs.API/DiffFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponse.FromString,
-        )
-    self.DeleteFile = channel.unary_unary(
-        '/pfs.API/DeleteFile',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.DeleteAll = channel.unary_unary(
-        '/pfs.API/DeleteAll',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub">APIStub</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.__init__">
@@ -3366,458 +1710,15 @@ StartCommit creates a new write commit from a parent commit.</p></div>
     
   
     <div class="desc"><p>Constructor.</p>
+
 <p>Args:
-  channel: A grpc.Channel.</p></div>
+  channel: A grpc.Channel.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.__init__" class="source">
-    <pre><code>def __init__(self, channel):
-  """Constructor.
-  Args:
-    channel: A grpc.Channel.
-  """
-  self.CreateRepo = channel.unary_unary(
-      '/pfs.API/CreateRepo',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.CreateRepoRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectRepo = channel.unary_unary(
-      '/pfs.API/InspectRepo',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
-      )
-  self.ListRepo = channel.unary_unary(
-      '/pfs.API/ListRepo',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
-      )
-  self.DeleteRepo = channel.unary_unary(
-      '/pfs.API/DeleteRepo',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.StartCommit = channel.unary_unary(
-      '/pfs.API/StartCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-      )
-  self.FinishCommit = channel.unary_unary(
-      '/pfs.API/FinishCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectCommit = channel.unary_unary(
-      '/pfs.API/InspectCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-      )
-  self.ListCommit = channel.unary_unary(
-      '/pfs.API/ListCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfos.FromString,
-      )
-  self.ListCommitStream = channel.unary_stream(
-      '/pfs.API/ListCommitStream',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-      )
-  self.DeleteCommit = channel.unary_unary(
-      '/pfs.API/DeleteCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.FlushCommit = channel.unary_stream(
-      '/pfs.API/FlushCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-      )
-  self.SubscribeCommit = channel.unary_stream(
-      '/pfs.API/SubscribeCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-      )
-  self.BuildCommit = channel.unary_unary(
-      '/pfs.API/BuildCommit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.Commit.FromString,
-      )
-  self.CreateBranch = channel.unary_unary(
-      '/pfs.API/CreateBranch',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectBranch = channel.unary_unary(
-      '/pfs.API/InspectBranch',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
-      )
-  self.ListBranch = channel.unary_unary(
-      '/pfs.API/ListBranch',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
-      )
-  self.DeleteBranch = channel.unary_unary(
-      '/pfs.API/DeleteBranch',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.PutFile = channel.stream_unary(
-      '/pfs.API/PutFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.PutFileRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.CopyFile = channel.unary_unary(
-      '/pfs.API/CopyFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.GetFile = channel.unary_stream(
-      '/pfs.API/GetFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-      )
-  self.InspectFile = channel.unary_unary(
-      '/pfs.API/InspectFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-      )
-  self.ListFile = channel.unary_unary(
-      '/pfs.API/ListFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-      )
-  self.ListFileStream = channel.unary_stream(
-      '/pfs.API/ListFileStream',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-      )
-  self.WalkFile = channel.unary_stream(
-      '/pfs.API/WalkFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-      )
-  self.GlobFile = channel.unary_unary(
-      '/pfs.API/GlobFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
-      )
-  self.GlobFileStream = channel.unary_stream(
-      '/pfs.API/GlobFileStream',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
-      )
-  self.DiffFile = channel.unary_unary(
-      '/pfs.API/DiffFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponse.FromString,
-      )
-  self.DeleteFile = channel.unary_unary(
-      '/pfs.API/DeleteFile',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteFileRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.DeleteAll = channel.unary_unary(
-      '/pfs.API/DeleteAll',
-      request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-</code></pre>
-  </div>
 </div>
 
   </div>
   
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.BuildCommit" class="name">var <span class="ident">BuildCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.CopyFile" class="name">var <span class="ident">CopyFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.CreateBranch" class="name">var <span class="ident">CreateBranch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.CreateRepo" class="name">var <span class="ident">CreateRepo</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DeleteAll" class="name">var <span class="ident">DeleteAll</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DeleteBranch" class="name">var <span class="ident">DeleteBranch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DeleteCommit" class="name">var <span class="ident">DeleteCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DeleteFile" class="name">var <span class="ident">DeleteFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DeleteRepo" class="name">var <span class="ident">DeleteRepo</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.DiffFile" class="name">var <span class="ident">DiffFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.FinishCommit" class="name">var <span class="ident">FinishCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.FlushCommit" class="name">var <span class="ident">FlushCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.GetFile" class="name">var <span class="ident">GetFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.GlobFile" class="name">var <span class="ident">GlobFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.GlobFileStream" class="name">var <span class="ident">GlobFileStream</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.InspectBranch" class="name">var <span class="ident">InspectBranch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.InspectCommit" class="name">var <span class="ident">InspectCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.InspectFile" class="name">var <span class="ident">InspectFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.InspectRepo" class="name">var <span class="ident">InspectRepo</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListBranch" class="name">var <span class="ident">ListBranch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListCommit" class="name">var <span class="ident">ListCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListCommitStream" class="name">var <span class="ident">ListCommitStream</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListFile" class="name">var <span class="ident">ListFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListFileStream" class="name">var <span class="ident">ListFileStream</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.ListRepo" class="name">var <span class="ident">ListRepo</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.PutFile" class="name">var <span class="ident">PutFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.StartCommit" class="name">var <span class="ident">StartCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.SubscribeCommit" class="name">var <span class="ident">SubscribeCommit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.WalkFile" class="name">var <span class="ident">WalkFile</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
       </div>
       </div>
       
@@ -3826,136 +1727,11 @@ StartCommit creates a new write commit from a parent commit.</p></div>
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer" class="source">
-    <pre><code>class ObjectAPIServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def PutObject(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutObjectSplit(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def PutObjects(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetBlocks(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def TagObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectObject(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CheckObject(self, request, context):
-    """CheckObject checks if an object exists in the blob store without
-    actually reading the object.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteObjects(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def GetTag(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def InspectTag(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ListTags(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def DeleteTags(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def Compact(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer">ObjectAPIServicer</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject">
@@ -3966,19 +1742,9 @@ StartCommit creates a new write commit from a parent commit.</p></div>
     
   
     <div class="desc"><p>CheckObject checks if an object exists in the blob store without
-actually reading the object.</p></div>
+actually reading the object.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject" class="source">
-    <pre><code>def CheckObject(self, request, context):
-  """CheckObject checks if an object exists in the blob store without
-  actually reading the object.
-  """
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -3993,16 +1759,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact" class="source">
-    <pre><code>def Compact(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4017,16 +1773,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects" class="source">
-    <pre><code>def DeleteObjects(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4041,16 +1787,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags" class="source">
-    <pre><code>def DeleteTags(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4065,16 +1801,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetBlocks', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetBlocks" class="source">
-    <pre><code>def GetBlocks(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4089,16 +1815,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject" class="source">
-    <pre><code>def GetObject(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4113,16 +1829,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects" class="source">
-    <pre><code>def GetObjects(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4137,16 +1843,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag" class="source">
-    <pre><code>def GetTag(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4161,16 +1857,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject" class="source">
-    <pre><code>def InspectObject(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4185,16 +1871,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag" class="source">
-    <pre><code>def InspectTag(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4209,16 +1885,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects" class="source">
-    <pre><code>def ListObjects(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4233,16 +1899,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags" class="source">
-    <pre><code>def ListTags(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4257,16 +1913,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject" class="source">
-    <pre><code>def PutObject(self, request_iterator, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4281,16 +1927,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit" class="source">
-    <pre><code>def PutObjectSplit(self, request_iterator, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4305,16 +1941,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjects', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjects" class="source">
-    <pre><code>def PutObjects(self, request_iterator, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4329,16 +1955,6 @@ actually reading the object.</p></div>
     
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject" class="source">
-    <pre><code>def TagObject(self, request, context):
-  # missing associated documentation comment in .proto file
-  pass
-  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-  context.set_details('Method not implemented!')
-  raise NotImplementedError('Method not implemented!')
-</code></pre>
-  </div>
 </div>
 
   </div>
@@ -4351,110 +1967,11 @@ actually reading the object.</p></div>
       
   
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub" class="source">
-    <pre><code>class ObjectAPIStub(object):
-  # missing associated documentation comment in .proto file
-  pass
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.PutObject = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-        )
-    self.PutObjectSplit = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObjectSplit',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Objects.FromString,
-        )
-    self.PutObjects = channel.stream_unary(
-        '/pfs.ObjectAPI/PutObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.GetObject = channel.unary_stream(
-        '/pfs.ObjectAPI/GetObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.GetObjects = channel.unary_stream(
-        '/pfs.ObjectAPI/GetObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.GetBlocks = channel.unary_stream(
-        '/pfs.ObjectAPI/GetBlocks',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.TagObject = channel.unary_unary(
-        '/pfs.ObjectAPI/TagObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.TagObjectRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-    self.InspectObject = channel.unary_unary(
-        '/pfs.ObjectAPI/InspectObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-        )
-    self.CheckObject = channel.unary_unary(
-        '/pfs.ObjectAPI/CheckObject',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.CheckObjectRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.CheckObjectResponse.FromString,
-        )
-    self.ListObjects = channel.unary_stream(
-        '/pfs.ObjectAPI/ListObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-        )
-    self.DeleteObjects = channel.unary_unary(
-        '/pfs.ObjectAPI/DeleteObjects',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.FromString,
-        )
-    self.GetTag = channel.unary_stream(
-        '/pfs.ObjectAPI/GetTag',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-        )
-    self.InspectTag = channel.unary_unary(
-        '/pfs.ObjectAPI/InspectTag',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-        )
-    self.ListTags = channel.unary_stream(
-        '/pfs.ObjectAPI/ListTags',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.ListTagsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.ListTagsResponse.FromString,
-        )
-    self.DeleteTags = channel.unary_unary(
-        '/pfs.ObjectAPI/DeleteTags',
-        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.FromString,
-        )
-    self.Compact = channel.unary_unary(
-        '/pfs.ObjectAPI/Compact',
-        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
-</code></pre>
-  </div>
 </div>
 
 
       <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub">ObjectAPIStub</a></li>
-          <li>builtins.object</li>
-          </ul>
-          <h3>Static methods</h3>
+          <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.__init__">
@@ -4465,280 +1982,25 @@ actually reading the object.</p></div>
     
   
     <div class="desc"><p>Constructor.</p>
+
 <p>Args:
-  channel: A grpc.Channel.</p></div>
+  channel: A grpc.Channel.</p>
+</div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.__init__" class="source">
-    <pre><code>def __init__(self, channel):
-  """Constructor.
-  Args:
-    channel: A grpc.Channel.
-  """
-  self.PutObject = channel.stream_unary(
-      '/pfs.ObjectAPI/PutObject',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-      )
-  self.PutObjectSplit = channel.stream_unary(
-      '/pfs.ObjectAPI/PutObjectSplit',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.Objects.FromString,
-      )
-  self.PutObjects = channel.stream_unary(
-      '/pfs.ObjectAPI/PutObjects',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.GetObject = channel.unary_stream(
-      '/pfs.ObjectAPI/GetObject',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-      )
-  self.GetObjects = channel.unary_stream(
-      '/pfs.ObjectAPI/GetObjects',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-      )
-  self.GetBlocks = channel.unary_stream(
-      '/pfs.ObjectAPI/GetBlocks',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-      )
-  self.TagObject = channel.unary_unary(
-      '/pfs.ObjectAPI/TagObject',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.TagObjectRequest.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-  self.InspectObject = channel.unary_unary(
-      '/pfs.ObjectAPI/InspectObject',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-      )
-  self.CheckObject = channel.unary_unary(
-      '/pfs.ObjectAPI/CheckObject',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.CheckObjectRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.CheckObjectResponse.FromString,
-      )
-  self.ListObjects = channel.unary_stream(
-      '/pfs.ObjectAPI/ListObjects',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
-      )
-  self.DeleteObjects = channel.unary_unary(
-      '/pfs.ObjectAPI/DeleteObjects',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.FromString,
-      )
-  self.GetTag = channel.unary_stream(
-      '/pfs.ObjectAPI/GetTag',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
-      )
-  self.InspectTag = channel.unary_unary(
-      '/pfs.ObjectAPI/InspectTag',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
-      )
-  self.ListTags = channel.unary_stream(
-      '/pfs.ObjectAPI/ListTags',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.ListTagsRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.ListTagsResponse.FromString,
-      )
-  self.DeleteTags = channel.unary_unary(
-      '/pfs.ObjectAPI/DeleteTags',
-      request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.SerializeToString,
-      response_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.FromString,
-      )
-  self.Compact = channel.unary_unary(
-      '/pfs.ObjectAPI/Compact',
-      request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-      )
-</code></pre>
-  </div>
 </div>
 
   </div>
   
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.CheckObject" class="name">var <span class="ident">CheckObject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.Compact" class="name">var <span class="ident">Compact</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.DeleteObjects" class="name">var <span class="ident">DeleteObjects</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.DeleteTags" class="name">var <span class="ident">DeleteTags</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.GetBlocks" class="name">var <span class="ident">GetBlocks</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.GetObject" class="name">var <span class="ident">GetObject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.GetObjects" class="name">var <span class="ident">GetObjects</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.GetTag" class="name">var <span class="ident">GetTag</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.InspectObject" class="name">var <span class="ident">InspectObject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.InspectTag" class="name">var <span class="ident">InspectTag</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.ListObjects" class="name">var <span class="ident">ListObjects</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.ListTags" class="name">var <span class="ident">ListTags</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.PutObject" class="name">var <span class="ident">PutObject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.PutObjectSplit" class="name">var <span class="ident">PutObjectSplit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.PutObjects" class="name">var <span class="ident">PutObjects</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.TagObject" class="name">var <span class="ident">TagObject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
       </div>
       </div>
 
   </section>
-
-    </article>
+</article>
   <div class="clear"> </div>
   <footer id="footer">
     <p>
-      Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      Generated by <a href="https://github.com/mitmproxy/pdoc">pdoc 0.3.2</a>
     </p>
-
-    <p>pdoc is in the public domain with the
-      <a href="http://unlicense.org">UNLICENSE</a></p>
-
-    <p>Design by <a href="http://nadh.in">Kailash Nadh</a></p>
   </footer>
 </div>
 </body>
