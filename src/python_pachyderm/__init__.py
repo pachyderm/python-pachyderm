@@ -22,4 +22,5 @@ from .client.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
 
 from .pfs_client import PfsClient
 from .pps_client import PpsClient
+from .util import get_remote_version
 from grpc import RpcError
