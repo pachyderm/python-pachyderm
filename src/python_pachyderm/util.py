@@ -8,8 +8,17 @@ from python_pachyderm.client.pfs import pfs_pb2 as pfs_proto
 def get_address(host=None, port=None):
     if host is not None and port is not None:
         return "{}:{}".format(host, port)
-    else:
-        return os.environ.get("PACHD_ADDRESS", "localhost:30650")
+    return os.environ.get("PACHD_ADDRESS", "localhost:30650")
+
+def get_metadata(auth_token=None):
+    if auth_token is None:
+        auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
+
+    metadata = []
+    if auth_token is not None:
+        metadata.append(("authn-token", auth_token))
+
+    return metadata
 
 def commit_from(src, allow_just_repo=False):
     if isinstance(src, pfs_proto.Commit):

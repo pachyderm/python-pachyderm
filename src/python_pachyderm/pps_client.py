@@ -6,7 +6,7 @@ import os
 
 from python_pachyderm.client.pps import pps_pb2 as proto
 from python_pachyderm.client.pps import pps_pb2_grpc as grpc
-from python_pachyderm.util import commit_from, get_address
+from python_pachyderm.util import commit_from, get_address, get_metadata
 
 
 class PpsClient(object):
@@ -19,13 +19,9 @@ class PpsClient(object):
         """
 
         address = get_address(host, port)
+        self.metadata = get_metadata(auth_token)
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
-
-        if auth_token is None:
-            self.metadata = ()
-        else:
-            self.metadata = (("authn-token", auth_token),)
 
     def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
                    output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):

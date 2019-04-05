@@ -10,7 +10,7 @@ import six
 
 from python_pachyderm.client.pfs import pfs_pb2 as proto
 from python_pachyderm.client.pfs import pfs_pb2_grpc as grpc
-from python_pachyderm.util import commit_from, get_address
+from python_pachyderm.util import commit_from, get_address, get_metadata
 
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
@@ -35,13 +35,9 @@ class PfsClient(object):
         """
 
         address = get_address(host, port)
+        self.metadata = get_metadata(auth_token)
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
-
-        if auth_token is None:
-            self.metadata = ()
-        else:
-            self.metadata = (("authn-token", auth_token),)
 
     def create_repo(self, repo_name, description=None):
         """
