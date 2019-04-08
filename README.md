@@ -6,7 +6,7 @@
 
 Official Python Pachyderm client. Created by [kalugny](https://github.com/kalugny) (formerly kalugny/pypachy.)
 
-See the [API docs](https://pachyderm.github.io/python-pachyderm/python_pachyderm/). Most of values are auto-generated from protobufs. It's generally easier to rely on the higher-level classes if they provide the functionality you need:
+See the [API docs](https://pachyderm.github.io/python-pachyderm/python_pachyderm/). Most of the values are auto-generated from protobufs. It's generally easier to rely on the higher-level classes if they provide the functionality you need:
 * [PfsClient](https://pachyderm.github.io/python-pachyderm/python_pachyderm/pfs_client.m.html#python_pachyderm.pfs_client.PfsClient)
 * [PpsClient](https://pachyderm.github.io/python-pachyderm/python_pachyderm/pps_client.m.html#python_pachyderm.pps_client.PpsClient)
 
