@@ -2,8 +2,6 @@
 
 from __future__ import absolute_import
 
-__version__ = '0.1.5'
-
 from .client.pfs.pfs_pb2 import DIR, FILE, NONE, JSON, LINE, \
 	Repo, Branch, BranchInfo, File, Block, Object, Tag, RepoInfo, \
 	RepoAuthInfo, Commit, CommitRange, CommitInfo, FileInfo, ByteRange, \
