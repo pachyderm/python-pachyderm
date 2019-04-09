@@ -1,0 +1,28 @@
+{
+  "pipeline": {
+    "name": "jupyter"
+  },
+  "transform": {
+    "image": "pachyderm/pachyderm_jupyter",
+    "cmd": [ "sh" ],
+    "stdin": [
+		  "/opt/conda/bin/jupyter notebook"
+    ]
+  },
+  "input": {
+    "cross": [
+      {
+        "pfs": {
+          "repo": "trips",
+          "glob": "/"
+        }
+      },
+      {
+        "pfs": {
+          "repo": "weather",
+          "glob": "/"
+        }
+      }
+    ]
+  }
+}
