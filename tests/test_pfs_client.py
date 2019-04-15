@@ -5,6 +5,10 @@
 
 
 from collections import namedtuple
+try:
+    from StringIO import StringIO as BytesIO
+except ImportError:
+    from io import BytesIO
 
 import six
 import pytest
@@ -380,22 +384,51 @@ def test_pfs_commit_context_mgr_missing_branch(pfs_client):
     assert commit_infos[0].commit.id == c.id
 
 
-def test_pfs_commit_context_mgr_put_file_bytes(pfs_client):
-    """ Start and finish a commit using a context manager while putting a file. """
-    # GIVEN a Pachyderm deployment in its initial state
-    #   AND a connected PFS client
-    client = pfs_client
-    #   AND an new empty repo
-    repo_name = 'test-repo-1'
-    client.create_repo(repo_name)
-    # WHEN calling the commit() context manager without specifying a branch
-    with client.commit(repo_name) as c:
-        client.put_file_bytes(c, 'file.dat', b'DATA')
-    # THEN a single commit should exist in the repo
-    commit_infos = client.list_commit(repo_name)
+def test_pfs_commit_context_mgr_put_file_bytes_bytestring(pfs_client):
+    """
+    Start and finish a commit using a context manager while putting a file
+    from a bytesting.
+    """
+
+    pfs_client.create_repo('test-repo-1')
+
+    with pfs_client.commit('test-repo-1') as c:
+        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
+
+    commit_infos = pfs_client.list_commit('test-repo-1')
     assert len(commit_infos) == 1
-    #   AND the commit ID should match the finished commit
     assert commit_infos[0].commit.id == c.id
-    #   AND a single file should exist in the repo
-    files = client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
     assert len(files) == 1
+
+
+def test_pfs_commit_context_mgr_put_file_bytes_filelike(pfs_client):
+    """
+    Start and finish a commit using a context manager while putting a file
+    from a file-like object.
+    """
+
+    pfs_client.create_repo('test-repo-1')
+
+    with pfs_client.commit('test-repo-1') as c:
+        pfs_client.put_file_bytes(c, 'file.dat', BytesIO(b'DATA'))
+
+    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
+    assert len(files) == 1
+
+
+def test_pfs_commit_context_mgr_put_file_bytes_iterable(pfs_client):
+    """
+    Start and finish a commit using a context manager while putting a file
+    from an iterator of bytes.
+    """
+
+    pfs_client.create_repo('test-repo-1')
+
+    with pfs_client.commit('test-repo-1') as c:
+        pfs_client.put_file_bytes(c, 'file.dat', [b'DATA'])
+
+    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
+    assert len(files) == 1
+
+
