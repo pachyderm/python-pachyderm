@@ -5,6 +5,7 @@ from __future__ import absolute_import
 import collections
 import os
 from contextlib import contextmanager
+import itertools
 
 import six
 
@@ -293,7 +294,8 @@ class PfsClient(object):
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
         * path: Path in the repo the file(s) will be written to.
-        * value: The data bytes array, or an iterator returning chunked byte arrays.
+        * value: The file contents as bytes, represented as a file-like
+        object, bytestring, or iterator of bytestrings.
         * delimiter: Optional. causes data to be broken up into separate files
         with `path` as a prefix.
         * target_file_datums: Optional. Specifies the target number of datums
@@ -303,26 +305,49 @@ class PfsClient(object):
         written file, files may have more or fewer bytes than the target.
         """
 
-        if isinstance(value, collections.Iterable) and not isinstance(value, (six.string_types, six.binary_type)):
-            def wrap(values):
-                for value in values:
-                    yield proto.PutFileRequest(
-                        file=proto.File(commit=commit_from(commit), path=path),
-                        value=value,
-                        delimiter=delimiter,
-                        target_file_datums=target_file_datums,
-                        target_file_bytes=target_file_bytes
-                    )
+        if hasattr(value, "read"):
+            def wrap(value):
+                for i in itertools.count():
+                    chunk = value.read(BUFFER_SIZE)
+
+                    if len(chunk) == 0:
+                        return
+
+                    if i == 0:
+                        yield proto.PutFileRequest(
+                            file=proto.File(commit=commit_from(commit), path=path),
+                            value=chunk,
+                            delimiter=delimiter,
+                            target_file_datums=target_file_datums,
+                            target_file_bytes=target_file_bytes
+                        )
+                    else:
+                        yield proto.PutFileRequest(value=chunk)
+        elif isinstance(value, collections.Iterable) and not isinstance(value, (six.string_types, six.binary_type)):
+            def wrap(value):
+                for i, chunk in enumerate(value):
+                    if i == 0:
+                        yield proto.PutFileRequest(
+                            file=proto.File(commit=commit_from(commit), path=path),
+                            value=chunk,
+                            delimiter=delimiter,
+                            target_file_datums=target_file_datums,
+                            target_file_bytes=target_file_bytes
+                        )
+                    else:
+                        yield proto.PutFileRequest(value=chunk)
         else:
             def wrap(value):
-                for i in range(0, len(value), BUFFER_SIZE):
-                    yield proto.PutFileRequest(
-                        file=proto.File(commit=commit_from(commit), path=path),
-                        value=value[i:i + BUFFER_SIZE],
-                        delimiter=delimiter,
-                        target_file_datums=target_file_datums,
-                        target_file_bytes=target_file_bytes
-                    )
+                yield proto.PutFileRequest(
+                    file=proto.File(commit=commit_from(commit), path=path),
+                    value=value[:BUFFER_SIZE],
+                    delimiter=delimiter,
+                    target_file_datums=target_file_datums,
+                    target_file_bytes=target_file_bytes
+                )
+
+                for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
+                    yield proto.PutFileRequest(value=value[i:i+BUFFER_SIZE])
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
