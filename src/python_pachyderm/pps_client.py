@@ -42,8 +42,14 @@ class PpsClient(object):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
-    def list_job(self, pipeline=None, input_commit=None):
-        req = proto.ListJobRequest(pipeline=pipeline, input_commit=commit_from(input_commit))
+    def list_job(self, pipeline=None, input_commit=None, output_commit=None):
+        if isinstance(input_commit, list):
+            input_commit = [commit_from(ic) for ic in input_commit]
+        elif input_commit is not None:
+            raise ValueError("input_commit should be a list of tuples in the form('repo','commit'), or strings in format 'repo/commit'")
+        if output_commit:
+            output_commit = commit_from(output_commit)
+        req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit, output_commit=output_commit)
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
@@ -130,10 +136,10 @@ class PpsClient(object):
     def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
         pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
         job = proto.Job(id=job_id) if job_id else None
-        
+
         if pipeline is None and job is None:
             raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
-        
+
         req = proto.GetLogsRequest(
             pipeline=pipeline, job=job, data_filters=data_filters,
             master=master
