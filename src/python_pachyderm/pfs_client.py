@@ -3,15 +3,14 @@
 from __future__ import absolute_import
 
 import collections
-from contextlib import contextmanager
 import itertools
+from contextlib import contextmanager
 
 import six
 
 from python_pachyderm.client.pfs import pfs_pb2 as proto
 from python_pachyderm.client.pfs import pfs_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
-
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
@@ -102,7 +101,7 @@ class PfsClient(object):
             else:
                 raise ValueError("Cannot specify a repo_name if all=True")
 
-    def start_commit(self, repo_name, branch=None, parent=None):
+    def start_commit(self, repo_name, branch=None, parent=None, description=None):
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with PutFile and when all the data has been
@@ -122,8 +121,10 @@ class PfsClient(object):
         to the new commit without affecting the contents of the parent Commit.
         You may pass "" as parentCommit in which case the new Commit will have
         no parent and will initially appear empty.
+        * description: (optional) explanation of the commit for clarity.
         """
-        req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch)
+        req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
+                                       description=description)
         res = self.stub.StartCommit(req, metadata=self.metadata)
         return res
 
@@ -141,9 +142,9 @@ class PfsClient(object):
         return res
 
     @contextmanager
-    def commit(self, repo_name, branch=None, parent=None):
+    def commit(self, repo_name, branch=None, parent=None, description=None):
         """A context manager for doing stuff inside a commit."""
-        commit = self.start_commit(repo_name, branch, parent)
+        commit = self.start_commit(repo_name, branch, parent, description)
         try:
             yield commit
         except Exception as e:
@@ -226,7 +227,8 @@ class PfsClient(object):
         * repos: Optional. Only the commits up to and including those repos.
         will be considered, otherwise all repos are considered.
         """
-        req = proto.FlushCommitRequest(commit=[commit_from(c) for c in commits], to_repo=[proto.Repo(name=r) for r in repos])
+        req = proto.FlushCommitRequest(commit=[commit_from(c) for c in commits],
+                                       to_repo=[proto.Repo(name=r) for r in repos])
         res = self.stub.FlushCommit(req, metadata=self.metadata)
         return res
 
