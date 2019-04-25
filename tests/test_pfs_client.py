@@ -15,6 +15,7 @@ import pytest
 
 import python_pachyderm
 
+
 @pytest.fixture(scope='function')
 def pfs_client():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
@@ -400,6 +401,25 @@ def test_pfs_commit_context_mgr_put_file_bytes_bytestring(pfs_client):
     assert commit_infos[0].commit.id == c.id
     files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
     assert len(files) == 1
+
+
+def test_pfs_commit_context_mgr_put_file_bytes_bytestring_with_overwrite(pfs_client):
+    """
+    Start and finish a commit using a context manager while putting a file
+    from a bytesting.
+    """
+
+    pfs_client.create_repo('test-repo-1')
+
+    with pfs_client.commit('test-repo-1', 'mybranch') as c:
+        for i in range(5):
+            pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
+
+    with pfs_client.commit('test-repo-1', 'mybranch') as c:
+        pfs_client.put_file_bytes(c, 'file.dat', b'FOO', overwrite_index=2)
+
+    file = list(pfs_client.get_file('test-repo-1/{}'.format(c.id), 'file.dat'))
+    assert file == [b'DATA', b'DATA', b'FOO']
 
 
 def test_pfs_commit_context_mgr_put_file_bytes_filelike(pfs_client):

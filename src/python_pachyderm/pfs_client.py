@@ -288,7 +288,7 @@ class PfsClient(object):
         self.stub.DeleteBranch(res, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
-                       target_file_datums=0, target_file_bytes=0):
+                       target_file_datums=0, target_file_bytes=0, overwrite_index=None):
         """
         Uploads a binary bytes array as file(s) in a certain path.
 
@@ -306,6 +306,8 @@ class PfsClient(object):
         written file, files may have more or fewer bytes than the target.
         """
 
+        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index else None
+
         if hasattr(value, "read"):
             def wrap(value):
                 for i in itertools.count():
@@ -320,7 +322,8 @@ class PfsClient(object):
                             value=chunk,
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
-                            target_file_bytes=target_file_bytes
+                            target_file_bytes=target_file_bytes,
+                            overwrite_index=overwrite_index_proto
                         )
                     else:
                         yield proto.PutFileRequest(value=chunk)
@@ -333,7 +336,8 @@ class PfsClient(object):
                             value=chunk,
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
-                            target_file_bytes=target_file_bytes
+                            target_file_bytes=target_file_bytes,
+                            overwrite_index=overwrite_index_proto
                         )
                     else:
                         yield proto.PutFileRequest(value=chunk)
@@ -344,11 +348,15 @@ class PfsClient(object):
                     value=value[:BUFFER_SIZE],
                     delimiter=delimiter,
                     target_file_datums=target_file_datums,
-                    target_file_bytes=target_file_bytes
+                    target_file_bytes=target_file_bytes,
+                    overwrite_index=overwrite_index_proto
                 )
 
                 for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
-                    yield proto.PutFileRequest(value=value[i:i + BUFFER_SIZE])
+                    yield proto.PutFileRequest(
+                        value=value[i:i + BUFFER_SIZE],
+                        overwrite_index=overwrite_index_proto
+                    )
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
