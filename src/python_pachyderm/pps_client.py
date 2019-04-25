@@ -45,8 +45,8 @@ class PpsClient(object):
     def list_job(self, pipeline=None, input_commit=None, output_commit=None):
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        elif input_commit is not None:
-            raise ValueError("input_commit should be a list of tuples in the form('repo','commit'), or strings in format 'repo/commit'")
+        else:
+            input_commit = [commit_from(input_commit)]
         if output_commit:
             output_commit = commit_from(output_commit)
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit, output_commit=output_commit)
