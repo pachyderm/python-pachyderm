@@ -306,7 +306,7 @@ class PfsClient(object):
         written file, files may have more or fewer bytes than the target.
         """
 
-        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index else None
+        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
         if hasattr(value, "read"):
             def wrap(value):
