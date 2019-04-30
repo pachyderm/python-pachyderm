@@ -17,6 +17,13 @@ env:
   global:
     - PATH=$HOME/cached-deps:$PATH
 
+matrix:
+  include:
+    - python: 3.7
+      env: TOXENV=flake8
+    - python: 3.7
+      env: TOXENV=examples
+
 install:
 - make ci-install
 before_script:
