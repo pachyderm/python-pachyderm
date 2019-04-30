@@ -2,6 +2,8 @@
 
 from __future__ import absolute_import
 
+import six
+
 from python_pachyderm.client.pps import pps_pb2 as proto
 from python_pachyderm.client.pps import pps_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
@@ -22,10 +24,10 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_job(self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
+    def create_job(self, transform, pipeline_name, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
                    output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
         req = proto.CreateJobRequest(
-            transform=transform, pipeline=pipeline,
+            transform=transform, pipeline=proto.Pipeline(name=pipeline_name),
             pipeline_version=pipeline_version,
             parallelism_spec=parallelism_spec, inputs=inputs,
             egress=egress, service=service, output_repo=output_repo,
@@ -40,14 +42,15 @@ class PpsClient(object):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
-    def list_job(self, pipeline=None, input_commit=None, output_commit=None):
+    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        elif isinstance(input_commit, str):
+        elif isinstance(input_commit, six.string_types):
             input_commit = [commit_from(input_commit)]
         if output_commit:
             output_commit = commit_from(output_commit)
-        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline), input_commit=input_commit, output_commit=output_commit)
+        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline_name), input_commit=input_commit,
+                                   output_commit=output_commit)
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
