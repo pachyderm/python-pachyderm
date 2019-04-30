@@ -2,8 +2,6 @@
 
 from __future__ import absolute_import
 
-import os
-
 from python_pachyderm.client.pps import pps_pb2 as proto
 from python_pachyderm.client.pps import pps_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
@@ -45,11 +43,11 @@ class PpsClient(object):
     def list_job(self, pipeline=None, input_commit=None, output_commit=None):
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        else:
+        elif isinstance(input_commit, str):
             input_commit = [commit_from(input_commit)]
         if output_commit:
             output_commit = commit_from(output_commit)
-        req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit, output_commit=output_commit)
+        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline), input_commit=input_commit, output_commit=output_commit)
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
@@ -60,8 +58,8 @@ class PpsClient(object):
         req = proto.StopJobRequest(job=proto.Job(id=job_id))
         self.stub.StopJob(req, metadata=self.metadata)
 
-    def inspect_datum(self, datum):
-        req = proto.InspectDatumRequest(datum=datum)
+    def inspect_datum(self, job_id, datum_id):
+        req = proto.InspectDatumRequest(datum=proto.Datum(id=datum_id, job=proto.Job(id=job_id)))
         return self.stub.InspectDatum(req, metadata=self.metadata)
 
     def list_datum(self, job_id):
@@ -104,13 +102,10 @@ class PpsClient(object):
         req = proto.ListPipelineRequest()
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
-    def delete_pipeline(self, pipeline_name, delete_jobs=False, delete_repo=False, all=False):
+    def delete_pipeline(self, pipeline_name, all=False):
         req = proto.DeletePipelineRequest(
             pipeline=proto.Pipeline(name=pipeline_name),
-            delete_jobs=delete_jobs,
-            delete_repo=delete_repo,
-            all=all
-        )
+            all=all)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def start_pipeline(self, pipeline_name):
