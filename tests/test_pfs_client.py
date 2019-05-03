@@ -462,7 +462,8 @@ def test_flush_commit(pfs_client):
     with pfs_client.commit('test-repo-1', 'master') as c:
         pfs_client.put_file_bytes(c, 'input.json', b'hello world')
 
-    pfs_client.flush_commit(['test-repo-1/{}'.format(c.id)])
+    # Just block until all of the commits are yielded
+    list(pfs_client.flush_commit(['test-repo-1/{}'.format(c.id)]))
 
     files = pfs_client.get_files('test-repo-1/master', '/', recursive=True)
     assert files == {'/input.json': b'hello world'}
