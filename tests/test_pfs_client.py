@@ -452,3 +452,17 @@ def test_pfs_commit_context_mgr_put_file_bytes_iterable(pfs_client):
     assert len(files) == 1
 
 
+def test_flush_commit(pfs_client):
+    """
+    Ensure flush commit works
+    """
+
+    pfs_client.create_repo('test-repo-1')
+
+    with pfs_client.commit('test-repo-1', 'master') as c:
+        pfs_client.put_file_bytes(c, 'input.json', b'hello world')
+
+    pfs_client.flush_commit(['test-repo-1/{}'.format(c.id)])
+
+    files = pfs_client.get_files('test-repo-1/master', '/', recursive=True)
+    assert files == {'/input.json': b'hello world'}
