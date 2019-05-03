@@ -230,7 +230,9 @@ class PfsClient(object):
         req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
                                        to_repos=[proto.Repo(name=r) for r in repos])
         res = self.stub.FlushCommit(req, metadata=self.metadata)
-        return res
+
+        for commit in res:
+            yield commit
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
         """
