@@ -52,6 +52,7 @@ sync:
 	make proto
 
 release:
+	rm -rf build dist
 	# Bump the version
 	expr $$(cat BUILD_NUMBER) + 1 > BUILD_NUMBER
 	python setup.py sdist
