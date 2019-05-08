@@ -227,10 +227,12 @@ class PfsClient(object):
         * repos: Optional. Only the commits up to and including those repos.
         will be considered, otherwise all repos are considered.
         """
-        req = proto.FlushCommitRequest(commit=[commit_from(c) for c in commits],
-                                       to_repo=[proto.Repo(name=r) for r in repos])
+        req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
+                                       to_repos=[proto.Repo(name=r) for r in repos])
         res = self.stub.FlushCommit(req, metadata=self.metadata)
-        return res
+
+        for commit in res:
+            yield commit
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
         """

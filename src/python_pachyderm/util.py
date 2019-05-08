@@ -33,9 +33,9 @@ def commit_from(src, allow_just_repo=False):
     elif isinstance(src, six.string_types):
         repo_name, commit_id = src.split('/', 1)
         return pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=commit_id)
+    
     if not allow_just_repo:
-        raise ValueError(
-            "Commit should either be a sequence of [repo, commit_id] or a string in the form 'repo/branch/commit_id")
+        raise ValueError("Invalid commit type")
     return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
 
 def get_remote_version(host=None, port=None):
