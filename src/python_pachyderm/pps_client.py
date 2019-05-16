@@ -116,7 +116,7 @@ class PpsClient(object):
         self.stub.StartPipeline(req, metadata=self.metadata)
 
     def stop_pipeline(self, pipeline_name):
-        req = proto.StopPipelineRequest(pipeline=proto.Pipeline(pipeline_name))
+        req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
         self.stub.StopPipeline(req, metadata=self.metadata)
 
     def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
