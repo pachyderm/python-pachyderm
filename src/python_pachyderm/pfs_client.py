@@ -445,7 +445,7 @@ class PfsClient(object):
         res = self.stub.InspectFile(req, metadata=self.metadata)
         return res
 
-    def list_file(self, commit, path, recursive=False):
+    def list_file(self, commit, path, recursive=False, history=0):
         """
         Lists the files in a directory.
 
@@ -453,9 +453,10 @@ class PfsClient(object):
         * commit: A tuple, string, or Commit object representing the commit.
         * path: The path to the directory.
         * recursive: If True, continue listing the files for sub-directories.
+        * history: number of historical "versions" to be returned (0 = none, -1 = all)
         """
         req = proto.ListFileRequest(
-            file=proto.File(commit=commit_from(commit), path=path)
+            file=proto.File(commit=commit_from(commit), path=path), history=history
         )
         res = self.stub.ListFile(req, metadata=self.metadata)
         file_infos = res.file_info
