@@ -11,7 +11,7 @@ from .client.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
 	JOB_STARTING, JOB_SUCCESS, FAILED, SUCCESS, SKIPPED, POD_SUCCESS, \
 	POD_FAILED, POD_RUNNING, PIPELINE_FAILURE, PIPELINE_PAUSED, \
 	PIPELINE_RESTARTING, PIPELINE_RUNNING, PIPELINE_STARTING, Secret, \
-	Transform, Egress, Job, Service, AtomInput, PFSInput, CronInput, \
+	Transform, Egress, Job, Service, PFSInput, CronInput, \
 	GitInput, Input, JobInput, ParallelismSpec, HashtreeSpec, InputFile, \
 	Datum, DatumInfo, Aggregate, ProcessStats, AggregateProcessStats, \
 	WorkerStatus, ResourceSpec, GPUSpec, EtcdJobInfo, JobInfo, Worker, \
