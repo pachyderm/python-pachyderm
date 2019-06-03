@@ -100,9 +100,9 @@ class APIStub(object):
         request_serializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.RerunPipeline = channel.unary_unary(
-        '/pps.API/RerunPipeline',
-        request_serializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.SerializeToString,
+    self.RunPipeline = channel.unary_unary(
+        '/pps.API/RunPipeline',
+        request_serializer=client_dot_pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.DeleteAll = channel.unary_unary(
@@ -252,7 +252,7 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def RerunPipeline(self, request, context):
+  def RunPipeline(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -376,9 +376,9 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pps_dot_pps__pb2.StopPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'RerunPipeline': grpc.unary_unary_rpc_method_handler(
-          servicer.RerunPipeline,
-          request_deserializer=client_dot_pps_dot_pps__pb2.RerunPipelineRequest.FromString,
+      'RunPipeline': grpc.unary_unary_rpc_method_handler(
+          servicer.RunPipeline,
+          request_deserializer=client_dot_pps_dot_pps__pb2.RunPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'DeleteAll': grpc.unary_unary_rpc_method_handler(

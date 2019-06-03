@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='config',
   syntax='proto3',
   serialized_options=_b('Z4github.com/pachyderm/pachyderm/src/client/pkg/config'),
-  serialized_pb=_b('\n\x1e\x63lient/pkg/config/config.proto\x12\x06\x63onfig\"7\n\x06\x43onfig\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x1c\n\x02v1\x18\x02 \x01(\x0b\x32\x10.config.ConfigV1\"L\n\x08\x43onfigV1\x12\x15\n\rpachd_address\x18\x02 \x01(\t\x12\x12\n\nserver_cas\x18\x03 \x01(\t\x12\x15\n\rsession_token\x18\x01 \x01(\tB6Z4github.com/pachyderm/pachyderm/src/client/pkg/configb\x06proto3')
+  serialized_pb=_b('\n\x1e\x63lient/pkg/config/config.proto\x12\x06\x63onfig\"7\n\x06\x43onfig\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x1c\n\x02v1\x18\x02 \x01(\x0b\x32\x10.config.ConfigV1\"h\n\x08\x43onfigV1\x12\x15\n\rpachd_address\x18\x02 \x01(\t\x12\x12\n\nserver_cas\x18\x03 \x01(\t\x12\x15\n\rsession_token\x18\x01 \x01(\t\x12\x1a\n\x12\x61\x63tive_transaction\x18\x04 \x01(\tB6Z4github.com/pachyderm/pachyderm/src/client/pkg/configb\x06proto3')
 )
 
 
@@ -91,6 +91,13 @@ _CONFIGV1 = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='active_transaction', full_name='config.ConfigV1.active_transaction', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -104,7 +111,7 @@ _CONFIGV1 = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=99,
-  serialized_end=175,
+  serialized_end=203,
 )
 
 _CONFIG.fields_by_name['v1'].message_type = _CONFIGV1

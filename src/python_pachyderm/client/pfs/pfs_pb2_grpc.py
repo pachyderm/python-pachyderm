@@ -161,6 +161,11 @@ class APIStub(object):
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
+    self.Fsck = channel.unary_unary(
+        '/pfs.API/Fsck',
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
 
 
 class APIServicer(object):
@@ -381,6 +386,13 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def Fsck(self, request, context):
+    """Fsck does a file system consistency check for pfs
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -526,6 +538,11 @@ def add_APIServicer_to_server(servicer, server):
       ),
       'DeleteAll': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteAll,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'Fsck': grpc.unary_unary_rpc_method_handler(
+          servicer.Fsck,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
