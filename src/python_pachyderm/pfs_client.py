@@ -6,8 +6,6 @@ import collections
 import itertools
 from contextlib import contextmanager
 
-import six
-
 from python_pachyderm.client.pfs import pfs_pb2 as proto
 from python_pachyderm.client.pfs import pfs_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
@@ -329,7 +327,7 @@ class PfsClient(object):
                         )
                     else:
                         yield proto.PutFileRequest(value=chunk)
-        elif isinstance(value, collections.Iterable) and not isinstance(value, (six.string_types, six.binary_type)):
+        elif isinstance(value, collections.Iterable) and not isinstance(value, (str, bytes)):
             def wrap(value):
                 for i, chunk in enumerate(value):
                     if i == 0:
