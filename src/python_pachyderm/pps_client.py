@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-
 from python_pachyderm.client.pps import pps_pb2 as proto
 from python_pachyderm.client.pps import pps_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata

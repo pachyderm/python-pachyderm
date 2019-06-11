@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-from __future__ import absolute_import
-from __future__ import print_function
 
 import io
 from glob import glob
@@ -61,7 +59,7 @@ setup(
     ],
     keywords=['pachyderm',],
     install_requires=[
-        'protobuf', 'grpcio', 'future>=0.14',
+        'protobuf', 'grpcio',
     ],
     test_suite='tests',
     tests_require=['pytest'],
