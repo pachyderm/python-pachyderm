@@ -119,14 +119,6 @@ class PpsClient(object):
         req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
         self.stub.StopPipeline(req, metadata=self.metadata)
 
-    def rerun_pipeline(self, pipeline_name, exclude=tuple(), include=tuple()):
-        req = proto.RerunPipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            exclude=exclude,
-            include=include
-        )
-        self.stub.RerunPipeline(req, metadata=self.metadata)
-
     def delete_all(self):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
