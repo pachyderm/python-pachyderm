@@ -28,7 +28,7 @@ class PfsClient(object):
     def __init__(self, host=None, port=None, auth_token=None):
         """
         Creates a client to connect to PFS.
-        
+
         Params:
         * host: The pachd host. Default is 'localhost', which is used with
         `pachctl port-forward`.
@@ -44,12 +44,12 @@ class PfsClient(object):
 
     def create_repo(self, repo_name, description=None):
         """
-        Creates a new Repo object in PFS with the given name. Repos are the 
+        Creates a new Repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
         similar type. For example rather than having a single Repo for an
         entire project you might have separate Repos for logs, metrics,
         database dumps etc.
-        
+
         Params:
         * repo_name: Name of the repo.
         * description: Repo description.
@@ -60,7 +60,7 @@ class PfsClient(object):
     def inspect_repo(self, repo_name):
         """
         Returns info about a specific Repo.
-        
+
         Params:
         * repo_name: Name of the repo.
         """
@@ -236,8 +236,8 @@ class PfsClient(object):
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
         """
-        SubscribeCommit is like ListCommit but it keeps listening for commits as
-        they come in. This returns an iterator Commit objects.
+        SubscribeCommit is like ListCommit but it keeps listening for commits
+        as they come in. This returns an iterator Commit objects.
 
         Params:
         * repo_name: Name of the repo.
@@ -286,7 +286,7 @@ class PfsClient(object):
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
         """
-        res = proto.DeleteBranchRequest(repo=Repo(name=repo_name), branch=branch_name)
+        res = proto.DeleteBranchRequest(repo=proto.Repo(name=repo_name), branch=branch_name)
         self.stub.DeleteBranch(res, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
@@ -385,7 +385,8 @@ class PfsClient(object):
 
     def get_file(self, commit, path, offset_bytes=0, size_bytes=0, extract_value=True):
         """
-        Returns an iterator of the contents contents of a file at a specific Commit.
+        Returns an iterator of the contents contents of a file at a specific
+        Commit.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
@@ -429,8 +430,7 @@ class PfsClient(object):
             else:
                 filtered_file_infos += self.list_file(commit, path, recursive=recursive)
 
-        filtered_paths = [fi.file.path for fi in filtered_file_infos if fi.file_type == proto.FILE]
-
+        filtered_paths = [f.file.path for f in filtered_file_infos if f.file_type == proto.FILE]
         return {path: b''.join(self.get_file(commit, path)) for path in filtered_paths}
 
     def inspect_file(self, commit, path):
@@ -453,7 +453,8 @@ class PfsClient(object):
         * commit: A tuple, string, or Commit object representing the commit.
         * path: The path to the directory.
         * recursive: If True, continue listing the files for sub-directories.
-        * history: number of historical "versions" to be returned (0 = none, -1 = all)
+        * history: number of historical "versions" to be returned (0 = none,
+        -1 = all)
         """
         req = proto.ListFileRequest(
             file=proto.File(commit=commit_from(commit), path=path), history=history
