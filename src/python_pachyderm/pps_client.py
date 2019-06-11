@@ -14,9 +14,10 @@ class PpsClient(object):
         """
         Creates a client to connect to PPS.
 
-        host: The pachd host. Default is 'localhost', which is used with `pachctl port-forward`
-        port: The port to connect to. Default is 30650
-        auth_token: The authentication token; used if authentication is enabled on the cluster. Default to `None`.
+        host: The pachd host. Default is 'localhost'.
+        port: The port to connect to. Default is 30650.
+        auth_token: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
         """
 
         address = get_address(host, port)
@@ -24,8 +25,9 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_job(self, transform, pipeline_name, pipeline_version, parallelism_spec, inputs, egress, service, output_repo,
-                   output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch):
+    def create_job(self, transform, pipeline_name, pipeline_version, parallelism_spec, inputs, egress, service,
+                   output_repo, output_branch, parent_job, resource_spec, input, new_branch, incremental,
+                   enable_stats, salt, batch):
         req = proto.CreateJobRequest(
             transform=transform, pipeline=proto.Pipeline(name=pipeline_name),
             pipeline_version=pipeline_version,
