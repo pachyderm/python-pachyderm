@@ -80,7 +80,7 @@ class PpsClient(object):
                         enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None,
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_spec=None, pod_patch=None):
+                        scheduling_spec=None, pod_patch=None):
         req = proto.CreatePipelineRequest(
             pipeline=proto.Pipeline(name=pipeline_name),
             transform=transform, parallelism_spec=parallelism_spec,
@@ -93,7 +93,7 @@ class PpsClient(object):
             chunk_spec=chunk_spec, datum_timeout=datum_timeout,
             job_timeout=job_timeout, salt=salt, standby=standby,
             datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-            pod_spec=pod_spec, pod_patch=pod_patch
+            pod_patch=pod_patch
         )
         self.stub.CreatePipeline(req, metadata=self.metadata)
 
