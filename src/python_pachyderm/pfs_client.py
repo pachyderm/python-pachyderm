@@ -164,6 +164,7 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit))
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
+    # NOTE: this is not a standard PFS function
     def provenances_for_repo(self, repo_name):
         provenances = {}
         commits = self.list_commit(repo_name)
@@ -351,6 +352,7 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
+    # NOTE: this is not a standard PFS function
     def put_file_url(self, commit, path, url, recursive=False):
         """
         Puts a file using the content found at a URL. The URL is sent to the
@@ -400,6 +402,7 @@ class PfsClient(object):
             return ExtractValueIterator(res)
         return res
 
+    # NOTE: this is not a standard PFS function
     def get_files(self, commit, paths, recursive=False):
         """
         Returns the contents of a list of files at a specific Commit as a
