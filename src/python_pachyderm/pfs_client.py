@@ -265,17 +265,6 @@ class PfsClient(object):
             return res.branch_info
         return []
 
-    def set_branch(self, commit, branch_name):
-        """
-        Sets a commit and its ancestors as a branch.
-
-        Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * branch_name: The name for the branch to set.
-        """
-        res = proto.SetBranchRequest(commit=commit_from(commit), branch=branch_name)
-        self.stub.SetBranch(res, metadata=self.metadata)
-
     def delete_branch(self, repo_name, branch_name):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
