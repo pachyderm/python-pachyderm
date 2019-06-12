@@ -338,3 +338,18 @@ def test_flush_commit(pfs_client_with_repo):
 
     files = pfs_client.get_files('{}/master'.format(repo_name), '/', recursive=True)
     assert files == {'/input.json': b'hello world'}
+
+
+def test_inspect_commit(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name, 'master') as c:
+        pfs_client.put_file_bytes(c, 'input.json', b'hello world')
+
+    commit = pfs_client.inspect_commit("{}/master".format(repo_name))
+    assert commit.branch.name == "master"
+    assert commit.finished
+    assert commit.description == ""
+    assert commit.size_bytes == 11
+    assert len(commit.commit.id) == 32
+    assert commit.commit.repo.name == "test-repo-1"
