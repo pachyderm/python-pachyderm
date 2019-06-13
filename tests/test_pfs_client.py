@@ -333,7 +333,7 @@ def test_put_file_url(pfs_client_with_repo):
 
     files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
-    assert files[0].file.name == '/index.html'
+    assert files[0].file.path == '/index.html'
 
 
 def test_flush_commit(pfs_client_with_repo):
