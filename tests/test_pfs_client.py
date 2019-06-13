@@ -424,3 +424,37 @@ def test_inspect_file(pfs_client_with_repo):
     assert fi.file.path == 'file.dat'
     assert fi.size_bytes == 4
     assert fi.objects[0].hash == '4ba7d4149c32f5ccc6e54190beef0f503d1e637249baa9e4b123f5aa5c89506f299c10a7e32ab1e4bae30ed32df848f87d9b03a640320b0ca758c5ee56cb2db4'
+
+def test_list_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
+        pfs_client.put_file_bytes(c, 'file2.dat', [b'DATA'])
+
+    files = pfs_client.list_file(c, '/')
+    assert len(files) == 2
+    assert files[0].size_bytes == 4
+    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file.path == "/file1.dat"
+    assert files[1].size_bytes == 4
+    assert files[1].file_type == python_pachyderm.FILE
+    assert files[1].file.path == "/file2.dat"
+
+def test_list_file_recursive(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    expected_files = set()
+
+    with pfs_client.commit(repo_name) as c:
+        for i in range(10):
+            filename = '{}/{}'.format(i % 2, i)
+            pfs_client.put_file_bytes(c, filename, [b'DATA'])
+            expected_files.add('/{}'.format(filename))
+
+    files = pfs_client.list_file(c, '/', recursive=True)
+    assert len(files) == 10
+
+    for f in files:
+        assert f.size_bytes == 4
+        assert f.file_type == python_pachyderm.FILE
+        assert f.file.path in expected_files
