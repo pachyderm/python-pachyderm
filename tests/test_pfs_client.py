@@ -399,7 +399,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_bytestring(pfs_client):
     commit_infos = pfs_client.list_commit('test-repo-1')
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
-    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
+    files = pfs_client.list_file('test-repo-1/{}'.format(c.id), '.')
     assert len(files) == 1
 
 
@@ -433,7 +433,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_filelike(pfs_client):
     with pfs_client.commit('test-repo-1') as c:
         pfs_client.put_file_bytes(c, 'file.dat', BytesIO(b'DATA'))
 
-    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
+    files = pfs_client.list_file('test-repo-1/{}'.format(c.id), '.')
     assert len(files) == 1
 
 
@@ -448,7 +448,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_iterable(pfs_client):
     with pfs_client.commit('test-repo-1') as c:
         pfs_client.put_file_bytes(c, 'file.dat', [b'DATA'])
 
-    files = pfs_client.get_files('test-repo-1/{}'.format(c.id), '.')
+    files = pfs_client.list_file('test-repo-1/{}'.format(c.id), '.')
     assert len(files) == 1
 
 
@@ -465,5 +465,5 @@ def test_flush_commit(pfs_client):
     # Just block until all of the commits are yielded
     list(pfs_client.flush_commit(['test-repo-1/{}'.format(c.id)]))
 
-    files = pfs_client.get_files('test-repo-1/master', '/', recursive=True)
-    assert files == {'/input.json': b'hello world'}
+    files = pfs_client.list_file('test-repo-1/master', '/', recursive=True)
+    assert len(files) == 1

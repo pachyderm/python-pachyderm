@@ -401,28 +401,6 @@ class PfsClient(object):
             return ExtractValueIterator(res)
         return res
 
-    def get_files(self, commit, paths, recursive=False):
-        """
-        Returns the contents of a list of files at a specific Commit as a
-        dictionary of file paths to data.
-
-        Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * paths: A list of paths to retrieve.
-        * recursive: If True, will go into each directory in the list
-        recursively.
-        """
-        filtered_file_infos = []
-        for path in paths:
-            fi = self.inspect_file(commit, path)
-            if fi.file_type == proto.FILE:
-                filtered_file_infos.append(fi)
-            else:
-                filtered_file_infos += self.list_file(commit, path, recursive=recursive)
-
-        filtered_paths = [f.file.path for f in filtered_file_infos if f.file_type == proto.FILE]
-        return {path: b''.join(self.get_file(commit, path)) for path in filtered_paths}
-
     def inspect_file(self, commit, path):
         """
         Returns info about a specific file.
