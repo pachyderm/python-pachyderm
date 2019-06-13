@@ -70,9 +70,7 @@ class PfsClient(object):
         """
         req = proto.ListRepoRequest()
         res = self.stub.ListRepo(req, metadata=self.metadata)
-        if hasattr(res, 'repo_info'):
-            return res.repo_info
-        return []
+        return res.repo_info
 
     def delete_repo(self, repo_name=None, force=False, all=False):
         """
@@ -242,9 +240,7 @@ class PfsClient(object):
         """
         req = proto.ListBranchRequest(repo=proto.Repo(name=repo_name))
         res = self.stub.ListBranch(req, metadata=self.metadata)
-        if hasattr(res, 'branch_info'):
-            return res.branch_info
-        return []
+        return res.branch_info
 
     def delete_branch(self, repo_name, branch_name):
         """
