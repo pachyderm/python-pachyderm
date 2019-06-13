@@ -353,3 +353,13 @@ def test_inspect_commit(pfs_client_with_repo):
     assert commit.size_bytes == 11
     assert len(commit.commit.id) == 32
     assert commit.commit.repo.name == "test-repo-1"
+
+def test_delete_commit(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name, 'master') as c:
+        pass
+
+    assert len(pfs_client.list_commit(repo_name)) == 1
+    pfs_client.delete_commit("{}/master".format(repo_name))
+    assert len(pfs_client.list_commit(repo_name)) == 0
