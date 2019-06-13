@@ -181,8 +181,7 @@ class PfsClient(object):
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, 'from').CopyFrom(commit_from(from_commit))
-        for res in self.stub.ListCommitStream(req, metadata=self.metadata):
-            yield res.commit_info
+        return self.stub.ListCommitStream(req, metadata=self.metadata)
 
     def delete_commit(self, commit):
         """
@@ -214,10 +213,7 @@ class PfsClient(object):
         """
         req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
                                        to_repos=[proto.Repo(name=r) for r in repos])
-        res = self.stub.FlushCommit(req, metadata=self.metadata)
-
-        for commit in res:
-            yield commit
+        return self.stub.FlushCommit(req, metadata=self.metadata)
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
         """
@@ -413,6 +409,7 @@ class PfsClient(object):
         -1 = all)
         * include_contents: If True, file contents are included
         """
+
         req = proto.ListFileRequest(
             file=proto.File(commit=commit_from(commit), path=path),
             history=history,
@@ -420,16 +417,16 @@ class PfsClient(object):
         )
 
         for res in self.stub.ListFileStream(req, metadata=self.metadata):
-            if recursive and res.file_info.file_type == proto.DIR:
+            if recursive and res.file_type == proto.DIR:
                 yield from self.list_file(
                     commit,
-                    d.file.path,
+                    req.file.path,
                     recursive=recursive,
                     history=history,
                     include_contents=include_contents
                 )
             else:
-                yield res.file_info
+                yield res
 
     def glob_file(self, commit, pattern):
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)

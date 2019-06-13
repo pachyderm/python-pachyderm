@@ -333,7 +333,7 @@ def test_put_file_url(pfs_client_with_repo):
 
     files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
-    assert '/index.html' in files
+    assert files[0].file.name == '/index.html'
 
 
 def test_flush_commit(pfs_client_with_repo):
@@ -372,9 +372,11 @@ def test_delete_commit(pfs_client_with_repo):
     with pfs_client.commit(repo_name, 'master') as c:
         pass
 
-    assert len(pfs_client.list_commit(repo_name)) == 1
+    commits = list(pfs_client.list_commit(repo_name))
+    assert len(commits) == 1
     pfs_client.delete_commit("{}/master".format(repo_name))
-    assert len(pfs_client.list_commit(repo_name)) == 0
+    commits = list(pfs_client.list_commit(repo_name))
+    assert len(commits) == 0
 
 def test_subscribe_commit(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
