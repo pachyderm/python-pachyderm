@@ -184,10 +184,8 @@ class PfsClient(object):
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, 'from').CopyFrom(commit_from(from_commit))
-        res = self.stub.ListCommit(req, metadata=self.metadata)
-        if hasattr(res, 'commit_info'):
-            return res.commit_info
-        return []
+        for res in self.stub.ListCommitStream(req, metadata=self.metadata):
+            yield res.commit_info
 
     def delete_commit(self, commit):
         """
