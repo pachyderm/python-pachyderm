@@ -349,7 +349,7 @@ def test_flush_commit(pfs_client_with_repo):
     # Just block until all of the commits are yielded
     list(pfs_client.flush_commit(['{}/{}'.format(repo_name, c.id)]))
 
-    files = list(pfs_client.list_file('{}/master'.format(repo_name), '/', recursive=True))
+    files = list(pfs_client.list_file('{}/master'.format(repo_name), '/'))
     assert len(files) == 1
 
 def test_inspect_commit(pfs_client_with_repo):
@@ -442,24 +442,6 @@ def test_list_file(pfs_client_with_repo):
     assert files[1].size_bytes == 4
     assert files[1].file_type == python_pachyderm.FILE
     assert files[1].file.path == "/file2.dat"
-
-def test_list_file_recursive(pfs_client_with_repo):
-    pfs_client, repo_name = pfs_client_with_repo
-    expected_files = set()
-
-    with pfs_client.commit(repo_name) as c:
-        for i in range(10):
-            filename = '{}/{}'.format(i % 2, i)
-            pfs_client.put_file_bytes(c, filename, [b'DATA'])
-            expected_files.add('/{}'.format(filename))
-
-    files = list(pfs_client.list_file(c, '/', recursive=True))
-    assert len(files) == 10
-
-    for f in files:
-        assert f.size_bytes == 4
-        assert f.file_type == python_pachyderm.FILE
-        assert f.file.path in expected_files
 
 def test_glob_file(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
