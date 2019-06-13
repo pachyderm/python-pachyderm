@@ -164,16 +164,6 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit))
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
-    def provenances_for_repo(self, repo_name):
-        provenances = {}
-        commits = self.list_commit(repo_name)
-        sorted_commits = [x[0] for x in
-                          sorted([(c.commit.id, c.finished.seconds) for c in commits], key=lambda x: x[1])]
-        for c in sorted_commits:
-            for p in c.provenance:
-                provenances[p.id] = c.commit.id
-        return provenances
-
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
         Gets a list of CommitInfo objects.
