@@ -458,3 +458,25 @@ def test_list_file_recursive(pfs_client_with_repo):
         assert f.size_bytes == 4
         assert f.file_type == python_pachyderm.FILE
         assert f.file.path in expected_files
+
+def test_glob_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
+        pfs_client.put_file_bytes(c, 'file2.dat', [b'DATA'])
+
+    files = pfs_client.glob_file(c, '/*.dat')
+    assert len(files) == 2
+    assert files[0].size_bytes == 4
+    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file.path == "/file1.dat"
+    assert files[1].size_bytes == 4
+    assert files[1].file_type == python_pachyderm.FILE
+    assert files[1].file.path == "/file2.dat"
+
+    files = pfs_client.glob_file(c, '/*1.dat')
+    assert len(files) == 1
+    assert files[0].size_bytes == 4
+    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file.path == "/file1.dat"
