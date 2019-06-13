@@ -216,7 +216,7 @@ def test_pfs_finish_commit(pfs_client_with_repo, commit_arg):
     elif commit_arg == '(repo, commit_id)':
         pfs_client.finish_commit((repo_name, commit.id))
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == commit.id
 
@@ -238,7 +238,7 @@ def test_pfs_commit_context_mgr(pfs_client, repo_to_create, repo_to_commit_to, b
     with pfs_client.commit(repo_to_commit_to, branch) as c:
         pass
     # THEN a single commit should exist in the repo
-    commit_infos = pfs_client.list_commit(repo_to_commit_to)
+    commit_infos = list(pfs_client.list_commit(repo_to_commit_to))
     assert len(commit_infos) == 1
     #   AND the commit ID should match the finished commit
     assert commit_infos[0].commit.id == c.id
@@ -252,7 +252,7 @@ def test_pfs_commit_context_mgr_missing_branch(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pass
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
 
@@ -268,7 +268,7 @@ def test_put_file_bytes_bytestring(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
     files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
