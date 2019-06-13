@@ -160,6 +160,7 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit))
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
+    # NOTE: this is not a standard PFS function
     def provenances_for_repo(self, repo_name):
         provenances = {}
         commits = self.list_commit(repo_name)
@@ -261,17 +262,6 @@ class PfsClient(object):
             return res.branch_info
         return []
 
-    def set_branch(self, commit, branch_name):
-        """
-        Sets a commit and its ancestors as a branch.
-
-        Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * branch_name: The name for the branch to set.
-        """
-        res = proto.SetBranchRequest(commit=commit_from(commit), branch=branch_name)
-        self.stub.SetBranch(res, metadata=self.metadata)
-
     def delete_branch(self, repo_name, branch_name):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
@@ -282,7 +272,10 @@ class PfsClient(object):
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
         """
-        res = proto.DeleteBranchRequest(repo=proto.Repo(name=repo_name), branch=branch_name)
+        res = proto.DeleteBranchRequest(branch=proto.Branch(
+            repo=proto.Repo(name=repo_name),
+            name=branch_name,
+        ))
         self.stub.DeleteBranch(res, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
@@ -358,6 +351,7 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
+    # NOTE: this is not a standard PFS function
     def put_file_url(self, commit, path, url, recursive=False):
         """
         Puts a file using the content found at a URL. The URL is sent to the
@@ -407,6 +401,7 @@ class PfsClient(object):
             return ExtractValueIterator(res)
         return res
 
+    # NOTE: this is not a standard PFS function
     def get_files(self, commit, paths, recursive=False):
         """
         Returns the contents of a list of files at a specific Commit as a
