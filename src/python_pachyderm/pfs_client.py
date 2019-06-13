@@ -430,15 +430,18 @@ class PfsClient(object):
             history=history,
             full=include_contents,
         )
-        res = self.stub.ListFile(req, metadata=self.metadata)
-        file_infos = res.file_info
 
-        if recursive:
-            dirs = [f for f in file_infos if f.file_type == proto.DIR]
-            files = [f for f in file_infos if f.file_type == proto.FILE]
-            return sum([self.list_file(commit, d.file.path, recursive=recursive, history=history, include_contents=include_contents) for d in dirs], files)
-
-        return list(file_infos)
+        for res in self.stub.ListFileStream(req, metadata=self.metadata):
+            if recursive and res.file_info.file_type == proto.DIR:
+                yield from self.list_file(
+                    commit,
+                    d.file.path,
+                    recursive=recursive,
+                    history=history,
+                    include_contents=include_contents
+                )
+            else:
+                yield res.file_info
 
     def glob_file(self, commit, pattern):
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
