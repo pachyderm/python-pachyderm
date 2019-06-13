@@ -257,7 +257,7 @@ def test_pfs_commit_context_mgr_missing_branch(pfs_client_with_repo):
     assert commit_infos[0].commit.id == c.id
 
 
-def test_pfs_commit_context_mgr_put_file_bytes_bytestring(pfs_client_with_repo):
+def test_put_file_bytes_bytestring(pfs_client_with_repo):
     """
     Start and finish a commit using a context manager while putting a file
     from a bytesting.
@@ -275,7 +275,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_bytestring(pfs_client_with_repo):
     assert len(files) == 1
 
 
-def test_pfs_commit_context_mgr_put_file_bytes_bytestring_with_overwrite(pfs_client_with_repo):
+def test_put_file_bytes_bytestring_with_overwrite(pfs_client_with_repo):
     """
     Start and finish a commit using a context manager while putting a file
     from a bytesting.
@@ -294,7 +294,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_bytestring_with_overwrite(pfs_cli
     assert file == [b'DATA', b'DATA', b'FOO']
 
 
-def test_pfs_commit_context_mgr_put_file_bytes_filelike(pfs_client_with_repo):
+def test_put_file_bytes_filelike(pfs_client_with_repo):
     """
     Start and finish a commit using a context manager while putting a file
     from a file-like object.
@@ -309,7 +309,7 @@ def test_pfs_commit_context_mgr_put_file_bytes_filelike(pfs_client_with_repo):
     assert len(files) == 1
 
 
-def test_pfs_commit_context_mgr_put_file_bytes_iterable(pfs_client_with_repo):
+def test_put_file_bytes_iterable(pfs_client_with_repo):
     """
     Start and finish a commit using a context manager while putting a file
     from an iterator of bytes.
@@ -322,6 +322,17 @@ def test_pfs_commit_context_mgr_put_file_bytes_iterable(pfs_client_with_repo):
 
     files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
     assert len(files) == 1
+
+
+def test_put_file_url(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_url(c, "index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
+
+    files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    assert len(files) == 1
+    assert '/index.html' in files
 
 
 def test_flush_commit(pfs_client_with_repo):
