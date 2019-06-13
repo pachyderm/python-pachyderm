@@ -322,11 +322,11 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
-    # NOTE: this is not a standard PFS function
     def put_file_url(self, commit, path, url, recursive=False):
         """
         Puts a file using the content found at a URL. The URL is sent to the
-        server which performs the request.
+        server which performs the request. Note that this is not a standard
+        PFS function.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
