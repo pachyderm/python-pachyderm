@@ -11,15 +11,6 @@ from python_pachyderm.util import commit_from, get_address, get_metadata
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
 
-class ExtractValueIterator(object):
-    def __init__(self, r):
-        self._iter = r
-
-    def __iter__(self):
-        for item in self._iter:
-            yield item.value
-
-
 class PfsClient(object):
     def __init__(self, host=None, port=None, auth_token=None):
         """
@@ -353,7 +344,7 @@ class PfsClient(object):
         ])
         self.stub.PutFile(req, metadata=self.metadata)
 
-    def get_file(self, commit, path, offset_bytes=0, size_bytes=0, extract_value=True):
+    def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
         """
         Returns an iterator of the contents contents of a file at a specific
         Commit.
@@ -367,9 +358,6 @@ class PfsClient(object):
         you will get fewer bytes than size if you pass a value larger than the
         size of the file. If size is set to 0 then all of the data will be
         returned.
-        * extract_value: If True, then an ExtractValueIterator will be return,
-        which will iterate over the bytes of the file. If False, then the
-        protobuf response iterator will return.
         """
         req = proto.GetFileRequest(
             file=proto.File(commit=commit_from(commit), path=path),
@@ -377,9 +365,8 @@ class PfsClient(object):
             size_bytes=size_bytes
         )
         res = self.stub.GetFile(req, metadata=self.metadata)
-        if extract_value:
-            return ExtractValueIterator(res)
-        return res
+        for item in res:
+            yield item.value
 
     def inspect_file(self, commit, path):
         """
