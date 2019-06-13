@@ -1,7 +1,5 @@
 import os
 
-import six
-
 from python_pachyderm.client.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.client.version.versionpb.version_pb2_grpc import (
     google_dot_protobuf_dot_empty__pb2 as pb_empty,
@@ -33,7 +31,7 @@ def commit_from(src, allow_just_repo=False):
         return src
     elif isinstance(src, (tuple, list)) and len(src) == 2:
         return pfs_proto.Commit(repo=pfs_proto.Repo(name=src[0]), id=src[1])
-    elif isinstance(src, six.string_types):
+    elif isinstance(src, str):
         repo_name, commit_id = src.split('/', 1)
         return pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=commit_id)
 

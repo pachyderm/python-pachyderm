@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-
-import six
-
 from python_pachyderm.client.pps import pps_pb2 as proto
 from python_pachyderm.client.pps import pps_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
@@ -47,7 +43,7 @@ class PpsClient(object):
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        elif isinstance(input_commit, six.string_types):
+        elif isinstance(input_commit, str):
             input_commit = [commit_from(input_commit)]
         if output_commit:
             output_commit = commit_from(output_commit)
