@@ -480,3 +480,16 @@ def test_glob_file(pfs_client_with_repo):
     assert files[0].size_bytes == 4
     assert files[0].file_type == python_pachyderm.FILE
     assert files[0].file.path == "/file1.dat"
+
+def test_delete_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
+
+    assert len(pfs_client.list_file(c, '/')) == 1
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.delete_file(c, 'file1.dat')
+
+    assert len(pfs_client.list_file(c, '/')) == 0
