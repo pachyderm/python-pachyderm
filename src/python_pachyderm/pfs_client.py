@@ -413,7 +413,7 @@ class PfsClient(object):
         res = self.stub.InspectFile(req, metadata=self.metadata)
         return res
 
-    def list_file(self, commit, path, recursive=False, history=0):
+    def list_file(self, commit, path, recursive=False, history=0, include_contents=False):
         """
         Lists the files in a directory.
 
@@ -423,9 +423,12 @@ class PfsClient(object):
         * recursive: If True, continue listing the files for sub-directories.
         * history: number of historical "versions" to be returned (0 = none,
         -1 = all)
+        * include_contents: If True, file contents are included
         """
         req = proto.ListFileRequest(
-            file=proto.File(commit=commit_from(commit), path=path), history=history
+            file=proto.File(commit=commit_from(commit), path=path),
+            history=history,
+            full=include_contents,
         )
         res = self.stub.ListFile(req, metadata=self.metadata)
         file_infos = res.file_info
@@ -433,7 +436,7 @@ class PfsClient(object):
         if recursive:
             dirs = [f for f in file_infos if f.file_type == proto.DIR]
             files = [f for f in file_infos if f.file_type == proto.FILE]
-            return sum([self.list_file(commit, d.file.path, recursive) for d in dirs], files)
+            return sum([self.list_file(commit, d.file.path, recursive=recursive, history=history, include_contents=include_contents) for d in dirs], files)
 
         return list(file_infos)
 
