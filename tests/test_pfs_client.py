@@ -375,3 +375,16 @@ def test_subscribe_commit(pfs_client_with_repo):
     commit = next(commits)
     assert commit.branch.repo.name == repo_name
     assert commit.branch.name == "master"
+
+def test_list_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name, 'master') as c:
+        pass
+    with pfs_client.commit(repo_name, 'develop') as c:
+        pass
+
+    branches = pfs_client.list_branch(repo_name)
+    assert len(branches) == 2
+    assert branches[0].name == "develop"
+    assert branches[1].name == "master"
