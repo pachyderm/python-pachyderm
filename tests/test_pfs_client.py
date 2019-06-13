@@ -411,3 +411,16 @@ def test_delete_branch(pfs_client_with_repo):
     pfs_client.delete_branch(repo_name, "develop")
     branches = pfs_client.list_branch(repo_name)
     assert len(branches) == 0
+
+def test_inspect_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_bytes(c, 'file.dat', [b'DATA'])
+
+    fi = pfs_client.inspect_file(c, 'file.dat')
+    assert fi.file.commit.id == c.id
+    assert fi.file.commit.repo.name == repo_name
+    assert fi.file.path == 'file.dat'
+    assert fi.size_bytes == 4
+    assert fi.objects[0].hash == '4ba7d4149c32f5ccc6e54190beef0f503d1e637249baa9e4b123f5aa5c89506f299c10a7e32ab1e4bae30ed32df848f87d9b03a640320b0ca758c5ee56cb2db4'
