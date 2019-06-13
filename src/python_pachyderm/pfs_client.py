@@ -276,7 +276,10 @@ class PfsClient(object):
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
         """
-        res = proto.DeleteBranchRequest(repo=proto.Repo(name=repo_name), branch=branch_name)
+        res = proto.DeleteBranchRequest(branch=proto.Branch(
+            repo=proto.Repo(name=repo_name),
+            name=branch_name,
+        ))
         self.stub.DeleteBranch(res, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,

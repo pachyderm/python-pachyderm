@@ -388,3 +388,15 @@ def test_list_branch(pfs_client_with_repo):
     assert len(branches) == 2
     assert branches[0].name == "develop"
     assert branches[1].name == "master"
+
+def test_delete_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name, 'develop') as c:
+        pass
+
+    branches = pfs_client.list_branch(repo_name)
+    assert len(branches) == 1
+    pfs_client.delete_branch(repo_name, "develop")
+    branches = pfs_client.list_branch(repo_name)
+    assert len(branches) == 0
