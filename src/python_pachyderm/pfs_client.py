@@ -415,10 +415,7 @@ class PfsClient(object):
 
     def glob_file(self, commit, pattern):
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
-        res = self.stub.GlobFile(req, metadata=self.metadata)
-        if hasattr(res, 'file_info'):
-            return res.file_info
-        return []
+        return self.stub.GlobFileStream(req, metadata=self.metadata)
 
     def delete_file(self, commit, path):
         """
