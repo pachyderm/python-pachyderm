@@ -12,6 +12,7 @@ except ImportError:
 
 import six
 import pytest
+import threading
 
 import python_pachyderm
 
@@ -363,3 +364,14 @@ def test_delete_commit(pfs_client_with_repo):
     assert len(pfs_client.list_commit(repo_name)) == 1
     pfs_client.delete_commit("{}/master".format(repo_name))
     assert len(pfs_client.list_commit(repo_name)) == 0
+
+def test_subscribe_commit(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    commits = pfs_client.subscribe_commit(repo_name, "master")
+
+    with pfs_client.commit(repo_name, 'master') as c:
+        pass
+
+    commit = next(commits)
+    assert commit.branch.repo.name == repo_name
+    assert commit.branch.name == "master"
