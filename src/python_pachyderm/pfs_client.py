@@ -52,8 +52,7 @@ class PfsClient(object):
         * repo_name: Name of the repo.
         """
         req = proto.InspectRepoRequest(repo=proto.Repo(name=repo_name))
-        res = self.stub.InspectRepo(req, metadata=self.metadata)
-        return res
+        return self.stub.InspectRepo(req, metadata=self.metadata)
 
     def list_repo(self):
         """
@@ -110,8 +109,7 @@ class PfsClient(object):
         """
         req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
                                        description=description)
-        res = self.stub.StartCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.StartCommit(req, metadata=self.metadata)
 
     def finish_commit(self, commit):
         """
@@ -123,8 +121,7 @@ class PfsClient(object):
         * commit: A tuple, string, or Commit object representing the commit.
         """
         req = proto.FinishCommitRequest(commit=commit_from(commit))
-        res = self.stub.FinishCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None, description=None):
@@ -219,8 +216,7 @@ class PfsClient(object):
         req = proto.SubscribeCommitRequest(repo=repo, branch=branch)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
-        res = self.stub.SubscribeCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.SubscribeCommit(req, metadata=self.metadata)
 
     def list_branch(self, repo_name):
         """
@@ -377,8 +373,7 @@ class PfsClient(object):
         * path: Path to file.
         """
         req = proto.InspectFileRequest(file=proto.File(commit=commit_from(commit), path=path))
-        res = self.stub.InspectFile(req, metadata=self.metadata)
-        return res
+        return self.stub.InspectFile(req, metadata=self.metadata)
 
     def list_file(self, commit, path, history=0, include_contents=False):
         """
