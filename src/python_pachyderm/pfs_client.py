@@ -146,7 +146,6 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit))
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
-
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
         Gets a list of CommitInfo objects.
