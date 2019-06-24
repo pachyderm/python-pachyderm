@@ -40,11 +40,6 @@ def pps_client_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-
-def test_create_job(pps_client_with_sandbox):
-    client = pps_client_with_sandbox
-    print(client.create_job("test-pps-copy"))
-
 def test_list_job(pps_client_with_sandbox):
     client = pps_client_with_sandbox
     jobs = client.list_job()
