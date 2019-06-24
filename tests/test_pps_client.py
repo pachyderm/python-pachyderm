@@ -40,10 +40,10 @@ def pps_client_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-def test_get_job(pps_client_with_sandbox):
+def test_jobs(pps_client_with_sandbox):
     """
-    Tests both listing and inspecting jobs. Tests are combined because waiting
-    for commits to flush is a slow operation.
+    Tests job-related functionality. Tests are combined because we first have
+    to wait for commits to flush, which is a slow operation.
     """
 
     pps_client, pfs_client = pps_client_with_sandbox
@@ -70,3 +70,16 @@ def test_get_job(pps_client_with_sandbox):
     job = pps_client.inspect_job(job_id)
     assert job.job.id == job_id
     assert job.state == python_pachyderm.JOB_SUCCESS
+
+    with pytest.raises(Exception):
+        # should fail since the job finished already
+        pps_client.stop_job(job_id)
+
+    pps_client.delete_job(job_id)
+
+    jobs = pps_client.list_job()
+    assert len(jobs.job_info) == 0
+
+    with pytest.raises(Exception):
+        # should fail since we've deleted the job
+        pps_client.inspect_job(job_id)
