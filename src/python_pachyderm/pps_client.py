@@ -21,18 +21,10 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_job(self, transform, pipeline_name, pipeline_version, parallelism_spec, inputs, egress, service,
-                   output_repo, output_branch, parent_job, resource_spec, input, new_branch, incremental,
-                   enable_stats, salt, batch):
+    def create_job(self, pipeline_name, output_commit=None):
         req = proto.CreateJobRequest(
-            transform=transform, pipeline=proto.Pipeline(name=pipeline_name),
-            pipeline_version=pipeline_version,
-            parallelism_spec=parallelism_spec, inputs=inputs,
-            egress=egress, service=service, output_repo=output_repo,
-            output_branch=output_branch, parent_job=parent_job,
-            resource_spec=resource_spec, input=input, new_branch=new_branch,
-            incremental=incremental, enable_stats=enable_stats, salt=salt,
-            batch=batch
+            pipeline=proto.Pipeline(name=pipeline_name),
+            output_commit=output_commit,
         )
         return self.stub.CreateJob(req, metadata=self.metadata)
 
@@ -41,14 +33,19 @@ class PpsClient(object):
         return self.stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
+        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
+
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
         elif isinstance(input_commit, str):
             input_commit = [commit_from(input_commit)]
+        
         if output_commit:
             output_commit = commit_from(output_commit)
-        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline_name), input_commit=input_commit,
+        
+        req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit)
+        
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
