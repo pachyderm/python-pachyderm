@@ -98,6 +98,8 @@ def test_stop_job(pps_client_with_sandbox):
 
     # This is necessary because `StopJob` does not wait for the job to be
     # killed before returning a result.
+    # TODO: remove once this is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1) 
 
     job = pps_client.inspect_job(job_id)
