@@ -11,15 +11,6 @@ from python_pachyderm.util import commit_from, get_address, get_metadata
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value
 
 
-class ExtractValueIterator(object):
-    def __init__(self, r):
-        self._iter = r
-
-    def __iter__(self):
-        for item in self._iter:
-            yield item.value
-
-
 class PfsClient(object):
     def __init__(self, host=None, port=None, auth_token=None):
         """
@@ -61,8 +52,7 @@ class PfsClient(object):
         * repo_name: Name of the repo.
         """
         req = proto.InspectRepoRequest(repo=proto.Repo(name=repo_name))
-        res = self.stub.InspectRepo(req, metadata=self.metadata)
-        return res
+        return self.stub.InspectRepo(req, metadata=self.metadata)
 
     def list_repo(self):
         """
@@ -70,9 +60,7 @@ class PfsClient(object):
         """
         req = proto.ListRepoRequest()
         res = self.stub.ListRepo(req, metadata=self.metadata)
-        if hasattr(res, 'repo_info'):
-            return res.repo_info
-        return []
+        return res.repo_info
 
     def delete_repo(self, repo_name=None, force=False, all=False):
         """
@@ -121,8 +109,7 @@ class PfsClient(object):
         """
         req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
                                        description=description)
-        res = self.stub.StartCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.StartCommit(req, metadata=self.metadata)
 
     def finish_commit(self, commit):
         """
@@ -134,8 +121,7 @@ class PfsClient(object):
         * commit: A tuple, string, or Commit object representing the commit.
         """
         req = proto.FinishCommitRequest(commit=commit_from(commit))
-        res = self.stub.FinishCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None, description=None):
@@ -160,17 +146,6 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit))
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
-    # NOTE: this is not a standard PFS function
-    def provenances_for_repo(self, repo_name):
-        provenances = {}
-        commits = self.list_commit(repo_name)
-        sorted_commits = [x[0] for x in
-                          sorted([(c.commit.id, c.finished.seconds) for c in commits], key=lambda x: x[1])]
-        for c in sorted_commits:
-            for p in c.provenance:
-                provenances[p.id] = c.commit.id
-        return provenances
-
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
         Gets a list of CommitInfo objects.
@@ -191,10 +166,7 @@ class PfsClient(object):
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, 'from').CopyFrom(commit_from(from_commit))
-        res = self.stub.ListCommit(req, metadata=self.metadata)
-        if hasattr(res, 'commit_info'):
-            return res.commit_info
-        return []
+        return self.stub.ListCommitStream(req, metadata=self.metadata)
 
     def delete_commit(self, commit):
         """
@@ -226,10 +198,7 @@ class PfsClient(object):
         """
         req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
                                        to_repos=[proto.Repo(name=r) for r in repos])
-        res = self.stub.FlushCommit(req, metadata=self.metadata)
-
-        for commit in res:
-            yield commit
+        return self.stub.FlushCommit(req, metadata=self.metadata)
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None):
         """
@@ -246,8 +215,7 @@ class PfsClient(object):
         req = proto.SubscribeCommitRequest(repo=repo, branch=branch)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
-        res = self.stub.SubscribeCommit(req, metadata=self.metadata)
-        return res
+        return self.stub.SubscribeCommit(req, metadata=self.metadata)
 
     def list_branch(self, repo_name):
         """
@@ -258,9 +226,7 @@ class PfsClient(object):
         """
         req = proto.ListBranchRequest(repo=proto.Repo(name=repo_name))
         res = self.stub.ListBranch(req, metadata=self.metadata)
-        if hasattr(res, 'branch_info'):
-            return res.branch_info
-        return []
+        return res.branch_info
 
     def delete_branch(self, repo_name, branch_name):
         """
@@ -351,11 +317,11 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
-    # NOTE: this is not a standard PFS function
     def put_file_url(self, commit, path, url, recursive=False):
         """
         Puts a file using the content found at a URL. The URL is sent to the
-        server which performs the request.
+        server which performs the request. Note that this is not a standard
+        PFS function.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
@@ -373,7 +339,7 @@ class PfsClient(object):
         ])
         self.stub.PutFile(req, metadata=self.metadata)
 
-    def get_file(self, commit, path, offset_bytes=0, size_bytes=0, extract_value=True):
+    def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
         """
         Returns an iterator of the contents contents of a file at a specific
         Commit.
@@ -387,9 +353,6 @@ class PfsClient(object):
         you will get fewer bytes than size if you pass a value larger than the
         size of the file. If size is set to 0 then all of the data will be
         returned.
-        * extract_value: If True, then an ExtractValueIterator will be return,
-        which will iterate over the bytes of the file. If False, then the
-        protobuf response iterator will return.
         """
         req = proto.GetFileRequest(
             file=proto.File(commit=commit_from(commit), path=path),
@@ -397,32 +360,8 @@ class PfsClient(object):
             size_bytes=size_bytes
         )
         res = self.stub.GetFile(req, metadata=self.metadata)
-        if extract_value:
-            return ExtractValueIterator(res)
-        return res
-
-    # NOTE: this is not a standard PFS function
-    def get_files(self, commit, paths, recursive=False):
-        """
-        Returns the contents of a list of files at a specific Commit as a
-        dictionary of file paths to data.
-
-        Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * paths: A list of paths to retrieve.
-        * recursive: If True, will go into each directory in the list
-        recursively.
-        """
-        filtered_file_infos = []
-        for path in paths:
-            fi = self.inspect_file(commit, path)
-            if fi.file_type == proto.FILE:
-                filtered_file_infos.append(fi)
-            else:
-                filtered_file_infos += self.list_file(commit, path, recursive=recursive)
-
-        filtered_paths = [f.file.path for f in filtered_file_infos if f.file_type == proto.FILE]
-        return {path: b''.join(self.get_file(commit, path)) for path in filtered_paths}
+        for item in res:
+            yield item.value
 
     def inspect_file(self, commit, path):
         """
@@ -433,39 +372,31 @@ class PfsClient(object):
         * path: Path to file.
         """
         req = proto.InspectFileRequest(file=proto.File(commit=commit_from(commit), path=path))
-        res = self.stub.InspectFile(req, metadata=self.metadata)
-        return res
+        return self.stub.InspectFile(req, metadata=self.metadata)
 
-    def list_file(self, commit, path, recursive=False, history=0):
+    def list_file(self, commit, path, history=0, include_contents=False):
         """
         Lists the files in a directory.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
         * path: The path to the directory.
-        * recursive: If True, continue listing the files for sub-directories.
         * history: number of historical "versions" to be returned (0 = none,
         -1 = all)
+        * include_contents: If True, file contents are included
         """
+
         req = proto.ListFileRequest(
-            file=proto.File(commit=commit_from(commit), path=path), history=history
+            file=proto.File(commit=commit_from(commit), path=path),
+            history=history,
+            full=include_contents,
         )
-        res = self.stub.ListFile(req, metadata=self.metadata)
-        file_infos = res.file_info
 
-        if recursive:
-            dirs = [f for f in file_infos if f.file_type == proto.DIR]
-            files = [f for f in file_infos if f.file_type == proto.FILE]
-            return sum([self.list_file(commit, d.file.path, recursive) for d in dirs], files)
-
-        return list(file_infos)
+        return self.stub.ListFileStream(req, metadata=self.metadata)
 
     def glob_file(self, commit, pattern):
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
-        res = self.stub.GlobFile(req, metadata=self.metadata)
-        if hasattr(res, 'file_info'):
-            return res.file_info
-        return []
+        return self.stub.GlobFileStream(req, metadata=self.metadata)
 
     def delete_file(self, commit, path):
         """

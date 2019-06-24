@@ -216,7 +216,7 @@ def test_pfs_finish_commit(pfs_client_with_repo, commit_arg):
     elif commit_arg == '(repo, commit_id)':
         pfs_client.finish_commit((repo_name, commit.id))
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == commit.id
 
@@ -238,7 +238,7 @@ def test_pfs_commit_context_mgr(pfs_client, repo_to_create, repo_to_commit_to, b
     with pfs_client.commit(repo_to_commit_to, branch) as c:
         pass
     # THEN a single commit should exist in the repo
-    commit_infos = pfs_client.list_commit(repo_to_commit_to)
+    commit_infos = list(pfs_client.list_commit(repo_to_commit_to))
     assert len(commit_infos) == 1
     #   AND the commit ID should match the finished commit
     assert commit_infos[0].commit.id == c.id
@@ -252,7 +252,7 @@ def test_pfs_commit_context_mgr_missing_branch(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pass
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
 
@@ -268,10 +268,10 @@ def test_put_file_bytes_bytestring(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
 
-    commit_infos = pfs_client.list_commit(repo_name)
+    commit_infos = list(pfs_client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
-    files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
 
@@ -305,7 +305,8 @@ def test_put_file_bytes_filelike(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_bytes(c, 'file.dat', BytesIO(b'DATA'))
 
-    files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
+
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
 
@@ -320,7 +321,7 @@ def test_put_file_bytes_iterable(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_bytes(c, 'file.dat', [b'DATA'])
 
-    files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
 
@@ -330,9 +331,9 @@ def test_put_file_url(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_url(c, "index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
 
-    files = pfs_client.get_files('{}/{}'.format(repo_name, c.id), '.')
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
-    assert '/index.html' in files
+    assert files[0].file.path == '/index.html'
 
 
 def test_flush_commit(pfs_client_with_repo):
@@ -348,9 +349,8 @@ def test_flush_commit(pfs_client_with_repo):
     # Just block until all of the commits are yielded
     list(pfs_client.flush_commit(['{}/{}'.format(repo_name, c.id)]))
 
-    files = pfs_client.get_files('{}/master'.format(repo_name), '/', recursive=True)
-    assert files == {'/input.json': b'hello world'}
-
+    files = list(pfs_client.list_file('{}/master'.format(repo_name), '/'))
+    assert len(files) == 1
 
 def test_inspect_commit(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
@@ -372,9 +372,11 @@ def test_delete_commit(pfs_client_with_repo):
     with pfs_client.commit(repo_name, 'master') as c:
         pass
 
-    assert len(pfs_client.list_commit(repo_name)) == 1
+    commits = list(pfs_client.list_commit(repo_name))
+    assert len(commits) == 1
     pfs_client.delete_commit("{}/master".format(repo_name))
-    assert len(pfs_client.list_commit(repo_name)) == 0
+    commits = list(pfs_client.list_commit(repo_name))
+    assert len(commits) == 0
 
 def test_subscribe_commit(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
@@ -432,7 +434,7 @@ def test_list_file(pfs_client_with_repo):
         pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
         pfs_client.put_file_bytes(c, 'file2.dat', [b'DATA'])
 
-    files = pfs_client.list_file(c, '/')
+    files = list(pfs_client.list_file(c, '/'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
     assert files[0].file_type == python_pachyderm.FILE
@@ -440,24 +442,6 @@ def test_list_file(pfs_client_with_repo):
     assert files[1].size_bytes == 4
     assert files[1].file_type == python_pachyderm.FILE
     assert files[1].file.path == "/file2.dat"
-
-def test_list_file_recursive(pfs_client_with_repo):
-    pfs_client, repo_name = pfs_client_with_repo
-    expected_files = set()
-
-    with pfs_client.commit(repo_name) as c:
-        for i in range(10):
-            filename = '{}/{}'.format(i % 2, i)
-            pfs_client.put_file_bytes(c, filename, [b'DATA'])
-            expected_files.add('/{}'.format(filename))
-
-    files = pfs_client.list_file(c, '/', recursive=True)
-    assert len(files) == 10
-
-    for f in files:
-        assert f.size_bytes == 4
-        assert f.file_type == python_pachyderm.FILE
-        assert f.file.path in expected_files
 
 def test_glob_file(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
@@ -466,7 +450,7 @@ def test_glob_file(pfs_client_with_repo):
         pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
         pfs_client.put_file_bytes(c, 'file2.dat', [b'DATA'])
 
-    files = pfs_client.glob_file(c, '/*.dat')
+    files = list(pfs_client.glob_file(c, '/*.dat'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
     assert files[0].file_type == python_pachyderm.FILE
@@ -475,7 +459,7 @@ def test_glob_file(pfs_client_with_repo):
     assert files[1].file_type == python_pachyderm.FILE
     assert files[1].file.path == "/file2.dat"
 
-    files = pfs_client.glob_file(c, '/*1.dat')
+    files = list(pfs_client.glob_file(c, '/*1.dat'))
     assert len(files) == 1
     assert files[0].size_bytes == 4
     assert files[0].file_type == python_pachyderm.FILE
@@ -487,9 +471,9 @@ def test_delete_file(pfs_client_with_repo):
     with pfs_client.commit(repo_name) as c:
         pfs_client.put_file_bytes(c, 'file1.dat', [b'DATA'])
 
-    assert len(pfs_client.list_file(c, '/')) == 1
+    assert len(list(pfs_client.list_file(c, '/'))) == 1
 
     with pfs_client.commit(repo_name) as c:
         pfs_client.delete_file(c, 'file1.dat')
 
-    assert len(pfs_client.list_file(c, '/')) == 0
+    assert len(list(pfs_client.list_file(c, '/'))) == 0
