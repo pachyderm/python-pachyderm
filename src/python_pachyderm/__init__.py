@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-
 from .client.pfs.pfs_pb2 import DIR, FILE, NONE, JSON, LINE, CSV, \
     Repo, Branch, BranchInfo, File, Block, Object, Tag, RepoInfo, \
     RepoAuthInfo, Commit, CommitRange, CommitInfo, FileInfo, ByteRange, \

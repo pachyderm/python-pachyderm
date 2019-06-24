@@ -4,15 +4,10 @@
 """Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
 
-from collections import namedtuple
-try:
-    from StringIO import StringIO as BytesIO
-except ImportError:
-    from io import BytesIO
-
-import six
 import pytest
 import threading
+from io import BytesIO
+from collections import namedtuple
 
 import python_pachyderm
 
