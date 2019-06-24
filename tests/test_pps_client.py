@@ -31,7 +31,7 @@ def pps_client_with_sandbox():
 
     pps_client.create_pipeline(
         "test-pps-copy",
-        transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["ls /pfs; cp /pfs/*.dat /pfs/out/"]),
+        transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/test-pps-input/*.dat /pfs/out/"]),
         input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="test-pps-input")),
     )
 
@@ -40,7 +40,12 @@ def pps_client_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-def test_list_job(pps_client_with_sandbox):
+def test_get_job(pps_client_with_sandbox):
+    """
+    Tests both listing and inspecting jobs. Tests are combined because waiting
+    for commits to flush is a slow operation.
+    """
+
     pps_client, pfs_client = pps_client_with_sandbox
 
     jobs = pps_client.list_job()
@@ -50,7 +55,7 @@ def test_list_job(pps_client_with_sandbox):
         pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
 
     # wait for the job to run
-    pfs_client.inspect_commit(f"test-pps-input/{c.id}")
+    list(pfs_client.flush_commit([f"test-pps-input/{c.id}"]))
 
     jobs = pps_client.list_job()
     assert len(jobs.job_info) == 1
@@ -60,3 +65,8 @@ def test_list_job(pps_client_with_sandbox):
 
     jobs = pps_client.list_job(input_commit=f"test-pps-input/{c.id}")
     assert len(jobs.job_info) == 1
+
+    job_id = jobs.job_info[0].job.id
+    job = pps_client.inspect_job(job_id)
+    assert job.job.id == job_id
+    assert job.state == python_pachyderm.JOB_SUCCESS
