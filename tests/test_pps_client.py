@@ -31,16 +31,32 @@ def pps_client_with_sandbox():
 
     pps_client.create_pipeline(
         "test-pps-copy",
-        transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/* /pfs/out/"]),
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="test-pps-input")),
+        transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["ls /pfs; cp /pfs/*.dat /pfs/out/"]),
+        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="test-pps-input")),
     )
 
-    yield pps_client
+    yield pps_client, pfs_client
 
     pps_client.delete_all()
     pfs_client.delete_all()
 
 def test_list_job(pps_client_with_sandbox):
-    client = pps_client_with_sandbox
-    jobs = client.list_job()
+    pps_client, pfs_client = pps_client_with_sandbox
+
+    jobs = pps_client.list_job()
     assert len(jobs.job_info) == 0
+
+    with pfs_client.commit('test-pps-input', 'master') as c:
+        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
+
+    # wait for the job to run
+    pfs_client.inspect_commit(f"test-pps-input/{c.id}")
+
+    jobs = pps_client.list_job()
+    assert len(jobs.job_info) == 1
+
+    jobs = pps_client.list_job(pipeline_name='test-pps-copy')
+    assert len(jobs.job_info) == 1
+
+    jobs = pps_client.list_job(input_commit=f"test-pps-input/{c.id}")
+    assert len(jobs.job_info) == 1

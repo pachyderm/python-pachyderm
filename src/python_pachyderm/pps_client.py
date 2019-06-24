@@ -30,11 +30,10 @@ class PpsClient(object):
 
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        elif isinstance(input_commit, str):
+        elif input_commit is not None:
             input_commit = [commit_from(input_commit)]
-        
-        if output_commit:
-            output_commit = commit_from(output_commit)
+
+        output_commit = commit_from(output_commit) if output_commit is not None else None
         
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit)
