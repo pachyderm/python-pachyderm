@@ -4,15 +4,10 @@
 """Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
 
-from collections import namedtuple
-try:
-    from StringIO import StringIO as BytesIO
-except ImportError:
-    from io import BytesIO
-
-import six
 import pytest
 import threading
+from io import BytesIO
+from collections import namedtuple
 
 import python_pachyderm
 
@@ -138,7 +133,7 @@ def test_pfs_start_commit(pfs_client, repo_to_create, repo_to_commit_to, branch)
     pfs_client.create_repo(repo_to_create)
     commit = pfs_client.start_commit(repo_to_commit_to, branch)
     assert commit.repo.name == repo_to_commit_to
-    assert isinstance(commit.id, six.string_types)
+    assert isinstance(commit.id, str)
 
 
 def test_pfs_start_commit_missing_branch(pfs_client_with_repo):
@@ -146,7 +141,7 @@ def test_pfs_start_commit_missing_branch(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
     commit = pfs_client.start_commit(repo_name)
     assert commit.repo.name == repo_name
-    assert isinstance(commit.id, six.string_types)
+    assert isinstance(commit.id, str)
 
 
 def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
@@ -166,7 +161,7 @@ def test_pfs_start_commit_with_parent_no_branch(pfs_client_with_repo):
 
     commit2 = pfs_client.start_commit(repo_name, parent=commit1.id)
     assert commit2.repo.name == repo_name
-    assert isinstance(commit2.id, six.string_types)
+    assert isinstance(commit2.id, str)
 
 
 def test_pfs_start_commit_on_branch_with_parent(pfs_client_with_repo):
@@ -179,7 +174,7 @@ def test_pfs_start_commit_on_branch_with_parent(pfs_client_with_repo):
 
     commit2 = pfs_client.start_commit(repo_name, branch=branch, parent=commit1.id)
     assert commit2.repo.name == repo_name
-    assert isinstance(commit2.id, six.string_types)
+    assert isinstance(commit2.id, str)
 
 
 def test_pfs_start_commit_fork(pfs_client_with_repo):
@@ -197,7 +192,7 @@ def test_pfs_start_commit_fork(pfs_client_with_repo):
     commit2 = pfs_client.start_commit(repo_name, branch=branch2, parent=branch1)
 
     assert commit2.repo.name == repo_name
-    assert isinstance(commit2.id, six.string_types)
+    assert isinstance(commit2.id, str)
 
     branches = [branch_info.name for branch_info in pfs_client.list_branch(repo_name)]
     assert (branch1 in branches) and (branch2 in branches)
