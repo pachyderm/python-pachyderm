@@ -123,7 +123,7 @@ class PpsClient(object):
             pipeline=pipeline, job=job, data_filters=data_filters,
             master=master
         )
-        return list(self.stub.GetLogs(req, metadata=self.metadata))
+        return self.stub.GetLogs(req, metadata=self.metadata)
 
     def garbage_collect(self):
         return self.stub.GarbageCollect(proto.GarbageCollectRequest(), metadata=self.metadata)
