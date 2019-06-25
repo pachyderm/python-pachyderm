@@ -126,5 +126,4 @@ class PpsClient(object):
         return list(self.stub.GetLogs(req, metadata=self.metadata))
 
     def garbage_collect(self):
-        req = self.stub.GarbageCollect(proto.GarbageCollectRequest())
-        return proto.GarbageCollectResponse(req, metadata=self.metadata)
+        return self.stub.GarbageCollect(proto.GarbageCollectRequest(), metadata=self.metadata)
