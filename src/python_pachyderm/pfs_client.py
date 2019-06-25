@@ -29,7 +29,7 @@ class PfsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_repo(self, repo_name, description=None):
+    def create_repo(self, repo_name, description=None, update=False):
         """
         Creates a new Repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
@@ -40,8 +40,13 @@ class PfsClient(object):
         Params:
         * repo_name: Name of the repo.
         * description: Repo description.
+        * update: Whether to update if the repo already exists.
         """
-        req = proto.CreateRepoRequest(repo=proto.Repo(name=repo_name), description=description)
+        req = proto.CreateRepoRequest(
+            repo=proto.Repo(name=repo_name),
+            description=description,
+            update=update
+        )
         self.stub.CreateRepo(req, metadata=self.metadata)
 
     def inspect_repo(self, repo_name):
@@ -85,7 +90,7 @@ class PfsClient(object):
             else:
                 raise ValueError("Cannot specify a repo_name if all=True")
 
-    def start_commit(self, repo_name, branch=None, parent=None, description=None):
+    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=tuple()):
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with PutFile and when all the data has been
@@ -105,13 +110,21 @@ class PfsClient(object):
         to the new commit without affecting the contents of the parent Commit.
         You may pass "" as parentCommit in which case the new Commit will have
         no parent and will initially appear empty.
-        * description: (optional) explanation of the commit for clarity.
+        * description: An optional explanation of the commit for clarity.
+        * provenance: An optional list of `CommitProvenance` specifying the
+        commit provenance.
         """
-        req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
-                                       description=description)
+        req = proto.StartCommitRequest(
+            parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent),
+            branch=branch,
+            description=description,
+            provenance=provenance,
+        )
         return self.stub.StartCommit(req, metadata=self.metadata)
 
-    def finish_commit(self, commit):
+    def finish_commit(self, commit, description=None,
+                      tree_object_hashes=tuple(), datum_object_hash=None,
+                      size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -119,8 +132,23 @@ class PfsClient(object):
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
+        * description: An optional user-provided string describing this commit.
+        * tree_object_hashes: A list of zero or more string specifying object
+        hashes.
+        * datum_object_hash: An optional string specifying an object hash.
+        * size_bytes: An optional int.
+        * empty: An optional bool. If set, 'commit' will be closed (its
+        'finished' field will be set to the current time) but its 'tree' will
+        be left nil.
         """
-        req = proto.FinishCommitRequest(commit=commit_from(commit))
+        req = proto.FinishCommitRequest(
+            commit=commit_from(commit),
+            description=description,
+            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes else None,
+            datums=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
+            size_bytes=size_bytes,
+            empty=empty,
+        )
         return self.stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
@@ -136,14 +164,16 @@ class PfsClient(object):
         finally:
             self.finish_commit(commit)
 
-    def inspect_commit(self, commit):
+    def inspect_commit(self, commit, block_state=None):
         """
         Returns info about a specific Commit.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
+        * block_state: Causes inspect commit to block until the commit is in
+        the desired commit state.
         """
-        req = proto.InspectCommitRequest(commit=commit_from(commit))
+        req = proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
@@ -200,7 +230,7 @@ class PfsClient(object):
                                        to_repos=[proto.Repo(name=r) for r in repos])
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
-    def subscribe_commit(self, repo_name, branch, from_commit_id=None):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
         """
         SubscribeCommit is like ListCommit but it keeps listening for commits
         as they come in. This returns an iterator Commit objects.
@@ -210,9 +240,10 @@ class PfsClient(object):
         * branch: Branch to subscribe to.
         * from_commit_id: Optional. Only commits created since this commit
         are returned.
+        * state: The commit state to filter on.
         """
         repo = proto.Repo(name=repo_name)
-        req = proto.SubscribeCommitRequest(repo=repo, branch=branch)
+        req = proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
@@ -228,7 +259,7 @@ class PfsClient(object):
         res = self.stub.ListBranch(req, metadata=self.metadata)
         return res.branch_info
 
-    def delete_branch(self, repo_name, branch_name):
+    def delete_branch(self, repo_name, branch_name, force=False):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
@@ -237,12 +268,11 @@ class PfsClient(object):
         Params:
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
+        * force: Whether to force the branch deletion.
         """
-        res = proto.DeleteBranchRequest(branch=proto.Branch(
-            repo=proto.Repo(name=repo_name),
-            name=branch_name,
-        ))
-        self.stub.DeleteBranch(res, metadata=self.metadata)
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
+        req = proto.DeleteBranchRequest(branch=branch, force=force)
+        self.stub.DeleteBranch(req, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
                        target_file_datums=0, target_file_bytes=0, overwrite_index=None):
