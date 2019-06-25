@@ -42,8 +42,8 @@ def clients_with_sandbox():
 
     yield pps_client, pfs_client, commit
 
-    # pps_client.delete_all()
-    # pfs_client.delete_all()
+    pps_client.delete_all()
+    pfs_client.delete_all()
 
 def wait_for_job(pps_client, sleep=0.01):
     for i in range(1000):
@@ -145,3 +145,27 @@ def test_delete_all_pipelines(clients_with_sandbox):
     pps_client.delete_all_pipelines()
     pipelines = pps_client.list_pipeline()
     assert len(pipelines.pipeline_info) == 0
+
+def test_restart_pipeline(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+    pps_client.stop_pipeline('test-pps-copy')
+
+    # This is necessary because `StopPipeline` does not wait for the job to be
+    # killed before returning a result.
+    # TODO: remove once this is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/3856
+    time.sleep(1)
+    
+    pipeline = pps_client.inspect_pipeline('test-pps-copy')
+    assert pipeline.state == python_pachyderm.PIPELINE_PAUSED
+
+    pps_client.start_pipeline('test-pps-copy')
+
+    # This is necessary because `StartPipeline` does not wait for the job to be
+    # killed before returning a result.
+    # TODO: remove once this is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/3856
+    time.sleep(1)
+
+    pipeline = pps_client.inspect_pipeline('test-pps-copy')
+    assert pipeline.state == python_pachyderm.PIPELINE_RUNNING
