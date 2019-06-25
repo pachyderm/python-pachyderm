@@ -46,17 +46,17 @@ def clients_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-def wait_for_job(pps_client, sleep=0.01):
-    for i in range(1000):
+def wait_for_job(pps_client, sleep=1.0):
+    start_time = time.time()
+
+    while True:
         jobs = pps_client.list_job()
 
         if len(jobs.job_info) > 0:
             return jobs.job_info[0].job.id
 
-        if sleep is not None:
-            time.sleep(sleep)
-
-    assert False, "failed to wait for job"
+        assert time.time() - start_time < 60.0, "timed out waiting for job"
+        time.sleep(sleep)
 
 def test_list_job(clients_with_sandbox):
     pps_client, _, commit = clients_with_sandbox
@@ -82,7 +82,7 @@ def test_inspect_job(clients_with_sandbox):
 def test_stop_job(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
 
-    job_id = wait_for_job(pps_client, sleep=None)
+    job_id = wait_for_job(pps_client, sleep=0.01)
 
     # This may fail if the job finished between the last call and here, so
     # ignore _Rendezvous errors.
