@@ -21,8 +21,9 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def inspect_job(self, job_id, block_state=False):
-        req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
+    def inspect_job(self, job_id, block_state=False, output_commit=None):
+        output_commit = commit_from(output_commit) if output_commit is not None else None
+        req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state, output_commit=output_commit)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=0):
