@@ -136,14 +136,16 @@ class PfsClient(object):
         finally:
             self.finish_commit(commit)
 
-    def inspect_commit(self, commit):
+    def inspect_commit(self, commit, block_state=None):
         """
         Returns info about a specific Commit.
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
+        * block_state: Causes inspect commit to block until the commit is in
+        the desired commit state.
         """
-        req = proto.InspectCommitRequest(commit=commit_from(commit))
+        req = proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
@@ -210,6 +212,7 @@ class PfsClient(object):
         * branch: Branch to subscribe to.
         * from_commit_id: Optional. Only commits created since this commit
         are returned.
+        * state: The commit state to filter on.
         """
         repo = proto.Repo(name=repo_name)
         req = proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
@@ -237,6 +240,7 @@ class PfsClient(object):
         Params:
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
+        * force: Whether to force the branch deletion.
         """
         branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
         req = proto.DeleteBranchRequest(branch=branch, force=force)
