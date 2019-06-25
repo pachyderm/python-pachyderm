@@ -3,6 +3,7 @@
 
 """Tests for the `PpsClient` class of the `python_pachyderm` package."""
 
+import grpc
 import time
 import pytest
 
@@ -60,9 +61,6 @@ def wait_for_job(pps_client, sleep=0.01):
 def test_list_job(clients_with_sandbox):
     pps_client, _, commit = clients_with_sandbox
 
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) == 0
-
     job_id = wait_for_job(pps_client)
 
     jobs = pps_client.list_job()
@@ -86,19 +84,22 @@ def test_stop_job(clients_with_sandbox):
 
     job_id = wait_for_job(pps_client, sleep=None)
 
-    # This may fail if the job finished between the last call and here. It's
-    # not ideal, but the alternative would be to just ensure that this throws
-    # an exception when called after the job has succeeded.
-    pps_client.stop_job(job_id)
-
-    # This is necessary because `StopJob` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(1) 
-
-    job = pps_client.inspect_job(job_id)
-    assert job.state == python_pachyderm.JOB_KILLED
+    # This may fail if the job finished between the last call and here, so
+    # ignore _Rendezvous errors.
+    try:
+        pps_client.stop_job(job_id)
+    except grpc._channel._Rendezvous:
+        # if it failed, it should be because the job already finished
+        job = pps_client.inspect_job(job_id)
+        assert job.state == python_pachyderm.JOB_SUCCESS
+    else:
+        # This is necessary because `StopJob` does not wait for the job to be
+        # killed before returning a result.
+        # TODO: remove once this is fixed:
+        # https://github.com/pachyderm/pachyderm/issues/3856
+        time.sleep(5) 
+        job = pps_client.inspect_job(job_id)
+        assert job.state == python_pachyderm.JOB_KILLED
 
 def test_delete_job(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
@@ -154,7 +155,7 @@ def test_restart_pipeline(clients_with_sandbox):
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(1)
+    time.sleep(5)
     
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert pipeline.state == python_pachyderm.PIPELINE_PAUSED
@@ -165,7 +166,7 @@ def test_restart_pipeline(clients_with_sandbox):
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(1)
+    time.sleep(5)
 
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert pipeline.state == python_pachyderm.PIPELINE_RUNNING
