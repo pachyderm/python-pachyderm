@@ -175,11 +175,19 @@ def test_get_logs(clients_with_sandbox):
 
     job_id = wait_for_job(pps_client)
 
-    # Just make sure these don't error out
-    list(pps_client.get_logs(pipeline_name='test-pps-copy'))
-    list(pps_client.get_logs(job_id=job_id))
-    list(pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id))
-    list(pps_client.get_logs(pipeline_name='test-pps-copy', master=True))
+    # Just make sure these spit out some logs
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
+    assert next(logs) is not None
+
 
 def test_garbage_collect(pps_client):
     # just make sure this doesn't error
