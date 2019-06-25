@@ -133,3 +133,15 @@ def test_list_pipeline(clients_with_sandbox):
     pipelines = pps_client.list_pipeline()
     assert len(pipelines.pipeline_info) == 1
     assert pipelines.pipeline_info[0].pipeline.name == 'test-pps-copy'
+
+def test_delete_pipeline(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+    pps_client.delete_pipeline('test-pps-copy')
+    pipelines = pps_client.list_pipeline()
+    assert len(pipelines.pipeline_info) == 0
+
+def test_delete_all_pipelines(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+    pps_client.delete_all_pipelines()
+    pipelines = pps_client.list_pipeline()
+    assert len(pipelines.pipeline_info) == 0
