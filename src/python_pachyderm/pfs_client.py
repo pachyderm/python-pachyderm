@@ -200,7 +200,7 @@ class PfsClient(object):
                                        to_repos=[proto.Repo(name=r) for r in repos])
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
-    def subscribe_commit(self, repo_name, branch, from_commit_id=None):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
         """
         SubscribeCommit is like ListCommit but it keeps listening for commits
         as they come in. This returns an iterator Commit objects.
@@ -212,7 +212,7 @@ class PfsClient(object):
         are returned.
         """
         repo = proto.Repo(name=repo_name)
-        req = proto.SubscribeCommitRequest(repo=repo, branch=branch)
+        req = proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
