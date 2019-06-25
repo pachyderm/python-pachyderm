@@ -112,7 +112,7 @@ class PpsClient(object):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False):
+    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False, datum=None, follow=False, tail=0):
         pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
         job = proto.Job(id=job_id) if job_id else None
 
@@ -121,7 +121,7 @@ class PpsClient(object):
 
         req = proto.GetLogsRequest(
             pipeline=pipeline, job=job, data_filters=data_filters,
-            master=master
+            master=master, datum=datum, follow=follow, tail=tail,
         )
         return self.stub.GetLogs(req, metadata=self.metadata)
 
