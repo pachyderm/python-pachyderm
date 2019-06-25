@@ -141,8 +141,8 @@ class PfsClient(object):
         req = proto.FinishCommitRequest(
             commit=commit_from(commit),
             description=description,
-            tree_object_hashes=[proto.Object(hash=h) for h in tree_object_hashes],
-            datum_object_hash=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
+            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes else None,
+            datums=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
             size_bytes=size_bytes,
             empty=empty,
         )
