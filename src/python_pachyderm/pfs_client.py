@@ -228,7 +228,7 @@ class PfsClient(object):
         res = self.stub.ListBranch(req, metadata=self.metadata)
         return res.branch_info
 
-    def delete_branch(self, repo_name, branch_name):
+    def delete_branch(self, repo_name, branch_name, force=False):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
@@ -238,11 +238,9 @@ class PfsClient(object):
         * repo_name: The name of the repo.
         * branch_name: The name of the branch to delete.
         """
-        res = proto.DeleteBranchRequest(branch=proto.Branch(
-            repo=proto.Repo(name=repo_name),
-            name=branch_name,
-        ))
-        self.stub.DeleteBranch(res, metadata=self.metadata)
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
+        req = proto.DeleteBranchRequest(branch=branch, force=force)
+        self.stub.DeleteBranch(req, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
                        target_file_datums=0, target_file_bytes=0, overwrite_index=None):
