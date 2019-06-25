@@ -106,7 +106,8 @@ class PfsClient(object):
         You may pass "" as parentCommit in which case the new Commit will have
         no parent and will initially appear empty.
         * description: An optional explanation of the commit for clarity.
-        * provenance: An optional list of `CommitProvenance` specifying the commit provenance.
+        * provenance: An optional list of `CommitProvenance` specifying the
+        commit provenance.
         """
         req = proto.StartCommitRequest(
             parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent),
