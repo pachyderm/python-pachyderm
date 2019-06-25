@@ -25,7 +25,7 @@ class PpsClient(object):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
-    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
+    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=0):
         pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
 
         if isinstance(input_commit, list):
@@ -36,7 +36,7 @@ class PpsClient(object):
         output_commit = commit_from(output_commit) if output_commit is not None else None
 
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
-                                   output_commit=output_commit)
+                                   output_commit=output_commit, history=history)
 
         return self.stub.ListJobStream(req, metadata=self.metadata)
 
