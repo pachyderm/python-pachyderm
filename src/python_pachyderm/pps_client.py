@@ -57,7 +57,7 @@ class PpsClient(object):
         return self.stub.ListDatum(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=tuple()):
-        req = proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters))
+        req = proto.RestartDatumRequest(job=proto.Job(id=job_id), data_filters=data_filters)
         self.stub.RestartDatum(req, metadata=self.metadata)
 
     def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,

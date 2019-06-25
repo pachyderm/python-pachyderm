@@ -15,6 +15,12 @@ from .client.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
     WorkerStatus, ResourceSpec, GPUSpec, EtcdJobInfo, JobInfo, Worker, \
     Pipeline, PipelineInput, EtcdPipelineInfo, PipelineInfo, LogMessage, \
     ChunkSpec, SchedulingSpec
+from .client.pps.pps_pb2 import \
+    FAILED as DATUM_FAILED, \
+    SUCCESS as DATUM_SUCCESS, \
+    SKIPPED as DATUM_SKIPPED, \
+    STARTING as DATUM_STARTING, \
+    RECOVERED as DATUM_RECOVERED
 
 from .pfs_client import PfsClient
 from .pps_client import PpsClient
