@@ -122,3 +122,14 @@ def test_datums(clients_with_sandbox):
 
     # Just ensure this doesn't raise an exception
     pps_client.restart_datum(job_id)
+
+def test_inspect_pipeline(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+    pipeline = pps_client.inspect_pipeline('test-pps-copy')
+    assert pipeline.pipeline.name == 'test-pps-copy'
+
+def test_list_pipeline(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+    pipelines = pps_client.list_pipeline()
+    assert len(pipelines.pipeline_info) == 1
+    assert pipelines.pipeline_info[0].pipeline.name == 'test-pps-copy'
