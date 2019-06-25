@@ -92,12 +92,12 @@ class PpsClient(object):
         req = proto.ListPipelineRequest()
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
-    def delete_pipeline(self, pipeline_name, all=False):
-        req = proto.DeletePipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
+    def delete_pipeline(self, pipeline_name, force=False):
+        req = proto.DeletePipelineRequest(pipeline=proto.Pipeline(name=pipeline_name), force=force)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
-    def delete_all_pipelines(self):
-        req = proto.DeletePipelineRequest(all=True)
+    def delete_all_pipelines(self, force=False):
+        req = proto.DeletePipelineRequest(all=True, force=force)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def start_pipeline(self, pipeline_name):
