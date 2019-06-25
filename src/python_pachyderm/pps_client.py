@@ -38,7 +38,7 @@ class PpsClient(object):
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit)
 
-        return self.stub.ListJob(req, metadata=self.metadata)
+        return self.stub.ListJobStream(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
         req = proto.DeleteJobRequest(job=proto.Job(id=job_id))
@@ -54,7 +54,7 @@ class PpsClient(object):
 
     def list_datum(self, job_id):
         req = proto.ListDatumRequest(job=proto.Job(id=job_id))
-        return self.stub.ListDatum(req, metadata=self.metadata)
+        return self.stub.ListDatumStream(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=tuple()):
         req = proto.RestartDatumRequest(job=proto.Job(id=job_id), data_filters=data_filters)

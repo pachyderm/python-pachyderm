@@ -48,10 +48,8 @@ def clients_with_sandbox():
 
 def wait_for_job(pps_client, sleep=0.01):
     for i in range(1000):
-        jobs = pps_client.list_job()
-
-        if len(jobs.job_info) > 0:
-            return jobs.job_info[0].job.id
+        for job in pps_client.list_job():
+            return job.job.id
 
         if sleep is not None:
             time.sleep(sleep)
@@ -63,14 +61,14 @@ def test_list_job(clients_with_sandbox):
 
     job_id = wait_for_job(pps_client)
 
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job())
+    assert len(jobs) == 1
 
-    jobs = pps_client.list_job(pipeline_name='test-pps-copy')
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job(pipeline_name='test-pps-copy'))
+    assert len(jobs) == 1
 
-    jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id))
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id)))
+    assert len(jobs) == 1
 
 def test_inspect_job(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
@@ -105,8 +103,8 @@ def test_delete_job(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
     job_id = wait_for_job(pps_client)
     pps_client.delete_job(job_id)
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) == 0
+    jobs = list(pps_client.list_job())
+    assert len(jobs) == 0
 
 def test_datums(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
@@ -115,9 +113,9 @@ def test_datums(clients_with_sandbox):
     # flush the job so it fully finishes
     list(pfs_client.flush_commit(["test-pps-input/{}".format(commit.id)]))
 
-    datums = pps_client.list_datum(job_id)
-    assert len(datums.datum_infos) == 1
-    datum_id = datums.datum_infos[0].datum.id
+    datums = list(pps_client.list_datum(job_id))
+    assert len(datums) == 1
+    datum_id = datums[0].datum.id
     datum = pps_client.inspect_datum(job_id, datum_id)
     assert datum.state == python_pachyderm.DATUM_SUCCESS
 
