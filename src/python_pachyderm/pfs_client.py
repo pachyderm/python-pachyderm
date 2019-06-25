@@ -85,7 +85,7 @@ class PfsClient(object):
             else:
                 raise ValueError("Cannot specify a repo_name if all=True")
 
-    def start_commit(self, repo_name, branch=None, parent=None, description=None):
+    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=tuple()):
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with PutFile and when all the data has been
@@ -105,10 +105,15 @@ class PfsClient(object):
         to the new commit without affecting the contents of the parent Commit.
         You may pass "" as parentCommit in which case the new Commit will have
         no parent and will initially appear empty.
-        * description: (optional) explanation of the commit for clarity.
+        * description: An optional explanation of the commit for clarity.
+        * provenance: An optional list of `CommitProvenance` specifying the commit provenance.
         """
-        req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
-                                       description=description)
+        req = proto.StartCommitRequest(
+            parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent),
+            branch=branch,
+            description=description,
+            provenance=provenance,
+        )
         return self.stub.StartCommit(req, metadata=self.metadata)
 
     def finish_commit(self, commit, description=None, tree_object_hashes=tuple(), datum_object_hash=None, size_bytes=None, empty=None):
