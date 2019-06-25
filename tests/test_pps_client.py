@@ -97,7 +97,7 @@ def test_stop_job(clients_with_sandbox):
         # killed before returning a result.
         # TODO: remove once this is fixed:
         # https://github.com/pachyderm/pachyderm/issues/3856
-        time.sleep(5) 
+        time.sleep(1)
         job = pps_client.inspect_job(job_id)
         assert job.state == python_pachyderm.JOB_KILLED
 
@@ -149,27 +149,14 @@ def test_delete_all_pipelines(clients_with_sandbox):
 
 def test_restart_pipeline(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
-    pps_client.stop_pipeline('test-pps-copy')
 
-    # This is necessary because `StopPipeline` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(5)
-    
+    pps_client.stop_pipeline('test-pps-copy')
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
-    assert pipeline.state == python_pachyderm.PIPELINE_PAUSED
+    assert pipeline.stopped
 
     pps_client.start_pipeline('test-pps-copy')
-
-    # This is necessary because `StartPipeline` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(5)
-
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
-    assert pipeline.state == python_pachyderm.PIPELINE_RUNNING
+    assert not pipeline.stopped
 
 def test_get_logs(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
