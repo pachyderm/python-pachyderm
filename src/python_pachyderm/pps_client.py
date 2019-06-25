@@ -34,10 +34,10 @@ class PpsClient(object):
             input_commit = [commit_from(input_commit)]
 
         output_commit = commit_from(output_commit) if output_commit is not None else None
-        
+
         req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit)
-        
+
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
