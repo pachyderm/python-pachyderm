@@ -169,3 +169,17 @@ def test_restart_pipeline(clients_with_sandbox):
 
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert pipeline.state == python_pachyderm.PIPELINE_RUNNING
+
+def test_get_logs(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+
+    job_id = wait_for_job(pps_client)
+
+    assert len(pps_client.get_logs(pipeline_name='test-pps-copy')) > 0
+    assert len(pps_client.get_logs(job_id=job_id)) > 0
+    assert len(pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)) > 0
+    assert len(pps_client.get_logs(pipeline_name='test-pps-copy', master=True)) > 0
+
+def test_garbage_collect(pps_client):
+    # just make sure this doesn't error
+    pps_client.garbage_collect()
