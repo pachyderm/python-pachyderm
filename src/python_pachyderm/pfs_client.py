@@ -29,7 +29,7 @@ class PfsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_repo(self, repo_name, description=None):
+    def create_repo(self, repo_name, description=None, update=False):
         """
         Creates a new Repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
@@ -40,8 +40,13 @@ class PfsClient(object):
         Params:
         * repo_name: Name of the repo.
         * description: Repo description.
+        * update: Whether to update if the repo already exists.
         """
-        req = proto.CreateRepoRequest(repo=proto.Repo(name=repo_name), description=description)
+        req = proto.CreateRepoRequest(
+            repo=proto.Repo(name=repo_name),
+            description=description,
+            update=update
+        )
         self.stub.CreateRepo(req, metadata=self.metadata)
 
     def inspect_repo(self, repo_name):
