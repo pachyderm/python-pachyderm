@@ -52,8 +52,8 @@ class PpsClient(object):
         req = proto.InspectDatumRequest(datum=proto.Datum(id=datum_id, job=proto.Job(id=job_id)))
         return self.stub.InspectDatum(req, metadata=self.metadata)
 
-    def list_datum(self, job_id):
-        req = proto.ListDatumRequest(job=proto.Job(id=job_id))
+    def list_datum(self, job_id, page_size=None, page=None):
+        req = proto.ListDatumRequest(job=proto.Job(id=job_id), page_size=page_size, page=page)
         return self.stub.ListDatumStream(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=tuple()):
