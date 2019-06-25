@@ -19,7 +19,7 @@ def pps_client():
 
 
 @pytest.fixture(scope='function')
-def pps_client_with_sandbox():
+def clients_with_sandbox():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
 
     pfs_client = python_pachyderm.PfsClient()
@@ -36,7 +36,10 @@ def pps_client_with_sandbox():
         input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="test-pps-input")),
     )
 
-    yield pps_client, pfs_client
+    with pfs_client.commit('test-pps-input', 'master') as commit:
+        pfs_client.put_file_bytes(commit, 'file.dat', b'DATA')
+
+    yield pps_client, pfs_client, commit
 
     pps_client.delete_all()
     pfs_client.delete_all()
@@ -53,14 +56,11 @@ def wait_for_job(pps_client, sleep=0.01):
 
     assert False, "failed to wait for job"
 
-def test_list_job(pps_client_with_sandbox):
-    pps_client, pfs_client = pps_client_with_sandbox
+def test_list_job(clients_with_sandbox):
+    pps_client, pfs_client, commit = clients_with_sandbox
 
     jobs = pps_client.list_job()
     assert len(jobs.job_info) == 0
-
-    with pfs_client.commit('test-pps-input', 'master') as c:
-        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
 
     job_id = wait_for_job(pps_client)
 
@@ -70,24 +70,18 @@ def test_list_job(pps_client_with_sandbox):
     jobs = pps_client.list_job(pipeline_name='test-pps-copy')
     assert len(jobs.job_info) == 1
 
-    jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(c.id))
+    jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id))
     assert len(jobs.job_info) == 1
 
-def test_inspect_job(pps_client_with_sandbox):
-    pps_client, pfs_client = pps_client_with_sandbox
-
-    with pfs_client.commit('test-pps-input', 'master') as c:
-        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
+def test_inspect_job(clients_with_sandbox):
+    pps_client, pfs_client, _ = clients_with_sandbox
 
     job_id = wait_for_job(pps_client)
     job = pps_client.inspect_job(job_id)
     assert job.job.id == job_id
 
-def test_stop_job(pps_client_with_sandbox):
-    pps_client, pfs_client = pps_client_with_sandbox
-
-    with pfs_client.commit('test-pps-input', 'master') as c:
-        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
+def test_stop_job(clients_with_sandbox):
+    pps_client, pfs_client, _ = clients_with_sandbox
 
     job_id = wait_for_job(pps_client, sleep=None)
 
@@ -106,11 +100,7 @@ def test_stop_job(pps_client_with_sandbox):
     assert job.state == python_pachyderm.JOB_KILLED
 
 def test_delete_job(pps_client_with_sandbox):
-    pps_client, pfs_client = pps_client_with_sandbox
-
-    with pfs_client.commit('test-pps-input', 'master') as c:
-        pfs_client.put_file_bytes(c, 'file.dat', b'DATA')
-
+    pps_client, pfs_client, _ = clients_with_sandbox
     job_id = wait_for_job(pps_client)
     pps_client.delete_job(job_id)
     jobs = pps_client.list_job()
