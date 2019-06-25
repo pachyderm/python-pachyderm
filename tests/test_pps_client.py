@@ -70,7 +70,7 @@ def test_list_job(pps_client_with_sandbox):
     jobs = pps_client.list_job(pipeline_name='test-pps-copy')
     assert len(jobs.job_info) == 1
 
-    jobs = pps_client.list_job(input_commit=f"test-pps-input/{c.id}")
+    jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(c.id))
     assert len(jobs.job_info) == 1
 
 def test_inspect_job(pps_client_with_sandbox):
