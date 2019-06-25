@@ -111,7 +111,7 @@ class PfsClient(object):
                                        description=description)
         return self.stub.StartCommit(req, metadata=self.metadata)
 
-    def finish_commit(self, commit):
+    def finish_commit(self, commit, description=None, tree_object_hashes=tuple(), datum_object_hash=None, size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -119,8 +119,22 @@ class PfsClient(object):
 
         Params:
         * commit: A tuple, string, or Commit object representing the commit.
+        * description: An optional user-provided string describing this commit.
+        * tree_object_hashes: A list of zero or more string specifying object hashes.
+        * datum_object_hash: An optional string specifying an object hash.
+        * size_bytes: An optional int.
+        * empty: An optional bool. If set, 'commit' will be closed (its
+        'finished' field will be set to the current time) but its 'tree' will
+        be left nil.
         """
-        req = proto.FinishCommitRequest(commit=commit_from(commit))
+        req = proto.FinishCommitRequest(
+            commit=commit_from(commit),
+            description=description,
+            tree_object_hashes=[proto.Object(hash=h) for h in tree_object_hashes],
+            datum_object_hash=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
+            size_bytes=size_bytes,
+            empty=empty,
+        )
         return self.stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
