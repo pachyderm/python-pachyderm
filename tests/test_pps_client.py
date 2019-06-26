@@ -55,7 +55,7 @@ def wait_for_job(pps_client, sleep=1.0):
         if len(jobs.job_info) > 0:
             return jobs.job_info[0].job.id
 
-        assert time.time() - start_time < (5 * 60.0), "timed out waiting for job"
+        assert time.time() - start_time < 60.0, "timed out waiting for job"
         time.sleep(sleep)
 
 def test_get_logs(clients_with_sandbox):
