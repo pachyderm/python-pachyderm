@@ -433,11 +433,16 @@ class PfsClient(object):
         Lists the files in a directory.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the directory.
-        * history: number of historical "versions" to be returned (0 = none,
-        -1 = all)
-        * include_contents: If True, file contents are included
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
+        * include_contents: An optional bool. If `True`, file contents are
+        included.
         """
 
         req = proto.ListFileRequest(
@@ -449,6 +454,14 @@ class PfsClient(object):
         return self.stub.ListFileStream(req, metadata=self.metadata)
 
     def glob_file(self, commit, pattern):
+        """
+        Lists files that match a glob pattern. Yields `FileInfo` objects.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * pattern: A string representing a glob pattern.
+        """
+
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
         return self.stub.GlobFileStream(req, metadata=self.metadata)
 
@@ -460,12 +473,15 @@ class PfsClient(object):
         will of course remain intact in the Commit's parent.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the file.
         """
         req = proto.DeleteFileRequest(file=proto.File(commit=commit_from(commit), path=path))
         self.stub.DeleteFile(req, metadata=self.metadata)
 
     def delete_all(self):
+        """
+        Deletes everything.
+        """
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
