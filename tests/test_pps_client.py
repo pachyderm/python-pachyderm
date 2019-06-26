@@ -58,6 +58,24 @@ def wait_for_job(pps_client, sleep=1.0):
         assert time.time() - start_time < (5 * 60.0), "timed out waiting for job"
         time.sleep(sleep)
 
+def test_get_logs(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+
+    job_id = wait_for_job(pps_client)
+
+    # Just make sure these spit out some logs
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
+    assert next(logs) is not None
+
 def test_list_job(clients_with_sandbox):
     pps_client, _, commit = clients_with_sandbox
 
@@ -157,25 +175,6 @@ def test_restart_pipeline(clients_with_sandbox):
     pps_client.start_pipeline('test-pps-copy')
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert not pipeline.stopped
-
-def test_get_logs(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-
-    job_id = wait_for_job(pps_client)
-
-    # Just make sure these spit out some logs
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(job_id=job_id)
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
-    assert next(logs) is not None
-
 
 def test_garbage_collect(pps_client):
     # just make sure this doesn't error
