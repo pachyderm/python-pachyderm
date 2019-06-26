@@ -46,15 +46,33 @@ def clients_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-def wait_for_job(pps_client, sleep=0.01):
-    for i in range(1000):
+def wait_for_job(pps_client, sleep=1.0):
+    start_time = time.time()
+
+    while True:
         for job in pps_client.list_job():
-            return job.job.id
+            return job.job_info.job.id
 
-        if sleep is not None:
-            time.sleep(sleep)
+        assert time.time() - start_time < 60.0, "timed out waiting for job"
+        time.sleep(sleep)
 
-    assert False, "failed to wait for job"
+def test_get_logs(clients_with_sandbox):
+    pps_client, _, _ = clients_with_sandbox
+
+    job_id = wait_for_job(pps_client)
+
+    # Just make sure these spit out some logs
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
+    assert next(logs) is not None
+
+    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
+    assert next(logs) is not None
 
 def test_list_job(clients_with_sandbox):
     pps_client, _, commit = clients_with_sandbox
@@ -80,7 +98,7 @@ def test_inspect_job(clients_with_sandbox):
 def test_stop_job(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
 
-    job_id = wait_for_job(pps_client, sleep=None)
+    job_id = wait_for_job(pps_client, sleep=0.01)
 
     # This may fail if the job finished between the last call and here, so
     # ignore _Rendezvous errors.
@@ -95,7 +113,7 @@ def test_stop_job(clients_with_sandbox):
         # killed before returning a result.
         # TODO: remove once this is fixed:
         # https://github.com/pachyderm/pachyderm/issues/3856
-        time.sleep(5) 
+        time.sleep(1)
         job = pps_client.inspect_job(job_id)
         assert job.state == python_pachyderm.JOB_KILLED
 
@@ -147,46 +165,14 @@ def test_delete_all_pipelines(clients_with_sandbox):
 
 def test_restart_pipeline(clients_with_sandbox):
     pps_client, _, _ = clients_with_sandbox
-    pps_client.stop_pipeline('test-pps-copy')
 
-    # This is necessary because `StopPipeline` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(5)
-    
+    pps_client.stop_pipeline('test-pps-copy')
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
-    assert pipeline.state == python_pachyderm.PIPELINE_PAUSED
+    assert pipeline.stopped
 
     pps_client.start_pipeline('test-pps-copy')
-
-    # This is necessary because `StartPipeline` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(5)
-
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
-    assert pipeline.state == python_pachyderm.PIPELINE_RUNNING
-
-def test_get_logs(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-
-    job_id = wait_for_job(pps_client)
-
-    # Just make sure these spit out some logs
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(job_id=job_id)
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
-    assert next(logs) is not None
-
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
-    assert next(logs) is not None
-
+    assert not pipeline.stopped
 
 def test_garbage_collect(pps_client):
     # just make sure this doesn't error
