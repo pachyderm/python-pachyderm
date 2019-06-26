@@ -76,7 +76,7 @@ class PfsClient(object):
         * force: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
-        req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force)
+        req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force, all=False)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
     def delete_all_repos(self, force=False):
@@ -88,7 +88,7 @@ class PfsClient(object):
         errors. This argument should be used with care.
         """
 
-        req = proto.DeleteRepoRequest(force=force, all=all)
+        req = proto.DeleteRepoRequest(force=force, all=True)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
     def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=tuple()):
