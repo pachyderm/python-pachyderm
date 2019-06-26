@@ -85,16 +85,6 @@ def test_pfs_delete_repo(pfs_client_with_repo):
     assert len(client.list_repo()) == 0
 
 
-def test_pfs_delete_repo_raises(pfs_client):
-    assert len(pfs_client.list_repo()) == 0
-
-    with pytest.raises(ValueError) as excinfo:
-        pfs_client.delete_repo()
-    exception_msg = excinfo.value.args[0]
-
-    assert exception_msg == 'Either a repo_name or all=True needs to be provided'
-
-
 def test_pfs_delete_non_existent_repo_raises(pfs_client):
     assert len(pfs_client.list_repo()) == 0
     pfs_client.delete_repo('BOGUS_NAME')
@@ -105,21 +95,8 @@ def test_pfs_delete_all_repos(pfs_client):
     pfs_client.create_repo('test-repo-2')
     assert len(pfs_client.list_repo()) == 2
 
-    pfs_client.delete_repo(all=True)
+    pfs_client.delete_all_repos()
     assert len(pfs_client.list_repo()) == 0
-
-
-def test_pfs_delete_all_repos_with_name_raises(pfs_client):
-    pfs_client.create_repo('test-repo-1')
-    pfs_client.create_repo('test-repo-2')
-    assert len(pfs_client.list_repo()) == 2
-
-    with pytest.raises(ValueError) as excinfo:
-        pfs_client.delete_repo('test-repo-1', all=True)
-
-    exception_msg = excinfo.value.args[0]
-    assert exception_msg == 'Cannot specify a repo_name if all=True'
-    assert len(pfs_client.list_repo()) == 2
 
 
 @pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
@@ -142,12 +119,6 @@ def test_pfs_start_commit_missing_branch(pfs_client_with_repo):
     commit = pfs_client.start_commit(repo_name)
     assert commit.repo.name == repo_name
     assert isinstance(commit.id, str)
-
-
-def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
-    """ Trying to start a commit without specifying a repo name should raise an error. """
-    with pytest.raises(TypeError) as excinfo:
-        pfs_client.start_commit()
 
 
 def test_pfs_start_commit_with_parent_no_branch(pfs_client_with_repo):
