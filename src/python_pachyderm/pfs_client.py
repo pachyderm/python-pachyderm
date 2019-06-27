@@ -480,6 +480,20 @@ class PfsClient(object):
 
         return self.stub.ListFileStream(req, metadata=self.metadata)
 
+    def walk_file(self, commit, path):
+        """
+        Walks over all descendant files in a directory. Returns a generator of
+        `FileInfo` objects.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: The path to the directory.
+        """
+        commit = commit_from(commit)
+        f = proto.File(commit=commit_from(commit), path=path)
+        req = proto.WalkFileRequest(file=f)
+        return self.stub.WalkFile(req, metadata=self.metadata)
+
     def glob_file(self, commit, pattern):
         """
         Lists files that match a glob pattern. Yields `FileInfo` objects.
