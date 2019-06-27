@@ -46,22 +46,15 @@ def clients_with_sandbox():
     pps_client.delete_all()
     pfs_client.delete_all()
 
-def wait_for_job(pps_client, sleep=1.0):
-    start_time = time.time()
-
-    while True:
-        jobs = pps_client.list_job()
-
-        if len(jobs.job_info) > 0:
-            return jobs.job_info[0].job.id
-
-        assert time.time() - start_time < 60.0, "timed out waiting for job"
-        time.sleep(sleep)
+def wait_for_job(pps_client, pfs_client, commit):
+    pfs_client.inspect_commit(commit, block_state=python_pachyderm.COMMIT_STATE_READY)
+    jobs = pps_client.list_job()
+    assert len(jobs.job_info) > 0
+    return jobs.job_info[0].job.id
 
 def test_list_job(clients_with_sandbox):
-    pps_client, _, commit = clients_with_sandbox
-
-    job_id = wait_for_job(pps_client)
+    pps_client, pfs_client, commit = clients_with_sandbox
+    job_id = wait_for_job(pps_client, pfs_client, commit)
 
     jobs = pps_client.list_job()
     assert len(jobs.job_info) == 1
@@ -73,16 +66,15 @@ def test_list_job(clients_with_sandbox):
     assert len(jobs.job_info) == 1
 
 def test_inspect_job(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
+    pps_client, pfs_client, commit = clients_with_sandbox
+    job_id = wait_for_job(pps_client, pfs_client, commit)
 
-    job_id = wait_for_job(pps_client)
     job = pps_client.inspect_job(job_id)
     assert job.job.id == job_id
 
 def test_stop_job(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-
-    job_id = wait_for_job(pps_client, sleep=0.01)
+    pps_client, pfs_client, commit = clients_with_sandbox
+    job_id = wait_for_job(pps_client, pfs_client, commit)
 
     # This may fail if the job finished between the last call and here, so
     # ignore _Rendezvous errors.
@@ -102,15 +94,16 @@ def test_stop_job(clients_with_sandbox):
         assert job.state == python_pachyderm.JOB_KILLED
 
 def test_delete_job(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-    job_id = wait_for_job(pps_client)
+    pps_client, pfs_client, commit = clients_with_sandbox
+    job_id = wait_for_job(pps_client, pfs_client, commit)
+
     pps_client.delete_job(job_id)
     jobs = pps_client.list_job()
     assert len(jobs.job_info) == 0
 
 def test_datums(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client)
+    job_id = wait_for_job(pps_client, pfs_client, commit)
 
     # flush the job so it fully finishes
     list(pfs_client.flush_commit(["test-pps-input/{}".format(commit.id)]))
@@ -159,9 +152,8 @@ def test_restart_pipeline(clients_with_sandbox):
     assert not pipeline.stopped
 
 def test_get_logs(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-
-    job_id = wait_for_job(pps_client)
+    pps_client, pfs_client, commit = clients_with_sandbox
+    job_id = wait_for_job(pps_client, pfs_client, commit)
 
     # Just make sure these spit out some logs
     logs = pps_client.get_logs(pipeline_name='test-pps-copy')
