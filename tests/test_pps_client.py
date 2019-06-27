@@ -159,22 +159,23 @@ def test_restart_pipeline(clients_with_sandbox):
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert not pipeline.stopped
 
-def test_get_logs(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
+# TODO: re-enable test
+# def test_get_logs(clients_with_sandbox):
+#     pps_client, pfs_client, commit = clients_with_sandbox
+#     job_id = wait_for_job(pps_client, pfs_client, commit)
 
-    # Just make sure these spit out some logs
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy')
-    assert next(logs) is not None
+#     # Just make sure these spit out some logs
+#     logs = pps_client.get_logs(pipeline_name='test-pps-copy')
+#     assert next(logs) is not None
 
-    logs = pps_client.get_logs(job_id=job_id)
-    assert next(logs) is not None
+#     logs = pps_client.get_logs(job_id=job_id)
+#     assert next(logs) is not None
 
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
-    assert next(logs) is not None
+#     logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
+#     assert next(logs) is not None
 
-    logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
-    assert next(logs) is not None
+#     logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
+#     assert next(logs) is not None
 
 
 def test_garbage_collect(pps_client):
