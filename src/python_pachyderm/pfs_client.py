@@ -174,10 +174,6 @@ class PfsClient(object):
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
             yield commit
-        except Exception as e:
-            print("An exception occurred during an open commit. "
-                  "Trying to finish it (Currently a commit can't be cancelled)")
-            raise e
         finally:
             self.finish_commit(commit)
 
