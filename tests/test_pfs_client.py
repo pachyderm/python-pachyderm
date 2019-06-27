@@ -443,3 +443,16 @@ def test_delete_file(pfs_client_with_repo):
         pfs_client.delete_file(c, 'file1.dat')
 
     assert len(list(pfs_client.list_file(c, '/'))) == 0
+
+def test_create_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    pfs_client.create_branch(repo_name, "foobar")
+    branches = pfs_client.list_branch(repo_name)
+    assert len(branches) == 1
+    assert branches[0].name == "foobar"
+
+def test_inspect_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    pfs_client.create_branch(repo_name, "foobar")
+    branch = pfs_client.inspect_branch(repo_name, "foobar")
+    print(branch)

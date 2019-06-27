@@ -267,6 +267,33 @@ class PfsClient(object):
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
 
+    def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
+        """
+        Creates a new branch.
+
+        Params:
+        * repo_name: A string specifying the name of the repo.
+        * branch_name: A string specifying the new branch name.
+        * commit: An optional tuple, string, or `Commit` object representing
+        the head commit of the branch.
+        * provenance: An optional iterable of `Branch` objects representing
+        the branch provenance.
+        """
+        req = proto.CreateBranchRequest(
+            branch=proto.Branch(repo=proto.Repo(name=repo_name), branch=branch_name),
+            head=commit_from(commit) if commit is not None else None,
+            provenance=provenance,
+        )
+        self.stub.CreateBranch(req, metadata=self.metadata)
+
+    def inspect_branch(self, repo_name, branch_name):
+        """
+        Inspects a branch. Returns a `BranchInfo` object.
+        """
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), branch=branch_name)
+        req = proto.InspectBranchRequest(branch=branch)
+        return self.stub.InspectBranch(req, metadata=self.metadata)
+
     def list_branch(self, repo_name):
         """
         Lists the active branch objects on a repo. Returns a list of
