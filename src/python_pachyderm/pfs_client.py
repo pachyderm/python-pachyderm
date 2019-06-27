@@ -421,6 +421,29 @@ class PfsClient(object):
         ])
         self.stub.PutFile(req, metadata=self.metadata)
 
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
+        """
+        Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of
+        1.9.0) silently fail.
+
+        Params:
+        * source_commit: A tuple, string, or `Commit` object representing the
+        commit for the source file.
+        * source_path: A string specifying the path of the source file.
+        * dest_commit: A tuple, string, or `Commit` object representing the
+        commit for the destination file.
+        * dest_path: A string specifying the path of the destination file.
+        * overwrite: Am optional bool specifying whether to overwrite the
+        destination file if it already exists.
+        """
+        req = proto.CopyFileRequest(
+            src=proto.File(commit=commit_from(source_commit), path=source_path),
+            dest=proto.File(commit=commit_from(dest_commit), path=dest_path),
+            overwrite=overwrite_index,
+        )
+        self.stub.CopyFile(req, metadata=self.metadata)
+
     def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
         """
         Returns an iterator of the contents of a file at a specific commit.

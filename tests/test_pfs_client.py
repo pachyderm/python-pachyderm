@@ -302,6 +302,24 @@ def test_put_file_url(pfs_client_with_repo):
     assert files[0].file.path == '/index.html'
 
 
+def test_copy_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as src_commit:
+        pfs_client.put_file_bytes(src_commit, 'file1.dat', BytesIO(b'DATA1'))
+        pfs_client.put_file_bytes(src_commit, 'file2.dat', BytesIO(b'DATA2'))
+
+    with pfs_client.commit(repo_name) as dest_commit:
+        pfs_client.copy_file(src_commit, 'file1.dat', dest_commit, 'copy.dat')
+        pfs_client.copy_file(src_commit, 'file2.dat', dest_commit, 'copy.dat', overwrite=True)
+
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, c.id), '.'))
+    assert len(files) == 3
+    assert files[0].file.path == '/copy.dat'
+    assert files[1].file.path == '/file1.dat'
+    assert files[2].file.path == '/file2.dat'
+
+
 def test_flush_commit(pfs_client_with_repo):
     """
     Ensure flush commit works
