@@ -47,10 +47,18 @@ def clients_with_sandbox():
     pfs_client.delete_all()
 
 def wait_for_job(pps_client, pfs_client, commit):
+    # block until the commit is ready
     pfs_client.inspect_commit(commit, block_state=python_pachyderm.COMMIT_STATE_READY)
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) > 0
-    return jobs.job_info[0].job.id
+
+    # while the commit is ready, the job might not be listed on the first
+    # call, so repeatedly list jobs until it's available
+    start_time = time.time()
+    while True:
+        jobs = pps_client.list_job()
+        if len(jobs.job_info) > 0:
+            return jobs.job_info[0].job.id
+        assert time.time() - start_time < 60.0, "timed out waiting for job"
+        time.sleep(1)
 
 def test_list_job(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
