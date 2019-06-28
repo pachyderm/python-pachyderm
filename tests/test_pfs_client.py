@@ -15,12 +15,9 @@ import python_pachyderm
 @pytest.fixture(scope='function')
 def pfs_client():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
-    # Setup : create a PfsClient instance
     client = python_pachyderm.PfsClient()
-
-    yield client  # this is where the testing happens
-
-    # Teardown : Delete all repos, commits, files, pipelines and jobs.  This resets the cluster to its initial state.
+    client.delete_all()
+    yield client
     client.delete_all()
 
 
@@ -29,11 +26,9 @@ def pfs_client_with_repo():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
     # Setup : create a PfsClient instance and create a repository
     client = python_pachyderm.PfsClient()
+    client.delete_all()
     client.create_repo('test-repo-1', 'This is a test repository')
-
-    yield client, 'test-repo-1'  # this is where the testing happens
-
-    # Teardown : Delete all repos, commits, files, pipelines and jobs.  This resets the cluster to its initial state.
+    yield client, 'test-repo-1'
     client.delete_all()
 
 

@@ -21,34 +21,23 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_job(self, transform, pipeline_name, pipeline_version, parallelism_spec, inputs, egress, service,
-                   output_repo, output_branch, parent_job, resource_spec, input, new_branch, incremental,
-                   enable_stats, salt, batch):
-        req = proto.CreateJobRequest(
-            transform=transform, pipeline=proto.Pipeline(name=pipeline_name),
-            pipeline_version=pipeline_version,
-            parallelism_spec=parallelism_spec, inputs=inputs,
-            egress=egress, service=service, output_repo=output_repo,
-            output_branch=output_branch, parent_job=parent_job,
-            resource_spec=resource_spec, input=input, new_branch=new_branch,
-            incremental=incremental, enable_stats=enable_stats, salt=salt,
-            batch=batch
-        )
-        return self.stub.CreateJob(req, metadata=self.metadata)
-
     def inspect_job(self, job_id, block_state=False):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
+        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
+
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
-        elif isinstance(input_commit, str):
+        elif input_commit is not None:
             input_commit = [commit_from(input_commit)]
-        if output_commit:
-            output_commit = commit_from(output_commit)
-        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline_name), input_commit=input_commit,
+
+        output_commit = commit_from(output_commit) if output_commit is not None else None
+
+        req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit)
+
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
@@ -68,7 +57,7 @@ class PpsClient(object):
         return self.stub.ListDatum(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=tuple()):
-        req = proto.RestartDatumRequest(job=proto.Job(id=job_id, data_filters=data_filters))
+        req = proto.RestartDatumRequest(job=proto.Job(id=job_id), data_filters=data_filters)
         self.stub.RestartDatum(req, metadata=self.metadata)
 
     def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
@@ -104,9 +93,11 @@ class PpsClient(object):
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
     def delete_pipeline(self, pipeline_name, all=False):
-        req = proto.DeletePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
-            all=all)
+        req = proto.DeletePipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
+        self.stub.DeletePipeline(req, metadata=self.metadata)
+
+    def delete_all_pipelines(self):
+        req = proto.DeletePipelineRequest(all=True)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def start_pipeline(self, pipeline_name):
@@ -132,8 +123,7 @@ class PpsClient(object):
             pipeline=pipeline, job=job, data_filters=data_filters,
             master=master
         )
-        return list(self.stub.GetLogs(req, metadata=self.metadata))
+        return self.stub.GetLogs(req, metadata=self.metadata)
 
     def garbage_collect(self):
-        req = self.stub.GarbageCollect(proto.GarbageCollectRequest())
-        return proto.GarbageCollectResponse(req, metadata=self.metadata)
+        return self.stub.GarbageCollect(proto.GarbageCollectRequest(), metadata=self.metadata)
