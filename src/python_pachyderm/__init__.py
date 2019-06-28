@@ -16,9 +16,9 @@ from .client.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
     Transform, Egress, Job, Service, PFSInput, CronInput, \
     GitInput, Input, JobInput, ParallelismSpec, HashtreeSpec, InputFile, \
     Datum, DatumInfo, Aggregate, ProcessStats, AggregateProcessStats, \
-    WorkerStatus, ResourceSpec, GPUSpec, EtcdJobInfo, JobInfo, Worker, \
-    Pipeline, PipelineInput, EtcdPipelineInfo, PipelineInfo, LogMessage, \
-    ChunkSpec, SchedulingSpec
+    WorkerStatus, ResourceSpec, GPUSpec, JobInfo, Worker, Pipeline, \
+    PipelineInput, PipelineInfo, LogMessage, ChunkSpec, SchedulingSpec, \
+    ListDatumStreamResponse, PipelineInfos
 from .client.pps.pps_pb2 import \
     FAILED as DATUM_FAILED, \
     SUCCESS as DATUM_SUCCESS, \

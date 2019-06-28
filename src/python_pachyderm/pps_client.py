@@ -21,7 +21,7 @@ class PpsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def inspect_job(self, job_id, block_state=False, output_commit=None):
+    def inspect_job(self, job_id, block_state=None, output_commit=None):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
 
@@ -36,7 +36,7 @@ class PpsClient(object):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state, output_commit=output_commit)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
-    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=0):
+    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None):
         """
         Lists jobs. Yields `JobInfo` objects.
 
@@ -116,7 +116,7 @@ class PpsClient(object):
         req = proto.ListDatumRequest(job=proto.Job(id=job_id), page_size=page_size, page=page)
         return self.stub.ListDatumStream(req, metadata=self.metadata)
 
-    def restart_datum(self, job_id, data_filters=tuple()):
+    def restart_datum(self, job_id, data_filters=None):
         """
         Restarts a datum.
 
@@ -209,7 +209,7 @@ class PpsClient(object):
         req = proto.ListPipelineRequest()
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
-    def delete_pipeline(self, pipeline_name, force=False):
+    def delete_pipeline(self, pipeline_name, force=None):
         """
         Deletes a pipeline.
 
@@ -221,7 +221,7 @@ class PpsClient(object):
         req = proto.DeletePipelineRequest(pipeline=proto.Pipeline(name=pipeline_name), force=force)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
-    def delete_all_pipelines(self, force=False):
+    def delete_all_pipelines(self, force=None):
         """
         Deletes all pipelines.
 
@@ -260,8 +260,8 @@ class PpsClient(object):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(),
-                 master=False, datum=None, follow=False, tail=0):
+    def get_logs(self, pipeline_name=None, job_id=None, data_filters=None,
+                 master=None, datum=None, follow=None, tail=None):
         """
         Gets logs. Yields `LogMessage` objects.
 
