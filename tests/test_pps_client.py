@@ -75,7 +75,7 @@ def test_list_job(clients_with_sandbox):
 
 def test_flush_job(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
-    jobs = list(pps_client.flush_job(commit))
+    jobs = list(pps_client.flush_job([commit]))
     assert len(jobs) == 1
     print(jobs[0])
 
@@ -163,6 +163,15 @@ def test_restart_pipeline(clients_with_sandbox):
     pps_client.start_pipeline('test-pps-copy')
     pipeline = pps_client.inspect_pipeline('test-pps-copy')
     assert not pipeline.stopped
+
+def test_run_pipeline(clients_with_sandbox):
+    pps_client, pfs_client, commit = clients_with_sandbox
+
+    # flush the job so it fully finishes
+    list(pfs_client.flush_commit(["test-pps-input/{}".format(commit.id)]))
+
+    # just make sure it worked
+    pps_client.run_pipeline('test-pps-copy')
 
 # TODO: re-enable test
 # def test_get_logs(clients_with_sandbox):

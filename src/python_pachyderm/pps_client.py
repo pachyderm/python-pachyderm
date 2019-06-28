@@ -270,6 +270,21 @@ class PpsClient(object):
         req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
         self.stub.StopPipeline(req, metadata=self.metadata)
 
+    def run_pipeline(self, pipeline_name, provenance=None):
+        """
+        Runs a pipeline.
+
+        Params:
+        * pipeline_name: A string representing the pipeline name.
+        * provenance: An optional iterable of `CommitProvenance` objects
+        representing the pipeline execution provenance.
+        """
+        req = proto.RunPipelineRequest(
+            pipeline=proto.Pipeline(name=pipeline_name),
+            provenance=provenance,
+        )
+        self.stub.RunPipeline(req, metadata=self.metadata)
+
     def delete_all(self):
         """
         Deletes everything in pachyderm.
