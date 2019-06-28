@@ -276,7 +276,7 @@ class PfsClient(object):
         the branch provenance.
         """
         req = proto.CreateBranchRequest(
-            branch=proto.Branch(repo=proto.Repo(name=repo_name), branch=branch_name),
+            branch=proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
         )
@@ -286,7 +286,7 @@ class PfsClient(object):
         """
         Inspects a branch. Returns a `BranchInfo` object.
         """
-        branch = proto.Branch(repo=proto.Repo(name=repo_name), branch=branch_name)
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
         req = proto.InspectBranchRequest(branch=branch)
         return self.stub.InspectBranch(req, metadata=self.metadata)
 
@@ -435,8 +435,8 @@ class PfsClient(object):
         """
         req = proto.CopyFileRequest(
             src=proto.File(commit=commit_from(source_commit), path=source_path),
-            dest=proto.File(commit=commit_from(dest_commit), path=dest_path),
-            overwrite=overwrite_index,
+            dst=proto.File(commit=commit_from(dest_commit), path=dest_path),
+            overwrite=overwrite,
         )
         self.stub.CopyFile(req, metadata=self.metadata)
 
