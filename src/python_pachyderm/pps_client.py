@@ -206,24 +206,47 @@ class PpsClient(object):
         )
         self.stub.CreatePipeline(req, metadata=self.metadata)
 
-    def inspect_pipeline(self, pipeline_name):
+    def inspect_pipeline(self, pipeline_name, history=None):
         """
         Inspects a pipeline. Returns a `PipelineInfo` object.
 
         Params:
         * pipeline_name: A string representing the pipeline name.
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
         """
-        req = proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
-        return self.stub.InspectPipeline(req, metadata=self.metadata)
 
-    def list_pipeline(self):
+        pipeline = proto.Pipeline(name=pipeline_name)
+
+        if history is None:
+            req = proto.InspectPipelineRequest(pipeline=pipeline)
+            return self.stub.InspectPipeline(req, metadata=self.metadata)
+        else:
+            # `InspectPipeline` doesn't support history, but `ListPipeline`
+            # with a pipeline filter does, so we use that here
+            req = proto.ListPipelineRequest(pipeline=pipeline, history=history)
+            pipelines = self.stub.ListPipeline(req, metadata=self.metadata).pipeline_info
+            assert len(pipelines) <= 1
+            return pipelines[0] if len(pipelines) else None
+
+    def list_pipeline(self, history=None):
         """
         Lists pipelines. Returns a `PipelineInfos` object.
 
         Params:
         * pipeline_name: A string representing the pipeline name.
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
         """
-        req = proto.ListPipelineRequest()
+        req = proto.ListPipelineRequest(history=history)
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
     def delete_pipeline(self, pipeline_name, force=None):
