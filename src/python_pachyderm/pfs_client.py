@@ -174,10 +174,6 @@ class PfsClient(object):
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
             yield commit
-        except Exception as e:
-            print("An exception occurred during an open commit. "
-                  "Trying to finish it (Currently a commit can't be cancelled)")
-            raise e
         finally:
             self.finish_commit(commit)
 
@@ -266,6 +262,33 @@ class PfsClient(object):
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
+
+    def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
+        """
+        Creates a new branch.
+
+        Params:
+        * repo_name: A string specifying the name of the repo.
+        * branch_name: A string specifying the new branch name.
+        * commit: An optional tuple, string, or `Commit` object representing
+        the head commit of the branch.
+        * provenance: An optional iterable of `Branch` objects representing
+        the branch provenance.
+        """
+        req = proto.CreateBranchRequest(
+            branch=proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name),
+            head=commit_from(commit) if commit is not None else None,
+            provenance=provenance,
+        )
+        self.stub.CreateBranch(req, metadata=self.metadata)
+
+    def inspect_branch(self, repo_name, branch_name):
+        """
+        Inspects a branch. Returns a `BranchInfo` object.
+        """
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
+        req = proto.InspectBranchRequest(branch=branch)
+        return self.stub.InspectBranch(req, metadata=self.metadata)
 
     def list_branch(self, repo_name):
         """
@@ -394,6 +417,29 @@ class PfsClient(object):
         ])
         self.stub.PutFile(req, metadata=self.metadata)
 
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
+        """
+        Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of
+        1.9.0) silently fail.
+
+        Params:
+        * source_commit: A tuple, string, or `Commit` object representing the
+        commit for the source file.
+        * source_path: A string specifying the path of the source file.
+        * dest_commit: A tuple, string, or `Commit` object representing the
+        commit for the destination file.
+        * dest_path: A string specifying the path of the destination file.
+        * overwrite: Am optional bool specifying whether to overwrite the
+        destination file if it already exists.
+        """
+        req = proto.CopyFileRequest(
+            src=proto.File(commit=commit_from(source_commit), path=source_path),
+            dst=proto.File(commit=commit_from(dest_commit), path=dest_path),
+            overwrite=overwrite,
+        )
+        self.stub.CopyFile(req, metadata=self.metadata)
+
     def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
         """
         Returns an iterator of the contents of a file at a specific commit.
@@ -452,6 +498,20 @@ class PfsClient(object):
         )
 
         return self.stub.ListFileStream(req, metadata=self.metadata)
+
+    def walk_file(self, commit, path):
+        """
+        Walks over all descendant files in a directory. Returns a generator of
+        `FileInfo` objects.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: The path to the directory.
+        """
+        commit = commit_from(commit)
+        f = proto.File(commit=commit_from(commit), path=path)
+        req = proto.WalkFileRequest(file=f)
+        return self.stub.WalkFile(req, metadata=self.metadata)
 
     def glob_file(self, commit, pattern):
         """
