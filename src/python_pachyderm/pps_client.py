@@ -40,6 +40,23 @@ class PpsClient(object):
 
         return self.stub.ListJob(req, metadata=self.metadata)
 
+    def flush_job(self, commits, pipeline_names=None):
+        """
+        Blocks until all of the jobs which have a set of commits as
+        provenance have finished. Yields `JobInfo` objects.
+
+        Params:
+        * commits: A list of tuples, strings, or `Commit` objects representing
+        the commits to flush.
+        * pipeline_names: An optional list of strings specifying pipeline
+        names. If specified, only jobs within these pipelines will be flushed.
+        """
+
+        commits = [commit_from(c) for c in commits]
+        pipelines = [proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None
+        req = proto.FlushJobRequest(commits=commits, to_pipelines=pipelines)
+        return self.stub.FlushJob(req)
+
     def delete_job(self, job_id):
         req = proto.DeleteJobRequest(job=proto.Job(id=job_id))
         self.stub.DeleteJob(req, metadata=self.metadata)

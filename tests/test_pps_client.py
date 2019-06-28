@@ -73,6 +73,12 @@ def test_list_job(clients_with_sandbox):
     jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id))
     assert len(jobs.job_info) == 1
 
+def test_flush_job(clients_with_sandbox):
+    pps_client, pfs_client, commit = clients_with_sandbox
+    jobs = list(pps_client.flush_job(commit))
+    assert len(jobs) == 1
+    print(jobs[0])
+
 def test_inspect_job(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
     job_id = wait_for_job(pps_client, pfs_client, commit)
