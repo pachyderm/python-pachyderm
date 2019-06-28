@@ -260,7 +260,8 @@ class PpsClient(object):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(), master=False, datum=None, follow=False, tail=0):
+    def get_logs(self, pipeline_name=None, job_id=None, data_filters=tuple(),
+                 master=False, datum=None, follow=False, tail=0):
         """
         Gets logs. Yields `LogMessage` objects.
 
