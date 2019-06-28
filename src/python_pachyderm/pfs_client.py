@@ -29,7 +29,7 @@ class PfsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_repo(self, repo_name, description=None, update=False):
+    def create_repo(self, repo_name, description=None, update=None):
         """
         Creates a new `Repo` object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
@@ -67,7 +67,7 @@ class PfsClient(object):
         res = self.stub.ListRepo(req, metadata=self.metadata)
         return res.repo_info
 
-    def delete_repo(self, repo_name, force=False):
+    def delete_repo(self, repo_name, force=None):
         """
         Deletes a repo and reclaims the storage space it was using.
 
@@ -79,7 +79,7 @@ class PfsClient(object):
         req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force, all=False)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
-    def delete_all_repos(self, force=False):
+    def delete_all_repos(self, force=None):
         """
         Deletes all repos.
 
@@ -91,7 +91,7 @@ class PfsClient(object):
         req = proto.DeleteRepoRequest(force=force, all=True)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
-    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=tuple()):
+    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=None):
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with PutFile and when all the data has been
@@ -124,7 +124,7 @@ class PfsClient(object):
         return self.stub.StartCommit(req, metadata=self.metadata)
 
     def finish_commit(self, commit, description=None,
-                      tree_object_hashes=tuple(), datum_object_hash=None,
+                      tree_object_hashes=None, datum_object_hash=None,
                       size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
@@ -145,7 +145,7 @@ class PfsClient(object):
         req = proto.FinishCommitRequest(
             commit=commit_from(commit),
             description=description,
-            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes else None,
+            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
             datums=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
             size_bytes=size_bytes,
             empty=empty,
@@ -189,7 +189,7 @@ class PfsClient(object):
         req = proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
-    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
+    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None):
         """
         Lists commits. Yields `CommitInfo` objects.
 
@@ -221,7 +221,7 @@ class PfsClient(object):
         req = proto.DeleteCommitRequest(commit=commit_from(commit))
         self.stub.DeleteCommit(req, metadata=self.metadata)
 
-    def flush_commit(self, commits, repos=tuple()):
+    def flush_commit(self, commits, repos=None):
         """
         Blocks until all of the commits which have a set of commits as
         provenance have finished. For commits to be considered they must have
@@ -242,8 +242,9 @@ class PfsClient(object):
         * repos: An optional list of strings specifying repo names. If
         specified, only commits within these repos will be flushed.
         """
+        to_repos = [proto.Repo(name=r) for r in repos] if repos is not None else None
         req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
-                                       to_repos=[proto.Repo(name=r) for r in repos])
+                                       to_repos=to_repos)
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
@@ -302,7 +303,7 @@ class PfsClient(object):
         res = self.stub.ListBranch(req, metadata=self.metadata)
         return res.branch_info
 
-    def delete_branch(self, repo_name, branch_name, force=False):
+    def delete_branch(self, repo_name, branch_name, force=None):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
@@ -318,7 +319,7 @@ class PfsClient(object):
         self.stub.DeleteBranch(req, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=None,
-                       target_file_datums=0, target_file_bytes=0, overwrite_index=None):
+                       target_file_datums=None, target_file_bytes=None, overwrite_index=None):
         """
         Uploads a binary bytes array as file(s) in a certain path.
 
@@ -395,7 +396,7 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
-    def put_file_url(self, commit, path, url, recursive=False):
+    def put_file_url(self, commit, path, url, recursive=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request. Note that this is not a standard
@@ -440,7 +441,7 @@ class PfsClient(object):
         )
         self.stub.CopyFile(req, metadata=self.metadata)
 
-    def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
+    def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
         """
         Returns an iterator of the contents of a file at a specific commit.
 
@@ -474,7 +475,7 @@ class PfsClient(object):
         req = proto.InspectFileRequest(file=proto.File(commit=commit_from(commit), path=path))
         return self.stub.InspectFile(req, metadata=self.metadata)
 
-    def list_file(self, commit, path, history=0, include_contents=False):
+    def list_file(self, commit, path, history=None, include_contents=None):
         """
         Lists the files in a directory.
 

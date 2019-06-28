@@ -54,9 +54,9 @@ def wait_for_job(pps_client, pfs_client, commit):
     # call, so repeatedly list jobs until it's available
     start_time = time.time()
     while True:
-        jobs = pps_client.list_job()
-        if len(jobs.job_info) > 0:
-            return jobs.job_info[0].job.id
+        for job in pps_client.list_job():
+            return job.job.id
+
         assert time.time() - start_time < 60.0, "timed out waiting for job"
         time.sleep(1)
 
@@ -64,14 +64,14 @@ def test_list_job(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
     job_id = wait_for_job(pps_client, pfs_client, commit)
 
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job())
+    assert len(jobs) == 1
 
-    jobs = pps_client.list_job(pipeline_name='test-pps-copy')
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job(pipeline_name='test-pps-copy'))
+    assert len(jobs) == 1
 
-    jobs = pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id))
-    assert len(jobs.job_info) == 1
+    jobs = list(pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id)))
+    assert len(jobs) == 1
 
 def test_flush_job(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
@@ -112,8 +112,8 @@ def test_delete_job(clients_with_sandbox):
     job_id = wait_for_job(pps_client, pfs_client, commit)
 
     pps_client.delete_job(job_id)
-    jobs = pps_client.list_job()
-    assert len(jobs.job_info) == 0
+    jobs = list(pps_client.list_job())
+    assert len(jobs) == 0
 
 def test_datums(clients_with_sandbox):
     pps_client, pfs_client, commit = clients_with_sandbox
@@ -122,10 +122,9 @@ def test_datums(clients_with_sandbox):
     # flush the job so it fully finishes
     list(pfs_client.flush_commit(["test-pps-input/{}".format(commit.id)]))
 
-    datums = pps_client.list_datum(job_id)
-    assert len(datums.datum_infos) == 1
-    datum_id = datums.datum_infos[0].datum.id
-    datum = pps_client.inspect_datum(job_id, datum_id)
+    datums = list(pps_client.list_datum(job_id))
+    assert len(datums) == 1
+    datum = pps_client.inspect_datum(job_id, datums[0].datum_info.datum.id)
     assert datum.state == python_pachyderm.DATUM_SUCCESS
 
     # Just ensure this doesn't raise an exception
@@ -182,7 +181,6 @@ def test_restart_pipeline(clients_with_sandbox):
 
 #     logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
 #     assert next(logs) is not None
-
 
 def test_garbage_collect(pps_client):
     # just make sure this doesn't error
