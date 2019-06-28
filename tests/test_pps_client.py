@@ -9,16 +9,6 @@ import pytest
 
 import python_pachyderm
 
-
-@pytest.fixture(scope='function')
-def pps_client():
-    """Connect to Pachyderm before tests and reset to initial state after tests."""
-    client = python_pachyderm.PpsClient()
-    client.delete_all()
-    yield client 
-    client.delete_all()
-
-
 @pytest.fixture(scope='function')
 def clients_with_sandbox():
     """Connect to Pachyderm before tests and reset to initial state after tests."""
@@ -196,5 +186,6 @@ def test_get_logs(clients_with_sandbox):
     assert next(logs) is not None
 
 def test_garbage_collect(pps_client):
-    # just make sure this doesn't error
+    client = python_pachyderm.PpsClient()
     pps_client.garbage_collect()
+    
