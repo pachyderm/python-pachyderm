@@ -29,24 +29,29 @@ class PfsClient(object):
         self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
 
-    def create_repo(self, repo_name, description=None):
+    def create_repo(self, repo_name, description=None, update=False):
         """
-        Creates a new Repo object in PFS with the given name. Repos are the
+        Creates a new `Repo` object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
-        similar type. For example rather than having a single Repo for an
-        entire project you might have separate Repos for logs, metrics,
+        similar type. For example rather than having a single `Repo` for an
+        entire project you might have separate `Repo`s for logs, metrics,
         database dumps etc.
 
         Params:
         * repo_name: Name of the repo.
-        * description: Repo description.
+        * description: An optional string describing the repo.
+        * update: Whether to update if the repo already exists.
         """
-        req = proto.CreateRepoRequest(repo=proto.Repo(name=repo_name), description=description)
+        req = proto.CreateRepoRequest(
+            repo=proto.Repo(name=repo_name),
+            description=description,
+            update=update
+        )
         self.stub.CreateRepo(req, metadata=self.metadata)
 
     def inspect_repo(self, repo_name):
         """
-        Returns info about a specific Repo.
+        Returns info about a specific repo. Returns a `RepoInfo` object.
 
         Params:
         * repo_name: Name of the repo.
@@ -56,13 +61,13 @@ class PfsClient(object):
 
     def list_repo(self):
         """
-        Returns info about all Repos.
+        Returns info about all repos, as a list of `RepoInfo` objects.
         """
         req = proto.ListRepoRequest()
         res = self.stub.ListRepo(req, metadata=self.metadata)
         return res.repo_info
 
-    def delete_repo(self, repo_name=None, force=False, all=False):
+    def delete_repo(self, repo_name, force=False):
         """
         Deletes a repo and reclaims the storage space it was using.
 
@@ -70,22 +75,23 @@ class PfsClient(object):
         * repo_name: The name of the repo.
         * force: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
-        * all: Delete all repos.
         """
-        if not all:
-            if repo_name:
-                req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force)
-                self.stub.DeleteRepo(req, metadata=self.metadata)
-            else:
-                raise ValueError("Either a repo_name or all=True needs to be provided")
-        else:
-            if not repo_name:
-                req = proto.DeleteRepoRequest(force=force, all=all)
-                self.stub.DeleteRepo(req, metadata=self.metadata)
-            else:
-                raise ValueError("Cannot specify a repo_name if all=True")
+        req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force, all=False)
+        self.stub.DeleteRepo(req, metadata=self.metadata)
 
-    def start_commit(self, repo_name, branch=None, parent=None, description=None):
+    def delete_all_repos(self, force=False):
+        """
+        Deletes all repos.
+
+        Params:
+        * force: If set to true, the repo will be removed regardless of
+        errors. This argument should be used with care.
+        """
+
+        req = proto.DeleteRepoRequest(force=force, all=True)
+        self.stub.DeleteRepo(req, metadata=self.metadata)
+
+    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=tuple()):
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with PutFile and when all the data has been
@@ -94,61 +100,98 @@ class PfsClient(object):
         returned.
 
         Params:
-        * repo_name: The name of the repo.
-        * branch: A more convenient way to build linear chains of commits.
-        When a commit is started with a non-empty branch the value of branch
-        becomes an alias for the created Commit. This enables a more intuitive
-        access pattern. When the commit is started on a branch the previous
-        head of the branch is used as the parent of the commit.
-        * parent: Specifies the parent Commit, upon creation the new Commit
-        will appear identical to the parent Commit, data can safely be added
-        to the new commit without affecting the contents of the parent Commit.
-        You may pass "" as parentCommit in which case the new Commit will have
-        no parent and will initially appear empty.
-        * description: (optional) explanation of the commit for clarity.
+        * repo_name: A string specifying the name of the repo.
+        * branch: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * parent: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * description: An optional string describing the commit.
+        * provenance: An optional iterable of `CommitProvenance` objects
+        specifying the commit provenance.
         """
-        req = proto.StartCommitRequest(parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent), branch=branch,
-                                       description=description)
+        req = proto.StartCommitRequest(
+            parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent),
+            branch=branch,
+            description=description,
+            provenance=provenance,
+        )
         return self.stub.StartCommit(req, metadata=self.metadata)
 
-    def finish_commit(self, commit):
+    def finish_commit(self, commit, description=None,
+                      tree_object_hashes=tuple(), datum_object_hash=None,
+                      size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
         future attempts to write to it with PutFile will error.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * description: An optional string describing this commit.
+        * tree_object_hashes: A list of zero or more strings specifying object
+        hashes.
+        * datum_object_hash: An optional string specifying an object hash.
+        * size_bytes: An optional int.
+        * empty: An optional bool. If set, the commit will be closed (its
+        `finished` field will be set to the current time) but its `tree` will
+        be left nil.
         """
-        req = proto.FinishCommitRequest(commit=commit_from(commit))
+        req = proto.FinishCommitRequest(
+            commit=commit_from(commit),
+            description=description,
+            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes else None,
+            datums=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
+            size_bytes=size_bytes,
+            empty=empty,
+        )
         return self.stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None, description=None):
-        """A context manager for doing stuff inside a commit."""
+        """
+        A context manager for running operations within a commit.
+
+        Params:
+        * repo_name: A string specifying the name of the repo.
+        * branch: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * parent: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * description: An optional string describing the commit.
+        """
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
             yield commit
-        except Exception as e:
-            print("An exception occurred during an open commit. "
-                  "Trying to finish it (Currently a commit can't be cancelled)")
-            raise e
         finally:
             self.finish_commit(commit)
 
-    def inspect_commit(self, commit):
+    def inspect_commit(self, commit, block_state=None):
         """
-        Returns info about a specific Commit.
+        Inspects a commit. Returns a `CommitInfo` object.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * block_state: Causes inspect commit to block until the commit is in
+        the desired commit state.
         """
-        req = proto.InspectCommitRequest(commit=commit_from(commit))
+        req = proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=0):
         """
-        Gets a list of CommitInfo objects.
+        Lists commits. Yields `CommitInfo` objects.
 
         Params:
         * repo_name: If only `repo_name` is given, all commits in the repo are
@@ -173,7 +216,7 @@ class PfsClient(object):
         Deletes a commit.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
         """
         req = proto.DeleteCommitRequest(commit=commit_from(commit))
         self.stub.DeleteCommit(req, metadata=self.metadata)
@@ -191,76 +234,111 @@ class PfsClient(object):
         them to complete and see their output once they do. This returns an
         iterator of CommitInfo objects.
 
+        Yields `CommitInfo` objects.
+
         Params:
-        * commits: A commit or a list of commits to wait on.
-        * repos: Optional. Only the commits up to and including those repos.
-        will be considered, otherwise all repos are considered.
+        * commits: A list of tuples, strings, or `Commit` objects representing
+        the commits to flush.
+        * repos: An optional list of strings specifying repo names. If
+        specified, only commits within these repos will be flushed.
         """
         req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
                                        to_repos=[proto.Repo(name=r) for r in repos])
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
-    def subscribe_commit(self, repo_name, branch, from_commit_id=None):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
         """
-        SubscribeCommit is like ListCommit but it keeps listening for commits
-        as they come in. This returns an iterator Commit objects.
+        Yields `CommitInfo` objects as commits occur.
 
         Params:
-        * repo_name: Name of the repo.
-        * branch: Branch to subscribe to.
-        * from_commit_id: Optional. Only commits created since this commit
-        are returned.
+        * repo_name: A string specifying the name of the repo.
+        * branch: A string specifying branch to subscribe to.
+        * from_commit_id: An optional string specifying the commit ID. Only
+        commits created since this commit are returned.
+        * state: The commit state to filter on.
         """
         repo = proto.Repo(name=repo_name)
-        req = proto.SubscribeCommitRequest(repo=repo, branch=branch)
+        req = proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
 
-    def list_branch(self, repo_name):
+    def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
         """
-        Lists the active Branch objects on a Repo.
+        Creates a new branch.
 
         Params:
-        * repo_name: The name of the repo.
+        * repo_name: A string specifying the name of the repo.
+        * branch_name: A string specifying the new branch name.
+        * commit: An optional tuple, string, or `Commit` object representing
+        the head commit of the branch.
+        * provenance: An optional iterable of `Branch` objects representing
+        the branch provenance.
+        """
+        req = proto.CreateBranchRequest(
+            branch=proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name),
+            head=commit_from(commit) if commit is not None else None,
+            provenance=provenance,
+        )
+        self.stub.CreateBranch(req, metadata=self.metadata)
+
+    def inspect_branch(self, repo_name, branch_name):
+        """
+        Inspects a branch. Returns a `BranchInfo` object.
+        """
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
+        req = proto.InspectBranchRequest(branch=branch)
+        return self.stub.InspectBranch(req, metadata=self.metadata)
+
+    def list_branch(self, repo_name):
+        """
+        Lists the active branch objects on a repo. Returns a list of
+        `BranchInfo` objects.
+
+        Params:
+        * repo_name: A string specifying the repo name.
         """
         req = proto.ListBranchRequest(repo=proto.Repo(name=repo_name))
         res = self.stub.ListBranch(req, metadata=self.metadata)
         return res.branch_info
 
-    def delete_branch(self, repo_name, branch_name):
+    def delete_branch(self, repo_name, branch_name, force=False):
         """
         Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
         branches they happen to be on.
 
         Params:
-        * repo_name: The name of the repo.
-        * branch_name: The name of the branch to delete.
+        * repo_name: A string specifying the repo name.
+        * branch_name: A string specifying the name of the branch to delete.
+        * force: A bool specifying whether to force the branch deletion.
         """
-        res = proto.DeleteBranchRequest(branch=proto.Branch(
-            repo=proto.Repo(name=repo_name),
-            name=branch_name,
-        ))
-        self.stub.DeleteBranch(res, metadata=self.metadata)
+        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
+        req = proto.DeleteBranchRequest(branch=branch, force=force)
+        self.stub.DeleteBranch(req, metadata=self.metadata)
 
-    def put_file_bytes(self, commit, path, value, delimiter=proto.NONE,
+    def put_file_bytes(self, commit, path, value, delimiter=None,
                        target_file_datums=0, target_file_bytes=0, overwrite_index=None):
         """
         Uploads a binary bytes array as file(s) in a certain path.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * path: Path in the repo the file(s) will be written to.
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: A string specifying the path in the repo the file(s) will be
+        written to.
         * value: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
         * delimiter: Optional. causes data to be broken up into separate files
         with `path` as a prefix.
-        * target_file_datums: Optional. Specifies the target number of datums
-        in each written file. It may be lower if data does not split evenly,
-        but will never be higher, unless the value is 0.
-        * target_file_bytes: Specifies the target number of bytes in each
-        written file, files may have more or fewer bytes than the target.
+        * target_file_datums: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * target_file_bytes: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * overwrite_index: An optional `OverwriteIndex` object. This is the
+        object index where the write starts from.  All existing objects
+        starting from the index are deleted.
         """
 
         overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
@@ -324,11 +402,11 @@ class PfsClient(object):
         PFS function.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * path: The path to the file.
-        * url: The url of the file to put.
-        * recursive: allow for recursive scraping of some types URLs for
-        example on s3:// urls.
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: A string specifying the path to the file.
+        * url: A string specifying the url of the file to put.
+        * recursive: allow for recursive scraping of some types URLs, for
+        example on s3:// URLs.
         """
         req = iter([
             proto.PutFileRequest(
@@ -339,20 +417,42 @@ class PfsClient(object):
         ])
         self.stub.PutFile(req, metadata=self.metadata)
 
-    def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
         """
-        Returns an iterator of the contents contents of a file at a specific
-        Commit.
+        Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of
+        1.9.0) silently fail.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * path: The path of the file.
-        * offset_bytes: Optional. specifies a number of bytes that should be
-        skipped in the beginning of the file.
-        * size_bytes: Optional. limits the total amount of data returned, note
-        you will get fewer bytes than size if you pass a value larger than the
-        size of the file. If size is set to 0 then all of the data will be
-        returned.
+        * source_commit: A tuple, string, or `Commit` object representing the
+        commit for the source file.
+        * source_path: A string specifying the path of the source file.
+        * dest_commit: A tuple, string, or `Commit` object representing the
+        commit for the destination file.
+        * dest_path: A string specifying the path of the destination file.
+        * overwrite: Am optional bool specifying whether to overwrite the
+        destination file if it already exists.
+        """
+        req = proto.CopyFileRequest(
+            src=proto.File(commit=commit_from(source_commit), path=source_path),
+            dst=proto.File(commit=commit_from(dest_commit), path=dest_path),
+            overwrite=overwrite,
+        )
+        self.stub.CopyFile(req, metadata=self.metadata)
+
+    def get_file(self, commit, path, offset_bytes=0, size_bytes=0):
+        """
+        Returns an iterator of the contents of a file at a specific commit.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: A string specifying the path of the file.
+        * offset_bytes: An optional int. Specifies a number of bytes that
+        should be skipped in the beginning of the file.
+        * size_bytes: An optional int. limits the total amount of data
+        returned, note you will get fewer bytes than size if you pass a value
+        larger than the size of the file. If size is set to 0 then all of the
+        data will be returned.
         """
         req = proto.GetFileRequest(
             file=proto.File(commit=commit_from(commit), path=path),
@@ -365,11 +465,11 @@ class PfsClient(object):
 
     def inspect_file(self, commit, path):
         """
-        Returns info about a specific file.
+        Inspects a file. Returns a `FileInfo` object.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
-        * path: Path to file.
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: A string specifying the path to the file.
         """
         req = proto.InspectFileRequest(file=proto.File(commit=commit_from(commit), path=path))
         return self.stub.InspectFile(req, metadata=self.metadata)
@@ -379,11 +479,16 @@ class PfsClient(object):
         Lists the files in a directory.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the directory.
-        * history: number of historical "versions" to be returned (0 = none,
-        -1 = all)
-        * include_contents: If True, file contents are included
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
+        * include_contents: An optional bool. If `True`, file contents are
+        included.
         """
 
         req = proto.ListFileRequest(
@@ -394,7 +499,29 @@ class PfsClient(object):
 
         return self.stub.ListFileStream(req, metadata=self.metadata)
 
+    def walk_file(self, commit, path):
+        """
+        Walks over all descendant files in a directory. Returns a generator of
+        `FileInfo` objects.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * path: The path to the directory.
+        """
+        commit = commit_from(commit)
+        f = proto.File(commit=commit_from(commit), path=path)
+        req = proto.WalkFileRequest(file=f)
+        return self.stub.WalkFile(req, metadata=self.metadata)
+
     def glob_file(self, commit, pattern):
+        """
+        Lists files that match a glob pattern. Yields `FileInfo` objects.
+
+        Params:
+        * commit: A tuple, string, or `Commit` object representing the commit.
+        * pattern: A string representing a glob pattern.
+        """
+
         req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
         return self.stub.GlobFileStream(req, metadata=self.metadata)
 
@@ -406,12 +533,15 @@ class PfsClient(object):
         will of course remain intact in the Commit's parent.
 
         Params:
-        * commit: A tuple, string, or Commit object representing the commit.
+        * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the file.
         """
         req = proto.DeleteFileRequest(file=proto.File(commit=commit_from(commit), path=path))
         self.stub.DeleteFile(req, metadata=self.metadata)
 
     def delete_all(self):
+        """
+        Deletes everything.
+        """
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)

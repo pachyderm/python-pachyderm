@@ -4,7 +4,11 @@ from .client.pfs.pfs_pb2 import DIR, FILE, NONE, JSON, LINE, CSV, \
     Repo, Branch, BranchInfo, File, Block, Object, Tag, RepoInfo, \
     RepoAuthInfo, Commit, CommitRange, CommitInfo, FileInfo, ByteRange, \
     BlockRef, ObjectInfo, OverwriteIndex, PutFileRecord, PutFileRecords, \
-    ObjectIndex
+    ObjectIndex, CommitProvenance
+from .client.pfs.pfs_pb2 import \
+    STARTED as COMMIT_STATE_STARTED, \
+    READY as COMMIT_STATE_READY, \
+    FINISHED as COMMIT_STATE_FINISHED
 from .client.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
     JOB_STARTING, JOB_SUCCESS, FAILED, SUCCESS, SKIPPED, POD_SUCCESS, \
     POD_FAILED, POD_RUNNING, PIPELINE_FAILURE, PIPELINE_PAUSED, \
