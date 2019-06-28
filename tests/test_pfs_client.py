@@ -80,16 +80,6 @@ def test_pfs_delete_repo(pfs_client_with_repo):
     assert len(client.list_repo()) == 0
 
 
-def test_pfs_delete_repo_raises(pfs_client):
-    assert len(pfs_client.list_repo()) == 0
-
-    with pytest.raises(ValueError) as excinfo:
-        pfs_client.delete_repo()
-    exception_msg = excinfo.value.args[0]
-
-    assert exception_msg == 'Either a repo_name or all=True needs to be provided'
-
-
 def test_pfs_delete_non_existent_repo_raises(pfs_client):
     assert len(pfs_client.list_repo()) == 0
     pfs_client.delete_repo('BOGUS_NAME')
@@ -100,21 +90,8 @@ def test_pfs_delete_all_repos(pfs_client):
     pfs_client.create_repo('test-repo-2')
     assert len(pfs_client.list_repo()) == 2
 
-    pfs_client.delete_repo(all=True)
+    pfs_client.delete_all_repos()
     assert len(pfs_client.list_repo()) == 0
-
-
-def test_pfs_delete_all_repos_with_name_raises(pfs_client):
-    pfs_client.create_repo('test-repo-1')
-    pfs_client.create_repo('test-repo-2')
-    assert len(pfs_client.list_repo()) == 2
-
-    with pytest.raises(ValueError) as excinfo:
-        pfs_client.delete_repo('test-repo-1', all=True)
-
-    exception_msg = excinfo.value.args[0]
-    assert exception_msg == 'Cannot specify a repo_name if all=True'
-    assert len(pfs_client.list_repo()) == 2
 
 
 @pytest.mark.parametrize('repo_to_create,repo_to_commit_to,branch', [
@@ -137,12 +114,6 @@ def test_pfs_start_commit_missing_branch(pfs_client_with_repo):
     commit = pfs_client.start_commit(repo_name)
     assert commit.repo.name == repo_name
     assert isinstance(commit.id, str)
-
-
-def test_pfs_start_commit_missing_repo_name_raises(pfs_client):
-    """ Trying to start a commit without specifying a repo name should raise an error. """
-    with pytest.raises(TypeError) as excinfo:
-        pfs_client.start_commit()
 
 
 def test_pfs_start_commit_with_parent_no_branch(pfs_client_with_repo):
@@ -326,6 +297,24 @@ def test_put_file_url(pfs_client_with_repo):
     assert files[0].file.path == '/index.html'
 
 
+def test_copy_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name, "master") as src_commit:
+        pfs_client.put_file_bytes(src_commit, 'file1.dat', BytesIO(b'DATA1'))
+        pfs_client.put_file_bytes(src_commit, 'file2.dat', BytesIO(b'DATA2'))
+
+    with pfs_client.commit(repo_name, "master") as dest_commit:
+        pfs_client.copy_file(src_commit, 'file1.dat', dest_commit, 'copy.dat')
+        pfs_client.copy_file(src_commit, 'file2.dat', dest_commit, 'copy.dat', overwrite=True)
+
+    files = list(pfs_client.list_file('{}/{}'.format(repo_name, dest_commit.id), '.'))
+    assert len(files) == 3
+    assert files[0].file.path == '/copy.dat'
+    assert files[1].file.path == '/file1.dat'
+    assert files[2].file.path == '/file2.dat'
+
+
 def test_flush_commit(pfs_client_with_repo):
     """
     Ensure flush commit works
@@ -433,6 +422,21 @@ def test_list_file(pfs_client_with_repo):
     assert files[1].file_type == python_pachyderm.FILE
     assert files[1].file.path == "/file2.dat"
 
+def test_walk_file(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+
+    with pfs_client.commit(repo_name) as c:
+        pfs_client.put_file_bytes(c, '/file1.dat', [b'DATA'])
+        pfs_client.put_file_bytes(c, '/a/file2.dat', [b'DATA'])
+        pfs_client.put_file_bytes(c, '/a/b/file3.dat', [b'DATA'])
+
+    files = list(pfs_client.walk_file(c, '/a'))
+    assert len(files) == 4
+    assert files[0].file.path == '/a'
+    assert files[1].file.path == '/a/b'
+    assert files[2].file.path == '/a/b/file3.dat'
+    assert files[3].file.path == '/a/file2.dat'
+
 def test_glob_file(pfs_client_with_repo):
     pfs_client, repo_name = pfs_client_with_repo
 
@@ -467,3 +471,16 @@ def test_delete_file(pfs_client_with_repo):
         pfs_client.delete_file(c, 'file1.dat')
 
     assert len(list(pfs_client.list_file(c, '/'))) == 0
+
+def test_create_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    pfs_client.create_branch(repo_name, "foobar")
+    branches = pfs_client.list_branch(repo_name)
+    assert len(branches) == 1
+    assert branches[0].name == "foobar"
+
+def test_inspect_branch(pfs_client_with_repo):
+    pfs_client, repo_name = pfs_client_with_repo
+    pfs_client.create_branch(repo_name, "foobar")
+    branch = pfs_client.inspect_branch(repo_name, "foobar")
+    print(branch)
