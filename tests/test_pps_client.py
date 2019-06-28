@@ -118,8 +118,7 @@ def test_datums(clients_with_sandbox):
 
     datums = list(pps_client.list_datum(job_id))
     assert len(datums) == 1
-    datum_id = datums[0].datum.id
-    datum = pps_client.inspect_datum(job_id, datum_id)
+    datum = pps_client.inspect_datum(job_id, datums[0].datum_info.datum.id)
     assert datum.state == python_pachyderm.DATUM_SUCCESS
 
     # Just ensure this doesn't raise an exception
