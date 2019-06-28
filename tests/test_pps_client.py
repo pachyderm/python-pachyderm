@@ -54,9 +54,8 @@ def wait_for_job(pps_client, pfs_client, commit):
     # call, so repeatedly list jobs until it's available
     start_time = time.time()
     while True:
-        jobs = pps_client.list_job()
-        if len(jobs.job_info) > 0:
-            return jobs.job_info[0].job.id
+        for job in pps_client.list_job():
+            return job.job.id
 
         assert time.time() - start_time < 60.0, "timed out waiting for job"
         time.sleep(1)
