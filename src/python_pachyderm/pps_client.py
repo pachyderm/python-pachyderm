@@ -344,8 +344,8 @@ class PpsClient(object):
         )
         return self.stub.GetLogs(req, metadata=self.metadata)
 
-    def get_job_logs(self, job_id, data_filters=None, master=None, datum=None,
-                 follow=None, tail=None):
+    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None,
+                     tail=None):
         """
         Gets logs for a job. Yields `LogMessage` objects.
 
@@ -356,7 +356,6 @@ class PpsClient(object):
         multiple files, to query pipelines that contain multiple inputs. Each
         filter may be an absolute path of a file within a pps repo, or it may
         be a hash for that file (to search for files at specific versions.)
-        * master: An optional bool.
         * datum: An optional `Datum` object.
         * follow: An optional bool specifying whether logs should continue to
         stream forever.

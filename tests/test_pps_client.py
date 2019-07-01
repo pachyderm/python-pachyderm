@@ -192,9 +192,5 @@ def test_get_job_logs():
     list(sandbox.pps_client.flush_job([sandbox.commit]))
 
     # Just make sure these spit out some logs
-
     logs = sandbox.pps_client.get_job_logs(job_id)
-    assert next(logs) is not None
-
-    logs = sandbox.pps_client.get_job_logs(job_id, master=True)
     assert next(logs) is not None
