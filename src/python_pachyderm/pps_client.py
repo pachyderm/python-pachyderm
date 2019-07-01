@@ -338,7 +338,7 @@ class PpsClient(object):
         """
 
         req = proto.GetLogsRequest(
-            pipeline=proto.Pipeline(name=pipeline_name), job=None,
+            pipeline=proto.Pipeline(name=pipeline_name),
             data_filters=data_filters, master=master, datum=datum,
             follow=follow, tail=tail,
         )
@@ -365,8 +365,8 @@ class PpsClient(object):
         """
 
         req = proto.GetLogsRequest(
-            pipeline=None, job=proto.Job(id=job_id), data_filters=data_filters,
-            master=master, datum=datum, follow=follow, tail=tail,
+            job=proto.Job(id=job_id), data_filters=data_filters, datum=datum,
+            follow=follow, tail=tail,
         )
         return self.stub.GetLogs(req, metadata=self.metadata)
 
