@@ -6,91 +6,92 @@
 import grpc
 import time
 import pytest
+import random
+import string
 
 import python_pachyderm
 
+def random_string(n):
+    return "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(n))
 
-@pytest.fixture(scope='function')
-def pps_client():
-    """Connect to Pachyderm before tests and reset to initial state after tests."""
-    client = python_pachyderm.PpsClient()
-    client.delete_all()
-    yield client 
-    client.delete_all()
+class Sandbox:
+    def __init__(self, test_name):
+        pfs_client = python_pachyderm.PfsClient()
+        pps_client = python_pachyderm.PpsClient()
 
+        repo_name_suffix = random_string(6)
+        input_repo_name = "{}-input-{}".format(test_name, repo_name_suffix)
+        pipeline_repo_name = "{}-pipeline-{}".format(test_name, repo_name_suffix)
 
-@pytest.fixture(scope='function')
-def clients_with_sandbox():
-    """Connect to Pachyderm before tests and reset to initial state after tests."""
+        pfs_client.create_repo(input_repo_name, "input repo for {}".format(test_name))
 
-    pfs_client = python_pachyderm.PfsClient()
-    pps_client = python_pachyderm.PpsClient()
+        pps_client.create_pipeline(
+            pipeline_repo_name,
+            transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)]),
+            input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo=input_repo_name)),
+            enable_stats=True,
+        )
 
-    pps_client.delete_all()
-    pfs_client.delete_all()
+        with pfs_client.commit(input_repo_name, 'master') as commit:
+            pfs_client.put_file_bytes(commit, 'file.dat', b'DATA')
 
-    pfs_client.create_repo('test-pps-input', 'This is a test repository for PPS functionality')
+        self.pps_client = pps_client
+        self.pfs_client = pfs_client
+        self.commit = commit
+        self.input_repo_name = input_repo_name
+        self.pipeline_repo_name = pipeline_repo_name
 
-    pps_client.create_pipeline(
-        "test-pps-copy",
-        transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/test-pps-input/*.dat /pfs/out/"]),
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="test-pps-input")),
-        enable_stats=True,
-    )
+    def wait_for_job(self):
+        # block until the commit is ready
+        self.pfs_client.inspect_commit(self.commit, block_state=python_pachyderm.COMMIT_STATE_READY)
 
-    with pfs_client.commit('test-pps-input', 'master') as commit:
-        pfs_client.put_file_bytes(commit, 'file.dat', b'DATA')
+        # while the commit is ready, the job might not be listed on the first
+        # call, so repeatedly list jobs until it's available
+        start_time = time.time()
+        while True:
+            for job in self.pps_client.list_job():
+                return job.job.id
 
-    yield pps_client, pfs_client, commit
+            assert time.time() - start_time < 60.0, "timed out waiting for job"
+            time.sleep(1)
 
-    pps_client.delete_all()
-    pfs_client.delete_all()
+def test_list_job():
+    sandbox = Sandbox("list_job")
+    job_id = sandbox.wait_for_job()
 
-def wait_for_job(pps_client, pfs_client, commit):
-    # block until the commit is ready
-    pfs_client.inspect_commit(commit, block_state=python_pachyderm.COMMIT_STATE_READY)
+    jobs = list(sandbox.pps_client.list_job())
+    assert len(jobs) >= 1
 
-    # while the commit is ready, the job might not be listed on the first
-    # call, so repeatedly list jobs until it's available
-    start_time = time.time()
-    while True:
-        for job in pps_client.list_job():
-            return job.job.id
+    jobs = list(sandbox.pps_client.list_job(pipeline_name=sandbox.pipeline_repo_name))
+    assert len(jobs) >= 1
 
-        assert time.time() - start_time < 60.0, "timed out waiting for job"
-        time.sleep(1)
+    jobs = list(sandbox.pps_client.list_job(input_commit=(sandbox.input_repo_name, sandbox.commit.id)))
+    assert len(jobs) >= 1
 
-def test_list_job(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
+def test_flush_job():
+    sandbox = Sandbox("flush_job")
+    jobs = list(sandbox.pps_client.flush_job([sandbox.commit]))
+    assert len(jobs) >= 1
+    print(jobs[0])
 
-    jobs = list(pps_client.list_job())
-    assert len(jobs) == 1
+def test_inspect_job():
+    sandbox = Sandbox("inspect_job")
+    job_id = sandbox.wait_for_job()
 
-    jobs = list(pps_client.list_job(pipeline_name='test-pps-copy'))
-    assert len(jobs) == 1
-
-    jobs = list(pps_client.list_job(input_commit="test-pps-input/{}".format(commit.id)))
-    assert len(jobs) == 1
-
-def test_inspect_job(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
-
-    job = pps_client.inspect_job(job_id)
+    job = sandbox.pps_client.inspect_job(job_id)
     assert job.job.id == job_id
 
-def test_stop_job(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
+def test_stop_job():
+    sandbox = Sandbox("stop_job")
+    job_id = sandbox.wait_for_job()
 
     # This may fail if the job finished between the last call and here, so
     # ignore _Rendezvous errors.
     try:
-        pps_client.stop_job(job_id)
+        sandbox.pps_client.stop_job(job_id)
     except grpc._channel._Rendezvous:
         # if it failed, it should be because the job already finished
-        job = pps_client.inspect_job(job_id)
+        job = sandbox.pps_client.inspect_job(job_id)
         assert job.state == python_pachyderm.JOB_SUCCESS
     else:
         # This is necessary because `StopJob` does not wait for the job to be
@@ -98,84 +99,98 @@ def test_stop_job(clients_with_sandbox):
         # TODO: remove once this is fixed:
         # https://github.com/pachyderm/pachyderm/issues/3856
         time.sleep(1)
-        job = pps_client.inspect_job(job_id)
+        job = sandbox.pps_client.inspect_job(job_id)
         assert job.state == python_pachyderm.JOB_KILLED
 
-def test_delete_job(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
+def test_delete_job():
+    sandbox = Sandbox("delete_job")
+    job_id = sandbox.wait_for_job()
+    orig_job_count = len(list(sandbox.pps_client.list_job()))
+    sandbox.pps_client.delete_job(job_id)
+    assert len(list(sandbox.pps_client.list_job())) == orig_job_count - 1
 
-    pps_client.delete_job(job_id)
-    jobs = list(pps_client.list_job())
-    assert len(jobs) == 0
-
-def test_datums(clients_with_sandbox):
-    pps_client, pfs_client, commit = clients_with_sandbox
-    job_id = wait_for_job(pps_client, pfs_client, commit)
+def test_datums():
+    sandbox = Sandbox("datums")
+    job_id = sandbox.wait_for_job()
 
     # flush the job so it fully finishes
-    list(pfs_client.flush_commit(["test-pps-input/{}".format(commit.id)]))
+    list(sandbox.pfs_client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
 
-    datums = list(pps_client.list_datum(job_id))
+    datums = list(sandbox.pps_client.list_datum(job_id))
     assert len(datums) == 1
-    datum = pps_client.inspect_datum(job_id, datums[0].datum_info.datum.id)
+    datum = sandbox.pps_client.inspect_datum(job_id, datums[0].datum_info.datum.id)
     assert datum.state == python_pachyderm.DATUM_SUCCESS
 
     # Just ensure this doesn't raise an exception
-    pps_client.restart_datum(job_id)
+    sandbox.pps_client.restart_datum(job_id)
 
-def test_inspect_pipeline(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-    pipeline = pps_client.inspect_pipeline('test-pps-copy')
-    assert pipeline.pipeline.name == 'test-pps-copy'
+def test_inspect_pipeline():
+    sandbox = Sandbox("inspect_pipeline")
+    pipeline = sandbox.pps_client.inspect_pipeline(sandbox.pipeline_repo_name)
+    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
+    pipeline = sandbox.pps_client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
+    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
 
-def test_list_pipeline(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-    pipelines = pps_client.list_pipeline()
-    assert len(pipelines.pipeline_info) == 1
-    assert pipelines.pipeline_info[0].pipeline.name == 'test-pps-copy'
+def test_list_pipeline():
+    sandbox = Sandbox("list_pipeline")
+    pipelines = sandbox.pps_client.list_pipeline()
+    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines.pipeline_info]
+    pipelines = sandbox.pps_client.list_pipeline(history=-1)
+    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines.pipeline_info]
 
-def test_delete_pipeline(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-    pps_client.delete_pipeline('test-pps-copy')
-    pipelines = pps_client.list_pipeline()
+def test_delete_pipeline():
+    sandbox = Sandbox("delete_pipeline")
+    orig_pipeline_count = len(sandbox.pps_client.list_pipeline().pipeline_info)
+    sandbox.pps_client.delete_pipeline(sandbox.pipeline_repo_name)
+    assert len(sandbox.pps_client.list_pipeline().pipeline_info) == orig_pipeline_count - 1
+
+def test_delete_all_pipelines():
+    sandbox = Sandbox("delete_all_pipelines")
+    sandbox.pps_client.delete_all_pipelines()
+    pipelines = sandbox.pps_client.list_pipeline()
     assert len(pipelines.pipeline_info) == 0
 
-def test_delete_all_pipelines(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-    pps_client.delete_all_pipelines()
-    pipelines = pps_client.list_pipeline()
-    assert len(pipelines.pipeline_info) == 0
+def test_restart_pipeline():
+    sandbox = Sandbox("restart_job")
 
-def test_restart_pipeline(clients_with_sandbox):
-    pps_client, _, _ = clients_with_sandbox
-
-    pps_client.stop_pipeline('test-pps-copy')
-    pipeline = pps_client.inspect_pipeline('test-pps-copy')
+    sandbox.pps_client.stop_pipeline(sandbox.pipeline_repo_name)
+    pipeline = sandbox.pps_client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert pipeline.stopped
 
-    pps_client.start_pipeline('test-pps-copy')
-    pipeline = pps_client.inspect_pipeline('test-pps-copy')
+    sandbox.pps_client.start_pipeline(sandbox.pipeline_repo_name)
+    pipeline = sandbox.pps_client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert not pipeline.stopped
 
-# TODO: re-enable test
-# def test_get_logs(clients_with_sandbox):
-#     pps_client, pfs_client, commit = clients_with_sandbox
-#     job_id = wait_for_job(pps_client, pfs_client, commit)
+def test_run_pipeline():
+    sandbox = Sandbox("run_pipeline")
 
-#     # Just make sure these spit out some logs
-#     logs = pps_client.get_logs(pipeline_name='test-pps-copy')
-#     assert next(logs) is not None
+    # flush the job so it fully finishes
+    list(sandbox.pfs_client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
 
-#     logs = pps_client.get_logs(job_id=job_id)
-#     assert next(logs) is not None
+    # just make sure it worked
+    sandbox.pps_client.run_pipeline(sandbox.pipeline_repo_name)
 
-#     logs = pps_client.get_logs(pipeline_name='test-pps-copy', job_id=job_id)
-#     assert next(logs) is not None
+def test_get_pipeline_logs():
+    sandbox = Sandbox("get_pipeline_logs")
+    job_id = sandbox.wait_for_job()
 
-#     logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
-#     assert next(logs) is not None
+    # Wait for the job to complete
+    list(sandbox.pps_client.flush_job([sandbox.commit]))
 
-def test_garbage_collect(pps_client):
-    # just make sure this doesn't error
-    pps_client.garbage_collect()
+    # Just make sure these spit out some logs
+    logs = sandbox.pps_client.get_pipeline_logs(sandbox.pipeline_repo_name)
+    assert next(logs) is not None
+
+    logs = sandbox.pps_client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
+    assert next(logs) is not None
+
+def test_get_job_logs():
+    sandbox = Sandbox("get_logs_logs")
+    job_id = sandbox.wait_for_job()
+
+    # Wait for the job to complete
+    list(sandbox.pps_client.flush_job([sandbox.commit]))
+
+    # Just make sure these spit out some logs
+    logs = sandbox.pps_client.get_job_logs(job_id)
+    assert next(logs) is not None

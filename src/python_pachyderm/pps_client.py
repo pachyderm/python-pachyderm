@@ -69,6 +69,23 @@ class PpsClient(object):
 
         return self.stub.ListJobStream(req, metadata=self.metadata)
 
+    def flush_job(self, commits, pipeline_names=None):
+        """
+        Blocks until all of the jobs which have a set of commits as
+        provenance have finished. Yields `JobInfo` objects.
+
+        Params:
+        * commits: A list of tuples, strings, or `Commit` objects representing
+        the commits to flush.
+        * pipeline_names: An optional list of strings specifying pipeline
+        names. If specified, only jobs within these pipelines will be flushed.
+        """
+
+        commits = [commit_from(c) for c in commits]
+        pipelines = [proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None
+        req = proto.FlushJobRequest(commits=commits, to_pipelines=pipelines)
+        return self.stub.FlushJob(req)
+
     def delete_job(self, job_id):
         """
         Deletes a job by its ID.
@@ -189,24 +206,47 @@ class PpsClient(object):
         )
         self.stub.CreatePipeline(req, metadata=self.metadata)
 
-    def inspect_pipeline(self, pipeline_name):
+    def inspect_pipeline(self, pipeline_name, history=None):
         """
         Inspects a pipeline. Returns a `PipelineInfo` object.
 
         Params:
         * pipeline_name: A string representing the pipeline name.
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
         """
-        req = proto.InspectPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
-        return self.stub.InspectPipeline(req, metadata=self.metadata)
 
-    def list_pipeline(self):
+        pipeline = proto.Pipeline(name=pipeline_name)
+
+        if history is None:
+            req = proto.InspectPipelineRequest(pipeline=pipeline)
+            return self.stub.InspectPipeline(req, metadata=self.metadata)
+        else:
+            # `InspectPipeline` doesn't support history, but `ListPipeline`
+            # with a pipeline filter does, so we use that here
+            req = proto.ListPipelineRequest(pipeline=pipeline, history=history)
+            pipelines = self.stub.ListPipeline(req, metadata=self.metadata).pipeline_info
+            assert len(pipelines) <= 1
+            return pipelines[0] if len(pipelines) else None
+
+    def list_pipeline(self, history=None):
         """
         Lists pipelines. Returns a `PipelineInfos` object.
 
         Params:
         * pipeline_name: A string representing the pipeline name.
+        * history: An optional int that indicates to return jobs from
+        historical versions of pipelines. Semantics are:
+         0: Return jobs from the current version of the pipeline or pipelines.
+         1: Return the above and jobs from the next most recent version
+         2: etc.
+        -1: Return jobs from all historical versions.
         """
-        req = proto.ListPipelineRequest()
+        req = proto.ListPipelineRequest(history=history)
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
     def delete_pipeline(self, pipeline_name, force=None):
@@ -253,6 +293,21 @@ class PpsClient(object):
         req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
         self.stub.StopPipeline(req, metadata=self.metadata)
 
+    def run_pipeline(self, pipeline_name, provenance=None):
+        """
+        Runs a pipeline.
+
+        Params:
+        * pipeline_name: A string representing the pipeline name.
+        * provenance: An optional iterable of `CommitProvenance` objects
+        representing the pipeline execution provenance.
+        """
+        req = proto.RunPipelineRequest(
+            pipeline=proto.Pipeline(name=pipeline_name),
+            provenance=provenance,
+        )
+        self.stub.RunPipeline(req, metadata=self.metadata)
+
     def delete_all(self):
         """
         Deletes everything in pachyderm.
@@ -260,15 +315,14 @@ class PpsClient(object):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=None,
-                 master=None, datum=None, follow=None, tail=None):
+    def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
+                          datum=None, follow=None, tail=None):
         """
-        Gets logs. Yields `LogMessage` objects.
+        Gets logs for a pipeline. Yields `LogMessage` objects.
 
         Params:
-        * pipeline_name: An optional string representing a pipeline to get
+        * pipeline_name: A string representing a pipeline to get
         logs of.
-        * job_id: An optional string representing a job to get logs of.
         * data_filters: An optional iterable of strings specifying the names
         of input files from which we want processing logs. This may contain
         multiple files, to query pipelines that contain multiple inputs. Each
@@ -283,15 +337,36 @@ class PpsClient(object):
         get tail * <number of pods> total lines back.
         """
 
-        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
-        job = proto.Job(id=job_id) if job_id else None
+        req = proto.GetLogsRequest(
+            pipeline=proto.Pipeline(name=pipeline_name),
+            data_filters=data_filters, master=master, datum=datum,
+            follow=follow, tail=tail,
+        )
+        return self.stub.GetLogs(req, metadata=self.metadata)
 
-        if pipeline is None and job is None:
-            raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
+    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None,
+                     tail=None):
+        """
+        Gets logs for a job. Yields `LogMessage` objects.
+
+        Params:
+        * job_id: A string representing a job to get logs of.
+        * data_filters: An optional iterable of strings specifying the names
+        of input files from which we want processing logs. This may contain
+        multiple files, to query pipelines that contain multiple inputs. Each
+        filter may be an absolute path of a file within a pps repo, or it may
+        be a hash for that file (to search for files at specific versions.)
+        * datum: An optional `Datum` object.
+        * follow: An optional bool specifying whether logs should continue to
+        stream forever.
+        * tail: An optional int. If nonzero, the number of lines from the end
+        of the logs to return.  Note: tail applies per container, so you will
+        get tail * <number of pods> total lines back.
+        """
 
         req = proto.GetLogsRequest(
-            pipeline=pipeline, job=job, data_filters=data_filters,
-            master=master, datum=datum, follow=follow, tail=tail,
+            job=proto.Job(id=job_id), data_filters=data_filters, datum=datum,
+            follow=follow, tail=tail,
         )
         return self.stub.GetLogs(req, metadata=self.metadata)
 
