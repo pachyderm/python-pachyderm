@@ -315,15 +315,14 @@ class PpsClient(object):
         req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
-    def get_logs(self, pipeline_name=None, job_id=None, data_filters=None,
-                 master=None, datum=None, follow=None, tail=None):
+    def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
+                          datum=None, follow=None, tail=None):
         """
-        Gets logs. Yields `LogMessage` objects.
+        Gets logs for a pipeline. Yields `LogMessage` objects.
 
         Params:
-        * pipeline_name: An optional string representing a pipeline to get
+        * pipeline_name: A string representing a pipeline to get
         logs of.
-        * job_id: An optional string representing a job to get logs of.
         * data_filters: An optional iterable of strings specifying the names
         of input files from which we want processing logs. This may contain
         multiple files, to query pipelines that contain multiple inputs. Each
@@ -338,14 +337,36 @@ class PpsClient(object):
         get tail * <number of pods> total lines back.
         """
 
-        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name else None
-        job = proto.Job(id=job_id) if job_id else None
+        req = proto.GetLogsRequest(
+            pipeline=proto.Pipeline(name=pipeline_name), job=None,
+            data_filters=data_filters, master=master, datum=datum,
+            follow=follow, tail=tail,
+        )
+        return self.stub.GetLogs(req, metadata=self.metadata)
 
-        if pipeline is None and job is None:
-            raise ValueError("One of 'pipeline_name' or 'job_id' must be specified")
+    def get_job_logs(self, job_id, data_filters=None, master=None, datum=None,
+                 follow=None, tail=None):
+        """
+        Gets logs for a job. Yields `LogMessage` objects.
+
+        Params:
+        * job_id: A string representing a job to get logs of.
+        * data_filters: An optional iterable of strings specifying the names
+        of input files from which we want processing logs. This may contain
+        multiple files, to query pipelines that contain multiple inputs. Each
+        filter may be an absolute path of a file within a pps repo, or it may
+        be a hash for that file (to search for files at specific versions.)
+        * master: An optional bool.
+        * datum: An optional `Datum` object.
+        * follow: An optional bool specifying whether logs should continue to
+        stream forever.
+        * tail: An optional int. If nonzero, the number of lines from the end
+        of the logs to return.  Note: tail applies per container, so you will
+        get tail * <number of pods> total lines back.
+        """
 
         req = proto.GetLogsRequest(
-            pipeline=pipeline, job=job, data_filters=data_filters,
+            pipeline=None, job=proto.Job(id=job_id), data_filters=data_filters,
             master=master, datum=datum, follow=follow, tail=tail,
         )
         return self.stub.GetLogs(req, metadata=self.metadata)

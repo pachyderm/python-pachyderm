@@ -170,22 +170,31 @@ def test_run_pipeline():
     # just make sure it worked
     sandbox.pps_client.run_pipeline(sandbox.pipeline_repo_name)
 
-def test_get_logs():
-    sandbox = Sandbox("get_logs")
+def test_get_pipeline_logs():
+    sandbox = Sandbox("get_pipeline_logs")
     job_id = sandbox.wait_for_job()
 
     # Wait for the job to complete
     list(sandbox.pps_client.flush_job([sandbox.commit]))
 
     # Just make sure these spit out some logs
-    logs = sandbox.pps_client.get_logs(pipeline_name=sandbox.pipeline_repo_name)
+    logs = sandbox.pps_client.get_pipeline_logs(sandbox.pipeline_repo_name)
     assert next(logs) is not None
 
-    logs = sandbox.pps_client.get_logs(job_id=job_id)
+    logs = sandbox.pps_client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
     assert next(logs) is not None
 
-    logs = sandbox.pps_client.get_logs(pipeline_name=sandbox.pipeline_repo_name, job_id=job_id)
+def test_get_job_logs():
+    sandbox = Sandbox("get_logs_logs")
+    job_id = sandbox.wait_for_job()
+
+    # Wait for the job to complete
+    list(sandbox.pps_client.flush_job([sandbox.commit]))
+
+    # Just make sure these spit out some logs
+
+    logs = sandbox.pps_client.get_job_logs(job_id)
     assert next(logs) is not None
 
-    logs = sandbox.pps_client.get_logs(pipeline_name=sandbox.pipeline_repo_name, master=True)
+    logs = sandbox.pps_client.get_job_logs(job_id, master=True)
     assert next(logs) is not None
