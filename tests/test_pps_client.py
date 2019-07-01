@@ -174,6 +174,9 @@ def test_get_logs():
     sandbox = Sandbox("get_logs")
     job_id = sandbox.wait_for_job()
 
+    # Wait for the job to complete
+    list(sandbox.pps_client.flush_job([sandbox.commit]))
+
     # Just make sure these spit out some logs
     logs = sandbox.pps_client.get_logs(pipeline_name=sandbox.pipeline_repo_name)
     assert next(logs) is not None
