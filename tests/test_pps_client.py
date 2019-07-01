@@ -185,7 +185,7 @@ def test_get_logs(clients_with_sandbox):
     logs = pps_client.get_logs(pipeline_name='test-pps-copy', master=True)
     assert next(logs) is not None
 
-def test_garbage_collect(pps_client):
+def test_garbage_collect():
     client = python_pachyderm.PpsClient()
-    pps_client.garbage_collect()
+    client.garbage_collect()
     
