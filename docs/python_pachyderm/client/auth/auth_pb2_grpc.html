@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.deploy.deploy_pb2_grpc API documentation</title>
+  <title>python_pachyderm.client.auth.auth_pb2_grpc API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,14 +1052,14 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.deploy</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.auth</a></li>
       </ul>
     </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
   </ul>
 
     </li>
@@ -1069,20 +1067,40 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2_grpc.APIServicer">APIServicer</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer">APIServicer</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2_grpc.APIServicer.DeployStorageSecret">DeployStorageSecret</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Activate">Activate</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authenticate">Authenticate</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authorize">Authorize</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Deactivate">Deactivate</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">ExtendAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetACL">GetACL</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAdmins">GetAdmins</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAuthToken">GetAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetConfiguration">GetConfiguration</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetGroups">GetGroups</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">GetOneTimePassword</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetScope">GetScope</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetUsers">GetUsers</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">ModifyAdmins</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyMembers">ModifyMembers</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">RevokeAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetACL">SetACL</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetConfiguration">SetConfiguration</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">SetGroupsForUser</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetScope">SetScope</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.WhoAmI">WhoAmI</a></li>
   </ul>
 
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2_grpc.APIStub">APIStub</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIStub">APIStub</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2_grpc.APIStub.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIStub.__init__">__init__</a></li>
   </ul>
 
         </li>
@@ -1099,7 +1117,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.deploy.deploy_pb2_grpc</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.auth.auth_pb2_grpc</span> module</h1>
   <p></p>
 
   
@@ -1111,7 +1129,7 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2_grpc.add_APIServicer_to_server">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.add_APIServicer_to_server">
     <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
     </div>
     
@@ -1127,7 +1145,7 @@ table {
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.deploy.deploy_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
+      <p id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
       
   
   <div class="source_cont">
@@ -1138,8 +1156,296 @@ table {
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2_grpc.APIServicer.DeployStorageSecret">
-    <p>def <span class="ident">DeployStorageSecret</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Activate">
+    <p>def <span class="ident">Activate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Activate/Deactivate the auth API. 'Activate' sets an initial set of admins
+for the Pachyderm cluster, and 'Deactivate' removes all ACLs, tokens, and
+admins from the Pachyderm cluster, making all data publicly accessable</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authenticate">
+    <p>def <span class="ident">Authenticate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authorize">
+    <p>def <span class="ident">Authorize</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Deactivate">
+    <p>def <span class="ident">Deactivate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">
+    <p>def <span class="ident">ExtendAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetACL">
+    <p>def <span class="ident">GetACL</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAdmins">
+    <p>def <span class="ident">GetAdmins</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>GetAdmins returns the current list of cluster admins</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAuthToken">
+    <p>def <span class="ident">GetAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetConfiguration">
+    <p>def <span class="ident">GetConfiguration</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetGroups">
+    <p>def <span class="ident">GetGroups</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">
+    <p>def <span class="ident">GetOneTimePassword</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetScope">
+    <p>def <span class="ident">GetScope</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetUsers">
+    <p>def <span class="ident">GetUsers</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">
+    <p>def <span class="ident">ModifyAdmins</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ModifyAdmins adds or removes admins from the cluster</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyMembers">
+    <p>def <span class="ident">ModifyMembers</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">
+    <p>def <span class="ident">RevokeAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetACL">
+    <p>def <span class="ident">SetACL</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetConfiguration">
+    <p>def <span class="ident">SetConfiguration</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">
+    <p>def <span class="ident">SetGroupsForUser</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetScope">
+    <p>def <span class="ident">SetScope</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.WhoAmI">
+    <p>def <span class="ident">WhoAmI</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1154,7 +1460,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.deploy.deploy_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      <p id="python_pachyderm.client.auth.auth_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
       
   
   <div class="source_cont">
@@ -1165,7 +1471,7 @@ table {
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.deploy.deploy_pb2_grpc.APIStub.__init__">
+    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIStub.__init__">
     <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
     </div>
     

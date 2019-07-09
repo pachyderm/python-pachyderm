@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.auth.auth_pb2_grpc API documentation</title>
+  <title>python_pachyderm.client.pfs.pfs_pb2_grpc API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,14 +1052,15 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.auth</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pfs</a></li>
       </ul>
     </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server">add_ObjectAPIServicer_to_server</a></li>
   </ul>
 
     </li>
@@ -1069,40 +1068,82 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer">APIServicer</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer">APIServicer</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Activate">Activate</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authenticate">Authenticate</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authorize">Authorize</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Deactivate">Deactivate</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">ExtendAuthToken</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetACL">GetACL</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAdmins">GetAdmins</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAuthToken">GetAuthToken</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetConfiguration">GetConfiguration</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetGroups">GetGroups</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">GetOneTimePassword</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetScope">GetScope</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetUsers">GetUsers</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">ModifyAdmins</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyMembers">ModifyMembers</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">RevokeAuthToken</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetACL">SetACL</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetConfiguration">SetConfiguration</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">SetGroupsForUser</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetScope">SetScope</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.WhoAmI">WhoAmI</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.BuildCommit">BuildCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CopyFile">CopyFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateBranch">CreateBranch</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateRepo">CreateRepo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteAll">DeleteAll</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch">DeleteBranch</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit">DeleteCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteFile">DeleteFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo">DeleteRepo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DiffFile">DiffFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FinishCommit">FinishCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FlushCommit">FlushCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.Fsck">Fsck</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GetFile">GetFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFile">GlobFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream">GlobFileStream</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectBranch">InspectBranch</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectCommit">InspectCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectFile">InspectFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectRepo">InspectRepo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListBranch">ListBranch</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommit">ListCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream">ListCommitStream</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFile">ListFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFileStream">ListFileStream</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListRepo">ListRepo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.PutFile">PutFile</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.StartCommit">StartCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit">SubscribeCommit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.WalkFile">WalkFile</a></li>
   </ul>
 
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIStub">APIStub</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub">APIStub</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.auth.auth_pb2_grpc.APIStub.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.__init__">__init__</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer">ObjectAPIServicer</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject">CheckObject</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact">Compact</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects">DeleteObjects</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags">DeleteTags</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetBlocks">GetBlocks</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject">GetObject</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects">GetObjects</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag">GetTag</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject">InspectObject</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag">InspectTag</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects">ListObjects</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags">ListTags</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject">PutObject</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit">PutObjectSplit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjects">PutObjects</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject">TagObject</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub">ObjectAPIStub</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.__init__">__init__</a></li>
   </ul>
 
         </li>
@@ -1119,7 +1160,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.auth.auth_pb2_grpc</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.pfs.pfs_pb2_grpc</span> module</h1>
   <p></p>
 
   
@@ -1131,8 +1172,22 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.add_APIServicer_to_server">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.add_APIServicer_to_server">
     <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server">
+    <p>def <span class="ident">add_ObjectAPIServicer_to_server</span>(</p><p>servicer, server)</p>
     </div>
     
 
@@ -1147,7 +1202,7 @@ table {
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
+      <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
       
   
   <div class="source_cont">
@@ -1158,16 +1213,14 @@ table {
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Activate">
-    <p>def <span class="ident">Activate</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.BuildCommit">
+    <p>def <span class="ident">BuildCommit</span>(</p><p>self, request, context)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Activate/Deactivate the auth API. 'Activate' sets an initial set of admins
-for the Pachyderm cluster, and 'Deactivate' removes all ACLs, tokens, and
-admins from the Pachyderm cluster, making all data publicly accessable</p>
+    <div class="desc"><p>BuildCommit builds a commit that's backed by the given tree</p>
 </div>
   <div class="source_cont">
 </div>
@@ -1176,8 +1229,545 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authenticate">
-    <p>def <span class="ident">Authenticate</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CopyFile">
+    <p>def <span class="ident">CopyFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>CopyFile copies the contents of one file to another.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateBranch">
+    <p>def <span class="ident">CreateBranch</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>CreateBranch creates a new branch</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.CreateRepo">
+    <p>def <span class="ident">CreateRepo</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Repo rpcs
+CreateRepo creates a new repo.
+An error is returned if the repo already exists.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteAll">
+    <p>def <span class="ident">DeleteAll</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteAll deletes everything</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch">
+    <p>def <span class="ident">DeleteBranch</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteBranch deletes a branch; note that the commits still exist.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit">
+    <p>def <span class="ident">DeleteCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteCommit deletes a commit.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteFile">
+    <p>def <span class="ident">DeleteFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteFile deletes a file.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo">
+    <p>def <span class="ident">DeleteRepo</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteRepo deletes a repo.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.DiffFile">
+    <p>def <span class="ident">DiffFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DiffFile returns the differences between 2 paths at 2 commits.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FinishCommit">
+    <p>def <span class="ident">FinishCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>FinishCommit turns a write commit into a read commit.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.FlushCommit">
+    <p>def <span class="ident">FlushCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>FlushCommit waits for downstream commits to finish</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.Fsck">
+    <p>def <span class="ident">Fsck</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Fsck does a file system consistency check for pfs</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GetFile">
+    <p>def <span class="ident">GetFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>GetFile returns a byte stream of the contents of the file.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFile">
+    <p>def <span class="ident">GlobFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>GlobFile returns info about all files. This is deprecated in favor of
+GlobFileStream</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream">
+    <p>def <span class="ident">GlobFileStream</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>GlobFileStream is a streaming version of GlobFile
+TODO(msteffen): When the dash has been updated to use GlobFileStream,
+replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectBranch">
+    <p>def <span class="ident">InspectBranch</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>InspectBranch returns info about a branch.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectCommit">
+    <p>def <span class="ident">InspectCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>InspectCommit returns the info about a commit.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectFile">
+    <p>def <span class="ident">InspectFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>InspectFile returns info about a file.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.InspectRepo">
+    <p>def <span class="ident">InspectRepo</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>InspectRepo returns info about a repo.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListBranch">
+    <p>def <span class="ident">ListBranch</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListBranch returns info about the heads of branches.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommit">
+    <p>def <span class="ident">ListCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListCommit returns info about all commits. This is deprecated in favor of
+ListCommitStream.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream">
+    <p>def <span class="ident">ListCommitStream</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListCommitStream is like ListCommit, but returns its results in a GRPC stream</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFile">
+    <p>def <span class="ident">ListFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListFile returns info about all files. This is deprecated in favor of
+ListFileStream</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListFileStream">
+    <p>def <span class="ident">ListFileStream</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListFileStream is a streaming version of ListFile
+TODO(msteffen): When the dash has been updated to use ListFileStream,
+replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.ListRepo">
+    <p>def <span class="ident">ListRepo</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListRepo returns info about all repos.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.PutFile">
+    <p>def <span class="ident">PutFile</span>(</p><p>self, request_iterator, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>File rpcs
+PutFile writes the specified file to pfs.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.StartCommit">
+    <p>def <span class="ident">StartCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Commit rpcs
+StartCommit creates a new write commit from a parent commit.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit">
+    <p>def <span class="ident">SubscribeCommit</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>SubscribeCommit subscribes for new commits on a given branch</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIServicer.WalkFile">
+    <p>def <span class="ident">WalkFile</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>WalkFile walks over all the files under a directory, including children of children.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.APIStub.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Constructor.</p>
+
+<p>Args:
+  channel: A grpc.Channel.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer" class="name">class <span class="ident">ObjectAPIServicer</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject">
+    <p>def <span class="ident">CheckObject</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>CheckObject checks if an object exists in the blob store without
+actually reading the object.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact">
+    <p>def <span class="ident">Compact</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1190,8 +1780,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Authorize">
-    <p>def <span class="ident">Authorize</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects">
+    <p>def <span class="ident">DeleteObjects</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1204,8 +1794,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.Deactivate">
-    <p>def <span class="ident">Deactivate</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags">
+    <p>def <span class="ident">DeleteTags</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1218,8 +1808,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">
-    <p>def <span class="ident">ExtendAuthToken</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetBlocks">
+    <p>def <span class="ident">GetBlocks</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1232,8 +1822,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetACL">
-    <p>def <span class="ident">GetACL</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject">
+    <p>def <span class="ident">GetObject</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1246,24 +1836,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAdmins">
-    <p>def <span class="ident">GetAdmins</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>GetAdmins returns the current list of cluster admins</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetAuthToken">
-    <p>def <span class="ident">GetAuthToken</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects">
+    <p>def <span class="ident">GetObjects</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1276,8 +1850,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetConfiguration">
-    <p>def <span class="ident">GetConfiguration</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag">
+    <p>def <span class="ident">GetTag</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1290,8 +1864,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetGroups">
-    <p>def <span class="ident">GetGroups</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject">
+    <p>def <span class="ident">InspectObject</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1304,8 +1878,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">
-    <p>def <span class="ident">GetOneTimePassword</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag">
+    <p>def <span class="ident">InspectTag</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1318,8 +1892,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetScope">
-    <p>def <span class="ident">GetScope</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects">
+    <p>def <span class="ident">ListObjects</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1332,8 +1906,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.GetUsers">
-    <p>def <span class="ident">GetUsers</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags">
+    <p>def <span class="ident">ListTags</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1346,24 +1920,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">
-    <p>def <span class="ident">ModifyAdmins</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>ModifyAdmins adds or removes admins from the cluster</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.ModifyMembers">
-    <p>def <span class="ident">ModifyMembers</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject">
+    <p>def <span class="ident">PutObject</span>(</p><p>self, request_iterator, context)</p>
     </div>
     
 
@@ -1376,8 +1934,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">
-    <p>def <span class="ident">RevokeAuthToken</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit">
+    <p>def <span class="ident">PutObjectSplit</span>(</p><p>self, request_iterator, context)</p>
     </div>
     
 
@@ -1390,8 +1948,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetACL">
-    <p>def <span class="ident">SetACL</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjects">
+    <p>def <span class="ident">PutObjects</span>(</p><p>self, request_iterator, context)</p>
     </div>
     
 
@@ -1404,50 +1962,8 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetConfiguration">
-    <p>def <span class="ident">SetConfiguration</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">
-    <p>def <span class="ident">SetGroupsForUser</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.SetScope">
-    <p>def <span class="ident">SetScope</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIServicer.WhoAmI">
-    <p>def <span class="ident">WhoAmI</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject">
+    <p>def <span class="ident">TagObject</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1462,7 +1978,7 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.auth.auth_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      <p id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub" class="name">class <span class="ident">ObjectAPIStub</span></p>
       
   
   <div class="source_cont">
@@ -1473,7 +1989,7 @@ admins from the Pachyderm cluster, making all data publicly accessable</p>
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.auth.auth_pb2_grpc.APIStub.__init__">
+    <div class="name def" id="python_pachyderm.client.pfs.pfs_pb2_grpc.ObjectAPIStub.__init__">
     <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
     </div>
     

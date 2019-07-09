@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1060,6 +1058,7 @@ table {
     <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.AUTO">AUTO</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.CSV">CSV</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.CommitState">CommitState</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
@@ -1071,10 +1070,12 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.JSON">JSON</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.LINE">LINE</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.NONE">NONE</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.OriginKind">OriginKind</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.READY">READY</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.RESERVED">RESERVED</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.SQL">SQL</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.STARTED">STARTED</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.USER">USER</a></li>
   </ul>
 
     </li>
@@ -1128,6 +1129,14 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.CommitInfos">CommitInfos</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.CommitOrigin">CommitOrigin</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.CommitProvenance">CommitProvenance</a></span>
         
         </li>
         <li class="mono">
@@ -1361,6 +1370,14 @@ table {
   <section id="section-items">
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.AUTO" class="name">var <span class="ident">AUTO</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="python_pachyderm.client.pfs.pfs_pb2.CSV" class="name">var <span class="ident">CSV</span></p>
       
   
@@ -1449,6 +1466,14 @@ table {
 
       </div>
       <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.OriginKind" class="name">var <span class="ident">OriginKind</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="python_pachyderm.client.pfs.pfs_pb2.READY" class="name">var <span class="ident">READY</span></p>
       
   
@@ -1474,6 +1499,14 @@ table {
       </div>
       <div class="item">
       <p id="python_pachyderm.client.pfs.pfs_pb2.STARTED" class="name">var <span class="ident">STARTED</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.USER" class="name">var <span class="ident">USER</span></p>
       
   
   <div class="source_cont">
@@ -2152,7 +2185,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitInfo.branch_provenance" class="name">var <span class="ident">branch_provenance</span></p>
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitInfo.branch" class="name">var <span class="ident">branch</span></p>
             
 
             
@@ -2203,6 +2236,16 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pfs.pfs_pb2.CommitInfo.finished" class="name">var <span class="ident">finished</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitInfo.origin" class="name">var <span class="ident">origin</span></p>
             
 
             
@@ -2333,6 +2376,116 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pfs.pfs_pb2.CommitInfos.commit_info" class="name">var <span class="ident">commit_info</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.CommitOrigin" class="name">class <span class="ident">CommitOrigin</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitOrigin.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitOrigin.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitOrigin.kind" class="name">var <span class="ident">kind</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.CommitProvenance" class="name">class <span class="ident">CommitProvenance</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitProvenance.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitProvenance.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitProvenance.branch" class="name">var <span class="ident">branch</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.CommitProvenance.commit" class="name">var <span class="ident">commit</span></p>
             
 
             

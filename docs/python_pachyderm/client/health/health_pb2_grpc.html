@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.pps.pps_pb2_grpc API documentation</title>
+  <title>python_pachyderm.client.health.health_pb2_grpc API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,14 +1052,14 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.pps</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.health</a></li>
       </ul>
     </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.add_HealthServicer_to_server">add_HealthServicer_to_server</a></li>
   </ul>
 
     </li>
@@ -1069,41 +1067,20 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer">APIServicer</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthServicer">HealthServicer</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth">ActivateAuth</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob">CreateJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline">CreatePipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll">DeleteAll</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob">DeleteJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline">DeletePipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob">FlushJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect">GarbageCollect</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs">GetLogs</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum">InspectDatum</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob">InspectJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline">InspectPipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum">ListDatum</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream">ListDatumStream</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob">ListJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream">ListJobStream</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline">ListPipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RerunPipeline">RerunPipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum">RestartDatum</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline">StartPipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob">StopJob</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline">StopPipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthServicer.Health">Health</a></li>
   </ul>
 
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIStub">APIStub</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthStub">HealthStub</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthStub.__init__">__init__</a></li>
   </ul>
 
         </li>
@@ -1120,7 +1097,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.pps.pps_pb2_grpc</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.health.health_pb2_grpc</span> module</h1>
   <p></p>
 
   
@@ -1132,8 +1109,8 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server">
-    <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
+    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.add_HealthServicer_to_server">
+    <p>def <span class="ident">add_HealthServicer_to_server</span>(</p><p>servicer, server)</p>
     </div>
     
 
@@ -1148,7 +1125,7 @@ table {
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
+      <p id="python_pachyderm.client.health.health_pb2_grpc.HealthServicer" class="name">class <span class="ident">HealthServicer</span></p>
       
   
   <div class="source_cont">
@@ -1159,319 +1136,8 @@ table {
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth">
-    <p>def <span class="ident">ActivateAuth</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>An internal call that causes PPS to put itself into an auth-enabled state
-(all pipeline have tokens, correct permissions, etcd)</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob">
-    <p>def <span class="ident">CreateJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline">
-    <p>def <span class="ident">CreatePipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll">
-    <p>def <span class="ident">DeleteAll</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>DeleteAll deletes everything</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob">
-    <p>def <span class="ident">DeleteJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline">
-    <p>def <span class="ident">DeletePipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob">
-    <p>def <span class="ident">FlushJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect">
-    <p>def <span class="ident">GarbageCollect</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Garbage collection</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs">
-    <p>def <span class="ident">GetLogs</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum">
-    <p>def <span class="ident">InspectDatum</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob">
-    <p>def <span class="ident">InspectJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline">
-    <p>def <span class="ident">InspectPipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum">
-    <p>def <span class="ident">ListDatum</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>ListDatum returns information about each datum fed to a Pachyderm job. This
-is deprecated in favor of ListDatumStream</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream">
-    <p>def <span class="ident">ListDatumStream</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>ListDatumStream returns information about each datum fed to a Pachyderm job</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob">
-    <p>def <span class="ident">ListJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>ListJob returns information about current and past Pachyderm jobs. This is
-deprecated in favor of ListJobStream</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream">
-    <p>def <span class="ident">ListJobStream</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>ListJobStream returns information about current and past Pachyderm jobs.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline">
-    <p>def <span class="ident">ListPipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RerunPipeline">
-    <p>def <span class="ident">RerunPipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum">
-    <p>def <span class="ident">RestartDatum</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline">
-    <p>def <span class="ident">StartPipeline</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob">
-    <p>def <span class="ident">StopJob</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline">
-    <p>def <span class="ident">StopPipeline</span>(</p><p>self, request, context)</p>
+    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.HealthServicer.Health">
+    <p>def <span class="ident">Health</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1486,7 +1152,7 @@ deprecated in favor of ListJobStream</p>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      <p id="python_pachyderm.client.health.health_pb2_grpc.HealthStub" class="name">class <span class="ident">HealthStub</span></p>
       
   
   <div class="source_cont">
@@ -1497,7 +1163,7 @@ deprecated in favor of ListJobStream</p>
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__">
+    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.HealthStub.__init__">
     <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
     </div>
     

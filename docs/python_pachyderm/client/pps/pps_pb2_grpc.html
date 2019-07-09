@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.pps_client API documentation</title>
+  <title>python_pachyderm.client.pps.pps_pb2_grpc API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,37 +1052,56 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pps</a></li>
       </ul>
     </li>
 
+    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+  </ul>
+
+    </li>
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.pps_client.PpsClient">PpsClient</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer">APIServicer</a></span>
         
           
   <ul>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.__init__">__init__</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.create_job">create_job</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.create_pipeline">create_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.delete_all">delete_all</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.delete_job">delete_job</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.delete_pipeline">delete_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.garbage_collect">garbage_collect</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.get_logs">get_logs</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.inspect_datum">inspect_datum</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.inspect_job">inspect_job</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.inspect_pipeline">inspect_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.list_datum">list_datum</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.list_job">list_job</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.list_pipeline">list_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.rerun_pipeline">rerun_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.restart_datum">restart_datum</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.start_pipeline">start_pipeline</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.stop_job">stop_job</a></li>
-    <li class="mono"><a href="#python_pachyderm.pps_client.PpsClient.stop_pipeline">stop_pipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth">ActivateAuth</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob">CreateJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline">CreatePipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll">DeleteAll</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob">DeleteJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline">DeletePipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob">FlushJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect">GarbageCollect</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs">GetLogs</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum">InspectDatum</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob">InspectJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline">InspectPipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum">ListDatum</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream">ListDatumStream</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob">ListJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream">ListJobStream</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline">ListPipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum">RestartDatum</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RunPipeline">RunPipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline">StartPipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob">StopJob</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline">StopPipeline</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIStub">APIStub</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__">__init__</a></li>
   </ul>
 
         </li>
@@ -1101,7 +1118,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.pps_client</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.pps.pps_pb2_grpc</span> module</h1>
   <p></p>
 
   
@@ -1110,11 +1127,26 @@ table {
 
   <section id="section-items">
 
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.add_APIServicer_to_server">
+    <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.pps_client.PpsClient" class="name">class <span class="ident">PpsClient</span></p>
+      <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
       
   
   <div class="source_cont">
@@ -1125,18 +1157,15 @@ table {
           <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, host=None, port=None, auth_token=None)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ActivateAuth">
+    <p>def <span class="ident">ActivateAuth</span>(</p><p>self, request, context)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Creates a client to connect to PPS.</p>
-
-<p>host: The pachd host. Default is 'localhost', which is used with <code>pachctl port-forward</code>
-port: The port to connect to. Default is 30650
-auth_token: The authentication token; used if authentication is enabled on the cluster. Default to <code>None</code>.</p>
+    <div class="desc"><p>An internal call that causes PPS to put itself into an auth-enabled state
+(all pipeline have tokens, correct permissions, etcd)</p>
 </div>
   <div class="source_cont">
 </div>
@@ -1145,22 +1174,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.create_job">
-    <p>def <span class="ident">create_job</span>(</p><p>self, transform, pipeline, pipeline_version, parallelism_spec, inputs, egress, service, output_repo, output_branch, parent_job, resource_spec, input, new_branch, incremental, enable_stats, salt, batch)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.create_pipeline">
-    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform=None, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, batch=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_spec=None, pod_patch=None)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreateJob">
+    <p>def <span class="ident">CreateJob</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1173,8 +1188,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.delete_all">
-    <p>def <span class="ident">delete_all</span>(</p><p>self)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.CreatePipeline">
+    <p>def <span class="ident">CreatePipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1187,8 +1202,24 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.delete_job">
-    <p>def <span class="ident">delete_job</span>(</p><p>self, job_id)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteAll">
+    <p>def <span class="ident">DeleteAll</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>DeleteAll deletes everything</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeleteJob">
+    <p>def <span class="ident">DeleteJob</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1201,8 +1232,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.delete_pipeline">
-    <p>def <span class="ident">delete_pipeline</span>(</p><p>self, pipeline_name, delete_jobs=False, delete_repo=False, all=False)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.DeletePipeline">
+    <p>def <span class="ident">DeletePipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1215,8 +1246,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.garbage_collect">
-    <p>def <span class="ident">garbage_collect</span>(</p><p>self)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.FlushJob">
+    <p>def <span class="ident">FlushJob</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1229,8 +1260,24 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.get_logs">
-    <p>def <span class="ident">get_logs</span>(</p><p>self, pipeline_name=None, job_id=None, data_filters=(), master=False)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GarbageCollect">
+    <p>def <span class="ident">GarbageCollect</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Garbage collection</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.GetLogs">
+    <p>def <span class="ident">GetLogs</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1243,8 +1290,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.inspect_datum">
-    <p>def <span class="ident">inspect_datum</span>(</p><p>self, datum)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectDatum">
+    <p>def <span class="ident">InspectDatum</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1257,8 +1304,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.inspect_job">
-    <p>def <span class="ident">inspect_job</span>(</p><p>self, job_id, block_state=False)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectJob">
+    <p>def <span class="ident">InspectJob</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1271,8 +1318,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.inspect_pipeline">
-    <p>def <span class="ident">inspect_pipeline</span>(</p><p>self, pipeline_name)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.InspectPipeline">
+    <p>def <span class="ident">InspectPipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1285,8 +1332,74 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.list_datum">
-    <p>def <span class="ident">list_datum</span>(</p><p>self, job_id)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatum">
+    <p>def <span class="ident">ListDatum</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListDatum returns information about each datum fed to a Pachyderm job. This
+is deprecated in favor of ListDatumStream</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListDatumStream">
+    <p>def <span class="ident">ListDatumStream</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListDatumStream returns information about each datum fed to a Pachyderm job</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJob">
+    <p>def <span class="ident">ListJob</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListJob returns information about current and past Pachyderm jobs. This is
+deprecated in favor of ListJobStream</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListJobStream">
+    <p>def <span class="ident">ListJobStream</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ListJobStream returns information about current and past Pachyderm jobs.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.ListPipeline">
+    <p>def <span class="ident">ListPipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1299,8 +1412,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.list_job">
-    <p>def <span class="ident">list_job</span>(</p><p>self, pipeline=None, input_commit=None)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RestartDatum">
+    <p>def <span class="ident">RestartDatum</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1313,8 +1426,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.list_pipeline">
-    <p>def <span class="ident">list_pipeline</span>(</p><p>self)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.RunPipeline">
+    <p>def <span class="ident">RunPipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1327,8 +1440,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.rerun_pipeline">
-    <p>def <span class="ident">rerun_pipeline</span>(</p><p>self, pipeline_name, exclude=(), include=())</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StartPipeline">
+    <p>def <span class="ident">StartPipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1341,8 +1454,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.restart_datum">
-    <p>def <span class="ident">restart_datum</span>(</p><p>self, job_id, data_filters=())</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopJob">
+    <p>def <span class="ident">StopJob</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1355,8 +1468,8 @@ auth_token: The authentication token; used if authentication is enabled on the c
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.start_pipeline">
-    <p>def <span class="ident">start_pipeline</span>(</p><p>self, pipeline_name)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIServicer.StopPipeline">
+    <p>def <span class="ident">StopPipeline</span>(</p><p>self, request, context)</p>
     </div>
     
 
@@ -1367,29 +1480,33 @@ auth_token: The authentication token; used if authentication is enabled on the c
 
   </div>
   
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.stop_job">
-    <p>def <span class="ident">stop_job</span>(</p><p>self, job_id)</p>
-    </div>
-    
-
-    
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      
   
   <div class="source_cont">
 </div>
 
-  </div>
-  
+
+      <div class="class">
+          <h3>Methods</h3>
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.pps_client.PpsClient.stop_pipeline">
-    <p>def <span class="ident">stop_pipeline</span>(</p><p>self, pipeline_name)</p>
+    <div class="name def" id="python_pachyderm.client.pps.pps_pb2_grpc.APIStub.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
     </div>
     
 
     
   
+    <div class="desc"><p>Constructor.</p>
+
+<p>Args:
+  channel: A grpc.Channel.</p>
+</div>
   <div class="source_cont">
 </div>
 

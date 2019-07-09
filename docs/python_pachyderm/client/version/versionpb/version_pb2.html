@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.pfs_client API documentation</title>
+  <title>python_pachyderm.client.version.versionpb.version_pb2 API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,13 +1052,13 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.version.versionpb</a></li>
       </ul>
     </li>
     <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.BUFFER_SIZE">BUFFER_SIZE</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.version.versionpb.version_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
   </ul>
 
     </li>
@@ -1069,47 +1067,8 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.pfs_client.ExtractValueIterator">ExtractValueIterator</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.version.versionpb.version_pb2.Version">Version</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.ExtractValueIterator.__init__">__init__</a></li>
-  </ul>
-
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.pfs_client.PfsClient">PfsClient</a></span>
-        
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.__init__">__init__</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.commit">commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.create_repo">create_repo</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.delete_all">delete_all</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.delete_branch">delete_branch</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.delete_commit">delete_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.delete_file">delete_file</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.delete_repo">delete_repo</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.finish_commit">finish_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.flush_commit">flush_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.get_file">get_file</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.get_files">get_files</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.glob_file">glob_file</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.inspect_commit">inspect_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.inspect_file">inspect_file</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.inspect_repo">inspect_repo</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.list_branch">list_branch</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.list_commit">list_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.list_file">list_file</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.list_repo">list_repo</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.provenances_for_repo">provenances_for_repo</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.put_file_bytes">put_file_bytes</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.put_file_url">put_file_url</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.set_branch">set_branch</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.start_commit">start_commit</a></li>
-    <li class="mono"><a href="#python_pachyderm.pfs_client.PfsClient.subscribe_commit">subscribe_commit</a></li>
-  </ul>
-
         </li>
       </ul>
     </li>
@@ -1124,7 +1083,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.pfs_client</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.version.versionpb.version_pb2</span> module</h1>
   <p></p>
 
   
@@ -1134,7 +1093,7 @@ table {
   <section id="section-items">
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
-      <p id="python_pachyderm.pfs_client.BUFFER_SIZE" class="name">var <span class="ident">BUFFER_SIZE</span></p>
+      <p id="python_pachyderm.client.version.versionpb.version_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
       
   
   <div class="source_cont">
@@ -1146,605 +1105,82 @@ table {
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.pfs_client.ExtractValueIterator" class="name">class <span class="ident">ExtractValueIterator</span></p>
+      <p id="python_pachyderm.client.version.versionpb.version_pb2.Version" class="name">class <span class="ident">Version</span></p>
       
   
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
 
       <div class="class">
-          <h3>Methods</h3>
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.ExtractValueIterator.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, r)</p>
-    </div>
-    
 
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.pfs_client.PfsClient" class="name">class <span class="ident">PfsClient</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Methods</h3>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, host=None, port=None, auth_token=None)</p>
-    </div>
-    
-
-    
   
-    <div class="desc"><p>Creates a client to connect to PFS.</p>
-
-<p>Params:
-* host: The pachd host. Default is 'localhost', which is used with
-<code>pachctl port-forward</code>.
-* port: The port to connect to. Default is 30650.
-* auth_token: The authentication token; used if authentication is
-enabled on the cluster. Default to <code>None</code>.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
-  
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.commit">
-    <p>def <span class="ident">commit</span>(</p><p>*args, **kwds)</p>
-    </div>
-    
 
-    
-  
-    <div class="desc"><p>A context manager for doing stuff inside a commit.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.create_repo">
-    <p>def <span class="ident">create_repo</span>(</p><p>self, repo_name, description=None)</p>
-    </div>
-    
-
-    
   
-    <div class="desc"><p>Creates a new Repo object in PFS with the given name. Repos are the 
-top level data object in PFS and should be used to store data of a
-similar type. For example rather than having a single Repo for an
-entire project you might have separate Repos for logs, metrics,
-database dumps etc.</p>
-
-<p>Params:
-* repo_name: Name of the repo.
-* description: Repo description.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
-  
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.additional" class="name">var <span class="ident">additional</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.delete_all">
-    <p>def <span class="ident">delete_all</span>(</p><p>self)</p>
-    </div>
-    
 
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.delete_branch">
-    <p>def <span class="ident">delete_branch</span>(</p><p>self, repo_name, branch_name)</p>
-    </div>
-    
-
-    
   
-    <div class="desc"><p>Deletes a branch, but leaves the commits themselves intact. In other
-words, those commits can still be accessed via commit IDs and other
-branches they happen to be on.</p>
-
-<p>Params:
-* repo<em>name: The name of the repo.
-* branch</em>name: The name of the branch to delete.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
-  
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.major" class="name">var <span class="ident">major</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.delete_commit">
-    <p>def <span class="ident">delete_commit</span>(</p><p>self, commit)</p>
-    </div>
-    
 
-    
-  
-    <div class="desc"><p>Deletes a commit.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.delete_file">
-    <p>def <span class="ident">delete_file</span>(</p><p>self, commit, path)</p>
-    </div>
-    
-
-    
   
-    <div class="desc"><p>Deletes a file from a Commit. DeleteFile leaves a tombstone in the
-Commit, assuming the file isn't written to later attempting to get the
-file from the finished commit will result in not found error. The file
-will of course remain intact in the Commit's parent.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: The path to the file.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
-  
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.micro" class="name">var <span class="ident">micro</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.delete_repo">
-    <p>def <span class="ident">delete_repo</span>(</p><p>self, repo_name=None, force=False, all=False)</p>
-    </div>
-    
 
-    
-  
-    <div class="desc"><p>Deletes a repo and reclaims the storage space it was using.</p>
-
-<p>Params:
-* repo_name: The name of the repo.
-* force: If set to true, the repo will be removed regardless of
-errors. This argument should be used with care.
-* all: Delete all repos.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.finish_commit">
-    <p>def <span class="ident">finish_commit</span>(</p><p>self, commit)</p>
-    </div>
-    
-
-    
   
-    <div class="desc"><p>Ends the process of committing data to a Repo and persists the
-Commit. Once a Commit is finished the data becomes immutable and
-future attempts to write to it with PutFile will error.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
-  
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.version.versionpb.version_pb2.Version.minor" class="name">var <span class="ident">minor</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.flush_commit">
-    <p>def <span class="ident">flush_commit</span>(</p><p>self, commits, repos=())</p>
-    </div>
-    
 
-    
-  
-    <div class="desc"><p>Blocks until all of the commits which have a set of commits as
-provenance have finished. For commits to be considered they must have
-all of the specified commits as provenance. This in effect waits for
-all of the jobs that are triggered by a set of commits to complete.
-It returns an error if any of the commits it's waiting on are
-cancelled due to one of the jobs encountering an error during runtime.
-Note that it's never necessary to call FlushCommit to run jobs,
-they'll run no matter what, FlushCommit just allows you to wait for
-them to complete and see their output once they do. This returns an
-iterator of CommitInfo objects.</p>
-
-<p>Params:
-* commits: A commit or a list of commits to wait on.
-* repos: Optional. Only the commits up to and including those repos.
-will be considered, otherwise all repos are considered.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.get_file">
-    <p>def <span class="ident">get_file</span>(</p><p>self, commit, path, offset_bytes=0, size_bytes=0, extract_value=True)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns an iterator of the contents contents of a file at a specific Commit.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: The path of the file.
-* offset<em>bytes: Optional. specifies a number of bytes that should be
-skipped in the beginning of the file.
-* size</em>bytes: Optional. limits the total amount of data returned, note
-you will get fewer bytes than size if you pass a value larger than the
-size of the file. If size is set to 0 then all of the data will be
-returned.
-* extract_value: If True, then an ExtractValueIterator will be return,
-which will iterate over the bytes of the file. If False, then the
-protobuf response iterator will return.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.get_files">
-    <p>def <span class="ident">get_files</span>(</p><p>self, commit, paths, recursive=False)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns the contents of a list of files at a specific Commit as a
-dictionary of file paths to data.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* paths: A list of paths to retrieve.
-* recursive: If True, will go into each directory in the list
-recursively.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.glob_file">
-    <p>def <span class="ident">glob_file</span>(</p><p>self, commit, pattern)</p>
-    </div>
-    
-
-    
   
   <div class="source_cont">
 </div>
 
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.inspect_commit">
-    <p>def <span class="ident">inspect_commit</span>(</p><p>self, commit)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns info about a specific Commit.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.inspect_file">
-    <p>def <span class="ident">inspect_file</span>(</p><p>self, commit, path)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns info about a specific file.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: Path to file.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.inspect_repo">
-    <p>def <span class="ident">inspect_repo</span>(</p><p>self, repo_name)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns info about a specific Repo.</p>
-
-<p>Params:
-* repo_name: Name of the repo.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.list_branch">
-    <p>def <span class="ident">list_branch</span>(</p><p>self, repo_name)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Lists the active Branch objects on a Repo.</p>
-
-<p>Params:
-* repo_name: The name of the repo.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.list_commit">
-    <p>def <span class="ident">list_commit</span>(</p><p>self, repo_name, to_commit=None, from_commit=None, number=0)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Gets a list of CommitInfo objects.</p>
-
-<p>Params:
-* repo<em>name: If only <code>repo_name</code> is given, all commits in the repo are
-returned.
-* to</em>commit: Optional. Only the ancestors of <code>to</code>, including <code>to</code>
-itself, are considered.
-* from_commit: Optional. Only the descendants of <code>from</code>, including
-<code>from</code> itself, are considered.
-* number: Optional. Determines how many commits are returned.  If
-<code>number</code> is 0, all commits that match the aforementioned criteria are
-returned.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.list_file">
-    <p>def <span class="ident">list_file</span>(</p><p>self, commit, path, recursive=False)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Lists the files in a directory.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: The path to the directory.
-* recursive: If True, continue listing the files for sub-directories.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.list_repo">
-    <p>def <span class="ident">list_repo</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns info about all Repos.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.provenances_for_repo">
-    <p>def <span class="ident">provenances_for_repo</span>(</p><p>self, repo_name)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.put_file_bytes">
-    <p>def <span class="ident">put_file_bytes</span>(</p><p>self, commit, path, value, delimiter=0, target_file_datums=0, target_file_bytes=0)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Uploads a binary bytes array as file(s) in a certain path.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: Path in the repo the file(s) will be written to.
-* value: The data bytes array, or an iterator returning chunked byte arrays.
-* delimiter: Optional. causes data to be broken up into separate files
-with <code>path</code> as a prefix.
-* target<em>file</em>datums: Optional. Specifies the target number of datums
-in each written file. It may be lower if data does not split evenly,
-but will never be higher, unless the value is 0.
-* target<em>file</em>bytes: Specifies the target number of bytes in each
-written file, files may have more or fewer bytes than the target.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.put_file_url">
-    <p>def <span class="ident">put_file_url</span>(</p><p>self, commit, path, url, recursive=False)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Puts a file using the content found at a URL. The URL is sent to the
-server which performs the request.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* path: The path to the file.
-* url: The url of the file to put.
-* recursive: allow for recursive scraping of some types URLs for
-example on s3:// urls.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.set_branch">
-    <p>def <span class="ident">set_branch</span>(</p><p>self, commit, branch_name)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Sets a commit and its ancestors as a branch.</p>
-
-<p>Params:
-* commit: A tuple, string, or Commit object representing the commit.
-* branch_name: The name for the branch to set.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.start_commit">
-    <p>def <span class="ident">start_commit</span>(</p><p>self, repo_name, branch=None, parent=None)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Begins the process of committing data to a Repo. Once started you can
-write to the Commit with PutFile and when all the data has been
-written you must finish the Commit with FinishCommit. NOTE, data is
-not persisted until FinishCommit is called. A Commit object is
-returned.</p>
-
-<p>Params:
-* repo_name: The name of the repo.
-* branch: A more convenient way to build linear chains of commits.
-When a commit is started with a non-empty branch the value of branch
-becomes an alias for the created Commit. This enables a more intuitive
-access pattern. When the commit is started on a branch the previous
-head of the branch is used as the parent of the commit.
-* parent: Specifies the parent Commit, upon creation the new Commit
-will appear identical to the parent Commit, data can safely be added
-to the new commit without affecting the contents of the parent Commit.
-You may pass "" as parentCommit in which case the new Commit will have
-no parent and will initially appear empty.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.pfs_client.PfsClient.subscribe_commit">
-    <p>def <span class="ident">subscribe_commit</span>(</p><p>self, repo_name, branch, from_commit_id=None)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>SubscribeCommit is like ListCommit but it keeps listening for commits as
-they come in. This returns an iterator Commit objects.</p>
-
-<p>Params:
-* repo<em>name: Name of the repo.
-* branch: Branch to subscribe to.
-* from</em>commit_id: Optional. Only commits created since this commit
-are returned.</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
+            </div>
       </div>
       </div>
 

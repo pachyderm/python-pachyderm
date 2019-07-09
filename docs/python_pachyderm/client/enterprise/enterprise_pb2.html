@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.health.health_pb2 API documentation</title>
+  <title>python_pachyderm.client.enterprise.enterprise_pb2 API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,18 +1052,58 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.health</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.enterprise</a></li>
       </ul>
     </li>
     <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ACTIVE">ACTIVE</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.EXPIRED">EXPIRED</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.NONE">NONE</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.State">State</a></li>
   </ul>
 
     </li>
 
 
+    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
+      <ul>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest">ActivateRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse">ActivateResponse</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest">DeactivateRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse">DeactivateResponse</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord">EnterpriseRecord</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest">GetStateRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse">GetStateResponse</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo">TokenInfo</a></span>
+        
+        </li>
+      </ul>
+    </li>
 
     </ul>
   </div>
@@ -1077,7 +1115,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.health.health_pb2</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.enterprise.enterprise_pb2</span> module</h1>
   <p></p>
 
   
@@ -1087,7 +1125,39 @@ table {
   <section id="section-items">
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
-      <p id="python_pachyderm.client.health.health_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ACTIVE" class="name">var <span class="ident">ACTIVE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.EXPIRED" class="name">var <span class="ident">EXPIRED</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.NONE" class="name">var <span class="ident">NONE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.State" class="name">var <span class="ident">State</span></p>
       
   
   <div class="source_cont">
@@ -1096,6 +1166,417 @@ table {
       </div>
 
 
+    <h2 class="section-title" id="header-classes">Classes</h2>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest" class="name">class <span class="ident">ActivateRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.activation_code" class="name">var <span class="ident">activation_code</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.expires" class="name">var <span class="ident">expires</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse" class="name">class <span class="ident">ActivateResponse</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.info" class="name">var <span class="ident">info</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest" class="name">class <span class="ident">DeactivateRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse" class="name">class <span class="ident">DeactivateResponse</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord" class="name">class <span class="ident">EnterpriseRecord</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.activation_code" class="name">var <span class="ident">activation_code</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.expires" class="name">var <span class="ident">expires</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest" class="name">class <span class="ident">GetStateRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse" class="name">class <span class="ident">GetStateResponse</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.activation_code" class="name">var <span class="ident">activation_code</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.info" class="name">var <span class="ident">info</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.state" class="name">var <span class="ident">state</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo" class="name">class <span class="ident">TokenInfo</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.expires" class="name">var <span class="ident">expires</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
 
   </section>
 </article>

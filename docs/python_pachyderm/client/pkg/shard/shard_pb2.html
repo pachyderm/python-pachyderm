@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.enterprise.enterprise_pb2 API documentation</title>
+  <title>python_pachyderm.client.pkg.shard.shard_pb2 API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,17 +1052,13 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.enterprise</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pkg.shard</a></li>
       </ul>
     </li>
     <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ACTIVE">ACTIVE</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.EXPIRED">EXPIRED</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.NONE">NONE</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.State">State</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
   </ul>
 
     </li>
@@ -1073,35 +1067,79 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest">ActivateRequest</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole">AddServerRole</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse">ActivateResponse</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.Addresses">Addresses</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest">DeactivateRequest</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.DeleteServerRole">DeleteServerRole</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse">DeactivateResponse</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles">FailedToAssignRoles</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord">EnterpriseRecord</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.FinishAssignRoles">FinishAssignRoles</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest">GetStateRequest</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister">FinishRegister</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse">GetStateResponse</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.FrontendState">FrontendState</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo">TokenInfo</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.GetAddress">GetAddress</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress">GetShardToAddress</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole">RemoveServerRole</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.ServerRole">ServerRole</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.ServerState">ServerState</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.SetAddresses">SetAddresses</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.SetFrontendState">SetFrontendState</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.SetServerRole">SetServerRole</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.SetServerState">SetServerState</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.StartAssignRoles">StartAssignRoles</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.StartRegister">StartRegister</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.shard.shard_pb2.Version">Version</a></span>
         
         </li>
       </ul>
@@ -1117,7 +1155,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.enterprise.enterprise_pb2</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.pkg.shard.shard_pb2</span> module</h1>
   <p></p>
 
   
@@ -1127,39 +1165,7 @@ table {
   <section id="section-items">
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ACTIVE" class="name">var <span class="ident">ACTIVE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.EXPIRED" class="name">var <span class="ident">EXPIRED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.NONE" class="name">var <span class="ident">NONE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.State" class="name">var <span class="ident">State</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
       
   
   <div class="source_cont">
@@ -1171,7 +1177,7 @@ table {
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest" class="name">class <span class="ident">ActivateRequest</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole" class="name">class <span class="ident">AddServerRole</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1188,7 +1194,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1198,7 +1204,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -1208,7 +1214,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.activation_code" class="name">var <span class="ident">activation_code</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole.error" class="name">var <span class="ident">error</span></p>
             
 
             
@@ -1218,7 +1224,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateRequest.expires" class="name">var <span class="ident">expires</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.AddServerRole.serverRole" class="name">var <span class="ident">serverRole</span></p>
             
 
             
@@ -1231,7 +1237,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse" class="name">class <span class="ident">ActivateResponse</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses" class="name">class <span class="ident">Addresses</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1248,7 +1254,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses.AddressesEntry" class="name">var <span class="ident">AddressesEntry</span></p>
             
 
             
@@ -1258,7 +1264,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1268,7 +1274,27 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.ActivateResponse.info" class="name">var <span class="ident">info</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses.addresses" class="name">var <span class="ident">addresses</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Addresses.version" class="name">var <span class="ident">version</span></p>
             
 
             
@@ -1281,7 +1307,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest" class="name">class <span class="ident">DeactivateRequest</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.DeleteServerRole" class="name">class <span class="ident">DeleteServerRole</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1298,7 +1324,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.DeleteServerRole.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1308,7 +1334,17 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.DeleteServerRole.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.DeleteServerRole.serverRole" class="name">var <span class="ident">serverRole</span></p>
             
 
             
@@ -1321,7 +1357,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse" class="name">class <span class="ident">DeactivateResponse</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles" class="name">class <span class="ident">FailedToAssignRoles</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1338,7 +1374,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1348,7 +1384,47 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.DeactivateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.ServerStatesEntry" class="name">var <span class="ident">ServerStatesEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.num_replicas" class="name">var <span class="ident">num_replicas</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.num_shards" class="name">var <span class="ident">num_shards</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FailedToAssignRoles.server_states" class="name">var <span class="ident">server_states</span></p>
             
 
             
@@ -1361,7 +1437,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord" class="name">class <span class="ident">EnterpriseRecord</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishAssignRoles" class="name">class <span class="ident">FinishAssignRoles</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1378,7 +1454,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishAssignRoles.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1388,7 +1464,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishAssignRoles.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -1398,17 +1474,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.activation_code" class="name">var <span class="ident">activation_code</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.EnterpriseRecord.expires" class="name">var <span class="ident">expires</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishAssignRoles.error" class="name">var <span class="ident">error</span></p>
             
 
             
@@ -1421,7 +1487,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest" class="name">class <span class="ident">GetStateRequest</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister" class="name">class <span class="ident">FinishRegister</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1438,7 +1504,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1448,7 +1514,27 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister.address" class="name">var <span class="ident">address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FinishRegister.error" class="name">var <span class="ident">error</span></p>
             
 
             
@@ -1461,7 +1547,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse" class="name">class <span class="ident">GetStateResponse</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.FrontendState" class="name">class <span class="ident">FrontendState</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1478,7 +1564,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FrontendState.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1488,7 +1574,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FrontendState.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -1498,7 +1584,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.info" class="name">var <span class="ident">info</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FrontendState.address" class="name">var <span class="ident">address</span></p>
             
 
             
@@ -1508,7 +1594,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.GetStateResponse.state" class="name">var <span class="ident">state</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.FrontendState.version" class="name">var <span class="ident">version</span></p>
             
 
             
@@ -1521,7 +1607,7 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo" class="name">class <span class="ident">TokenInfo</span></p>
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress" class="name">class <span class="ident">GetAddress</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -1538,7 +1624,7 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -1548,7 +1634,7 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -1558,7 +1644,677 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.enterprise.enterprise_pb2.TokenInfo.expires" class="name">var <span class="ident">expires</span></p>
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.error" class="name">var <span class="ident">error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.ok" class="name">var <span class="ident">ok</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.result" class="name">var <span class="ident">result</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.shard" class="name">var <span class="ident">shard</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetAddress.version" class="name">var <span class="ident">version</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress" class="name">class <span class="ident">GetShardToAddress</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.ResultEntry" class="name">var <span class="ident">ResultEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.error" class="name">var <span class="ident">error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.result" class="name">var <span class="ident">result</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.GetShardToAddress.version" class="name">var <span class="ident">version</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole" class="name">class <span class="ident">RemoveServerRole</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole.error" class="name">var <span class="ident">error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.RemoveServerRole.serverRole" class="name">var <span class="ident">serverRole</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole" class="name">class <span class="ident">ServerRole</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.ShardsEntry" class="name">var <span class="ident">ShardsEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.address" class="name">var <span class="ident">address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.shards" class="name">var <span class="ident">shards</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerRole.version" class="name">var <span class="ident">version</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerState" class="name">class <span class="ident">ServerState</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerState.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerState.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerState.address" class="name">var <span class="ident">address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.ServerState.version" class="name">var <span class="ident">version</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetAddresses" class="name">class <span class="ident">SetAddresses</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetAddresses.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetAddresses.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetAddresses.addresses" class="name">var <span class="ident">addresses</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetFrontendState" class="name">class <span class="ident">SetFrontendState</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetFrontendState.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetFrontendState.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetFrontendState.frontendState" class="name">var <span class="ident">frontendState</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerRole" class="name">class <span class="ident">SetServerRole</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerRole.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerRole.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerRole.serverRole" class="name">var <span class="ident">serverRole</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerState" class="name">class <span class="ident">SetServerState</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerState.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerState.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.SetServerState.serverState" class="name">var <span class="ident">serverState</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartAssignRoles" class="name">class <span class="ident">StartAssignRoles</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartAssignRoles.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartAssignRoles.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartRegister" class="name">class <span class="ident">StartRegister</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartRegister.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartRegister.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.StartRegister.address" class="name">var <span class="ident">address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.shard.shard_pb2.Version" class="name">class <span class="ident">Version</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Version.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Version.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Version.error" class="name">var <span class="ident">error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.shard.shard_pb2.Version.result" class="name">var <span class="ident">result</span></p>
             
 
             

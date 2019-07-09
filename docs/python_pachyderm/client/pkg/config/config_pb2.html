@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.health.health_pb2_grpc API documentation</title>
+  <title>python_pachyderm.client.pkg.config.config_pb2 API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,37 +1052,38 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.health</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.pkg.config</a></li>
       </ul>
     </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.add_HealthServicer_to_server">add_HealthServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pkg.config.config_pb2.CONFIG_V1">CONFIG_V1</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pkg.config.config_pb2.ContextSource">ContextSource</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pkg.config.config_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pkg.config.config_pb2.NONE">NONE</a></li>
   </ul>
 
     </li>
+
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthServicer">HealthServicer</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.config.config_pb2.Config">Config</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthServicer.Health">Health</a></li>
-  </ul>
-
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthStub">HealthStub</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.config.config_pb2.ConfigV1">ConfigV1</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.health.health_pb2_grpc.HealthStub.__init__">__init__</a></li>
-  </ul>
-
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.config.config_pb2.ConfigV2">ConfigV2</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pkg.config.config_pb2.Context">Context</a></span>
+        
         </li>
       </ul>
     </li>
@@ -1099,7 +1098,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.health.health_pb2_grpc</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.pkg.config.config_pb2</span> module</h1>
   <p></p>
 
   
@@ -1107,81 +1106,360 @@ table {
   </header>
 
   <section id="section-items">
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.CONFIG_V1" class="name">var <span class="ident">CONFIG_V1</span></p>
       
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.add_HealthServicer_to_server">
-    <p>def <span class="ident">add_HealthServicer_to_server</span>(</p><p>servicer, server)</p>
-    </div>
-    
-
-    
   
   <div class="source_cont">
 </div>
 
-  </div>
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.ContextSource" class="name">var <span class="ident">ContextSource</span></p>
+      
   
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.NONE" class="name">var <span class="ident">NONE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.health.health_pb2_grpc.HealthServicer" class="name">class <span class="ident">HealthServicer</span></p>
+      <p id="python_pachyderm.client.pkg.config.config_pb2.Config" class="name">class <span class="ident">Config</span></p>
       
   
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
 
       <div class="class">
-          <h3>Methods</h3>
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Config.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.HealthServicer.Health">
-    <p>def <span class="ident">Health</span>(</p><p>self, request, context)</p>
-    </div>
-    
 
-    
+            
   
   <div class="source_cont">
 </div>
 
-  </div>
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Config.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
   
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Config.user_id" class="name">var <span class="ident">user_id</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Config.v1" class="name">var <span class="ident">v1</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Config.v2" class="name">var <span class="ident">v2</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.health.health_pb2_grpc.HealthStub" class="name">class <span class="ident">HealthStub</span></p>
+      <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1" class="name">class <span class="ident">ConfigV1</span></p>
       
   
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
 
       <div class="class">
-          <h3>Methods</h3>
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.health.health_pb2_grpc.HealthStub.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
-    </div>
-    
 
-    
+            
   
-    <div class="desc"><p>Constructor.</p>
+  <div class="source_cont">
+</div>
 
-<p>Args:
-  channel: A grpc.Channel.</p>
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.active_transaction" class="name">var <span class="ident">active_transaction</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.pachd_address" class="name">var <span class="ident">pachd_address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.server_cas" class="name">var <span class="ident">server_cas</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV1.session_token" class="name">var <span class="ident">session_token</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2" class="name">class <span class="ident">ConfigV2</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
 </div>
   <div class="source_cont">
 </div>
 
-  </div>
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.ContextsEntry" class="name">var <span class="ident">ContextsEntry</span></p>
+            
+
+            
   
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.active_context" class="name">var <span class="ident">active_context</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.contexts" class="name">var <span class="ident">contexts</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.ConfigV2.metrics" class="name">var <span class="ident">metrics</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pkg.config.config_pb2.Context" class="name">class <span class="ident">Context</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.active_transaction" class="name">var <span class="ident">active_transaction</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.pachd_address" class="name">var <span class="ident">pachd_address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.server_cas" class="name">var <span class="ident">server_cas</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.session_token" class="name">var <span class="ident">session_token</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pkg.config.config_pb2.Context.source" class="name">var <span class="ident">source</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
 

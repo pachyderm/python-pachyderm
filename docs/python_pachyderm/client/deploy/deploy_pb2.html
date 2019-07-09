@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.client.enterprise.enterprise_pb2_grpc API documentation</title>
+  <title>python_pachyderm.client.deploy.deploy_pb2 API documentation</title>
   <meta name="description" content="" />
 
 
@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1054,39 +1052,27 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.client.enterprise</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.client.deploy</a></li>
       </ul>
     </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
       
   <ul>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.deploy.deploy_pb2.DESCRIPTOR">DESCRIPTOR</a></li>
   </ul>
 
     </li>
+
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer">APIServicer</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest">DeployStorageSecretRequest</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.Activate">Activate</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.Deactivate">Deactivate</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.GetState">GetState</a></li>
-  </ul>
-
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIStub">APIStub</a></span>
+        <span class="class_name"><a href="#python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse">DeployStorageSecretResponse</a></span>
         
-          
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIStub.__init__">__init__</a></li>
-  </ul>
-
         </li>
       </ul>
     </li>
@@ -1101,7 +1087,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.client.enterprise.enterprise_pb2_grpc</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.client.deploy.deploy_pb2</span> module</h1>
   <p></p>
 
   
@@ -1109,120 +1095,116 @@ table {
   </header>
 
   <section id="section-items">
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="python_pachyderm.client.deploy.deploy_pb2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
       
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.add_APIServicer_to_server">
-    <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
-    </div>
-    
-
-    
   
   <div class="source_cont">
 </div>
 
-  </div>
-  
+      </div>
+
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
+      <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest" class="name">class <span class="ident">DeployStorageSecretRequest</span></p>
       
   
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
 
       <div class="class">
-          <h3>Methods</h3>
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.Activate">
-    <p>def <span class="ident">Activate</span>(</p><p>self, request, context)</p>
-    </div>
-    
 
-    
-  
-    <div class="desc"><p>Provide a Pachyderm enterprise token, enabling Pachyderm enterprise
-features, such as the Pachyderm Dashboard and Auth system</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.Deactivate">
-    <p>def <span class="ident">Deactivate</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Deactivate is a testing API. It removes a cluster's enterprise activation
-token and sets its enterprise state to NONE (normally, once a cluster has
-been activated, the only reachable state is EXPIRED).</p>
-
-<p>NOTE: This endpoint also calls DeleteAll (and deletes all Pachyderm data in
-its cluster). This is to avoid dealing with invalid, intermediate states
-(e.g. auth is activated but enterprise state is NONE)</p>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIServicer.GetState">
-    <p>def <span class="ident">GetState</span>(</p><p>self, request, context)</p>
-    </div>
-    
-
-    
   
   <div class="source_cont">
 </div>
 
-  </div>
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
   
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.SecretsEntry" class="name">var <span class="ident">SecretsEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretRequest.secrets" class="name">var <span class="ident">secrets</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse" class="name">class <span class="ident">DeployStorageSecretResponse</span></p>
       
   
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
   <div class="source_cont">
 </div>
 
 
       <div class="class">
-          <h3>Methods</h3>
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.enterprise.enterprise_pb2_grpc.APIStub.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
-    </div>
-    
 
-    
+            
   
-    <div class="desc"><p>Constructor.</p>
-
-<p>Args:
-  channel: A grpc.Channel.</p>
-</div>
   <div class="source_cont">
 </div>
 
-  </div>
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.deploy.deploy_pb2.DeployStorageSecretResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
   
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
 

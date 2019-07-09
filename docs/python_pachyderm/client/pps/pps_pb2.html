@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1080,6 +1078,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.POD_RUNNING">POD_RUNNING</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.POD_SUCCESS">POD_SUCCESS</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.PipelineState">PipelineState</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.RECOVERED">RECOVERED</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.SKIPPED">SKIPPED</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.STARTING">STARTING</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pps.pps_pb2.SUCCESS">SUCCESS</a></li>
@@ -1105,10 +1104,6 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.AggregateProcessStats">AggregateProcessStats</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.AtomInput">AtomInput</a></span>
         
         </li>
         <li class="mono">
@@ -1272,15 +1267,15 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest">RerunPipelineRequest</a></span>
-        
-        </li>
-        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.ResourceSpec">ResourceSpec</a></span>
         
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.RestartDatumRequest">RestartDatumRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pps.pps_pb2.RunPipelineRequest">RunPipelineRequest</a></span>
         
         </li>
         <li class="mono">
@@ -1499,6 +1494,14 @@ table {
       </div>
       <div class="item">
       <p id="python_pachyderm.client.pps.pps_pb2.PipelineState" class="name">var <span class="ident">PipelineState</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pps.pps_pb2.RECOVERED" class="name">var <span class="ident">RECOVERED</span></p>
       
   
   <div class="source_cont">
@@ -1790,116 +1793,6 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.AggregateProcessStats.upload_time" class="name">var <span class="ident">upload_time</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.client.pps.pps_pb2.AtomInput" class="name">class <span class="ident">AtomInput</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.branch" class="name">var <span class="ident">branch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.commit" class="name">var <span class="ident">commit</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.empty_files" class="name">var <span class="ident">empty_files</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.glob" class="name">var <span class="ident">glob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.lazy" class="name">var <span class="ident">lazy</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.name" class="name">var <span class="ident">name</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.AtomInput.repo" class="name">var <span class="ident">repo</span></p>
             
 
             
@@ -2829,6 +2722,16 @@ table {
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.EtcdJobInfo.data_recovered" class="name">var <span class="ident">data_recovered</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.EtcdJobInfo.data_skipped" class="name">var <span class="ident">data_skipped</span></p>
             
 
@@ -3549,16 +3452,6 @@ table {
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.Input.atom" class="name">var <span class="ident">atom</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Input.cron" class="name">var <span class="ident">cron</span></p>
             
 
@@ -3969,6 +3862,16 @@ table {
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.JobInfo.data_recovered" class="name">var <span class="ident">data_recovered</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.JobInfo.data_skipped" class="name">var <span class="ident">data_skipped</span></p>
             
 
@@ -4230,6 +4133,16 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.JobInfo.service" class="name">var <span class="ident">service</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.JobInfo.spec_commit" class="name">var <span class="ident">spec_commit</span></p>
             
 
             
@@ -4689,6 +4602,26 @@ table {
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.ListJobRequest.full" class="name">var <span class="ident">full</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.ListJobRequest.history" class="name">var <span class="ident">history</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.ListJobRequest.input_commit" class="name">var <span class="ident">input_commit</span></p>
             
 
@@ -4750,6 +4683,26 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.ListPipelineRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.ListPipelineRequest.history" class="name">var <span class="ident">history</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.ListPipelineRequest.pipeline" class="name">var <span class="ident">pipeline</span></p>
             
 
             
@@ -5772,76 +5725,6 @@ table {
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest" class="name">class <span class="ident">RerunPipelineRequest</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest.exclude" class="name">var <span class="ident">exclude</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest.include" class="name">var <span class="ident">include</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.client.pps.pps_pb2.RerunPipelineRequest.pipeline" class="name">var <span class="ident">pipeline</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
       <p id="python_pachyderm.client.pps.pps_pb2.ResourceSpec" class="name">class <span class="ident">ResourceSpec</span></p>
       
   
@@ -5970,6 +5853,66 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.RestartDatumRequest.job" class="name">var <span class="ident">job</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pps.pps_pb2.RunPipelineRequest" class="name">class <span class="ident">RunPipelineRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.RunPipelineRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.RunPipelineRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.RunPipelineRequest.pipeline" class="name">var <span class="ident">pipeline</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.RunPipelineRequest.provenance" class="name">var <span class="ident">provenance</span></p>
             
 
             
@@ -6149,6 +6092,16 @@ table {
           </ul>
           <h3>Class variables</h3>
             <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Service.AnnotationsEntry" class="name">var <span class="ident">AnnotationsEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Service.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
@@ -6160,6 +6113,16 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Service.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Service.annotations" class="name">var <span class="ident">annotations</span></p>
             
 
             
@@ -6190,6 +6153,16 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Service.ip" class="name">var <span class="ident">ip</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Service.type" class="name">var <span class="ident">type</span></p>
             
 
             
@@ -6240,6 +6213,16 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Spout.overwrite" class="name">var <span class="ident">overwrite</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Spout.service" class="name">var <span class="ident">service</span></p>
             
 
             
@@ -6490,6 +6473,26 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pps.pps_pb2.Transform.env" class="name">var <span class="ident">env</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Transform.err_cmd" class="name">var <span class="ident">err_cmd</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pps.pps_pb2.Transform.err_stdin" class="name">var <span class="ident">err_stdin</span></p>
             
 
             
