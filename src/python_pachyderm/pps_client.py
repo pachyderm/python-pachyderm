@@ -42,15 +42,21 @@ class PpsClient(object):
         req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
-    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None):
+    def list_job(self,
+                 pipeline_name=None,
+                 input_commit=None,
+                 output_commit=None,
+                 history=None):
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
         elif isinstance(input_commit, six.string_types):
             input_commit = [commit_from(input_commit)]
         if output_commit:
             output_commit = commit_from(output_commit)
-        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline_name), input_commit=input_commit,
-                                   output_commit=output_commit)
+        req = proto.ListJobRequest(pipeline=proto.Pipeline(name=pipeline_name),
+                                   input_commit=input_commit,
+                                   output_commit=output_commit,
+                                   history=history)
         return self.stub.ListJob(req, metadata=self.metadata)
 
     def delete_job(self, job_id):
