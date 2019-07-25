@@ -6,7 +6,7 @@ from python_pachyderm.util import commit_from, get_address, get_metadata
 
 
 class PpsClient(object):
-    def __init__(self, host=None, port=None, auth_token=None, root_certificates=None):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
         """
         Creates a client to connect to PPS.
 
@@ -14,13 +14,14 @@ class PpsClient(object):
         port: The port to connect to. Default is 30650.
         auth_token: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        root_certificates:  The PEM-encoded root certificates as a byte string.
+        root_certs:  The PEM-encoded root certificates as byte string.
         """
 
         address = get_address(host, port)
         self.metadata = get_metadata(auth_token)
-        if root_certificates:
-            ssl_credentials = grpc.grpc.ssl_channel_credentials(root_certificates=root_certificates)
+        if root_certs:
+            ssl_credentials = grpc.grpc.ssl_channel_credentials(
+                    root_certificates=root_certs)
             self.channel = grpc.grpc.secure_channel(address, ssl_credentials)
         else:
             self.channel = grpc.grpc.insecure_channel(address)
