@@ -20,9 +20,9 @@ class PpsClient(object):
         address = get_address(host, port)
         self.metadata = get_metadata(auth_token)
         if root_certs:
-            ssl_credentials = grpc.grpc.ssl_channel_credentials(
-                    root_certificates=root_certs)
-            self.channel = grpc.grpc.secure_channel(address, ssl_credentials)
+            ssl_channel_credentials = grpc.grpc.ssl_credentials
+            ssl = ssl_channel_credentials(root_certificates=root_certs)
+            self.channel = grpc.grpc.secure_channel(address, ssl)
         else:
             self.channel = grpc.grpc.insecure_channel(address)
         self.stub = grpc.APIStub(self.channel)
