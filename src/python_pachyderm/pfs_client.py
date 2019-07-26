@@ -28,7 +28,7 @@ class PfsClient(object):
         address = get_address(host, port)
         self.metadata = get_metadata(auth_token)
         if root_certs:
-            ssl_channel_credentials = grpc.grpc.ssl_credentials
+            ssl_channel_credentials = grpc.grpc.ssl_channel_credentials
             ssl = ssl_channel_credentials(root_certificates=root_certs)
             self.channel = grpc.grpc.secure_channel(address, ssl)
         else:
