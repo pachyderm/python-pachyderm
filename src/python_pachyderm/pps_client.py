@@ -10,11 +10,13 @@ class PpsClient(object):
         """
         Creates a client to connect to PPS.
 
-        host: The pachd host. Default is 'localhost'.
-        port: The port to connect to. Default is 30650.
-        auth_token: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        root_certs:  The PEM-encoded root certificates as byte string.
+        Params:
+
+        * host: The pachd host. Default is 'localhost'.
+        * port: The port to connect to. Default is 30650.
+        * auth_token: The authentication token; used if authentication is
+        * enabled on the cluster. Default to `None`.
+        * root_certs:  The PEM-encoded root certificates as byte string.
         """
 
         address = get_address(host, port)
@@ -32,6 +34,7 @@ class PpsClient(object):
         Inspects a job with a given ID. Returns a `JobInfo`.
 
         Params:
+
         * job_id: The ID of the job to inspect.
         * block_state: If true, block until the job completes.
         * output_commit: An optional tuple, string, or `Commit` object
@@ -47,6 +50,7 @@ class PpsClient(object):
         Lists jobs. Yields `JobInfo` objects.
 
         Params:
+
         * pipeline_name: An optional string representing a pipeline name to
         filter on.
         * input_commit: An optional list of tuples, strings, or `Commit`
@@ -54,11 +58,12 @@ class PpsClient(object):
         * output_commit: An optional tuple, string, or `Commit` object
         representing an output commit to filter on.
         * history: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
-         0: Return jobs from the current version of the pipeline or pipelines.
-         1: Return the above and jobs from the next most recent version
-         2: etc.
-        -1: Return jobs from all historical versions.
+          historical versions of pipelines. Semantics are:
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
+            * 1: Return the above and jobs from the next most recent version
+            * 2: etc.
+            * -1: Return jobs from all historical versions.
         """
 
         pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
@@ -81,6 +86,7 @@ class PpsClient(object):
         provenance have finished. Yields `JobInfo` objects.
 
         Params:
+
         * commits: A list of tuples, strings, or `Commit` objects representing
         the commits to flush.
         * pipeline_names: An optional list of strings specifying pipeline
@@ -97,6 +103,7 @@ class PpsClient(object):
         Deletes a job by its ID.
 
         Params:
+
         * job_id: The ID of the job to delete.
         """
 
@@ -108,6 +115,7 @@ class PpsClient(object):
         Stops a job by its ID.
 
         Params:
+
         * job_id: The ID of the job to stop.
         """
 
@@ -119,6 +127,7 @@ class PpsClient(object):
         Inspects a datum. Returns a `DatumInfo` object.
 
         Params:
+
         * job_id: The ID of the job.
         * datum_id: The ID of the datum.
         """
@@ -131,6 +140,7 @@ class PpsClient(object):
         Lists datums. Yields `ListDatumStreamResponse` objects.
 
         Params:
+
         * job_id: The ID of the job.
         * page_size: An optional int specifying the size of the page.
         * page: An optional int specifying the page number.
@@ -144,6 +154,7 @@ class PpsClient(object):
         Restarts a datum.
 
         Params:
+
         * job_id: The ID of the job.
         * data_filters: An optional iterable of strings.
         """
@@ -165,6 +176,7 @@ class PpsClient(object):
         http://docs.pachyderm.io/en/latest/reference/pipeline_spec.html
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         * transform: An optional `Transform` object.
         * parallelism_spec: An optional `ParallelismSpec` object.
@@ -217,13 +229,15 @@ class PpsClient(object):
         Inspects a pipeline. Returns a `PipelineInfo` object.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         * history: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
-         0: Return jobs from the current version of the pipeline or pipelines.
-         1: Return the above and jobs from the next most recent version
-         2: etc.
-        -1: Return jobs from all historical versions.
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
+            * 1: Return the above and jobs from the next most recent version
+            * 2: etc.
+            * -1: Return jobs from all historical versions.
         """
 
         pipeline = proto.Pipeline(name=pipeline_name)
@@ -244,13 +258,15 @@ class PpsClient(object):
         Lists pipelines. Returns a `PipelineInfos` object.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         * history: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
-         0: Return jobs from the current version of the pipeline or pipelines.
-         1: Return the above and jobs from the next most recent version
-         2: etc.
-        -1: Return jobs from all historical versions.
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
+            * 1: Return the above and jobs from the next most recent version
+            * 2: etc.
+            * -1: Return jobs from all historical versions.
         """
         req = proto.ListPipelineRequest(history=history)
         return self.stub.ListPipeline(req, metadata=self.metadata)
@@ -260,6 +276,7 @@ class PpsClient(object):
         Deletes a pipeline.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         * force: Whether to force delete.
         """
@@ -272,6 +289,7 @@ class PpsClient(object):
         Deletes all pipelines.
 
         Params:
+
         * force: Whether to force delete.
         """
 
@@ -283,6 +301,7 @@ class PpsClient(object):
         Starts a pipeline.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         """
 
@@ -294,6 +313,7 @@ class PpsClient(object):
         Stops a pipeline.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         """
         req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
@@ -304,6 +324,7 @@ class PpsClient(object):
         Runs a pipeline.
 
         Params:
+
         * pipeline_name: A string representing the pipeline name.
         * provenance: An optional iterable of `CommitProvenance` objects
         representing the pipeline execution provenance.
@@ -327,6 +348,7 @@ class PpsClient(object):
         Gets logs for a pipeline. Yields `LogMessage` objects.
 
         Params:
+
         * pipeline_name: A string representing a pipeline to get
         logs of.
         * data_filters: An optional iterable of strings specifying the names
@@ -356,6 +378,7 @@ class PpsClient(object):
         Gets logs for a job. Yields `LogMessage` objects.
 
         Params:
+
         * job_id: A string representing a job to get logs of.
         * data_filters: An optional iterable of strings specifying the names
         of input files from which we want processing logs. This may contain

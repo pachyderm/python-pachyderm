@@ -17,6 +17,7 @@ class PfsClient(object):
         Creates a client to connect to PFS.
 
         Params:
+
         * host: The pachd host. Default is 'localhost', which is used with
         `pachctl port-forward`.
         * port: The port to connect to. Default is 30650.
@@ -44,6 +45,7 @@ class PfsClient(object):
         database dumps etc.
 
         Params:
+
         * repo_name: Name of the repo.
         * description: An optional string describing the repo.
         * update: Whether to update if the repo already exists.
@@ -78,6 +80,7 @@ class PfsClient(object):
         Deletes a repo and reclaims the storage space it was using.
 
         Params:
+
         * repo_name: The name of the repo.
         * force: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
@@ -90,6 +93,7 @@ class PfsClient(object):
         Deletes all repos.
 
         Params:
+
         * force: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
@@ -106,6 +110,7 @@ class PfsClient(object):
         returned.
 
         Params:
+
         * repo_name: A string specifying the name of the repo.
         * branch: A string specifying the branch name. This is a more
         convenient way to build linear chains of commits. When a commit is
@@ -138,6 +143,7 @@ class PfsClient(object):
         future attempts to write to it with PutFile will error.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * description: An optional string describing this commit.
         * tree_object_hashes: A list of zero or more strings specifying object
@@ -164,6 +170,7 @@ class PfsClient(object):
         A context manager for running operations within a commit.
 
         Params:
+
         * repo_name: A string specifying the name of the repo.
         * branch: A string specifying the branch name. This is a more
         convenient way to build linear chains of commits. When a commit is
@@ -188,6 +195,7 @@ class PfsClient(object):
         Inspects a commit. Returns a `CommitInfo` object.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * block_state: Causes inspect commit to block until the commit is in
         the desired commit state.
@@ -200,6 +208,7 @@ class PfsClient(object):
         Lists commits. Yields `CommitInfo` objects.
 
         Params:
+
         * repo_name: If only `repo_name` is given, all commits in the repo are
         returned.
         * to_commit: Optional. Only the ancestors of `to`, including `to`
@@ -222,6 +231,7 @@ class PfsClient(object):
         Deletes a commit.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         """
         req = proto.DeleteCommitRequest(commit=commit_from(commit))
@@ -243,6 +253,7 @@ class PfsClient(object):
         Yields `CommitInfo` objects.
 
         Params:
+
         * commits: A list of tuples, strings, or `Commit` objects representing
         the commits to flush.
         * repos: An optional list of strings specifying repo names. If
@@ -258,6 +269,7 @@ class PfsClient(object):
         Yields `CommitInfo` objects as commits occur.
 
         Params:
+
         * repo_name: A string specifying the name of the repo.
         * branch: A string specifying branch to subscribe to.
         * from_commit_id: An optional string specifying the commit ID. Only
@@ -303,6 +315,7 @@ class PfsClient(object):
         `BranchInfo` objects.
 
         Params:
+
         * repo_name: A string specifying the repo name.
         """
         req = proto.ListBranchRequest(repo=proto.Repo(name=repo_name))
@@ -316,6 +329,7 @@ class PfsClient(object):
         branches they happen to be on.
 
         Params:
+
         * repo_name: A string specifying the repo name.
         * branch_name: A string specifying the name of the branch to delete.
         * force: A bool specifying whether to force the branch deletion.
@@ -330,6 +344,7 @@ class PfsClient(object):
         Uploads a binary bytes array as file(s) in a certain path.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: A string specifying the path in the repo the file(s) will be
         written to.
@@ -409,6 +424,7 @@ class PfsClient(object):
         PFS function.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: A string specifying the path to the file.
         * url: A string specifying the url of the file to put.
@@ -431,6 +447,7 @@ class PfsClient(object):
         1.9.0) silently fail.
 
         Params:
+
         * source_commit: A tuple, string, or `Commit` object representing the
         commit for the source file.
         * source_path: A string specifying the path of the source file.
@@ -452,6 +469,7 @@ class PfsClient(object):
         Returns an iterator of the contents of a file at a specific commit.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: A string specifying the path of the file.
         * offset_bytes: An optional int. Specifies a number of bytes that
@@ -475,6 +493,7 @@ class PfsClient(object):
         Inspects a file. Returns a `FileInfo` object.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: A string specifying the path to the file.
         """
@@ -486,6 +505,7 @@ class PfsClient(object):
         Lists the files in a directory.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the directory.
         * history: An optional int that indicates to return jobs from
@@ -512,6 +532,7 @@ class PfsClient(object):
         `FileInfo` objects.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the directory.
         """
@@ -525,6 +546,7 @@ class PfsClient(object):
         Lists files that match a glob pattern. Yields `FileInfo` objects.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * pattern: A string representing a glob pattern.
         """
@@ -540,6 +562,7 @@ class PfsClient(object):
         will of course remain intact in the Commit's parent.
 
         Params:
+
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the file.
         """
