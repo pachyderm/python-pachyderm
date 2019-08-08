@@ -59,7 +59,8 @@ class PpsClient(object):
         representing an output commit to filter on.
         * history: An optional int that indicates to return jobs from
           historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or pipelines.
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
@@ -232,7 +233,8 @@ class PpsClient(object):
         * pipeline_name: A string representing the pipeline name.
         * history: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or pipelines.
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
@@ -260,7 +262,8 @@ class PpsClient(object):
         * pipeline_name: A string representing the pipeline name.
         * history: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or pipelines.
+            * 0: Return jobs from the current version of the pipeline or
+              pipelines.
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
