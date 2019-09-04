@@ -417,7 +417,7 @@ class PfsClient(object):
 
         self.stub.PutFile(wrap(value), metadata=self.metadata)
 
-    def put_file_url(self, commit, path, url, recursive=None):
+    def put_file_url(self, commit, path, url, recursive=None, overwrite_index=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request. Note that this is not a standard
@@ -430,12 +430,19 @@ class PfsClient(object):
         * url: A string specifying the url of the file to put.
         * recursive: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
+        * overwrite_index: An optional `OverwriteIndex` object. This is the
+        object index where the write starts from.  All existing objects
+        starting from the index are deleted.
         """
+
+        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
+
         req = iter([
             proto.PutFileRequest(
                 file=proto.File(commit=commit_from(commit), path=path),
                 url=url,
-                recursive=recursive
+                recursive=recursive,
+                overwrite_index=overwrite_index_proto
             )
         ])
         self.stub.PutFile(req, metadata=self.metadata)
