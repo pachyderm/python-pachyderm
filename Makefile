@@ -15,6 +15,7 @@ proto: docker-build-proto
 	| tar xf -
 	rm -rf src/python_pachyderm/_proto
 	mv src/python_pachyderm/client src/python_pachyderm/_proto
+	find src/python_pachyderm/_proto -type d -exec touch {}/__init__.py \;
 
 init:
 	git submodule update --init
