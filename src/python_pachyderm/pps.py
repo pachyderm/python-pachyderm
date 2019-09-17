@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from python_pachyderm._proto.pps import pps_pb2 as proto
+from python_pachyderm._proto.pps.pps_pb2 import *
 from python_pachyderm._proto.pps import pps_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
 
@@ -42,7 +40,7 @@ class PpsClient(object):
         """
 
         output_commit = commit_from(output_commit) if output_commit is not None else None
-        req = proto.InspectJobRequest(job=proto.Job(id=job_id), block_state=block_state, output_commit=output_commit)
+        req = InspectJobRequest(job=Job(id=job_id), block_state=block_state, output_commit=output_commit)
         return self.stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None):
@@ -66,7 +64,7 @@ class PpsClient(object):
             * -1: Return jobs from all historical versions.
         """
 
-        pipeline = proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
+        pipeline = Pipeline(name=pipeline_name) if pipeline_name is not None else None
 
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
@@ -75,7 +73,7 @@ class PpsClient(object):
 
         output_commit = commit_from(output_commit) if output_commit is not None else None
 
-        req = proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
+        req = ListJobRequest(pipeline=pipeline, input_commit=input_commit,
                                    output_commit=output_commit, history=history)
 
         return self.stub.ListJobStream(req, metadata=self.metadata)
@@ -94,8 +92,8 @@ class PpsClient(object):
         """
 
         commits = [commit_from(c) for c in commits]
-        pipelines = [proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None
-        req = proto.FlushJobRequest(commits=commits, to_pipelines=pipelines)
+        pipelines = [Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None
+        req = FlushJobRequest(commits=commits, to_pipelines=pipelines)
         return self.stub.FlushJob(req)
 
     def delete_job(self, job_id):
@@ -107,7 +105,7 @@ class PpsClient(object):
         * job_id: The ID of the job to delete.
         """
 
-        req = proto.DeleteJobRequest(job=proto.Job(id=job_id))
+        req = DeleteJobRequest(job=Job(id=job_id))
         self.stub.DeleteJob(req, metadata=self.metadata)
 
     def stop_job(self, job_id):
@@ -119,7 +117,7 @@ class PpsClient(object):
         * job_id: The ID of the job to stop.
         """
 
-        req = proto.StopJobRequest(job=proto.Job(id=job_id))
+        req = StopJobRequest(job=Job(id=job_id))
         self.stub.StopJob(req, metadata=self.metadata)
 
     def inspect_datum(self, job_id, datum_id):
@@ -132,7 +130,7 @@ class PpsClient(object):
         * datum_id: The ID of the datum.
         """
 
-        req = proto.InspectDatumRequest(datum=proto.Datum(id=datum_id, job=proto.Job(id=job_id)))
+        req = InspectDatumRequest(datum=Datum(id=datum_id, job=Job(id=job_id)))
         return self.stub.InspectDatum(req, metadata=self.metadata)
 
     def list_datum(self, job_id, page_size=None, page=None):
@@ -146,7 +144,7 @@ class PpsClient(object):
         * page: An optional int specifying the page number.
         """
 
-        req = proto.ListDatumRequest(job=proto.Job(id=job_id), page_size=page_size, page=page)
+        req = ListDatumRequest(job=Job(id=job_id), page_size=page_size, page=page)
         return self.stub.ListDatumStream(req, metadata=self.metadata)
 
     def restart_datum(self, job_id, data_filters=None):
@@ -159,7 +157,7 @@ class PpsClient(object):
         * data_filters: An optional iterable of strings.
         """
 
-        req = proto.RestartDatumRequest(job=proto.Job(id=job_id), data_filters=data_filters)
+        req = RestartDatumRequest(job=Job(id=job_id), data_filters=data_filters)
         self.stub.RestartDatum(req, metadata=self.metadata)
 
     def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
@@ -208,8 +206,8 @@ class PpsClient(object):
         * pod_patch: An optional string.
         """
 
-        req = proto.CreatePipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
+        req = CreatePipelineRequest(
+            pipeline=Pipeline(name=pipeline_name),
             transform=transform, parallelism_spec=parallelism_spec,
             hashtree_spec=hashtree_spec, egress=egress, update=update,
             output_branch=output_branch, scale_down_threshold=scale_down_threshold,
@@ -240,15 +238,15 @@ class PpsClient(object):
             * -1: Return jobs from all historical versions.
         """
 
-        pipeline = proto.Pipeline(name=pipeline_name)
+        pipeline = Pipeline(name=pipeline_name)
 
         if history is None:
-            req = proto.InspectPipelineRequest(pipeline=pipeline)
+            req = InspectPipelineRequest(pipeline=pipeline)
             return self.stub.InspectPipeline(req, metadata=self.metadata)
         else:
             # `InspectPipeline` doesn't support history, but `ListPipeline`
             # with a pipeline filter does, so we use that here
-            req = proto.ListPipelineRequest(pipeline=pipeline, history=history)
+            req = ListPipelineRequest(pipeline=pipeline, history=history)
             pipelines = self.stub.ListPipeline(req, metadata=self.metadata).pipeline_info
             assert len(pipelines) <= 1
             return pipelines[0] if len(pipelines) else None
@@ -268,7 +266,7 @@ class PpsClient(object):
             * 2: etc.
             * -1: Return jobs from all historical versions.
         """
-        req = proto.ListPipelineRequest(history=history)
+        req = ListPipelineRequest(history=history)
         return self.stub.ListPipeline(req, metadata=self.metadata)
 
     def delete_pipeline(self, pipeline_name, force=None):
@@ -281,7 +279,7 @@ class PpsClient(object):
         * force: Whether to force delete.
         """
 
-        req = proto.DeletePipelineRequest(pipeline=proto.Pipeline(name=pipeline_name), force=force)
+        req = DeletePipelineRequest(pipeline=Pipeline(name=pipeline_name), force=force)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def delete_all_pipelines(self, force=None):
@@ -293,7 +291,7 @@ class PpsClient(object):
         * force: Whether to force delete.
         """
 
-        req = proto.DeletePipelineRequest(all=True, force=force)
+        req = DeletePipelineRequest(all=True, force=force)
         self.stub.DeletePipeline(req, metadata=self.metadata)
 
     def start_pipeline(self, pipeline_name):
@@ -305,7 +303,7 @@ class PpsClient(object):
         * pipeline_name: A string representing the pipeline name.
         """
 
-        req = proto.StartPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
+        req = StartPipelineRequest(pipeline=Pipeline(name=pipeline_name))
         self.stub.StartPipeline(req, metadata=self.metadata)
 
     def stop_pipeline(self, pipeline_name):
@@ -316,7 +314,7 @@ class PpsClient(object):
 
         * pipeline_name: A string representing the pipeline name.
         """
-        req = proto.StopPipelineRequest(pipeline=proto.Pipeline(name=pipeline_name))
+        req = StopPipelineRequest(pipeline=Pipeline(name=pipeline_name))
         self.stub.StopPipeline(req, metadata=self.metadata)
 
     def run_pipeline(self, pipeline_name, provenance=None):
@@ -329,8 +327,8 @@ class PpsClient(object):
         * provenance: An optional iterable of `CommitProvenance` objects
         representing the pipeline execution provenance.
         """
-        req = proto.RunPipelineRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
+        req = RunPipelineRequest(
+            pipeline=Pipeline(name=pipeline_name),
             provenance=provenance,
         )
         self.stub.RunPipeline(req, metadata=self.metadata)
@@ -339,7 +337,7 @@ class PpsClient(object):
         """
         Deletes everything in pachyderm.
         """
-        req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
+        req = google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)
 
     def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
@@ -365,8 +363,8 @@ class PpsClient(object):
         get tail * <number of pods> total lines back.
         """
 
-        req = proto.GetLogsRequest(
-            pipeline=proto.Pipeline(name=pipeline_name),
+        req = GetLogsRequest(
+            pipeline=Pipeline(name=pipeline_name),
             data_filters=data_filters, master=master, datum=datum,
             follow=follow, tail=tail,
         )
@@ -393,8 +391,8 @@ class PpsClient(object):
         get tail * <number of pods> total lines back.
         """
 
-        req = proto.GetLogsRequest(
-            job=proto.Job(id=job_id), data_filters=data_filters, datum=datum,
+        req = GetLogsRequest(
+            job=Job(id=job_id), data_filters=data_filters, datum=datum,
             follow=follow, tail=tail,
         )
         return self.stub.GetLogs(req, metadata=self.metadata)
@@ -403,4 +401,4 @@ class PpsClient(object):
         """
         Runs garbage collection.
         """
-        return self.stub.GarbageCollect(proto.GarbageCollectRequest(), metadata=self.metadata)
+        return self.stub.GarbageCollect(GarbageCollectRequest(), metadata=self.metadata)

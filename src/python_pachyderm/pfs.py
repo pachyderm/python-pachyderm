@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import collections
 import itertools
 from contextlib import contextmanager
 
-from python_pachyderm._proto.pfs import pfs_pb2 as proto
+from python_pachyderm._proto.pfs.pfs_pb2 import *
 from python_pachyderm._proto.pfs import pfs_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
 
@@ -50,8 +48,8 @@ class PfsClient(object):
         * description: An optional string describing the repo.
         * update: Whether to update if the repo already exists.
         """
-        req = proto.CreateRepoRequest(
-            repo=proto.Repo(name=repo_name),
+        req = CreateRepoRequest(
+            repo=Repo(name=repo_name),
             description=description,
             update=update
         )
@@ -64,14 +62,14 @@ class PfsClient(object):
         Params:
         * repo_name: Name of the repo.
         """
-        req = proto.InspectRepoRequest(repo=proto.Repo(name=repo_name))
+        req = InspectRepoRequest(repo=Repo(name=repo_name))
         return self.stub.InspectRepo(req, metadata=self.metadata)
 
     def list_repo(self):
         """
         Returns info about all repos, as a list of `RepoInfo` objects.
         """
-        req = proto.ListRepoRequest()
+        req = ListRepoRequest()
         res = self.stub.ListRepo(req, metadata=self.metadata)
         return res.repo_info
 
@@ -85,7 +83,7 @@ class PfsClient(object):
         * force: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
-        req = proto.DeleteRepoRequest(repo=proto.Repo(name=repo_name), force=force, all=False)
+        req = DeleteRepoRequest(repo=Repo(name=repo_name), force=force, all=False)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
     def delete_all_repos(self, force=None):
@@ -98,7 +96,7 @@ class PfsClient(object):
         errors. This argument should be used with care.
         """
 
-        req = proto.DeleteRepoRequest(force=force, all=True)
+        req = DeleteRepoRequest(force=force, all=True)
         self.stub.DeleteRepo(req, metadata=self.metadata)
 
     def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=None):
@@ -126,8 +124,8 @@ class PfsClient(object):
         * provenance: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         """
-        req = proto.StartCommitRequest(
-            parent=proto.Commit(repo=proto.Repo(name=repo_name), id=parent),
+        req = StartCommitRequest(
+            parent=Commit(repo=Repo(name=repo_name), id=parent),
             branch=branch,
             description=description,
             provenance=provenance,
@@ -154,11 +152,11 @@ class PfsClient(object):
         `finished` field will be set to the current time) but its `tree` will
         be left nil.
         """
-        req = proto.FinishCommitRequest(
+        req = FinishCommitRequest(
             commit=commit_from(commit),
             description=description,
-            trees=[proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
-            datums=proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
+            trees=[Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
+            datums=Object(hash=datum_object_hash) if datum_object_hash is not None else None,
             size_bytes=size_bytes,
             empty=empty,
         )
@@ -200,7 +198,7 @@ class PfsClient(object):
         * block_state: Causes inspect commit to block until the commit is in
         the desired commit state.
         """
-        req = proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
+        req = InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
         return self.stub.InspectCommit(req, metadata=self.metadata)
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None):
@@ -219,7 +217,7 @@ class PfsClient(object):
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
         """
-        req = proto.ListCommitRequest(repo=proto.Repo(name=repo_name), number=number)
+        req = ListCommitRequest(repo=Repo(name=repo_name), number=number)
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
@@ -234,7 +232,7 @@ class PfsClient(object):
 
         * commit: A tuple, string, or `Commit` object representing the commit.
         """
-        req = proto.DeleteCommitRequest(commit=commit_from(commit))
+        req = DeleteCommitRequest(commit=commit_from(commit))
         self.stub.DeleteCommit(req, metadata=self.metadata)
 
     def flush_commit(self, commits, repos=None):
@@ -259,8 +257,8 @@ class PfsClient(object):
         * repos: An optional list of strings specifying repo names. If
         specified, only commits within these repos will be flushed.
         """
-        to_repos = [proto.Repo(name=r) for r in repos] if repos is not None else None
-        req = proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
+        to_repos = [Repo(name=r) for r in repos] if repos is not None else None
+        req = FlushCommitRequest(commits=[commit_from(c) for c in commits],
                                        to_repos=to_repos)
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
@@ -276,10 +274,10 @@ class PfsClient(object):
         commits created since this commit are returned.
         * state: The commit state to filter on.
         """
-        repo = proto.Repo(name=repo_name)
-        req = proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
+        repo = Repo(name=repo_name)
+        req = SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
-            getattr(req, 'from').CopyFrom(proto.Commit(repo=repo, id=from_commit_id))
+            getattr(req, 'from').CopyFrom(Commit(repo=repo, id=from_commit_id))
         return self.stub.SubscribeCommit(req, metadata=self.metadata)
 
     def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
@@ -294,8 +292,8 @@ class PfsClient(object):
         * provenance: An optional iterable of `Branch` objects representing
         the branch provenance.
         """
-        req = proto.CreateBranchRequest(
-            branch=proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name),
+        req = CreateBranchRequest(
+            branch=Branch(repo=Repo(name=repo_name), name=branch_name),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
         )
@@ -305,8 +303,8 @@ class PfsClient(object):
         """
         Inspects a branch. Returns a `BranchInfo` object.
         """
-        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
-        req = proto.InspectBranchRequest(branch=branch)
+        branch = Branch(repo=Repo(name=repo_name), name=branch_name)
+        req = InspectBranchRequest(branch=branch)
         return self.stub.InspectBranch(req, metadata=self.metadata)
 
     def list_branch(self, repo_name):
@@ -318,7 +316,7 @@ class PfsClient(object):
 
         * repo_name: A string specifying the repo name.
         """
-        req = proto.ListBranchRequest(repo=proto.Repo(name=repo_name))
+        req = ListBranchRequest(repo=Repo(name=repo_name))
         res = self.stub.ListBranch(req, metadata=self.metadata)
         return res.branch_info
 
@@ -334,8 +332,8 @@ class PfsClient(object):
         * branch_name: A string specifying the name of the branch to delete.
         * force: A bool specifying whether to force the branch deletion.
         """
-        branch = proto.Branch(repo=proto.Repo(name=repo_name), name=branch_name)
-        req = proto.DeleteBranchRequest(branch=branch, force=force)
+        branch = Branch(repo=Repo(name=repo_name), name=branch_name)
+        req = DeleteBranchRequest(branch=branch, force=force)
         self.stub.DeleteBranch(req, metadata=self.metadata)
 
     def put_file_bytes(self, commit, path, value, delimiter=None,
@@ -363,7 +361,7 @@ class PfsClient(object):
         starting from the index are deleted.
         """
 
-        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
+        overwrite_index_proto = OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
         if hasattr(value, "read"):
             def wrap(value):
@@ -374,8 +372,8 @@ class PfsClient(object):
                         return
 
                     if i == 0:
-                        yield proto.PutFileRequest(
-                            file=proto.File(commit=commit_from(commit), path=path),
+                        yield PutFileRequest(
+                            file=File(commit=commit_from(commit), path=path),
                             value=chunk,
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
@@ -383,13 +381,13 @@ class PfsClient(object):
                             overwrite_index=overwrite_index_proto
                         )
                     else:
-                        yield proto.PutFileRequest(value=chunk)
+                        yield PutFileRequest(value=chunk)
         elif isinstance(value, collections.Iterable) and not isinstance(value, (str, bytes)):
             def wrap(value):
                 for i, chunk in enumerate(value):
                     if i == 0:
-                        yield proto.PutFileRequest(
-                            file=proto.File(commit=commit_from(commit), path=path),
+                        yield PutFileRequest(
+                            file=File(commit=commit_from(commit), path=path),
                             value=chunk,
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
@@ -397,11 +395,11 @@ class PfsClient(object):
                             overwrite_index=overwrite_index_proto
                         )
                     else:
-                        yield proto.PutFileRequest(value=chunk)
+                        yield PutFileRequest(value=chunk)
         else:
             def wrap(value):
-                yield proto.PutFileRequest(
-                    file=proto.File(commit=commit_from(commit), path=path),
+                yield PutFileRequest(
+                    file=File(commit=commit_from(commit), path=path),
                     value=value[:BUFFER_SIZE],
                     delimiter=delimiter,
                     target_file_datums=target_file_datums,
@@ -410,7 +408,7 @@ class PfsClient(object):
                 )
 
                 for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
-                    yield proto.PutFileRequest(
+                    yield PutFileRequest(
                         value=value[i:i + BUFFER_SIZE],
                         overwrite_index=overwrite_index_proto
                     )
@@ -435,11 +433,11 @@ class PfsClient(object):
         starting from the index are deleted.
         """
 
-        overwrite_index_proto = proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
+        overwrite_index_proto = OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
         req = iter([
-            proto.PutFileRequest(
-                file=proto.File(commit=commit_from(commit), path=path),
+            PutFileRequest(
+                file=File(commit=commit_from(commit), path=path),
                 url=url,
                 recursive=recursive,
                 overwrite_index=overwrite_index_proto
@@ -464,9 +462,9 @@ class PfsClient(object):
         * overwrite: Am optional bool specifying whether to overwrite the
         destination file if it already exists.
         """
-        req = proto.CopyFileRequest(
-            src=proto.File(commit=commit_from(source_commit), path=source_path),
-            dst=proto.File(commit=commit_from(dest_commit), path=dest_path),
+        req = CopyFileRequest(
+            src=File(commit=commit_from(source_commit), path=source_path),
+            dst=File(commit=commit_from(dest_commit), path=dest_path),
             overwrite=overwrite,
         )
         self.stub.CopyFile(req, metadata=self.metadata)
@@ -486,8 +484,8 @@ class PfsClient(object):
         larger than the size of the file. If size is set to 0 then all of the
         data will be returned.
         """
-        req = proto.GetFileRequest(
-            file=proto.File(commit=commit_from(commit), path=path),
+        req = GetFileRequest(
+            file=File(commit=commit_from(commit), path=path),
             offset_bytes=offset_bytes,
             size_bytes=size_bytes
         )
@@ -504,7 +502,7 @@ class PfsClient(object):
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: A string specifying the path to the file.
         """
-        req = proto.InspectFileRequest(file=proto.File(commit=commit_from(commit), path=path))
+        req = InspectFileRequest(file=File(commit=commit_from(commit), path=path))
         return self.stub.InspectFile(req, metadata=self.metadata)
 
     def list_file(self, commit, path, history=None, include_contents=None):
@@ -525,8 +523,8 @@ class PfsClient(object):
         included.
         """
 
-        req = proto.ListFileRequest(
-            file=proto.File(commit=commit_from(commit), path=path),
+        req = ListFileRequest(
+            file=File(commit=commit_from(commit), path=path),
             history=history,
             full=include_contents,
         )
@@ -544,8 +542,8 @@ class PfsClient(object):
         * path: The path to the directory.
         """
         commit = commit_from(commit)
-        f = proto.File(commit=commit_from(commit), path=path)
-        req = proto.WalkFileRequest(file=f)
+        f = File(commit=commit_from(commit), path=path)
+        req = WalkFileRequest(file=f)
         return self.stub.WalkFile(req, metadata=self.metadata)
 
     def glob_file(self, commit, pattern):
@@ -558,7 +556,7 @@ class PfsClient(object):
         * pattern: A string representing a glob pattern.
         """
 
-        req = proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
+        req = GlobFileRequest(commit=commit_from(commit), pattern=pattern)
         return self.stub.GlobFileStream(req, metadata=self.metadata)
 
     def delete_file(self, commit, path):
@@ -573,12 +571,12 @@ class PfsClient(object):
         * commit: A tuple, string, or `Commit` object representing the commit.
         * path: The path to the file.
         """
-        req = proto.DeleteFileRequest(file=proto.File(commit=commit_from(commit), path=path))
+        req = DeleteFileRequest(file=File(commit=commit_from(commit), path=path))
         self.stub.DeleteFile(req, metadata=self.metadata)
 
     def delete_all(self):
         """
         Deletes everything.
         """
-        req = proto.google_dot_protobuf_dot_empty__pb2.Empty()
+        req = google_dot_protobuf_dot_empty__pb2.Empty()
         self.stub.DeleteAll(req, metadata=self.metadata)

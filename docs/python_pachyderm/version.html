@@ -22,22 +22,41 @@
 <section id="section-intro">
 <details class="source">
 <summary>Source code</summary>
-<pre><code class="python">from .client import get_remote_version
-from python_pachyderm._proto.version.versionpb.version_pb2 import *</code></pre>
+<pre><code class="python">from python_pachyderm._proto.version.versionpb.version_pb2 import *
+from python_pachyderm._proto.version.versionpb import version_pb2_grpc as grpc
+
+from contextlib import closing
+from python_pachyderm.util import get_address
+
+def get_remote_version(host=None, port=None):
+    with closing(grpc.grpc.insecure_channel(get_address(host, port))) as channel:
+        stub = grpc.APIStub(channel)
+        version = stub.GetVersion(grpc.google_dot_protobuf_dot_empty__pb2.Empty())
+        return version</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt><code class="name"><a title="python_pachyderm.version.client" href="client.html">python_pachyderm.version.client</a></code></dt>
+<dt id="python_pachyderm.version.get_remote_version"><code class="name flex">
+<span>def <span class="ident">get_remote_version</span></span>(<span>host=None, port=None)</span>
+</code></dt>
 <dd>
 <section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_remote_version(host=None, port=None):
+    with closing(grpc.grpc.insecure_channel(get_address(host, port))) as channel:
+        stub = grpc.APIStub(channel)
+        version = stub.GetVersion(grpc.google_dot_protobuf_dot_empty__pb2.Empty())
+        return version</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -91,12 +110,12 @@ from python_pachyderm._proto.version.versionpb.version_pb2 import *</code></pre>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="python_pachyderm" href="../index.html">python_pachyderm</a></code></li>
+<li><code><a title="python_pachyderm" href="index.html">python_pachyderm</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
-<ul>
-<li><code><a title="python_pachyderm.version.client" href="client.html">python_pachyderm.version.client</a></code></li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="python_pachyderm.version.get_remote_version" href="#python_pachyderm.version.get_remote_version">get_remote_version</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
