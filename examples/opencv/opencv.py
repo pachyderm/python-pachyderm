@@ -4,28 +4,26 @@
 # walkthrough is available in the pachyderm docs:
 # https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
 
-import python_pachyderm._proto.pps.pps_pb2 as proto 
-
-import python_pachyderm
+from python_pachyderm import pfs, pps
 
 def main():
-    pfs_client = python_pachyderm.PfsClient()
-    pps_client = python_pachyderm.PpsClient()
+    pfs_client = pfs.PfsClient()
+    pps_client = pps.PpsClient()
 
     pfs_client.create_repo("images")
 
     pps_client.create_pipeline(
         "edges",
-        transform=proto.Transform(cmd=["python3", "edges.py"], image="pachyderm/opencv"),
-        input=proto.Input(pfs=proto.PFSInput(glob="/*", repo="images"))
+        transform=pps.Transform(cmd=["python3", "edges.py"], image="pachyderm/opencv"),
+        input=pps.Input(pfs=pps.PFSInput(glob="/*", repo="images"))
     )
 
     pps_client.create_pipeline(
         "montage",
-        transform=proto.Transform(cmd=["sh"], image="v4tech/imagemagick", stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]),
-        input=proto.Input(cross=[
-            proto.Input(pfs=proto.PFSInput(glob="/", repo="images")),
-            proto.Input(pfs=proto.PFSInput(glob="/", repo="edges")),
+        transform=pps.Transform(cmd=["sh"], image="v4tech/imagemagick", stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]),
+        input=pps.Input(cross=[
+            pps.Input(pfs=pps.PFSInput(glob="/", repo="images")),
+            pps.Input(pfs=pps.PFSInput(glob="/", repo="edges")),
         ])
     )
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """Tests for the `PfsClient` class of the `python_pachyderm` package."""
 
@@ -10,8 +9,7 @@ import threading
 from io import BytesIO
 from collections import namedtuple
 
-import python_pachyderm
-from python_pachyderm._proto.pfs import pfs_pb2 as proto
+from python_pachyderm import pfs
 
 def create_repo(client, test_name):
     repo_name_suffix = "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
@@ -20,14 +18,14 @@ def create_repo(client, test_name):
     return repo_name
 
 def sandbox(test_name):
-    client = python_pachyderm.PfsClient()
+    client = pfs.PfsClient()
     repo_name = create_repo(client, test_name)
     return client, repo_name
 
 def test_client_init_with_default_host_port():
     # GIVEN a Pachyderm deployment
     # WHEN a client is created without specifying a host or port
-    client = python_pachyderm.PfsClient()
+    client = pfs.PfsClient()
     # THEN the GRPC channel should reflect the default of localhost and port 30650
     assert client.channel._channel.target() == b'localhost:30650'
 
@@ -37,7 +35,7 @@ def test_client_init_with_env_vars(monkeypatch):
     # WHEN environment variables are set for Pachyderm host and port
     monkeypatch.setenv('PACHD_ADDRESS', 'pachd.example.com:12345')
     #   AND a client is created without specifying a host or port
-    client = python_pachyderm.PfsClient()
+    client = pfs.PfsClient()
     # THEN the GRPC channel should reflect the host and port specified in the environment variables
     assert client.channel._channel.target() == b'pachd.example.com:12345'
 
@@ -45,7 +43,7 @@ def test_client_init_with_env_vars(monkeypatch):
 def test_client_init_with_args():
     # GIVEN a Pachyderm deployment
     # WHEN a client is created with host and port arguments
-    client = python_pachyderm.PfsClient(host='pachd.example.com', port=54321)
+    client = pfs.PfsClient(host='pachd.example.com', port=54321)
     # THEN the GRPC channel should reflect the host and port specified in the arguments
     assert client.channel._channel.target() == b'pachd.example.com:54321'
 
@@ -67,14 +65,14 @@ def test_delete_repo():
 
 
 def test_delete_non_existent_repo():
-    pfs_client = python_pachyderm.PfsClient()
+    pfs_client = pfs.PfsClient()
     orig_repo_count = len(pfs_client.list_repo())
     pfs_client.delete_repo('BOGUS_NAME')
     assert len(pfs_client.list_repo()) == orig_repo_count
 
 
 def test_delete_all_repos():
-    pfs_client = python_pachyderm.PfsClient()
+    pfs_client = pfs.PfsClient()
 
     create_repo(pfs_client, "delete_all_1")
     create_repo(pfs_client, "delete_all_2")
@@ -366,10 +364,10 @@ def test_list_file():
     files = list(pfs_client.list_file(c, '/'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == proto.FILE
+    assert files[0].file_type == pfs.FILE
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == proto.FILE
+    assert files[1].file_type == pfs.FILE
     assert files[1].file.path == "/file2.dat"
 
 def test_walk_file():
@@ -397,16 +395,16 @@ def test_glob_file():
     files = list(pfs_client.glob_file(c, '/*.dat'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == proto.FILE
+    assert files[0].file_type == pfs.FILE
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == proto.FILE
+    assert files[1].file_type == pfs.FILE
     assert files[1].file.path == "/file2.dat"
 
     files = list(pfs_client.glob_file(c, '/*1.dat'))
     assert len(files) == 1
     assert files[0].size_bytes == 4
-    assert files[0].file_type == proto.FILE
+    assert files[0].file_type == pfs.FILE
     assert files[0].file.path == "/file1.dat"
 
 def test_delete_file():
