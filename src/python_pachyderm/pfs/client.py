@@ -4,8 +4,8 @@ import collections
 import itertools
 from contextlib import contextmanager
 
-from python_pachyderm.client.pfs import pfs_pb2 as proto
-from python_pachyderm.client.pfs import pfs_pb2_grpc as grpc
+from python_pachyderm._proto.pfs import pfs_pb2 as proto
+from python_pachyderm._proto.pfs import pfs_pb2_grpc as grpc
 from python_pachyderm.util import commit_from, get_address, get_metadata
 
 BUFFER_SIZE = 3 * 1024 * 1024  # 3MB TODO: Base this on some grpc value

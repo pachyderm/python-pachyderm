@@ -13,6 +13,8 @@ proto: docker-build-proto
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
+	rm -rf src/python_pachyderm/_proto
+	mv src/python_pachyderm/client src/python_pachyderm/_proto
 
 init:
 	git submodule update --init

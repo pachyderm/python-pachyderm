@@ -3,7 +3,7 @@
 
 """Tests for the `get_remote_version` function of the `python_pachyderm` package."""
 import python_pachyderm
-from python_pachyderm.client.version.versionpb.version_pb2 import Version
+from python_pachyderm._proto.version.versionpb.version_pb2 import Version
 
 
 def test_pfs_client_init_with_default_host_port():

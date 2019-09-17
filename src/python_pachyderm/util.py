@@ -1,7 +1,7 @@
 import os
 
-from python_pachyderm.client.pfs import pfs_pb2 as pfs_proto
-from python_pachyderm.client.version.versionpb.version_pb2_grpc import (
+from python_pachyderm._proto.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm._proto.version.versionpb.version_pb2_grpc import (
     google_dot_protobuf_dot_empty__pb2 as pb_empty,
     APIStub as VersionStub,
     grpc

@@ -11,6 +11,7 @@ from io import BytesIO
 from collections import namedtuple
 
 import python_pachyderm
+from python_pachyderm._proto.pfs import pfs_pb2 as proto
 
 def create_repo(client, test_name):
     repo_name_suffix = "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
@@ -365,10 +366,10 @@ def test_list_file():
     files = list(pfs_client.list_file(c, '/'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file_type == proto.FILE
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == python_pachyderm.FILE
+    assert files[1].file_type == proto.FILE
     assert files[1].file.path == "/file2.dat"
 
 def test_walk_file():
@@ -396,16 +397,16 @@ def test_glob_file():
     files = list(pfs_client.glob_file(c, '/*.dat'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file_type == proto.FILE
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == python_pachyderm.FILE
+    assert files[1].file_type == proto.FILE
     assert files[1].file.path == "/file2.dat"
 
     files = list(pfs_client.glob_file(c, '/*1.dat'))
     assert len(files) == 1
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FILE
+    assert files[0].file_type == proto.FILE
     assert files[0].file.path == "/file1.dat"
 
 def test_delete_file():

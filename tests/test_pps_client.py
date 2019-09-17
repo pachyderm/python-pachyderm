@@ -10,6 +10,8 @@ import random
 import string
 
 import python_pachyderm
+from python_pachyderm._proto.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm._proto.pps import pps_pb2 as pps_proto
 
 def random_string(n):
     return "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(n))
@@ -27,8 +29,8 @@ class Sandbox:
 
         pps_client.create_pipeline(
             pipeline_repo_name,
-            transform=python_pachyderm.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)]),
-            input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo=input_repo_name)),
+            transform=pps_proto.Transform(cmd=["sh"], image="alpine", stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)]),
+            input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
             enable_stats=True,
         )
 
@@ -43,7 +45,7 @@ class Sandbox:
 
     def wait_for_job(self):
         # block until the commit is ready
-        self.pfs_client.inspect_commit(self.commit, block_state=python_pachyderm.COMMIT_STATE_READY)
+        self.pfs_client.inspect_commit(self.commit, block_state=pfs_proto.READY)
 
         # while the commit is ready, the job might not be listed on the first
         # call, so repeatedly list jobs until it's available
@@ -92,7 +94,7 @@ def test_stop_job():
     except grpc._channel._Rendezvous:
         # if it failed, it should be because the job already finished
         job = sandbox.pps_client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JOB_SUCCESS
+        assert job.state == pps_proto.JOB_SUCCESS
     else:
         # This is necessary because `StopJob` does not wait for the job to be
         # killed before returning a result.
@@ -100,7 +102,7 @@ def test_stop_job():
         # https://github.com/pachyderm/pachyderm/issues/3856
         time.sleep(1)
         job = sandbox.pps_client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JOB_KILLED
+        assert job.state == pps_proto.JOB_KILLED
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
@@ -119,7 +121,7 @@ def test_datums():
     datums = list(sandbox.pps_client.list_datum(job_id))
     assert len(datums) == 1
     datum = sandbox.pps_client.inspect_datum(job_id, datums[0].datum_info.datum.id)
-    assert datum.state == python_pachyderm.DATUM_SUCCESS
+    assert datum.state == pps_proto.SUCCESS
 
     # Just ensure this doesn't raise an exception
     sandbox.pps_client.restart_datum(job_id)

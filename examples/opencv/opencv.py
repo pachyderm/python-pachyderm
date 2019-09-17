@@ -4,7 +4,7 @@
 # walkthrough is available in the pachyderm docs:
 # https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
 
-import python_pachyderm.client.pps.pps_pb2 as proto 
+import python_pachyderm._proto.pps.pps_pb2 as proto 
 
 import python_pachyderm
 
