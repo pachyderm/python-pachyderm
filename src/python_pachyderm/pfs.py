@@ -259,7 +259,7 @@ class PfsClient(object):
         """
         to_repos = [Repo(name=r) for r in repos] if repos is not None else None
         req = FlushCommitRequest(commits=[commit_from(c) for c in commits],
-                                       to_repos=to_repos)
+                                 to_repos=to_repos)
         return self.stub.FlushCommit(req, metadata=self.metadata)
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):

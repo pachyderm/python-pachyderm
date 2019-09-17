@@ -74,7 +74,7 @@ class PpsClient(object):
         output_commit = commit_from(output_commit) if output_commit is not None else None
 
         req = ListJobRequest(pipeline=pipeline, input_commit=input_commit,
-                                   output_commit=output_commit, history=history)
+                             output_commit=output_commit, history=history)
 
         return self.stub.ListJobStream(req, metadata=self.metadata)
 

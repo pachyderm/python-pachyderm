@@ -4,6 +4,7 @@ from python_pachyderm._proto.version.versionpb import version_pb2_grpc as grpc
 from contextlib import closing
 from python_pachyderm.util import get_address
 
+
 def get_remote_version(host=None, port=None):
     with closing(grpc.grpc.insecure_channel(get_address(host, port))) as channel:
         stub = grpc.APIStub(channel)
