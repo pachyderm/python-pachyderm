@@ -1,0 +1,2824 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>python_pachyderm.pfs API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.pfs</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">from .client import PfsClient
+from python_pachyderm._proto.pfs.pfs_pb2 import *</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="python_pachyderm.pfs.client" href="client.html">python_pachyderm.pfs.client</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.pfs.Block"><code class="flex name class">
+<span>class <span class="ident">Block</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Block.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Block.hash"><code class="name">var <span class="ident">hash</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Block.hash</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.BlockRef"><code class="flex name class">
+<span>class <span class="ident">BlockRef</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BlockRef.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BlockRef.block"><code class="name">var <span class="ident">block</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BlockRef.block</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BlockRef.range"><code class="name">var <span class="ident">range</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BlockRef.range</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Branch"><code class="flex name class">
+<span>class <span class="ident">Branch</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Branch.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Branch.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Branch.name</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.Branch.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Branch.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo"><code class="flex name class">
+<span>class <span class="ident">BranchInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BranchInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BranchInfo.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo.direct_provenance"><code class="name">var <span class="ident">direct_provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.direct_provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo.head"><code class="name">var <span class="ident">head</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.head</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.name</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfo.subvenance"><code class="name">var <span class="ident">subvenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfo.subvenance</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.BranchInfos"><code class="flex name class">
+<span>class <span class="ident">BranchInfos</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BranchInfos.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BranchInfos.branch_info"><code class="name">var <span class="ident">branch_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BranchInfos.branch_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.BuildCommitRequest"><code class="flex name class">
+<span>class <span class="ident">BuildCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.ID"><code class="name">var <span class="ident">ID</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BuildCommitRequest.ID</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BuildCommitRequest.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.parent"><code class="name">var <span class="ident">parent</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BuildCommitRequest.parent</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BuildCommitRequest.provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.BuildCommitRequest.tree"><code class="name">var <span class="ident">tree</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.BuildCommitRequest.tree</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ByteRange"><code class="flex name class">
+<span>class <span class="ident">ByteRange</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ByteRange.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ByteRange.lower"><code class="name">var <span class="ident">lower</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ByteRange.lower</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ByteRange.upper"><code class="name">var <span class="ident">upper</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ByteRange.upper</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CheckObjectRequest"><code class="flex name class">
+<span>class <span class="ident">CheckObjectRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CheckObjectRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CheckObjectRequest.object"><code class="name">var <span class="ident">object</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CheckObjectRequest.object</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CheckObjectResponse"><code class="flex name class">
+<span>class <span class="ident">CheckObjectResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CheckObjectResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CheckObjectResponse.exists"><code class="name">var <span class="ident">exists</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CheckObjectResponse.exists</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Commit"><code class="flex name class">
+<span>class <span class="ident">Commit</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Commit.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Commit.id"><code class="name">var <span class="ident">id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Commit.id</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.Commit.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Commit.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo"><code class="flex name class">
+<span>class <span class="ident">CommitInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitInfo.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.child_commits"><code class="name">var <span class="ident">child_commits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.child_commits</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.datums"><code class="name">var <span class="ident">datums</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.datums</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.description</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.finished"><code class="name">var <span class="ident">finished</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.finished</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.origin"><code class="name">var <span class="ident">origin</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.origin</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.parent_commit"><code class="name">var <span class="ident">parent_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.parent_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.ready_provenance"><code class="name">var <span class="ident">ready_provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.ready_provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.size_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.started"><code class="name">var <span class="ident">started</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.started</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.subvenance"><code class="name">var <span class="ident">subvenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.subvenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.tree"><code class="name">var <span class="ident">tree</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.tree</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfo.trees"><code class="name">var <span class="ident">trees</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfo.trees</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CommitInfos"><code class="flex name class">
+<span>class <span class="ident">CommitInfos</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitInfos.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitInfos.commit_info"><code class="name">var <span class="ident">commit_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitInfos.commit_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CommitOrigin"><code class="flex name class">
+<span>class <span class="ident">CommitOrigin</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitOrigin.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitOrigin.kind"><code class="name">var <span class="ident">kind</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitOrigin.kind</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CommitProvenance"><code class="flex name class">
+<span>class <span class="ident">CommitProvenance</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitProvenance.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitProvenance.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitProvenance.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitProvenance.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitProvenance.commit</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CommitRange"><code class="flex name class">
+<span>class <span class="ident">CommitRange</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitRange.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CommitRange.lower"><code class="name">var <span class="ident">lower</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitRange.lower</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CommitRange.upper"><code class="name">var <span class="ident">upper</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CommitRange.upper</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CopyFileRequest"><code class="flex name class">
+<span>class <span class="ident">CopyFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CopyFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CopyFileRequest.dst"><code class="name">var <span class="ident">dst</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CopyFileRequest.dst</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CopyFileRequest.overwrite"><code class="name">var <span class="ident">overwrite</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CopyFileRequest.overwrite</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CopyFileRequest.src"><code class="name">var <span class="ident">src</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CopyFileRequest.src</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CreateBranchRequest"><code class="flex name class">
+<span>class <span class="ident">CreateBranchRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CreateBranchRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CreateBranchRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateBranchRequest.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CreateBranchRequest.head"><code class="name">var <span class="ident">head</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateBranchRequest.head</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CreateBranchRequest.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateBranchRequest.provenance</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CreateBranchRequest.s_branch"><code class="name">var <span class="ident">s_branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateBranchRequest.s_branch</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.CreateRepoRequest"><code class="flex name class">
+<span>class <span class="ident">CreateRepoRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CreateRepoRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.CreateRepoRequest.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateRepoRequest.description</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CreateRepoRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateRepoRequest.repo</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.CreateRepoRequest.update"><code class="name">var <span class="ident">update</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.CreateRepoRequest.update</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteBranchRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteBranchRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteBranchRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteBranchRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteBranchRequest.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteBranchRequest.force"><code class="name">var <span class="ident">force</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteBranchRequest.force</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteCommitRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteCommitRequest.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteCommitRequest.commit</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteFileRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteFileRequest.file</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteObjectsRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteObjectsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteObjectsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteObjectsRequest.objects"><code class="name">var <span class="ident">objects</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteObjectsRequest.objects</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteObjectsResponse"><code class="flex name class">
+<span>class <span class="ident">DeleteObjectsResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteObjectsResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteRepoRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteRepoRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteRepoRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteRepoRequest.all"><code class="name">var <span class="ident">all</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteRepoRequest.all</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteRepoRequest.force"><code class="name">var <span class="ident">force</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteRepoRequest.force</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteRepoRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteRepoRequest.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteTagsRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteTagsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteTagsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteTagsRequest.tags"><code class="name">var <span class="ident">tags</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DeleteTagsRequest.tags</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DeleteTagsResponse"><code class="flex name class">
+<span>class <span class="ident">DeleteTagsResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DeleteTagsResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DiffFileRequest"><code class="flex name class">
+<span>class <span class="ident">DiffFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DiffFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DiffFileRequest.new_file"><code class="name">var <span class="ident">new_file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DiffFileRequest.new_file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DiffFileRequest.old_file"><code class="name">var <span class="ident">old_file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DiffFileRequest.old_file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DiffFileRequest.shallow"><code class="name">var <span class="ident">shallow</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DiffFileRequest.shallow</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.DiffFileResponse"><code class="flex name class">
+<span>class <span class="ident">DiffFileResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DiffFileResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.DiffFileResponse.new_files"><code class="name">var <span class="ident">new_files</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DiffFileResponse.new_files</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.DiffFileResponse.old_files"><code class="name">var <span class="ident">old_files</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.DiffFileResponse.old_files</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.File"><code class="flex name class">
+<span>class <span class="ident">File</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.File.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.File.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.File.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.File.path"><code class="name">var <span class="ident">path</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.File.path</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo"><code class="flex name class">
+<span>class <span class="ident">FileInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FileInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FileInfo.blockRefs"><code class="name">var <span class="ident">blockRefs</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.blockRefs</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.children"><code class="name">var <span class="ident">children</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.children</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.committed"><code class="name">var <span class="ident">committed</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.committed</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.file_type"><code class="name">var <span class="ident">file_type</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.file_type</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.hash"><code class="name">var <span class="ident">hash</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.hash</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.objects"><code class="name">var <span class="ident">objects</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.objects</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfo.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfo.size_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FileInfos"><code class="flex name class">
+<span>class <span class="ident">FileInfos</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FileInfos.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FileInfos.file_info"><code class="name">var <span class="ident">file_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FileInfos.file_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest"><code class="flex name class">
+<span>class <span class="ident">FinishCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.datums"><code class="name">var <span class="ident">datums</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.datums</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.description</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.empty"><code class="name">var <span class="ident">empty</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.empty</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.size_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.tree"><code class="name">var <span class="ident">tree</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.tree</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FinishCommitRequest.trees"><code class="name">var <span class="ident">trees</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FinishCommitRequest.trees</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FlushCommitRequest"><code class="flex name class">
+<span>class <span class="ident">FlushCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FlushCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FlushCommitRequest.commits"><code class="name">var <span class="ident">commits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FlushCommitRequest.commits</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FlushCommitRequest.to_repos"><code class="name">var <span class="ident">to_repos</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FlushCommitRequest.to_repos</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FsckRequest"><code class="flex name class">
+<span>class <span class="ident">FsckRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FsckRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FsckRequest.fix"><code class="name">var <span class="ident">fix</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FsckRequest.fix</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.FsckResponse"><code class="flex name class">
+<span>class <span class="ident">FsckResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FsckResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.FsckResponse.error"><code class="name">var <span class="ident">error</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FsckResponse.error</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.FsckResponse.fix"><code class="name">var <span class="ident">fix</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.FsckResponse.fix</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.GetBlocksRequest"><code class="flex name class">
+<span>class <span class="ident">GetBlocksRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetBlocksRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetBlocksRequest.blockRefs"><code class="name">var <span class="ident">blockRefs</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetBlocksRequest.blockRefs</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetBlocksRequest.offset_bytes"><code class="name">var <span class="ident">offset_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetBlocksRequest.offset_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetBlocksRequest.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetBlocksRequest.size_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetBlocksRequest.total_size"><code class="name">var <span class="ident">total_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetBlocksRequest.total_size</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.GetFileRequest"><code class="flex name class">
+<span>class <span class="ident">GetFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetFileRequest.file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetFileRequest.offset_bytes"><code class="name">var <span class="ident">offset_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetFileRequest.offset_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetFileRequest.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetFileRequest.size_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.GetObjectsRequest"><code class="flex name class">
+<span>class <span class="ident">GetObjectsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetObjectsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GetObjectsRequest.objects"><code class="name">var <span class="ident">objects</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetObjectsRequest.objects</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetObjectsRequest.offset_bytes"><code class="name">var <span class="ident">offset_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetObjectsRequest.offset_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetObjectsRequest.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetObjectsRequest.size_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GetObjectsRequest.total_size"><code class="name">var <span class="ident">total_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GetObjectsRequest.total_size</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.GlobFileRequest"><code class="flex name class">
+<span>class <span class="ident">GlobFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GlobFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.GlobFileRequest.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GlobFileRequest.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.GlobFileRequest.pattern"><code class="name">var <span class="ident">pattern</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.GlobFileRequest.pattern</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.InspectBranchRequest"><code class="flex name class">
+<span>class <span class="ident">InspectBranchRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectBranchRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectBranchRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.InspectBranchRequest.branch</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.InspectCommitRequest"><code class="flex name class">
+<span>class <span class="ident">InspectCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectCommitRequest.block_state"><code class="name">var <span class="ident">block_state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.InspectCommitRequest.block_state</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.InspectCommitRequest.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.InspectCommitRequest.commit</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.InspectFileRequest"><code class="flex name class">
+<span>class <span class="ident">InspectFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.InspectFileRequest.file</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.InspectRepoRequest"><code class="flex name class">
+<span>class <span class="ident">InspectRepoRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectRepoRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.InspectRepoRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.InspectRepoRequest.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListBranchRequest"><code class="flex name class">
+<span>class <span class="ident">ListBranchRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListBranchRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListBranchRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListBranchRequest.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListCommitRequest"><code class="flex name class">
+<span>class <span class="ident">ListCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListCommitRequest.from"><code class="name">var <span class="ident">from</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListCommitRequest.from</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListCommitRequest.number"><code class="name">var <span class="ident">number</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListCommitRequest.number</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListCommitRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListCommitRequest.repo</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListCommitRequest.to"><code class="name">var <span class="ident">to</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListCommitRequest.to</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListFileRequest"><code class="flex name class">
+<span>class <span class="ident">ListFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListFileRequest.file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListFileRequest.full"><code class="name">var <span class="ident">full</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListFileRequest.full</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListFileRequest.history"><code class="name">var <span class="ident">history</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListFileRequest.history</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListObjectsRequest"><code class="flex name class">
+<span>class <span class="ident">ListObjectsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListObjectsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListRepoRequest"><code class="flex name class">
+<span>class <span class="ident">ListRepoRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListRepoRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListRepoResponse"><code class="flex name class">
+<span>class <span class="ident">ListRepoResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListRepoResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListRepoResponse.repo_info"><code class="name">var <span class="ident">repo_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListRepoResponse.repo_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListTagsRequest"><code class="flex name class">
+<span>class <span class="ident">ListTagsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListTagsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListTagsRequest.include_object"><code class="name">var <span class="ident">include_object</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListTagsRequest.include_object</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListTagsRequest.prefix"><code class="name">var <span class="ident">prefix</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListTagsRequest.prefix</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ListTagsResponse"><code class="flex name class">
+<span>class <span class="ident">ListTagsResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListTagsResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ListTagsResponse.object"><code class="name">var <span class="ident">object</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListTagsResponse.object</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ListTagsResponse.tag"><code class="name">var <span class="ident">tag</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ListTagsResponse.tag</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Object"><code class="flex name class">
+<span>class <span class="ident">Object</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Object.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Object.hash"><code class="name">var <span class="ident">hash</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Object.hash</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectIndex"><code class="flex name class">
+<span>class <span class="ident">ObjectIndex</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ObjectIndex.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectIndex.ObjectsEntry"><code class="name">var <span class="ident">ObjectsEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectIndex.TagsEntry"><code class="name">var <span class="ident">TagsEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ObjectIndex.objects"><code class="name">var <span class="ident">objects</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ObjectIndex.objects</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectIndex.tags"><code class="name">var <span class="ident">tags</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ObjectIndex.tags</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectInfo"><code class="flex name class">
+<span>class <span class="ident">ObjectInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ObjectInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.ObjectInfo.block_ref"><code class="name">var <span class="ident">block_ref</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ObjectInfo.block_ref</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.ObjectInfo.object"><code class="name">var <span class="ident">object</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.ObjectInfo.object</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Objects"><code class="flex name class">
+<span>class <span class="ident">Objects</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Objects.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Objects.objects"><code class="name">var <span class="ident">objects</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Objects.objects</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.OverwriteIndex"><code class="flex name class">
+<span>class <span class="ident">OverwriteIndex</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.OverwriteIndex.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.OverwriteIndex.index"><code class="name">var <span class="ident">index</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.OverwriteIndex.index</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecord"><code class="flex name class">
+<span>class <span class="ident">PutFileRecord</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRecord.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRecord.object_hash"><code class="name">var <span class="ident">object_hash</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecord.object_hash</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecord.overwrite_index"><code class="name">var <span class="ident">overwrite_index</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecord.overwrite_index</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecord.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecord.size_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecords"><code class="flex name class">
+<span>class <span class="ident">PutFileRecords</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRecords.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRecords.footer"><code class="name">var <span class="ident">footer</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecords.footer</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecords.header"><code class="name">var <span class="ident">header</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecords.header</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecords.records"><code class="name">var <span class="ident">records</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecords.records</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecords.split"><code class="name">var <span class="ident">split</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecords.split</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRecords.tombstone"><code class="name">var <span class="ident">tombstone</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRecords.tombstone</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest"><code class="flex name class">
+<span>class <span class="ident">PutFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutFileRequest.delimiter"><code class="name">var <span class="ident">delimiter</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.delimiter</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.file</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.header_records"><code class="name">var <span class="ident">header_records</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.header_records</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.overwrite_index"><code class="name">var <span class="ident">overwrite_index</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.overwrite_index</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.recursive"><code class="name">var <span class="ident">recursive</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.recursive</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.target_file_bytes"><code class="name">var <span class="ident">target_file_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.target_file_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.target_file_datums"><code class="name">var <span class="ident">target_file_datums</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.target_file_datums</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.url"><code class="name">var <span class="ident">url</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.url</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutFileRequest.value"><code class="name">var <span class="ident">value</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutFileRequest.value</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.PutObjectRequest"><code class="flex name class">
+<span>class <span class="ident">PutObjectRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutObjectRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.PutObjectRequest.block"><code class="name">var <span class="ident">block</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutObjectRequest.block</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutObjectRequest.tags"><code class="name">var <span class="ident">tags</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutObjectRequest.tags</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.PutObjectRequest.value"><code class="name">var <span class="ident">value</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.PutObjectRequest.value</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Repo"><code class="flex name class">
+<span>class <span class="ident">Repo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Repo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Repo.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Repo.name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.RepoAuthInfo"><code class="flex name class">
+<span>class <span class="ident">RepoAuthInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.RepoAuthInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.RepoAuthInfo.access_level"><code class="name">var <span class="ident">access_level</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoAuthInfo.access_level</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo"><code class="flex name class">
+<span>class <span class="ident">RepoInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.RepoInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.RepoInfo.auth_info"><code class="name">var <span class="ident">auth_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.auth_info</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo.branches"><code class="name">var <span class="ident">branches</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.branches</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo.created"><code class="name">var <span class="ident">created</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.created</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.description</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.repo</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.RepoInfo.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.RepoInfo.size_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.StartCommitRequest"><code class="flex name class">
+<span>class <span class="ident">StartCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.StartCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.StartCommitRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.StartCommitRequest.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.StartCommitRequest.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.StartCommitRequest.description</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.StartCommitRequest.parent"><code class="name">var <span class="ident">parent</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.StartCommitRequest.parent</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.StartCommitRequest.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.StartCommitRequest.provenance</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest"><code class="flex name class">
+<span>class <span class="ident">SubscribeCommitRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.SubscribeCommitRequest.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest.from"><code class="name">var <span class="ident">from</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.SubscribeCommitRequest.from</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.SubscribeCommitRequest.repo</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.SubscribeCommitRequest.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.SubscribeCommitRequest.state</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.Tag"><code class="flex name class">
+<span>class <span class="ident">Tag</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Tag.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.Tag.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.Tag.name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.TagObjectRequest"><code class="flex name class">
+<span>class <span class="ident">TagObjectRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.TagObjectRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.TagObjectRequest.object"><code class="name">var <span class="ident">object</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.TagObjectRequest.object</p></section>
+</dd>
+<dt id="python_pachyderm.pfs.TagObjectRequest.tags"><code class="name">var <span class="ident">tags</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.TagObjectRequest.tags</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pfs.WalkFileRequest"><code class="flex name class">
+<span>class <span class="ident">WalkFileRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.WalkFileRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pfs.WalkFileRequest.file"><code class="name">var <span class="ident">file</span></code></dt>
+<dd>
+<section class="desc"><p>Field pfs.WalkFileRequest.file</p></section>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm" href="../index.html">python_pachyderm</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="python_pachyderm.pfs.client" href="client.html">python_pachyderm.pfs.client</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Block" href="#python_pachyderm.pfs.Block">Block</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Block.DESCRIPTOR" href="#python_pachyderm.pfs.Block.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Block.hash" href="#python_pachyderm.pfs.Block.hash">hash</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.BlockRef" href="#python_pachyderm.pfs.BlockRef">BlockRef</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.BlockRef.DESCRIPTOR" href="#python_pachyderm.pfs.BlockRef.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BlockRef.block" href="#python_pachyderm.pfs.BlockRef.block">block</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BlockRef.range" href="#python_pachyderm.pfs.BlockRef.range">range</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Branch" href="#python_pachyderm.pfs.Branch">Branch</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Branch.DESCRIPTOR" href="#python_pachyderm.pfs.Branch.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Branch.name" href="#python_pachyderm.pfs.Branch.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Branch.repo" href="#python_pachyderm.pfs.Branch.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.BranchInfo" href="#python_pachyderm.pfs.BranchInfo">BranchInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.BranchInfo.DESCRIPTOR" href="#python_pachyderm.pfs.BranchInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.branch" href="#python_pachyderm.pfs.BranchInfo.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.direct_provenance" href="#python_pachyderm.pfs.BranchInfo.direct_provenance">direct_provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.head" href="#python_pachyderm.pfs.BranchInfo.head">head</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.name" href="#python_pachyderm.pfs.BranchInfo.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.provenance" href="#python_pachyderm.pfs.BranchInfo.provenance">provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfo.subvenance" href="#python_pachyderm.pfs.BranchInfo.subvenance">subvenance</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.BranchInfos" href="#python_pachyderm.pfs.BranchInfos">BranchInfos</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.BranchInfos.DESCRIPTOR" href="#python_pachyderm.pfs.BranchInfos.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BranchInfos.branch_info" href="#python_pachyderm.pfs.BranchInfos.branch_info">branch_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.BuildCommitRequest" href="#python_pachyderm.pfs.BuildCommitRequest">BuildCommitRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.BuildCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.ID" href="#python_pachyderm.pfs.BuildCommitRequest.ID">ID</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.branch" href="#python_pachyderm.pfs.BuildCommitRequest.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.parent" href="#python_pachyderm.pfs.BuildCommitRequest.parent">parent</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.provenance" href="#python_pachyderm.pfs.BuildCommitRequest.provenance">provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.BuildCommitRequest.tree" href="#python_pachyderm.pfs.BuildCommitRequest.tree">tree</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ByteRange" href="#python_pachyderm.pfs.ByteRange">ByteRange</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ByteRange.DESCRIPTOR" href="#python_pachyderm.pfs.ByteRange.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ByteRange.lower" href="#python_pachyderm.pfs.ByteRange.lower">lower</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ByteRange.upper" href="#python_pachyderm.pfs.ByteRange.upper">upper</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CheckObjectRequest" href="#python_pachyderm.pfs.CheckObjectRequest">CheckObjectRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CheckObjectRequest.DESCRIPTOR" href="#python_pachyderm.pfs.CheckObjectRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CheckObjectRequest.object" href="#python_pachyderm.pfs.CheckObjectRequest.object">object</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CheckObjectResponse" href="#python_pachyderm.pfs.CheckObjectResponse">CheckObjectResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CheckObjectResponse.DESCRIPTOR" href="#python_pachyderm.pfs.CheckObjectResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CheckObjectResponse.exists" href="#python_pachyderm.pfs.CheckObjectResponse.exists">exists</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Commit" href="#python_pachyderm.pfs.Commit">Commit</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Commit.DESCRIPTOR" href="#python_pachyderm.pfs.Commit.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Commit.id" href="#python_pachyderm.pfs.Commit.id">id</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Commit.repo" href="#python_pachyderm.pfs.Commit.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CommitInfo" href="#python_pachyderm.pfs.CommitInfo">CommitInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.CommitInfo.DESCRIPTOR" href="#python_pachyderm.pfs.CommitInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.branch" href="#python_pachyderm.pfs.CommitInfo.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.child_commits" href="#python_pachyderm.pfs.CommitInfo.child_commits">child_commits</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.commit" href="#python_pachyderm.pfs.CommitInfo.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.datums" href="#python_pachyderm.pfs.CommitInfo.datums">datums</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.description" href="#python_pachyderm.pfs.CommitInfo.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.finished" href="#python_pachyderm.pfs.CommitInfo.finished">finished</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.origin" href="#python_pachyderm.pfs.CommitInfo.origin">origin</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.parent_commit" href="#python_pachyderm.pfs.CommitInfo.parent_commit">parent_commit</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.provenance" href="#python_pachyderm.pfs.CommitInfo.provenance">provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.ready_provenance" href="#python_pachyderm.pfs.CommitInfo.ready_provenance">ready_provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.size_bytes" href="#python_pachyderm.pfs.CommitInfo.size_bytes">size_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.started" href="#python_pachyderm.pfs.CommitInfo.started">started</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.subvenance" href="#python_pachyderm.pfs.CommitInfo.subvenance">subvenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.tree" href="#python_pachyderm.pfs.CommitInfo.tree">tree</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfo.trees" href="#python_pachyderm.pfs.CommitInfo.trees">trees</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CommitInfos" href="#python_pachyderm.pfs.CommitInfos">CommitInfos</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CommitInfos.DESCRIPTOR" href="#python_pachyderm.pfs.CommitInfos.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitInfos.commit_info" href="#python_pachyderm.pfs.CommitInfos.commit_info">commit_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CommitOrigin" href="#python_pachyderm.pfs.CommitOrigin">CommitOrigin</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CommitOrigin.DESCRIPTOR" href="#python_pachyderm.pfs.CommitOrigin.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitOrigin.kind" href="#python_pachyderm.pfs.CommitOrigin.kind">kind</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CommitProvenance" href="#python_pachyderm.pfs.CommitProvenance">CommitProvenance</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CommitProvenance.DESCRIPTOR" href="#python_pachyderm.pfs.CommitProvenance.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitProvenance.branch" href="#python_pachyderm.pfs.CommitProvenance.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitProvenance.commit" href="#python_pachyderm.pfs.CommitProvenance.commit">commit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CommitRange" href="#python_pachyderm.pfs.CommitRange">CommitRange</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CommitRange.DESCRIPTOR" href="#python_pachyderm.pfs.CommitRange.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitRange.lower" href="#python_pachyderm.pfs.CommitRange.lower">lower</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CommitRange.upper" href="#python_pachyderm.pfs.CommitRange.upper">upper</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CopyFileRequest" href="#python_pachyderm.pfs.CopyFileRequest">CopyFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CopyFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.CopyFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CopyFileRequest.dst" href="#python_pachyderm.pfs.CopyFileRequest.dst">dst</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CopyFileRequest.overwrite" href="#python_pachyderm.pfs.CopyFileRequest.overwrite">overwrite</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CopyFileRequest.src" href="#python_pachyderm.pfs.CopyFileRequest.src">src</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CreateBranchRequest" href="#python_pachyderm.pfs.CreateBranchRequest">CreateBranchRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CreateBranchRequest.DESCRIPTOR" href="#python_pachyderm.pfs.CreateBranchRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateBranchRequest.branch" href="#python_pachyderm.pfs.CreateBranchRequest.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateBranchRequest.head" href="#python_pachyderm.pfs.CreateBranchRequest.head">head</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateBranchRequest.provenance" href="#python_pachyderm.pfs.CreateBranchRequest.provenance">provenance</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateBranchRequest.s_branch" href="#python_pachyderm.pfs.CreateBranchRequest.s_branch">s_branch</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.CreateRepoRequest" href="#python_pachyderm.pfs.CreateRepoRequest">CreateRepoRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.CreateRepoRequest.DESCRIPTOR" href="#python_pachyderm.pfs.CreateRepoRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateRepoRequest.description" href="#python_pachyderm.pfs.CreateRepoRequest.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateRepoRequest.repo" href="#python_pachyderm.pfs.CreateRepoRequest.repo">repo</a></code></li>
+<li><code><a title="python_pachyderm.pfs.CreateRepoRequest.update" href="#python_pachyderm.pfs.CreateRepoRequest.update">update</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteBranchRequest" href="#python_pachyderm.pfs.DeleteBranchRequest">DeleteBranchRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteBranchRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteBranchRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteBranchRequest.branch" href="#python_pachyderm.pfs.DeleteBranchRequest.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteBranchRequest.force" href="#python_pachyderm.pfs.DeleteBranchRequest.force">force</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteCommitRequest" href="#python_pachyderm.pfs.DeleteCommitRequest">DeleteCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteCommitRequest.commit" href="#python_pachyderm.pfs.DeleteCommitRequest.commit">commit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteFileRequest" href="#python_pachyderm.pfs.DeleteFileRequest">DeleteFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteFileRequest.file" href="#python_pachyderm.pfs.DeleteFileRequest.file">file</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteObjectsRequest" href="#python_pachyderm.pfs.DeleteObjectsRequest">DeleteObjectsRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteObjectsRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteObjectsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteObjectsRequest.objects" href="#python_pachyderm.pfs.DeleteObjectsRequest.objects">objects</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteObjectsResponse" href="#python_pachyderm.pfs.DeleteObjectsResponse">DeleteObjectsResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteObjectsResponse.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteObjectsResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteRepoRequest" href="#python_pachyderm.pfs.DeleteRepoRequest">DeleteRepoRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteRepoRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteRepoRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteRepoRequest.all" href="#python_pachyderm.pfs.DeleteRepoRequest.all">all</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteRepoRequest.force" href="#python_pachyderm.pfs.DeleteRepoRequest.force">force</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteRepoRequest.repo" href="#python_pachyderm.pfs.DeleteRepoRequest.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteTagsRequest" href="#python_pachyderm.pfs.DeleteTagsRequest">DeleteTagsRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteTagsRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteTagsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DeleteTagsRequest.tags" href="#python_pachyderm.pfs.DeleteTagsRequest.tags">tags</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DeleteTagsResponse" href="#python_pachyderm.pfs.DeleteTagsResponse">DeleteTagsResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DeleteTagsResponse.DESCRIPTOR" href="#python_pachyderm.pfs.DeleteTagsResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DiffFileRequest" href="#python_pachyderm.pfs.DiffFileRequest">DiffFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DiffFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.DiffFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DiffFileRequest.new_file" href="#python_pachyderm.pfs.DiffFileRequest.new_file">new_file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DiffFileRequest.old_file" href="#python_pachyderm.pfs.DiffFileRequest.old_file">old_file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DiffFileRequest.shallow" href="#python_pachyderm.pfs.DiffFileRequest.shallow">shallow</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.DiffFileResponse" href="#python_pachyderm.pfs.DiffFileResponse">DiffFileResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.DiffFileResponse.DESCRIPTOR" href="#python_pachyderm.pfs.DiffFileResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DiffFileResponse.new_files" href="#python_pachyderm.pfs.DiffFileResponse.new_files">new_files</a></code></li>
+<li><code><a title="python_pachyderm.pfs.DiffFileResponse.old_files" href="#python_pachyderm.pfs.DiffFileResponse.old_files">old_files</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.File" href="#python_pachyderm.pfs.File">File</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.File.DESCRIPTOR" href="#python_pachyderm.pfs.File.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.File.commit" href="#python_pachyderm.pfs.File.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pfs.File.path" href="#python_pachyderm.pfs.File.path">path</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FileInfo" href="#python_pachyderm.pfs.FileInfo">FileInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.FileInfo.DESCRIPTOR" href="#python_pachyderm.pfs.FileInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.blockRefs" href="#python_pachyderm.pfs.FileInfo.blockRefs">blockRefs</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.children" href="#python_pachyderm.pfs.FileInfo.children">children</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.committed" href="#python_pachyderm.pfs.FileInfo.committed">committed</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.file" href="#python_pachyderm.pfs.FileInfo.file">file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.file_type" href="#python_pachyderm.pfs.FileInfo.file_type">file_type</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.hash" href="#python_pachyderm.pfs.FileInfo.hash">hash</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.objects" href="#python_pachyderm.pfs.FileInfo.objects">objects</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfo.size_bytes" href="#python_pachyderm.pfs.FileInfo.size_bytes">size_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FileInfos" href="#python_pachyderm.pfs.FileInfos">FileInfos</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.FileInfos.DESCRIPTOR" href="#python_pachyderm.pfs.FileInfos.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FileInfos.file_info" href="#python_pachyderm.pfs.FileInfos.file_info">file_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FinishCommitRequest" href="#python_pachyderm.pfs.FinishCommitRequest">FinishCommitRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.FinishCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.commit" href="#python_pachyderm.pfs.FinishCommitRequest.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.datums" href="#python_pachyderm.pfs.FinishCommitRequest.datums">datums</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.description" href="#python_pachyderm.pfs.FinishCommitRequest.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.empty" href="#python_pachyderm.pfs.FinishCommitRequest.empty">empty</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.size_bytes" href="#python_pachyderm.pfs.FinishCommitRequest.size_bytes">size_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.tree" href="#python_pachyderm.pfs.FinishCommitRequest.tree">tree</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FinishCommitRequest.trees" href="#python_pachyderm.pfs.FinishCommitRequest.trees">trees</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FlushCommitRequest" href="#python_pachyderm.pfs.FlushCommitRequest">FlushCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.FlushCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.FlushCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FlushCommitRequest.commits" href="#python_pachyderm.pfs.FlushCommitRequest.commits">commits</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FlushCommitRequest.to_repos" href="#python_pachyderm.pfs.FlushCommitRequest.to_repos">to_repos</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FsckRequest" href="#python_pachyderm.pfs.FsckRequest">FsckRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.FsckRequest.DESCRIPTOR" href="#python_pachyderm.pfs.FsckRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FsckRequest.fix" href="#python_pachyderm.pfs.FsckRequest.fix">fix</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.FsckResponse" href="#python_pachyderm.pfs.FsckResponse">FsckResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.FsckResponse.DESCRIPTOR" href="#python_pachyderm.pfs.FsckResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FsckResponse.error" href="#python_pachyderm.pfs.FsckResponse.error">error</a></code></li>
+<li><code><a title="python_pachyderm.pfs.FsckResponse.fix" href="#python_pachyderm.pfs.FsckResponse.fix">fix</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.GetBlocksRequest" href="#python_pachyderm.pfs.GetBlocksRequest">GetBlocksRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.GetBlocksRequest.DESCRIPTOR" href="#python_pachyderm.pfs.GetBlocksRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetBlocksRequest.blockRefs" href="#python_pachyderm.pfs.GetBlocksRequest.blockRefs">blockRefs</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetBlocksRequest.offset_bytes" href="#python_pachyderm.pfs.GetBlocksRequest.offset_bytes">offset_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetBlocksRequest.size_bytes" href="#python_pachyderm.pfs.GetBlocksRequest.size_bytes">size_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetBlocksRequest.total_size" href="#python_pachyderm.pfs.GetBlocksRequest.total_size">total_size</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.GetFileRequest" href="#python_pachyderm.pfs.GetFileRequest">GetFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.GetFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.GetFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetFileRequest.file" href="#python_pachyderm.pfs.GetFileRequest.file">file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetFileRequest.offset_bytes" href="#python_pachyderm.pfs.GetFileRequest.offset_bytes">offset_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetFileRequest.size_bytes" href="#python_pachyderm.pfs.GetFileRequest.size_bytes">size_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.GetObjectsRequest" href="#python_pachyderm.pfs.GetObjectsRequest">GetObjectsRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.GetObjectsRequest.DESCRIPTOR" href="#python_pachyderm.pfs.GetObjectsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetObjectsRequest.objects" href="#python_pachyderm.pfs.GetObjectsRequest.objects">objects</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetObjectsRequest.offset_bytes" href="#python_pachyderm.pfs.GetObjectsRequest.offset_bytes">offset_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetObjectsRequest.size_bytes" href="#python_pachyderm.pfs.GetObjectsRequest.size_bytes">size_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GetObjectsRequest.total_size" href="#python_pachyderm.pfs.GetObjectsRequest.total_size">total_size</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.GlobFileRequest" href="#python_pachyderm.pfs.GlobFileRequest">GlobFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.GlobFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.GlobFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GlobFileRequest.commit" href="#python_pachyderm.pfs.GlobFileRequest.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pfs.GlobFileRequest.pattern" href="#python_pachyderm.pfs.GlobFileRequest.pattern">pattern</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.InspectBranchRequest" href="#python_pachyderm.pfs.InspectBranchRequest">InspectBranchRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.InspectBranchRequest.DESCRIPTOR" href="#python_pachyderm.pfs.InspectBranchRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.InspectBranchRequest.branch" href="#python_pachyderm.pfs.InspectBranchRequest.branch">branch</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.InspectCommitRequest" href="#python_pachyderm.pfs.InspectCommitRequest">InspectCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.InspectCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.InspectCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.InspectCommitRequest.block_state" href="#python_pachyderm.pfs.InspectCommitRequest.block_state">block_state</a></code></li>
+<li><code><a title="python_pachyderm.pfs.InspectCommitRequest.commit" href="#python_pachyderm.pfs.InspectCommitRequest.commit">commit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.InspectFileRequest" href="#python_pachyderm.pfs.InspectFileRequest">InspectFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.InspectFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.InspectFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.InspectFileRequest.file" href="#python_pachyderm.pfs.InspectFileRequest.file">file</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.InspectRepoRequest" href="#python_pachyderm.pfs.InspectRepoRequest">InspectRepoRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.InspectRepoRequest.DESCRIPTOR" href="#python_pachyderm.pfs.InspectRepoRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.InspectRepoRequest.repo" href="#python_pachyderm.pfs.InspectRepoRequest.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListBranchRequest" href="#python_pachyderm.pfs.ListBranchRequest">ListBranchRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListBranchRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListBranchRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListBranchRequest.repo" href="#python_pachyderm.pfs.ListBranchRequest.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListCommitRequest" href="#python_pachyderm.pfs.ListCommitRequest">ListCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListCommitRequest.from" href="#python_pachyderm.pfs.ListCommitRequest.from">from</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListCommitRequest.number" href="#python_pachyderm.pfs.ListCommitRequest.number">number</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListCommitRequest.repo" href="#python_pachyderm.pfs.ListCommitRequest.repo">repo</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListCommitRequest.to" href="#python_pachyderm.pfs.ListCommitRequest.to">to</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListFileRequest" href="#python_pachyderm.pfs.ListFileRequest">ListFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListFileRequest.file" href="#python_pachyderm.pfs.ListFileRequest.file">file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListFileRequest.full" href="#python_pachyderm.pfs.ListFileRequest.full">full</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListFileRequest.history" href="#python_pachyderm.pfs.ListFileRequest.history">history</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListObjectsRequest" href="#python_pachyderm.pfs.ListObjectsRequest">ListObjectsRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListObjectsRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListObjectsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListRepoRequest" href="#python_pachyderm.pfs.ListRepoRequest">ListRepoRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListRepoRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListRepoRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListRepoResponse" href="#python_pachyderm.pfs.ListRepoResponse">ListRepoResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListRepoResponse.DESCRIPTOR" href="#python_pachyderm.pfs.ListRepoResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListRepoResponse.repo_info" href="#python_pachyderm.pfs.ListRepoResponse.repo_info">repo_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListTagsRequest" href="#python_pachyderm.pfs.ListTagsRequest">ListTagsRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListTagsRequest.DESCRIPTOR" href="#python_pachyderm.pfs.ListTagsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListTagsRequest.include_object" href="#python_pachyderm.pfs.ListTagsRequest.include_object">include_object</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListTagsRequest.prefix" href="#python_pachyderm.pfs.ListTagsRequest.prefix">prefix</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ListTagsResponse" href="#python_pachyderm.pfs.ListTagsResponse">ListTagsResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ListTagsResponse.DESCRIPTOR" href="#python_pachyderm.pfs.ListTagsResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListTagsResponse.object" href="#python_pachyderm.pfs.ListTagsResponse.object">object</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ListTagsResponse.tag" href="#python_pachyderm.pfs.ListTagsResponse.tag">tag</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Object" href="#python_pachyderm.pfs.Object">Object</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Object.DESCRIPTOR" href="#python_pachyderm.pfs.Object.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Object.hash" href="#python_pachyderm.pfs.Object.hash">hash</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ObjectIndex" href="#python_pachyderm.pfs.ObjectIndex">ObjectIndex</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ObjectIndex.DESCRIPTOR" href="#python_pachyderm.pfs.ObjectIndex.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectIndex.ObjectsEntry" href="#python_pachyderm.pfs.ObjectIndex.ObjectsEntry">ObjectsEntry</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectIndex.TagsEntry" href="#python_pachyderm.pfs.ObjectIndex.TagsEntry">TagsEntry</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectIndex.objects" href="#python_pachyderm.pfs.ObjectIndex.objects">objects</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectIndex.tags" href="#python_pachyderm.pfs.ObjectIndex.tags">tags</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.ObjectInfo" href="#python_pachyderm.pfs.ObjectInfo">ObjectInfo</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.ObjectInfo.DESCRIPTOR" href="#python_pachyderm.pfs.ObjectInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectInfo.block_ref" href="#python_pachyderm.pfs.ObjectInfo.block_ref">block_ref</a></code></li>
+<li><code><a title="python_pachyderm.pfs.ObjectInfo.object" href="#python_pachyderm.pfs.ObjectInfo.object">object</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Objects" href="#python_pachyderm.pfs.Objects">Objects</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Objects.DESCRIPTOR" href="#python_pachyderm.pfs.Objects.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Objects.objects" href="#python_pachyderm.pfs.Objects.objects">objects</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.OverwriteIndex" href="#python_pachyderm.pfs.OverwriteIndex">OverwriteIndex</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.OverwriteIndex.DESCRIPTOR" href="#python_pachyderm.pfs.OverwriteIndex.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.OverwriteIndex.index" href="#python_pachyderm.pfs.OverwriteIndex.index">index</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.PutFileRecord" href="#python_pachyderm.pfs.PutFileRecord">PutFileRecord</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.PutFileRecord.DESCRIPTOR" href="#python_pachyderm.pfs.PutFileRecord.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecord.object_hash" href="#python_pachyderm.pfs.PutFileRecord.object_hash">object_hash</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecord.overwrite_index" href="#python_pachyderm.pfs.PutFileRecord.overwrite_index">overwrite_index</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecord.size_bytes" href="#python_pachyderm.pfs.PutFileRecord.size_bytes">size_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.PutFileRecords" href="#python_pachyderm.pfs.PutFileRecords">PutFileRecords</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.DESCRIPTOR" href="#python_pachyderm.pfs.PutFileRecords.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.footer" href="#python_pachyderm.pfs.PutFileRecords.footer">footer</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.header" href="#python_pachyderm.pfs.PutFileRecords.header">header</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.records" href="#python_pachyderm.pfs.PutFileRecords.records">records</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.split" href="#python_pachyderm.pfs.PutFileRecords.split">split</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRecords.tombstone" href="#python_pachyderm.pfs.PutFileRecords.tombstone">tombstone</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.PutFileRequest" href="#python_pachyderm.pfs.PutFileRequest">PutFileRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.PutFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.delimiter" href="#python_pachyderm.pfs.PutFileRequest.delimiter">delimiter</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.file" href="#python_pachyderm.pfs.PutFileRequest.file">file</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.header_records" href="#python_pachyderm.pfs.PutFileRequest.header_records">header_records</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.overwrite_index" href="#python_pachyderm.pfs.PutFileRequest.overwrite_index">overwrite_index</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.recursive" href="#python_pachyderm.pfs.PutFileRequest.recursive">recursive</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.target_file_bytes" href="#python_pachyderm.pfs.PutFileRequest.target_file_bytes">target_file_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.target_file_datums" href="#python_pachyderm.pfs.PutFileRequest.target_file_datums">target_file_datums</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.url" href="#python_pachyderm.pfs.PutFileRequest.url">url</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutFileRequest.value" href="#python_pachyderm.pfs.PutFileRequest.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.PutObjectRequest" href="#python_pachyderm.pfs.PutObjectRequest">PutObjectRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.PutObjectRequest.DESCRIPTOR" href="#python_pachyderm.pfs.PutObjectRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutObjectRequest.block" href="#python_pachyderm.pfs.PutObjectRequest.block">block</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutObjectRequest.tags" href="#python_pachyderm.pfs.PutObjectRequest.tags">tags</a></code></li>
+<li><code><a title="python_pachyderm.pfs.PutObjectRequest.value" href="#python_pachyderm.pfs.PutObjectRequest.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Repo" href="#python_pachyderm.pfs.Repo">Repo</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Repo.DESCRIPTOR" href="#python_pachyderm.pfs.Repo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Repo.name" href="#python_pachyderm.pfs.Repo.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.RepoAuthInfo" href="#python_pachyderm.pfs.RepoAuthInfo">RepoAuthInfo</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.RepoAuthInfo.DESCRIPTOR" href="#python_pachyderm.pfs.RepoAuthInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoAuthInfo.access_level" href="#python_pachyderm.pfs.RepoAuthInfo.access_level">access_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.RepoInfo" href="#python_pachyderm.pfs.RepoInfo">RepoInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pfs.RepoInfo.DESCRIPTOR" href="#python_pachyderm.pfs.RepoInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.auth_info" href="#python_pachyderm.pfs.RepoInfo.auth_info">auth_info</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.branches" href="#python_pachyderm.pfs.RepoInfo.branches">branches</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.created" href="#python_pachyderm.pfs.RepoInfo.created">created</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.description" href="#python_pachyderm.pfs.RepoInfo.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.repo" href="#python_pachyderm.pfs.RepoInfo.repo">repo</a></code></li>
+<li><code><a title="python_pachyderm.pfs.RepoInfo.size_bytes" href="#python_pachyderm.pfs.RepoInfo.size_bytes">size_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.StartCommitRequest" href="#python_pachyderm.pfs.StartCommitRequest">StartCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.StartCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.StartCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.StartCommitRequest.branch" href="#python_pachyderm.pfs.StartCommitRequest.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.StartCommitRequest.description" href="#python_pachyderm.pfs.StartCommitRequest.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pfs.StartCommitRequest.parent" href="#python_pachyderm.pfs.StartCommitRequest.parent">parent</a></code></li>
+<li><code><a title="python_pachyderm.pfs.StartCommitRequest.provenance" href="#python_pachyderm.pfs.StartCommitRequest.provenance">provenance</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.SubscribeCommitRequest" href="#python_pachyderm.pfs.SubscribeCommitRequest">SubscribeCommitRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.SubscribeCommitRequest.DESCRIPTOR" href="#python_pachyderm.pfs.SubscribeCommitRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.SubscribeCommitRequest.branch" href="#python_pachyderm.pfs.SubscribeCommitRequest.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pfs.SubscribeCommitRequest.from" href="#python_pachyderm.pfs.SubscribeCommitRequest.from">from</a></code></li>
+<li><code><a title="python_pachyderm.pfs.SubscribeCommitRequest.repo" href="#python_pachyderm.pfs.SubscribeCommitRequest.repo">repo</a></code></li>
+<li><code><a title="python_pachyderm.pfs.SubscribeCommitRequest.state" href="#python_pachyderm.pfs.SubscribeCommitRequest.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.Tag" href="#python_pachyderm.pfs.Tag">Tag</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.Tag.DESCRIPTOR" href="#python_pachyderm.pfs.Tag.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.Tag.name" href="#python_pachyderm.pfs.Tag.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.TagObjectRequest" href="#python_pachyderm.pfs.TagObjectRequest">TagObjectRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.TagObjectRequest.DESCRIPTOR" href="#python_pachyderm.pfs.TagObjectRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.TagObjectRequest.object" href="#python_pachyderm.pfs.TagObjectRequest.object">object</a></code></li>
+<li><code><a title="python_pachyderm.pfs.TagObjectRequest.tags" href="#python_pachyderm.pfs.TagObjectRequest.tags">tags</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pfs.WalkFileRequest" href="#python_pachyderm.pfs.WalkFileRequest">WalkFileRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pfs.WalkFileRequest.DESCRIPTOR" href="#python_pachyderm.pfs.WalkFileRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pfs.WalkFileRequest.file" href="#python_pachyderm.pfs.WalkFileRequest.file">file</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

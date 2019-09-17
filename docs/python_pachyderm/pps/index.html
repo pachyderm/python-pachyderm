@@ -1,0 +1,3129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>python_pachyderm.pps API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.pps</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">from .client import PpsClient
+from python_pachyderm._proto.pps.pps_pb2 import *</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="python_pachyderm.pps.client" href="client.html">python_pachyderm.pps.client</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.pps.ActivateAuthRequest"><code class="flex name class">
+<span>class <span class="ident">ActivateAuthRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ActivateAuthRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ActivateAuthResponse"><code class="flex name class">
+<span>class <span class="ident">ActivateAuthResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ActivateAuthResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Aggregate"><code class="flex name class">
+<span>class <span class="ident">Aggregate</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Aggregate.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Aggregate.count"><code class="name">var <span class="ident">count</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Aggregate.count</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Aggregate.fifth_percentile"><code class="name">var <span class="ident">fifth_percentile</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Aggregate.fifth_percentile</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Aggregate.mean"><code class="name">var <span class="ident">mean</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Aggregate.mean</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Aggregate.ninety_fifth_percentile"><code class="name">var <span class="ident">ninety_fifth_percentile</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Aggregate.ninety_fifth_percentile</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Aggregate.stddev"><code class="name">var <span class="ident">stddev</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Aggregate.stddev</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.AggregateProcessStats"><code class="flex name class">
+<span>class <span class="ident">AggregateProcessStats</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.AggregateProcessStats.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.AggregateProcessStats.download_bytes"><code class="name">var <span class="ident">download_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.AggregateProcessStats.download_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pps.AggregateProcessStats.download_time"><code class="name">var <span class="ident">download_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.AggregateProcessStats.download_time</p></section>
+</dd>
+<dt id="python_pachyderm.pps.AggregateProcessStats.process_time"><code class="name">var <span class="ident">process_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.AggregateProcessStats.process_time</p></section>
+</dd>
+<dt id="python_pachyderm.pps.AggregateProcessStats.upload_bytes"><code class="name">var <span class="ident">upload_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.AggregateProcessStats.upload_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pps.AggregateProcessStats.upload_time"><code class="name">var <span class="ident">upload_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.AggregateProcessStats.upload_time</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ChunkSpec"><code class="flex name class">
+<span>class <span class="ident">ChunkSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ChunkSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ChunkSpec.number"><code class="name">var <span class="ident">number</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ChunkSpec.number</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ChunkSpec.size_bytes"><code class="name">var <span class="ident">size_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ChunkSpec.size_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.CreateJobRequest"><code class="flex name class">
+<span>class <span class="ident">CreateJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CreateJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CreateJobRequest.output_commit"><code class="name">var <span class="ident">output_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreateJobRequest.output_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreateJobRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreateJobRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest"><code class="flex name class">
+<span>class <span class="ident">CreatePipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.batch"><code class="name">var <span class="ident">batch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.batch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.cache_size"><code class="name">var <span class="ident">cache_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.cache_size</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.chunk_spec"><code class="name">var <span class="ident">chunk_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.chunk_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.datum_timeout"><code class="name">var <span class="ident">datum_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.datum_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.datum_tries"><code class="name">var <span class="ident">datum_tries</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.datum_tries</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.description</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.egress"><code class="name">var <span class="ident">egress</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.egress</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.enable_stats"><code class="name">var <span class="ident">enable_stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.enable_stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.hashtree_spec"><code class="name">var <span class="ident">hashtree_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.hashtree_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.input"><code class="name">var <span class="ident">input</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.input</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.job_timeout"><code class="name">var <span class="ident">job_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.job_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.max_queue_size"><code class="name">var <span class="ident">max_queue_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.max_queue_size</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.output_branch"><code class="name">var <span class="ident">output_branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.output_branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.parallelism_spec"><code class="name">var <span class="ident">parallelism_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.parallelism_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.pod_patch"><code class="name">var <span class="ident">pod_patch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.pod_patch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.pod_spec"><code class="name">var <span class="ident">pod_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.pod_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.reprocess"><code class="name">var <span class="ident">reprocess</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.reprocess</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.resource_limits"><code class="name">var <span class="ident">resource_limits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.resource_limits</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.resource_requests"><code class="name">var <span class="ident">resource_requests</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.resource_requests</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.salt"><code class="name">var <span class="ident">salt</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.salt</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.scale_down_threshold"><code class="name">var <span class="ident">scale_down_threshold</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.scale_down_threshold</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.scheduling_spec"><code class="name">var <span class="ident">scheduling_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.scheduling_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.service"><code class="name">var <span class="ident">service</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.service</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.spout"><code class="name">var <span class="ident">spout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.spout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.standby"><code class="name">var <span class="ident">standby</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.standby</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.transform"><code class="name">var <span class="ident">transform</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.transform</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CreatePipelineRequest.update"><code class="name">var <span class="ident">update</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CreatePipelineRequest.update</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.CronInput"><code class="flex name class">
+<span>class <span class="ident">CronInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CronInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.CronInput.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CronInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CronInput.overwrite"><code class="name">var <span class="ident">overwrite</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.overwrite</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CronInput.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.repo</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CronInput.spec"><code class="name">var <span class="ident">spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.CronInput.start"><code class="name">var <span class="ident">start</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.CronInput.start</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Datum"><code class="flex name class">
+<span>class <span class="ident">Datum</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Datum.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Datum.id"><code class="name">var <span class="ident">id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Datum.id</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Datum.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Datum.job</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.DatumInfo"><code class="flex name class">
+<span>class <span class="ident">DatumInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DatumInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DatumInfo.data"><code class="name">var <span class="ident">data</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DatumInfo.data</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DatumInfo.datum"><code class="name">var <span class="ident">datum</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DatumInfo.datum</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DatumInfo.pfs_state"><code class="name">var <span class="ident">pfs_state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DatumInfo.pfs_state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DatumInfo.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DatumInfo.state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DatumInfo.stats"><code class="name">var <span class="ident">stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DatumInfo.stats</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.DeleteJobRequest"><code class="flex name class">
+<span>class <span class="ident">DeleteJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DeleteJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DeleteJobRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DeleteJobRequest.job</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.DeletePipelineRequest"><code class="flex name class">
+<span>class <span class="ident">DeletePipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DeletePipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.DeletePipelineRequest.all"><code class="name">var <span class="ident">all</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DeletePipelineRequest.all</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DeletePipelineRequest.force"><code class="name">var <span class="ident">force</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DeletePipelineRequest.force</p></section>
+</dd>
+<dt id="python_pachyderm.pps.DeletePipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.DeletePipelineRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Egress"><code class="flex name class">
+<span>class <span class="ident">Egress</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Egress.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Egress.URL"><code class="name">var <span class="ident">URL</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Egress.URL</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo"><code class="flex name class">
+<span>class <span class="ident">EtcdJobInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.EtcdJobInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.EtcdJobInfo.data_failed"><code class="name">var <span class="ident">data_failed</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.data_failed</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.data_processed"><code class="name">var <span class="ident">data_processed</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.data_processed</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.data_recovered"><code class="name">var <span class="ident">data_recovered</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.data_recovered</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.data_skipped"><code class="name">var <span class="ident">data_skipped</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.data_skipped</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.data_total"><code class="name">var <span class="ident">data_total</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.data_total</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.finished"><code class="name">var <span class="ident">finished</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.finished</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.output_commit"><code class="name">var <span class="ident">output_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.output_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.reason"><code class="name">var <span class="ident">reason</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.reason</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.restart"><code class="name">var <span class="ident">restart</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.restart</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.started"><code class="name">var <span class="ident">started</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.started</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.stats"><code class="name">var <span class="ident">stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdJobInfo.stats_commit"><code class="name">var <span class="ident">stats_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdJobInfo.stats_commit</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo"><code class="flex name class">
+<span>class <span class="ident">EtcdPipelineInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.JobCountsEntry"><code class="name">var <span class="ident">JobCountsEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.auth_token"><code class="name">var <span class="ident">auth_token</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.auth_token</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.job_counts"><code class="name">var <span class="ident">job_counts</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.job_counts</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.last_job_state"><code class="name">var <span class="ident">last_job_state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.last_job_state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.reason"><code class="name">var <span class="ident">reason</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.reason</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.spec_commit"><code class="name">var <span class="ident">spec_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.spec_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.EtcdPipelineInfo.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.EtcdPipelineInfo.state</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.FlushJobRequest"><code class="flex name class">
+<span>class <span class="ident">FlushJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.FlushJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.FlushJobRequest.commits"><code class="name">var <span class="ident">commits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.FlushJobRequest.commits</p></section>
+</dd>
+<dt id="python_pachyderm.pps.FlushJobRequest.to_pipelines"><code class="name">var <span class="ident">to_pipelines</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.FlushJobRequest.to_pipelines</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.GPUSpec"><code class="flex name class">
+<span>class <span class="ident">GPUSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GPUSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GPUSpec.number"><code class="name">var <span class="ident">number</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GPUSpec.number</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GPUSpec.type"><code class="name">var <span class="ident">type</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GPUSpec.type</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.GarbageCollectRequest"><code class="flex name class">
+<span>class <span class="ident">GarbageCollectRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GarbageCollectRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GarbageCollectRequest.memory_bytes"><code class="name">var <span class="ident">memory_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GarbageCollectRequest.memory_bytes</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.GarbageCollectResponse"><code class="flex name class">
+<span>class <span class="ident">GarbageCollectResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GarbageCollectResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest"><code class="flex name class">
+<span>class <span class="ident">GetLogsRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GetLogsRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GetLogsRequest.data_filters"><code class="name">var <span class="ident">data_filters</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.data_filters</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.datum"><code class="name">var <span class="ident">datum</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.datum</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.follow"><code class="name">var <span class="ident">follow</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.follow</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.master"><code class="name">var <span class="ident">master</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.master</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GetLogsRequest.tail"><code class="name">var <span class="ident">tail</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GetLogsRequest.tail</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.GitInput"><code class="flex name class">
+<span>class <span class="ident">GitInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GitInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.GitInput.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GitInput.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GitInput.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GitInput.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GitInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GitInput.name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.GitInput.url"><code class="name">var <span class="ident">url</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.GitInput.url</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.HashtreeSpec"><code class="flex name class">
+<span>class <span class="ident">HashtreeSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.HashtreeSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.HashtreeSpec.constant"><code class="name">var <span class="ident">constant</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.HashtreeSpec.constant</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Input"><code class="flex name class">
+<span>class <span class="ident">Input</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Input.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Input.cron"><code class="name">var <span class="ident">cron</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.cron</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Input.cross"><code class="name">var <span class="ident">cross</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.cross</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Input.git"><code class="name">var <span class="ident">git</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.git</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Input.join"><code class="name">var <span class="ident">join</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.join</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Input.pfs"><code class="name">var <span class="ident">pfs</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.pfs</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Input.union"><code class="name">var <span class="ident">union</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.union</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.InputFile"><code class="flex name class">
+<span>class <span class="ident">InputFile</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InputFile.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InputFile.hash"><code class="name">var <span class="ident">hash</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InputFile.hash</p></section>
+</dd>
+<dt id="python_pachyderm.pps.InputFile.path"><code class="name">var <span class="ident">path</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InputFile.path</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.InspectDatumRequest"><code class="flex name class">
+<span>class <span class="ident">InspectDatumRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectDatumRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectDatumRequest.datum"><code class="name">var <span class="ident">datum</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InspectDatumRequest.datum</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.InspectJobRequest"><code class="flex name class">
+<span>class <span class="ident">InspectJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectJobRequest.block_state"><code class="name">var <span class="ident">block_state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InspectJobRequest.block_state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.InspectJobRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InspectJobRequest.job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.InspectJobRequest.output_commit"><code class="name">var <span class="ident">output_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InspectJobRequest.output_commit</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.InspectPipelineRequest"><code class="flex name class">
+<span>class <span class="ident">InspectPipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectPipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.InspectPipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.InspectPipelineRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Job"><code class="flex name class">
+<span>class <span class="ident">Job</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Job.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Job.id"><code class="name">var <span class="ident">id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Job.id</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo"><code class="flex name class">
+<span>class <span class="ident">JobInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInfo.batch"><code class="name">var <span class="ident">batch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.batch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.chunk_spec"><code class="name">var <span class="ident">chunk_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.chunk_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.data_failed"><code class="name">var <span class="ident">data_failed</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.data_failed</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.data_processed"><code class="name">var <span class="ident">data_processed</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.data_processed</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.data_recovered"><code class="name">var <span class="ident">data_recovered</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.data_recovered</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.data_skipped"><code class="name">var <span class="ident">data_skipped</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.data_skipped</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.data_total"><code class="name">var <span class="ident">data_total</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.data_total</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.datum_timeout"><code class="name">var <span class="ident">datum_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.datum_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.datum_tries"><code class="name">var <span class="ident">datum_tries</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.datum_tries</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.egress"><code class="name">var <span class="ident">egress</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.egress</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.enable_stats"><code class="name">var <span class="ident">enable_stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.enable_stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.finished"><code class="name">var <span class="ident">finished</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.finished</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.input"><code class="name">var <span class="ident">input</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.input</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.job_timeout"><code class="name">var <span class="ident">job_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.job_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.new_branch"><code class="name">var <span class="ident">new_branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.new_branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.output_branch"><code class="name">var <span class="ident">output_branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.output_branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.output_commit"><code class="name">var <span class="ident">output_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.output_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.output_repo"><code class="name">var <span class="ident">output_repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.output_repo</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.parallelism_spec"><code class="name">var <span class="ident">parallelism_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.parallelism_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.parent_job"><code class="name">var <span class="ident">parent_job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.parent_job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.pipeline_version"><code class="name">var <span class="ident">pipeline_version</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.pipeline_version</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.pod_patch"><code class="name">var <span class="ident">pod_patch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.pod_patch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.pod_spec"><code class="name">var <span class="ident">pod_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.pod_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.reason"><code class="name">var <span class="ident">reason</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.reason</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.resource_limits"><code class="name">var <span class="ident">resource_limits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.resource_limits</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.resource_requests"><code class="name">var <span class="ident">resource_requests</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.resource_requests</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.restart"><code class="name">var <span class="ident">restart</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.restart</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.salt"><code class="name">var <span class="ident">salt</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.salt</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.scheduling_spec"><code class="name">var <span class="ident">scheduling_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.scheduling_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.service"><code class="name">var <span class="ident">service</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.service</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.spec_commit"><code class="name">var <span class="ident">spec_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.spec_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.spout"><code class="name">var <span class="ident">spout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.spout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.started"><code class="name">var <span class="ident">started</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.started</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.stats"><code class="name">var <span class="ident">stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.stats_commit"><code class="name">var <span class="ident">stats_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.stats_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.transform"><code class="name">var <span class="ident">transform</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.transform</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInfo.worker_status"><code class="name">var <span class="ident">worker_status</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfo.worker_status</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.JobInfos"><code class="flex name class">
+<span>class <span class="ident">JobInfos</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInfos.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInfos.job_info"><code class="name">var <span class="ident">job_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInfos.job_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.JobInput"><code class="flex name class">
+<span>class <span class="ident">JobInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.JobInput.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInput.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInput.glob"><code class="name">var <span class="ident">glob</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInput.glob</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInput.lazy"><code class="name">var <span class="ident">lazy</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInput.lazy</p></section>
+</dd>
+<dt id="python_pachyderm.pps.JobInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.JobInput.name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumRequest"><code class="flex name class">
+<span>class <span class="ident">ListDatumRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumRequest.job</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumRequest.page"><code class="name">var <span class="ident">page</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumRequest.page</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumRequest.page_size"><code class="name">var <span class="ident">page_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumRequest.page_size</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumResponse"><code class="flex name class">
+<span>class <span class="ident">ListDatumResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumResponse.datum_infos"><code class="name">var <span class="ident">datum_infos</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumResponse.datum_infos</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumResponse.page"><code class="name">var <span class="ident">page</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumResponse.page</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumResponse.total_pages"><code class="name">var <span class="ident">total_pages</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumResponse.total_pages</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumStreamResponse"><code class="flex name class">
+<span>class <span class="ident">ListDatumStreamResponse</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumStreamResponse.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListDatumStreamResponse.datum_info"><code class="name">var <span class="ident">datum_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumStreamResponse.datum_info</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumStreamResponse.page"><code class="name">var <span class="ident">page</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumStreamResponse.page</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListDatumStreamResponse.total_pages"><code class="name">var <span class="ident">total_pages</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListDatumStreamResponse.total_pages</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ListJobRequest"><code class="flex name class">
+<span>class <span class="ident">ListJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListJobRequest.full"><code class="name">var <span class="ident">full</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListJobRequest.full</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListJobRequest.history"><code class="name">var <span class="ident">history</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListJobRequest.history</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListJobRequest.input_commit"><code class="name">var <span class="ident">input_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListJobRequest.input_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListJobRequest.output_commit"><code class="name">var <span class="ident">output_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListJobRequest.output_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListJobRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListJobRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ListPipelineRequest"><code class="flex name class">
+<span>class <span class="ident">ListPipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListPipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ListPipelineRequest.history"><code class="name">var <span class="ident">history</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListPipelineRequest.history</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ListPipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ListPipelineRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage"><code class="flex name class">
+<span>class <span class="ident">LogMessage</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.LogMessage.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.LogMessage.data"><code class="name">var <span class="ident">data</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.data</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.datum_id"><code class="name">var <span class="ident">datum_id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.datum_id</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.job_id"><code class="name">var <span class="ident">job_id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.job_id</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.master"><code class="name">var <span class="ident">master</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.master</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.message"><code class="name">var <span class="ident">message</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.message</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.pipeline_name"><code class="name">var <span class="ident">pipeline_name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.pipeline_name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.ts"><code class="name">var <span class="ident">ts</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.ts</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.user"><code class="name">var <span class="ident">user</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.user</p></section>
+</dd>
+<dt id="python_pachyderm.pps.LogMessage.worker_id"><code class="name">var <span class="ident">worker_id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.LogMessage.worker_id</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput"><code class="flex name class">
+<span>class <span class="ident">PFSInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PFSInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PFSInput.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.empty_files"><code class="name">var <span class="ident">empty_files</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.empty_files</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.glob"><code class="name">var <span class="ident">glob</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.glob</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.join_on"><code class="name">var <span class="ident">join_on</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.join_on</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.lazy"><code class="name">var <span class="ident">lazy</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.lazy</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PFSInput.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ParallelismSpec"><code class="flex name class">
+<span>class <span class="ident">ParallelismSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ParallelismSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ParallelismSpec.coefficient"><code class="name">var <span class="ident">coefficient</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ParallelismSpec.coefficient</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ParallelismSpec.constant"><code class="name">var <span class="ident">constant</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ParallelismSpec.constant</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Pipeline"><code class="flex name class">
+<span>class <span class="ident">Pipeline</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Pipeline.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Pipeline.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Pipeline.name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo"><code class="flex name class">
+<span>class <span class="ident">PipelineInfo</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInfo.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.JobCountsEntry"><code class="name">var <span class="ident">JobCountsEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInfo.batch"><code class="name">var <span class="ident">batch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.batch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.cache_size"><code class="name">var <span class="ident">cache_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.cache_size</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.chunk_spec"><code class="name">var <span class="ident">chunk_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.chunk_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.created_at"><code class="name">var <span class="ident">created_at</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.created_at</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.datum_timeout"><code class="name">var <span class="ident">datum_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.datum_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.datum_tries"><code class="name">var <span class="ident">datum_tries</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.datum_tries</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.description"><code class="name">var <span class="ident">description</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.description</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.egress"><code class="name">var <span class="ident">egress</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.egress</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.enable_stats"><code class="name">var <span class="ident">enable_stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.enable_stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.githook_url"><code class="name">var <span class="ident">githook_url</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.githook_url</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.hashtree_spec"><code class="name">var <span class="ident">hashtree_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.hashtree_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.id"><code class="name">var <span class="ident">id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.id</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.input"><code class="name">var <span class="ident">input</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.input</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.job_counts"><code class="name">var <span class="ident">job_counts</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.job_counts</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.job_timeout"><code class="name">var <span class="ident">job_timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.job_timeout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.last_job_state"><code class="name">var <span class="ident">last_job_state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.last_job_state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.max_queue_size"><code class="name">var <span class="ident">max_queue_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.max_queue_size</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.output_branch"><code class="name">var <span class="ident">output_branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.output_branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.parallelism_spec"><code class="name">var <span class="ident">parallelism_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.parallelism_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.pod_patch"><code class="name">var <span class="ident">pod_patch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.pod_patch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.pod_spec"><code class="name">var <span class="ident">pod_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.pod_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.reason"><code class="name">var <span class="ident">reason</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.reason</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.recent_error"><code class="name">var <span class="ident">recent_error</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.recent_error</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.resource_limits"><code class="name">var <span class="ident">resource_limits</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.resource_limits</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.resource_requests"><code class="name">var <span class="ident">resource_requests</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.resource_requests</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.salt"><code class="name">var <span class="ident">salt</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.salt</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.scale_down_threshold"><code class="name">var <span class="ident">scale_down_threshold</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.scale_down_threshold</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.scheduling_spec"><code class="name">var <span class="ident">scheduling_spec</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.scheduling_spec</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.service"><code class="name">var <span class="ident">service</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.service</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.spec_commit"><code class="name">var <span class="ident">spec_commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.spec_commit</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.spout"><code class="name">var <span class="ident">spout</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.spout</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.standby"><code class="name">var <span class="ident">standby</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.standby</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.state</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.stopped"><code class="name">var <span class="ident">stopped</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.stopped</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.transform"><code class="name">var <span class="ident">transform</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.transform</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfo.version"><code class="name">var <span class="ident">version</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfo.version</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInfos"><code class="flex name class">
+<span>class <span class="ident">PipelineInfos</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInfos.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInfos.pipeline_info"><code class="name">var <span class="ident">pipeline_info</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInfos.pipeline_info</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput"><code class="flex name class">
+<span>class <span class="ident">PipelineInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.PipelineInput.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.branch</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.from"><code class="name">var <span class="ident">from</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.from</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.glob"><code class="name">var <span class="ident">glob</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.glob</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.join_on"><code class="name">var <span class="ident">join_on</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.join_on</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.lazy"><code class="name">var <span class="ident">lazy</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.lazy</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.PipelineInput.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PipelineInput.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ProcessStats"><code class="flex name class">
+<span>class <span class="ident">ProcessStats</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ProcessStats.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ProcessStats.download_bytes"><code class="name">var <span class="ident">download_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ProcessStats.download_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ProcessStats.download_time"><code class="name">var <span class="ident">download_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ProcessStats.download_time</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ProcessStats.process_time"><code class="name">var <span class="ident">process_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ProcessStats.process_time</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ProcessStats.upload_bytes"><code class="name">var <span class="ident">upload_bytes</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ProcessStats.upload_bytes</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ProcessStats.upload_time"><code class="name">var <span class="ident">upload_time</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ProcessStats.upload_time</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.ResourceSpec"><code class="flex name class">
+<span>class <span class="ident">ResourceSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ResourceSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.ResourceSpec.cpu"><code class="name">var <span class="ident">cpu</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ResourceSpec.cpu</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ResourceSpec.disk"><code class="name">var <span class="ident">disk</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ResourceSpec.disk</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ResourceSpec.gpu"><code class="name">var <span class="ident">gpu</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ResourceSpec.gpu</p></section>
+</dd>
+<dt id="python_pachyderm.pps.ResourceSpec.memory"><code class="name">var <span class="ident">memory</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ResourceSpec.memory</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.RestartDatumRequest"><code class="flex name class">
+<span>class <span class="ident">RestartDatumRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.RestartDatumRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.RestartDatumRequest.data_filters"><code class="name">var <span class="ident">data_filters</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.RestartDatumRequest.data_filters</p></section>
+</dd>
+<dt id="python_pachyderm.pps.RestartDatumRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.RestartDatumRequest.job</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.RunPipelineRequest"><code class="flex name class">
+<span>class <span class="ident">RunPipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.RunPipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.RunPipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.RunPipelineRequest.pipeline</p></section>
+</dd>
+<dt id="python_pachyderm.pps.RunPipelineRequest.provenance"><code class="name">var <span class="ident">provenance</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.RunPipelineRequest.provenance</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.SchedulingSpec"><code class="flex name class">
+<span>class <span class="ident">SchedulingSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.SchedulingSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="python_pachyderm.pps.SchedulingSpec.NodeSelectorEntry"><code class="name">var <span class="ident">NodeSelectorEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.SchedulingSpec.node_selector"><code class="name">var <span class="ident">node_selector</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.SchedulingSpec.node_selector</p></section>
+</dd>
+<dt id="python_pachyderm.pps.SchedulingSpec.priority_class_name"><code class="name">var <span class="ident">priority_class_name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.SchedulingSpec.priority_class_name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Secret"><code class="flex name class">
+<span>class <span class="ident">Secret</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Secret.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Secret.env_var"><code class="name">var <span class="ident">env_var</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Secret.env_var</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Secret.key"><code class="name">var <span class="ident">key</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Secret.key</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Secret.mount_path"><code class="name">var <span class="ident">mount_path</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Secret.mount_path</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Secret.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Secret.name</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Service"><code class="flex name class">
+<span>class <span class="ident">Service</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Service.AnnotationsEntry"><code class="name">var <span class="ident">AnnotationsEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Service.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Service.annotations"><code class="name">var <span class="ident">annotations</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Service.annotations</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Service.external_port"><code class="name">var <span class="ident">external_port</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Service.external_port</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Service.internal_port"><code class="name">var <span class="ident">internal_port</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Service.internal_port</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Service.ip"><code class="name">var <span class="ident">ip</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Service.ip</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Service.type"><code class="name">var <span class="ident">type</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Service.type</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Spout"><code class="flex name class">
+<span>class <span class="ident">Spout</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Spout.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Spout.overwrite"><code class="name">var <span class="ident">overwrite</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Spout.overwrite</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Spout.service"><code class="name">var <span class="ident">service</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Spout.service</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.StartPipelineRequest"><code class="flex name class">
+<span>class <span class="ident">StartPipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StartPipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StartPipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.StartPipelineRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.StopJobRequest"><code class="flex name class">
+<span>class <span class="ident">StopJobRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StopJobRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StopJobRequest.job"><code class="name">var <span class="ident">job</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.StopJobRequest.job</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.StopPipelineRequest"><code class="flex name class">
+<span>class <span class="ident">StopPipelineRequest</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StopPipelineRequest.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.StopPipelineRequest.pipeline"><code class="name">var <span class="ident">pipeline</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.StopPipelineRequest.pipeline</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Transform"><code class="flex name class">
+<span>class <span class="ident">Transform</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Transform.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.EnvEntry"><code class="name">var <span class="ident">EnvEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Transform.accept_return_code"><code class="name">var <span class="ident">accept_return_code</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.accept_return_code</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.cmd"><code class="name">var <span class="ident">cmd</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.cmd</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.debug"><code class="name">var <span class="ident">debug</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.debug</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.dockerfile"><code class="name">var <span class="ident">dockerfile</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.dockerfile</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.env"><code class="name">var <span class="ident">env</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.env</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.err_cmd"><code class="name">var <span class="ident">err_cmd</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.err_cmd</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.err_stdin"><code class="name">var <span class="ident">err_stdin</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.err_stdin</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.image"><code class="name">var <span class="ident">image</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.image</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.image_pull_secrets"><code class="name">var <span class="ident">image_pull_secrets</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.image_pull_secrets</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.secrets"><code class="name">var <span class="ident">secrets</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.secrets</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.stdin"><code class="name">var <span class="ident">stdin</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.stdin</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.user"><code class="name">var <span class="ident">user</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.user</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Transform.working_dir"><code class="name">var <span class="ident">working_dir</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.working_dir</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.Worker"><code class="flex name class">
+<span>class <span class="ident">Worker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Worker.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.Worker.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Worker.name</p></section>
+</dd>
+<dt id="python_pachyderm.pps.Worker.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Worker.state</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus"><code class="flex name class">
+<span>class <span class="ident">WorkerStatus</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.WorkerStatus.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.pps.WorkerStatus.data"><code class="name">var <span class="ident">data</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.data</p></section>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus.job_id"><code class="name">var <span class="ident">job_id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.job_id</p></section>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus.queue_size"><code class="name">var <span class="ident">queue_size</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.queue_size</p></section>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus.started"><code class="name">var <span class="ident">started</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.started</p></section>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus.stats"><code class="name">var <span class="ident">stats</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.stats</p></section>
+</dd>
+<dt id="python_pachyderm.pps.WorkerStatus.worker_id"><code class="name">var <span class="ident">worker_id</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.WorkerStatus.worker_id</p></section>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm" href="../index.html">python_pachyderm</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="python_pachyderm.pps.client" href="client.html">python_pachyderm.pps.client</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.pps.ActivateAuthRequest" href="#python_pachyderm.pps.ActivateAuthRequest">ActivateAuthRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ActivateAuthRequest.DESCRIPTOR" href="#python_pachyderm.pps.ActivateAuthRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ActivateAuthResponse" href="#python_pachyderm.pps.ActivateAuthResponse">ActivateAuthResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ActivateAuthResponse.DESCRIPTOR" href="#python_pachyderm.pps.ActivateAuthResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Aggregate" href="#python_pachyderm.pps.Aggregate">Aggregate</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Aggregate.DESCRIPTOR" href="#python_pachyderm.pps.Aggregate.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Aggregate.count" href="#python_pachyderm.pps.Aggregate.count">count</a></code></li>
+<li><code><a title="python_pachyderm.pps.Aggregate.fifth_percentile" href="#python_pachyderm.pps.Aggregate.fifth_percentile">fifth_percentile</a></code></li>
+<li><code><a title="python_pachyderm.pps.Aggregate.mean" href="#python_pachyderm.pps.Aggregate.mean">mean</a></code></li>
+<li><code><a title="python_pachyderm.pps.Aggregate.ninety_fifth_percentile" href="#python_pachyderm.pps.Aggregate.ninety_fifth_percentile">ninety_fifth_percentile</a></code></li>
+<li><code><a title="python_pachyderm.pps.Aggregate.stddev" href="#python_pachyderm.pps.Aggregate.stddev">stddev</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.AggregateProcessStats" href="#python_pachyderm.pps.AggregateProcessStats">AggregateProcessStats</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.DESCRIPTOR" href="#python_pachyderm.pps.AggregateProcessStats.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.download_bytes" href="#python_pachyderm.pps.AggregateProcessStats.download_bytes">download_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.download_time" href="#python_pachyderm.pps.AggregateProcessStats.download_time">download_time</a></code></li>
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.process_time" href="#python_pachyderm.pps.AggregateProcessStats.process_time">process_time</a></code></li>
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.upload_bytes" href="#python_pachyderm.pps.AggregateProcessStats.upload_bytes">upload_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pps.AggregateProcessStats.upload_time" href="#python_pachyderm.pps.AggregateProcessStats.upload_time">upload_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ChunkSpec" href="#python_pachyderm.pps.ChunkSpec">ChunkSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ChunkSpec.DESCRIPTOR" href="#python_pachyderm.pps.ChunkSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ChunkSpec.number" href="#python_pachyderm.pps.ChunkSpec.number">number</a></code></li>
+<li><code><a title="python_pachyderm.pps.ChunkSpec.size_bytes" href="#python_pachyderm.pps.ChunkSpec.size_bytes">size_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.CreateJobRequest" href="#python_pachyderm.pps.CreateJobRequest">CreateJobRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.CreateJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.CreateJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreateJobRequest.output_commit" href="#python_pachyderm.pps.CreateJobRequest.output_commit">output_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreateJobRequest.pipeline" href="#python_pachyderm.pps.CreateJobRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.CreatePipelineRequest" href="#python_pachyderm.pps.CreatePipelineRequest">CreatePipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.CreatePipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.batch" href="#python_pachyderm.pps.CreatePipelineRequest.batch">batch</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.cache_size" href="#python_pachyderm.pps.CreatePipelineRequest.cache_size">cache_size</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.chunk_spec" href="#python_pachyderm.pps.CreatePipelineRequest.chunk_spec">chunk_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.datum_timeout" href="#python_pachyderm.pps.CreatePipelineRequest.datum_timeout">datum_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.datum_tries" href="#python_pachyderm.pps.CreatePipelineRequest.datum_tries">datum_tries</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.description" href="#python_pachyderm.pps.CreatePipelineRequest.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.egress" href="#python_pachyderm.pps.CreatePipelineRequest.egress">egress</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.enable_stats" href="#python_pachyderm.pps.CreatePipelineRequest.enable_stats">enable_stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.hashtree_spec" href="#python_pachyderm.pps.CreatePipelineRequest.hashtree_spec">hashtree_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.input" href="#python_pachyderm.pps.CreatePipelineRequest.input">input</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.job_timeout" href="#python_pachyderm.pps.CreatePipelineRequest.job_timeout">job_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.max_queue_size" href="#python_pachyderm.pps.CreatePipelineRequest.max_queue_size">max_queue_size</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.output_branch" href="#python_pachyderm.pps.CreatePipelineRequest.output_branch">output_branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.parallelism_spec" href="#python_pachyderm.pps.CreatePipelineRequest.parallelism_spec">parallelism_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.pipeline" href="#python_pachyderm.pps.CreatePipelineRequest.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.pod_patch" href="#python_pachyderm.pps.CreatePipelineRequest.pod_patch">pod_patch</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.pod_spec" href="#python_pachyderm.pps.CreatePipelineRequest.pod_spec">pod_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.reprocess" href="#python_pachyderm.pps.CreatePipelineRequest.reprocess">reprocess</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.resource_limits" href="#python_pachyderm.pps.CreatePipelineRequest.resource_limits">resource_limits</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.resource_requests" href="#python_pachyderm.pps.CreatePipelineRequest.resource_requests">resource_requests</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.salt" href="#python_pachyderm.pps.CreatePipelineRequest.salt">salt</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.scale_down_threshold" href="#python_pachyderm.pps.CreatePipelineRequest.scale_down_threshold">scale_down_threshold</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.scheduling_spec" href="#python_pachyderm.pps.CreatePipelineRequest.scheduling_spec">scheduling_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.service" href="#python_pachyderm.pps.CreatePipelineRequest.service">service</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.spout" href="#python_pachyderm.pps.CreatePipelineRequest.spout">spout</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.standby" href="#python_pachyderm.pps.CreatePipelineRequest.standby">standby</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.transform" href="#python_pachyderm.pps.CreatePipelineRequest.transform">transform</a></code></li>
+<li><code><a title="python_pachyderm.pps.CreatePipelineRequest.update" href="#python_pachyderm.pps.CreatePipelineRequest.update">update</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.CronInput" href="#python_pachyderm.pps.CronInput">CronInput</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.CronInput.DESCRIPTOR" href="#python_pachyderm.pps.CronInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.commit" href="#python_pachyderm.pps.CronInput.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.name" href="#python_pachyderm.pps.CronInput.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.overwrite" href="#python_pachyderm.pps.CronInput.overwrite">overwrite</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.repo" href="#python_pachyderm.pps.CronInput.repo">repo</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.spec" href="#python_pachyderm.pps.CronInput.spec">spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.CronInput.start" href="#python_pachyderm.pps.CronInput.start">start</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Datum" href="#python_pachyderm.pps.Datum">Datum</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Datum.DESCRIPTOR" href="#python_pachyderm.pps.Datum.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Datum.id" href="#python_pachyderm.pps.Datum.id">id</a></code></li>
+<li><code><a title="python_pachyderm.pps.Datum.job" href="#python_pachyderm.pps.Datum.job">job</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.DatumInfo" href="#python_pachyderm.pps.DatumInfo">DatumInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.DatumInfo.DESCRIPTOR" href="#python_pachyderm.pps.DatumInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.DatumInfo.data" href="#python_pachyderm.pps.DatumInfo.data">data</a></code></li>
+<li><code><a title="python_pachyderm.pps.DatumInfo.datum" href="#python_pachyderm.pps.DatumInfo.datum">datum</a></code></li>
+<li><code><a title="python_pachyderm.pps.DatumInfo.pfs_state" href="#python_pachyderm.pps.DatumInfo.pfs_state">pfs_state</a></code></li>
+<li><code><a title="python_pachyderm.pps.DatumInfo.state" href="#python_pachyderm.pps.DatumInfo.state">state</a></code></li>
+<li><code><a title="python_pachyderm.pps.DatumInfo.stats" href="#python_pachyderm.pps.DatumInfo.stats">stats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.DeleteJobRequest" href="#python_pachyderm.pps.DeleteJobRequest">DeleteJobRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.DeleteJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.DeleteJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.DeleteJobRequest.job" href="#python_pachyderm.pps.DeleteJobRequest.job">job</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.DeletePipelineRequest" href="#python_pachyderm.pps.DeletePipelineRequest">DeletePipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.DeletePipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.DeletePipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.DeletePipelineRequest.all" href="#python_pachyderm.pps.DeletePipelineRequest.all">all</a></code></li>
+<li><code><a title="python_pachyderm.pps.DeletePipelineRequest.force" href="#python_pachyderm.pps.DeletePipelineRequest.force">force</a></code></li>
+<li><code><a title="python_pachyderm.pps.DeletePipelineRequest.pipeline" href="#python_pachyderm.pps.DeletePipelineRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Egress" href="#python_pachyderm.pps.Egress">Egress</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Egress.DESCRIPTOR" href="#python_pachyderm.pps.Egress.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Egress.URL" href="#python_pachyderm.pps.Egress.URL">URL</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.EtcdJobInfo" href="#python_pachyderm.pps.EtcdJobInfo">EtcdJobInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.DESCRIPTOR" href="#python_pachyderm.pps.EtcdJobInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.data_failed" href="#python_pachyderm.pps.EtcdJobInfo.data_failed">data_failed</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.data_processed" href="#python_pachyderm.pps.EtcdJobInfo.data_processed">data_processed</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.data_recovered" href="#python_pachyderm.pps.EtcdJobInfo.data_recovered">data_recovered</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.data_skipped" href="#python_pachyderm.pps.EtcdJobInfo.data_skipped">data_skipped</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.data_total" href="#python_pachyderm.pps.EtcdJobInfo.data_total">data_total</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.finished" href="#python_pachyderm.pps.EtcdJobInfo.finished">finished</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.job" href="#python_pachyderm.pps.EtcdJobInfo.job">job</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.output_commit" href="#python_pachyderm.pps.EtcdJobInfo.output_commit">output_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.pipeline" href="#python_pachyderm.pps.EtcdJobInfo.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.reason" href="#python_pachyderm.pps.EtcdJobInfo.reason">reason</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.restart" href="#python_pachyderm.pps.EtcdJobInfo.restart">restart</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.started" href="#python_pachyderm.pps.EtcdJobInfo.started">started</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.state" href="#python_pachyderm.pps.EtcdJobInfo.state">state</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.stats" href="#python_pachyderm.pps.EtcdJobInfo.stats">stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdJobInfo.stats_commit" href="#python_pachyderm.pps.EtcdJobInfo.stats_commit">stats_commit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.EtcdPipelineInfo" href="#python_pachyderm.pps.EtcdPipelineInfo">EtcdPipelineInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.DESCRIPTOR" href="#python_pachyderm.pps.EtcdPipelineInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.JobCountsEntry" href="#python_pachyderm.pps.EtcdPipelineInfo.JobCountsEntry">JobCountsEntry</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.auth_token" href="#python_pachyderm.pps.EtcdPipelineInfo.auth_token">auth_token</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.job_counts" href="#python_pachyderm.pps.EtcdPipelineInfo.job_counts">job_counts</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.last_job_state" href="#python_pachyderm.pps.EtcdPipelineInfo.last_job_state">last_job_state</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.reason" href="#python_pachyderm.pps.EtcdPipelineInfo.reason">reason</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.spec_commit" href="#python_pachyderm.pps.EtcdPipelineInfo.spec_commit">spec_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.EtcdPipelineInfo.state" href="#python_pachyderm.pps.EtcdPipelineInfo.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.FlushJobRequest" href="#python_pachyderm.pps.FlushJobRequest">FlushJobRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.FlushJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.FlushJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.FlushJobRequest.commits" href="#python_pachyderm.pps.FlushJobRequest.commits">commits</a></code></li>
+<li><code><a title="python_pachyderm.pps.FlushJobRequest.to_pipelines" href="#python_pachyderm.pps.FlushJobRequest.to_pipelines">to_pipelines</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.GPUSpec" href="#python_pachyderm.pps.GPUSpec">GPUSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.GPUSpec.DESCRIPTOR" href="#python_pachyderm.pps.GPUSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.GPUSpec.number" href="#python_pachyderm.pps.GPUSpec.number">number</a></code></li>
+<li><code><a title="python_pachyderm.pps.GPUSpec.type" href="#python_pachyderm.pps.GPUSpec.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.GarbageCollectRequest" href="#python_pachyderm.pps.GarbageCollectRequest">GarbageCollectRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.GarbageCollectRequest.DESCRIPTOR" href="#python_pachyderm.pps.GarbageCollectRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.GarbageCollectRequest.memory_bytes" href="#python_pachyderm.pps.GarbageCollectRequest.memory_bytes">memory_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.GarbageCollectResponse" href="#python_pachyderm.pps.GarbageCollectResponse">GarbageCollectResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.GarbageCollectResponse.DESCRIPTOR" href="#python_pachyderm.pps.GarbageCollectResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.GetLogsRequest" href="#python_pachyderm.pps.GetLogsRequest">GetLogsRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.DESCRIPTOR" href="#python_pachyderm.pps.GetLogsRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.data_filters" href="#python_pachyderm.pps.GetLogsRequest.data_filters">data_filters</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.datum" href="#python_pachyderm.pps.GetLogsRequest.datum">datum</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.follow" href="#python_pachyderm.pps.GetLogsRequest.follow">follow</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.job" href="#python_pachyderm.pps.GetLogsRequest.job">job</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.master" href="#python_pachyderm.pps.GetLogsRequest.master">master</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.pipeline" href="#python_pachyderm.pps.GetLogsRequest.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.GetLogsRequest.tail" href="#python_pachyderm.pps.GetLogsRequest.tail">tail</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.GitInput" href="#python_pachyderm.pps.GitInput">GitInput</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.GitInput.DESCRIPTOR" href="#python_pachyderm.pps.GitInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.GitInput.branch" href="#python_pachyderm.pps.GitInput.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.GitInput.commit" href="#python_pachyderm.pps.GitInput.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.GitInput.name" href="#python_pachyderm.pps.GitInput.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pps.GitInput.url" href="#python_pachyderm.pps.GitInput.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.HashtreeSpec" href="#python_pachyderm.pps.HashtreeSpec">HashtreeSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.HashtreeSpec.DESCRIPTOR" href="#python_pachyderm.pps.HashtreeSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.HashtreeSpec.constant" href="#python_pachyderm.pps.HashtreeSpec.constant">constant</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Input" href="#python_pachyderm.pps.Input">Input</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.Input.DESCRIPTOR" href="#python_pachyderm.pps.Input.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.cron" href="#python_pachyderm.pps.Input.cron">cron</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.cross" href="#python_pachyderm.pps.Input.cross">cross</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.git" href="#python_pachyderm.pps.Input.git">git</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.join" href="#python_pachyderm.pps.Input.join">join</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.pfs" href="#python_pachyderm.pps.Input.pfs">pfs</a></code></li>
+<li><code><a title="python_pachyderm.pps.Input.union" href="#python_pachyderm.pps.Input.union">union</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.InputFile" href="#python_pachyderm.pps.InputFile">InputFile</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.InputFile.DESCRIPTOR" href="#python_pachyderm.pps.InputFile.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.InputFile.hash" href="#python_pachyderm.pps.InputFile.hash">hash</a></code></li>
+<li><code><a title="python_pachyderm.pps.InputFile.path" href="#python_pachyderm.pps.InputFile.path">path</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.InspectDatumRequest" href="#python_pachyderm.pps.InspectDatumRequest">InspectDatumRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.InspectDatumRequest.DESCRIPTOR" href="#python_pachyderm.pps.InspectDatumRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.InspectDatumRequest.datum" href="#python_pachyderm.pps.InspectDatumRequest.datum">datum</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.InspectJobRequest" href="#python_pachyderm.pps.InspectJobRequest">InspectJobRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.InspectJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.InspectJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.InspectJobRequest.block_state" href="#python_pachyderm.pps.InspectJobRequest.block_state">block_state</a></code></li>
+<li><code><a title="python_pachyderm.pps.InspectJobRequest.job" href="#python_pachyderm.pps.InspectJobRequest.job">job</a></code></li>
+<li><code><a title="python_pachyderm.pps.InspectJobRequest.output_commit" href="#python_pachyderm.pps.InspectJobRequest.output_commit">output_commit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.InspectPipelineRequest" href="#python_pachyderm.pps.InspectPipelineRequest">InspectPipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.InspectPipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.InspectPipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.InspectPipelineRequest.pipeline" href="#python_pachyderm.pps.InspectPipelineRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Job" href="#python_pachyderm.pps.Job">Job</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Job.DESCRIPTOR" href="#python_pachyderm.pps.Job.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Job.id" href="#python_pachyderm.pps.Job.id">id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.JobInfo" href="#python_pachyderm.pps.JobInfo">JobInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.JobInfo.DESCRIPTOR" href="#python_pachyderm.pps.JobInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.batch" href="#python_pachyderm.pps.JobInfo.batch">batch</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.chunk_spec" href="#python_pachyderm.pps.JobInfo.chunk_spec">chunk_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.data_failed" href="#python_pachyderm.pps.JobInfo.data_failed">data_failed</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.data_processed" href="#python_pachyderm.pps.JobInfo.data_processed">data_processed</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.data_recovered" href="#python_pachyderm.pps.JobInfo.data_recovered">data_recovered</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.data_skipped" href="#python_pachyderm.pps.JobInfo.data_skipped">data_skipped</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.data_total" href="#python_pachyderm.pps.JobInfo.data_total">data_total</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.datum_timeout" href="#python_pachyderm.pps.JobInfo.datum_timeout">datum_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.datum_tries" href="#python_pachyderm.pps.JobInfo.datum_tries">datum_tries</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.egress" href="#python_pachyderm.pps.JobInfo.egress">egress</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.enable_stats" href="#python_pachyderm.pps.JobInfo.enable_stats">enable_stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.finished" href="#python_pachyderm.pps.JobInfo.finished">finished</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.input" href="#python_pachyderm.pps.JobInfo.input">input</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.job" href="#python_pachyderm.pps.JobInfo.job">job</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.job_timeout" href="#python_pachyderm.pps.JobInfo.job_timeout">job_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.new_branch" href="#python_pachyderm.pps.JobInfo.new_branch">new_branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.output_branch" href="#python_pachyderm.pps.JobInfo.output_branch">output_branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.output_commit" href="#python_pachyderm.pps.JobInfo.output_commit">output_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.output_repo" href="#python_pachyderm.pps.JobInfo.output_repo">output_repo</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.parallelism_spec" href="#python_pachyderm.pps.JobInfo.parallelism_spec">parallelism_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.parent_job" href="#python_pachyderm.pps.JobInfo.parent_job">parent_job</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.pipeline" href="#python_pachyderm.pps.JobInfo.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.pipeline_version" href="#python_pachyderm.pps.JobInfo.pipeline_version">pipeline_version</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.pod_patch" href="#python_pachyderm.pps.JobInfo.pod_patch">pod_patch</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.pod_spec" href="#python_pachyderm.pps.JobInfo.pod_spec">pod_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.reason" href="#python_pachyderm.pps.JobInfo.reason">reason</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.resource_limits" href="#python_pachyderm.pps.JobInfo.resource_limits">resource_limits</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.resource_requests" href="#python_pachyderm.pps.JobInfo.resource_requests">resource_requests</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.restart" href="#python_pachyderm.pps.JobInfo.restart">restart</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.salt" href="#python_pachyderm.pps.JobInfo.salt">salt</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.scheduling_spec" href="#python_pachyderm.pps.JobInfo.scheduling_spec">scheduling_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.service" href="#python_pachyderm.pps.JobInfo.service">service</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.spec_commit" href="#python_pachyderm.pps.JobInfo.spec_commit">spec_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.spout" href="#python_pachyderm.pps.JobInfo.spout">spout</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.started" href="#python_pachyderm.pps.JobInfo.started">started</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.state" href="#python_pachyderm.pps.JobInfo.state">state</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.stats" href="#python_pachyderm.pps.JobInfo.stats">stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.stats_commit" href="#python_pachyderm.pps.JobInfo.stats_commit">stats_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.transform" href="#python_pachyderm.pps.JobInfo.transform">transform</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfo.worker_status" href="#python_pachyderm.pps.JobInfo.worker_status">worker_status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.JobInfos" href="#python_pachyderm.pps.JobInfos">JobInfos</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.JobInfos.DESCRIPTOR" href="#python_pachyderm.pps.JobInfos.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInfos.job_info" href="#python_pachyderm.pps.JobInfos.job_info">job_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.JobInput" href="#python_pachyderm.pps.JobInput">JobInput</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.JobInput.DESCRIPTOR" href="#python_pachyderm.pps.JobInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInput.commit" href="#python_pachyderm.pps.JobInput.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInput.glob" href="#python_pachyderm.pps.JobInput.glob">glob</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInput.lazy" href="#python_pachyderm.pps.JobInput.lazy">lazy</a></code></li>
+<li><code><a title="python_pachyderm.pps.JobInput.name" href="#python_pachyderm.pps.JobInput.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ListDatumRequest" href="#python_pachyderm.pps.ListDatumRequest">ListDatumRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ListDatumRequest.DESCRIPTOR" href="#python_pachyderm.pps.ListDatumRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumRequest.job" href="#python_pachyderm.pps.ListDatumRequest.job">job</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumRequest.page" href="#python_pachyderm.pps.ListDatumRequest.page">page</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumRequest.page_size" href="#python_pachyderm.pps.ListDatumRequest.page_size">page_size</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ListDatumResponse" href="#python_pachyderm.pps.ListDatumResponse">ListDatumResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ListDatumResponse.DESCRIPTOR" href="#python_pachyderm.pps.ListDatumResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumResponse.datum_infos" href="#python_pachyderm.pps.ListDatumResponse.datum_infos">datum_infos</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumResponse.page" href="#python_pachyderm.pps.ListDatumResponse.page">page</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumResponse.total_pages" href="#python_pachyderm.pps.ListDatumResponse.total_pages">total_pages</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ListDatumStreamResponse" href="#python_pachyderm.pps.ListDatumStreamResponse">ListDatumStreamResponse</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ListDatumStreamResponse.DESCRIPTOR" href="#python_pachyderm.pps.ListDatumStreamResponse.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumStreamResponse.datum_info" href="#python_pachyderm.pps.ListDatumStreamResponse.datum_info">datum_info</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumStreamResponse.page" href="#python_pachyderm.pps.ListDatumStreamResponse.page">page</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListDatumStreamResponse.total_pages" href="#python_pachyderm.pps.ListDatumStreamResponse.total_pages">total_pages</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ListJobRequest" href="#python_pachyderm.pps.ListJobRequest">ListJobRequest</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.ListJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.ListJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListJobRequest.full" href="#python_pachyderm.pps.ListJobRequest.full">full</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListJobRequest.history" href="#python_pachyderm.pps.ListJobRequest.history">history</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListJobRequest.input_commit" href="#python_pachyderm.pps.ListJobRequest.input_commit">input_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListJobRequest.output_commit" href="#python_pachyderm.pps.ListJobRequest.output_commit">output_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListJobRequest.pipeline" href="#python_pachyderm.pps.ListJobRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ListPipelineRequest" href="#python_pachyderm.pps.ListPipelineRequest">ListPipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ListPipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.ListPipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListPipelineRequest.history" href="#python_pachyderm.pps.ListPipelineRequest.history">history</a></code></li>
+<li><code><a title="python_pachyderm.pps.ListPipelineRequest.pipeline" href="#python_pachyderm.pps.ListPipelineRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.LogMessage" href="#python_pachyderm.pps.LogMessage">LogMessage</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.LogMessage.DESCRIPTOR" href="#python_pachyderm.pps.LogMessage.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.data" href="#python_pachyderm.pps.LogMessage.data">data</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.datum_id" href="#python_pachyderm.pps.LogMessage.datum_id">datum_id</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.job_id" href="#python_pachyderm.pps.LogMessage.job_id">job_id</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.master" href="#python_pachyderm.pps.LogMessage.master">master</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.message" href="#python_pachyderm.pps.LogMessage.message">message</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.pipeline_name" href="#python_pachyderm.pps.LogMessage.pipeline_name">pipeline_name</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.ts" href="#python_pachyderm.pps.LogMessage.ts">ts</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.user" href="#python_pachyderm.pps.LogMessage.user">user</a></code></li>
+<li><code><a title="python_pachyderm.pps.LogMessage.worker_id" href="#python_pachyderm.pps.LogMessage.worker_id">worker_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.PFSInput" href="#python_pachyderm.pps.PFSInput">PFSInput</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.PFSInput.DESCRIPTOR" href="#python_pachyderm.pps.PFSInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.branch" href="#python_pachyderm.pps.PFSInput.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.commit" href="#python_pachyderm.pps.PFSInput.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.empty_files" href="#python_pachyderm.pps.PFSInput.empty_files">empty_files</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.glob" href="#python_pachyderm.pps.PFSInput.glob">glob</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.join_on" href="#python_pachyderm.pps.PFSInput.join_on">join_on</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.lazy" href="#python_pachyderm.pps.PFSInput.lazy">lazy</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.name" href="#python_pachyderm.pps.PFSInput.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pps.PFSInput.repo" href="#python_pachyderm.pps.PFSInput.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ParallelismSpec" href="#python_pachyderm.pps.ParallelismSpec">ParallelismSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ParallelismSpec.DESCRIPTOR" href="#python_pachyderm.pps.ParallelismSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ParallelismSpec.coefficient" href="#python_pachyderm.pps.ParallelismSpec.coefficient">coefficient</a></code></li>
+<li><code><a title="python_pachyderm.pps.ParallelismSpec.constant" href="#python_pachyderm.pps.ParallelismSpec.constant">constant</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Pipeline" href="#python_pachyderm.pps.Pipeline">Pipeline</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Pipeline.DESCRIPTOR" href="#python_pachyderm.pps.Pipeline.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Pipeline.name" href="#python_pachyderm.pps.Pipeline.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.PipelineInfo" href="#python_pachyderm.pps.PipelineInfo">PipelineInfo</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.PipelineInfo.DESCRIPTOR" href="#python_pachyderm.pps.PipelineInfo.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.JobCountsEntry" href="#python_pachyderm.pps.PipelineInfo.JobCountsEntry">JobCountsEntry</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.batch" href="#python_pachyderm.pps.PipelineInfo.batch">batch</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.cache_size" href="#python_pachyderm.pps.PipelineInfo.cache_size">cache_size</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.chunk_spec" href="#python_pachyderm.pps.PipelineInfo.chunk_spec">chunk_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.created_at" href="#python_pachyderm.pps.PipelineInfo.created_at">created_at</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.datum_timeout" href="#python_pachyderm.pps.PipelineInfo.datum_timeout">datum_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.datum_tries" href="#python_pachyderm.pps.PipelineInfo.datum_tries">datum_tries</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.description" href="#python_pachyderm.pps.PipelineInfo.description">description</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.egress" href="#python_pachyderm.pps.PipelineInfo.egress">egress</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.enable_stats" href="#python_pachyderm.pps.PipelineInfo.enable_stats">enable_stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.githook_url" href="#python_pachyderm.pps.PipelineInfo.githook_url">githook_url</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.hashtree_spec" href="#python_pachyderm.pps.PipelineInfo.hashtree_spec">hashtree_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.id" href="#python_pachyderm.pps.PipelineInfo.id">id</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.input" href="#python_pachyderm.pps.PipelineInfo.input">input</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.job_counts" href="#python_pachyderm.pps.PipelineInfo.job_counts">job_counts</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.job_timeout" href="#python_pachyderm.pps.PipelineInfo.job_timeout">job_timeout</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.last_job_state" href="#python_pachyderm.pps.PipelineInfo.last_job_state">last_job_state</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.max_queue_size" href="#python_pachyderm.pps.PipelineInfo.max_queue_size">max_queue_size</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.output_branch" href="#python_pachyderm.pps.PipelineInfo.output_branch">output_branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.parallelism_spec" href="#python_pachyderm.pps.PipelineInfo.parallelism_spec">parallelism_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.pipeline" href="#python_pachyderm.pps.PipelineInfo.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.pod_patch" href="#python_pachyderm.pps.PipelineInfo.pod_patch">pod_patch</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.pod_spec" href="#python_pachyderm.pps.PipelineInfo.pod_spec">pod_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.reason" href="#python_pachyderm.pps.PipelineInfo.reason">reason</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.recent_error" href="#python_pachyderm.pps.PipelineInfo.recent_error">recent_error</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.resource_limits" href="#python_pachyderm.pps.PipelineInfo.resource_limits">resource_limits</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.resource_requests" href="#python_pachyderm.pps.PipelineInfo.resource_requests">resource_requests</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.salt" href="#python_pachyderm.pps.PipelineInfo.salt">salt</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.scale_down_threshold" href="#python_pachyderm.pps.PipelineInfo.scale_down_threshold">scale_down_threshold</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.scheduling_spec" href="#python_pachyderm.pps.PipelineInfo.scheduling_spec">scheduling_spec</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.service" href="#python_pachyderm.pps.PipelineInfo.service">service</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.spec_commit" href="#python_pachyderm.pps.PipelineInfo.spec_commit">spec_commit</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.spout" href="#python_pachyderm.pps.PipelineInfo.spout">spout</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.standby" href="#python_pachyderm.pps.PipelineInfo.standby">standby</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.state" href="#python_pachyderm.pps.PipelineInfo.state">state</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.stopped" href="#python_pachyderm.pps.PipelineInfo.stopped">stopped</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.transform" href="#python_pachyderm.pps.PipelineInfo.transform">transform</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfo.version" href="#python_pachyderm.pps.PipelineInfo.version">version</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.PipelineInfos" href="#python_pachyderm.pps.PipelineInfos">PipelineInfos</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.PipelineInfos.DESCRIPTOR" href="#python_pachyderm.pps.PipelineInfos.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInfos.pipeline_info" href="#python_pachyderm.pps.PipelineInfos.pipeline_info">pipeline_info</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.PipelineInput" href="#python_pachyderm.pps.PipelineInput">PipelineInput</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.PipelineInput.DESCRIPTOR" href="#python_pachyderm.pps.PipelineInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.branch" href="#python_pachyderm.pps.PipelineInput.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.from" href="#python_pachyderm.pps.PipelineInput.from">from</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.glob" href="#python_pachyderm.pps.PipelineInput.glob">glob</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.join_on" href="#python_pachyderm.pps.PipelineInput.join_on">join_on</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.lazy" href="#python_pachyderm.pps.PipelineInput.lazy">lazy</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.name" href="#python_pachyderm.pps.PipelineInput.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pps.PipelineInput.repo" href="#python_pachyderm.pps.PipelineInput.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ProcessStats" href="#python_pachyderm.pps.ProcessStats">ProcessStats</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.ProcessStats.DESCRIPTOR" href="#python_pachyderm.pps.ProcessStats.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ProcessStats.download_bytes" href="#python_pachyderm.pps.ProcessStats.download_bytes">download_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pps.ProcessStats.download_time" href="#python_pachyderm.pps.ProcessStats.download_time">download_time</a></code></li>
+<li><code><a title="python_pachyderm.pps.ProcessStats.process_time" href="#python_pachyderm.pps.ProcessStats.process_time">process_time</a></code></li>
+<li><code><a title="python_pachyderm.pps.ProcessStats.upload_bytes" href="#python_pachyderm.pps.ProcessStats.upload_bytes">upload_bytes</a></code></li>
+<li><code><a title="python_pachyderm.pps.ProcessStats.upload_time" href="#python_pachyderm.pps.ProcessStats.upload_time">upload_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.ResourceSpec" href="#python_pachyderm.pps.ResourceSpec">ResourceSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.ResourceSpec.DESCRIPTOR" href="#python_pachyderm.pps.ResourceSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.ResourceSpec.cpu" href="#python_pachyderm.pps.ResourceSpec.cpu">cpu</a></code></li>
+<li><code><a title="python_pachyderm.pps.ResourceSpec.disk" href="#python_pachyderm.pps.ResourceSpec.disk">disk</a></code></li>
+<li><code><a title="python_pachyderm.pps.ResourceSpec.gpu" href="#python_pachyderm.pps.ResourceSpec.gpu">gpu</a></code></li>
+<li><code><a title="python_pachyderm.pps.ResourceSpec.memory" href="#python_pachyderm.pps.ResourceSpec.memory">memory</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.RestartDatumRequest" href="#python_pachyderm.pps.RestartDatumRequest">RestartDatumRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.RestartDatumRequest.DESCRIPTOR" href="#python_pachyderm.pps.RestartDatumRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.RestartDatumRequest.data_filters" href="#python_pachyderm.pps.RestartDatumRequest.data_filters">data_filters</a></code></li>
+<li><code><a title="python_pachyderm.pps.RestartDatumRequest.job" href="#python_pachyderm.pps.RestartDatumRequest.job">job</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.RunPipelineRequest" href="#python_pachyderm.pps.RunPipelineRequest">RunPipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.RunPipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.RunPipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.RunPipelineRequest.pipeline" href="#python_pachyderm.pps.RunPipelineRequest.pipeline">pipeline</a></code></li>
+<li><code><a title="python_pachyderm.pps.RunPipelineRequest.provenance" href="#python_pachyderm.pps.RunPipelineRequest.provenance">provenance</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.SchedulingSpec" href="#python_pachyderm.pps.SchedulingSpec">SchedulingSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.SchedulingSpec.DESCRIPTOR" href="#python_pachyderm.pps.SchedulingSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.SchedulingSpec.NodeSelectorEntry" href="#python_pachyderm.pps.SchedulingSpec.NodeSelectorEntry">NodeSelectorEntry</a></code></li>
+<li><code><a title="python_pachyderm.pps.SchedulingSpec.node_selector" href="#python_pachyderm.pps.SchedulingSpec.node_selector">node_selector</a></code></li>
+<li><code><a title="python_pachyderm.pps.SchedulingSpec.priority_class_name" href="#python_pachyderm.pps.SchedulingSpec.priority_class_name">priority_class_name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Secret" href="#python_pachyderm.pps.Secret">Secret</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Secret.DESCRIPTOR" href="#python_pachyderm.pps.Secret.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Secret.env_var" href="#python_pachyderm.pps.Secret.env_var">env_var</a></code></li>
+<li><code><a title="python_pachyderm.pps.Secret.key" href="#python_pachyderm.pps.Secret.key">key</a></code></li>
+<li><code><a title="python_pachyderm.pps.Secret.mount_path" href="#python_pachyderm.pps.Secret.mount_path">mount_path</a></code></li>
+<li><code><a title="python_pachyderm.pps.Secret.name" href="#python_pachyderm.pps.Secret.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Service" href="#python_pachyderm.pps.Service">Service</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.Service.AnnotationsEntry" href="#python_pachyderm.pps.Service.AnnotationsEntry">AnnotationsEntry</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.DESCRIPTOR" href="#python_pachyderm.pps.Service.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.annotations" href="#python_pachyderm.pps.Service.annotations">annotations</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.external_port" href="#python_pachyderm.pps.Service.external_port">external_port</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.internal_port" href="#python_pachyderm.pps.Service.internal_port">internal_port</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.ip" href="#python_pachyderm.pps.Service.ip">ip</a></code></li>
+<li><code><a title="python_pachyderm.pps.Service.type" href="#python_pachyderm.pps.Service.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Spout" href="#python_pachyderm.pps.Spout">Spout</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Spout.DESCRIPTOR" href="#python_pachyderm.pps.Spout.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Spout.overwrite" href="#python_pachyderm.pps.Spout.overwrite">overwrite</a></code></li>
+<li><code><a title="python_pachyderm.pps.Spout.service" href="#python_pachyderm.pps.Spout.service">service</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.StartPipelineRequest" href="#python_pachyderm.pps.StartPipelineRequest">StartPipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.StartPipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.StartPipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.StartPipelineRequest.pipeline" href="#python_pachyderm.pps.StartPipelineRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.StopJobRequest" href="#python_pachyderm.pps.StopJobRequest">StopJobRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.StopJobRequest.DESCRIPTOR" href="#python_pachyderm.pps.StopJobRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.StopJobRequest.job" href="#python_pachyderm.pps.StopJobRequest.job">job</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.StopPipelineRequest" href="#python_pachyderm.pps.StopPipelineRequest">StopPipelineRequest</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.StopPipelineRequest.DESCRIPTOR" href="#python_pachyderm.pps.StopPipelineRequest.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.StopPipelineRequest.pipeline" href="#python_pachyderm.pps.StopPipelineRequest.pipeline">pipeline</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Transform" href="#python_pachyderm.pps.Transform">Transform</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.Transform.DESCRIPTOR" href="#python_pachyderm.pps.Transform.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.EnvEntry" href="#python_pachyderm.pps.Transform.EnvEntry">EnvEntry</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.accept_return_code" href="#python_pachyderm.pps.Transform.accept_return_code">accept_return_code</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.cmd" href="#python_pachyderm.pps.Transform.cmd">cmd</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.debug" href="#python_pachyderm.pps.Transform.debug">debug</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.dockerfile" href="#python_pachyderm.pps.Transform.dockerfile">dockerfile</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.env" href="#python_pachyderm.pps.Transform.env">env</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.err_cmd" href="#python_pachyderm.pps.Transform.err_cmd">err_cmd</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.err_stdin" href="#python_pachyderm.pps.Transform.err_stdin">err_stdin</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.image" href="#python_pachyderm.pps.Transform.image">image</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.image_pull_secrets" href="#python_pachyderm.pps.Transform.image_pull_secrets">image_pull_secrets</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.secrets" href="#python_pachyderm.pps.Transform.secrets">secrets</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.stdin" href="#python_pachyderm.pps.Transform.stdin">stdin</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.user" href="#python_pachyderm.pps.Transform.user">user</a></code></li>
+<li><code><a title="python_pachyderm.pps.Transform.working_dir" href="#python_pachyderm.pps.Transform.working_dir">working_dir</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.Worker" href="#python_pachyderm.pps.Worker">Worker</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.pps.Worker.DESCRIPTOR" href="#python_pachyderm.pps.Worker.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.Worker.name" href="#python_pachyderm.pps.Worker.name">name</a></code></li>
+<li><code><a title="python_pachyderm.pps.Worker.state" href="#python_pachyderm.pps.Worker.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.pps.WorkerStatus" href="#python_pachyderm.pps.WorkerStatus">WorkerStatus</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.pps.WorkerStatus.DESCRIPTOR" href="#python_pachyderm.pps.WorkerStatus.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.data" href="#python_pachyderm.pps.WorkerStatus.data">data</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.job_id" href="#python_pachyderm.pps.WorkerStatus.job_id">job_id</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.queue_size" href="#python_pachyderm.pps.WorkerStatus.queue_size">queue_size</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.started" href="#python_pachyderm.pps.WorkerStatus.started">started</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.stats" href="#python_pachyderm.pps.WorkerStatus.stats">stats</a></code></li>
+<li><code><a title="python_pachyderm.pps.WorkerStatus.worker_id" href="#python_pachyderm.pps.WorkerStatus.worker_id">worker_id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

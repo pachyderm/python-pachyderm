@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.6.3" />
-<title>python_pachyderm API documentation</title>
+<title>python_pachyderm.version.client API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,40 +17,48 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>python_pachyderm</code></h1>
+<h1 class="title">Module <code>python_pachyderm.version.client</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>Source code</summary>
-<pre><code class="python">from .pfs import PfsClient
-from .pps import PpsClient
-from .version import get_remote_version</code></pre>
+<pre><code class="python">from python_pachyderm._proto.version.versionpb.version_pb2_grpc import (
+    google_dot_protobuf_dot_empty__pb2 as pb_empty,
+    APIStub as VersionStub,
+    grpc
+)
+from contextlib import closing
+from python_pachyderm.util import get_address
+
+def get_remote_version(host=None, port=None):
+    with closing(grpc.insecure_channel(get_address(host, port))) as channel:
+        stub = VersionStub(channel)
+        version = stub.GetVersion(pb_empty.Empty())
+        return version</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt><code class="name"><a title="python_pachyderm.pfs" href="pfs/index.html">python_pachyderm.pfs</a></code></dt>
+<dt id="python_pachyderm.version.client.get_remote_version"><code class="name flex">
+<span>def <span class="ident">get_remote_version</span></span>(<span>host=None, port=None)</span>
+</code></dt>
 <dd>
 <section class="desc"></section>
-</dd>
-<dt><code class="name"><a title="python_pachyderm.pps" href="pps/index.html">python_pachyderm.pps</a></code></dt>
-<dd>
-<section class="desc"></section>
-</dd>
-<dt><code class="name"><a title="python_pachyderm.util" href="util.html">python_pachyderm.util</a></code></dt>
-<dd>
-<section class="desc"></section>
-</dd>
-<dt><code class="name"><a title="python_pachyderm.version" href="version/index.html">python_pachyderm.version</a></code></dt>
-<dd>
-<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def get_remote_version(host=None, port=None):
+    with closing(grpc.insecure_channel(get_address(host, port))) as channel:
+        stub = VersionStub(channel)
+        version = stub.GetVersion(pb_empty.Empty())
+        return version</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
 </section>
 <section>
 </section>
@@ -61,12 +69,14 @@ from .version import get_remote_version</code></pre>
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="python_pachyderm.pfs" href="pfs/index.html">python_pachyderm.pfs</a></code></li>
-<li><code><a title="python_pachyderm.pps" href="pps/index.html">python_pachyderm.pps</a></code></li>
-<li><code><a title="python_pachyderm.util" href="util.html">python_pachyderm.util</a></code></li>
-<li><code><a title="python_pachyderm.version" href="version/index.html">python_pachyderm.version</a></code></li>
+<li><code><a title="python_pachyderm.version" href="index.html">python_pachyderm.version</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="python_pachyderm.version.client.get_remote_version" href="#python_pachyderm.version.client.get_remote_version">get_remote_version</a></code></li>
 </ul>
 </li>
 </ul>
