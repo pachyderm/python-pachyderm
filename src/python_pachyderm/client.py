@@ -61,7 +61,7 @@ class Client(object):
         if not hasattr(self, "__pfs_stub"):
             if self.root_certs:
                 ssl_channel_credentials = pfs_grpc.grpc.ssl_channel_credentials
-                ssl = ssl_channel_credentials(root_certificates=root_certs)
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
                 channel = pfs_grpc.grpc.secure_channel(self.address, ssl)
             else:
                 channel = pfs_grpc.grpc.insecure_channel(self.address)
@@ -73,7 +73,7 @@ class Client(object):
         if not hasattr(self, "__pps_stub"):
             if self.root_certs:
                 ssl_channel_credentials = pps_grpc.grpc.ssl_channel_credentials
-                ssl = ssl_channel_credentials(root_certificates=root_certs)
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
                 channel = pps_grpc.grpc.secure_channel(self.address, ssl)
             else:
                 channel = pps_grpc.grpc.insecure_channel(self.address)
@@ -310,7 +310,7 @@ class Client(object):
         """
         to_repos = [pfs_proto.Repo(name=r) for r in repos] if repos is not None else None
         req = pfs_proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
-                                       to_repos=to_repos)
+                                           to_repos=to_repos)
         return self._pfs_stub.FlushCommit(req, metadata=self.metadata)
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
@@ -638,7 +638,9 @@ class Client(object):
         """
 
         output_commit = commit_from(output_commit) if output_commit is not None else None
-        req = pps_proto.InspectJobRequest(job=pps_proto.Job(id=job_id), block_state=block_state, output_commit=output_commit)
+        req = pps_proto.InspectJobRequest(job=pps_proto.Job(id=job_id),
+                                          block_state=block_state,
+                                          output_commit=output_commit)
         return self._pps_stub.InspectJob(req, metadata=self.metadata)
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None):
@@ -672,7 +674,7 @@ class Client(object):
         output_commit = commit_from(output_commit) if output_commit is not None else None
 
         req = pps_proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
-                                   output_commit=output_commit, history=history)
+                                       output_commit=output_commit, history=history)
 
         return self._pps_stub.ListJobStream(req, metadata=self.metadata)
 
@@ -1000,4 +1002,3 @@ class Client(object):
         Runs garbage collection.
         """
         return self._pps_stub.GarbageCollect(pps_proto.GarbageCollectRequest(), metadata=self.metadata)
-
