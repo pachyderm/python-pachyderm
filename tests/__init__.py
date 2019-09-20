@@ -1,3 +1,1 @@
-# -*- coding: utf-8 -*-
-
-"""Unit test package for pypachy."""
+"""Unit test package for python-pachyderm."""
