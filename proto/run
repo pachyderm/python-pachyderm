@@ -20,7 +20,7 @@ done
 
 for i in $(find $OUTDIR -regex ".*pb2.*py"); do
     # Fix the imports so they work once this is packaged by pypi
-    sed -i 's/from client\./from python_pachyderm\.client\./' $i
+    sed -i 's/from client\./from python_pachyderm\.proto\./' $i
 done
 
 
