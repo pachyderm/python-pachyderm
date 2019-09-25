@@ -632,7 +632,9 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-
+  p, pre {
+    white-space: pre-wrap;
+  }
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1066,6 +1068,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.Delimiter">Delimiter</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.FILE">FILE</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.FINISHED">FINISHED</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.FSCK">FSCK</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.FileType">FileType</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.JSON">JSON</a></li>
     <li class="mono"><a href="#python_pachyderm.client.pfs.pfs_pb2.LINE">LINE</a></li>
@@ -1213,6 +1216,14 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.FlushCommitRequest">FlushCommitRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.FsckRequest">FsckRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.client.pfs.pfs_pb2.FsckResponse">FsckResponse</a></span>
         
         </li>
         <li class="mono">
@@ -1427,6 +1438,14 @@ table {
       </div>
       <div class="item">
       <p id="python_pachyderm.client.pfs.pfs_pb2.FINISHED" class="name">var <span class="ident">FINISHED</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.FSCK" class="name">var <span class="ident">FSCK</span></p>
       
   
   <div class="source_cont">
@@ -3706,6 +3725,116 @@ table {
             </div>
             <div class="item">
             <p id="python_pachyderm.client.pfs.pfs_pb2.FlushCommitRequest.to_repos" class="name">var <span class="ident">to_repos</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.FsckRequest" class="name">class <span class="ident">FsckRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckRequest.fix" class="name">var <span class="ident">fix</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.client.pfs.pfs_pb2.FsckResponse" class="name">class <span class="ident">FsckResponse</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckResponse.error" class="name">var <span class="ident">error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.client.pfs.pfs_pb2.FsckResponse.fix" class="name">var <span class="ident">fix</span></p>
             
 
             
