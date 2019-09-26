@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 docs:
 	python3 setup.py clean build install
-	pdoc --html --html-dir ./docs ./src/python_pachyderm
+	pdoc3 --html --html-dir ./docs ./src/python_pachyderm
 
 docker-build-proto:
 	pushd proto && \
