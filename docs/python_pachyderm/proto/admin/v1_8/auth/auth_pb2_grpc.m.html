@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
   
-  <title>python_pachyderm.proto.auth API documentation</title>
+  <title>python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc API documentation</title>
   <meta name="description" content="" />
 
 
@@ -1054,18 +1054,61 @@ table {
     <ul id="index">
     <li class="set"><h3>Super-module</h3>
       <ul>
-        <li class="mono"><a href="index.html">python_pachyderm.proto</a></li>
+        <li class="mono"><a href="index.html">python_pachyderm.proto.admin.v1_8.auth</a></li>
       </ul>
     </li>
 
+    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></li>
+  </ul>
 
+    </li>
 
-    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
+    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
-        <li class="mono"><a href="auth_pb2.m.html">python_pachyderm.proto.auth.auth_pb2</a></li>
-        <li class="mono"><a href="auth_pb2_grpc.m.html">python_pachyderm.proto.auth.auth_pb2_grpc</a></li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer">APIServicer</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Activate">Activate</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Authenticate">Authenticate</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Authorize">Authorize</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Deactivate">Deactivate</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">ExtendAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetACL">GetACL</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetAdmins">GetAdmins</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetAuthToken">GetAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetConfiguration">GetConfiguration</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetGroups">GetGroups</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">GetOneTimePassword</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetScope">GetScope</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetUsers">GetUsers</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">ModifyAdmins</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ModifyMembers">ModifyMembers</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">RevokeAuthToken</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetACL">SetACL</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetConfiguration">SetConfiguration</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">SetGroupsForUser</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetScope">SetScope</a></li>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.WhoAmI">WhoAmI</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIStub">APIStub</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIStub.__init__">__init__</a></li>
+  </ul>
+
+        </li>
       </ul>
     </li>
+
     </ul>
   </div>
 
@@ -1076,7 +1119,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">python_pachyderm.proto.auth</span> module</h1>
+  <h1 class="title"><span class="name">python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc</span> module</h1>
   <p></p>
 
   
@@ -1085,21 +1128,371 @@ table {
 
   <section id="section-items">
 
-
-
-    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
-      <div class="item">
-      <p class="name"><a href="auth_pb2.m.html">python_pachyderm.proto.auth.auth_pb2</a></p>
+    <h2 class="section-title" id="header-functions">Functions</h2>
       
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.add_APIServicer_to_server">
+    <p>def <span class="ident">add_APIServicer_to_server</span>(</p><p>servicer, server)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
   
 
-      </div>
+    <h2 class="section-title" id="header-classes">Classes</h2>
+      
       <div class="item">
-      <p class="name"><a href="auth_pb2_grpc.m.html">python_pachyderm.proto.auth.auth_pb2_grpc</a></p>
+      <p id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer" class="name">class <span class="ident">APIServicer</span></p>
       
   
+  <div class="source_cont">
+</div>
 
+
+      <div class="class">
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Activate">
+    <p>def <span class="ident">Activate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Activate/Deactivate the auth API. 'Activate' sets an initial set of admins
+for the Pachyderm cluster, and 'Deactivate' removes all ACLs, tokens, and
+admins from the Pachyderm cluster, making all data publicly accessable</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Authenticate">
+    <p>def <span class="ident">Authenticate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Authorize">
+    <p>def <span class="ident">Authorize</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.Deactivate">
+    <p>def <span class="ident">Deactivate</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ExtendAuthToken">
+    <p>def <span class="ident">ExtendAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetACL">
+    <p>def <span class="ident">GetACL</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetAdmins">
+    <p>def <span class="ident">GetAdmins</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>GetAdmins returns the current list of cluster admins</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetAuthToken">
+    <p>def <span class="ident">GetAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetConfiguration">
+    <p>def <span class="ident">GetConfiguration</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetGroups">
+    <p>def <span class="ident">GetGroups</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetOneTimePassword">
+    <p>def <span class="ident">GetOneTimePassword</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetScope">
+    <p>def <span class="ident">GetScope</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.GetUsers">
+    <p>def <span class="ident">GetUsers</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ModifyAdmins">
+    <p>def <span class="ident">ModifyAdmins</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>ModifyAdmins adds or removes admins from the cluster</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.ModifyMembers">
+    <p>def <span class="ident">ModifyMembers</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.RevokeAuthToken">
+    <p>def <span class="ident">RevokeAuthToken</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetACL">
+    <p>def <span class="ident">SetACL</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetConfiguration">
+    <p>def <span class="ident">SetConfiguration</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetGroupsForUser">
+    <p>def <span class="ident">SetGroupsForUser</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.SetScope">
+    <p>def <span class="ident">SetScope</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIServicer.WhoAmI">
+    <p>def <span class="ident">WhoAmI</span>(</p><p>self, request, context)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIStub" class="name">class <span class="ident">APIStub</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.proto.admin.v1_8.auth.auth_pb2_grpc.APIStub.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, channel)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Constructor.</p>
+
+<p>Args:
+  channel: A grpc.Channel.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+
   </section>
 </article>
   <div class="clear"> </div>
