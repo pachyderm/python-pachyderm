@@ -40,7 +40,7 @@ class Sandbox:
 
     def wait_for_job(self):
         # block until the commit is ready
-        self.client.inspect_commit(self.commit, block_state=python_pachyderm.COMMIT_STATE_READY)
+        self.client.inspect_commit(self.commit, block_state=python_pachyderm.CommitState.READY)
 
         # while the commit is ready, the job might not be listed on the first
         # call, so repeatedly list jobs until it's available
@@ -89,7 +89,7 @@ def test_stop_job():
     except grpc._channel._Rendezvous:
         # if it failed, it should be because the job already finished
         job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JOB_SUCCESS
+        assert job.state == python_pachyderm.JobState.JOB_SUCCESS
     else:
         # This is necessary because `StopJob` does not wait for the job to be
         # killed before returning a result.
@@ -97,7 +97,7 @@ def test_stop_job():
         # https://github.com/pachyderm/pachyderm/issues/3856
         time.sleep(1)
         job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JOB_KILLED
+        assert job.state == python_pachyderm.JobState.JOB_KILLED
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
@@ -116,7 +116,7 @@ def test_datums():
     datums = list(sandbox.client.list_datum(job_id))
     assert len(datums) == 1
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
-    assert datum.state == python_pachyderm.DATUM_SUCCESS
+    assert datum.state == python_pachyderm.DatumState.SUCCESS
 
     # Just ensure this doesn't raise an exception
     sandbox.client.restart_datum(job_id)

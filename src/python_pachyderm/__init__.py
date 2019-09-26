@@ -1,44 +1,43 @@
 import string as _string
 import importlib as _importlib
+import enum as _enum
+from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
+
+from .client import Client
+from grpc import RpcError
 
 def _import_protos(path, *enums):
+    """
+    Imports items selectively from the auto-generated proto package.
+
+    Importing is done dynamically so we can selectively blacklist items. We
+    also dynamically define enums that build on top of the auto-generated
+    protobuf enums, to create a more pythonic API.
+
+    More broadly, the dark magic in here allows us to maintain parity with
+    Pachyderm protobufs when they change, without having to maintain a manual
+    mapping of protobuf to python_pachyderm values.
+    """
+
     g = globals()
     module = _importlib.import_module(path)
     uppercase_letters = set(_string.ascii_uppercase)
     lowercase_letters = set(_string.ascii_lowercase)
 
     for key in dir(module):
-        added = False
+        if key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
+            value = getattr(module, key)
 
-        for (enum_prefix, enum_members) in enums:
-            if key in enum_members:
-                if enum_prefix is not None:
-                    g["{}_{}".format(enum_prefix, key)] = getattr(module, key)
-                else:
-                    g[key] = getattr(module, key)
-                added = True
-                break
+            if isinstance(value, _EnumTypeWrapper):
+                # Dynamically define an enum class that is exported
+                enum_values = _enum._EnumDict()
+                enum_values.update(dict(value.items()))
+                enum_class = type(key, (_enum.IntEnum,), enum_values)
+                g[key] = enum_class
+            else:
+                # Export the value
+                g[key] = getattr(module, key)
 
-        if not added and key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
-            g[key] = getattr(module, key)
-
-_import_protos(
-    "python_pachyderm.proto.pfs.pfs_pb2",
-    ("FILE_TYPE", set(("RESERVED", "FILE", "DIR"))),
-    ("FILE_DELIMITER", set(("NONE", "JSON", "LINE", "SQL", "CSV"))),
-    ("ORIGIN_KIND", set(("USER", "AUTH", "FSCK"))),
-    ("COMMIT_STATE", set(("STARTED", "READY", "FINISHED"))),
-)
-
-_import_protos(
-    "python_pachyderm.proto.pps.pps_pb2",
-    (None, set(("JOB_STARTING", "JOB_RUNNING", "JOB_FAILURE", "JOB_SUCCESS", "JOB_KILLED", "JOB_MERGING"))),
-    ("DATUM_STATE", set(("FAILED", "SUCCESS", "SKIPPED", "STARTING", "RECOVERED"))),
-    (None, set(("POD_RUNNING", "POD_SUCCESS", "POD_FAILED"))),
-    (None, set(("PIPELINE_STARTING", "PIPELINE_RUNNING", "PIPELINE_RESTARTING", "PIPELINE_FAILURE", "PIPELINE_PAUSED", "PIPELINE_STANDBY"))),
-)
-
+_import_protos("python_pachyderm.proto.pfs.pfs_pb2")
+_import_protos("python_pachyderm.proto.pps.pps_pb2")
 _import_protos("python_pachyderm.proto.version.versionpb.version_pb2")
-
-from .client import Client
-from grpc import RpcError
