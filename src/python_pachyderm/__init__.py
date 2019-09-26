@@ -6,7 +6,7 @@ from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumT
 from .client import Client
 from grpc import RpcError
 
-def _import_protos(path, *enums):
+def _import_protos(path):
     """
     Imports items selectively from the auto-generated proto package.
 
@@ -36,7 +36,7 @@ def _import_protos(path, *enums):
                 g[key] = enum_class
             else:
                 # Export the value
-                g[key] = getattr(module, key)
+                g[key] = value
 
 _import_protos("python_pachyderm.proto.pfs.pfs_pb2")
 _import_protos("python_pachyderm.proto.pps.pps_pb2")
