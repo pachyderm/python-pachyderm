@@ -1,29 +1,40 @@
-from .proto.pfs.pfs_pb2 import DIR, FILE, NONE, JSON, LINE, CSV, \
-    Repo, Branch, BranchInfo, File, Block, Object, Tag, RepoInfo, \
-    RepoAuthInfo, Commit, CommitRange, CommitInfo, FileInfo, ByteRange, \
-    BlockRef, ObjectInfo, OverwriteIndex, PutFileRecord, PutFileRecords, \
-    ObjectIndex, CommitProvenance
-from .proto.pfs.pfs_pb2 import \
-    STARTED as COMMIT_STATE_STARTED, \
-    READY as COMMIT_STATE_READY, \
-    FINISHED as COMMIT_STATE_FINISHED
-from .proto.pps.pps_pb2 import JOB_FAILURE, JOB_KILLED, JOB_RUNNING, \
-    JOB_STARTING, JOB_SUCCESS, FAILED, SUCCESS, SKIPPED, POD_SUCCESS, \
-    POD_FAILED, POD_RUNNING, PIPELINE_FAILURE, PIPELINE_PAUSED, \
-    PIPELINE_RESTARTING, PIPELINE_RUNNING, PIPELINE_STARTING, Secret, \
-    Transform, Egress, Job, Service, PFSInput, CronInput, \
-    GitInput, Input, JobInput, ParallelismSpec, HashtreeSpec, InputFile, \
-    Datum, DatumInfo, Aggregate, ProcessStats, AggregateProcessStats, \
-    WorkerStatus, ResourceSpec, GPUSpec, JobInfo, Worker, Pipeline, \
-    PipelineInput, PipelineInfo, LogMessage, ChunkSpec, SchedulingSpec, \
-    ListDatumStreamResponse, PipelineInfos
-from .proto.pps.pps_pb2 import \
-    FAILED as DATUM_FAILED, \
-    SUCCESS as DATUM_SUCCESS, \
-    SKIPPED as DATUM_SKIPPED, \
-    STARTING as DATUM_STARTING, \
-    RECOVERED as DATUM_RECOVERED
-from .proto.version.versionpb.version_pb2 import Version
+def _import_protos(path, *enums):
+    import string
+    import importlib
+    g = globals()
+    module = importlib.import_module(path)
+    uppercase_letters = set(string.ascii_uppercase)
+    lowercase_letters = set(string.ascii_lowercase)
+
+    for key in dir(module):
+        for (enum_prefix, enum_members) in enums:
+            if key in enum_members:
+                if enum_prefix is not None:
+                    g["{}_{}".format(enum_prefix, key)] = getattr(module, key)
+                else:
+                    g[key] = getattr(module, key)
+                continue
+
+        if len(key) > 0 and key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
+            g[key] = getattr(module, key)
+
+_import_protos(
+    "python_pachyderm.proto.pfs.pfs_pb2",
+    ("FILE_TYPE", set(("RESERVED", "FILE", "DIR"))),
+    ("FILE_DELIMITER", set(("NONE", "JSON", "LINE", "SQL", "CSV"))),
+    ("ORIGIN_KIND", set(("USER", "AUTH", "FSCK"))),
+    ("COMMIT_STATE", set(("STARTED", "READY", "FINISHED"))),
+)
+
+_import_protos(
+    "python_pachyderm.proto.pps.pps_pb2",
+    (None, set(("JOB_STARTING", "JOB_RUNNING", "JOB_FAILURE", "JOB_SUCCESS", "JOB_KILLED", "JOB_MERGING"))),
+    ("DATUM_STATE", set(("FAILED", "SUCCESS", "SKIPPED", "STARTING", "RECOVERED"))),
+    (None, set(("POD_RUNNING", "POD_SUCCESS", "POD_FAILED"))),
+    (None, set(("PIPELINE_STARTING", "PIPELINE_RUNNING", "PIPELINE_RESTARTING", "PIPELINE_FAILURE", "PIPELINE_PAUSED", "PIPELINE_STANDBY"))),
+)
+
+_import_protos("python_pachyderm.proto.version.versionpb.version_pb2")
 
 from .client import Client
 from grpc import RpcError
