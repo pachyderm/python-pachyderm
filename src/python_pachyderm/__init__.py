@@ -8,6 +8,7 @@ from grpc import RpcError
 
 __all__ = ["Client", "RpcError"]
 
+
 def _import_protos(path):
     """
     Imports items selectively from the auto-generated proto package.
@@ -41,6 +42,7 @@ def _import_protos(path):
                 g[key] = value
 
             __all__.append(key)
+
 
 _import_protos("python_pachyderm.proto.pfs.pfs_pb2")
 _import_protos("python_pachyderm.proto.pps.pps_pb2")
