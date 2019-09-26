@@ -1,21 +1,25 @@
+import string as _string
+import importlib as _importlib
+
 def _import_protos(path, *enums):
-    import string
-    import importlib
     g = globals()
-    module = importlib.import_module(path)
-    uppercase_letters = set(string.ascii_uppercase)
-    lowercase_letters = set(string.ascii_lowercase)
+    module = _importlib.import_module(path)
+    uppercase_letters = set(_string.ascii_uppercase)
+    lowercase_letters = set(_string.ascii_lowercase)
 
     for key in dir(module):
+        added = False
+
         for (enum_prefix, enum_members) in enums:
             if key in enum_members:
                 if enum_prefix is not None:
                     g["{}_{}".format(enum_prefix, key)] = getattr(module, key)
                 else:
                     g[key] = getattr(module, key)
-                continue
+                added = True
+                break
 
-        if len(key) > 0 and key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
+        if not added and key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
             g[key] = getattr(module, key)
 
 _import_protos(
