@@ -80,10 +80,21 @@ class Client(object):
             self.__pps_stub = pps_grpc.APIStub(channel)
         return self.__pps_stub
 
+    @property
+    def _version_stub(self):
+        if not hasattr(self, "__version_stub"):
+            if self.root_certs:
+                ssl_channel_credentials = version_grpc.grpc.ssl_channel_credentials
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
+                channel = version_grpc.grpc.secure_channel(self.address, ssl)
+            else:
+                channel = version_grpc.grpc.insecure_channel(self.address)
+            self.__version_stub = version_grpc.APIStub(channel)
+        return self.__version_stub
+
     def get_remote_version(self):
-        with closing(version_grpc.grpc.insecure_channel(self.address)) as channel:
-            stub = version_grpc.APIStub(channel)
-            return stub.GetVersion(version_grpc.google_dot_protobuf_dot_empty__pb2.Empty())
+        req = version_grpc.google_dot_protobuf_dot_empty__pb2.Empty()
+        return self._version_stub.GetVersion(req, metadata=self.metadata)
 
     def create_repo(self, repo_name, description=None, update=None):
         """
