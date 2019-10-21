@@ -1,7 +1,7 @@
 import os
 import collections
 import itertools
-from contextlib import contextmanager, closing
+from contextlib import contextmanager
 
 from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.proto.pfs import pfs_pb2_grpc as pfs_grpc
