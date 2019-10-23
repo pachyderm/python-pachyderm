@@ -60,7 +60,7 @@ This driver is co-maintained by Pachyderm and the community. If you're looking t
 
 ### Getting started
 
-To run tests, clone the repo, then run:
+To run tests, clone the repo, [install jq](https://stedolan.github.io/jq/), then run:
 
 ```
 make init
