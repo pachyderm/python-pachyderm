@@ -28,5 +28,4 @@ install:
 before_script:
 - make ci-setup
 script:
-- make proto
 - tox
