@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+PACHYDERM_VERSION = $(shell jq -r .pachyderm version.json)
 
 docs:
 	python3 setup.py clean build install
@@ -8,7 +9,11 @@ docker-build-proto:
 	cd proto && \
 		docker build -t pachyderm_python_proto .
 
-proto: docker-build-proto
+src/python_pachyderm/proto: docker-build-proto
+	@echo "Building with pachyderm core v$(PACHYDERM_VERSION)"
+	cd proto/pachyderm && \
+		git fetch --all && \
+		git checkout v$(PACHYDERM_VERSION)
 	find ./proto/pachyderm/src/client -regex ".*\.proto" \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
@@ -21,7 +26,7 @@ ci-install:
 	sudo apt-get install jq
 	cd proto/pachyderm && \
 		sudo ./etc/testing/travis_before_install.sh && \
-		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$$(jq -r .pachyderm version.json)/pachctl_$$(jq -r .pachyderm version.json)_amd64.deb  && \
+		curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$(PACHYDERM_VERSION)/pachctl_$(PACHYDERM_VERSION)_amd64.deb  && \
 		sudo dpkg -i /tmp/pachctl.deb
 	pip install tox tox-travis
 
@@ -33,15 +38,9 @@ ci-setup:
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	PACHD_ADDRESS=$$(minikube ip):30650 pachctl version
 
-sync:
-	cd proto/pachyderm && \
-		git fetch --all && \
-		git checkout v$$(jq -r .pachyderm version.json)
-	make proto
-
 release:
 	rm -rf build dist
 	python setup.py sdist
 	twine upload dist/*
 
-.PHONY: docker-build-proto init ci-install ci-setup sync release
+.PHONY: docker-build-proto init ci-install ci-setup release
