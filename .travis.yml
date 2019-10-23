@@ -9,8 +9,6 @@ cache:
 language: python
 python:
   - '3.4'
-  - '3.5'
-  - '3.6'
   - '3.7'
 env:
   global:
@@ -22,6 +20,15 @@ matrix:
       env: TOXENV=flake8
     - python: 3.7
       env: TOXENV=examples
+    - python: 3.4
+    - python: 3.7
+      env: PACHYDERM_VERSION=1.9.7
+    - python: 3.7
+      env: PACHYDERM_VERSION=1.9.0
+    - python: 3.7
+      env: PACHYDERM_VERSION=1.8.8
+    - python: 3.7
+      env: PACHYDERM_VERSION=1.8.0
 
 install:
 - make ci-install

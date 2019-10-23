@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PACHYDERM_VERSION = $(shell jq -r .pachyderm version.json)
+PACHYDERM_VERSION ?= $(shell jq -r .pachyderm version.json)
 
 docs:
 	rm -rf build dist
