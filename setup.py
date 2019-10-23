@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-import io
+import json
 from glob import glob
 from os.path import basename
 from os.path import dirname
@@ -11,31 +11,20 @@ from os.path import splitext
 from setuptools import find_packages
 from setuptools import setup
 
+with open(join(dirname(__file__), "README.md"), "r") as f:
+    readme = f.read()
 
-def read(*names, **kwargs):
-    return io.open(
-        join(dirname(__file__), *names),
-        encoding=kwargs.get('encoding', 'utf8')
-    ).read()
-
-def get_version():
-    with open("VERSION", "r") as f:
-        version = f.read().strip()
-    with open("BUILD_NUMBER", "r") as f:
-        build = f.read().strip()
-
-    if build != "1":
-        return version + "-" + build
-    else:
-        return version
+with open(join(dirname(__file__), "version.json"), "r") as f:
+    j = json.load(f)
+    version = j["python-pachyderm"]
 
 setup(
     name='python-pachyderm',
-    version=get_version(),
+    version=version,
     license='Apache 2.0',
     description='Python Pachyderm Client',
     long_description_content_type='text/markdown',
-    long_description=read('README.md'),
+    long_description=readme,
     author='Joe Doliner',
     author_email='jdoliner@pachyderm.io',
     url='https://github.com/pachyderm/python-pachyderm',
