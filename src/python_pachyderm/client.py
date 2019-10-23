@@ -34,12 +34,12 @@ class Client(object):
 
         Params:
 
-        * host: The pachd host. Default is 'localhost', which is used with
+        * `host`: The pachd host. Default is 'localhost', which is used with
         `pachctl port-forward`.
-        * port: The port to connect to. Default is 30650.
-        * auth_token: The authentication token; used if authentication is
+        * `port`: The port to connect to. Default is 30650.
+        * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        * root_certs:  The PEM-encoded root certificates as byte string.
+        * `root_certs`:  The PEM-encoded root certificates as byte string.
         """
 
         if host is not None and port is not None:
@@ -106,9 +106,9 @@ class Client(object):
 
         Params:
 
-        * repo_name: Name of the repo.
-        * description: An optional string describing the repo.
-        * update: Whether to update if the repo already exists.
+        * `repo_name`: Name of the repo.
+        * `description`: An optional string describing the repo.
+        * `update`: Whether to update if the repo already exists.
         """
         req = pfs_proto.CreateRepoRequest(
             repo=pfs_proto.Repo(name=repo_name),
@@ -122,7 +122,7 @@ class Client(object):
         Returns info about a specific repo. Returns a `RepoInfo` object.
 
         Params:
-        * repo_name: Name of the repo.
+        * `repo_name`: Name of the repo.
         """
         req = pfs_proto.InspectRepoRequest(repo=pfs_proto.Repo(name=repo_name))
         return self._pfs_stub.InspectRepo(req, metadata=self.metadata)
@@ -141,8 +141,8 @@ class Client(object):
 
         Params:
 
-        * repo_name: The name of the repo.
-        * force: If set to true, the repo will be removed regardless of
+        * `repo_name`: The name of the repo.
+        * `force`: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
         req = pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name=repo_name), force=force, all=False)
@@ -154,7 +154,7 @@ class Client(object):
 
         Params:
 
-        * force: If set to true, the repo will be removed regardless of
+        * `force`: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
 
@@ -171,19 +171,19 @@ class Client(object):
 
         Params:
 
-        * repo_name: A string specifying the name of the repo.
-        * branch: A string specifying the branch name. This is a more
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
         convenient way to build linear chains of commits. When a commit is
         started with a non-empty branch the value of branch becomes an alias
         for the created Commit. This enables a more intuitive access pattern.
         When the commit is started on a branch the previous head of the branch
         is used as the parent of the commit.
-        * parent: An optional `Commit` object specifying the parent commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
         Upon creation the new commit will appear identical to the parent
         commit, data can safely be added to the new commit without affecting
         the contents of the parent commit.
-        * description: An optional string describing the commit.
-        * provenance: An optional iterable of `CommitProvenance` objects
+        * `description`: An optional string describing the commit.
+        * `provenance`: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         """
         req = pfs_proto.StartCommitRequest(
@@ -204,13 +204,13 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * description: An optional string describing this commit.
-        * tree_object_hashes: A list of zero or more strings specifying object
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `description`: An optional string describing this commit.
+        * `tree_object_hashes`: A list of zero or more strings specifying object
         hashes.
-        * datum_object_hash: An optional string specifying an object hash.
-        * size_bytes: An optional int.
-        * empty: An optional bool. If set, the commit will be closed (its
+        * `datum_object_hash`: An optional string specifying an object hash.
+        * `size_bytes`: An optional int.
+        * `empty`: An optional bool. If set, the commit will be closed (its
         `finished` field will be set to the current time) but its `tree` will
         be left nil.
         """
@@ -231,18 +231,18 @@ class Client(object):
 
         Params:
 
-        * repo_name: A string specifying the name of the repo.
-        * branch: A string specifying the branch name. This is a more
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
         convenient way to build linear chains of commits. When a commit is
         started with a non-empty branch the value of branch becomes an alias
         for the created Commit. This enables a more intuitive access pattern.
         When the commit is started on a branch the previous head of the branch
         is used as the parent of the commit.
-        * parent: An optional `Commit` object specifying the parent commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
         Upon creation the new commit will appear identical to the parent
         commit, data can safely be added to the new commit without affecting
         the contents of the parent commit.
-        * description: An optional string describing the commit.
+        * `description`: An optional string describing the commit.
         """
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
@@ -256,8 +256,8 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * block_state: Causes inspect commit to block until the commit is in
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `block_state`: Causes inspect commit to block until the commit is in
         the desired commit state.
         """
         req = pfs_proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
@@ -269,13 +269,13 @@ class Client(object):
 
         Params:
 
-        * repo_name: If only `repo_name` is given, all commits in the repo are
+        * `repo_name`: If only `repo_name` is given, all commits in the repo are
         returned.
-        * to_commit: Optional. Only the ancestors of `to`, including `to`
+        * `to_commit`: Optional. Only the ancestors of `to`, including `to`
         itself, are considered.
-        * from_commit: Optional. Only the descendants of `from`, including
+        * `from_commit`: Optional. Only the descendants of `from`, including
         `from` itself, are considered.
-        * number: Optional. Determines how many commits are returned.  If
+        * `number`: Optional. Determines how many commits are returned.  If
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
         """
@@ -292,7 +292,7 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
         """
         req = pfs_proto.DeleteCommitRequest(commit=commit_from(commit))
         self._pfs_stub.DeleteCommit(req, metadata=self.metadata)
@@ -314,9 +314,9 @@ class Client(object):
 
         Params:
 
-        * commits: A list of tuples, strings, or `Commit` objects representing
+        * `commits`: A list of tuples, strings, or `Commit` objects representing
         the commits to flush.
-        * repos: An optional list of strings specifying repo names. If
+        * `repos`: An optional list of strings specifying repo names. If
         specified, only commits within these repos will be flushed.
         """
         to_repos = [pfs_proto.Repo(name=r) for r in repos] if repos is not None else None
@@ -330,11 +330,11 @@ class Client(object):
 
         Params:
 
-        * repo_name: A string specifying the name of the repo.
-        * branch: A string specifying branch to subscribe to.
-        * from_commit_id: An optional string specifying the commit ID. Only
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying branch to subscribe to.
+        * `from_commit_id`: An optional string specifying the commit ID. Only
         commits created since this commit are returned.
-        * state: The commit state to filter on.
+        * `state`: The commit state to filter on.
         """
         repo = pfs_proto.Repo(name=repo_name)
         req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
@@ -347,11 +347,11 @@ class Client(object):
         Creates a new branch.
 
         Params:
-        * repo_name: A string specifying the name of the repo.
-        * branch_name: A string specifying the new branch name.
-        * commit: An optional tuple, string, or `Commit` object representing
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch_name`: A string specifying the new branch name.
+        * `commit`: An optional tuple, string, or `Commit` object representing
         the head commit of the branch.
-        * provenance: An optional iterable of `Branch` objects representing
+        * `provenance`: An optional iterable of `Branch` objects representing
         the branch provenance.
         """
         req = pfs_proto.CreateBranchRequest(
@@ -376,7 +376,7 @@ class Client(object):
 
         Params:
 
-        * repo_name: A string specifying the repo name.
+        * `repo_name`: A string specifying the repo name.
         """
         req = pfs_proto.ListBranchRequest(repo=pfs_proto.Repo(name=repo_name))
         res = self._pfs_stub.ListBranch(req, metadata=self.metadata)
@@ -390,9 +390,9 @@ class Client(object):
 
         Params:
 
-        * repo_name: A string specifying the repo name.
-        * branch_name: A string specifying the name of the branch to delete.
-        * force: A bool specifying whether to force the branch deletion.
+        * `repo_name`: A string specifying the repo name.
+        * `branch_name`: A string specifying the name of the branch to delete.
+        * `force`: A bool specifying whether to force the branch deletion.
         """
         branch = pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name)
         req = pfs_proto.DeleteBranchRequest(branch=branch, force=force)
@@ -405,20 +405,20 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: A string specifying the path in the repo the file(s) will be
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: A string specifying the path in the repo the file(s) will be
         written to.
-        * value: The file contents as bytes, represented as a file-like
+        * `value`: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
-        * delimiter: Optional. causes data to be broken up into separate files
+        * `delimiter`: Optional. causes data to be broken up into separate files
         with `path` as a prefix.
-        * target_file_datums: An optional int. Specifies the target number of
+        * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
-        * target_file_bytes: An optional int. Specifies the target number of
+        * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * overwrite_index: An optional `OverwriteIndex` object. This is the
+        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
         """
@@ -485,12 +485,12 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: A string specifying the path to the file.
-        * url: A string specifying the url of the file to put.
-        * recursive: allow for recursive scraping of some types URLs, for
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: A string specifying the path to the file.
+        * `url`: A string specifying the url of the file to put.
+        * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
-        * overwrite_index: An optional `OverwriteIndex` object. This is the
+        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
         """
@@ -515,13 +515,13 @@ class Client(object):
 
         Params:
 
-        * source_commit: A tuple, string, or `Commit` object representing the
+        * `source_commit`: A tuple, string, or `Commit` object representing the
         commit for the source file.
-        * source_path: A string specifying the path of the source file.
-        * dest_commit: A tuple, string, or `Commit` object representing the
+        * `source_path`: A string specifying the path of the source file.
+        * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
-        * dest_path: A string specifying the path of the destination file.
-        * overwrite: Am optional bool specifying whether to overwrite the
+        * `dest_path`: A string specifying the path of the destination file.
+        * `overwrite`: Am optional bool specifying whether to overwrite the
         destination file if it already exists.
         """
         req = pfs_proto.CopyFileRequest(
@@ -537,11 +537,11 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: A string specifying the path of the file.
-        * offset_bytes: An optional int. Specifies a number of bytes that
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: A string specifying the path of the file.
+        * `offset_bytes`: An optional int. Specifies a number of bytes that
         should be skipped in the beginning of the file.
-        * size_bytes: An optional int. limits the total amount of data
+        * `size_bytes`: An optional int. limits the total amount of data
         returned, note you will get fewer bytes than size if you pass a value
         larger than the size of the file. If size is set to 0 then all of the
         data will be returned.
@@ -561,8 +561,8 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: A string specifying the path to the file.
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: A string specifying the path to the file.
         """
         req = pfs_proto.InspectFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
         return self._pfs_stub.InspectFile(req, metadata=self.metadata)
@@ -573,15 +573,15 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: The path to the directory.
-        * history: An optional int that indicates to return jobs from
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: The path to the directory.
+        * `history`: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
          0: Return jobs from the current version of the pipeline or pipelines.
          1: Return the above and jobs from the next most recent version
          2: etc.
         -1: Return jobs from all historical versions.
-        * include_contents: An optional bool. If `True`, file contents are
+        * `include_contents`: An optional bool. If `True`, file contents are
         included.
         """
 
@@ -600,8 +600,8 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: The path to the directory.
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: The path to the directory.
         """
         commit = commit_from(commit)
         f = pfs_proto.File(commit=commit_from(commit), path=path)
@@ -614,8 +614,8 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * pattern: A string representing a glob pattern.
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `pattern`: A string representing a glob pattern.
         """
 
         req = pfs_proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
@@ -630,8 +630,8 @@ class Client(object):
 
         Params:
 
-        * commit: A tuple, string, or `Commit` object representing the commit.
-        * path: The path to the file.
+        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `path`: The path to the file.
         """
         req = pfs_proto.DeleteFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
         self._pfs_stub.DeleteFile(req, metadata=self.metadata)
@@ -642,9 +642,9 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job to inspect.
-        * block_state: If true, block until the job completes.
-        * output_commit: An optional tuple, string, or `Commit` object
+        * `job_id`: The ID of the job to inspect.
+        * `block_state`: If true, block until the job completes.
+        * `output_commit`: An optional tuple, string, or `Commit` object
         representing an output commit to filter on.
         """
 
@@ -660,13 +660,13 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: An optional string representing a pipeline name to
+        * `pipeline_name`: An optional string representing a pipeline name to
         filter on.
-        * input_commit: An optional list of tuples, strings, or `Commit`
+        * `input_commit`: An optional list of tuples, strings, or `Commit`
         objects representing input commits to filter on.
-        * output_commit: An optional tuple, string, or `Commit` object
+        * `output_commit`: An optional tuple, string, or `Commit` object
         representing an output commit to filter on.
-        * history: An optional int that indicates to return jobs from
+        * `history`: An optional int that indicates to return jobs from
           historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
               pipelines.
@@ -696,9 +696,9 @@ class Client(object):
 
         Params:
 
-        * commits: A list of tuples, strings, or `Commit` objects representing
+        * `commits`: A list of tuples, strings, or `Commit` objects representing
         the commits to flush.
-        * pipeline_names: An optional list of strings specifying pipeline
+        * `pipeline_names`: An optional list of strings specifying pipeline
         names. If specified, only jobs within these pipelines will be flushed.
         """
 
@@ -713,7 +713,7 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job to delete.
+        * `job_id`: The ID of the job to delete.
         """
 
         req = pps_proto.DeleteJobRequest(job=pps_proto.Job(id=job_id))
@@ -725,7 +725,7 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job to stop.
+        * `job_id`: The ID of the job to stop.
         """
 
         req = pps_proto.StopJobRequest(job=pps_proto.Job(id=job_id))
@@ -737,8 +737,8 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job.
-        * datum_id: The ID of the datum.
+        * `job_id`: The ID of the job.
+        * `datum_id`: The ID of the datum.
         """
 
         req = pps_proto.InspectDatumRequest(datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)))
@@ -750,9 +750,9 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job.
-        * page_size: An optional int specifying the size of the page.
-        * page: An optional int specifying the page number.
+        * `job_id`: The ID of the job.
+        * `page_size`: An optional int specifying the size of the page.
+        * `page`: An optional int specifying the page number.
         """
 
         req = pps_proto.ListDatumRequest(job=pps_proto.Job(id=job_id), page_size=page_size, page=page)
@@ -764,8 +764,8 @@ class Client(object):
 
         Params:
 
-        * job_id: The ID of the job.
-        * data_filters: An optional iterable of strings.
+        * `job_id`: The ID of the job.
+        * `data_filters`: An optional iterable of strings.
         """
 
         req = pps_proto.RestartDatumRequest(job=pps_proto.Job(id=job_id), data_filters=data_filters)
@@ -786,35 +786,35 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
-        * transform: An optional `Transform` object.
-        * parallelism_spec: An optional `ParallelismSpec` object.
-        * hashtree_spec: An optional `HashtreeSpec` object.
-        * egress: An optional `Egress` object.
-        * update: An optional bool specifying whether this should behave as an
+        * `pipeline_name`: A string representing the pipeline name.
+        * `transform`: An optional `Transform` object.
+        * `parallelism_spec`: An optional `ParallelismSpec` object.
+        * `hashtree_spec`: An optional `HashtreeSpec` object.
+        * `egress`: An optional `Egress` object.
+        * `update`: An optional bool specifying whether this should behave as an
         upsert.
-        * output_branch: An optional string representing the branch to output
+        * `output_branch`: An optional string representing the branch to output
         results on.
-        * scale_down_threshold: An optional pps_proto.uf `Duration` object.
-        * resource_requests: An optional `ResourceSpec` object.
-        * resource_limits: An optional `ResourceSpec` object.
-        * input: An optional `Input` object.
-        * description: An optional string describing the pipeline.
-        * cache_size: An optional string.
-        * enable_stats: An optional bool.
-        * reprocess: An optional bool. If true, pachyderm forces the pipeline
+        * `scale_down_threshold`: An optional pps_proto.uf `Duration` object.
+        * `resource_requests`: An optional `ResourceSpec` object.
+        * `resource_limits`: An optional `ResourceSpec` object.
+        * `input`: An optional `Input` object.
+        * `description`: An optional string describing the pipeline.
+        * `cache_size`: An optional string.
+        * `enable_stats`: An optional bool.
+        * `reprocess`: An optional bool. If true, pachyderm forces the pipeline
         to reprocess all datums. It only has meaning if `update` is `True`.
-        * batch: An optional bool.
-        * max_queue_size: An optional int.
-        * service: An optional `Service` object.
-        * chunk_spec: An optional `ChunkSpec` object.
-        * datum_timeout: An optional pps_proto.uf `Duration` object.
-        * job_timeout: An optional pps_proto.uf `Duration` object.
-        * salt: An optional stirng.
-        * standby: An optional bool.
-        * datum_tries: An optional int.
-        * scheduling_spec: An optional `SchedulingSpec` object.
-        * pod_patch: An optional string.
+        * `batch`: An optional bool.
+        * `max_queue_size`: An optional int.
+        * `service`: An optional `Service` object.
+        * `chunk_spec`: An optional `ChunkSpec` object.
+        * `datum_timeout`: An optional pps_proto.uf `Duration` object.
+        * `job_timeout`: An optional pps_proto.uf `Duration` object.
+        * `salt`: An optional stirng.
+        * `standby`: An optional bool.
+        * `datum_tries`: An optional int.
+        * `scheduling_spec`: An optional `SchedulingSpec` object.
+        * `pod_patch`: An optional string.
         """
 
         req = pps_proto.CreatePipelineRequest(
@@ -839,8 +839,8 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
-        * history: An optional int that indicates to return jobs from
+        * `pipeline_name`: A string representing the pipeline name.
+        * `history`: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
               pipelines.
@@ -868,8 +868,8 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
-        * history: An optional int that indicates to return jobs from
+        * `pipeline_name`: A string representing the pipeline name.
+        * `history`: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
               pipelines.
@@ -886,8 +886,8 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
-        * force: Whether to force delete.
+        * `pipeline_name`: A string representing the pipeline name.
+        * `force`: Whether to force delete.
         """
 
         req = pps_proto.DeletePipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name), force=force)
@@ -899,7 +899,7 @@ class Client(object):
 
         Params:
 
-        * force: Whether to force delete.
+        * `force`: Whether to force delete.
         """
 
         req = pps_proto.DeletePipelineRequest(all=True, force=force)
@@ -911,7 +911,7 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
+        * `pipeline_name`: A string representing the pipeline name.
         """
 
         req = pps_proto.StartPipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name))
@@ -923,7 +923,7 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
+        * `pipeline_name`: A string representing the pipeline name.
         """
         req = pps_proto.StopPipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name))
         self._pps_stub.StopPipeline(req, metadata=self.metadata)
@@ -934,8 +934,8 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing the pipeline name.
-        * provenance: An optional iterable of `CommitProvenance` objects
+        * `pipeline_name`: A string representing the pipeline name.
+        * `provenance`: An optional iterable of `CommitProvenance` objects
         representing the pipeline execution provenance.
         """
         req = pps_proto.RunPipelineRequest(
@@ -958,18 +958,18 @@ class Client(object):
 
         Params:
 
-        * pipeline_name: A string representing a pipeline to get
+        * `pipeline_name`: A string representing a pipeline to get
         logs of.
-        * data_filters: An optional iterable of strings specifying the names
+        * `data_filters`: An optional iterable of strings specifying the names
         of input files from which we want processing logs. This may contain
         multiple files, to query pipelines that contain multiple inputs. Each
         filter may be an absolute path of a file within a pps repo, or it may
         be a hash for that file (to search for files at specific versions.)
-        * master: An optional bool.
-        * datum: An optional `Datum` object.
-        * follow: An optional bool specifying whether logs should continue to
+        * `master`: An optional bool.
+        * `datum`: An optional `Datum` object.
+        * `follow`: An optional bool specifying whether logs should continue to
         stream forever.
-        * tail: An optional int. If nonzero, the number of lines from the end
+        * `tail`: An optional int. If nonzero, the number of lines from the end
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
         """
@@ -988,16 +988,16 @@ class Client(object):
 
         Params:
 
-        * job_id: A string representing a job to get logs of.
-        * data_filters: An optional iterable of strings specifying the names
+        * `job_id`: A string representing a job to get logs of.
+        * `data_filters`: An optional iterable of strings specifying the names
         of input files from which we want processing logs. This may contain
         multiple files, to query pipelines that contain multiple inputs. Each
         filter may be an absolute path of a file within a pps repo, or it may
         be a hash for that file (to search for files at specific versions.)
-        * datum: An optional `Datum` object.
-        * follow: An optional bool specifying whether logs should continue to
+        * `datum`: An optional `Datum` object.
+        * `follow`: An optional bool specifying whether logs should continue to
         stream forever.
-        * tail: An optional int. If nonzero, the number of lines from the end
+        * `tail`: An optional int. If nonzero, the number of lines from the end
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
         """
