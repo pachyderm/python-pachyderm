@@ -204,10 +204,11 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `description`: An optional string describing this commit.
-        * `tree_object_hashes`: A list of zero or more strings specifying object
-        hashes.
+        * `tree_object_hashes`: A list of zero or more strings specifying
+        object hashes.
         * `datum_object_hash`: An optional string specifying an object hash.
         * `size_bytes`: An optional int.
         * `empty`: An optional bool. If set, the commit will be closed (its
@@ -256,7 +257,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `block_state`: Causes inspect commit to block until the commit is in
         the desired commit state.
         """
@@ -269,8 +271,8 @@ class Client(object):
 
         Params:
 
-        * `repo_name`: If only `repo_name` is given, all commits in the repo are
-        returned.
+        * `repo_name`: If only `repo_name` is given, all commits in the repo
+        are returned.
         * `to_commit`: Optional. Only the ancestors of `to`, including `to`
         itself, are considered.
         * `from_commit`: Optional. Only the descendants of `from`, including
@@ -292,7 +294,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         """
         req = pfs_proto.DeleteCommitRequest(commit=commit_from(commit))
         self._pfs_stub.DeleteCommit(req, metadata=self.metadata)
@@ -314,8 +317,8 @@ class Client(object):
 
         Params:
 
-        * `commits`: A list of tuples, strings, or `Commit` objects representing
-        the commits to flush.
+        * `commits`: A list of tuples, strings, or `Commit` objects
+        representing the commits to flush.
         * `repos`: An optional list of strings specifying repo names. If
         specified, only commits within these repos will be flushed.
         """
@@ -405,13 +408,14 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
-        * `delimiter`: Optional. causes data to be broken up into separate files
-        with `path` as a prefix.
+        * `delimiter`: Optional. causes data to be broken up into separate
+        files with `path` as a prefix.
         * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
@@ -485,7 +489,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
         * `recursive`: allow for recursive scraping of some types URLs, for
@@ -537,7 +542,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: A string specifying the path of the file.
         * `offset_bytes`: An optional int. Specifies a number of bytes that
         should be skipped in the beginning of the file.
@@ -561,7 +567,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: A string specifying the path to the file.
         """
         req = pfs_proto.InspectFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
@@ -573,7 +580,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: The path to the directory.
         * `history`: An optional int that indicates to return jobs from
         historical versions of pipelines. Semantics are:
@@ -600,7 +608,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: The path to the directory.
         """
         commit = commit_from(commit)
@@ -614,7 +623,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `pattern`: A string representing a glob pattern.
         """
 
@@ -630,7 +640,8 @@ class Client(object):
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the commit.
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
         * `path`: The path to the file.
         """
         req = pfs_proto.DeleteFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
@@ -696,8 +707,8 @@ class Client(object):
 
         Params:
 
-        * `commits`: A list of tuples, strings, or `Commit` objects representing
-        the commits to flush.
+        * `commits`: A list of tuples, strings, or `Commit` objects
+        representing the commits to flush.
         * `pipeline_names`: An optional list of strings specifying pipeline
         names. If specified, only jobs within these pipelines will be flushed.
         """
@@ -791,8 +802,8 @@ class Client(object):
         * `parallelism_spec`: An optional `ParallelismSpec` object.
         * `hashtree_spec`: An optional `HashtreeSpec` object.
         * `egress`: An optional `Egress` object.
-        * `update`: An optional bool specifying whether this should behave as an
-        upsert.
+        * `update`: An optional bool specifying whether this should behave as
+        an upsert.
         * `output_branch`: An optional string representing the branch to output
         results on.
         * `scale_down_threshold`: An optional pps_proto.uf `Duration` object.
