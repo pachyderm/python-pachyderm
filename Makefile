@@ -2,6 +2,7 @@ SHELL := /bin/bash
 PACHYDERM_VERSION = $(shell jq -r .pachyderm version.json)
 
 docs:
+	rm -rf build dist
 	python3 setup.py clean build install
 	pdoc3 --html --html-dir ./docs ./src/python_pachyderm
 
@@ -18,6 +19,8 @@ src/python_pachyderm/proto: docker-build-proto
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
+	mv src/python_pachyderm/client src/python_pachyderm/proto
+	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
 
 init:
 	git submodule update --init
