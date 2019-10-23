@@ -775,7 +775,7 @@ class Client(object):
                         hashtree_spec=None, egress=None, update=None, output_branch=None,
                         scale_down_threshold=None, resource_requests=None,
                         resource_limits=None, input=None, description=None, cache_size=None,
-                        enable_stats=None, reprocess=None, batch=None, max_queue_size=None,
+                        enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None,
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
                         scheduling_spec=None, pod_patch=None):
@@ -804,7 +804,6 @@ class Client(object):
         * `enable_stats`: An optional bool.
         * `reprocess`: An optional bool. If true, pachyderm forces the pipeline
         to reprocess all datums. It only has meaning if `update` is `True`.
-        * `batch`: An optional bool.
         * `max_queue_size`: An optional int.
         * `service`: An optional `Service` object.
         * `chunk_spec`: An optional `ChunkSpec` object.
@@ -824,7 +823,7 @@ class Client(object):
             output_branch=output_branch, scale_down_threshold=scale_down_threshold,
             resource_requests=resource_requests, resource_limits=resource_limits,
             input=input, description=description, cache_size=cache_size,
-            enable_stats=enable_stats, reprocess=reprocess, batch=batch,
+            enable_stats=enable_stats, reprocess=reprocess,
             max_queue_size=max_queue_size, service=service,
             chunk_spec=chunk_spec, datum_timeout=datum_timeout,
             job_timeout=job_timeout, salt=salt, standby=standby,

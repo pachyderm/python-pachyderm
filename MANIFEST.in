@@ -3,12 +3,11 @@ graft tests
 
 include .editorconfig
 
-include CHANGELOG.rst
+include CHANGELOG.md
 include LICENSE
 include README.md
 
-include VERSION
-include BUILD_NUMBER
+include version.json
 
 include tox.ini .travis.yml
 

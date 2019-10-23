@@ -577,6 +577,11 @@ class ObjectAPIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
+    self.CreateObject = channel.unary_unary(
+        '/pfs.ObjectAPI/CreateObject',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.CreateObjectRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
     self.GetObject = channel.unary_stream(
         '/pfs.ObjectAPI/GetObject',
         request_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
@@ -587,10 +592,25 @@ class ObjectAPIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
         )
+    self.PutBlock = channel.stream_unary(
+        '/pfs.ObjectAPI/PutBlock',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.PutBlockRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.GetBlock = channel.unary_stream(
+        '/pfs.ObjectAPI/GetBlock',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.GetBlockRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
     self.GetBlocks = channel.unary_stream(
         '/pfs.ObjectAPI/GetBlocks',
         request_serializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.ListBlock = channel.unary_stream(
+        '/pfs.ObjectAPI/ListBlock',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.ListBlockRequest.SerializeToString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.Block.FromString,
         )
     self.TagObject = channel.unary_unary(
         '/pfs.ObjectAPI/TagObject',
@@ -610,7 +630,7 @@ class ObjectAPIStub(object):
     self.ListObjects = channel.unary_stream(
         '/pfs.ObjectAPI/ListObjects',
         request_serializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
-        response_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
         )
     self.DeleteObjects = channel.unary_unary(
         '/pfs.ObjectAPI/DeleteObjects',
@@ -669,6 +689,13 @@ class ObjectAPIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CreateObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def GetObject(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -683,7 +710,28 @@ class ObjectAPIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def PutBlock(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetBlock(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def GetBlocks(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListBlock(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -779,6 +827,11 @@ def add_ObjectAPIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
+      'CreateObject': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateObject,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.CreateObjectRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
       'GetObject': grpc.unary_stream_rpc_method_handler(
           servicer.GetObject,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.Object.FromString,
@@ -789,10 +842,25 @@ def add_ObjectAPIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pfs_dot_pfs__pb2.GetObjectsRequest.FromString,
           response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ),
+      'PutBlock': grpc.stream_unary_rpc_method_handler(
+          servicer.PutBlock,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutBlockRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'GetBlock': grpc.unary_stream_rpc_method_handler(
+          servicer.GetBlock,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetBlockRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
       'GetBlocks': grpc.unary_stream_rpc_method_handler(
           servicer.GetBlocks,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.GetBlocksRequest.FromString,
           response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      'ListBlock': grpc.unary_stream_rpc_method_handler(
+          servicer.ListBlock,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.ListBlockRequest.FromString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.Block.SerializeToString,
       ),
       'TagObject': grpc.unary_unary_rpc_method_handler(
           servicer.TagObject,
@@ -812,7 +880,7 @@ def add_ObjectAPIServicer_to_server(servicer, server):
       'ListObjects': grpc.unary_stream_rpc_method_handler(
           servicer.ListObjects,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.ListObjectsRequest.FromString,
-          response_serializer=client_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
       ),
       'DeleteObjects': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteObjects,
