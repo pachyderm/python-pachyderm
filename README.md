@@ -20,7 +20,7 @@ Here's an example that creates a repo and adds a file:
 
 ```python
 import python_pachyderm
-client = python_pachyderm.PfsClient()
+client = python_pachyderm.Client()
 client.create_repo('test')
 with client.commit('test', 'master') as c:
     client.put_file_bytes(c, '/dir_a/data.txt', b'DATA')
