@@ -68,8 +68,8 @@ class Client(object):
         * `root_certs`: The PEM-encoded root certificates as byte string.
         """
 
-        host = os.env["PACHD_SERVICE_HOST"]
-        port = int(os.env["PACHD_SERVICE_PORT"])
+        host = os.environ["PACHD_SERVICE_HOST"]
+        port = int(os.environ["PACHD_SERVICE_PORT"])
         return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs)
 
     @classmethod
@@ -81,25 +81,21 @@ class Client(object):
 
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string. If
-        unspecified, but the `pachd_address` is `grpcs`, this will attempt to
-        use `certifi` to default to system certs.
+        * `root_certs`: The PEM-encoded root certificates as byte string. This
+        is required if the pachd address implies TLS is enabled.
         """
+
+        if "://" not in pachd_address:
+            pachd_address = "grpc://{}".format(pachd_address)
 
         u = urlparse(pachd_address)
 
         if u.scheme not in ("grpc", "http", "grpcs", "https"):
             raise ValueError("unrecognized pachd address scheme: {}".format(u.scheme))
+        if (u.scheme == "grpcs" or u.scheme == "https") and root_certs is None:
+            raise ValueError("the pachd address scheme implies TLS, but root_certs aren't set")
         if u.path != "" or u.params != "" or u.query != "" or u.fragment != "" or u.username is not None or u.password is not None:
             raise ValueError("invalid pachd address")
-
-        if u.scheme == "grpcs" or u.scheme == "https":
-            try:
-                import certifi
-            except ImportError:
-                raise Exception("the pachd address scheme implies TLS, but root_certs aren't set, and certifi is unavailable")
-            with open(certifi.where(), "rb") as f:
-                root_certs = f.read()
 
         return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs)
 
