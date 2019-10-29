@@ -42,10 +42,9 @@ class Client(object):
         * `root_certs`:  The PEM-encoded root certificates as byte string.
         """
 
-        if host is not None and port is not None:
-            self.address = "{}:{}".format(host, port)
-        else:
-            self.address = os.environ.get("PACHD_ADDRESS", "localhost:30650")
+        host = host or "localhost"
+        port = port or 30650
+        self.address = "{}:{}".format(host, port)
 
         if auth_token is None:
             auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
