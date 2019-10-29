@@ -10,16 +10,12 @@ from io import BytesIO
 from collections import namedtuple
 
 import python_pachyderm
+from tests import util
 
-def create_repo(client, test_name):
-    repo_name_suffix = "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
-    repo_name = "{}-{}".format(test_name, repo_name_suffix)
-    client.create_repo(repo_name, "repo for {}".format(test_name))
-    return repo_name
 
 def sandbox(test_name):
     client = python_pachyderm.Client()
-    repo_name = create_repo(client, test_name)
+    repo_name = util.create_test_repo(client, test_name)
     return client, repo_name
 
 
@@ -49,8 +45,8 @@ def test_delete_non_existent_repo():
 def test_delete_all_repos():
     client = python_pachyderm.Client()
 
-    create_repo(client, "delete_all_1")
-    create_repo(client, "delete_all_2")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
     assert len(client.list_repo()) >= 2
 
     client.delete_all_repos()
