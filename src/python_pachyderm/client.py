@@ -789,7 +789,7 @@ class Client(object):
                         enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None,
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_patch=None):
+                        scheduling_spec=None, pod_patch=None, spout=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -825,6 +825,7 @@ class Client(object):
         * `datum_tries`: An optional int.
         * `scheduling_spec`: An optional `SchedulingSpec` object.
         * `pod_patch`: An optional string.
+        * `spout`: An optional `Spout` object.
         """
 
         req = pps_proto.CreatePipelineRequest(
@@ -839,7 +840,7 @@ class Client(object):
             chunk_spec=chunk_spec, datum_timeout=datum_timeout,
             job_timeout=job_timeout, salt=salt, standby=standby,
             datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-            pod_patch=pod_patch
+            pod_patch=pod_patch, spout=spout,
         )
         self._pps_stub.CreatePipeline(req, metadata=self.metadata)
 
