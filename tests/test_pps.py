@@ -9,19 +9,15 @@ import random
 import string
 
 import python_pachyderm
-
-def random_string(n):
-    return "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(n))
+from tests import util
 
 class Sandbox:
     def __init__(self, test_name):
         client = python_pachyderm.Client()
 
-        repo_name_suffix = random_string(6)
-        input_repo_name = "{}-input-{}".format(test_name, repo_name_suffix)
-        pipeline_repo_name = "{}-pipeline-{}".format(test_name, repo_name_suffix)
-
-        client.create_repo(input_repo_name, "input repo for {}".format(test_name))
+        repo_name_suffix = util.random_string(6)
+        input_repo_name = util.create_test_repo(client, test_name, prefix="input", suffix=repo_name_suffix)
+        pipeline_repo_name = util.test_repo_name(test_name, prefix="pipeline", suffix=repo_name_suffix)
 
         client.create_pipeline(
             pipeline_repo_name,
