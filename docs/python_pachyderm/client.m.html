@@ -1069,6 +1069,7 @@ table {
       
   <ul>
     <li class="mono"><a href="#python_pachyderm.client.commit_from">commit_from</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.transaction_from">transaction_from</a></li>
   </ul>
 
     </li>
@@ -1095,7 +1096,9 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_job">delete_job</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_pipeline">delete_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_repo">delete_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.delete_transaction">delete_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.finish_commit">finish_commit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.finish_transaction">finish_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.flush_commit">flush_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.flush_job">flush_job</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.garbage_collect">garbage_collect</a></li>
@@ -1111,6 +1114,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_job">inspect_job</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_pipeline">inspect_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_repo">inspect_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.inspect_transaction">inspect_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.list_branch">list_branch</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.list_commit">list_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.list_datum">list_datum</a></li>
@@ -1118,15 +1122,18 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.list_job">list_job</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.list_pipeline">list_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.list_repo">list_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.list_transaction">list_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.put_file_bytes">put_file_bytes</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.put_file_url">put_file_url</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.restart_datum">restart_datum</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.run_pipeline">run_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.start_commit">start_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.start_pipeline">start_pipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.start_transaction">start_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.stop_job">stop_job</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.stop_pipeline">stop_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.subscribe_commit">subscribe_commit</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.transaction">transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.walk_file">walk_file</a></li>
   </ul>
 
@@ -1177,6 +1184,20 @@ table {
 
   </div>
   
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.transaction_from">
+    <p>def <span class="ident">transaction_from</span>(</p><p>transaction)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
@@ -1208,7 +1229,7 @@ table {
 <code>pachctl port-forward</code>.</li>
 <li><code>port</code>: The port to connect to. Default is 30650.</li>
 <li><code>auth_token</code>: The authentication token; used if authentication is
-enabled on the cluster. Default to <code>None</code>.</li>
+enabled on the cluster. Defaults to <code>None</code>.</li>
 <li><code>root_certs</code>:  The PEM-encoded root certificates as byte string.</li>
 </ul>
 </div>
@@ -1326,8 +1347,8 @@ http://docs.pachyderm.io/en/latest/reference/pipeline_spec.html</p>
 <li><code>parallelism_spec</code>: An optional <code>ParallelismSpec</code> object.</li>
 <li><code>hashtree_spec</code>: An optional <code>HashtreeSpec</code> object.</li>
 <li><code>egress</code>: An optional <code>Egress</code> object.</li>
-<li><code>update</code>: An optional bool specifying whether this should behave as an
-upsert.</li>
+<li><code>update</code>: An optional bool specifying whether this should behave as
+an upsert.</li>
 <li><code>output_branch</code>: An optional string representing the branch to output
 results on.</li>
 <li><code>scale_down_threshold</code>: An optional pps_proto.uf <code>Duration</code> object.</li>
@@ -1485,7 +1506,8 @@ branches they happen to be on.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -1510,7 +1532,8 @@ will of course remain intact in the Commit's parent.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: The path to the file.</li>
 </ul>
 </div>
@@ -1590,6 +1613,28 @@ errors. This argument should be used with care.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.delete_transaction">
+    <p>def <span class="ident">delete_transaction</span>(</p><p>self, transaction)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Deletes a given transaction.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>transaction</code>: A string or <code>Transaction</code> object.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.finish_commit">
     <p>def <span class="ident">finish_commit</span>(</p><p>self, commit, description=None, tree_object_hashes=None, datum_object_hash=None, size_bytes=None, empty=None)</p>
     </div>
@@ -1604,15 +1649,38 @@ future attempts to write to it with PutFile will error.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>description</code>: An optional string describing this commit.</li>
-<li><code>tree_object_hashes</code>: A list of zero or more strings specifying object
-hashes.</li>
+<li><code>tree_object_hashes</code>: A list of zero or more strings specifying
+object hashes.</li>
 <li><code>datum_object_hash</code>: An optional string specifying an object hash.</li>
 <li><code>size_bytes</code>: An optional int.</li>
 <li><code>empty</code>: An optional bool. If set, the commit will be closed (its
 <code>finished</code> field will be set to the current time) but its <code>tree</code> will
 be left nil.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.finish_transaction">
+    <p>def <span class="ident">finish_transaction</span>(</p><p>self, transaction)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Finishes a given transaction.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>transaction</code>: A string or <code>Transaction</code> object.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -1645,8 +1713,8 @@ iterator of CommitInfo objects.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commits</code>: A list of tuples, strings, or <code>Commit</code> objects representing
-the commits to flush.</li>
+<li><code>commits</code>: A list of tuples, strings, or <code>Commit</code> objects
+representing the commits to flush.</li>
 <li><code>repos</code>: An optional list of strings specifying repo names. If
 specified, only commits within these repos will be flushed.</li>
 </ul>
@@ -1671,8 +1739,8 @@ provenance have finished. Yields <code>JobInfo</code> objects.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commits</code>: A list of tuples, strings, or <code>Commit</code> objects representing
-the commits to flush.</li>
+<li><code>commits</code>: A list of tuples, strings, or <code>Commit</code> objects
+representing the commits to flush.</li>
 <li><code>pipeline_names</code>: An optional list of strings specifying pipeline
 names. If specified, only jobs within these pipelines will be flushed.</li>
 </ul>
@@ -1712,7 +1780,8 @@ names. If specified, only jobs within these pipelines will be flushed.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: A string specifying the path of the file.</li>
 <li><code>offset_bytes</code>: An optional int. Specifies a number of bytes that
 should be skipped in the beginning of the file.</li>
@@ -1823,7 +1892,8 @@ get tail * <number of pods> total lines back.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>pattern</code>: A string representing a glob pattern.</li>
 </ul>
 </div>
@@ -1862,7 +1932,8 @@ get tail * <number of pods> total lines back.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>block_state</code>: Causes inspect commit to block until the commit is in
 the desired commit state.</li>
 </ul>
@@ -1909,7 +1980,8 @@ the desired commit state.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: A string specifying the path to the file.</li>
 </ul>
 </div>
@@ -1995,6 +2067,28 @@ pipelines.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.inspect_transaction">
+    <p>def <span class="ident">inspect_transaction</span>(</p><p>self, transaction)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Inspects a given transaction.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>transaction</code>: A string or <code>Transaction</code> object.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.list_branch">
     <p>def <span class="ident">list_branch</span>(</p><p>self, repo_name)</p>
     </div>
@@ -2030,8 +2124,8 @@ pipelines.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>repo_name</code>: If only <code>repo_name</code> is given, all commits in the repo are
-returned.</li>
+<li><code>repo_name</code>: If only <code>repo_name</code> is given, all commits in the repo
+are returned.</li>
 <li><code>to_commit</code>: Optional. Only the ancestors of <code>to</code>, including <code>to</code>
 itself, are considered.</li>
 <li><code>from_commit</code>: Optional. Only the descendants of <code>from</code>, including
@@ -2084,7 +2178,8 @@ returned.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: The path to the directory.</li>
 <li><code>history</code>: An optional int that indicates to return jobs from
 historical versions of pipelines. Semantics are:
@@ -2186,6 +2281,22 @@ pipelines.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.list_transaction">
+    <p>def <span class="ident">list_transaction</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Lists transactions.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.put_file_bytes">
     <p>def <span class="ident">put_file_bytes</span>(</p><p>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None)</p>
     </div>
@@ -2198,13 +2309,14 @@ pipelines.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file contents as bytes, represented as a file-like
 object, bytestring, or iterator of bytestrings.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate files
-with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: Optional. causes data to be broken up into separate
+files with <code>path</code> as a prefix.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
@@ -2237,7 +2349,8 @@ PFS function.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
 <li><code>recursive</code>: allow for recursive scraping of some types URLs, for
@@ -2362,6 +2475,22 @@ specifying the commit provenance.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.start_transaction">
+    <p>def <span class="ident">start_transaction</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Starts a transaction.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.stop_job">
     <p>def <span class="ident">stop_job</span>(</p><p>self, job_id)</p>
     </div>
@@ -2432,6 +2561,31 @@ commits created since this commit are returned.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.transaction">
+    <p>def <span class="ident">transaction</span>(</p><p>*args, **kwds)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>A context manager for running operations within a transaction. When
+the context manager completes, the transaction will be deleted if an
+error occurred, or otherwise finished.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>transaction</code>: An optional string or <code>Transaction</code> object. If
+unspecified, a new transaction will be started.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.walk_file">
     <p>def <span class="ident">walk_file</span>(</p><p>self, commit, path)</p>
     </div>
@@ -2445,7 +2599,8 @@ commits created since this commit are returned.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the commit.</li>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
 <li><code>path</code>: The path to the directory.</li>
 </ul>
 </div>

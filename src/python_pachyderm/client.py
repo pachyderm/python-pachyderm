@@ -1094,7 +1094,7 @@ class Client(object):
         Params:
 
         * `transaction`: An optional string or `Transaction` object. If
-          unspecified, a new transaction will be started. 
+        unspecified, a new transaction will be started.
         """
 
         # note that this is different from `pachctl`, which will delete any
@@ -1112,7 +1112,7 @@ class Client(object):
 
         try:
             yield transaction
-        except:
+        except Exception:
             self.delete_transaction(transaction)
             raise
         else:
