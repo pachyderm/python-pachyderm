@@ -30,7 +30,7 @@ def commit_from(src, allow_just_repo=False):
 class Client(object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
         """
-        Creates a client to connect to PFS.
+        Creates a Pachyderm client.
 
         Params:
 
