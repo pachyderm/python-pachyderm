@@ -47,3 +47,5 @@ def _import_protos(path):
 _import_protos("python_pachyderm.proto.pfs.pfs_pb2")
 _import_protos("python_pachyderm.proto.pps.pps_pb2")
 _import_protos("python_pachyderm.proto.version.versionpb.version_pb2")
+_import_protos("python_pachyderm.proto.transaction.transaction_pb2")
+_import_protos("python_pachyderm.proto.admin.admin_pb2")
