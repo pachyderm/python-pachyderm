@@ -94,7 +94,9 @@ class Client(object):
             raise ValueError("unrecognized pachd address scheme: {}".format(u.scheme))
         if (u.scheme == "grpcs" or u.scheme == "https") and root_certs is None:
             raise ValueError("the pachd address scheme implies TLS, but root_certs aren't set")
-        if u.path != "" or u.params != "" or u.query != "" or u.fragment != "" or u.username is not None or u.password is not None:
+        if u.path != "" or u.params != "" or u.query != "" or u.fragment != "":
+            raise ValueError("invalid pachd address")
+        if u.username is not None or u.password is not None:
             raise ValueError("invalid pachd address")
 
         return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs)
