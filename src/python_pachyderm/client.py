@@ -55,6 +55,22 @@ class Client(object):
 
         self.root_certs = root_certs
 
+    @classmethod
+    def in_cluster(cls, auth_token=None, root_certs=None):
+        """
+        Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`:  The PEM-encoded root certificates as byte string.
+        """
+
+        host = os.env["PACHD_SERVICE_HOST"]
+        port = int(os.env["PACHD_SERVICE_PORT"])
+        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs)
+
     @property
     def _pfs_stub(self):
         if not hasattr(self, "__pfs_stub"):
