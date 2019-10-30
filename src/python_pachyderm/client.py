@@ -1,9 +1,10 @@
 import os
 
-from python_pachyderm.mixin import PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Service, GRPC_MODULES, PROTO_MODULES
+from python_pachyderm import mixin
+from python_pachyderm.service import GRPC_MODULES, PROTO_MODULES
 
 
-class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, object):
+class Client(mixin.PFSMixin, mixin.PPSMixin, mixin.TransactionMixin, mixin.VersionMixin, mixin.AdminMixin, object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
         """
         Creates a client to connect to PFS.
