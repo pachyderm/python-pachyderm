@@ -1057,22 +1057,7 @@ table {
         <li class="mono"><a href="index.html">python_pachyderm</a></li>
       </ul>
     </li>
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.BUFFER_SIZE">BUFFER_SIZE</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#python_pachyderm.client.commit_from">commit_from</a></li>
-    <li class="mono"><a href="#python_pachyderm.client.transaction_from">transaction_from</a></li>
-  </ul>
-
-    </li>
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
@@ -1097,6 +1082,8 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_pipeline">delete_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_repo">delete_repo</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.delete_transaction">delete_transaction</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.extract">extract</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.extract_pipeline">extract_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.finish_commit">finish_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.finish_transaction">finish_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.flush_commit">flush_commit</a></li>
@@ -1108,6 +1095,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.get_remote_version">get_remote_version</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.glob_file">glob_file</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_branch">inspect_branch</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.inspect_cluster">inspect_cluster</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_commit">inspect_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_datum">inspect_datum</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.inspect_file">inspect_file</a></li>
@@ -1126,6 +1114,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.client.Client.put_file_bytes">put_file_bytes</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.put_file_url">put_file_url</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.restart_datum">restart_datum</a></li>
+    <li class="mono"><a href="#python_pachyderm.client.Client.restore">restore</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.run_pipeline">run_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.start_commit">start_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.client.Client.start_pipeline">start_pipeline</a></li>
@@ -1159,45 +1148,7 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="python_pachyderm.client.BUFFER_SIZE" class="name">var <span class="ident">BUFFER_SIZE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
 
-      </div>
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
-      
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.commit_from">
-    <p>def <span class="ident">commit_from</span>(</p><p>src, allow_just_repo=False)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="python_pachyderm.client.transaction_from">
-    <p>def <span class="ident">transaction_from</span>(</p><p>transaction)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-</div>
-
-  </div>
-  
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
@@ -1210,6 +1161,14 @@ table {
 
 
       <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="pfs.m.html#python_pachyderm.pfs.PFSMixin">python_pachyderm.pfs.PFSMixin</a></li>
+          <li><a href="pps.m.html#python_pachyderm.pps.PPSMixin">python_pachyderm.pps.PPSMixin</a></li>
+          <li><a href="transaction.m.html#python_pachyderm.transaction.TransactionMixin">python_pachyderm.transaction.TransactionMixin</a></li>
+          <li><a href="version.m.html#python_pachyderm.version.VersionMixin">python_pachyderm.version.VersionMixin</a></li>
+          <li><a href="admin.m.html#python_pachyderm.admin.AdminMixin">python_pachyderm.admin.AdminMixin</a></li>
+          </ul>
           <h3>Methods</h3>
             
   <div class="item">
@@ -1329,7 +1288,7 @@ the branch provenance.</p>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.client.Client.create_pipeline">
-    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform=None, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None)</p>
+    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform=None, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None)</p>
     </div>
     
 
@@ -1370,6 +1329,7 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>datum_tries</code>: An optional int.</li>
 <li><code>scheduling_spec</code>: An optional <code>SchedulingSpec</code> object.</li>
 <li><code>pod_patch</code>: An optional string.</li>
+<li><code>spout</code>: An optional <code>Spout</code> object.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -1626,6 +1586,57 @@ errors. This argument should be used with care.</li>
 
 <ul>
 <li><code>transaction</code>: A string or <code>Transaction</code> object.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.extract">
+    <p>def <span class="ident">extract</span>(</p><p>self, url=None, no_objects=None, no_repos=None, no_pipelines=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Extracts cluster data for backup. Yields <code>Op</code> objects.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>url</code>: An optional string specifying an object storage URL. If set,
+data will be extracted to this URL rather than returned.</li>
+<li><code>no_objects</code>: An optional bool. If true, will cause extract to omit
+objects (and tags.)</li>
+<li><code>no_repos</code>: An optional bool. If true, will cause extract to omit
+repos, commits and branches.</li>
+<li><code>no_pipelines</code>: An optional bool. If true, will cause extract to
+omit pipelines.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.extract_pipeline">
+    <p>def <span class="ident">extract_pipeline</span>(</p><p>self, pipeline_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Extracts a pipeline for backup. Returns an <code>Op</code> object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>pipeline_name</code>: A string representing a pipeline name to extract.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -1912,6 +1923,22 @@ commit.</li>
     
   
     <div class="desc"><p>Inspects a branch. Returns a <code>BranchInfo</code> object.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.inspect_cluster">
+    <p>def <span class="ident">inspect_cluster</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Inspects a cluster. Returns a <code>ClusterInfo</code> object.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -2381,6 +2408,28 @@ starting from the index are deleted.</li>
 <ul>
 <li><code>job_id</code>: The ID of the job.</li>
 <li><code>data_filters</code>: An optional iterable of strings.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.client.Client.restore">
+    <p>def <span class="ident">restore</span>(</p><p>self, requests)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Restores a cluster.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>requests</code>: A generator of <code>RestoreRequest</code> objects.</li>
 </ul>
 </div>
   <div class="source_cont">
