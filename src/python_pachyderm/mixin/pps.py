@@ -67,10 +67,15 @@ class PPSMixin:
         * `pipeline_names`: An optional list of strings specifying pipeline
         names. If specified, only jobs within these pipelines will be flushed.
         """
+        if pipeline_names is not None:
+            to_pipelines = [pps_proto.Pipeline(name=name) for name in pipeline_names]
+        else:
+            to_pipelines = None
+
         return self._req(
             Service.PPS, "FlushJob",
             commits=[commit_from(c) for c in commits],
-            to_pipelines=[pps_proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None,
+            to_pipelines=to_pipelines,
         )
 
     def delete_job(self, job_id):
