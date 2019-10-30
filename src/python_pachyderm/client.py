@@ -5,7 +5,7 @@ from python_pachyderm.pps import PPSMixin
 from python_pachyderm.transaction import TransactionMixin
 from python_pachyderm.version import VersionMixin
 from python_pachyderm.admin import AdminMixin
-
+from python_pachyderm.util import Service, GRPC_MODULES, PROTO_MODULES
 
 class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
@@ -35,12 +35,31 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, obj
             self.metadata.append(("authn-token", auth_token))
 
         self.root_certs = root_certs
+        self._stubs = {}
 
-    def _create_stub(self, grpc_module):
-        if self.root_certs:
-            ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
-            ssl = ssl_channel_credentials(root_certificates=self.root_certs)
-            channel = grpc_module.grpc.secure_channel(self.address, ssl)
-        else:
-            channel = grpc_module.grpc.insecure_channel(self.address)
-        return grpc_module.APIStub(channel)
+    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+        stub = self._stubs.get(grpc_service)
+        if stub is None:
+            grpc_module = GRPC_MODULES[grpc_service]
+            if self.root_certs:
+                ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
+                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+            else:
+                channel = grpc_module.grpc.insecure_channel(self.address)
+            stub = grpc_module.APIStub(channel)
+            self._stubs[grpc_service] = stub
+
+        assert req is None or len(kwargs) == 0
+
+        if req is None:
+            proto_module = PROTO_MODULES[grpc_service]
+            if grpc_method_name.endswith("Stream"):
+                req_cls_name_prefix = grpc_method_name[:-6]
+            else:
+                req_cls_name_prefix = grpc_method_name
+            req_cls = getattr(proto_module, "{}Request".format(req_cls_name_prefix))
+            req = req_cls(**kwargs)
+
+        grpc_method = getattr(stub, grpc_method_name)
+        return grpc_method(req, metadata=self.metadata)

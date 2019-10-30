@@ -3,20 +3,14 @@ import itertools
 from contextlib import contextmanager
 
 from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
-from python_pachyderm.proto.pfs import pfs_pb2_grpc as pfs_grpc
 from python_pachyderm.util import commit_from
+from python_pachyderm.util import Service
 
 
 BUFFER_SIZE = 20 * 1024 * 1024
 
 
 class PFSMixin:
-    @property
-    def _pfs_stub(self):
-        if not hasattr(self, "__pfs_stub"):
-            self.__pfs_stub = self._create_stub(pfs_grpc)
-        return self.__pfs_stub
-
     def create_repo(self, repo_name, description=None, update=None):
         """
         Creates a new `Repo` object in PFS with the given name. Repos are the
@@ -31,12 +25,12 @@ class PFSMixin:
         * `description`: An optional string describing the repo.
         * `update`: Whether to update if the repo already exists.
         """
-        req = pfs_proto.CreateRepoRequest(
+        return self._req(
+            Service.PFS, "CreateRepo",
             repo=pfs_proto.Repo(name=repo_name),
             description=description,
-            update=update
+            update=update,
         )
-        self._pfs_stub.CreateRepo(req, metadata=self.metadata)
 
     def inspect_repo(self, repo_name):
         """
@@ -45,16 +39,13 @@ class PFSMixin:
         Params:
         * `repo_name`: Name of the repo.
         """
-        req = pfs_proto.InspectRepoRequest(repo=pfs_proto.Repo(name=repo_name))
-        return self._pfs_stub.InspectRepo(req, metadata=self.metadata)
+        return self._req(Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name))
 
     def list_repo(self):
         """
         Returns info about all repos, as a list of `RepoInfo` objects.
         """
-        req = pfs_proto.ListRepoRequest()
-        res = self._pfs_stub.ListRepo(req, metadata=self.metadata)
-        return res.repo_info
+        return self._req(Service.PFS, "ListRepo").repo_info
 
     def delete_repo(self, repo_name, force=None):
         """
@@ -66,8 +57,7 @@ class PFSMixin:
         * `force`: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
-        req = pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name=repo_name), force=force, all=False)
-        self._pfs_stub.DeleteRepo(req, metadata=self.metadata)
+        return self._req(Service.PFS, "DeleteRepo", repo=pfs_proto.Repo(name=repo_name), force=force, all=False)
 
     def delete_all_repos(self, force=None):
         """
@@ -78,9 +68,7 @@ class PFSMixin:
         * `force`: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
-
-        req = pfs_proto.DeleteRepoRequest(force=force, all=True)
-        self._pfs_stub.DeleteRepo(req, metadata=self.metadata)
+        return self._req(Service.PFS, "DeleteRepo", force=force, all=True)
 
     def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=None):
         """
@@ -107,13 +95,13 @@ class PFSMixin:
         * `provenance`: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         """
-        req = pfs_proto.StartCommitRequest(
+        return self._req(
+            Service.PFS, "StartCommit",
             parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
             branch=branch,
             description=description,
             provenance=provenance,
         )
-        return self._pfs_stub.StartCommit(req, metadata=self.metadata)
 
     def finish_commit(self, commit, description=None,
                       tree_object_hashes=None, datum_object_hash=None,
@@ -136,7 +124,8 @@ class PFSMixin:
         `finished` field will be set to the current time) but its `tree` will
         be left nil.
         """
-        req = pfs_proto.FinishCommitRequest(
+        return self._req(
+            Service.PFS, "FinishCommit",
             commit=commit_from(commit),
             description=description,
             trees=[pfs_proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
@@ -144,7 +133,6 @@ class PFSMixin:
             size_bytes=size_bytes,
             empty=empty,
         )
-        return self._pfs_stub.FinishCommit(req, metadata=self.metadata)
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None, description=None):
@@ -183,8 +171,7 @@ class PFSMixin:
         * `block_state`: Causes inspect commit to block until the commit is in
         the desired commit state.
         """
-        req = pfs_proto.InspectCommitRequest(commit=commit_from(commit), block_state=block_state)
-        return self._pfs_stub.InspectCommit(req, metadata=self.metadata)
+        return self._req(Service.PFS, "InspectCommit", commit=commit_from(commit), block_state=block_state)
 
     def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None):
         """
@@ -207,7 +194,7 @@ class PFSMixin:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, 'from').CopyFrom(commit_from(from_commit))
-        return self._pfs_stub.ListCommitStream(req, metadata=self.metadata)
+        return self._req(Service.PFS, "ListCommitStream", req=req)
 
     def delete_commit(self, commit):
         """
@@ -218,8 +205,7 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         """
-        req = pfs_proto.DeleteCommitRequest(commit=commit_from(commit))
-        self._pfs_stub.DeleteCommit(req, metadata=self.metadata)
+        return self._req(Service.PFS, "DeleteCommit", commit=commit_from(commit))
 
     def flush_commit(self, commits, repos=None):
         """
@@ -243,10 +229,11 @@ class PFSMixin:
         * `repos`: An optional list of strings specifying repo names. If
         specified, only commits within these repos will be flushed.
         """
-        to_repos = [pfs_proto.Repo(name=r) for r in repos] if repos is not None else None
-        req = pfs_proto.FlushCommitRequest(commits=[commit_from(c) for c in commits],
-                                           to_repos=to_repos)
-        return self._pfs_stub.FlushCommit(req, metadata=self.metadata)
+        return self._req(
+            Service.PFS, "FlushCommit",
+            commits=[commit_from(c) for c in commits],
+            to_repos=[pfs_proto.Repo(name=r) for r in repos] if repos is not None else None,
+        )
 
     def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
         """
@@ -264,7 +251,7 @@ class PFSMixin:
         req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(pfs_proto.Commit(repo=repo, id=from_commit_id))
-        return self._pfs_stub.SubscribeCommit(req, metadata=self.metadata)
+        return self._req(Service.PFS, "SubscribeCommit", req=req)
 
     def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
         """
@@ -278,20 +265,21 @@ class PFSMixin:
         * `provenance`: An optional iterable of `Branch` objects representing
         the branch provenance.
         """
-        req = pfs_proto.CreateBranchRequest(
+        return self._req(
+            Service.PFS, "CreateBranch",
             branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
         )
-        self._pfs_stub.CreateBranch(req, metadata=self.metadata)
 
     def inspect_branch(self, repo_name, branch_name):
         """
         Inspects a branch. Returns a `BranchInfo` object.
         """
-        branch = pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name)
-        req = pfs_proto.InspectBranchRequest(branch=branch)
-        return self._pfs_stub.InspectBranch(req, metadata=self.metadata)
+        return self._req(
+            Service.PFS, "InspectBranch",
+            branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
+        )
 
     def list_branch(self, repo_name):
         """
@@ -302,9 +290,7 @@ class PFSMixin:
 
         * `repo_name`: A string specifying the repo name.
         """
-        req = pfs_proto.ListBranchRequest(repo=pfs_proto.Repo(name=repo_name))
-        res = self._pfs_stub.ListBranch(req, metadata=self.metadata)
-        return res.branch_info
+        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name)).branch_info
 
     def delete_branch(self, repo_name, branch_name, force=None):
         """
@@ -318,9 +304,11 @@ class PFSMixin:
         * `branch_name`: A string specifying the name of the branch to delete.
         * `force`: A bool specifying whether to force the branch deletion.
         """
-        branch = pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name)
-        req = pfs_proto.DeleteBranchRequest(branch=branch, force=force)
-        self._pfs_stub.DeleteBranch(req, metadata=self.metadata)
+        return self._req(
+            Service.PFS, "DeleteBranch",
+            branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
+            force=force,
+        )
 
     def put_file_bytes(self, commit, path, value, delimiter=None,
                        target_file_datums=None, target_file_bytes=None, overwrite_index=None):
@@ -347,7 +335,6 @@ class PFSMixin:
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
         """
-
         overwrite_index = pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
         if hasattr(value, "read"):
@@ -400,7 +387,7 @@ class PFSMixin:
                         overwrite_index=overwrite_index
                     )
 
-        self._pfs_stub.PutFile(wrap(value), metadata=self.metadata)
+        return self._req(Service.PFS, "PutFile", req=wrap(value))
 
     def put_file_url(self, commit, path, url, recursive=None, overwrite_index=None):
         """
@@ -420,18 +407,15 @@ class PFSMixin:
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
         """
-
         overwrite_index = pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
-
-        req = iter([
+        return self._req(Service.PFS, "PutFile", req=iter([
             pfs_proto.PutFileRequest(
                 file=pfs_proto.File(commit=commit_from(commit), path=path),
                 url=url,
                 recursive=recursive,
                 overwrite_index=overwrite_index
             )
-        ])
-        self._pfs_stub.PutFile(req, metadata=self.metadata)
+        ]))
 
     def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
         """
@@ -450,12 +434,12 @@ class PFSMixin:
         * `overwrite`: Am optional bool specifying whether to overwrite the
         destination file if it already exists.
         """
-        req = pfs_proto.CopyFileRequest(
+        return self._req(
+            Service.PFS, "CopyFile",
             src=pfs_proto.File(commit=commit_from(source_commit), path=source_path),
             dst=pfs_proto.File(commit=commit_from(dest_commit), path=dest_path),
             overwrite=overwrite,
         )
-        self._pfs_stub.CopyFile(req, metadata=self.metadata)
 
     def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
         """
@@ -473,12 +457,12 @@ class PFSMixin:
         larger than the size of the file. If size is set to 0 then all of the
         data will be returned.
         """
-        req = pfs_proto.GetFileRequest(
+        res = self._req(
+            Service.PFS, "GetFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path),
             offset_bytes=offset_bytes,
-            size_bytes=size_bytes
+            size_bytes=size_bytes,
         )
-        res = self._pfs_stub.GetFile(req, metadata=self.metadata)
         for item in res:
             yield item.value
 
@@ -492,8 +476,7 @@ class PFSMixin:
         commit.
         * `path`: A string specifying the path to the file.
         """
-        req = pfs_proto.InspectFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
-        return self._pfs_stub.InspectFile(req, metadata=self.metadata)
+        return self._req(Service.PFS, "InspectFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
 
     def list_file(self, commit, path, history=None, include_contents=None):
         """
@@ -513,14 +496,12 @@ class PFSMixin:
         * `include_contents`: An optional bool. If `True`, file contents are
         included.
         """
-
-        req = pfs_proto.ListFileRequest(
+        return self._req(
+            Service.PFS, "ListFileStream",
             file=pfs_proto.File(commit=commit_from(commit), path=path),
             history=history,
             full=include_contents,
         )
-
-        return self._pfs_stub.ListFileStream(req, metadata=self.metadata)
 
     def walk_file(self, commit, path):
         """
@@ -533,10 +514,7 @@ class PFSMixin:
         commit.
         * `path`: The path to the directory.
         """
-        commit = commit_from(commit)
-        f = pfs_proto.File(commit=commit_from(commit), path=path)
-        req = pfs_proto.WalkFileRequest(file=f)
-        return self._pfs_stub.WalkFile(req, metadata=self.metadata)
+        return self._req(Service.PFS, "WalkFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
 
     def glob_file(self, commit, pattern):
         """
@@ -548,9 +526,7 @@ class PFSMixin:
         commit.
         * `pattern`: A string representing a glob pattern.
         """
-
-        req = pfs_proto.GlobFileRequest(commit=commit_from(commit), pattern=pattern)
-        return self._pfs_stub.GlobFileStream(req, metadata=self.metadata)
+        return self._req(Service.PFS, "GlobFileStream", commit=commit_from(commit), pattern=pattern)
 
     def delete_file(self, commit, path):
         """
@@ -565,5 +541,4 @@ class PFSMixin:
         commit.
         * `path`: The path to the file.
         """
-        req = pfs_proto.DeleteFileRequest(file=pfs_proto.File(commit=commit_from(commit), path=path))
-        self._pfs_stub.DeleteFile(req, metadata=self.metadata)
+        return self._req(Service.PFS, "DeleteFile", file=pfs_proto.File(commit=commit_from(commit), path=path))

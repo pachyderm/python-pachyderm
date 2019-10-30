@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 
 from python_pachyderm.proto.transaction import transaction_pb2 as transaction_proto
-from python_pachyderm.proto.transaction import transaction_pb2_grpc as transaction_grpc
+from python_pachyderm.util import Service
 
 
 def transaction_from(transaction):
@@ -12,18 +12,11 @@ def transaction_from(transaction):
 
 
 class TransactionMixin:
-    @property
-    def _transaction_stub(self):
-        if not hasattr(self, "__transaction_stub"):
-            self.__transaction_stub = self._create_stub(transaction_grpc)
-        return self.__transaction_stub
-
     def start_transaction(self):
         """
         Starts a transaction.
         """
-        req = transaction_proto.StartTransactionRequest()
-        return self._transaction_stub.StartTransaction(req, metadata=self.metadata)
+        return self._req(Service.TRANSACTION, "StartTransaction")
 
     def inspect_transaction(self, transaction):
         """
@@ -33,8 +26,7 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        req = transaction_proto.InspectTransactionRequest(transaction=transaction_from(transaction))
-        return self._transaction_stub.InspectTransaction(req, metadata=self.metadata)
+        return self._req(Service.TRANSACTION, "InspectTransaction", transaction=transaction_from(transaction))
 
     def delete_transaction(self, transaction):
         """
@@ -44,15 +36,13 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        req = transaction_proto.DeleteTransactionRequest(transaction=transaction_from(transaction))
-        return self._transaction_stub.DeleteTransaction(req, metadata=self.metadata)
+        return self._req(Service.TRANSACTION, "DeleteTransaction", transaction=transaction_from(transaction))
 
     def list_transaction(self):
         """
         Lists transactions.
         """
-        req = transaction_proto.ListTransactionRequest()
-        return self._transaction_stub.ListTransaction(req, metadata=self.metadata).transaction_info
+        return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
 
     def finish_transaction(self, transaction):
         """
@@ -62,8 +52,7 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        req = transaction_proto.FinishTransactionRequest(transaction=transaction_from(transaction))
-        return self._transaction_stub.FinishTransaction(req, metadata=self.metadata)
+        return self._req(Service.TRANSACTION, "FinishTransaction", transaction=transaction_from(transaction))
 
     @contextmanager
     def transaction(self, transaction=None):

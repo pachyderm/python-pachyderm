@@ -1,15 +1,9 @@
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
-from python_pachyderm.proto.pps import pps_pb2_grpc as pps_grpc
 from python_pachyderm.util import commit_from
+from python_pachyderm.util import Service
 
 
 class PPSMixin:
-    @property
-    def _pps_stub(self):
-        if not hasattr(self, "__pps_stub"):
-            self.__pps_stub = self._create_stub(pps_grpc)
-        return self.__pps_stub
-
     def inspect_job(self, job_id, block_state=None, output_commit=None):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
@@ -21,12 +15,12 @@ class PPSMixin:
         * `output_commit`: An optional tuple, string, or `Commit` object
         representing an output commit to filter on.
         """
-
-        output_commit = commit_from(output_commit) if output_commit is not None else None
-        req = pps_proto.InspectJobRequest(job=pps_proto.Job(id=job_id),
-                                          block_state=block_state,
-                                          output_commit=output_commit)
-        return self._pps_stub.InspectJob(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "InspectJob",
+            job=pps_proto.Job(id=job_id),
+            block_state=block_state,
+            output_commit=commit_from(output_commit) if output_commit is not None else None,
+        )
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None):
         """
@@ -48,20 +42,18 @@ class PPSMixin:
             * 2: etc.
             * -1: Return jobs from all historical versions.
         """
-
-        pipeline = pps_proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None
-
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
         elif input_commit is not None:
             input_commit = [commit_from(input_commit)]
 
-        output_commit = commit_from(output_commit) if output_commit is not None else None
-
-        req = pps_proto.ListJobRequest(pipeline=pipeline, input_commit=input_commit,
-                                       output_commit=output_commit, history=history)
-
-        return self._pps_stub.ListJobStream(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "ListJobStream",
+            pipeline=pps_proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None,
+            input_commit=input_commit,
+            output_commit=commit_from(output_commit) if output_commit is not None else None,
+            history=history,
+        )
 
     def flush_job(self, commits, pipeline_names=None):
         """
@@ -75,11 +67,11 @@ class PPSMixin:
         * `pipeline_names`: An optional list of strings specifying pipeline
         names. If specified, only jobs within these pipelines will be flushed.
         """
-
-        commits = [commit_from(c) for c in commits]
-        pipelines = [pps_proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None
-        req = pps_proto.FlushJobRequest(commits=commits, to_pipelines=pipelines)
-        return self._pps_stub.FlushJob(req)
+        return self._req(
+            Service.PPS, "FlushJob",
+            commits=[commit_from(c) for c in commits],
+            to_pipelines=[pps_proto.Pipeline(name=name) for name in pipeline_names] if pipeline_names is not None else None,
+        )
 
     def delete_job(self, job_id):
         """
@@ -89,9 +81,7 @@ class PPSMixin:
 
         * `job_id`: The ID of the job to delete.
         """
-
-        req = pps_proto.DeleteJobRequest(job=pps_proto.Job(id=job_id))
-        self._pps_stub.DeleteJob(req, metadata=self.metadata)
+        return self._req(Service.PPS, "DeleteJob", job=pps_proto.Job(id=job_id))
 
     def stop_job(self, job_id):
         """
@@ -101,9 +91,7 @@ class PPSMixin:
 
         * `job_id`: The ID of the job to stop.
         """
-
-        req = pps_proto.StopJobRequest(job=pps_proto.Job(id=job_id))
-        self._pps_stub.StopJob(req, metadata=self.metadata)
+        return self._req(Service.PPS, "StopJob", job=pps_proto.Job(id=job_id))
 
     def inspect_datum(self, job_id, datum_id):
         """
@@ -114,9 +102,10 @@ class PPSMixin:
         * `job_id`: The ID of the job.
         * `datum_id`: The ID of the datum.
         """
-
-        req = pps_proto.InspectDatumRequest(datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)))
-        return self._pps_stub.InspectDatum(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "InspectDatum",
+            datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
+        )
 
     def list_datum(self, job_id, page_size=None, page=None):
         """
@@ -128,9 +117,10 @@ class PPSMixin:
         * `page_size`: An optional int specifying the size of the page.
         * `page`: An optional int specifying the page number.
         """
-
-        req = pps_proto.ListDatumRequest(job=pps_proto.Job(id=job_id), page_size=page_size, page=page)
-        return self._pps_stub.ListDatumStream(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "ListDatumStream",
+            job=pps_proto.Job(id=job_id), page_size=page_size, page=page,
+        )
 
     def restart_datum(self, job_id, data_filters=None):
         """
@@ -141,9 +131,10 @@ class PPSMixin:
         * `job_id`: The ID of the job.
         * `data_filters`: An optional iterable of strings.
         """
-
-        req = pps_proto.RestartDatumRequest(job=pps_proto.Job(id=job_id), data_filters=data_filters)
-        self._pps_stub.RestartDatum(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "RestartDatum",
+            job=pps_proto.Job(id=job_id), data_filters=data_filters,
+        )
 
     def create_pipeline(self, pipeline_name, transform=None, parallelism_spec=None,
                         hashtree_spec=None, egress=None, update=None, output_branch=None,
@@ -190,22 +181,35 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         """
-
-        req = pps_proto.CreatePipelineRequest(
+        return self._req(
+            Service.PPS, "CreatePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
-            transform=transform, parallelism_spec=parallelism_spec,
-            hashtree_spec=hashtree_spec, egress=egress, update=update,
-            output_branch=output_branch, scale_down_threshold=scale_down_threshold,
-            resource_requests=resource_requests, resource_limits=resource_limits,
-            input=input, description=description, cache_size=cache_size,
-            enable_stats=enable_stats, reprocess=reprocess,
-            max_queue_size=max_queue_size, service=service,
-            chunk_spec=chunk_spec, datum_timeout=datum_timeout,
-            job_timeout=job_timeout, salt=salt, standby=standby,
-            datum_tries=datum_tries, scheduling_spec=scheduling_spec,
-            pod_patch=pod_patch, spout=spout,
+            transform=transform,
+            parallelism_spec=parallelism_spec,
+            hashtree_spec=hashtree_spec,
+            egress=egress,
+            update=update,
+            output_branch=output_branch,
+            scale_down_threshold=scale_down_threshold,
+            resource_requests=resource_requests,
+            resource_limits=resource_limits,
+            input=input,
+            description=description,
+            cache_size=cache_size,
+            enable_stats=enable_stats,
+            reprocess=reprocess,
+            max_queue_size=max_queue_size,
+            service=service,
+            chunk_spec=chunk_spec,
+            datum_timeout=datum_timeout,
+            job_timeout=job_timeout,
+            salt=salt,
+            standby=standby,
+            datum_tries=datum_tries,
+            scheduling_spec=scheduling_spec,
+            pod_patch=pod_patch,
+            spout=spout,
         )
-        self._pps_stub.CreatePipeline(req, metadata=self.metadata)
 
     def inspect_pipeline(self, pipeline_name, history=None):
         """
@@ -222,17 +226,14 @@ class PPSMixin:
             * 2: etc.
             * -1: Return jobs from all historical versions.
         """
-
         pipeline = pps_proto.Pipeline(name=pipeline_name)
 
         if history is None:
-            req = pps_proto.InspectPipelineRequest(pipeline=pipeline)
-            return self._pps_stub.InspectPipeline(req, metadata=self.metadata)
+            return self._req(Service.PPS, "InspectPipeline", pipeline=pipeline)
         else:
             # `InspectPipeline` doesn't support history, but `ListPipeline`
             # with a pipeline filter does, so we use that here
-            req = pps_proto.ListPipelineRequest(pipeline=pipeline, history=history)
-            pipelines = self._pps_stub.ListPipeline(req, metadata=self.metadata).pipeline_info
+            pipelines = self._req(Service.PPS, "ListPipeline", pipeline=pipeline, history=history)
             assert len(pipelines) <= 1
             return pipelines[0] if len(pipelines) else None
 
@@ -251,8 +252,7 @@ class PPSMixin:
             * 2: etc.
             * -1: Return jobs from all historical versions.
         """
-        req = pps_proto.ListPipelineRequest(history=history)
-        return self._pps_stub.ListPipeline(req, metadata=self.metadata)
+        return self._req(Service.PPS, "ListPipeline", history=history)
 
     def delete_pipeline(self, pipeline_name, force=None):
         """
@@ -263,9 +263,7 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
         """
-
-        req = pps_proto.DeletePipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name), force=force)
-        self._pps_stub.DeletePipeline(req, metadata=self.metadata)
+        return self._req(Service.PPS, "DeletePipeline", pipeline=pps_proto.Pipeline(name=pipeline_name), force=force)
 
     def delete_all_pipelines(self, force=None):
         """
@@ -275,9 +273,7 @@ class PPSMixin:
 
         * `force`: Whether to force delete.
         """
-
-        req = pps_proto.DeletePipelineRequest(all=True, force=force)
-        self._pps_stub.DeletePipeline(req, metadata=self.metadata)
+        return self._req(Service.PPS, "DeletePipeline", all=True, force=force)
 
     def start_pipeline(self, pipeline_name):
         """
@@ -287,9 +283,7 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         """
-
-        req = pps_proto.StartPipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name))
-        self._pps_stub.StartPipeline(req, metadata=self.metadata)
+        return self._req(Service.PPS, "StartPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name))
 
     def stop_pipeline(self, pipeline_name):
         """
@@ -299,8 +293,7 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         """
-        req = pps_proto.StopPipelineRequest(pipeline=pps_proto.Pipeline(name=pipeline_name))
-        self._pps_stub.StopPipeline(req, metadata=self.metadata)
+        return self._req(Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name))
 
     def run_pipeline(self, pipeline_name, provenance=None):
         """
@@ -312,18 +305,20 @@ class PPSMixin:
         * `provenance`: An optional iterable of `CommitProvenance` objects
         representing the pipeline execution provenance.
         """
-        req = pps_proto.RunPipelineRequest(
+        return self._req(
+            Service.PPS, "RunPipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             provenance=provenance,
         )
-        self._pps_stub.RunPipeline(req, metadata=self.metadata)
 
     def delete_all(self):
         """
         Deletes everything in pachyderm.
         """
-        req = pps_proto.google_dot_pps_proto.uf_dot_empty__pb2.Empty()
-        self._pps_stub.DeleteAll(req, metadata=self.metadata)
+        return self._req(
+            Service.PPS, "DeleteAll",
+            req=pps_proto.google_dot_pps_proto.uf_dot_empty__pb2.Empty(),
+        )
 
     def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
                           datum=None, follow=None, tail=None):
@@ -347,13 +342,15 @@ class PPSMixin:
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
         """
-
-        req = pps_proto.GetLogsRequest(
+        return self._req(
+            Service.PPS, "GetLogs",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
-            data_filters=data_filters, master=master, datum=datum,
-            follow=follow, tail=tail,
+            data_filters=data_filters,
+            master=master,
+            datum=datum,
+            follow=follow,
+            tail=tail,
         )
-        return self._pps_stub.GetLogs(req, metadata=self.metadata)
 
     def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None,
                      tail=None):
@@ -375,15 +372,17 @@ class PPSMixin:
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
         """
-
-        req = pps_proto.GetLogsRequest(
-            job=pps_proto.Job(id=job_id), data_filters=data_filters, datum=datum,
-            follow=follow, tail=tail,
+        return self._req(
+            Service.PPS, "GetLogs",
+            job=pps_proto.Job(id=job_id),
+            data_filters=data_filters,
+            datum=datum,
+            follow=follow,
+            tail=tail,
         )
-        return self._pps_stub.GetLogs(req, metadata=self.metadata)
 
     def garbage_collect(self):
         """
         Runs garbage collection.
         """
-        return self._pps_stub.GarbageCollect(pps_proto.GarbageCollectRequest(), metadata=self.metadata)
+        return self._req(Service.PPS, "GarbageCollect")
