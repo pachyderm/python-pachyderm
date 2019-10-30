@@ -233,7 +233,7 @@ class PPSMixin:
         else:
             # `InspectPipeline` doesn't support history, but `ListPipeline`
             # with a pipeline filter does, so we use that here
-            pipelines = self._req(Service.PPS, "ListPipeline", pipeline=pipeline, history=history)
+            pipelines = self._req(Service.PPS, "ListPipeline", pipeline=pipeline, history=history).pipeline_info
             assert len(pipelines) <= 1
             return pipelines[0] if len(pipelines) else None
 
