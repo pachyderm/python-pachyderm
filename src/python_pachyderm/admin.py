@@ -1,5 +1,6 @@
 from python_pachyderm.proto.admin import admin_pb2 as admin_proto
 from python_pachyderm.proto.admin import admin_pb2_grpc as admin_grpc
+from python_pachyderm.proto.pps import pps_pb2 as pps_proto
 
 
 class AdminMixin:
@@ -54,5 +55,5 @@ class AdminMixin:
         """
         Inspects a cluster. Returns a `ClusterInfo` object.
         """
-        req = version_grpc.google_dot_protobuf_dot_empty__pb2.Empty()
+        req = admin_grpc.google_dot_protobuf_dot_empty__pb2.Empty()
         return self._admin_stub.InspectCluster(req, metadata=self.metadata)
