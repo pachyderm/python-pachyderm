@@ -1,11 +1,7 @@
 import os
 
-from python_pachyderm.pfs import PFSMixin
-from python_pachyderm.pps import PPSMixin
-from python_pachyderm.transaction import TransactionMixin
-from python_pachyderm.version import VersionMixin
-from python_pachyderm.admin import AdminMixin
-from python_pachyderm.util import Service, GRPC_MODULES, PROTO_MODULES
+from python_pachyderm.mixin import PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Service, GRPC_MODULES, PROTO_MODULES
+
 
 class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):

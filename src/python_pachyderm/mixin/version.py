@@ -1,4 +1,4 @@
-from python_pachyderm.util import Service
+from .util import Service
 from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
 
 

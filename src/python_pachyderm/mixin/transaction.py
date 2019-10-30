@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 
 from python_pachyderm.proto.transaction import transaction_pb2 as transaction_proto
-from python_pachyderm.util import Service
+from .util import Service
 
 
 def transaction_from(transaction):

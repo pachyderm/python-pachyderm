@@ -1,6 +1,5 @@
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
-from python_pachyderm.util import commit_from
-from python_pachyderm.util import Service
+from .util import Service, commit_from
 
 
 class PPSMixin:
