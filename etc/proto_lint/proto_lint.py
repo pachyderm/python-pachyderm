@@ -49,8 +49,9 @@ PROTO_OBJECT_BUILTINS = set([
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
     Service.ADMIN: [],
-    # ignored because we implement PPS' delete_all anyway
-    Service.PFS: ["delete_all"],
+    # delete_all is ignored because we implement PPS' delete_all anyway
+    # put_file is ignored because we break it up into multiple functions
+    Service.PFS: ["delete_all", "put_file"],
     # activate_auth is ignored because it's an internal function
     # get_logs is ignored because we break it up into several functions
     Service.PPS: ["activate_auth", "get_logs"],
@@ -94,7 +95,7 @@ BLACKLISTED_MISSING_ARGS = {
     },
     Service.PFS: {
         "copy_file": ["src", "dst"],
-        "create_branch": ["head"],
+        "create_branch": ["head", "s_branch"],
         "delete_file": ["file"],
         "delete_repo": ["all"],
         "finish_commit": ["trees", "datums"],
