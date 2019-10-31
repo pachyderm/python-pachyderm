@@ -51,10 +51,12 @@ BLACKLISTED_METHODS = {
     Service.ADMIN: [],
     # delete_all is ignored because we implement PPS' delete_all anyway
     # put_file is ignored because we break it up into multiple functions
-    Service.PFS: ["delete_all", "put_file"],
+    # build_commit is ignored because it's for internal use only
+    Service.PFS: ["delete_all", "put_file", "build_commit"],
     # activate_auth is ignored because it's an internal function
     # get_logs is ignored because we break it up into several functions
-    Service.PPS: ["activate_auth", "get_logs"],
+    # create_job is ignored because it's for internal use only
+    Service.PPS: ["activate_auth", "get_logs", "create_job"],
     Service.TRANSACTION: [],
     # get_version is ignored because we renamed it to disambiguate
     Service.VERSION: ["get_version"],
