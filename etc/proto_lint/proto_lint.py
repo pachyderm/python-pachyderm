@@ -81,10 +81,8 @@ WHITELISTED_EXTRA_ARGS = {
         "inspect_pipeline": ["history"],
         "flush_job": ["pipeline_names"],
     },
-    Service.TRANSACTION: {
-    },
-    Service.VERSION: {
-    },
+    Service.TRANSACTION: {},
+    Service.VERSION: {},
 }
 
 # Arguments in gRPC functions that aren't in the python functions, but should
