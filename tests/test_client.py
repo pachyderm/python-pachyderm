@@ -53,12 +53,19 @@ def test_client_new_from_pachd_address():
 
     client = python_pachyderm.Client.new_from_pachd_address("https://pachyderm.com:80", root_certs=b"foo")
     assert client.address == "pachyderm.com:80"
+    assert client.root_certs is not None
 
     client = python_pachyderm.Client.new_from_pachd_address("https://pachyderm.com:80", root_certs=b"foo")
     assert client.address == "pachyderm.com:80"
+    assert client.root_certs is not None
+
+    client = python_pachyderm.Client.new_from_pachd_address("grpcs://pachyderm.com:80")
+    assert client.address == "pachyderm.com:80"
+    assert client.root_certs is not None
 
     client = python_pachyderm.Client.new_from_pachd_address("grpcs://[::1]:80", root_certs=b"foo")
     assert client.address == "::1:80"
+    assert client.root_certs is not None
 
     client = python_pachyderm.Client.new_from_pachd_address("grpc://pachyderm.com")
     assert client.address == "pachyderm.com:30650"
@@ -74,6 +81,3 @@ def test_client_new_from_pachd_address():
 
     client = python_pachyderm.Client.new_from_pachd_address("[::1]:80")
     assert client.address == "::1:80"
-
-    with pytest.raises(ValueError):
-        client = python_pachyderm.Client.new_from_pachd_address("grpcs://pachyderm.com:80")
