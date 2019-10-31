@@ -402,7 +402,7 @@ def test_inspect_branch():
     client, repo_name = sandbox("inspect_branch")
     client.create_branch(repo_name, "foobar")
     branch = client.inspect_branch(repo_name, "foobar")
-    print(branch)
+    assert branch.branch.name == "foobar"
 
 def test_fsck():
     client = python_pachyderm.Client()
