@@ -45,31 +45,30 @@ PROTO_OBJECT_BUILTINS = set([
 BLACKLISTED_METHODS = {
     Service.ADMIN: [],
     Service.PFS: ["delete_all"],
-    Service.PPS: [],
+    Service.PPS: ["activate_auth", "get_logs"],
     Service.TRANSACTION: ["delete_all"],
     Service.VERSION: ["get_version"],
 }
 
 WHITELISTED_ARGS = {
     Service.ADMIN: {
-        "extract": ["url"],
         "restore": ["requests"],
     },
     Service.PFS: {
-        "create_branch": ["commit", "repo_name"],
-        "delete_branch": ["repo_name"],
-        "delete_file": ["commit", "path"],
+        "copy_file": ["source_commit", "source_path", "dest_commit", "dest_path"],
+        "create_branch": ["commit"],
+        "delete_branch": [],
         "finish_commit": ["tree_object_hashes", "datum_object_hash"],
         "flush_commit": ["repos"],
-        "get_file": ["commit", "path"],
-        "inspect_branch": ["repo_name"],
-        "inspect_file": ["commit", "path"],
+        "inspect_branch": [],
         "list_commit": ["from_commit", "to_commit"],
-        "list_file": ["commit", "path", "include_contents"],
-        "subscribe_commit": ["from"],
-        "walk_file": ["commit", "path"],
+        "list_file": ["include_contents"],
+        "start_commit": ["repo_name"],
+        "subscribe_commit": ["from_commit_id"],
     },
     Service.PPS: {
+        "inspect_pipeline": ["history"],
+        "flush_job": ["pipeline_names"],
     },
     Service.TRANSACTION: {
     },
@@ -83,25 +82,39 @@ BLACKLISTED_ARGS = {
         "restore": ["op", "URL"],
     },
     Service.PFS: {
+        "copy_file": ["src", "dst"],
         "create_branch": ["head"],
         "delete_file": ["file"],
         "delete_repo": ["all"],
         "finish_commit": ["trees", "datums"],
         "flush_commit": ["to_repos"],
         "get_file": ["file"],
-        "inspect_file": ["commit", "path"],
         "list_commit": ["from", "to"],
         "list_file": ["file", "full"],
-        "subscribe_commit": ["from_commit_id"],
+        "start_commit": ["repo_name"],
+        "subscribe_commit": ["from"],
         "walk_file": ["file"],
     },
     Service.PPS: {
+        "delete_pipeline": ["all"],
+        "flush_job": ["to_pipelines"],
+        "list_pipeline": ["pipeline"],
     },
     Service.TRANSACTION: {
     },
     Service.VERSION: {
     },
 }
+
+ARG_MAPPING = [
+    (["repo_name"], "repo"),
+    (["url"], "URL"),
+    (["commit", "path"], "file"),
+    (["pipeline_name"], "pipeline"),
+    (["repo_name", "branch_name"], "branch"),
+    (["datum_id", "job_id"], "datum"),
+    (["job_id"], "job"),
+]
 
 def snake_to_camel(s):
     return "".join(x.capitalize() or "_" for x in s.split("_"))
@@ -146,20 +159,17 @@ def lint(service, mixin, proto_module, grpc_module):
         extra_args = mixin_method_args - request_args
         missing_args = request_args - mixin_method_args
 
-        whitelisted_extra_args = set(WHITELISTED_ARGS[service].get(mixin_method_name, []))
-        blacklisted_missing_args = set(BLACKLISTED_ARGS[service].get(mixin_method_name, []))
-        for arg in extra_args:
-            for suffix in ("_id", "_name"):
-                trimmed = trim_suffix(arg, suffix)
-                if arg != trimmed:
-                    if trimmed in missing_args:
-                        whitelisted_extra_args.add(arg)
-                        blacklisted_missing_args.add(trimmed)
-                    break
+        ok_extra_args = set(WHITELISTED_ARGS[service].get(mixin_method_name, []))
+        ok_missing_args = set(BLACKLISTED_ARGS[service].get(mixin_method_name, []))
+        for arg in missing_args:
+            for (from_args, to_arg) in ARG_MAPPING:
+                if arg == to_arg and all(a in extra_args for a in from_args):
+                    ok_extra_args.update(from_args)
+                    ok_missing_args.add(to_arg)
 
-        for arg in extra_args - whitelisted_extra_args:
+        for arg in extra_args - ok_extra_args:
             yield "method {}: extra argument: {}".format(mixin_method_name, arg)
-        for arg in missing_args - blacklisted_missing_args:
+        for arg in missing_args - ok_missing_args:
             yield "method {}: missing argument: {}".format(mixin_method_name, arg)
 
 def main():
