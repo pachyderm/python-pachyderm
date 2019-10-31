@@ -103,9 +103,8 @@ class PFSMixin:
             provenance=provenance,
         )
 
-    def finish_commit(self, commit, description=None,
-                      tree_object_hashes=None, datum_object_hash=None,
-                      size_bytes=None, empty=None):
+    def finish_commit(self, commit, description=None, input_tree_object_hash=None, tree_object_hashes=None,
+                      datum_object_hash=None, size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -116,8 +115,10 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `description`: An optional string describing this commit.
+        * `input_tree_object_hash`: An optional string specifying an input tree
+        object hash.
         * `tree_object_hashes`: A list of zero or more strings specifying
-        object hashes.
+        object hashes for the output trees.
         * `datum_object_hash`: An optional string specifying an object hash.
         * `size_bytes`: An optional int.
         * `empty`: An optional bool. If set, the commit will be closed (its
@@ -128,6 +129,7 @@ class PFSMixin:
             Service.PFS, "FinishCommit",
             commit=commit_from(commit),
             description=description,
+            tree=pfs_proto.Object(hash=input_tree_object_hash) if input_tree_object_hash is not None else None,
             trees=[pfs_proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
             datums=pfs_proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
             size_bytes=size_bytes,
