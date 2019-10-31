@@ -431,7 +431,7 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
-        * `overwrite`: Am optional bool specifying whether to overwrite the
+        * `overwrite`: An optional bool specifying whether to overwrite the
         destination file if it already exists.
         """
         return self._req(
@@ -548,3 +548,32 @@ class PFSMixin:
         Performs a file system consistency check for PFS.
         """
         return self._req(Service.PFS, "Fsck", fix=fix)
+
+    def diff_file(self, new_commit, new_path, old_commit=None, old_path=None, shallow=None):
+        """
+        Diffs two files. If `old_commit` or `old_path` are not specified, the
+        same path in the parent of the file specified by `new_commit` and
+        `new_path` will be used.
+
+        Params:
+
+        * `new_commit`: A tuple, string, or `Commit` object representing the
+        commit for the new file.
+        * `new_path`: A string specifying the path of the new file.
+        * `old_commit`: A tuple, string, or `Commit` object representing the
+        commit for the old file.
+        * `old_path`: A string specifying the path of the old file.
+        * `shallow`: An optional bool specifying whether to do a shallow diff.
+        """
+
+        if old_commit is not None and old_path is not None:
+            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+        else:
+            old_file = None
+
+        return self._req(
+            Service.PFS, "DiffFile",
+            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+            old_file=old_file,
+            shallow=shallow,
+        )

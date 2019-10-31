@@ -407,3 +407,21 @@ def test_inspect_branch():
 def test_fsck():
     client = python_pachyderm.Client()
     assert len(list(client.fsck())) == 0
+
+def test_diff_file():
+    client, repo_name = sandbox("diff_file")
+
+    with client.commit(repo_name, "master") as old_commit:
+        client.put_file_bytes(old_commit, 'file1.dat', BytesIO(b'old data 1'))
+        client.put_file_bytes(old_commit, 'file2.dat', BytesIO(b'old data 2'))
+
+    with client.commit(repo_name, "master") as new_commit:
+        client.put_file_bytes(new_commit, 'file1.dat', BytesIO(b'new data 1'))
+
+    diff = client.diff_file(new_commit, "file1.dat", old_commit, "file2.dat")
+    assert diff.new_files[0].file.path == "file1.dat"
+    assert diff.old_files[0].file.path == "file2.dat"
+
+    diff = client.diff_file(new_commit, "file1.dat")
+    assert diff.new_files[0].file.path == "file1.dat"
+    assert diff.old_files[0].file.path == "file1.dat"
