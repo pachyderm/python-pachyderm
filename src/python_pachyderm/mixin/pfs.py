@@ -542,3 +542,9 @@ class PFSMixin:
         * `path`: The path to the file.
         """
         return self._req(Service.PFS, "DeleteFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
+
+    def fsck(self, fix=None):
+        """
+        Performs a file system consistency check for PFS.
+        """
+        return self._req(Service.PFS, "Fsck", fix=fix)

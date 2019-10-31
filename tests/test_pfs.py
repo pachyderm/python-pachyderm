@@ -403,3 +403,7 @@ def test_inspect_branch():
     client.create_branch(repo_name, "foobar")
     branch = client.inspect_branch(repo_name, "foobar")
     print(branch)
+
+def test_fsck():
+    client = python_pachyderm.Client()
+    client.fsck()
