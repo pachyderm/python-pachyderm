@@ -406,4 +406,4 @@ def test_inspect_branch():
 
 def test_fsck():
     client = python_pachyderm.Client()
-    client.fsck()
+    assert len(list(client.fsck())) == 0
