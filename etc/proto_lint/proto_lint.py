@@ -54,6 +54,7 @@ BLACKLISTED_METHODS = {
     # activate_auth is ignored because it's an internal function
     # get_logs is ignored because we break it up into several functions
     Service.PPS: ["activate_auth", "get_logs"],
+    Service.TRANSACTION: [],
     # get_version is ignored because we renamed it to disambiguate
     Service.VERSION: ["get_version"],
 }
