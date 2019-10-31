@@ -235,7 +235,7 @@ class PFSMixin:
             to_repos=[pfs_proto.Repo(name=r) for r in repos] if repos is not None else None,
         )
 
-    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None, prov=None):
         """
         Yields `CommitInfo` objects as commits occur.
 
@@ -246,9 +246,10 @@ class PFSMixin:
         * `from_commit_id`: An optional string specifying the commit ID. Only
         commits created since this commit are returned.
         * `state`: The commit state to filter on.
+        * `prov`: An optional `CommitProvenance` object.
         """
         repo = pfs_proto.Repo(name=repo_name)
-        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
+        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state, prov=prov)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(pfs_proto.Commit(repo=repo, id=from_commit_id))
         return self._req(Service.PFS, "SubscribeCommit", req=req)

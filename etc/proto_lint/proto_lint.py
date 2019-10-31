@@ -57,7 +57,7 @@ BLACKLISTED_METHODS = {
     # get_logs is ignored because we break it up into several functions
     # create_job is ignored because it's for internal use only
     Service.PPS: ["activate_auth", "get_logs", "create_job"],
-    Service.TRANSACTION: [],
+    Service.TRANSACTION: ["delete_all"],
     # get_version is ignored because we renamed it to disambiguate
     Service.VERSION: ["get_version"],
 }
@@ -70,6 +70,7 @@ WHITELISTED_EXTRA_ARGS = {
     },
     Service.PFS: {
         "copy_file": ["source_commit", "source_path", "dest_commit", "dest_path"],
+        "diff_file": ["new_commit", "new_path", "old_commit", "old_path"],
         "create_branch": ["commit"],
         "delete_branch": [],
         "finish_commit": ["tree_object_hashes", "datum_object_hash"],
@@ -97,6 +98,7 @@ BLACKLISTED_MISSING_ARGS = {
     },
     Service.PFS: {
         "copy_file": ["src", "dst"],
+        "diff_file": ["old_file", "new_file"],
         "create_branch": ["head", "s_branch"],
         "delete_file": ["file"],
         "delete_repo": ["all"],
@@ -110,6 +112,7 @@ BLACKLISTED_MISSING_ARGS = {
         "walk_file": ["file"],
     },
     Service.PPS: {
+        "create_pipeline": ["pod_spec"],
         "delete_pipeline": ["all"],
         "flush_job": ["to_pipelines"],
         "list_pipeline": ["pipeline"],

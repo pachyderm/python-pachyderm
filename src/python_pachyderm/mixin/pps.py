@@ -22,7 +22,7 @@ class PPSMixin:
             output_commit=commit_from(output_commit) if output_commit is not None else None,
         )
 
-    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None):
+    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None, full=None):
         """
         Lists jobs. Yields `JobInfo` objects.
 
@@ -41,6 +41,12 @@ class PPSMixin:
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
+        * `full`: An optional bool indicating whether the result should
+        include all pipeline details in each `JobInfo`, or limited information
+        including name and status, but excluding information in the pipeline
+        spec. Leaving this `None` (or `False`) can make the call significantly
+        faster in clusters with a large number of pipelines and jobs. Note
+        that if `input_commit` is set, this field is coerced to `True`.
         """
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
@@ -53,6 +59,7 @@ class PPSMixin:
             input_commit=input_commit,
             output_commit=commit_from(output_commit) if output_commit is not None else None,
             history=history,
+            full=full,
         )
 
     def flush_job(self, commits, pipeline_names=None):
@@ -148,7 +155,7 @@ class PPSMixin:
                         enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None,
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_patch=None, spout=None):
+                        scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -165,7 +172,7 @@ class PPSMixin:
         an upsert.
         * `output_branch`: An optional string representing the branch to output
         results on.
-        * `scale_down_threshold`: An optional pps_proto.uf `Duration` object.
+        * `scale_down_threshold`: An optional `Duration` object.
         * `resource_requests`: An optional `ResourceSpec` object.
         * `resource_limits`: An optional `ResourceSpec` object.
         * `input`: An optional `Input` object.
@@ -177,14 +184,15 @@ class PPSMixin:
         * `max_queue_size`: An optional int.
         * `service`: An optional `Service` object.
         * `chunk_spec`: An optional `ChunkSpec` object.
-        * `datum_timeout`: An optional pps_proto.uf `Duration` object.
-        * `job_timeout`: An optional pps_proto.uf `Duration` object.
-        * `salt`: An optional stirng.
+        * `datum_timeout`: An optional `Duration` object.
+        * `job_timeout`: An optional `Duration` object.
+        * `salt`: An optional string.
         * `standby`: An optional bool.
         * `datum_tries`: An optional int.
         * `scheduling_spec`: An optional `SchedulingSpec` object.
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
+        * `spec_commit`: An optional `Commit` object.
         """
         return self._req(
             Service.PPS, "CreatePipeline",
@@ -214,6 +222,7 @@ class PPSMixin:
             scheduling_spec=scheduling_spec,
             pod_patch=pod_patch,
             spout=spout,
+            spec_commit=spec_commit,
         )
 
     def inspect_pipeline(self, pipeline_name, history=None):
@@ -386,8 +395,14 @@ class PPSMixin:
             tail=tail,
         )
 
-    def garbage_collect(self):
+    def garbage_collect(self, memory_bytes=None):
         """
         Runs garbage collection.
+
+        Params:
+
+        * `memory_bytes`: An optional int specifying how much memory to use in
+        computing which objects are alive. A larger number will result in more
+        precise garbage collection (at the cost of more memory usage).
         """
-        return self._req(Service.PPS, "GarbageCollect")
+        return self._req(Service.PPS, "GarbageCollect", memory_bytes=memory_bytes)
