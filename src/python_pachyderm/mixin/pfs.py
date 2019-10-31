@@ -173,7 +173,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "InspectCommit", commit=commit_from(commit), block_state=block_state)
 
-    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None):
+    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None):
         """
         Lists commits. Yields `CommitInfo` objects.
 
@@ -189,7 +189,7 @@ class PFSMixin:
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
         """
-        req = pfs_proto.ListCommitRequest(repo=pfs_proto.Repo(name=repo_name), number=number)
+        req = pfs_proto.ListCommitRequest(repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse)
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
@@ -281,7 +281,7 @@ class PFSMixin:
             branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
         )
 
-    def list_branch(self, repo_name):
+    def list_branch(self, repo_name, reverse=None):
         """
         Lists the active branch objects on a repo. Returns a list of
         `BranchInfo` objects.
@@ -290,7 +290,7 @@ class PFSMixin:
 
         * `repo_name`: A string specifying the repo name.
         """
-        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name)).branch_info
+        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name), reverse=reverse).branch_info
 
     def delete_branch(self, repo_name, branch_name, force=None):
         """
