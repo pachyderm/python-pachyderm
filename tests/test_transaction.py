@@ -78,3 +78,11 @@ def test_delete_transaction():
     with pytest.raises(Exception):
         # re-deleting should cause an error
         client.delete_transaction(transaction)
+
+def test_delete_all_transactions():
+    client = python_pachyderm.Client()
+    client.start_transaction()
+    client.start_transaction()
+    assert len(client.list_transaction()) == 2
+    client.delete_all_transactions()
+    assert len(client.list_transaction()) == 0
