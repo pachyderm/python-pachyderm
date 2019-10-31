@@ -65,60 +65,44 @@ BLACKLISTED_METHODS = {
 # Extra arguments in python functions that should not show up as warnings,
 # usually because they're just renamed versions of gRPC arguments
 WHITELISTED_EXTRA_ARGS = {
-    Service.ADMIN: {
-        "restore": ["requests"],
-    },
-    Service.PFS: {
-        "copy_file": ["source_commit", "source_path", "dest_commit", "dest_path"],
-        "diff_file": ["new_commit", "new_path", "old_commit", "old_path"],
-        "create_branch": ["commit"],
-        "delete_branch": [],
-        "finish_commit": ["tree_object_hashes", "datum_object_hash"],
-        "flush_commit": ["repos"],
-        "inspect_branch": [],
-        "list_commit": ["from_commit", "to_commit"],
-        "list_file": ["include_contents"],
-        "start_commit": ["repo_name"],
-        "subscribe_commit": ["from_commit_id"],
-    },
-    Service.PPS: {
-        "inspect_pipeline": ["history"],
-        "flush_job": ["pipeline_names"],
-    },
-    Service.TRANSACTION: {},
-    Service.VERSION: {},
+    "restore": ["requests"],
+    "copy_file": ["source_commit", "source_path", "dest_commit", "dest_path"],
+    "diff_file": ["new_commit", "new_path", "old_commit", "old_path"],
+    "create_branch": ["commit"],
+    "delete_branch": [],
+    "finish_commit": ["tree_object_hashes", "datum_object_hash"],
+    "flush_commit": ["repos"],
+    "inspect_branch": [],
+    "list_commit": ["from_commit", "to_commit"],
+    "list_file": ["include_contents"],
+    "start_commit": ["repo_name"],
+    "subscribe_commit": ["from_commit_id"],
+    "inspect_pipeline": ["history"],
+    "flush_job": ["pipeline_names"],
 }
 
 # Arguments in gRPC functions that aren't in the python functions, but should
 # not show up as warnings, usually because they're just renamed in the library
 BLACKLISTED_MISSING_ARGS = {
-    Service.ADMIN: {
-        "extract": ["URL"],
-        "restore": ["op", "URL"],
-    },
-    Service.PFS: {
-        "copy_file": ["src", "dst"],
-        "diff_file": ["old_file", "new_file"],
-        "create_branch": ["head", "s_branch"],
-        "delete_file": ["file"],
-        "delete_repo": ["all"],
-        "finish_commit": ["trees", "datums"],
-        "flush_commit": ["to_repos"],
-        "get_file": ["file"],
-        "list_commit": ["from", "to"],
-        "list_file": ["file", "full"],
-        "start_commit": ["repo_name"],
-        "subscribe_commit": ["from"],
-        "walk_file": ["file"],
-    },
-    Service.PPS: {
-        "create_pipeline": ["pod_spec"],
-        "delete_pipeline": ["all"],
-        "flush_job": ["to_pipelines"],
-        "list_pipeline": ["pipeline"],
-    },
-    Service.TRANSACTION: {},
-    Service.VERSION: {},
+    "extract": ["URL"],
+    "restore": ["op", "URL"],
+    "copy_file": ["src", "dst"],
+    "diff_file": ["old_file", "new_file"],
+    "create_branch": ["head", "s_branch"],
+    "delete_file": ["file"],
+    "delete_repo": ["all"],
+    "finish_commit": ["trees", "datums"],
+    "flush_commit": ["to_repos"],
+    "get_file": ["file"],
+    "list_commit": ["from", "to"],
+    "list_file": ["file", "full"],
+    "start_commit": ["repo_name"],
+    "subscribe_commit": ["from"],
+    "walk_file": ["file"],
+    "create_pipeline": ["pod_spec"],
+    "delete_pipeline": ["all"],
+    "flush_job": ["to_pipelines"],
+    "list_pipeline": ["pipeline"],
 }
 
 # A mapping of python argument(s) to gRPC arguments. The python argument(s)
@@ -186,8 +170,8 @@ def lint(service, mixin, proto_module, grpc_module):
         missing_args = request_args - mixin_method_args
 
         # find which differing arguments we can safely ignore
-        ok_extra_args = set(WHITELISTED_EXTRA_ARGS[service].get(mixin_method_name, []))
-        ok_missing_args = set(BLACKLISTED_MISSING_ARGS[service].get(mixin_method_name, []))
+        ok_extra_args = set(WHITELISTED_EXTRA_ARGS.get(mixin_method_name, []))
+        ok_missing_args = set(BLACKLISTED_MISSING_ARGS.get(mixin_method_name, []))
         for arg in missing_args:
             for (from_args, to_arg) in ARG_MAPPING:
                 if arg == to_arg and all(a in extra_args for a in from_args):
