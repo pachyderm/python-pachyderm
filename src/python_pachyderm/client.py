@@ -1,7 +1,4 @@
 import os
-import collections
-import itertools
-from contextlib import contextmanager
 from urllib.parse import urlparse
 
 from .mixin.pfs import PFSMixin
