@@ -8,6 +8,7 @@ from python_pachyderm.proto.pps import pps_pb2 as pps_proto
 from python_pachyderm.proto.pps import pps_pb2_grpc as pps_grpc
 from python_pachyderm.proto.transaction import transaction_pb2 as transaction_proto
 from python_pachyderm.proto.transaction import transaction_pb2_grpc as transaction_grpc
+from python_pachyderm.proto.version.versionpb import version_pb2 as version_proto
 from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
 
 
@@ -32,4 +33,5 @@ PROTO_MODULES = {
     Service.PFS: pfs_proto,
     Service.PPS: pps_proto,
     Service.TRANSACTION: transaction_proto,
+    Service.VERSION: version_proto,
 }
