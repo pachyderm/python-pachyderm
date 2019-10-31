@@ -63,8 +63,8 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, obj
 
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string. This
-        is required if the pachd address implies TLS is enabled.
+        * `root_certs`: The PEM-encoded root certificates as byte string. If
+        unspecified, this will load default certs from certifi.
         """
 
         if "://" not in pachd_address:
