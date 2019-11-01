@@ -50,16 +50,29 @@ PROTO_OBJECT_BUILTINS = set([
 BLACKLISTED_METHODS = {
     Service.ADMIN: [],
     # delete_all is ignored because we implement PPS' delete_all anyway
-    # put_file is ignored because we break it up into multiple functions
     # build_commit is ignored because it's for internal use only
-    Service.PFS: ["delete_all", "put_file", "build_commit"],
+    Service.PFS: ["delete_all", "build_commit"],
     # activate_auth is ignored because it's an internal function
-    # get_logs is ignored because we break it up into several functions
     # create_job is ignored because it's for internal use only
-    Service.PPS: ["activate_auth", "get_logs", "create_job"],
-    Service.TRANSACTION: ["delete_all"],
-    # get_version is ignored because we renamed it to disambiguate
-    Service.VERSION: ["get_version"],
+    Service.PPS: ["activate_auth", "create_job"],
+    Service.TRANSACTION: [],
+    Service.VERSION: [],
+}
+
+RENAMED_METHODS = {
+    Service.ADMIN: {},
+    Service.PFS: {
+        "put_file": "put_file_bytes"
+    },
+    Service.PPS: {
+        "get_logs": "get_job_logs"
+    },
+    Service.TRANSACTION: {
+        "delete_all": "delete_all_transactions"
+    },
+    Service.VERSION: {
+        "get_version": "get_remote_version"
+    }
 }
 
 # Extra arguments in python functions that should not show up as warnings,
@@ -146,9 +159,15 @@ def lint(service, mixin, proto_module, grpc_module):
         mixin_method_name = camel_to_snake(trim_suffix(grpc_method_name, "Stream"))
 
         # ignore blacklisted methods
+        if mixin_method_name in BLACKLISTED_METHODS[service]:
+            continue
+
+        # find if this method is renamed
+        mixin_method_name = RENAMED_METHODS[service].get(mixin_method_name, mixin_method_name)
+
+        # find if this method isn't implemented
         if mixin_method_name not in mixin_method_names:
-            if mixin_method_name not in BLACKLISTED_METHODS[service]:
-                yield "missing method: {}".format(mixin_method_name)
+            yield "missing method: {}".format(mixin_method_name)
             continue
 
         # get the mixin function and its arguments
