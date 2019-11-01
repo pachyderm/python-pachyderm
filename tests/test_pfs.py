@@ -10,16 +10,12 @@ from io import BytesIO
 from collections import namedtuple
 
 import python_pachyderm
+from tests import util
 
-def create_repo(client, test_name):
-    repo_name_suffix = "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
-    repo_name = "{}-{}".format(test_name, repo_name_suffix)
-    client.create_repo(repo_name, "repo for {}".format(test_name))
-    return repo_name
 
 def sandbox(test_name):
     client = python_pachyderm.Client()
-    repo_name = create_repo(client, test_name)
+    repo_name = util.create_test_repo(client, test_name)
     return client, repo_name
 
 
@@ -49,8 +45,8 @@ def test_delete_non_existent_repo():
 def test_delete_all_repos():
     client = python_pachyderm.Client()
 
-    create_repo(client, "delete_all_1")
-    create_repo(client, "delete_all_2")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
     assert len(client.list_repo()) >= 2
 
     client.delete_all_repos()
@@ -406,4 +402,26 @@ def test_inspect_branch():
     client, repo_name = sandbox("inspect_branch")
     client.create_branch(repo_name, "foobar")
     branch = client.inspect_branch(repo_name, "foobar")
-    print(branch)
+    assert branch.branch.name == "foobar"
+
+def test_fsck():
+    client = python_pachyderm.Client()
+    assert len(list(client.fsck())) == 0
+
+def test_diff_file():
+    client, repo_name = sandbox("diff_file")
+
+    with client.commit(repo_name, "master") as old_commit:
+        client.put_file_bytes(old_commit, 'file1.dat', BytesIO(b'old data 1'))
+        client.put_file_bytes(old_commit, 'file2.dat', BytesIO(b'old data 2'))
+
+    with client.commit(repo_name, "master") as new_commit:
+        client.put_file_bytes(new_commit, 'file1.dat', BytesIO(b'new data 1'))
+
+    diff = client.diff_file(new_commit, "file1.dat", old_commit, "file2.dat")
+    assert diff.new_files[0].file.path == "file1.dat"
+    assert diff.old_files[0].file.path == "file2.dat"
+
+    diff = client.diff_file(new_commit, "file1.dat")
+    assert diff.new_files[0].file.path == "file1.dat"
+    assert diff.old_files[0].file.path == "file1.dat"
