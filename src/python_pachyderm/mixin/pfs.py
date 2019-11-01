@@ -103,9 +103,8 @@ class PFSMixin:
             provenance=provenance,
         )
 
-    def finish_commit(self, commit, description=None,
-                      tree_object_hashes=None, datum_object_hash=None,
-                      size_bytes=None, empty=None):
+    def finish_commit(self, commit, description=None, input_tree_object_hash=None, tree_object_hashes=None,
+                      datum_object_hash=None, size_bytes=None, empty=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -116,8 +115,10 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `description`: An optional string describing this commit.
+        * `input_tree_object_hash`: An optional string specifying an input tree
+        object hash.
         * `tree_object_hashes`: A list of zero or more strings specifying
-        object hashes.
+        object hashes for the output trees.
         * `datum_object_hash`: An optional string specifying an object hash.
         * `size_bytes`: An optional int.
         * `empty`: An optional bool. If set, the commit will be closed (its
@@ -128,6 +129,7 @@ class PFSMixin:
             Service.PFS, "FinishCommit",
             commit=commit_from(commit),
             description=description,
+            tree=pfs_proto.Object(hash=input_tree_object_hash) if input_tree_object_hash is not None else None,
             trees=[pfs_proto.Object(hash=h) for h in tree_object_hashes] if tree_object_hashes is not None else None,
             datums=pfs_proto.Object(hash=datum_object_hash) if datum_object_hash is not None else None,
             size_bytes=size_bytes,
@@ -173,7 +175,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "InspectCommit", commit=commit_from(commit), block_state=block_state)
 
-    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None):
+    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None):
         """
         Lists commits. Yields `CommitInfo` objects.
 
@@ -189,7 +191,7 @@ class PFSMixin:
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
         """
-        req = pfs_proto.ListCommitRequest(repo=pfs_proto.Repo(name=repo_name), number=number)
+        req = pfs_proto.ListCommitRequest(repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse)
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
@@ -235,7 +237,7 @@ class PFSMixin:
             to_repos=[pfs_proto.Repo(name=r) for r in repos] if repos is not None else None,
         )
 
-    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None, prov=None):
         """
         Yields `CommitInfo` objects as commits occur.
 
@@ -246,9 +248,10 @@ class PFSMixin:
         * `from_commit_id`: An optional string specifying the commit ID. Only
         commits created since this commit are returned.
         * `state`: The commit state to filter on.
+        * `prov`: An optional `CommitProvenance` object.
         """
         repo = pfs_proto.Repo(name=repo_name)
-        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
+        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state, prov=prov)
         if from_commit_id is not None:
             getattr(req, 'from').CopyFrom(pfs_proto.Commit(repo=repo, id=from_commit_id))
         return self._req(Service.PFS, "SubscribeCommit", req=req)
@@ -281,7 +284,7 @@ class PFSMixin:
             branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
         )
 
-    def list_branch(self, repo_name):
+    def list_branch(self, repo_name, reverse=None):
         """
         Lists the active branch objects on a repo. Returns a list of
         `BranchInfo` objects.
@@ -290,7 +293,7 @@ class PFSMixin:
 
         * `repo_name`: A string specifying the repo name.
         """
-        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name)).branch_info
+        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name), reverse=reverse).branch_info
 
     def delete_branch(self, repo_name, branch_name, force=None):
         """
@@ -431,7 +434,7 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
-        * `overwrite`: Am optional bool specifying whether to overwrite the
+        * `overwrite`: An optional bool specifying whether to overwrite the
         destination file if it already exists.
         """
         return self._req(
@@ -542,3 +545,38 @@ class PFSMixin:
         * `path`: The path to the file.
         """
         return self._req(Service.PFS, "DeleteFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
+
+    def fsck(self, fix=None):
+        """
+        Performs a file system consistency check for PFS.
+        """
+        return self._req(Service.PFS, "Fsck", fix=fix)
+
+    def diff_file(self, new_commit, new_path, old_commit=None, old_path=None, shallow=None):
+        """
+        Diffs two files. If `old_commit` or `old_path` are not specified, the
+        same path in the parent of the file specified by `new_commit` and
+        `new_path` will be used.
+
+        Params:
+
+        * `new_commit`: A tuple, string, or `Commit` object representing the
+        commit for the new file.
+        * `new_path`: A string specifying the path of the new file.
+        * `old_commit`: A tuple, string, or `Commit` object representing the
+        commit for the old file.
+        * `old_path`: A string specifying the path of the old file.
+        * `shallow`: An optional bool specifying whether to do a shallow diff.
+        """
+
+        if old_commit is not None and old_path is not None:
+            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+        else:
+            old_file = None
+
+        return self._req(
+            Service.PFS, "DiffFile",
+            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+            old_file=old_file,
+            shallow=shallow,
+        )

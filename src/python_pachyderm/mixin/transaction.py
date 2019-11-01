@@ -38,6 +38,12 @@ class TransactionMixin:
         """
         return self._req(Service.TRANSACTION, "DeleteTransaction", transaction=transaction_from(transaction))
 
+    def delete_all_transactions(self):
+        """
+        Deletes all transactions.
+        """
+        return self._req(Service.TRANSACTION, "DeleteAll")
+
     def list_transaction(self):
         """
         Lists transactions.
