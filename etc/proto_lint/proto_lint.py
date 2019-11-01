@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import inspect
 import string
 
@@ -300,6 +301,8 @@ def lint(service, mixin, proto_module, grpc_module):
             yield "method {}: missing argument: {}".format(mixin_method_name, arg)
 
 def main():
+    warned = False
+
     for service in Service:
         service_mixin = SERVICE_MIXINS[service]
         proto_module = PROTO_MODULES[service]
@@ -307,6 +310,9 @@ def main():
 
         for warning in lint(service, service_mixin, proto_module, grpc_module):
             print("{}: {}".format(service.name, warning))
+            warned = True
+
+    sys.exit(1 if warned else 0)
 
 if __name__ == "__main__":
     main()
