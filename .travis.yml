@@ -17,10 +17,15 @@ env:
 matrix:
   include:
     - python: 3.7
-      env: TOXENV=flake8
+      env:
+        - TOXENV=lint
+        - PACHYDERM_VERSION=1.9.7
     - python: 3.7
-      env: TOXENV=examples
+      env:
+        - TOXENV=examples
+        - PACHYDERM_VERSION=1.9.7
     - python: 3.4
+      env: PACHYDERM_VERSION=1.9.7
     - python: 3.7
       env: PACHYDERM_VERSION=1.9.7
     - python: 3.7

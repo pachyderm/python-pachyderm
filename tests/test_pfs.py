@@ -257,7 +257,8 @@ def test_inspect_commit():
         client.put_file_bytes(c, 'input.json', b'hello world')
 
     commit = client.inspect_commit("{}/master".format(repo_name))
-    assert commit.branch.name == "master"
+    if util.test_pachyderm_version() >= (1, 9, 0):
+        assert commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
     assert commit.size_bytes == 11
@@ -284,7 +285,8 @@ def test_subscribe_commit():
         pass
 
     commit = next(commits)
-    assert commit.branch.repo.name == repo_name
+    if util.test_pachyderm_version() >= (1, 9, 0):
+        assert commit.branch.repo.name == repo_name
     assert commit.branch.name == "master"
 
 def test_list_branch():
@@ -404,6 +406,7 @@ def test_inspect_branch():
     branch = client.inspect_branch(repo_name, "foobar")
     assert branch.branch.name == "foobar"
 
+@util.skip_if_below_pachyderm_version(1, 9, 7)
 def test_fsck():
     client = python_pachyderm.Client()
     assert len(list(client.fsck())) == 0
