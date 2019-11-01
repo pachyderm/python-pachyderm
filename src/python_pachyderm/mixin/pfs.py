@@ -314,7 +314,7 @@ class PFSMixin:
         )
 
     def put_file_bytes(self, commit, path, value, delimiter=None,
-                       target_file_datums=None, target_file_bytes=None, overwrite_index=None):
+                       target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a binary bytes array as file(s) in a certain path.
 
@@ -355,7 +355,8 @@ class PFSMixin:
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
                             target_file_bytes=target_file_bytes,
-                            overwrite_index=overwrite_index
+                            overwrite_index=overwrite_index,
+                            header_records=header_records
                         )
                     else:
                         yield pfs_proto.PutFileRequest(value=chunk)
@@ -369,7 +370,8 @@ class PFSMixin:
                             delimiter=delimiter,
                             target_file_datums=target_file_datums,
                             target_file_bytes=target_file_bytes,
-                            overwrite_index=overwrite_index
+                            overwrite_index=overwrite_index,
+                            header_records=header_records
                         )
                     else:
                         yield pfs_proto.PutFileRequest(value=chunk)
@@ -381,13 +383,15 @@ class PFSMixin:
                     delimiter=delimiter,
                     target_file_datums=target_file_datums,
                     target_file_bytes=target_file_bytes,
-                    overwrite_index=overwrite_index
+                    overwrite_index=overwrite_index,
+                    header_records=header_records
                 )
 
                 for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
                     yield pfs_proto.PutFileRequest(
                         value=value[i:i + BUFFER_SIZE],
-                        overwrite_index=overwrite_index
+                        overwrite_index=overwrite_index,
+                        header_records=header_records
                     )
 
         return self._req(Service.PFS, "PutFile", req=wrap(value))
