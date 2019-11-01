@@ -28,10 +28,19 @@ class Service(Enum):
 
     @property
     def stub(self):
-        if self == Service.DEBUG:
-            return debug_grpc.DebugStub
-        else:
-            return getattr(self.grpc_module, "APIStub")
+        grpc_module = self.grpc_module
+
+        for key in dir(grpc_module):
+            if key.endswith("Stub"):
+                return getattr(self.grpc_module, key)
+
+    @property
+    def servicer(self):
+        grpc_module = self.grpc_module
+
+        for key in dir(grpc_module):
+            if key.endswith("Servicer"):
+                return getattr(self.grpc_module, key)
 
     @property
     def proto_module(self):

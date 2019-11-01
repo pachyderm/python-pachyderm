@@ -50,19 +50,18 @@ PROTO_OBJECT_BUILTINS = set([
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
-    Service.ADMIN: [],
     # delete_all is ignored because we implement PPS' delete_all anyway
     # build_commit is ignored because it's for internal use only
     Service.PFS: ["delete_all", "build_commit"],
     # activate_auth is ignored because it's an internal function
     # create_job is ignored because it's for internal use only
     Service.PPS: ["activate_auth", "create_job"],
-    Service.TRANSACTION: [],
-    Service.VERSION: [],
 }
 
 RENAMED_METHODS = {
-    Service.ADMIN: {},
+    Service.DEBUG: {
+        "profile": ["profile_cpu"],
+    },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
     },
@@ -87,6 +86,10 @@ RENAMED_ARGS = {
     ],
     "restore": [
         (("op", "URL"), "requests"),
+    ],
+    # debug
+    "profile_cpu": [
+        ("profile", None),
     ],
     # PFS
     "create_repo": [
@@ -287,10 +290,9 @@ def lint_service(service):
 
     mixin_cls = SERVICE_MIXINS[service]
     mixin_method_names = set(attrs(mixin_cls))
-    grpc_cls = service.stub
-    grpc_method_names = set(attrs(grpc_cls))
-    grpc_module = service.grpc_module
     proto_module = service.proto_module
+    grpc_cls = service.servicer
+    grpc_method_names = set(attrs(grpc_cls))
 
     for grpc_method_name in grpc_method_names:
         if (not grpc_method_name.endswith("Stream")) and "{}Stream".format(grpc_method_name) in grpc_method_names:
@@ -302,11 +304,11 @@ def lint_service(service):
         mixin_method_name = camel_to_snake(trim_suffix(grpc_method_name, "Stream"))
 
         # ignore blacklisted methods
-        if mixin_method_name in BLACKLISTED_METHODS[service]:
+        if mixin_method_name in BLACKLISTED_METHODS.get(service, []):
             continue
 
         # find if this method is renamed
-        renamed_mixin_method_names = RENAMED_METHODS[service].get(mixin_method_name, [mixin_method_name])
+        renamed_mixin_method_names = RENAMED_METHODS.get(service, {}).get(mixin_method_name, [mixin_method_name])
 
         for mixin_method_name in renamed_mixin_method_names:
             # find if this method isn't implemented
