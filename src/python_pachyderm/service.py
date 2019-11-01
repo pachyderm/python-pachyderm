@@ -31,7 +31,7 @@ class Service(Enum):
         if self == Service.DEBUG:
             return debug_grpc.DebugStub
         else:
-            return getattr(self.module(), "APIStub")
+            return getattr(self.grpc_module, "APIStub")
 
     @property
     def proto_module(self):
