@@ -75,60 +75,149 @@ RENAMED_METHODS = {
     }
 }
 
-# Extra arguments in python functions that should not show up as warnings,
-# usually because they're just renamed versions of gRPC arguments
-WHITELISTED_EXTRA_ARGS = {
-    "restore": ["requests"],
-    "copy_file": ["source_commit", "source_path", "dest_commit", "dest_path"],
-    "diff_file": ["new_commit", "new_path", "old_commit", "old_path"],
-    "create_branch": ["commit"],
-    "delete_branch": [],
-    "finish_commit": ["tree_object_hashes", "datum_object_hash", "input_tree_object_hash"],
-    "flush_commit": ["repos"],
-    "inspect_branch": [],
-    "list_commit": ["from_commit", "to_commit"],
-    "list_file": ["include_contents"],
-    "start_commit": ["repo_name"],
-    "subscribe_commit": ["from_commit_id"],
-    "inspect_pipeline": ["history"],
-    "flush_job": ["pipeline_names"],
+RENAMED_ARGS = {
+    # admin
+    "extract_pipeline": [
+        ("pipeline", "pipeline_name"),
+    ],
+    "extract": [
+        ("URL", "url"),
+    ],
+    "restore": [
+        (("op", "URL"), "requests"),
+    ],
+    # PFS
+    "create_repo": [
+        ("repo", "repo_name"),
+    ],
+    "create_branch": [
+        ("branch", ("repo_name", "branch_name")),
+        ("head", "commit"),
+        ("s_branch", None),
+    ],
+    "copy_file": [
+        ("src", ("source_commit", "source_path")),
+        ("dst", ("dest_commit", "dest_path")),
+    ],
+    "delete_branch": [
+        ("branch", ("repo_name", "branch_name")),
+    ],
+    "delete_file": [
+        ("file", ("commit", "path")),
+    ],
+    "delete_repo": [
+        ("repo", "repo_name"),
+        ("all", None),
+    ],
+    "diff_file": [
+        ("old_file", ("old_commit", "old_path")),
+        ("new_file", ("new_commit", "new_path")),
+    ],
+    "finish_commit": [
+        ("tree", "input_tree_object_hash"),
+        ("trees", "tree_object_hashes"),
+        ("datums", "datum_object_hash"),
+    ],
+    "flush_commit": [
+        ("to_repos", "repos"),
+    ],
+    "get_file": [
+        ("file", ("commit", "path")),
+    ],
+    "inspect_branch": [
+        ("branch", ("repo_name", "branch_name")),
+    ],
+    "inspect_commit": [
+        ("repo", "repo_name"),
+    ],
+    "inspect_file": [
+        ("file", ("commit", "path")),
+    ],
+    "inspect_repo": [
+        ("repo", "repo_name"),
+    ],
+    "list_branch": [
+        ("repo", "repo_name"),
+    ],
+    "list_commit": [
+        ("from", "from_commit"),
+        ("to", "to_commit"),
+        ("repo", "repo_name"),
+    ],
+    "list_file": [
+        ("full", "include_contents"),
+        ("file", ("commit", "path")),
+    ],
+    "put_file_bytes": [
+        ("file", ("commit", "path")),
+        ("url", None),
+        ("recursive", None),
+    ],
+    "start_commit": [
+        ("parent", ("repo_name", "parent")),
+    ],
+    "subscribe_commit": [
+        ("from", "from_commit_id"),
+        ("repo", "repo_name"),
+    ],
+    "walk_file": [
+        ("file", ("commit", "path")),
+    ],
+    # PPS
+    "create_pipeline": [
+        ("pipeline", "pipeline_name"),
+        ("pod_spec", None),
+    ],
+    "delete_job": [
+        ("job", "job_id"),
+    ],
+    "delete_pipeline": [
+        ("pipeline", "pipeline_name"),
+        ("all", None),
+    ],
+    "flush_job": [
+        ("to_pipelines", "pipeline_names"),
+    ],
+    "get_job_logs": [
+        ("job", "job_id"),
+        ("master", None),
+        ("pipeline", None),
+    ],
+    "inspect_datum": [
+        ("datum", ("job_id", "datum_id")),
+    ],
+    "inspect_job": [
+        ("job", "job_id"),
+    ],
+    "inspect_pipeline": [
+        ("pipeline", "pipeline_name"),
+        (None, "history"),
+    ],
+    "list_datum": [
+        ("job", "job_id"),
+    ],
+    "list_pipeline": [
+        ("pipeline", None),
+    ],
+    "list_job": [
+        ("pipeline", "pipeline_name"),
+    ],
+    "restart_datum": [
+        ("job", "job_id"),
+    ],
+    "run_pipeline": [
+        ("pipeline", "pipeline_name"),
+    ],
+    "start_pipeline": [
+        ("pipeline", "pipeline_name"),
+    ],
+    "stop_job": [
+        ("job", "job_id"),
+    ],
+    "stop_pipeline": [
+        ("pipeline", "pipeline_name"),
+    ],
 }
-
-# Arguments in gRPC functions that aren't in the python functions, but should
-# not show up as warnings, usually because they're just renamed in the library
-BLACKLISTED_MISSING_ARGS = {
-    "extract": ["URL"],
-    "restore": ["op", "URL"],
-    "copy_file": ["src", "dst"],
-    "diff_file": ["old_file", "new_file"],
-    "create_branch": ["head", "s_branch"],
-    "delete_file": ["file"],
-    "delete_repo": ["all"],
-    "finish_commit": ["trees", "datums", "tree"],
-    "flush_commit": ["to_repos"],
-    "get_file": ["file"],
-    "list_commit": ["from", "to"],
-    "list_file": ["file", "full"],
-    "start_commit": ["repo_name"],
-    "subscribe_commit": ["from"],
-    "walk_file": ["file"],
-    "create_pipeline": ["pod_spec"],
-    "delete_pipeline": ["all"],
-    "flush_job": ["to_pipelines"],
-    "list_pipeline": ["pipeline"],
-}
-
-# A mapping of python argument(s) to gRPC arguments. The python argument(s)
-# can be considered a safe substitute for the gRPC arguments.
-ARG_MAPPING = [
-    (["repo_name"], "repo"),
-    (["url"], "URL"),
-    (["commit", "path"], "file"),
-    (["pipeline_name"], "pipeline"),
-    (["repo_name", "branch_name"], "branch"),
-    (["datum_id", "job_id"], "datum"),
-    (["job_id"], "job"),
-]
 
 def camel_to_snake(s):
     """Converts CamelCase strings to snake_case"""
@@ -141,6 +230,18 @@ def attrs(obj):
 def trim_suffix(s, suffix):
     """Removes a suffix from a string if it exists"""
     return s[:-len(suffix)] if s.endswith(suffix) else s
+
+def args_set(values):
+    s = set()
+
+    for v in values:
+        if v is not None:
+            if isinstance(v, tuple):
+                s.update(v)
+            else:
+                s.add(v)
+
+    return s
 
 def lint(service, mixin, proto_module, grpc_module):
     """Lints a given service"""
@@ -185,17 +286,12 @@ def lint(service, mixin, proto_module, grpc_module):
 
         # find which arguments differ between the python and gRPC implementation
         request_args = set([n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS])
-        extra_args = mixin_method_args - request_args
         missing_args = request_args - mixin_method_args
+        extra_args = mixin_method_args - request_args
 
         # find which differing arguments we can safely ignore
-        ok_extra_args = set(WHITELISTED_EXTRA_ARGS.get(mixin_method_name, []))
-        ok_missing_args = set(BLACKLISTED_MISSING_ARGS.get(mixin_method_name, []))
-        for arg in missing_args:
-            for (from_args, to_arg) in ARG_MAPPING:
-                if arg == to_arg and all(a in extra_args for a in from_args):
-                    ok_extra_args.update(from_args)
-                    ok_missing_args.add(to_arg)
+        ok_missing_args = args_set(s for (s, _) in RENAMED_ARGS.get(mixin_method_name, []))
+        ok_extra_args = args_set(s for (_, s) in RENAMED_ARGS.get(mixin_method_name, []))
 
         # yield warnings for the remaining differing arguments
         for arg in extra_args - ok_extra_args:
