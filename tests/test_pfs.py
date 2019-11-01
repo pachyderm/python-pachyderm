@@ -287,7 +287,7 @@ def test_subscribe_commit():
     commit = next(commits)
     if util.test_pachyderm_version() >= (1, 9, 0):
         assert commit.branch.repo.name == repo_name
-    assert commit.branch.name == "master"
+        assert commit.branch.name == "master"
 
 def test_list_branch():
     client, repo_name = sandbox("list_branch")
