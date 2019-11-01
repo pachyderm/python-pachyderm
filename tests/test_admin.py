@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Tests PFS-related functionality"""
+"""Tests admin-related functionality"""
 
 import pytest
 import random

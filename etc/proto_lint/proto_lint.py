@@ -3,7 +3,7 @@
 import inspect
 import string
 
-from python_pachyderm.service import Service, GRPC_MODULES, PROTO_MODULES
+from python_pachyderm.service import Service
 from python_pachyderm import mixin
 
 # A set of uppercase characters
@@ -129,12 +129,14 @@ def trim_suffix(s, suffix):
     """Removes a suffix from a string if it exists"""
     return s[:-len(suffix)] if s.endswith(suffix) else s
 
-def lint(service, mixin, proto_module, grpc_module):
+def lint(service, mixin):
     """Lints a given service"""
 
     mixin_method_names = set(attrs(mixin))
     grpc_cls = getattr(grpc_module, "APIServicer")
     grpc_method_names = set(attrs(grpc_cls))
+    grpc_module = service.grpc_module
+    proto_module = service.proto_module
 
     for grpc_method_name in grpc_method_names:
         if (not grpc_method_name.endswith("Stream")) and "{}Stream".format(grpc_method_name) in grpc_method_names:
@@ -187,10 +189,8 @@ def lint(service, mixin, proto_module, grpc_module):
 def main():
     for service in Service:
         service_mixin = SERVICE_MIXINS[service]
-        proto_module = PROTO_MODULES[service]
-        grpc_module = GRPC_MODULES[service]
 
-        for warning in lint(service, service_mixin, proto_module, grpc_module):
+        for warning in lint(service, service_mixin):
             print("{}: {}".format(service.name, warning))
 
 if __name__ == "__main__":
