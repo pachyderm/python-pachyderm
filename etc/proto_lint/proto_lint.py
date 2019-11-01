@@ -63,16 +63,16 @@ BLACKLISTED_METHODS = {
 RENAMED_METHODS = {
     Service.ADMIN: {},
     Service.PFS: {
-        "put_file": "put_file_bytes"
+        "put_file": ["put_file_bytes", "put_file_url"],
     },
     Service.PPS: {
-        "get_logs": "get_job_logs"
+        "get_logs": ["get_job_logs", "get_pipeline_logs"],
     },
     Service.TRANSACTION: {
-        "delete_all": "delete_all_transactions"
+        "delete_all": ["delete_all_transactions"],
     },
     Service.VERSION: {
-        "get_version": "get_remote_version"
+        "get_version": ["get_remote_version"],
     }
 }
 
@@ -154,6 +154,10 @@ RENAMED_ARGS = {
         ("url", None),
         ("recursive", None),
     ],
+    "put_file_url": [
+        ("file", ("commit", "path")),
+        ("value", None),
+    ],
     "start_commit": [
         ("parent", ("repo_name", "parent")),
     ],
@@ -183,6 +187,10 @@ RENAMED_ARGS = {
         ("job", "job_id"),
         ("master", None),
         ("pipeline", None),
+    ],
+    "get_pipeline_logs": [
+        ("pipeline", ("pipeline_name")),
+        ("job", None),
     ],
     "inspect_datum": [
         ("datum", ("job_id", "datum_id")),
@@ -244,7 +252,36 @@ def args_set(values):
 
     return s
 
-def lint(service, mixin, proto_module, grpc_module):
+def lint_method(mixin, proto_module, grpc_method_name, mixin_method_name):
+    # get the mixin function and its arguments
+    request_cls = getattr(proto_module, "{}Request".format(trim_suffix(grpc_method_name, "Stream")), None)
+    mixin_method = getattr(mixin, mixin_method_name)
+    mixin_method_args = set(a for a in inspect.getfullargspec(mixin_method).args if a != "self")
+
+    # give a warning for a python function that takes in arguments even
+    # though there's no request object for the gRPC function, implying
+    # that the gRPC function takes no arguments
+    if request_cls is None:
+        if len(mixin_method_args) > 0:
+            yield "method {}: unexpected arguments".format(mixin_method_name)
+        return
+
+    # find which arguments differ between the python and gRPC implementation
+    request_args = set([n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS])
+    missing_args = request_args - mixin_method_args
+    extra_args = mixin_method_args - request_args
+
+    # find which differing arguments we can safely ignore
+    ok_missing_args = args_set(s for (s, _) in RENAMED_ARGS.get(mixin_method_name, []))
+    ok_extra_args = args_set(s for (_, s) in RENAMED_ARGS.get(mixin_method_name, []))
+
+    # yield warnings for the remaining differing arguments
+    for arg in extra_args - ok_extra_args:
+        yield "method {}: extra argument: {}".format(mixin_method_name, arg)
+    for arg in missing_args - ok_missing_args:
+        yield "method {}: missing argument: {}".format(mixin_method_name, arg)
+
+def lint_service(service, mixin, proto_module, grpc_module):
     """Lints a given service"""
 
     mixin_method_names = set(attrs(mixin))
@@ -265,40 +302,16 @@ def lint(service, mixin, proto_module, grpc_module):
             continue
 
         # find if this method is renamed
-        mixin_method_name = RENAMED_METHODS[service].get(mixin_method_name, mixin_method_name)
+        renamed_mixin_method_names = RENAMED_METHODS[service].get(mixin_method_name, [mixin_method_name])
 
-        # find if this method isn't implemented
-        if mixin_method_name not in mixin_method_names:
-            yield "missing method: {}".format(mixin_method_name)
-            continue
+        for mixin_method_name in renamed_mixin_method_names:
+            # find if this method isn't implemented
+            if mixin_method_name not in mixin_method_names:
+                yield "missing method: {}".format(mixin_method_name)
+                continue
 
-        # get the mixin function and its arguments
-        request_cls = getattr(proto_module, "{}Request".format(trim_suffix(grpc_method_name, "Stream")), None)
-        mixin_method = getattr(mixin, mixin_method_name)
-        mixin_method_args = set(a for a in inspect.getfullargspec(mixin_method).args if a != "self")
-
-        # give a warning for a python function that takes in arguments even
-        # though there's no request object for the gRPC function, implying
-        # that the gRPC function takes no arguments
-        if request_cls is None:
-            if len(mixin_method_args) > 0:
-                yield "method {}: unexpected arguments".format(mixin_method_name)
-            continue
-
-        # find which arguments differ between the python and gRPC implementation
-        request_args = set([n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS])
-        missing_args = request_args - mixin_method_args
-        extra_args = mixin_method_args - request_args
-
-        # find which differing arguments we can safely ignore
-        ok_missing_args = args_set(s for (s, _) in RENAMED_ARGS.get(mixin_method_name, []))
-        ok_extra_args = args_set(s for (_, s) in RENAMED_ARGS.get(mixin_method_name, []))
-
-        # yield warnings for the remaining differing arguments
-        for arg in extra_args - ok_extra_args:
-            yield "method {}: extra argument: {}".format(mixin_method_name, arg)
-        for arg in missing_args - ok_missing_args:
-            yield "method {}: missing argument: {}".format(mixin_method_name, arg)
+            for warning in lint_method(mixin, proto_module, grpc_method_name, mixin_method_name):
+                yield "{}: {}".format(service.name, warning)
 
 def main():
     warned = False
@@ -308,8 +321,8 @@ def main():
         proto_module = PROTO_MODULES[service]
         grpc_module = GRPC_MODULES[service]
 
-        for warning in lint(service, service_mixin, proto_module, grpc_module):
-            print("{}: {}".format(service.name, warning))
+        for warning in lint_service(service, service_mixin, proto_module, grpc_module):
+            print(warning)
             warned = True
 
     sys.exit(1 if warned else 0)
