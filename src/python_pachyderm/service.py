@@ -46,6 +46,7 @@ class Service(Enum):
     def proto_module(self):
         return PROTO_MODULES[self]
 
+
 GRPC_MODULES = {
     Service.ADMIN: admin_grpc,
     Service.DEBUG: debug_grpc,

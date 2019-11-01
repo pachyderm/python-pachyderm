@@ -1,4 +1,3 @@
-from python_pachyderm.proto.debug import debug_pb2_grpc as debug_grpc
 from python_pachyderm.service import Service
 
 

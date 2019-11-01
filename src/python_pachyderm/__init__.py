@@ -27,8 +27,6 @@ def _import_protos(path):
     uppercase_letters = set(string.ascii_uppercase)
     lowercase_letters = set(string.ascii_lowercase)
 
-    is_importable = lambda k: k[0] in uppercase_letters and any(c in lowercase_letters for c in k[1:])
-
     def import_item(g, module, key):
         value = getattr(module, key)
 
@@ -44,13 +42,16 @@ def _import_protos(path):
 
         __all__.append(key)
 
+    def should_import(key):
+        return key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:])
+
     for key in dir(module):
-        if is_importable(key):
+        if should_import(key):
             import_item(g, module, key)
         elif key.startswith("google_dot_protobuf_dot_"):
             sub_module = getattr(module, key)
             for key in dir(sub_module):
-                if is_importable(key):
+                if should_import(key):
                     import_item(g, sub_module, key)
 
 
