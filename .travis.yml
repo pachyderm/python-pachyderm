@@ -7,9 +7,6 @@ cache:
     - $HOME/.cache/go-build
     - $HOME/cached-deps
 language: python
-python:
-  - '3.4'
-  - '3.7'
 env:
   global:
     - PATH=$HOME/cached-deps:$PATH
