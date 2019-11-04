@@ -7,21 +7,35 @@ cache:
     - $HOME/.cache/go-build
     - $HOME/cached-deps
 language: python
-python:
-  - '3.4'
-  - '3.5'
-  - '3.6'
-  - '3.7'
 env:
   global:
     - PATH=$HOME/cached-deps:$PATH
 
 matrix:
   include:
+    # python 3.4
+    - python: 3.4
+      env: PACHYDERM_VERSION=1.9.7
+    - python: 3.4
+      env: PACHYDERM_VERSION=1.9.0
+    - python: 3.4
+      env: PACHYDERM_VERSION=1.8.8
+    # python 3.7
     - python: 3.7
-      env: TOXENV=flake8
+      env: PACHYDERM_VERSION=1.9.7
     - python: 3.7
-      env: TOXENV=examples
+      env: PACHYDERM_VERSION=1.9.0
+    - python: 3.7
+      env: PACHYDERM_VERSION=1.8.8
+    # other tests
+    - python: 3.7
+      env:
+        - TOXENV=lint
+        - PACHYDERM_VERSION=1.9.7
+    - python: 3.7
+      env:
+        - TOXENV=examples
+        - PACHYDERM_VERSION=1.9.7
 
 install:
 - make ci-install

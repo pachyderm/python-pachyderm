@@ -1,7 +1,31 @@
+import os
 import string
 import random
 
+import pytest
 import python_pachyderm
+
+_test_pachyderm_version = None
+
+def test_pachyderm_version():
+    global _test_pachyderm_version
+
+    if _test_pachyderm_version is None:
+        value = os.environ.get("PACHYDERM_VERSION")
+
+        if value is None:
+            client = python_pachyderm.Client()
+            value = client.get_remote_version()
+            _test_pachyderm_version = (value.major, value.minor, value.micro)
+        else:
+            _test_pachyderm_version = tuple(int(i) for i in value.split("."))
+
+    return _test_pachyderm_version
+
+def skip_if_below_pachyderm_version(major, minor, revision):
+    test = test_pachyderm_version() < (major, minor, revision)
+    reason = "requires pachyderm {}.{}.{} or higher".format(major, minor, revision)
+    return pytest.mark.skipif(test, reason=reason)
 
 def random_string(n):
     return "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(n))

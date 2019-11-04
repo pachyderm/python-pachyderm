@@ -107,8 +107,9 @@ def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
-    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
+    if util.test_pachyderm_version() >= (1, 9, 0):
+        pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
+        assert pipeline.pipeline.name == sandbox.pipeline_repo_name
 
 def test_list_pipeline():
     sandbox = Sandbox("list_pipeline")
@@ -147,7 +148,8 @@ def test_run_pipeline():
     list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
 
     # just make sure it worked
-    sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
+    if util.test_pachyderm_version() >= (1, 9, 0):
+        sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
 
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
