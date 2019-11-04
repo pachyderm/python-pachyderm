@@ -3,11 +3,6 @@
 """Tests debug-related functionality"""
 
 import pytest
-import random
-import string
-import threading
-from io import BytesIO
-from collections import namedtuple
 
 import python_pachyderm
 from tests import util

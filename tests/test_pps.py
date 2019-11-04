@@ -4,9 +4,6 @@
 
 import grpc
 import time
-import pytest
-import random
-import string
 
 import python_pachyderm
 from tests import util
