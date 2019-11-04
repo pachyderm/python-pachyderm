@@ -12,6 +12,8 @@ from python_pachyderm.proto.version.versionpb import version_pb2 as version_prot
 from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
 from python_pachyderm.proto.debug import debug_pb2 as debug_proto
 from python_pachyderm.proto.debug import debug_pb2_grpc as debug_grpc
+from python_pachyderm.proto.auth import auth_pb2 as auth_proto
+from python_pachyderm.proto.auth import auth_pb2_grpc as auth_grpc
 
 
 class Service(Enum):
@@ -49,6 +51,7 @@ class Service(Enum):
 
 GRPC_MODULES = {
     Service.ADMIN: admin_grpc,
+    Service.AUTH: auth_grpc,
     Service.DEBUG: debug_grpc,
     Service.PFS: pfs_grpc,
     Service.PPS: pps_grpc,
@@ -58,6 +61,7 @@ GRPC_MODULES = {
 
 PROTO_MODULES = {
     Service.ADMIN: admin_proto,
+    Service.AUTH: auth_proto,
     Service.DEBUG: debug_proto,
     Service.PFS: pfs_proto,
     Service.PPS: pps_proto,

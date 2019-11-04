@@ -13,6 +13,7 @@ UPPERCASE = set(string.ascii_uppercase)
 # Mapping of services to their implementing mixins
 SERVICE_MIXINS = {
     Service.ADMIN: mixin.admin.AdminMixin,
+    Service.AUTH: mixin.auth.AuthMixin,
     Service.DEBUG: mixin.debug.DebugMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
