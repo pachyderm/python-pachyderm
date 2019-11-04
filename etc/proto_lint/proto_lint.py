@@ -14,6 +14,7 @@ UPPERCASE = set(string.ascii_uppercase)
 SERVICE_MIXINS = {
     Service.ADMIN: mixin.admin.AdminMixin,
     Service.DEBUG: mixin.debug.DebugMixin,
+    Service.HEALTH: mixin.health.HealthMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
     Service.TRANSACTION: mixin.transaction.TransactionMixin,
