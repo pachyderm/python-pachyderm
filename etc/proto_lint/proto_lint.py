@@ -4,7 +4,7 @@ import sys
 import inspect
 import string
 
-from python_pachyderm.service import Service, GRPC_MODULES, PROTO_MODULES
+from python_pachyderm.service import Service
 from python_pachyderm import mixin
 
 # A set of uppercase characters
@@ -13,6 +13,7 @@ UPPERCASE = set(string.ascii_uppercase)
 # Mapping of services to their implementing mixins
 SERVICE_MIXINS = {
     Service.ADMIN: mixin.admin.AdminMixin,
+    Service.DEBUG: mixin.debug.DebugMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
     Service.TRANSACTION: mixin.transaction.TransactionMixin,
@@ -49,19 +50,18 @@ PROTO_OBJECT_BUILTINS = set([
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
-    Service.ADMIN: [],
     # delete_all is ignored because we implement PPS' delete_all anyway
     # build_commit is ignored because it's for internal use only
     Service.PFS: ["delete_all", "build_commit"],
     # activate_auth is ignored because it's an internal function
     # create_job is ignored because it's for internal use only
     Service.PPS: ["activate_auth", "create_job"],
-    Service.TRANSACTION: [],
-    Service.VERSION: [],
 }
 
 RENAMED_METHODS = {
-    Service.ADMIN: {},
+    Service.DEBUG: {
+        "profile": ["profile_cpu"],
+    },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
     },
@@ -86,6 +86,10 @@ RENAMED_ARGS = {
     ],
     "restore": [
         (("op", "URL"), "requests"),
+    ],
+    # debug
+    "profile_cpu": [
+        ("profile", None),
     ],
     # PFS
     "create_repo": [
@@ -252,10 +256,10 @@ def args_set(values):
 
     return s
 
-def lint_method(mixin, proto_module, grpc_method_name, mixin_method_name):
+def lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
     # get the mixin function and its arguments
     request_cls = getattr(proto_module, "{}Request".format(trim_suffix(grpc_method_name, "Stream")), None)
-    mixin_method = getattr(mixin, mixin_method_name)
+    mixin_method = getattr(mixin_cls, mixin_method_name)
     mixin_method_args = set(a for a in inspect.getfullargspec(mixin_method).args if a != "self")
 
     # give a warning for a python function that takes in arguments even
@@ -281,11 +285,13 @@ def lint_method(mixin, proto_module, grpc_method_name, mixin_method_name):
     for arg in missing_args - ok_missing_args:
         yield "method {}: missing argument: {}".format(mixin_method_name, arg)
 
-def lint_service(service, mixin, proto_module, grpc_module):
+def lint_service(service):
     """Lints a given service"""
 
-    mixin_method_names = set(attrs(mixin))
-    grpc_cls = getattr(grpc_module, "APIServicer")
+    mixin_cls = SERVICE_MIXINS[service]
+    mixin_method_names = set(attrs(mixin_cls))
+    proto_module = service.proto_module
+    grpc_cls = service.servicer
     grpc_method_names = set(attrs(grpc_cls))
 
     for grpc_method_name in grpc_method_names:
@@ -298,11 +304,11 @@ def lint_service(service, mixin, proto_module, grpc_module):
         mixin_method_name = camel_to_snake(trim_suffix(grpc_method_name, "Stream"))
 
         # ignore blacklisted methods
-        if mixin_method_name in BLACKLISTED_METHODS[service]:
+        if mixin_method_name in BLACKLISTED_METHODS.get(service, []):
             continue
 
         # find if this method is renamed
-        renamed_mixin_method_names = RENAMED_METHODS[service].get(mixin_method_name, [mixin_method_name])
+        renamed_mixin_method_names = RENAMED_METHODS.get(service, {}).get(mixin_method_name, [mixin_method_name])
 
         for mixin_method_name in renamed_mixin_method_names:
             # find if this method isn't implemented
@@ -310,18 +316,14 @@ def lint_service(service, mixin, proto_module, grpc_module):
                 yield "missing method: {}".format(mixin_method_name)
                 continue
 
-            for warning in lint_method(mixin, proto_module, grpc_method_name, mixin_method_name):
+            for warning in lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
                 yield "{}: {}".format(service.name, warning)
 
 def main():
     warned = False
 
     for service in Service:
-        service_mixin = SERVICE_MIXINS[service]
-        proto_module = PROTO_MODULES[service]
-        grpc_module = GRPC_MODULES[service]
-
-        for warning in lint_service(service, service_mixin, proto_module, grpc_module):
+        for warning in lint_service(service):
             print(warning)
             warned = True
 

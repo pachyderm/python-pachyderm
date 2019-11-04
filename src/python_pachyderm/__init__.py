@@ -1,6 +1,6 @@
-import string as string
-import importlib as importlib
-import enum as enum
+import string as _string
+import importlib as _importlib
+import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
 from .client import Client
@@ -23,25 +23,36 @@ def _import_protos(path):
     """
 
     g = globals()
-    module = importlib.import_module(path)
-    uppercase_letters = set(string.ascii_uppercase)
-    lowercase_letters = set(string.ascii_lowercase)
+    module = _importlib.import_module(path)
+    uppercase_letters = set(_string.ascii_uppercase)
+    lowercase_letters = set(_string.ascii_lowercase)
+
+    def import_item(g, module, key):
+        value = getattr(module, key)
+
+        if isinstance(value, _EnumTypeWrapper):
+            # Dynamically define an enum class that is exported
+            enum_values = _enum._EnumDict()
+            enum_values.update(dict(value.items()))
+            enum_class = type(key, (_enum.IntEnum,), enum_values)
+            g[key] = enum_class
+        else:
+            # Export the value
+            g[key] = value
+
+        __all__.append(key)
+
+    def should_import(key):
+        return key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:])
 
     for key in dir(module):
-        if key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:]):
-            value = getattr(module, key)
-
-            if isinstance(value, _EnumTypeWrapper):
-                # Dynamically define an enum class that is exported
-                enum_values = enum._EnumDict()
-                enum_values.update(dict(value.items()))
-                enum_class = type(key, (enum.IntEnum,), enum_values)
-                g[key] = enum_class
-            else:
-                # Export the value
-                g[key] = value
-
-            __all__.append(key)
+        if should_import(key):
+            import_item(g, module, key)
+        elif key.startswith("google_dot_protobuf_dot_"):
+            sub_module = getattr(module, key)
+            for key in dir(sub_module):
+                if should_import(key):
+                    import_item(g, sub_module, key)
 
 
 _import_protos("python_pachyderm.proto.pfs.pfs_pb2")
