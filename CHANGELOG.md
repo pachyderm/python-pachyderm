@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.2.0
+
+- Added support for health (PR #156)
+- Added support for debug (PR #155)
+- Added full feature parity with PFS, PPS and transactions (PR #152, #151)
+    - Added `health_records` to `put_file` methods
+    - Added `input_tree_object_hash` to `finish_commit`
+    - Added `reverse` `list_commit` and `list_branch`
+    - Added `prov` to `subscribe_commit`
+    - Added `full` to `list_job`
+    - Added `spec_commit` to `create_pipeline`
+    - Added `memory_bytes` to `garbage_collect`
+    - Added `fsck`, `diff_file`, `delete_all_transactions`
+
 ## 2.1.0
 
 - Added support for admin (PR #139)
