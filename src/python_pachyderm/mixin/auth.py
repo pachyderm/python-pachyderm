@@ -44,7 +44,7 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "GetConfiguration").configuration
 
-    def set_auth_configuration(self, config):
+    def set_auth_configuration(self, configuration):
         """
         Set the auth configuration.
 
@@ -52,7 +52,7 @@ class AuthMixin:
 
         * `config`: An `AuthConfig` object.
         """
-        return self._req(Service.AUTH, "SetConfiguration", configuration=config)
+        return self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
 
     def get_admins(self):
         """
