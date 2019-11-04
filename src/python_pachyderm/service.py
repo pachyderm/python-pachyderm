@@ -12,15 +12,18 @@ from python_pachyderm.proto.version.versionpb import version_pb2 as version_prot
 from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
 from python_pachyderm.proto.debug import debug_pb2 as debug_proto
 from python_pachyderm.proto.debug import debug_pb2_grpc as debug_grpc
+from python_pachyderm.proto.health import health_pb2 as health_proto
+from python_pachyderm.proto.health import health_pb2_grpc as health_grpc
 
 
 class Service(Enum):
     ADMIN = 0
     DEBUG = 1
-    PFS = 2
-    PPS = 3
-    TRANSACTION = 4
-    VERSION = 5
+    HEALTH = 2
+    PFS = 3
+    PPS = 4
+    TRANSACTION = 5
+    VERSION = 6
 
     @property
     def grpc_module(self):
@@ -50,6 +53,7 @@ class Service(Enum):
 GRPC_MODULES = {
     Service.ADMIN: admin_grpc,
     Service.DEBUG: debug_grpc,
+    Service.HEALTH: health_grpc,
     Service.PFS: pfs_grpc,
     Service.PPS: pps_grpc,
     Service.TRANSACTION: transaction_grpc,
@@ -59,6 +63,7 @@ GRPC_MODULES = {
 PROTO_MODULES = {
     Service.ADMIN: admin_proto,
     Service.DEBUG: debug_proto,
+    Service.HEALTH: health_proto,
     Service.PFS: pfs_proto,
     Service.PPS: pps_proto,
     Service.TRANSACTION: transaction_proto,
