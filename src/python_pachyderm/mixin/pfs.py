@@ -337,6 +337,9 @@ class PFSMixin:
         * `overwrite_index`: An optional `OverwriteIndex` object. This is the
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
         """
         overwrite_index = pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
@@ -396,7 +399,8 @@ class PFSMixin:
 
         return self._req(Service.PFS, "PutFile", req=wrap(value))
 
-    def put_file_url(self, commit, path, url, recursive=None, overwrite_index=None):
+    def put_file_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
+                     target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request. Note that this is not a standard
@@ -408,19 +412,34 @@ class PFSMixin:
         commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
+        * `delimiter`: Optional. causes data to be broken up into separate
+        files with `path` as a prefix.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
         * `overwrite_index`: An optional `OverwriteIndex` object. This is the
         object index where the write starts from.  All existing objects
         starting from the index are deleted.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
         """
         overwrite_index = pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
         return self._req(Service.PFS, "PutFile", req=iter([
             pfs_proto.PutFileRequest(
                 file=pfs_proto.File(commit=commit_from(commit), path=path),
                 url=url,
+                delimiter=delimiter,
                 recursive=recursive,
-                overwrite_index=overwrite_index
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records
             )
         ]))
 

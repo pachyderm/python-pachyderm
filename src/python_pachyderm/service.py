@@ -10,18 +10,46 @@ from python_pachyderm.proto.transaction import transaction_pb2 as transaction_pr
 from python_pachyderm.proto.transaction import transaction_pb2_grpc as transaction_grpc
 from python_pachyderm.proto.version.versionpb import version_pb2 as version_proto
 from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
+from python_pachyderm.proto.debug import debug_pb2 as debug_proto
+from python_pachyderm.proto.debug import debug_pb2_grpc as debug_grpc
 
 
 class Service(Enum):
     ADMIN = 0
-    PFS = 1
-    PPS = 2
-    TRANSACTION = 3
-    VERSION = 4
+    DEBUG = 1
+    PFS = 2
+    PPS = 3
+    TRANSACTION = 4
+    VERSION = 5
+
+    @property
+    def grpc_module(self):
+        return GRPC_MODULES[self]
+
+    @property
+    def stub(self):
+        grpc_module = self.grpc_module
+
+        for key in dir(grpc_module):
+            if key.endswith("Stub"):
+                return getattr(self.grpc_module, key)
+
+    @property
+    def servicer(self):
+        grpc_module = self.grpc_module
+
+        for key in dir(grpc_module):
+            if key.endswith("Servicer"):
+                return getattr(self.grpc_module, key)
+
+    @property
+    def proto_module(self):
+        return PROTO_MODULES[self]
 
 
 GRPC_MODULES = {
     Service.ADMIN: admin_grpc,
+    Service.DEBUG: debug_grpc,
     Service.PFS: pfs_grpc,
     Service.PPS: pps_grpc,
     Service.TRANSACTION: transaction_grpc,
@@ -30,6 +58,7 @@ GRPC_MODULES = {
 
 PROTO_MODULES = {
     Service.ADMIN: admin_proto,
+    Service.DEBUG: debug_proto,
     Service.PFS: pfs_proto,
     Service.PPS: pps_proto,
     Service.TRANSACTION: transaction_proto,
