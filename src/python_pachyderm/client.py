@@ -7,9 +7,10 @@ from .mixin.version import VersionMixin
 from .mixin.admin import AdminMixin
 from .mixin.debug import DebugMixin
 from .mixin.auth import AuthMixin
+from .mixin.enterprise import EnterpriseMixin
 
 
-class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, AuthMixin, object):
+class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, AuthMixin, EnterpriseMixin, object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
         """
         Creates a client to connect to PFS.

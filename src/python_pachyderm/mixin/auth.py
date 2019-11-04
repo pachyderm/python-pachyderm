@@ -2,7 +2,7 @@ from python_pachyderm.service import Service
 
 
 class AuthMixin:
-    def activate(self, subject=None, github_token=None):
+    def activate_auth(self, subject=None, github_token=None):
         """
         Activates auth, creating an initial set of admins. Returns a string
         string that can be used for making authenticated requests. Note that
@@ -31,7 +31,7 @@ class AuthMixin:
         self.metadata.append(("authn-token", token))
         return token
 
-    def deactivate(self):
+    def deactivate_auth(self):
         """
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
