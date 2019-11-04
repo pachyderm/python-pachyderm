@@ -7,7 +7,7 @@
 - Added full feature parity with PFS, PPS and transactions (PR #152, #151)
     - Added `health_records` to `put_file` methods
     - Added `input_tree_object_hash` to `finish_commit`
-    - Added `reverse` `list_commit` and `list_branch`
+    - Added `reverse` to `list_commit` and `list_branch`
     - Added `prov` to `subscribe_commit`
     - Added `full` to `list_job`
     - Added `spec_commit` to `create_pipeline`
