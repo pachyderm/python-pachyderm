@@ -34,7 +34,6 @@ class Sandbox:
             assert time.time() - start_time < 60.0, "timed out waiting for job"
             time.sleep(1)
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_list_job():
     sandbox = Sandbox("list_job")
     job_id = sandbox.wait_for_job()
@@ -48,14 +47,12 @@ def test_list_job():
     jobs = list(sandbox.client.list_job(input_commit=(sandbox.input_repo_name, sandbox.commit.id)))
     assert len(jobs) >= 1
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_flush_job():
     sandbox = Sandbox("flush_job")
     jobs = list(sandbox.client.flush_job([sandbox.commit]))
     assert len(jobs) >= 1
     print(jobs[0])
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_inspect_job():
     sandbox = Sandbox("inspect_job")
     job_id = sandbox.wait_for_job()
@@ -63,7 +60,6 @@ def test_inspect_job():
     job = sandbox.client.inspect_job(job_id)
     assert job.job.id == job_id
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_stop_job():
     sandbox = Sandbox("stop_job")
     job_id = sandbox.wait_for_job()
@@ -85,7 +81,6 @@ def test_stop_job():
         job = sandbox.client.inspect_job(job_id)
         assert job.state == python_pachyderm.JobState.JOB_KILLED
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_delete_job():
     sandbox = Sandbox("delete_job")
     job_id = sandbox.wait_for_job()
@@ -93,7 +88,6 @@ def test_delete_job():
     sandbox.client.delete_job(job_id)
     assert len(list(sandbox.client.list_job())) == orig_job_count - 1
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_datums():
     sandbox = Sandbox("datums")
     job_id = sandbox.wait_for_job()
@@ -109,7 +103,6 @@ def test_datums():
     # Just ensure this doesn't raise an exception
     sandbox.client.restart_datum(job_id)
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
@@ -118,7 +111,6 @@ def test_inspect_pipeline():
         pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
         assert pipeline.pipeline.name == sandbox.pipeline_repo_name
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_list_pipeline():
     sandbox = Sandbox("list_pipeline")
     pipelines = sandbox.client.list_pipeline()
@@ -126,21 +118,18 @@ def test_list_pipeline():
     pipelines = sandbox.client.list_pipeline(history=-1)
     assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines.pipeline_info]
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_delete_pipeline():
     sandbox = Sandbox("delete_pipeline")
     orig_pipeline_count = len(sandbox.client.list_pipeline().pipeline_info)
     sandbox.client.delete_pipeline(sandbox.pipeline_repo_name)
     assert len(sandbox.client.list_pipeline().pipeline_info) == orig_pipeline_count - 1
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_delete_all_pipelines():
     sandbox = Sandbox("delete_all_pipelines")
     sandbox.client.delete_all_pipelines()
     pipelines = sandbox.client.list_pipeline()
     assert len(pipelines.pipeline_info) == 0
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_restart_pipeline():
     sandbox = Sandbox("restart_job")
 
@@ -152,7 +141,6 @@ def test_restart_pipeline():
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert not pipeline.stopped
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_run_pipeline():
     sandbox = Sandbox("run_pipeline")
 
@@ -163,7 +151,6 @@ def test_run_pipeline():
     if util.test_pachyderm_version() >= (1, 9, 0):
         sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
     job_id = sandbox.wait_for_job()
@@ -178,7 +165,6 @@ def test_get_pipeline_logs():
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
     assert next(logs) is not None
 
-@util.skip_if_below_pachyderm_version(1, 8, 8)
 def test_get_job_logs():
     sandbox = Sandbox("get_logs_logs")
     job_id = sandbox.wait_for_job()
