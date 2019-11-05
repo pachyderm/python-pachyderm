@@ -11,7 +11,7 @@ from .mixin.enterprise import EnterpriseMixin
 
 
 class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, AuthMixin, EnterpriseMixin, object):
-    def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None):
         """
         Creates a client to connect to PFS.
 
@@ -23,6 +23,7 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Defaults to `None`.
         * `root_certs`:  The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
         """
 
         if host is not None and port is not None:
@@ -30,15 +31,37 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         else:
             self.address = os.environ.get("PACHD_ADDRESS", "localhost:30650")
 
-        if auth_token is None:
-            auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
-
-        self.metadata = []
-        if auth_token is not None:
-            self.metadata.append(("authn-token", auth_token))
-
         self.root_certs = root_certs
         self._stubs = {}
+        self._auth_token = auth_token or os.environ.get("PACH_PYTHON_AUTH_TOKEN")
+        self._transaction_id = transaction_id
+        self._metadata = self._build_metadata()
+
+    @property
+    def auth_token(self):
+        return self._auth_token
+
+    @auth_token.setter
+    def auth_token(self, value):
+        self._auth_token = value
+        self._metadata = self._build_metadata()
+
+    @property
+    def transaction_id(self):
+        return self._transaction_id
+    
+    @transaction_id.setter
+    def transaction_id(self, value):
+        self._transaction_id = value
+        self._metadata = self._build_metadata()
+
+    def _build_metadata(self):
+        metadata = []
+        if self._auth_token is not None:
+            metadata.append(("authn-token", self._auth_token))
+        if self._transaction_id is not None:
+            metadata.append(("pach-transaction", self._transaction_id))
+        return metadata
 
     def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
@@ -54,6 +77,7 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
             self._stubs[grpc_service] = stub
 
         assert req is None or len(kwargs) == 0
+        assert self._metadata is not None
 
         if req is None:
             proto_module = grpc_service.proto_module
@@ -65,4 +89,4 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
             req = req_cls(**kwargs)
 
         grpc_method = getattr(stub, grpc_method_name)
-        return grpc_method(req, metadata=self.metadata)
+        return grpc_method(req, metadata=self._metadata)
