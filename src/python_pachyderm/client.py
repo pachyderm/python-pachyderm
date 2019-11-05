@@ -13,7 +13,7 @@ from .mixin.enterprise import EnterpriseMixin
 
 
 class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, AuthMixin, EnterpriseMixin, HealthMixin, object):
-    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
         """
         Creates a Pachyderm client.
 
@@ -26,12 +26,23 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         enabled on the cluster. Defaults to `None`.
         * `root_certs`:  The PEM-encoded root certificates as byte string.
         * `transaction_id`: The ID of the transaction to run operations on.
+        * `tls`: Specifies whether TLS should be used. If `root_certs` are
+        specified, they are used; otherwise, we use the certs provided by
+        certifi.
         """
 
         host = host or "localhost"
         port = port or 30650
-        self.address = "{}:{}".format(host, port)
 
+        if tls is None:
+            tls = root_certs is not None
+        if tls and root_certs is None:
+            # load default certs if none are specified
+            import certifi
+            with open(certifi.where(), "rb") as f:
+                root_certs = f.read()
+
+        self.address = "{}:{}".format(host, port)
         self.root_certs = root_certs
         self._stubs = {}
         self._auth_token = auth_token or os.environ.get("PACH_PYTHON_AUTH_TOKEN")
@@ -105,13 +116,8 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         if u.username is not None or u.password is not None:
             raise ValueError("invalid pachd address")
 
-        if (u.scheme == "grpcs" or u.scheme == "https") and root_certs is None:
-            # load default certs if none are specified
-            import certifi
-            with open(certifi.where(), "rb") as f:
-                root_certs = f.read()
-
-        return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs)
+        tls = u.scheme == "grpcs" or u.scheme == "https"
+        return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs, tls=tls)
 
     def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
