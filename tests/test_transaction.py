@@ -45,7 +45,7 @@ def test_transaction_context_mgr_exception():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo())
 
-    with pytest.raises(python_pachyderm.RpcError):
+    with pytest.raises(Exception):
         with client.transaction() as transaction:
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
