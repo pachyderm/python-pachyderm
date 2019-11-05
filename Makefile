@@ -39,7 +39,7 @@ ci-setup:
 	cd proto/pachyderm && make launch-kube
 	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
-	PACHD_ADDRESS=$$(minikube ip):30650 pachctl version
+	pachctl version
 
 release:
 	rm -rf build dist
