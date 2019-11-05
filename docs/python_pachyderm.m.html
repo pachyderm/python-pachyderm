@@ -1117,6 +1117,8 @@ table {
         
           
   <ul>
+    <li class="mono"><a href="#python_pachyderm.Client.new_from_pachd_address">new_from_pachd_address</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.new_in_cluster">new_in_cluster</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.__init__">__init__</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.commit">commit</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.copy_file">copy_file</a></li>
@@ -2716,7 +2718,67 @@ table {
           <li><a href="/python_pachyderm.mixin.version.VersionMixin.ext">python_pachyderm.mixin.version.VersionMixin</a></li>
           <li><a href="/python_pachyderm.mixin.admin.AdminMixin.ext">python_pachyderm.mixin.admin.AdminMixin</a></li>
           </ul>
+          <h3>Static methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.new_from_pachd_address">
+    <p>def <span class="ident">new_from_pachd_address</span>(</p><p>cls, pachd_address, auth_token=None, root_certs=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a Pachyderm client from a given pachd address.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>auth_token</code>: The authentication token; used if authentication is
+enabled on the cluster. Default to <code>None</code>.</li>
+<li><code>root_certs</code>: The PEM-encoded root certificates as byte string. This
+is required if the pachd address implies TLS is enabled.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.new_in_cluster">
+    <p>def <span class="ident">new_in_cluster</span>(</p><p>cls, auth_token=None, root_certs=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>auth_token</code>: The authentication token; used if authentication is
+enabled on the cluster. Default to <code>None</code>.</li>
+<li><code>root_certs</code>: The PEM-encoded root certificates as byte string.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
           <h3>Instance variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.Client.address" class="name">var <span class="ident">address</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
             <div class="item">
             <p id="python_pachyderm.Client.metadata" class="name">var <span class="ident">metadata</span></p>
             
@@ -2747,7 +2809,7 @@ table {
 
     
   
-    <div class="desc"><p>Creates a client to connect to PFS.</p>
+    <div class="desc"><p>Creates a Pachyderm client.</p>
 
 <p>Params:</p>
 
@@ -2757,7 +2819,7 @@ table {
 <li><code>port</code>: The port to connect to. Default is 30650.</li>
 <li><code>auth_token</code>: The authentication token; used if authentication is
 enabled on the cluster. Defaults to <code>None</code>.</li>
-<li><code>root_certs</code>:  The PEM-encoded root certificates as byte string.</li>
+<li><code>root_certs</code>: The PEM-encoded root certificates as byte string.</li>
 </ul>
 </div>
   <div class="source_cont">

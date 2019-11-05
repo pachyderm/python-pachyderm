@@ -16,6 +16,7 @@ SERVICE_MIXINS = {
     Service.AUTH: mixin.auth.AuthMixin,
     Service.DEBUG: mixin.debug.DebugMixin,
     Service.ENTERPRISE: mixin.enterprise.EnterpriseMixin,
+    Service.HEALTH: mixin.health.HealthMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
     Service.TRANSACTION: mixin.transaction.TransactionMixin,
