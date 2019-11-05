@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 
 from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
@@ -12,7 +13,7 @@ from .mixin.health import HealthMixin
 class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, HealthMixin, object):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None):
         """
-        Creates a client to connect to PFS.
+        Creates a Pachyderm client.
 
         Params:
 
@@ -21,13 +22,12 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         * `port`: The port to connect to. Default is 30650.
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Defaults to `None`.
-        * `root_certs`:  The PEM-encoded root certificates as byte string.
+        * `root_certs`: The PEM-encoded root certificates as byte string.
         """
 
-        if host is not None and port is not None:
-            self.address = "{}:{}".format(host, port)
-        else:
-            self.address = os.environ.get("PACHD_ADDRESS", "localhost:30650")
+        host = host or "localhost"
+        port = port or 30650
+        self.address = "{}:{}".format(host, port)
 
         if auth_token is None:
             auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
@@ -38,6 +38,55 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
 
         self.root_certs = root_certs
         self._stubs = {}
+
+    @classmethod
+    def new_in_cluster(cls, auth_token=None, root_certs=None):
+        """
+        Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string.
+        """
+
+        host = os.environ["PACHD_SERVICE_HOST"]
+        port = int(os.environ["PACHD_SERVICE_PORT"])
+        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs)
+
+    @classmethod
+    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None):
+        """
+        Creates a Pachyderm client from a given pachd address.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string. If
+        unspecified, this will load default certs from certifi.
+        """
+
+        if "://" not in pachd_address:
+            pachd_address = "grpc://{}".format(pachd_address)
+
+        u = urlparse(pachd_address)
+
+        if u.scheme not in ("grpc", "http", "grpcs", "https"):
+            raise ValueError("unrecognized pachd address scheme: {}".format(u.scheme))
+        if u.path != "" or u.params != "" or u.query != "" or u.fragment != "":
+            raise ValueError("invalid pachd address")
+        if u.username is not None or u.password is not None:
+            raise ValueError("invalid pachd address")
+
+        if (u.scheme == "grpcs" or u.scheme == "https") and root_certs is None:
+            # load default certs if none are specified
+            import certifi
+            with open(certifi.where(), "rb") as f:
+                root_certs = f.read()
+
+        return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs)
 
     def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
