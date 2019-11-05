@@ -5,8 +5,7 @@ class AuthMixin:
     def activate_auth(self, subject=None, github_token=None):
         """
         Activates auth, creating an initial set of admins. Returns a string
-        string that can be used for making authenticated requests. Note that
-        this string is automatically set as the current client's auth token.
+        that can be used for making authenticated requests.
 
         Params:
 
@@ -71,8 +70,7 @@ class AuthMixin:
     def authenticate_github(self, github_token):
         """
         Authenticates a GitHub user to the Pachyderm cluster. Returns a string
-        string that can be used for making authenticated requests. Note that
-        this string is automatically set as the current client's auth token.
+        that can be used for making authenticated requests.
 
         Params:
 
@@ -88,9 +86,8 @@ class AuthMixin:
     def authenticate_one_time_password(self, one_time_password):
         """
         Authenticates a user to the Pachyderm cluster using a one-time
-        password. Returns a string string that can be used for making
-        authenticated requests. Note that this string is automatically set as
-        the current client's auth token.
+        password. Returns a string that can be used for making authenticated
+        requests.
 
         Params:
 
@@ -177,17 +174,17 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "SetACL", repo=repo, entries=entries)
 
-    def get_auth_token(self, subject, ttl):
+    def get_auth_token(self, subject=None, ttl=None):
         """
         Gets an auth token for a subject. Returns an `GetAuthTokenResponse`
         object.
 
         Params:
 
-        * `subject`: A string. The returned token will allow the caller to
-        access resources as this subject.
-        * `ttl`: An int that indicates the approximate remaining lifetime of
-        this token, in seconds.
+        * `subject`: An optional string. The returned token will allow the
+        caller to access resources as this subject.
+        * `ttl`: An optional int that indicates the approximate remaining
+        lifetime of this token, in seconds.
         """
         return self._req(Service.AUTH, "GetAuthToken", subject=subject, ttl=ttl)
 
@@ -236,9 +233,9 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         """
-        return self._req(Service.AUTH, "ModifyMembers", add=add or [], remove=remove or [])
+        return self._req(Service.AUTH, "ModifyMembers", group=group, add=add or [], remove=remove or [])
 
-    def get_groups(self, username):
+    def get_groups(self, username=None):
         """
         Gets which groups the given `username` belongs to. Returns a list of
         strings.
