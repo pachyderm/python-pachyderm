@@ -45,7 +45,7 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         self.address = "{}:{}".format(host, port)
         self.root_certs = root_certs
         self._stubs = {}
-        self._auth_token = auth_token or os.environ.get("PACH_PYTHON_AUTH_TOKEN")
+        self._auth_token = auth_token
         self._transaction_id = transaction_id
         self._metadata = self._build_metadata()
 
