@@ -49,6 +49,58 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         self._transaction_id = transaction_id
         self._metadata = self._build_metadata()
 
+    @classmethod
+    def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+        """
+        Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        """
+
+        host = os.environ["PACHD_SERVICE_HOST"]
+        port = int(os.environ["PACHD_SERVICE_PORT"])
+        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+
+    @classmethod
+    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
+        """
+        Creates a Pachyderm client from a given pachd address.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string. If
+        unspecified, this will load default certs from certifi.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        """
+
+        if "://" not in pachd_address:
+            pachd_address = "grpc://{}".format(pachd_address)
+
+        u = urlparse(pachd_address)
+
+        if u.scheme not in ("grpc", "http", "grpcs", "https"):
+            raise ValueError("unrecognized pachd address scheme: {}".format(u.scheme))
+        if u.path != "" or u.params != "" or u.query != "" or u.fragment != "":
+            raise ValueError("invalid pachd address")
+        if u.username is not None or u.password is not None:
+            raise ValueError("invalid pachd address")
+
+        return cls(
+            host=u.hostname,
+            port=u.port,
+            auth_token=auth_token,
+            root_certs=root_certs,
+            transaction_id=transaction_id,
+            tls=u.scheme == "grpcs" or u.scheme == "https",
+        )
+
     @property
     def auth_token(self):
         return self._auth_token
@@ -74,50 +126,6 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
         if self._transaction_id is not None:
             metadata.append(("pach-transaction", self._transaction_id))
         return metadata
-
-    @classmethod
-    def new_in_cluster(cls, auth_token=None, root_certs=None):
-        """
-        Creates a Pachyderm client that operates within a Pachyderm cluster.
-
-        Params:
-
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string.
-        """
-
-        host = os.environ["PACHD_SERVICE_HOST"]
-        port = int(os.environ["PACHD_SERVICE_PORT"])
-        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs)
-
-    @classmethod
-    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None):
-        """
-        Creates a Pachyderm client from a given pachd address.
-
-        Params:
-
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string. If
-        unspecified, this will load default certs from certifi.
-        """
-
-        if "://" not in pachd_address:
-            pachd_address = "grpc://{}".format(pachd_address)
-
-        u = urlparse(pachd_address)
-
-        if u.scheme not in ("grpc", "http", "grpcs", "https"):
-            raise ValueError("unrecognized pachd address scheme: {}".format(u.scheme))
-        if u.path != "" or u.params != "" or u.query != "" or u.fragment != "":
-            raise ValueError("invalid pachd address")
-        if u.username is not None or u.password is not None:
-            raise ValueError("invalid pachd address")
-
-        tls = u.scheme == "grpcs" or u.scheme == "https"
-        return cls(host=u.hostname, port=u.port, auth_token=auth_token, root_certs=root_certs, tls=tls)
 
     def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
