@@ -57,7 +57,7 @@ def test_start_commit():
     commit = client.start_commit(repo_name, None)
     assert commit.repo.name == repo_name
 
-    with pytest.raises(Exception):
+    with pytest.raises(python_pachyderm.RpcError):
         client.start_commit("some-fake-repo", "master")
 
 def test_start_commit_with_parent_no_branch():
@@ -125,7 +125,7 @@ def test_commit_context_mgr():
     with client.commit(repo_name, None) as c2:
         pass
 
-    with pytest.raises(Exception):
+    with pytest.raises(python_pachyderm.RpcError):
         with client.commit("some-fake-repo", "master"):
             pass
 

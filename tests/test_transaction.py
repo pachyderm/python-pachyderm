@@ -45,7 +45,7 @@ def test_transaction_context_mgr_exception():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo())
 
-    with pytest.raises(Exception):
+    with pytest.raises(python_pachyderm.RpcError):
         with client.transaction() as transaction:
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
@@ -69,7 +69,7 @@ def test_delete_transaction():
     # because the transaction wasn't tied to the client
     assert len(client.list_repo()) == expected_repo_count + 2
 
-    with pytest.raises(Exception):
+    with pytest.raises(python_pachyderm.RpcError):
         # re-deleting should cause an error
         client.delete_transaction(transaction)
 
