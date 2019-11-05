@@ -27,6 +27,10 @@ def skip_if_below_pachyderm_version(major, minor, revision):
     reason = "requires pachyderm {}.{}.{} or higher".format(major, minor, revision)
     return pytest.mark.skipif(test, reason=reason)
 
+def skip_if_no_enterprise():
+    test = os.environ.get("PACH_PYTHON_ENTERPRISE_CODE") == None
+    return pytest.mark.skipif(test, reason="enterprise code not available")
+
 def random_string(n):
     return "".join(random.choice(string.ascii_lowercase + string.digits) for _ in range(n))
 

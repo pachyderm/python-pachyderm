@@ -18,7 +18,7 @@ class EnterpriseMixin:
         primarily used for testing), and is only applied if it's earlier than
         the signed expiration time in `activation_code`.
         """
-        return self._req(Service.ENTERPRISE, "Activate").info
+        return self._req(Service.ENTERPRISE, "Activate", activation_code=activation_code, expires=expires).info
 
     def get_enterprise_state(self):
         """
