@@ -1,18 +1,29 @@
 import os
 from urllib.parse import urlparse
 
+from .mixin.admin import AdminMixin
+from .mixin.auth import AuthMixin
+from .mixin.debug import DebugMixin
+from .mixin.enterprise import EnterpriseMixin
+from .mixin.health import HealthMixin
 from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
-from .mixin.health import HealthMixin
-from .mixin.admin import AdminMixin
-from .mixin.debug import DebugMixin
-from .mixin.auth import AuthMixin
-from .mixin.enterprise import EnterpriseMixin
 
 
-class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, DebugMixin, AuthMixin, EnterpriseMixin, HealthMixin, object):
+class Client(
+    AdminMixin,
+    AuthMixin,
+    DebugMixin,
+    EnterpriseMixin,
+    HealthMixin,
+    PFSMixin,
+    PPSMixin,
+    TransactionMixin,
+    VersionMixin,
+    object
+):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
         """
         Creates a Pachyderm client.
@@ -113,7 +124,7 @@ class Client(PFSMixin, PPSMixin, TransactionMixin, VersionMixin, AdminMixin, Deb
     @property
     def transaction_id(self):
         return self._transaction_id
-    
+
     @transaction_id.setter
     def transaction_id(self, value):
         self._transaction_id = value
