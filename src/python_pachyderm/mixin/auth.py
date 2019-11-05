@@ -36,7 +36,9 @@ class AuthMixin:
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         """
-        return self._req(Service.AUTH, "Deactivate")
+        res = self._req(Service.AUTH, "Deactivate")
+        self.metadata = [(k, v) for (k, v) in self.metadata if k != "authn-token"]
+        return res
 
     def get_auth_configuration(self):
         """
