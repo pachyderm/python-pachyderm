@@ -200,6 +200,12 @@ RENAMED_ARGS = {
     "create_pipeline": [
         ("pipeline", "pipeline_name"),
         ("pod_spec", None),
+        ("tf_job", None),
+    ],
+    "create_tf_job_pipeline": [
+        ("pipeline", "pipeline_name"),
+        ("pod_spec", None),
+        ("transform", None),
     ],
     "delete_job": [
         ("job", "job_id"),
