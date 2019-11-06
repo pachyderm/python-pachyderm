@@ -2,15 +2,14 @@ from python_pachyderm.service import Service
 
 
 class AuthMixin:
-    def activate_auth(self, subject=None, github_token=None):
+    def activate_auth(self, subject, github_token=None):
         """
         Activates auth, creating an initial set of admins. Returns a string
         that can be used for making authenticated requests.
 
         Params:
 
-        * `subject`: An optional string. If set, Pachyderm will authenticate
-        the caller as this user.
+        * `subject`: A string.
           - If set to a github user (i.e. it has a 'github:' prefix or no
           prefix) then Pachyderm will confirm that it matches the user
           associated with 'github_token'
@@ -174,7 +173,7 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "SetACL", repo=repo, entries=entries)
 
-    def get_auth_token(self, subject=None, ttl=None):
+    def get_auth_token(self, subject, ttl=None):
         """
         Gets an auth token for a subject. Returns an `GetAuthTokenResponse`
         object.

@@ -18,7 +18,7 @@ def sandbox():
     root_auth_token = None
     
     try:
-        root_auth_token = client.activate_auth(subject="robot:root")
+        root_auth_token = client.activate_auth("robot:root")
         client.auth_token = root_auth_token
         try:
             yield client
@@ -99,7 +99,7 @@ def test_acl():
 @util.skip_if_no_enterprise()
 def test_auth_token():
     with sandbox() as client:
-        auth_token = client.get_auth_token(ttl=30)
+        auth_token = client.get_auth_token("robot:root", ttl=30)
         assert auth_token.subject == "robot:root"
         client.extend_auth_token(auth_token.token, 60)
         client.revoke_auth_token(auth_token.token)
