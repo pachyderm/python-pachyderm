@@ -48,11 +48,6 @@ def test_admins():
         assert set(users) == set(["robot:root", "robot:someuser"])
 
 @util.skip_if_no_enterprise()
-def test_authenticate_github():
-    with sandbox() as client:
-        client.authenticate_github("foobar")
-
-@util.skip_if_no_enterprise()
 def test_one_time_password():
     with sandbox() as client:
         otp = client.get_one_time_password()
