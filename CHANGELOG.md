@@ -2,7 +2,7 @@
 
 ## 2.4.0
 
-- Synced with pachyderm core v1.9.8
+- Synced with pachyderm core v1.9.8 (PR #159)
 
 ## 2.3.0
 
