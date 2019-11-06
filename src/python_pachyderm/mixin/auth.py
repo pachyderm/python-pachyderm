@@ -255,7 +255,7 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "GetUsers", group=group).usernames
 
-    def get_one_time_password(self, subject=None):
+    def get_one_time_password(self, subject=None, ttl=None):
         """
         If this `Client` is authenticated as an admin, you can generate a
         one-time password for any given `subject`. If the caller is not an
@@ -265,5 +265,7 @@ class AuthMixin:
         Params:
 
         `subject`: A string.
+        * `ttl`: An optional int that indicates the approximate remaining
+        lifetime of this token, in seconds.
         """
-        return self._req(Service.AUTH, "GetOneTimePassword", subject=subject).code
+        return self._req(Service.AUTH, "GetOneTimePassword", subject=subject, ttl=ttl).code
