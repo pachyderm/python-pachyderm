@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- Synced with pachyderm core v1.9.8
+
 ## 2.3.0
 
 - Tweaks to the way `Client`s can be initialized (PR #143, #157)
