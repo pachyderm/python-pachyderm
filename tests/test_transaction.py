@@ -3,11 +3,6 @@
 """Tests PFS-related functionality"""
 
 import pytest
-import random
-import string
-import threading
-from io import BytesIO
-from collections import namedtuple
 
 import python_pachyderm
 from tests import util
@@ -32,24 +27,18 @@ def test_transaction_context_mgr():
     assert len(client.list_repo()) == expected_repo_count
 
 @util.skip_if_below_pachyderm_version(1, 9, 0)
-def test_transaction_context_mgr_arg():
-    client = python_pachyderm.Client()
-    expected_repo_count = len(client.list_repo()) + 2
-
-    with client.transaction(client.start_transaction()) as transaction:
-        util.create_test_repo(client, "test_transaction_context_mgr_arg")
-        util.create_test_repo(client, "test_transaction_context_mgr_arg")
-
-    assert len(client.list_transaction()) == 0
-    assert len(client.list_repo()) == expected_repo_count
-
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_nested():
-    with pytest.raises(Exception):
+    client = python_pachyderm.Client()
+    
+    with client.transaction() as transaction:
+        assert client.transaction_id is not None
+        old_transaction_id = client.transaction_id
+
         with client.transaction() as transaction:
-            # it shouldn't be possible to nest transactions
-            with client.transaction() as transaction:
-                pass
+            assert client.transaction_id is not None
+            assert client.transaction_id != old_transaction_id
+
+        assert client.transaction_id == old_transaction_id
 
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_exception():
@@ -80,7 +69,7 @@ def test_delete_transaction():
     # because the transaction wasn't tied to the client
     assert len(client.list_repo()) == expected_repo_count + 2
 
-    with pytest.raises(Exception):
+    with pytest.raises(python_pachyderm.RpcError):
         # re-deleting should cause an error
         client.delete_transaction(transaction)
 

@@ -13,7 +13,9 @@ UPPERCASE = set(string.ascii_uppercase)
 # Mapping of services to their implementing mixins
 SERVICE_MIXINS = {
     Service.ADMIN: mixin.admin.AdminMixin,
+    Service.AUTH: mixin.auth.AuthMixin,
     Service.DEBUG: mixin.debug.DebugMixin,
+    Service.ENTERPRISE: mixin.enterprise.EnterpriseMixin,
     Service.HEALTH: mixin.health.HealthMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
@@ -60,8 +62,22 @@ BLACKLISTED_METHODS = {
 }
 
 RENAMED_METHODS = {
+    Service.AUTH: {
+        "activate": ["activate_auth"],
+        "deactivate": ["deactivate_auth"],
+        "authenticate": ["authenticate_github", "authenticate_one_time_password"],
+        "get_a_c_l": ["get_acl"],
+        "set_a_c_l": ["set_acl"],
+        "get_configuration": ["get_auth_configuration"],
+        "set_configuration": ["set_auth_configuration"],
+    },
     Service.DEBUG: {
         "profile": ["profile_cpu"],
+    },
+    Service.ENTERPRISE: {
+        "activate": ["activate_enterprise"],
+        "get_state": ["get_enterprise_state"],
+        "deactivate": ["deactivate_enterprise"],
     },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
@@ -87,6 +103,13 @@ RENAMED_ARGS = {
     ],
     "restore": [
         (("op", "URL"), "requests"),
+    ],
+    # auth
+    "authenticate_github": [
+        ("one_time_password", None),
+    ],
+    "authenticate_one_time_password": [
+        ("github_token", None),
     ],
     # debug
     "profile_cpu": [

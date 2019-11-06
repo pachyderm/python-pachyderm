@@ -39,7 +39,7 @@ ci-setup:
 	cd proto/pachyderm && make launch-kube
 	pachctl deploy local
 	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
-	PACHD_ADDRESS=$$(minikube ip):30650 pachctl version
+	pachctl version
 
 release:
 	rm -rf build dist
@@ -48,8 +48,6 @@ release:
 
 lint:
 	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=79
-
-proto-lint:
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
-.PHONY: docker-build-proto init ci-install ci-setup release lint proto-lint
+.PHONY: docker-build-proto init ci-install ci-setup release lint

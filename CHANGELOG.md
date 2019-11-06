@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.3.0
+
+- Tweaks to the way `Client`s can be initialized (PR #143, #157)
+    - Removed support for the deprecated `PACHD_ADDRESS` environment variable
+    - Removed support for library-specific `PACH_PYTHON_AUTH_TOKEN` environment variable
+    - Added `Client.new_in_cluster`, which can be used to create a `Client` instance running inside a Pachyderm cluster
+    - Added `Client.new_from_pachd_address`, which can be used to create a `Client` instance from a pachd address/URL
+    - Added support for using default system certs
+    - Added support for client initialization with a transaction ID
+- Added support for the enterprise service (PR #157)
+- Added support for the auth service (PR #157)
+- Added `auth_token` and `transaction_id` properties for better ergonomics (PR #157)
+- Renamed `Client.metadata` to `Client._metadata`, since it should be private (PR #157)
+- Some changes to `Client.transaction` to be more ergonomic and less redundant with other functionality (PR #157)
+
 ## 2.2.0
 
 - Added support for health (PR #156)

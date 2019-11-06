@@ -61,30 +61,16 @@ class TransactionMixin:
         return self._req(Service.TRANSACTION, "FinishTransaction", transaction=transaction_from(transaction))
 
     @contextmanager
-    def transaction(self, transaction=None):
+    def transaction(self):
         """
         A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an
         error occurred, or otherwise finished.
-
-        Params:
-
-        * `transaction`: An optional string or `Transaction` object. If
-        unspecified, a new transaction will be started.
         """
 
-        # note that this is different from `pachctl`, which will delete any
-        # active transaction
-        for (k, v) in self.metadata:
-            if k == "pach-transaction":
-                raise Exception("this client already has an active transaction with ID={}".format(v))
-
-        if transaction is None:
-            transaction = self.start_transaction()
-        else:
-            transaction = transaction_from(transaction)
-
-        self.metadata.append(("pach-transaction", transaction.id))
+        old_transaction_id = self.transaction_id
+        transaction = self.start_transaction()
+        self.transaction_id = transaction.id
 
         try:
             yield transaction
@@ -94,4 +80,4 @@ class TransactionMixin:
         else:
             self.finish_transaction(transaction)
         finally:
-            self.metadata = [(k, v) for (k, v) in self.metadata if k != "pach-transaction"]
+            self.transaction_id = old_transaction_id
