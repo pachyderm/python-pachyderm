@@ -37,6 +37,7 @@ class PFSMixin:
         Returns info about a specific repo. Returns a `RepoInfo` object.
 
         Params:
+
         * `repo_name`: Name of the repo.
         """
         return self._req(Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name))
@@ -261,6 +262,7 @@ class PFSMixin:
         Creates a new branch.
 
         Params:
+
         * `repo_name`: A string specifying the name of the repo.
         * `branch_name`: A string specifying the new branch name.
         * `commit`: An optional tuple, string, or `Commit` object representing
