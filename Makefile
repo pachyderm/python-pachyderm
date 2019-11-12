@@ -48,7 +48,7 @@ release:
 	twine upload dist/*
 
 lint:
-	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=79
+	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=80
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
 .PHONY: docker-build-proto init ci-install ci-setup release lint
