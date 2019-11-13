@@ -45,6 +45,9 @@ class Client(
         host = host or "localhost"
         port = port or 30650
 
+        if auth_token is None:
+            auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
+
         if tls is None:
             tls = root_certs is not None
         if tls and root_certs is None:
