@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1
+
+- Re-introduced `PACH_PYTHON_AUTH_TOKEN`, as we need it for JupyterHub integration (PR #161)
+
 ## 2.4.0
 
 - Synced with pachyderm core v1.9.8 (PR #159)
