@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM python:3.7
 
 # Install opencv and matplotlib.
 RUN export DEBIAN_FRONTEND=noninteractive; \
