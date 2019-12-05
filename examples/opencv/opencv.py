@@ -4,6 +4,7 @@
 # walkthrough is available in the pachyderm docs:
 # https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
 
+import os
 import python_pachyderm
 
 def main():
@@ -11,9 +12,9 @@ def main():
 
     client.create_repo("images")
 
-    client.create_pipeline(
-        "edges",
-        transform=python_pachyderm.Transform(cmd=["python3", "edges.py"], image="pachyderm/opencv"),
+    python_pachyderm.build_pipeline(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "edges"),
+        "ysimonson/opencv",
         input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images"))
     )
 
