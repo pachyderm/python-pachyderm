@@ -12,7 +12,7 @@ from .proto.pps.pps_pb2 import Input, Transform, PFSInput
 
 # Script for running python code in a pipeline that was deployed with
 # `build_pipeline`.
-.RUNNER_SCRIPT = """
+RUNNER_SCRIPT = """
 #!/bin/bash
 set -e{}
 cd /pfs/{}
