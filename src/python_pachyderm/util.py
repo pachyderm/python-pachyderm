@@ -110,16 +110,14 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
                 raise
 
         if not create_source_repo:
-            commit = client.start_commit(source_repo, branch="master", description="python_pachyderm: sync source code")
-
-            for file_info in client.walk_file(commit, "/"):
-                client.delete_file(commit, file_info.file.path)
+            commit = client.start_commit(source_repo, branch="master", description="python_pachyderm.build_python_pipeline: sync source code")
+            client.delete_file(commit, "/")
 
     if create_source_repo:
         client.create_repo(source_repo, description="python_pachyderm: source code for pipeline {}".format(pipeline_name))
 
     if commit is None:
-        commit = client.start_commit(source_repo, branch="master", description="python_pachyderm: add source code")
+        commit = client.start_commit(source_repo, branch="master", description="python_pachyderm.build_python_pipeline: add source code")
 
     put_files(client, path, commit, "/")
 
