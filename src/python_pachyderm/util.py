@@ -10,28 +10,27 @@ import collections
 from .client import Client
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 
-# Script for running python code in a pipeline that was deployed with
-# `build_pipeline`.
+# Default script for running python code in a pipeline that was deployed with
+# `build_python_pipeline`.
 RUNNER_SCRIPT = """
 #!/bin/bash
-set -e{}
+set -{set_args}
 
-cd /pfs/{}
-pip install wheelhouse/*.whl
-test -f requirements.txt && pip install -r requirements.txt
+cd /pfs/{source_repo_name}
+pip install /pfs/{build_pipeline_name}/*.whl
 python main.py
 """
 
+# Default script for building python wheels for a pipeline that was deployed
+# with `build_python_pipeline`.
 BUILDER_SCRIPT = """
 #!/bin/bash
-set -e{}
+set -{set_args}
 python --version
 pip --version
 
-mv /pfs/{}/* /pfs/out/
-cd /pfs/out
-test -d wheelhouse || mkdir -p wheelhouse
-test -f requirements.txt && pip wheel -r requirements.txt -w wheelhouse
+cd /pfs/{source_repo_name}
+test -f requirements.txt && pip wheel -r requirements.txt -w /pfs/out
 """
 
 def put_files(client, source_path, commit, dest_path, **kwargs):
@@ -61,10 +60,12 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally.
 
-    Instead of baking a container with the source code and dependencies, this
-    creates:
+    A normal pipeline creation process (i.e. a call to
+    `client.create_pipeline`) requires you to first build and push a container
+    image with the source and dependencies baked in. As an alternative
+    process, this function circumvents container image creation by creating:
 
-    1) a repo for storing the source code.
+    1) a PFS repo that stores the source code at `path`.
     2) A pipeline for building the dependencies into wheels.
     3) A pipeline for executing the PFS stored source code with the built
     dependencies.
@@ -75,37 +76,30 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     +------------------------+      +-----------------------+
     |                        |      |                       |
     | <pipeline_name>_source | ---> | <pipeline_name>_build |
-    |                        |      |                       | \
-    +------------------------+      +-----------------------+  \       +-----------------+
-                                                                \      |                 |
-                                                                  ---> | <pipeline_name> |
-                                                                /      |                 |
-                                                  +---------+  /       +-----------------+
-                                                  |         | /
+    |                        |      |                       |
+    +------------------------+      +-----------------------+          +-----------------+
+                 |                              |                      |                 |
+                 `---------------------------------------------------> | <pipeline_name> |
+                                                       |               |                 |
+                                                  +---------+          +-----------------+
+                                                  |         |
                                                   | <input> |
                                                   |         |
                                                   +---------+
 
     ```
 
-    This setup is oftentimes more convenient than using
-    `client.create_pipeline`, since you don't have to deal with building and
-    pushing container images; however, note the caveats:
+    While this tends to be more convenient for pushing out local code, note
+    the caveats:
 
-    * Pipeline execution will be slower for dependencies that cannot be
-    resolved as wheels, since they need to be re-pulled on every pipeline run.
+    * Pipeline works will take a bit longer to start up, due to wheel
+    installation.
     * This creates an extra repo and an extra pipeline for each pipeline.
 
     The directory at the specified `path` should have the following:
 
     * A `main.py`, as the pipeline entry-point.
     * An optional `requirements.txt` that specifies pip requirements.
-    * An optional `wheelhouse` directory that contains wheels (`.whl` files)
-    to be installed as well, which can be used to help speed the build
-    process (since those wheels don't need to be resolved.) Note that wheels
-    in here must target the same platform as the pipeline execution
-    environment (which defaults to the docker image `python`, unless
-    overridden via the `image` argument.)
 
     If you need further customization, you can override behavior by specifying
     one or both of these scripts in `path`:
@@ -113,6 +107,9 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     * `build.sh`, which is run by the build pipeline to build wheels
     * `run.sh`, which is run by the pipeline you're creating to execute the
     python code.
+
+    ... if you need even further customization, you can always use the
+    lower-level `client.create_pipeline`.
 
     Params:
 
@@ -215,15 +212,17 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     # Insert the source code
     put_files(client, path, commit, "/")
 
-    # Insert either the user-specified `build.sh`, or the default one
-    if not os.path.exists(os.path.join(path, "build.sh")):
-        with io.BytesIO(BUILDER_SCRIPT.format("x" if debug else "", source_repo_name).encode("utf8")) as builder_file:
-            client.put_file_bytes(commit, "/build.sh", builder_file)
+    # Insert either the user-specified `build.sh` and `run.sh`, or their defaults
+    for (filename, template) in [("build.sh", BUILDER_SCRIPT), ("run.sh", RUNNER_SCRIPT)]:
+        if not os.path.exists(os.path.join(path, filename)):
+            source = template.format(
+                set_args="ex" if debug else "e",
+                source_repo_name=source_repo_name,
+                build_pipeline_name=build_pipeline_name,
+            )
 
-    # Insert either the user-specified `run.sh`, or the default one
-    if not os.path.exists(os.path.join(path, "run.sh")):
-        with io.BytesIO(RUNNER_SCRIPT.format("x" if debug else "", build_pipeline_name).encode("utf8")) as runner_file:
-            client.put_file_bytes(commit, "/run.sh", runner_file)
+            with io.BytesIO(source.encode("utf8")) as f:
+                client.put_file_bytes(commit, filename, f)
 
     client.finish_commit(commit)
 
@@ -232,11 +231,15 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
         pipeline_name,
         Transform(
             image=image,
-            cmd=["bash", "/pfs/{}/run.sh".format(build_pipeline_name)],
+            cmd=["bash", "/pfs/{}/run.sh".format(source_repo_name)],
             image_pull_secrets=image_pull_secrets,
             debug=debug,
         ),
-        input=Input(cross=[Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)), input]),
+        input=Input(cross=[
+            Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
+            Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)),
+            input,
+        ]),
         update=update,
         **pipeline_kwargs
     )
