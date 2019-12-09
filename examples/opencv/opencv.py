@@ -13,9 +13,10 @@ def main():
     client.create_repo("images")
 
     python_pachyderm.build_pipeline(
+        client,
         os.path.join(os.path.dirname(os.path.abspath(__file__)), "edges"),
-        "ysimonson/opencv",
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images"))
+        python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
+        image="pachyderm/opencv", # TODO: use a smaller image pachyderm/opencv
     )
 
     client.create_pipeline(
