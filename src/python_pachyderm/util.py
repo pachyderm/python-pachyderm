@@ -65,6 +65,10 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     the pipeline execution environment (which defaults to the docker image
     `python`, unless overridden via the `image` argument.)
 
+    If you need further customization, you can specify a `run.sh` at `path`.
+    This script should do the job of installing dependencies and running the
+    pipeline entry-point.
+
     Params:
 
     * `client`: The `Client` instance to use.
