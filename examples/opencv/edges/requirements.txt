@@ -1,1 +1,2 @@
-matplotlib
+matplotlib>=3.1.2
+opencv-python>=4.1.2.30

@@ -26,7 +26,6 @@ def main():
         client,
         relpath("edges"),
         python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
-        image="pachyderm/opencv", # TODO: use a smaller image pachyderm/opencv
     )
 
     # Create the montage pipeline

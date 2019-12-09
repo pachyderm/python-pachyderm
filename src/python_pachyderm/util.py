@@ -8,17 +8,30 @@ import tempfile
 import collections
 
 from .client import Client
-from .proto.pps.pps_pb2 import Input, Transform, PFSInput
+from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 
 # Script for running python code in a pipeline that was deployed with
 # `build_pipeline`.
 RUNNER_SCRIPT = """
 #!/bin/bash
 set -e{}
+
 cd /pfs/{}
-test -d wheelhouse && pip3 install wheelhouse/*.whl
-test -f requirements.txt && pip3 install -r requirements.txt
-python3 main.py
+pip install wheelhouse/*.whl
+test -f requirements.txt && pip install -r requirements.txt
+python main.py
+"""
+
+BUILDER_SCRIPT = """
+#!/bin/bash
+set -e{}
+python --version
+pip --version
+
+mv /pfs/{}/* /pfs/out/
+cd /pfs/out
+test -d wheelhouse || mkdir -p wheelhouse
+test -f requirements.txt && pip wheel -r requirements.txt -w wheelhouse
 """
 
 def put_files(client, source_path, commit, dest_path, **kwargs):
@@ -45,29 +58,61 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
 
 def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None, pipeline_kwargs=None, image=None, update=False):
     """
-    Utility function for creating (or updating) a pipeline for executing python
-    code. Instead of baking a container image with the source code, this
-    inserts source code into a PFS repo, then uses that repo to run the
-    pipeline. If you want to easily push out python code stored locally on
-    your computer, this is oftentimes more convenient than using
+    Utility function for creating (or updating) a pipeline specially built for
+    executing python code that is stored locally.
+
+    Instead of baking a container with the source code and dependencies, this
+    creates:
+
+    1) a repo for storing the source code.
+    2) A pipeline for building the dependencies into wheels.
+    3) A pipeline for executing the PFS stored source code with the built
+    dependencies.
+
+    As a result, this is what the pachyderm DAG looks like:
+
+    ```
+    +------------------------+      +-----------------------+
+    |                        |      |                       |
+    | <pipeline_name>_source | ---> | <pipeline_name>_build |
+    |                        |      |                       | \
+    +------------------------+      +-----------------------+  \       +-----------------+
+                                                                \      |                 |
+                                                                  ---> | <pipeline_name> |
+                                                                /      |                 |
+                                                  +---------+  /       +-----------------+
+                                                  |         | /
+                                                  | <input> |
+                                                  |         |
+                                                  +---------+
+
+    ```
+
+    This setup is oftentimes more convenient than using
     `client.create_pipeline`, since you don't have to deal with building and
-    pushing container images; however, note that pipelines built with this
-    will tend to run slower, as they have to pip install their dependencies on
-    every run (versus images which tend to have their dependencies pre-baked.)
+    pushing container images; however, note the caveats:
+
+    * Pipeline execution will be slower for dependencies that cannot be
+    resolved as wheels, since they need to be re-pulled on every pipeline run.
+    * This creates an extra repo and an extra pipeline for each pipeline.
 
     The directory at the specified `path` should have the following:
 
     * A `main.py`, as the pipeline entry-point.
     * An optional `requirements.txt` that specifies pip requirements.
     * An optional `wheelhouse` directory that contains wheels (`.whl` files)
-    to be installed as well, which can be used to help speed dependency
-    resolution up. Note that wheels in here must target the same platform as
-    the pipeline execution environment (which defaults to the docker image
-    `python`, unless overridden via the `image` argument.)
+    to be installed as well, which can be used to help speed the build
+    process (since those wheels don't need to be resolved.) Note that wheels
+    in here must target the same platform as the pipeline execution
+    environment (which defaults to the docker image `python`, unless
+    overridden via the `image` argument.)
 
-    If you need further customization, you can specify a `run.sh` at `path`.
-    This script should do the job of installing dependencies and running the
-    pipeline entry-point.
+    If you need further customization, you can override behavior by specifying
+    one or both of these scripts in `path`:
+
+    * `build.sh`, which is run by the build pipeline to build wheels
+    * `run.sh`, which is run by the pipeline you're creating to execute the
+    python code.
 
     Params:
 
@@ -89,6 +134,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     * `update`: Whether to act as an upsert.
     """
 
+    # Verify & set defaults for arguments
     if not os.path.exists(path):
         raise Exception("path does not exist")
 
@@ -101,52 +147,96 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     if not pipeline_name:
         raise Exception("could not derive pipeline name")
 
-    source_repo = "{}_source".format(pipeline_name)
-    commit = None
+    image = image or "python:3"
+    pipeline_kwargs = pipeline_kwargs or {}
+
+    # Create the source repo and build pipeline (if necessary.)
+    source_repo_name = "{}_source".format(pipeline_name)
+    build_pipeline_name = "{}_build".format(pipeline_name)
     create_source_repo = True
+    create_build_pipeline = True
+    commit = None
 
     if update:
         try:
-            client.inspect_repo(source_repo)
+            client.inspect_repo(source_repo_name)
             create_source_repo = False
         except Exception as e:
             if "not found" not in e:
                 raise
 
+        try:
+            client.inspect_pipeline(build_pipeline_name)
+            create_build_pipeline = False
+        except Exception as e:
+            if "not found" not in e:
+                raise
+
         if not create_source_repo:
-            commit = client.start_commit(source_repo, branch="master", description="python_pachyderm.build_python_pipeline: sync source code")
+            # The source repo already exists - delete existing source code
+            # (since upsert is enabled.)
+            commit = client.start_commit(
+                source_repo_name,
+                branch="master",
+                description="python_pachyderm.build_python_pipeline: sync source code.",
+            )
             client.delete_file(commit, "/")
 
     if create_source_repo:
-        client.create_repo(source_repo, description="python_pachyderm: source code for pipeline {}".format(pipeline_name))
+        client.create_repo(
+            source_repo_name,
+            description="python_pachyderm.build_python_pipeline: source code for pipeline {}.".format(pipeline_name),
+        )
 
+    if create_build_pipeline:
+        client.create_pipeline(
+            build_pipeline_name,
+            Transform(
+                image=image,
+                cmd=["bash", "/pfs/{}/build.sh".format(source_repo_name)],
+                image_pull_secrets=image_pull_secrets,
+                debug=debug,
+            ),
+            input=Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
+            update=update,
+            description="python_pachyderm.build_python_pipeline: build artifacts for pipeline {}.".format(pipeline_name),
+            parallelism_spec=ParallelismSpec(constant=1),
+        )
+
+    # If we haven't created a commit already, create one now to insert the
+    # source code
     if commit is None:
-        commit = client.start_commit(source_repo, branch="master", description="python_pachyderm.build_python_pipeline: add source code")
+        commit = client.start_commit(
+            source_repo_name,
+            branch="master",
+            description="python_pachyderm.build_python_pipeline: add source code.",
+        )
 
+    # Insert the source code
     put_files(client, path, commit, "/")
 
+    # Insert either the user-specified `build.sh`, or the default one
+    if not os.path.exists(os.path.join(path, "build.sh")):
+        with io.BytesIO(BUILDER_SCRIPT.format("x" if debug else "", source_repo_name).encode("utf8")) as builder_file:
+            client.put_file_bytes(commit, "/build.sh", builder_file)
+
+    # Insert either the user-specified `run.sh`, or the default one
     if not os.path.exists(os.path.join(path, "run.sh")):
-        with io.BytesIO(RUNNER_SCRIPT.format("x" if debug else "", source_repo).encode("utf8")) as runner_f:
-            client.put_file_bytes(commit, "/run.sh", runner_f)
+        with io.BytesIO(RUNNER_SCRIPT.format("x" if debug else "", build_pipeline_name).encode("utf8")) as runner_file:
+            client.put_file_bytes(commit, "/run.sh", runner_file)
 
     client.finish_commit(commit)
 
-    transform = Transform(
-        image=image or "python",
-        cmd=["bash", "/pfs/{}/run.sh".format(source_repo)],
-        image_pull_secrets=image_pull_secrets,
-        debug=debug,
-    )
-
-    input = Input(cross=[
-        Input(pfs=PFSInput(glob="/", repo=source_repo)),
-        input,
-    ])
-
+    # Create the pipeline
     return client.create_pipeline(
         pipeline_name,
-        transform,
-        input=input,
+        Transform(
+            image=image,
+            cmd=["bash", "/pfs/{}/run.sh".format(build_pipeline_name)],
+            image_pull_secrets=image_pull_secrets,
+            debug=debug,
+        ),
+        input=Input(cross=[Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)), input]),
         update=update,
-        **(pipeline_kwargs or {})
+        **pipeline_kwargs
     )
