@@ -7,7 +7,7 @@ from .client import Client
 from .util import put_files, build_python_pipeline
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError"]
+__all__ = ["Client", "RpcError", "put_files", "build_python_pipeline"]
 
 
 def _import_protos(path):
