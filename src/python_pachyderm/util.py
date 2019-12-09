@@ -14,6 +14,7 @@ RUNNER_SCRIPT = """
 #!/bin/bash
 set -e{}
 cd /pfs/{}
+test -d wheelhouse && pip3 install wheelhouse/*.whl
 test -f requirements.txt && pip3 install -r requirements.txt
 python3 main.py
 """
