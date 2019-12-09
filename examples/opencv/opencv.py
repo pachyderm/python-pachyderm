@@ -3,22 +3,33 @@
 # This is a reproduction of pachyderm's opencv example in python. A
 # walkthrough is available in the pachyderm docs:
 # https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
+#
+# It makes heavy use of python_pachyderm's higher-level utility functionality
+# (`build_python_pipeline`, `put_files`), as well as more run-of-the-mill
+# functionality (`create_repo`, `create_pipeline`).
 
 import os
 import python_pachyderm
 
+def relpath(path):
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+
 def main():
     client = python_pachyderm.Client()
 
+    # Create a repo called images
     client.create_repo("images")
 
-    python_pachyderm.build_pipeline(
+    # Create a pipeline specifically designed for executing python code. This
+    # is equivalent to the edges pipeline in the standard opencv example.
+    python_pachyderm.build_python_pipeline(
         client,
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "edges"),
+        relpath("edges"),
         python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
         image="pachyderm/opencv", # TODO: use a smaller image pachyderm/opencv
     )
 
+    # Create the montage pipeline
     client.create_pipeline(
         "montage",
         transform=python_pachyderm.Transform(cmd=["sh"], image="v4tech/imagemagick", stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]),
@@ -28,11 +39,11 @@ def main():
         ])
     )
 
-    client.put_file_url("images/master", "46Q8nDz.jpg", "http://imgur.com/46Q8nDz.jpg")
-
+    # Add some images, recursively inserting content from the images
+    # directory. Alternatively, you could use `client.put_file_url` or
+    # `client_put_file_bytes`.
     with client.commit("images", "master") as commit:
-        client.put_file_url(commit, "g2QnNqa.jpg", "http://imgur.com/g2QnNqa.jpg")
-        client.put_file_url(commit, "8MN9Kg0.jpg", "http://imgur.com/8MN9Kg0.jpg")
+        python_pachyderm.put_files(client, relpath("images"), commit, "/")
 
 if __name__ == '__main__':
     main()
