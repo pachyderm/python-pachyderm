@@ -1,4 +1,5 @@
 import os
+import time
 import string
 import random
 
@@ -60,3 +61,17 @@ def create_test_pipeline(client, test_name):
         client.put_file_bytes(commit, 'file.dat', b'DATA')
 
     return (commit, input_repo_name, pipeline_repo_name)
+
+def wait_for_job(client, commit):
+    # block until the commit is ready
+    client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY)
+
+    # while the commit is ready, the job might not be listed on the first
+    # call, so repeatedly list jobs until it's available
+    start_time = time.time()
+    while True:
+        for job in client.list_job():
+            return job.job.id
+
+        assert time.time() - start_time < 60.0, "timed out waiting for job"
+        time.sleep(1)
