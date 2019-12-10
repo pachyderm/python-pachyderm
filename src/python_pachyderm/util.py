@@ -1,4 +1,3 @@
-import io
 import os
 
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
@@ -177,14 +176,11 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
     with client.commit(source_repo_name, branch="master", description="python_pachyderm.create_python_pipeline: sync source code.") as commit:
         # Utility function for inserting build.sh/run.sh
         def put_templated_script(filename, template):
-            source = template.format(
+            client.put_file_bytes(commit, filename, template.format(
                 set_args="ex" if debug else "e",
                 source_repo_name=source_repo_name,
                 build_pipeline_name=build_pipeline_name,
-            )
-
-            with io.BytesIO(source.encode("utf8")) as f:
-                client.put_file_bytes(commit, filename, f)
+            ).encode("utf8"))
 
         # Delete any existing source code
         if update:
