@@ -66,7 +66,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     3) A pipeline for executing the PFS stored source code with the built
     dependencies.
 
-    As a result, this is what the pachyderm DAG looks like:
+    This is what the DAG looks like:
 
     ```
     .------------------------.      .-----------------------.
@@ -79,7 +79,6 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
         '-----------------'
                  ▲
                  |
-                 |
             .---------.
             | <input> |
             '---------'
@@ -89,7 +88,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     While this tends to be more convenient for pushing out local code, note
     the caveats:
 
-    * Pipeline works will take a bit longer to start up, due to wheel
+    * Pipeline workers will take a bit longer to start up, due to wheel
     installation.
     * This creates an extra repo and an extra pipeline for each pipeline.
 
@@ -101,7 +100,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     If you need further customization, you can override behavior by specifying
     one or both of these scripts in `path`:
 
-    * `build.sh`, which is run by the build pipeline to build wheels
+    * `build.sh`, which is run by the build pipeline to build wheels.
     * `run.sh`, which is run by the pipeline you're creating to execute the
     python code.
 
