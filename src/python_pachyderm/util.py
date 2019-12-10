@@ -76,7 +76,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
                  |                /
                  ▼               /
         .-----------------.     /
-        | <pipeline_name> | ◀---
+        | <pipeline_name> | ◀--'
         '-----------------'
                  ▲
                  |
