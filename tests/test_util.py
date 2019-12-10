@@ -52,5 +52,5 @@ def test_put_files():
     for path in expected:
         assert False, "expected path not found: {}".format(path)
 
-def test_build_python_pipeline():
+def test_create_python_pipeline():
     raise NotImplementedError

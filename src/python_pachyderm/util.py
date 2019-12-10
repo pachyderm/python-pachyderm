@@ -4,7 +4,7 @@ import os
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 
 # Default script for running python code with wheels in a pipeline that was
-# deployed with `build_python_pipeline`.
+# deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITH_WHEELS = """
 #!/bin/bash
 set -{set_args}
@@ -15,7 +15,7 @@ python main.py
 """
 
 # Default script for running python code without wheels in a pipeline that was
-# deployed with `build_python_pipeline`.
+# deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITHOUT_WHEELS = """
 #!/bin/bash
 set -{set_args}
@@ -25,7 +25,7 @@ python main.py
 """
 
 # Default script for building python wheels for a pipeline that was deployed
-# with `build_python_pipeline`.
+# with `create_python_pipeline`.
 BUILDER_SCRIPT = """
 #!/bin/bash
 set -{set_args}
@@ -60,8 +60,8 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
                 client.put_file_bytes(commit, dest_filepath, f, **kwargs)
 
 
-def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
-                          pipeline_kwargs=None, image=None, update=False):
+def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
+                           pipeline_kwargs=None, image=None, update=False):
     """
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally at `path`. `path` can either
@@ -153,7 +153,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
 
     client.create_repo(
         source_repo_name,
-        description="python_pachyderm.build_python_pipeline: source code for pipeline {}.".format(pipeline_name),
+        description="python_pachyderm.create_python_pipeline: source code for pipeline {}.".format(pipeline_name),
         update=update,
     )
 
@@ -169,12 +169,12 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
             input=Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
             update=update,
             description="""
-                python_pachyderm.build_python_pipeline: build artifacts for pipeline {}.
+                python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
             """.format(pipeline_name).strip(),
             parallelism_spec=ParallelismSpec(constant=1),
         )
 
-    with client.commit(source_repo_name, branch="master", description="python_pachyderm.build_python_pipeline: sync source code.") as commit:
+    with client.commit(source_repo_name, branch="master", description="python_pachyderm.create_python_pipeline: sync source code.") as commit:
         # Utility function for inserting build.sh/run.sh
         def put_templated_script(filename, template):
             source = template.format(
@@ -201,7 +201,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
             put_templated_script("run.sh", RUNNER_SCRIPT_WITHOUT_WHEELS)
         else:
             put_files(client, path, commit, "/")
-            
+
             if not os.path.exists(os.path.join(path, "run.sh")):
                 put_templated_script("run.sh", RUNNER_SCRIPT_WITH_WHEELS)
             if not os.path.exists(os.path.join(path, "build.sh")):
@@ -210,7 +210,7 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     # Create the pipeline
     inputs = [Input(pfs=PFSInput(glob="/", repo=source_repo_name)), input]
 
-    if build_python_pipeline is not None:
+    if build_pipeline_name is not None:
         inputs.append(Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)))
 
     return client.create_pipeline(

@@ -5,7 +5,7 @@
 # https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
 #
 # It makes heavy use of python_pachyderm's higher-level utility functionality
-# (`build_python_pipeline`, `put_files`), as well as more run-of-the-mill
+# (`create_python_pipeline`, `put_files`), as well as more run-of-the-mill
 # functionality (`create_repo`, `create_pipeline`).
 
 import os
@@ -22,7 +22,7 @@ def main():
 
     # Create a pipeline specifically designed for executing python code. This
     # is equivalent to the edges pipeline in the standard opencv example.
-    python_pachyderm.build_python_pipeline(
+    python_pachyderm.create_python_pipeline(
         client,
         relpath("edges"),
         python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),

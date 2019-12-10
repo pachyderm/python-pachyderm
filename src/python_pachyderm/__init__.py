@@ -4,10 +4,10 @@ import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
 from .client import Client
-from .util import put_files, build_python_pipeline
+from .util import put_files, create_python_pipeline
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError", "put_files", "build_python_pipeline"]
+__all__ = ["Client", "RpcError", "put_files", "create_python_pipeline"]
 
 
 def _import_protos(path):
