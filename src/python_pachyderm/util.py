@@ -1,13 +1,6 @@
 import io
 import os
-import sys
-import json
-import uuid
-import tarfile
-import tempfile
-import collections
 
-from .client import Client
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 
 # Default script for running python code in a pipeline that was deployed with
@@ -33,6 +26,7 @@ cd /pfs/{source_repo_name}
 test -f requirements.txt && pip wheel -r requirements.txt -w /pfs/out
 """
 
+
 def put_files(client, source_path, commit, dest_path, **kwargs):
     """
     Utility function for recursively inserting files from the local
@@ -55,7 +49,9 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
             with open(source_filepath, "rb") as f:
                 client.put_file_bytes(commit, dest_filepath, f, **kwargs)
 
-def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None, pipeline_kwargs=None, image=None, update=False):
+
+def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
+                          pipeline_kwargs=None, image=None, update=False):
     """
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally.
@@ -73,15 +69,21 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     As a result, this is what the pachyderm DAG looks like:
 
     ```
-    +------------------------+      +-----------------------+
-    | <pipeline_name>_source | ---> | <pipeline_name>_build |
-    +------------------------+      +-----------------------+
-                 |                              |                      +-----------------+
-                 `---------------------------------------------------> | <pipeline_name> |
-                                                       |               +-----------------+
-                                                  +---------+
-                                                  | <input> |
-                                                  +---------+
+    .------------------------.      .-----------------------.
+    | <pipeline_name>_source | ---▶ | <pipeline_name>_build |
+    '------------------------'      '-----------------------'
+                 |                 /
+                 |                /
+                 ▼               /
+        .-----------------.     /
+        | <pipeline_name> | ◀---
+        '-----------------'
+                 ▲
+                 |
+                 |
+            +---------+
+            | <input> |
+            +---------+
 
     ```
 
@@ -192,7 +194,9 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
             ),
             input=Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
             update=update,
-            description="python_pachyderm.build_python_pipeline: build artifacts for pipeline {}.".format(pipeline_name),
+            description="""
+                python_pachyderm.build_python_pipeline: build artifacts for pipeline {}.
+            """.format(pipeline_name).strip(),
             parallelism_spec=ParallelismSpec(constant=1),
         )
 
@@ -208,7 +212,8 @@ def build_python_pipeline(client, path, input, pipeline_name=None, image_pull_se
     # Insert the source code
     put_files(client, path, commit, "/")
 
-    # Insert either the user-specified `build.sh` and `run.sh`, or their defaults
+    # Insert either the user-specified `build.sh` and `run.sh`, or their
+    # defaults
     for (filename, template) in [("build.sh", BUILDER_SCRIPT), ("run.sh", RUNNER_SCRIPT)]:
         if not os.path.exists(os.path.join(path, filename)):
             source = template.format(
