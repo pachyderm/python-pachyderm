@@ -132,19 +132,27 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
     if not os.path.exists(path):
         raise Exception("path does not exist")
 
+    if not os.path.isfile(path) and not os.path.exists(os.path.join(path, "main.py")):
+        raise Exception("no main.py detected")
+
     if pipeline_name is None:
-        if path.endswith("/"):
-            pipeline_name = os.path.basename(path[:-1])
-        elif path.endswith(".py"):
-            pipeline_name = os.path.basename(path)[:-3]
+        pipeline_name = os.path.basename(path)
+        if os.path.isfile(path):
+            if path.endswith(".py"):
+                pipeline_name = pipeline_name[:-3]
         else:
-            pipeline_name = os.path.basename(path)
+            if path.endswith("/"):
+                pipeline_name = os.path.basename(path[:-1])
 
     if not pipeline_name:
         raise Exception("could not derive pipeline name")
 
     image = image or "python:3"
     pipeline_kwargs = pipeline_kwargs or {}
+
+    for param in ("pipeline_name", "transform", "input", "update"):
+        if param in pipeline_kwargs:
+            raise Exception("cannot specify the pipeline kwarg '%s'".format(param))
 
     # Create the source repo and build pipeline (if necessary.)
     source_repo_name = "{}_source".format(pipeline_name)
