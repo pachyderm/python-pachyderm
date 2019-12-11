@@ -154,9 +154,8 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
         if param in pipeline_kwargs:
             raise Exception("cannot specify the pipeline kwarg '%s'".format(param))
 
-    # Create the source repo and build pipeline (if necessary.)
+    # Create the source repo
     source_repo_name = "{}_source".format(pipeline_name)
-    build_pipeline_name = "{}_build".format(pipeline_name) if os.path.exists(os.path.join(path, "requirements.txt")) else None
 
     client.create_repo(
         source_repo_name,
@@ -164,7 +163,16 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
         update=update,
     )
 
+    # Create the build pipeline
+    build_pipeline_name = None
+    if os.path.exists(os.path.join(path, "requirements.txt")):
+        build_pipeline_name = "{}_build".format(pipeline_name)
+
     if build_pipeline_name is not None:
+        build_pipeline_desc = """
+            python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
+        """.format(pipeline_name).strip()
+
         client.create_pipeline(
             build_pipeline_name,
             Transform(
@@ -175,13 +183,12 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
             ),
             input=Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
             update=update,
-            description="""
-                python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
-            """.format(pipeline_name).strip(),
+            description=build_pipeline_desc,
             parallelism_spec=ParallelismSpec(constant=1),
         )
 
-    with client.commit(source_repo_name, branch="master", description="python_pachyderm.create_python_pipeline: sync source code.") as commit:
+    source_commit_desc = "python_pachyderm.create_python_pipeline: sync source code."
+    with client.commit(source_repo_name, branch="master", description=source_commit_desc) as commit:
         # Utility function for inserting build.sh/run.sh
         def put_templated_script(filename, template):
             client.put_file_bytes(commit, filename, template.format(
