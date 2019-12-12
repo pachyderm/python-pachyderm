@@ -18,18 +18,7 @@ class Sandbox:
         self.pipeline_repo_name = pipeline_repo_name
 
     def wait_for_job(self):
-        # block until the commit is ready
-        self.client.inspect_commit(self.commit, block_state=python_pachyderm.CommitState.READY)
-
-        # while the commit is ready, the job might not be listed on the first
-        # call, so repeatedly list jobs until it's available
-        start_time = time.time()
-        while True:
-            for job in self.client.list_job():
-                return job.job.id
-
-            assert time.time() - start_time < 60.0, "timed out waiting for job"
-            time.sleep(1)
+        return util.wait_for_job(self.client, self.commit)
 
 def test_list_job():
     sandbox = Sandbox("list_job")

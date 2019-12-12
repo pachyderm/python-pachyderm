@@ -1053,6 +1053,14 @@ table {
     <h1>Index</h1>
     <ul id="index">
 
+    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.create_python_pipeline">create_python_pipeline</a></li>
+    <li class="mono"><a href="#python_pachyderm.put_files">put_files</a></li>
+  </ul>
+
+    </li>
 
     <li class="set"><h3><a href="#header-classes">Classes</a></h3>
       <ul>
@@ -2124,6 +2132,116 @@ table {
 
   <section id="section-items">
 
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.create_python_pipeline">
+    <p>def <span class="ident">create_python_pipeline</span>(</p><p>client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None, pipeline_kwargs=None, image=None, update=False)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Utility function for creating (or updating) a pipeline specially built for
+executing python code that is stored locally at <code>path</code>. <code>path</code> can either
+reference a directory with python code, or a single python file.</p>
+
+<p>A normal pipeline creation process (i.e. a call to
+<code>client.create_pipeline</code>) requires you to first build and push a container
+image with the source and dependencies baked in. As an alternative
+process, this function circumvents container image creation by creating:</p>
+
+<p>1) a PFS repo that stores the source code at <code>path</code>.
+2) If there's a <code>requirements.txt</code> in <code>path</code>, a  pipeline for building the
+dependencies into wheels.
+3) A pipeline for executing the PFS stored source code with the built
+dependencies.</p>
+
+<p>This is what the DAG looks like:</p>
+
+<pre><code>.------------------------.      .-----------------------.
+| &lt;pipeline_name&gt;_source | ---▶ | &lt;pipeline_name&gt;_build |
+'------------------------'      '-----------------------'
+             |                 /
+             ▼                /
+    .-----------------.      /
+    | &lt;pipeline_name&gt; | ◀---'
+    '-----------------'
+             ▲
+             |
+        .---------.
+        | &lt;input&gt; |
+        '---------'
+
+</code></pre>
+
+<p>(without a <code>requirements.txt</code>, there is no build pipeline.)</p>
+
+<p>If <code>path</code> references a directory, it should have following:</p>
+
+<ul>
+<li>A <code>main.py</code>, as the pipeline entry-point.</li>
+<li>An optional <code>requirements.txt</code> that specifies pip requirements.</li>
+<li>An optional <code>build.sh</code> if you wish to override the default build
+process.</li>
+<li>An optional <code>run.sh</code> if you wish to override the default pipeline
+execution process.</li>
+</ul>
+
+<p>Params:</p>
+
+<ul>
+<li><code>client</code>: The <code>Client</code> instance to use.</li>
+<li><code>path</code>: The directory containing the python pipeline source, or an
+individual python file.</li>
+<li><code>input</code>: An <code>Input</code> object specifying the pipeline input.</li>
+<li><code>pipeline_name</code>: An optional string specifying the pipeline name.
+Defaults to using the last directory name in <code>path</code>.</li>
+<li><code>image_pull_secrets</code>: An optional list of strings specifying the
+pipeline transform's image pull secrets, which are used for pulling images
+from a private registry. Defaults to <code>None</code>, in which case the public
+docker registry will be used. See the pipeline spec document for more
+details.</li>
+<li><code>debug</code>: An optional bool specifying whether debug logging should be
+enabled for the pipeline. Defaults to <code>False</code>.</li>
+<li><code>pipeline_kwargs</code>: Keyword arguments to forward to <code>create_pipeline</code>.</li>
+<li><code>image</code>: An optional string specifying the docker image to use for the
+pipeline. Defaults to <code>python</code>.</li>
+<li><code>update</code>: Whether to act as an upsert.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="python_pachyderm.put_files">
+    <p>def <span class="ident">put_files</span>(</p><p>client, source_path, commit, dest_path, **kwargs)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Utility function for recursively inserting files from the local
+<code>source_path</code> to pachyderm. Roughly equivalent to <code>pachctl put file -r</code>.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>client</code>: The <code>Client</code> instance to use.</li>
+<li><code>source_path</code>: The directory to recursively insert content from.</li>
+<li><code>commit</code>: The <code>Commit</code> object to use for inserting files.</li>
+<li><code>dest_path</code>: The destination path in PFS.</li>
+<li><code>kwargs</code>: Keyword arguments to forward to <code>put_file_bytes</code>.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       

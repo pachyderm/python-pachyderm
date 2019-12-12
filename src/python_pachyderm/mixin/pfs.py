@@ -365,7 +365,7 @@ class PFSMixin:
                         )
                     else:
                         yield pfs_proto.PutFileRequest(value=chunk)
-        elif isinstance(value, collections.Iterable) and not isinstance(value, (str, bytes)):
+        elif isinstance(value, collections.abc.Iterable) and not isinstance(value, (str, bytes)):
             def wrap(value):
                 for i, chunk in enumerate(value):
                     if i == 0:
