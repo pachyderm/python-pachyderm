@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.5.0
+
+- Added a utility function for creating a pipeline from locally stored python code (PR #163)
+- Added a utility function for recursively putting many files into PFS (PR #163)
+- Removed support for python 3.4 (PR #162)
+
 ## 2.4.1
 
 - Re-introduced `PACH_PYTHON_AUTH_TOKEN`, as we need it for JupyterHub integration (PR #161)
