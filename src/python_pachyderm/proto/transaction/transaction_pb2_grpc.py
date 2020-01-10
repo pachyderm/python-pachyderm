@@ -15,6 +15,11 @@ class APIStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.BatchTransaction = channel.unary_unary(
+        '/transaction.API/BatchTransaction',
+        request_serializer=client_dot_transaction_dot_transaction__pb2.BatchTransactionRequest.SerializeToString,
+        response_deserializer=client_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
+        )
     self.StartTransaction = channel.unary_unary(
         '/transaction.API/StartTransaction',
         request_serializer=client_dot_transaction_dot_transaction__pb2.StartTransactionRequest.SerializeToString,
@@ -51,9 +56,16 @@ class APIServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def StartTransaction(self, request, context):
+  def BatchTransaction(self, request, context):
     """Transaction rpcs
     """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def StartTransaction(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -96,6 +108,11 @@ class APIServicer(object):
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'BatchTransaction': grpc.unary_unary_rpc_method_handler(
+          servicer.BatchTransaction,
+          request_deserializer=client_dot_transaction_dot_transaction__pb2.BatchTransactionRequest.FromString,
+          response_serializer=client_dot_transaction_dot_transaction__pb2.TransactionInfo.SerializeToString,
+      ),
       'StartTransaction': grpc.unary_unary_rpc_method_handler(
           servicer.StartTransaction,
           request_deserializer=client_dot_transaction_dot_transaction__pb2.StartTransactionRequest.FromString,
