@@ -56,9 +56,10 @@ BLACKLISTED_METHODS = {
     # delete_all is ignored because we implement PPS' delete_all anyway
     # build_commit is ignored because it's for internal use only
     Service.PFS: ["delete_all", "build_commit"],
-    # activate_auth is ignored because it's an internal function
+    # activate_auth is ignored because it's for internal use only
     # create_job is ignored because it's for internal use only
-    Service.PPS: ["activate_auth", "create_job"],
+    # update_job_state is ignored because it's for internal use only
+    Service.PPS: ["activate_auth", "create_job", "update_job_state"],
 }
 
 RENAMED_METHODS = {
@@ -249,6 +250,9 @@ RENAMED_ARGS = {
         ("job", "job_id"),
     ],
     "run_pipeline": [
+        ("pipeline", "pipeline_name"),
+    ],
+    "run_cron": [
         ("pipeline", "pipeline_name"),
     ],
     "start_pipeline": [

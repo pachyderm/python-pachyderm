@@ -12,6 +12,16 @@ def transaction_from(transaction):
 
 
 class TransactionMixin:
+    def batch_transaction(self, requests):
+        """
+        Executes a batch transaction.
+
+        Params:
+
+        * `requests`: A list of `TransactionRequest` objects.
+        """
+        return self._req(Service.TRANSACTION, "BatchTransaction")
+
     def start_transaction(self):
         """
         Starts a transaction.
