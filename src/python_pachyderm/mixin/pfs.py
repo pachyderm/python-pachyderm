@@ -10,6 +10,65 @@ from .util import commit_from
 BUFFER_SIZE = 20 * 1024 * 1024
 
 
+def put_file_from_filelike(commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None,
+                           overwrite_index=None, header_records=None):
+    for i in itertools.count():
+        chunk = value.read(BUFFER_SIZE)
+
+        if len(chunk) == 0:
+            return
+
+        if i == 0:
+            yield pfs_proto.PutFileRequest(
+                file=pfs_proto.File(commit=commit_from(commit), path=path),
+                value=chunk,
+                delimiter=delimiter,
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records
+            )
+        else:
+            yield pfs_proto.PutFileRequest(value=chunk)
+
+
+def put_file_from_iterable(commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None,
+                           overwrite_index=None, header_records=None):
+    for i, chunk in enumerate(value):
+        if i == 0:
+            yield pfs_proto.PutFileRequest(
+                file=pfs_proto.File(commit=commit_from(commit), path=path),
+                value=chunk,
+                delimiter=delimiter,
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records
+            )
+        else:
+            yield pfs_proto.PutFileRequest(value=chunk)
+
+
+def put_file_from_bytestring(commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None,
+                             overwrite_index=None, header_records=None):
+    yield pfs_proto.PutFileRequest(
+        file=pfs_proto.File(commit=commit_from(commit), path=path),
+        value=value[:BUFFER_SIZE],
+        delimiter=delimiter,
+        target_file_datums=target_file_datums,
+        target_file_bytes=target_file_bytes,
+        overwrite_index=overwrite_index,
+        header_records=header_records
+    )
+
+    for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
+        yield pfs_proto.PutFileRequest(
+            value=value[i:i + BUFFER_SIZE],
+            overwrite_index=overwrite_index,
+            header_records=header_records
+        )
+
+
 class PFSMixin:
     def create_repo(self, repo_name, description=None, update=None):
         """
@@ -346,60 +405,40 @@ class PFSMixin:
         overwrite_index = pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None
 
         if hasattr(value, "read"):
-            def wrap(value):
-                for i in itertools.count():
-                    chunk = value.read(BUFFER_SIZE)
-
-                    if len(chunk) == 0:
-                        return
-
-                    if i == 0:
-                        yield pfs_proto.PutFileRequest(
-                            file=pfs_proto.File(commit=commit_from(commit), path=path),
-                            value=chunk,
-                            delimiter=delimiter,
-                            target_file_datums=target_file_datums,
-                            target_file_bytes=target_file_bytes,
-                            overwrite_index=overwrite_index,
-                            header_records=header_records
-                        )
-                    else:
-                        yield pfs_proto.PutFileRequest(value=chunk)
+            reqs = put_file_from_filelike(
+                commit,
+                path,
+                value,
+                delimiter=delimiter,
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records,
+            )
         elif isinstance(value, collections.abc.Iterable) and not isinstance(value, (str, bytes)):
-            def wrap(value):
-                for i, chunk in enumerate(value):
-                    if i == 0:
-                        yield pfs_proto.PutFileRequest(
-                            file=pfs_proto.File(commit=commit_from(commit), path=path),
-                            value=chunk,
-                            delimiter=delimiter,
-                            target_file_datums=target_file_datums,
-                            target_file_bytes=target_file_bytes,
-                            overwrite_index=overwrite_index,
-                            header_records=header_records
-                        )
-                    else:
-                        yield pfs_proto.PutFileRequest(value=chunk)
+            reqs = put_file_from_iterable(
+                commit,
+                path,
+                value,
+                delimiter=delimiter,
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records,
+            )
         else:
-            def wrap(value):
-                yield pfs_proto.PutFileRequest(
-                    file=pfs_proto.File(commit=commit_from(commit), path=path),
-                    value=value[:BUFFER_SIZE],
-                    delimiter=delimiter,
-                    target_file_datums=target_file_datums,
-                    target_file_bytes=target_file_bytes,
-                    overwrite_index=overwrite_index,
-                    header_records=header_records
-                )
+            reqs = put_file_from_bytestring(
+                commit,
+                path,
+                value,
+                delimiter=delimiter,
+                target_file_datums=target_file_datums,
+                target_file_bytes=target_file_bytes,
+                overwrite_index=overwrite_index,
+                header_records=header_records,
+            )
 
-                for i in range(BUFFER_SIZE, len(value), BUFFER_SIZE):
-                    yield pfs_proto.PutFileRequest(
-                        value=value[i:i + BUFFER_SIZE],
-                        overwrite_index=overwrite_index,
-                        header_records=header_records
-                    )
-
-        return self._req(Service.PFS, "PutFile", req=wrap(value))
+        return self._req(Service.PFS, "PutFile", req=reqs)
 
     def put_file_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
                      target_file_bytes=None, overwrite_index=None, header_records=None):
