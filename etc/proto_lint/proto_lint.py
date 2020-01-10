@@ -343,11 +343,11 @@ def lint_service(service):
         for mixin_method_name in renamed_mixin_method_names:
             # find if this method isn't implemented
             if mixin_method_name not in mixin_method_names:
-                yield "missing method: {}".format(mixin_method_name)
+                yield "service {}: missing method: {}".format(service.name, mixin_method_name)
                 continue
 
             for warning in lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
-                yield "{}: {}".format(service.name, warning)
+                yield "service {}: {}".format(service.name, warning)
 
 def main():
     warned = False
