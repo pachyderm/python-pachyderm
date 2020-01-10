@@ -20,7 +20,7 @@ class TransactionMixin:
 
         * `requests`: A list of `TransactionRequest` objects.
         """
-        return self._req(Service.TRANSACTION, "BatchTransaction")
+        return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
 
     def start_transaction(self):
         """

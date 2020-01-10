@@ -2,8 +2,10 @@
 
 """Tests for PPS-related functionality."""
 
-import grpc
 import time
+
+import pytest
+import grpc
 
 import python_pachyderm
 from tests import util
@@ -127,6 +129,7 @@ def test_restart_pipeline():
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert not pipeline.stopped
 
+@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_run_pipeline():
     sandbox = Sandbox("run_pipeline")
 
@@ -134,8 +137,20 @@ def test_run_pipeline():
     list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
 
     # just make sure it worked
-    if util.test_pachyderm_version() >= (1, 9, 0):
-        sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
+    sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
+
+@util.skip_if_below_pachyderm_version(1, 9, 10)
+def test_run_cron():
+    sandbox = Sandbox("run_cron")
+
+    # flush the job so it fully finishes
+    list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
+
+    # this should trigger an error because the sandbox pipeline doesn't have a
+    # cron input
+    with pytest.raises(python_pachyderm.RpcError) as e:
+        sandbox.client.run_cron(sandbox.pipeline_repo_name)
+    assert "pipeline must have a cron input" in str(e.value)
 
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
