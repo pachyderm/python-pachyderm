@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+
+- Faster `put_files` by putting multiple files in a single request (PR #166)
+
 ## 2.5.0
 
 - Added a utility function for creating a pipeline from locally stored python code (PR #163)
