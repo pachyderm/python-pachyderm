@@ -54,7 +54,7 @@ def test_stop_job():
     # ignore _Rendezvous errors.
     try:
         sandbox.client.stop_job(job_id)
-    except grpc._channel._Rendezvous:
+    except:
         # if it failed, it should be because the job already finished
         job = sandbox.client.inspect_job(job_id)
         assert job.state == python_pachyderm.JobState.JOB_SUCCESS
