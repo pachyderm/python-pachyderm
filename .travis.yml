@@ -2,6 +2,10 @@ dist: xenial
 sudo: required
 services:
 - docker
+addons:
+  apt:
+    packages:
+      - socat
 cache:
   directories:
     - ${HOME}/.cache
