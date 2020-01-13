@@ -1,5 +1,7 @@
 import os
 
+from .service import Service
+from .mixin import pfs
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 
 # Default script for running python code with wheels in a pipeline that was
@@ -50,13 +52,18 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
     * `kwargs`: Keyword arguments to forward to `put_file_bytes`.
     """
 
-    for root, _, filenames in os.walk(source_path):
-        for filename in filenames:
-            source_filepath = os.path.join(root, filename)
-            dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
+    def reqs():
+        for root, _, filenames in os.walk(source_path):
+            for filename in filenames:
+                source_filepath = os.path.join(root, filename)
+                dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
 
-            with open(source_filepath, "rb") as f:
-                client.put_file_bytes(commit, dest_filepath, f, **kwargs)
+                with open(source_filepath, "rb") as f:
+                    yield from pfs.put_file_from_filelike(commit, dest_filepath, f, **kwargs)
+
+    # Call the lower-level `PutFile` function, because the higher-level ones
+    # only support putting a single file at a time
+    return client._req(Service.PFS, "PutFile", req=reqs())
 
 
 def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
