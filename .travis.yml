@@ -4,8 +4,10 @@ services:
 - docker
 cache:
   directories:
-    - $HOME/.cache/go-build
-    - $HOME/cached-deps
+    - ${HOME}/.cache
+    - ${HOME}/cached-deps
+    - ${HOME}/gopath/pkg/mod
+    - "$(python3 -c 'import site; print(site.USER_BASE)')"
 language: python
 env:
   global:
