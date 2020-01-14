@@ -50,3 +50,16 @@ To run tests, clone the repo, [install jq](https://stedolan.github.io/jq/), then
 make init
 tox
 ```
+
+### Build the documentation
+
+To build the `python-pachyderm` locally, comlete the following steps:
+
+1. Go to the `docs` folder.
+1. Run: 
+
+   ```bash
+   python3 -m http.server
+   ```
+   
+1. In a browser, navigate to localhost:8000.
