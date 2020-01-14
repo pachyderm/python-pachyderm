@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>python_pachyderm.client API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.client</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+from urllib.parse import urlparse
+
+from .mixin.admin import AdminMixin
+from .mixin.auth import AuthMixin
+from .mixin.debug import DebugMixin
+from .mixin.enterprise import EnterpriseMixin
+from .mixin.health import HealthMixin
+from .mixin.pfs import PFSMixin
+from .mixin.pps import PPSMixin
+from .mixin.transaction import TransactionMixin
+from .mixin.version import VersionMixin
+
+
+class Client(
+    AdminMixin,
+    AuthMixin,
+    DebugMixin,
+    EnterpriseMixin,
+    HealthMixin,
+    PFSMixin,
+    PPSMixin,
+    TransactionMixin,
+    VersionMixin,
+    object
+):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client.
+
+        Params:
+
+        * `host`: The pachd host. Default is &#39;localhost&#39;, which is used with
+        `pachctl port-forward`.
+        * `port`: The port to connect to. Default is 30650.
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Defaults to `None`.
+        * `root_certs`:  The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        * `tls`: Specifies whether TLS should be used. If `root_certs` are
+        specified, they are used; otherwise, we use the certs provided by
+        certifi.
+        &#34;&#34;&#34;
+
+        host = host or &#34;localhost&#34;
+        port = port or 30650
+
+        if auth_token is None:
+            auth_token = os.environ.get(&#34;PACH_PYTHON_AUTH_TOKEN&#34;)
+
+        if tls is None:
+            tls = root_certs is not None
+        if tls and root_certs is None:
+            # load default certs if none are specified
+            import certifi
+            with open(certifi.where(), &#34;rb&#34;) as f:
+                root_certs = f.read()
+
+        self.address = &#34;{}:{}&#34;.format(host, port)
+        self.root_certs = root_certs
+        self._stubs = {}
+        self._auth_token = auth_token
+        self._transaction_id = transaction_id
+        self._metadata = self._build_metadata()
+
+    @classmethod
+    def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        &#34;&#34;&#34;
+
+        host = os.environ[&#34;PACHD_SERVICE_HOST&#34;]
+        port = int(os.environ[&#34;PACHD_SERVICE_PORT&#34;])
+        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+
+    @classmethod
+    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client from a given pachd address.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string. If
+        unspecified, this will load default certs from certifi.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        &#34;&#34;&#34;
+
+        if &#34;://&#34; not in pachd_address:
+            pachd_address = &#34;grpc://{}&#34;.format(pachd_address)
+
+        u = urlparse(pachd_address)
+
+        if u.scheme not in (&#34;grpc&#34;, &#34;http&#34;, &#34;grpcs&#34;, &#34;https&#34;):
+            raise ValueError(&#34;unrecognized pachd address scheme: {}&#34;.format(u.scheme))
+        if u.path != &#34;&#34; or u.params != &#34;&#34; or u.query != &#34;&#34; or u.fragment != &#34;&#34;:
+            raise ValueError(&#34;invalid pachd address&#34;)
+        if u.username is not None or u.password is not None:
+            raise ValueError(&#34;invalid pachd address&#34;)
+
+        return cls(
+            host=u.hostname,
+            port=u.port,
+            auth_token=auth_token,
+            root_certs=root_certs,
+            transaction_id=transaction_id,
+            tls=u.scheme == &#34;grpcs&#34; or u.scheme == &#34;https&#34;,
+        )
+
+    @property
+    def auth_token(self):
+        return self._auth_token
+
+    @auth_token.setter
+    def auth_token(self, value):
+        self._auth_token = value
+        self._metadata = self._build_metadata()
+
+    @property
+    def transaction_id(self):
+        return self._transaction_id
+
+    @transaction_id.setter
+    def transaction_id(self, value):
+        self._transaction_id = value
+        self._metadata = self._build_metadata()
+
+    def _build_metadata(self):
+        metadata = []
+        if self._auth_token is not None:
+            metadata.append((&#34;authn-token&#34;, self._auth_token))
+        if self._transaction_id is not None:
+            metadata.append((&#34;pach-transaction&#34;, self._transaction_id))
+        return metadata
+
+    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+        stub = self._stubs.get(grpc_service)
+        if stub is None:
+            grpc_module = grpc_service.grpc_module
+            if self.root_certs:
+                ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
+                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+            else:
+                channel = grpc_module.grpc.insecure_channel(self.address)
+            stub = grpc_service.stub(channel)
+            self._stubs[grpc_service] = stub
+
+        assert req is None or len(kwargs) == 0
+        assert self._metadata is not None
+
+        if req is None:
+            proto_module = grpc_service.proto_module
+            if grpc_method_name.endswith(&#34;Stream&#34;):
+                req_cls_name_prefix = grpc_method_name[:-6]
+            else:
+                req_cls_name_prefix = grpc_method_name
+            req_cls = getattr(proto_module, &#34;{}Request&#34;.format(req_cls_name_prefix))
+            req = req_cls(**kwargs)
+
+        grpc_method = getattr(stub, grpc_method_name)
+        return grpc_method(req, metadata=self._metadata)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.client.Client"><code class="flex name class">
+<span>class <span class="ident">Client</span></span>
+<span>(</span><span>host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates a Pachyderm client.</p>
+<p>Params:</p>
+<ul>
+<li><code>host</code>: The pachd host. Default is 'localhost', which is used with
+<code>pachctl port-forward</code>.</li>
+<li><code>port</code>: The port to connect to. Default is 30650.</li>
+<li><code>auth_token</code>: The authentication token; used if authentication is
+enabled on the cluster. Defaults to <code>None</code>.</li>
+<li><code>root_certs</code>:
+The PEM-encoded root certificates as byte string.</li>
+<li><code>transaction_id</code>: The ID of the transaction to run operations on.</li>
+<li><code>tls</code>: Specifies whether TLS should be used. If <code>root_certs</code> are
+specified, they are used; otherwise, we use the certs provided by
+certifi.</li>
+</ul></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    AdminMixin,
+    AuthMixin,
+    DebugMixin,
+    EnterpriseMixin,
+    HealthMixin,
+    PFSMixin,
+    PPSMixin,
+    TransactionMixin,
+    VersionMixin,
+    object
+):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client.
+
+        Params:
+
+        * `host`: The pachd host. Default is &#39;localhost&#39;, which is used with
+        `pachctl port-forward`.
+        * `port`: The port to connect to. Default is 30650.
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Defaults to `None`.
+        * `root_certs`:  The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        * `tls`: Specifies whether TLS should be used. If `root_certs` are
+        specified, they are used; otherwise, we use the certs provided by
+        certifi.
+        &#34;&#34;&#34;
+
+        host = host or &#34;localhost&#34;
+        port = port or 30650
+
+        if auth_token is None:
+            auth_token = os.environ.get(&#34;PACH_PYTHON_AUTH_TOKEN&#34;)
+
+        if tls is None:
+            tls = root_certs is not None
+        if tls and root_certs is None:
+            # load default certs if none are specified
+            import certifi
+            with open(certifi.where(), &#34;rb&#34;) as f:
+                root_certs = f.read()
+
+        self.address = &#34;{}:{}&#34;.format(host, port)
+        self.root_certs = root_certs
+        self._stubs = {}
+        self._auth_token = auth_token
+        self._transaction_id = transaction_id
+        self._metadata = self._build_metadata()
+
+    @classmethod
+    def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        &#34;&#34;&#34;
+
+        host = os.environ[&#34;PACHD_SERVICE_HOST&#34;]
+        port = int(os.environ[&#34;PACHD_SERVICE_PORT&#34;])
+        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+
+    @classmethod
+    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
+        &#34;&#34;&#34;
+        Creates a Pachyderm client from a given pachd address.
+
+        Params:
+
+        * `auth_token`: The authentication token; used if authentication is
+        enabled on the cluster. Default to `None`.
+        * `root_certs`: The PEM-encoded root certificates as byte string. If
+        unspecified, this will load default certs from certifi.
+        * `transaction_id`: The ID of the transaction to run operations on.
+        &#34;&#34;&#34;
+
+        if &#34;://&#34; not in pachd_address:
+            pachd_address = &#34;grpc://{}&#34;.format(pachd_address)
+
+        u = urlparse(pachd_address)
+
+        if u.scheme not in (&#34;grpc&#34;, &#34;http&#34;, &#34;grpcs&#34;, &#34;https&#34;):
+            raise ValueError(&#34;unrecognized pachd address scheme: {}&#34;.format(u.scheme))
+        if u.path != &#34;&#34; or u.params != &#34;&#34; or u.query != &#34;&#34; or u.fragment != &#34;&#34;:
+            raise ValueError(&#34;invalid pachd address&#34;)
+        if u.username is not None or u.password is not None:
+            raise ValueError(&#34;invalid pachd address&#34;)
+
+        return cls(
+            host=u.hostname,
+            port=u.port,
+            auth_token=auth_token,
+            root_certs=root_certs,
+            transaction_id=transaction_id,
+            tls=u.scheme == &#34;grpcs&#34; or u.scheme == &#34;https&#34;,
+        )
+
+    @property
+    def auth_token(self):
+        return self._auth_token
+
+    @auth_token.setter
+    def auth_token(self, value):
+        self._auth_token = value
+        self._metadata = self._build_metadata()
+
+    @property
+    def transaction_id(self):
+        return self._transaction_id
+
+    @transaction_id.setter
+    def transaction_id(self, value):
+        self._transaction_id = value
+        self._metadata = self._build_metadata()
+
+    def _build_metadata(self):
+        metadata = []
+        if self._auth_token is not None:
+            metadata.append((&#34;authn-token&#34;, self._auth_token))
+        if self._transaction_id is not None:
+            metadata.append((&#34;pach-transaction&#34;, self._transaction_id))
+        return metadata
+
+    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+        stub = self._stubs.get(grpc_service)
+        if stub is None:
+            grpc_module = grpc_service.grpc_module
+            if self.root_certs:
+                ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
+                ssl = ssl_channel_credentials(root_certificates=self.root_certs)
+                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+            else:
+                channel = grpc_module.grpc.insecure_channel(self.address)
+            stub = grpc_service.stub(channel)
+            self._stubs[grpc_service] = stub
+
+        assert req is None or len(kwargs) == 0
+        assert self._metadata is not None
+
+        if req is None:
+            proto_module = grpc_service.proto_module
+            if grpc_method_name.endswith(&#34;Stream&#34;):
+                req_cls_name_prefix = grpc_method_name[:-6]
+            else:
+                req_cls_name_prefix = grpc_method_name
+            req_cls = getattr(proto_module, &#34;{}Request&#34;.format(req_cls_name_prefix))
+            req = req_cls(**kwargs)
+
+        grpc_method = getattr(stub, grpc_method_name)
+        return grpc_method(req, metadata=self._metadata)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.admin.AdminMixin" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin">AdminMixin</a></li>
+<li><a title="python_pachyderm.mixin.auth.AuthMixin" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin">AuthMixin</a></li>
+<li><a title="python_pachyderm.mixin.debug.DebugMixin" href="mixin/debug.html#python_pachyderm.mixin.debug.DebugMixin">DebugMixin</a></li>
+<li><a title="python_pachyderm.mixin.enterprise.EnterpriseMixin" href="mixin/enterprise.html#python_pachyderm.mixin.enterprise.EnterpriseMixin">EnterpriseMixin</a></li>
+<li><a title="python_pachyderm.mixin.health.HealthMixin" href="mixin/health.html#python_pachyderm.mixin.health.HealthMixin">HealthMixin</a></li>
+<li><a title="python_pachyderm.mixin.pfs.PFSMixin" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin">PFSMixin</a></li>
+<li><a title="python_pachyderm.mixin.pps.PPSMixin" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin">PPSMixin</a></li>
+<li><a title="python_pachyderm.mixin.transaction.TransactionMixin" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin">TransactionMixin</a></li>
+<li><a title="python_pachyderm.mixin.version.VersionMixin" href="mixin/version.html#python_pachyderm.mixin.version.VersionMixin">VersionMixin</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="python_pachyderm.client.Client.new_from_pachd_address"><code class="name flex">
+<span>def <span class="ident">new_from_pachd_address</span></span>(<span>pachd_address, auth_token=None, root_certs=None, transaction_id=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates a Pachyderm client from a given pachd address.</p>
+<p>Params:</p>
+<ul>
+<li><code>auth_token</code>: The authentication token; used if authentication is
+enabled on the cluster. Default to <code>None</code>.</li>
+<li><code>root_certs</code>: The PEM-encoded root certificates as byte string. If
+unspecified, this will load default certs from certifi.</li>
+<li><code>transaction_id</code>: The ID of the transaction to run operations on.</li>
+</ul></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
+    &#34;&#34;&#34;
+    Creates a Pachyderm client from a given pachd address.
+
+    Params:
+
+    * `auth_token`: The authentication token; used if authentication is
+    enabled on the cluster. Default to `None`.
+    * `root_certs`: The PEM-encoded root certificates as byte string. If
+    unspecified, this will load default certs from certifi.
+    * `transaction_id`: The ID of the transaction to run operations on.
+    &#34;&#34;&#34;
+
+    if &#34;://&#34; not in pachd_address:
+        pachd_address = &#34;grpc://{}&#34;.format(pachd_address)
+
+    u = urlparse(pachd_address)
+
+    if u.scheme not in (&#34;grpc&#34;, &#34;http&#34;, &#34;grpcs&#34;, &#34;https&#34;):
+        raise ValueError(&#34;unrecognized pachd address scheme: {}&#34;.format(u.scheme))
+    if u.path != &#34;&#34; or u.params != &#34;&#34; or u.query != &#34;&#34; or u.fragment != &#34;&#34;:
+        raise ValueError(&#34;invalid pachd address&#34;)
+    if u.username is not None or u.password is not None:
+        raise ValueError(&#34;invalid pachd address&#34;)
+
+    return cls(
+        host=u.hostname,
+        port=u.port,
+        auth_token=auth_token,
+        root_certs=root_certs,
+        transaction_id=transaction_id,
+        tls=u.scheme == &#34;grpcs&#34; or u.scheme == &#34;https&#34;,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.client.Client.new_in_cluster"><code class="name flex">
+<span>def <span class="ident">new_in_cluster</span></span>(<span>auth_token=None, root_certs=None, transaction_id=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p>
+<p>Params:</p>
+<ul>
+<li><code>auth_token</code>: The authentication token; used if authentication is
+enabled on the cluster. Default to <code>None</code>.</li>
+<li><code>root_certs</code>: The PEM-encoded root certificates as byte string.</li>
+<li><code>transaction_id</code>: The ID of the transaction to run operations on.</li>
+</ul></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+    &#34;&#34;&#34;
+    Creates a Pachyderm client that operates within a Pachyderm cluster.
+
+    Params:
+
+    * `auth_token`: The authentication token; used if authentication is
+    enabled on the cluster. Default to `None`.
+    * `root_certs`: The PEM-encoded root certificates as byte string.
+    * `transaction_id`: The ID of the transaction to run operations on.
+    &#34;&#34;&#34;
+
+    host = os.environ[&#34;PACHD_SERVICE_HOST&#34;]
+    port = int(os.environ[&#34;PACHD_SERVICE_PORT&#34;])
+    return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.client.Client.auth_token"><code class="name">var <span class="ident">auth_token</span></code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def auth_token(self):
+    return self._auth_token</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.client.Client.transaction_id"><code class="name">var <span class="ident">transaction_id</span></code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def transaction_id(self):
+    return self._transaction_id</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.admin.AdminMixin" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin">AdminMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.admin.AdminMixin.extract" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin.extract">extract</a></code></li>
+<li><code><a title="python_pachyderm.mixin.admin.AdminMixin.extract_pipeline" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin.extract_pipeline">extract_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.admin.AdminMixin.inspect_cluster" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin.inspect_cluster">inspect_cluster</a></code></li>
+<li><code><a title="python_pachyderm.mixin.admin.AdminMixin.restore" href="mixin/admin.html#python_pachyderm.mixin.admin.AdminMixin.restore">restore</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.auth.AuthMixin" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin">AuthMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.activate_auth" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.activate_auth">activate_auth</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authenticate_github" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_github">authenticate_github</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authenticate_one_time_password" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_one_time_password">authenticate_one_time_password</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authorize" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.authorize">authorize</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.deactivate_auth" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.deactivate_auth">deactivate_auth</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.extend_auth_token" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.extend_auth_token">extend_auth_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_acl" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_acl">get_acl</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_admins" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_admins">get_admins</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration">get_auth_configuration</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_auth_token" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_auth_token">get_auth_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_groups" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_groups">get_groups</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_one_time_password" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_one_time_password">get_one_time_password</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_scope" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_scope">get_scope</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_users" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.get_users">get_users</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_admins" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.modify_admins">modify_admins</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_members" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.modify_members">modify_members</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token">revoke_auth_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_acl" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.set_acl">set_acl</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration">set_auth_configuration</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user">set_groups_for_user</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_scope" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.set_scope">set_scope</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.who_am_i" href="mixin/auth.html#python_pachyderm.mixin.auth.AuthMixin.who_am_i">who_am_i</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.debug.DebugMixin" href="mixin/debug.html#python_pachyderm.mixin.debug.DebugMixin">DebugMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.debug.DebugMixin.binary" href="mixin/debug.html#python_pachyderm.mixin.debug.DebugMixin.binary">binary</a></code></li>
+<li><code><a title="python_pachyderm.mixin.debug.DebugMixin.dump" href="mixin/debug.html#python_pachyderm.mixin.debug.DebugMixin.dump">dump</a></code></li>
+<li><code><a title="python_pachyderm.mixin.debug.DebugMixin.profile_cpu" href="mixin/debug.html#python_pachyderm.mixin.debug.DebugMixin.profile_cpu">profile_cpu</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.enterprise.EnterpriseMixin" href="mixin/enterprise.html#python_pachyderm.mixin.enterprise.EnterpriseMixin">EnterpriseMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.enterprise.EnterpriseMixin.activate_enterprise" href="mixin/enterprise.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.activate_enterprise">activate_enterprise</a></code></li>
+<li><code><a title="python_pachyderm.mixin.enterprise.EnterpriseMixin.deactivate_enterprise" href="mixin/enterprise.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.deactivate_enterprise">deactivate_enterprise</a></code></li>
+<li><code><a title="python_pachyderm.mixin.enterprise.EnterpriseMixin.get_enterprise_state" href="mixin/enterprise.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.get_enterprise_state">get_enterprise_state</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.pfs.PFSMixin" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin">PFSMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.copy_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.copy_file">copy_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.create_branch" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.create_branch">create_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.create_repo" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.create_repo">create_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos">delete_all_repos</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_branch" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.delete_branch">delete_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.delete_commit">delete_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">delete_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_repo" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.delete_repo">delete_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.diff_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.diff_file">diff_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.finish_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">finish_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.flush_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.flush_commit">flush_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.fsck" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.fsck">fsck</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.get_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.get_file">get_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.glob_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.glob_file">glob_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_branch" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_branch">inspect_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_commit">inspect_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_file">inspect_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_repo" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_repo">inspect_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_branch" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.list_branch">list_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.list_commit">list_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.list_file">list_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_repo" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.list_repo">list_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">put_file_bytes</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_url" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">put_file_url</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.start_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.start_commit">start_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">subscribe_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.walk_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.walk_file">walk_file</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.pps.PPSMixin" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin">PPSMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline">create_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_tf_job_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_tf_job_pipeline">create_tf_job_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_all" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_all">delete_all</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_all_pipelines" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_all_pipelines">delete_all_pipelines</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_job">delete_job</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_pipeline">delete_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.flush_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.flush_job">flush_job</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.garbage_collect" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.garbage_collect">garbage_collect</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.get_job_logs" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.get_job_logs">get_job_logs</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.get_pipeline_logs" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.get_pipeline_logs">get_pipeline_logs</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.inspect_datum" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.inspect_datum">inspect_datum</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.inspect_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.inspect_job">inspect_job</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline">inspect_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.list_datum" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.list_datum">list_datum</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.list_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.list_job">list_job</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.list_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.list_pipeline">list_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.restart_datum" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.restart_datum">restart_datum</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.run_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.run_pipeline">run_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.start_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.start_pipeline">start_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.stop_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.stop_job">stop_job</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.stop_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.stop_pipeline">stop_pipeline</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="python_pachyderm.mixin.transaction.TransactionMixin" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin">TransactionMixin</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.delete_all_transactions" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.delete_all_transactions">delete_all_transactions</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.delete_transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.delete_transaction">delete_transaction</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.finish_transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.finish_transaction">finish_transaction</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.inspect_transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.inspect_transaction">inspect_transaction</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.list_transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.list_transaction">list_transaction</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.start_transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.start_transaction">start_transaction</a></code></li>
+<li><code><a title="python_pachyderm.mixin.transaction.TransactionMixin.transaction" href="mixin/transaction.html#python_pachyderm.mixin.transaction.TransactionMixin.transaction">transaction</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm" href="index.html">python_pachyderm</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.client.Client" href="#python_pachyderm.client.Client">Client</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.client.Client.auth_token" href="#python_pachyderm.client.Client.auth_token">auth_token</a></code></li>
+<li><code><a title="python_pachyderm.client.Client.new_from_pachd_address" href="#python_pachyderm.client.Client.new_from_pachd_address">new_from_pachd_address</a></code></li>
+<li><code><a title="python_pachyderm.client.Client.new_in_cluster" href="#python_pachyderm.client.Client.new_in_cluster">new_in_cluster</a></code></li>
+<li><code><a title="python_pachyderm.client.Client.transaction_id" href="#python_pachyderm.client.Client.transaction_id">transaction_id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

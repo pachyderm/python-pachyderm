@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>python_pachyderm.util API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.util</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+
+from .service import Service
+from .mixin import pfs
+from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
+
+# Default script for running python code with wheels in a pipeline that was
+# deployed with `create_python_pipeline`.
+RUNNER_SCRIPT_WITH_WHEELS = &#34;&#34;&#34;
+#!/bin/bash
+set -{set_args}
+
+cd /pfs/{source_repo_name}
+pip install /pfs/{build_pipeline_name}/*.whl
+python main.py
+&#34;&#34;&#34;
+
+# Default script for running python code without wheels in a pipeline that was
+# deployed with `create_python_pipeline`.
+RUNNER_SCRIPT_WITHOUT_WHEELS = &#34;&#34;&#34;
+#!/bin/bash
+set -{set_args}
+
+cd /pfs/{source_repo_name}
+python main.py
+&#34;&#34;&#34;
+
+# Default script for building python wheels for a pipeline that was deployed
+# with `create_python_pipeline`.
+BUILDER_SCRIPT = &#34;&#34;&#34;
+#!/bin/bash
+set -{set_args}
+python --version
+pip --version
+
+cd /pfs/{source_repo_name}
+test -f requirements.txt &amp;&amp; pip wheel -r requirements.txt -w /pfs/out
+&#34;&#34;&#34;
+
+
+def put_files(client, source_path, commit, dest_path, **kwargs):
+    &#34;&#34;&#34;
+    Utility function for recursively inserting files from the local
+    `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
+
+    Params:
+
+    * `client`: The `Client` instance to use.
+    * `source_path`: The directory to recursively insert content from.
+    * `commit`: The `Commit` object to use for inserting files.
+    * `dest_path`: The destination path in PFS.
+    * `kwargs`: Keyword arguments to forward to `put_file_bytes`.
+    &#34;&#34;&#34;
+
+    def reqs():
+        for root, _, filenames in os.walk(source_path):
+            for filename in filenames:
+                source_filepath = os.path.join(root, filename)
+                dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
+
+                with open(source_filepath, &#34;rb&#34;) as f:
+                    yield from pfs.put_file_from_filelike(commit, dest_filepath, f, **kwargs)
+
+    # Call the lower-level `PutFile` function, because the higher-level ones
+    # only support putting a single file at a time
+    return client._req(Service.PFS, &#34;PutFile&#34;, req=reqs())
+
+
+def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
+                           pipeline_kwargs=None, image=None, update=False):
+    &#34;&#34;&#34;
+    Utility function for creating (or updating) a pipeline specially built for
+    executing python code that is stored locally at `path`. `path` can either
+    reference a directory with python code, or a single python file.
+
+    A normal pipeline creation process (i.e. a call to
+    `client.create_pipeline`) requires you to first build and push a container
+    image with the source and dependencies baked in. As an alternative
+    process, this function circumvents container image creation by creating:
+
+    1) a PFS repo that stores the source code at `path`.
+    2) If there&#39;s a `requirements.txt` in `path`, a  pipeline for building the
+    dependencies into wheels.
+    3) A pipeline for executing the PFS stored source code with the built
+    dependencies.
+
+    This is what the DAG looks like:
+
+    ```
+    .------------------------.      .-----------------------.
+    | &lt;pipeline_name&gt;_source | ---▶ | &lt;pipeline_name&gt;_build |
+    &#39;------------------------&#39;      &#39;-----------------------&#39;
+                 |                 /
+                 ▼                /
+        .-----------------.      /
+        | &lt;pipeline_name&gt; | ◀---&#39;
+        &#39;-----------------&#39;
+                 ▲
+                 |
+            .---------.
+            | &lt;input&gt; |
+            &#39;---------&#39;
+
+    ```
+
+    (without a `requirements.txt`, there is no build pipeline.)
+
+    If `path` references a directory, it should have following:
+
+    * A `main.py`, as the pipeline entry-point.
+    * An optional `requirements.txt` that specifies pip requirements.
+    * An optional `build.sh` if you wish to override the default build
+    process.
+    * An optional `run.sh` if you wish to override the default pipeline
+    execution process.
+
+    Params:
+
+    * `client`: The `Client` instance to use.
+    * `path`: The directory containing the python pipeline source, or an
+    individual python file.
+    * `input`: An `Input` object specifying the pipeline input.
+    * `pipeline_name`: An optional string specifying the pipeline name.
+    Defaults to using the last directory name in `path`.
+    * `image_pull_secrets`: An optional list of strings specifying the
+    pipeline transform&#39;s image pull secrets, which are used for pulling images
+    from a private registry. Defaults to `None`, in which case the public
+    docker registry will be used. See the pipeline spec document for more
+    details.
+    * `debug`: An optional bool specifying whether debug logging should be
+    enabled for the pipeline. Defaults to `False`.
+    * `pipeline_kwargs`: Keyword arguments to forward to `create_pipeline`.
+    * `image`: An optional string specifying the docker image to use for the
+    pipeline. Defaults to `python`.
+    * `update`: Whether to act as an upsert.
+    &#34;&#34;&#34;
+
+    # Verify &amp; set defaults for arguments
+    if not os.path.exists(path):
+        raise Exception(&#34;path does not exist&#34;)
+
+    if not os.path.isfile(path) and not os.path.exists(os.path.join(path, &#34;main.py&#34;)):
+        raise Exception(&#34;no main.py detected&#34;)
+
+    if pipeline_name is None:
+        pipeline_name = os.path.basename(path)
+        if os.path.isfile(path):
+            if path.endswith(&#34;.py&#34;):
+                pipeline_name = pipeline_name[:-3]
+        else:
+            if path.endswith(&#34;/&#34;):
+                pipeline_name = os.path.basename(path[:-1])
+
+    if not pipeline_name:
+        raise Exception(&#34;could not derive pipeline name&#34;)
+
+    image = image or &#34;python:3&#34;
+    pipeline_kwargs = pipeline_kwargs or {}
+
+    for param in (&#34;pipeline_name&#34;, &#34;transform&#34;, &#34;input&#34;, &#34;update&#34;):
+        if param in pipeline_kwargs:
+            raise Exception(&#34;cannot specify the pipeline kwarg &#39;%s&#39;&#34;.format(param))
+
+    # Create the source repo
+    source_repo_name = &#34;{}_source&#34;.format(pipeline_name)
+
+    client.create_repo(
+        source_repo_name,
+        description=&#34;python_pachyderm.create_python_pipeline: source code for pipeline {}.&#34;.format(pipeline_name),
+        update=update,
+    )
+
+    # Create the build pipeline
+    build_pipeline_name = None
+    if os.path.exists(os.path.join(path, &#34;requirements.txt&#34;)):
+        build_pipeline_name = &#34;{}_build&#34;.format(pipeline_name)
+
+    if build_pipeline_name is not None:
+        build_pipeline_desc = &#34;&#34;&#34;
+            python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
+        &#34;&#34;&#34;.format(pipeline_name).strip()
+
+        client.create_pipeline(
+            build_pipeline_name,
+            Transform(
+                image=image,
+                cmd=[&#34;bash&#34;, &#34;/pfs/{}/build.sh&#34;.format(source_repo_name)],
+                image_pull_secrets=image_pull_secrets,
+                debug=debug,
+            ),
+            input=Input(pfs=PFSInput(glob=&#34;/&#34;, repo=source_repo_name)),
+            update=update,
+            description=build_pipeline_desc,
+            parallelism_spec=ParallelismSpec(constant=1),
+        )
+
+    source_commit_desc = &#34;python_pachyderm.create_python_pipeline: sync source code.&#34;
+    with client.commit(source_repo_name, branch=&#34;master&#34;, description=source_commit_desc) as commit:
+        # Utility function for inserting build.sh/run.sh
+        def put_templated_script(filename, template):
+            client.put_file_bytes(commit, filename, template.format(
+                set_args=&#34;ex&#34; if debug else &#34;e&#34;,
+                source_repo_name=source_repo_name,
+                build_pipeline_name=build_pipeline_name,
+            ).encode(&#34;utf8&#34;))
+
+        # Delete any existing source code
+        if update:
+            client.delete_file(commit, &#34;/&#34;)
+
+        # Insert the source code
+        if build_pipeline_name is None:
+            if os.path.isfile(path):
+                with open(path, &#34;rb&#34;) as f:
+                    client.put_file_bytes(commit, &#34;main.py&#34;, f)
+            else:
+                put_files(client, path, commit, &#34;/&#34;)
+
+            put_templated_script(&#34;run.sh&#34;, RUNNER_SCRIPT_WITHOUT_WHEELS)
+        else:
+            put_files(client, path, commit, &#34;/&#34;)
+
+            if not os.path.exists(os.path.join(path, &#34;run.sh&#34;)):
+                put_templated_script(&#34;run.sh&#34;, RUNNER_SCRIPT_WITH_WHEELS)
+            if not os.path.exists(os.path.join(path, &#34;build.sh&#34;)):
+                put_templated_script(&#34;build.sh&#34;, BUILDER_SCRIPT)
+
+    # Create the pipeline
+    inputs = [Input(pfs=PFSInput(glob=&#34;/&#34;, repo=source_repo_name)), input]
+
+    if build_pipeline_name is not None:
+        inputs.append(Input(pfs=PFSInput(glob=&#34;/&#34;, repo=build_pipeline_name)))
+
+    return client.create_pipeline(
+        pipeline_name,
+        Transform(
+            image=image,
+            cmd=[&#34;bash&#34;, &#34;/pfs/{}/run.sh&#34;.format(source_repo_name)],
+            image_pull_secrets=image_pull_secrets,
+            debug=debug,
+        ),
+        input=Input(cross=inputs),
+        update=update,
+        **pipeline_kwargs
+    )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="python_pachyderm.util.create_python_pipeline"><code class="name flex">
+<span>def <span class="ident">create_python_pipeline</span></span>(<span>client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None, pipeline_kwargs=None, image=None, update=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Utility function for creating (or updating) a pipeline specially built for
+executing python code that is stored locally at <code>path</code>. <code>path</code> can either
+reference a directory with python code, or a single python file.</p>
+<p>A normal pipeline creation process (i.e. a call to
+<code>client.create_pipeline</code>) requires you to first build and push a container
+image with the source and dependencies baked in. As an alternative
+process, this function circumvents container image creation by creating:</p>
+<p>1) a PFS repo that stores the source code at <code>path</code>.
+2) If there's a <code>requirements.txt</code> in <code>path</code>, a
+pipeline for building the
+dependencies into wheels.
+3) A pipeline for executing the PFS stored source code with the built
+dependencies.</p>
+<p>This is what the DAG looks like:</p>
+<pre><code>.------------------------.      .-----------------------.
+| &lt;pipeline_name&gt;_source | ---▶ | &lt;pipeline_name&gt;_build |
+'------------------------'      '-----------------------'
+             |                 /
+             ▼                /
+    .-----------------.      /
+    | &lt;pipeline_name&gt; | ◀---'
+    '-----------------'
+             ▲
+             |
+        .---------.
+        | &lt;input&gt; |
+        '---------'
+
+</code></pre>
+<p>(without a <code>requirements.txt</code>, there is no build pipeline.)</p>
+<p>If <code>path</code> references a directory, it should have following:</p>
+<ul>
+<li>A <code>main.py</code>, as the pipeline entry-point.</li>
+<li>An optional <code>requirements.txt</code> that specifies pip requirements.</li>
+<li>An optional <code>build.sh</code> if you wish to override the default build
+process.</li>
+<li>An optional <code>run.sh</code> if you wish to override the default pipeline
+execution process.</li>
+</ul>
+<p>Params:</p>
+<ul>
+<li><code>client</code>: The <code>Client</code> instance to use.</li>
+<li><code>path</code>: The directory containing the python pipeline source, or an
+individual python file.</li>
+<li><code>input</code>: An <code>Input</code> object specifying the pipeline input.</li>
+<li><code>pipeline_name</code>: An optional string specifying the pipeline name.
+Defaults to using the last directory name in <code>path</code>.</li>
+<li><code>image_pull_secrets</code>: An optional list of strings specifying the
+pipeline transform's image pull secrets, which are used for pulling images
+from a private registry. Defaults to <code>None</code>, in which case the public
+docker registry will be used. See the pipeline spec document for more
+details.</li>
+<li><code>debug</code>: An optional bool specifying whether debug logging should be
+enabled for the pipeline. Defaults to <code>False</code>.</li>
+<li><code>pipeline_kwargs</code>: Keyword arguments to forward to <code>create_pipeline</code>.</li>
+<li><code>image</code>: An optional string specifying the docker image to use for the
+pipeline. Defaults to <code>python</code>.</li>
+<li><code>update</code>: Whether to act as an upsert.</li>
+</ul></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
+                           pipeline_kwargs=None, image=None, update=False):
+    &#34;&#34;&#34;
+    Utility function for creating (or updating) a pipeline specially built for
+    executing python code that is stored locally at `path`. `path` can either
+    reference a directory with python code, or a single python file.
+
+    A normal pipeline creation process (i.e. a call to
+    `client.create_pipeline`) requires you to first build and push a container
+    image with the source and dependencies baked in. As an alternative
+    process, this function circumvents container image creation by creating:
+
+    1) a PFS repo that stores the source code at `path`.
+    2) If there&#39;s a `requirements.txt` in `path`, a  pipeline for building the
+    dependencies into wheels.
+    3) A pipeline for executing the PFS stored source code with the built
+    dependencies.
+
+    This is what the DAG looks like:
+
+    ```
+    .------------------------.      .-----------------------.
+    | &lt;pipeline_name&gt;_source | ---▶ | &lt;pipeline_name&gt;_build |
+    &#39;------------------------&#39;      &#39;-----------------------&#39;
+                 |                 /
+                 ▼                /
+        .-----------------.      /
+        | &lt;pipeline_name&gt; | ◀---&#39;
+        &#39;-----------------&#39;
+                 ▲
+                 |
+            .---------.
+            | &lt;input&gt; |
+            &#39;---------&#39;
+
+    ```
+
+    (without a `requirements.txt`, there is no build pipeline.)
+
+    If `path` references a directory, it should have following:
+
+    * A `main.py`, as the pipeline entry-point.
+    * An optional `requirements.txt` that specifies pip requirements.
+    * An optional `build.sh` if you wish to override the default build
+    process.
+    * An optional `run.sh` if you wish to override the default pipeline
+    execution process.
+
+    Params:
+
+    * `client`: The `Client` instance to use.
+    * `path`: The directory containing the python pipeline source, or an
+    individual python file.
+    * `input`: An `Input` object specifying the pipeline input.
+    * `pipeline_name`: An optional string specifying the pipeline name.
+    Defaults to using the last directory name in `path`.
+    * `image_pull_secrets`: An optional list of strings specifying the
+    pipeline transform&#39;s image pull secrets, which are used for pulling images
+    from a private registry. Defaults to `None`, in which case the public
+    docker registry will be used. See the pipeline spec document for more
+    details.
+    * `debug`: An optional bool specifying whether debug logging should be
+    enabled for the pipeline. Defaults to `False`.
+    * `pipeline_kwargs`: Keyword arguments to forward to `create_pipeline`.
+    * `image`: An optional string specifying the docker image to use for the
+    pipeline. Defaults to `python`.
+    * `update`: Whether to act as an upsert.
+    &#34;&#34;&#34;
+
+    # Verify &amp; set defaults for arguments
+    if not os.path.exists(path):
+        raise Exception(&#34;path does not exist&#34;)
+
+    if not os.path.isfile(path) and not os.path.exists(os.path.join(path, &#34;main.py&#34;)):
+        raise Exception(&#34;no main.py detected&#34;)
+
+    if pipeline_name is None:
+        pipeline_name = os.path.basename(path)
+        if os.path.isfile(path):
+            if path.endswith(&#34;.py&#34;):
+                pipeline_name = pipeline_name[:-3]
+        else:
+            if path.endswith(&#34;/&#34;):
+                pipeline_name = os.path.basename(path[:-1])
+
+    if not pipeline_name:
+        raise Exception(&#34;could not derive pipeline name&#34;)
+
+    image = image or &#34;python:3&#34;
+    pipeline_kwargs = pipeline_kwargs or {}
+
+    for param in (&#34;pipeline_name&#34;, &#34;transform&#34;, &#34;input&#34;, &#34;update&#34;):
+        if param in pipeline_kwargs:
+            raise Exception(&#34;cannot specify the pipeline kwarg &#39;%s&#39;&#34;.format(param))
+
+    # Create the source repo
+    source_repo_name = &#34;{}_source&#34;.format(pipeline_name)
+
+    client.create_repo(
+        source_repo_name,
+        description=&#34;python_pachyderm.create_python_pipeline: source code for pipeline {}.&#34;.format(pipeline_name),
+        update=update,
+    )
+
+    # Create the build pipeline
+    build_pipeline_name = None
+    if os.path.exists(os.path.join(path, &#34;requirements.txt&#34;)):
+        build_pipeline_name = &#34;{}_build&#34;.format(pipeline_name)
+
+    if build_pipeline_name is not None:
+        build_pipeline_desc = &#34;&#34;&#34;
+            python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
+        &#34;&#34;&#34;.format(pipeline_name).strip()
+
+        client.create_pipeline(
+            build_pipeline_name,
+            Transform(
+                image=image,
+                cmd=[&#34;bash&#34;, &#34;/pfs/{}/build.sh&#34;.format(source_repo_name)],
+                image_pull_secrets=image_pull_secrets,
+                debug=debug,
+            ),
+            input=Input(pfs=PFSInput(glob=&#34;/&#34;, repo=source_repo_name)),
+            update=update,
+            description=build_pipeline_desc,
+            parallelism_spec=ParallelismSpec(constant=1),
+        )
+
+    source_commit_desc = &#34;python_pachyderm.create_python_pipeline: sync source code.&#34;
+    with client.commit(source_repo_name, branch=&#34;master&#34;, description=source_commit_desc) as commit:
+        # Utility function for inserting build.sh/run.sh
+        def put_templated_script(filename, template):
+            client.put_file_bytes(commit, filename, template.format(
+                set_args=&#34;ex&#34; if debug else &#34;e&#34;,
+                source_repo_name=source_repo_name,
+                build_pipeline_name=build_pipeline_name,
+            ).encode(&#34;utf8&#34;))
+
+        # Delete any existing source code
+        if update:
+            client.delete_file(commit, &#34;/&#34;)
+
+        # Insert the source code
+        if build_pipeline_name is None:
+            if os.path.isfile(path):
+                with open(path, &#34;rb&#34;) as f:
+                    client.put_file_bytes(commit, &#34;main.py&#34;, f)
+            else:
+                put_files(client, path, commit, &#34;/&#34;)
+
+            put_templated_script(&#34;run.sh&#34;, RUNNER_SCRIPT_WITHOUT_WHEELS)
+        else:
+            put_files(client, path, commit, &#34;/&#34;)
+
+            if not os.path.exists(os.path.join(path, &#34;run.sh&#34;)):
+                put_templated_script(&#34;run.sh&#34;, RUNNER_SCRIPT_WITH_WHEELS)
+            if not os.path.exists(os.path.join(path, &#34;build.sh&#34;)):
+                put_templated_script(&#34;build.sh&#34;, BUILDER_SCRIPT)
+
+    # Create the pipeline
+    inputs = [Input(pfs=PFSInput(glob=&#34;/&#34;, repo=source_repo_name)), input]
+
+    if build_pipeline_name is not None:
+        inputs.append(Input(pfs=PFSInput(glob=&#34;/&#34;, repo=build_pipeline_name)))
+
+    return client.create_pipeline(
+        pipeline_name,
+        Transform(
+            image=image,
+            cmd=[&#34;bash&#34;, &#34;/pfs/{}/run.sh&#34;.format(source_repo_name)],
+            image_pull_secrets=image_pull_secrets,
+            debug=debug,
+        ),
+        input=Input(cross=inputs),
+        update=update,
+        **pipeline_kwargs
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.util.put_files"><code class="name flex">
+<span>def <span class="ident">put_files</span></span>(<span>client, source_path, commit, dest_path, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Utility function for recursively inserting files from the local
+<code>source_path</code> to pachyderm. Roughly equivalent to <code>pachctl put file -r</code>.</p>
+<p>Params:</p>
+<ul>
+<li><code>client</code>: The <code>Client</code> instance to use.</li>
+<li><code>source_path</code>: The directory to recursively insert content from.</li>
+<li><code>commit</code>: The <code>Commit</code> object to use for inserting files.</li>
+<li><code>dest_path</code>: The destination path in PFS.</li>
+<li><code>kwargs</code>: Keyword arguments to forward to <code>put_file_bytes</code>.</li>
+</ul></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_files(client, source_path, commit, dest_path, **kwargs):
+    &#34;&#34;&#34;
+    Utility function for recursively inserting files from the local
+    `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
+
+    Params:
+
+    * `client`: The `Client` instance to use.
+    * `source_path`: The directory to recursively insert content from.
+    * `commit`: The `Commit` object to use for inserting files.
+    * `dest_path`: The destination path in PFS.
+    * `kwargs`: Keyword arguments to forward to `put_file_bytes`.
+    &#34;&#34;&#34;
+
+    def reqs():
+        for root, _, filenames in os.walk(source_path):
+            for filename in filenames:
+                source_filepath = os.path.join(root, filename)
+                dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
+
+                with open(source_filepath, &#34;rb&#34;) as f:
+                    yield from pfs.put_file_from_filelike(commit, dest_filepath, f, **kwargs)
+
+    # Call the lower-level `PutFile` function, because the higher-level ones
+    # only support putting a single file at a time
+    return client._req(Service.PFS, &#34;PutFile&#34;, req=reqs())</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.util.Input"><code class="flex name class">
+<span>class <span class="ident">Input</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.util.Input.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"><p>A Message Descriptor</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.util.Input.cron"><code class="name">var <span class="ident">cron</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.cron</p></section>
+</dd>
+<dt id="python_pachyderm.util.Input.cross"><code class="name">var <span class="ident">cross</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.cross</p></section>
+</dd>
+<dt id="python_pachyderm.util.Input.git"><code class="name">var <span class="ident">git</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.git</p></section>
+</dd>
+<dt id="python_pachyderm.util.Input.join"><code class="name">var <span class="ident">join</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.join</p></section>
+</dd>
+<dt id="python_pachyderm.util.Input.pfs"><code class="name">var <span class="ident">pfs</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.pfs</p></section>
+</dd>
+<dt id="python_pachyderm.util.Input.union"><code class="name">var <span class="ident">union</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Input.union</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.util.PFSInput"><code class="flex name class">
+<span>class <span class="ident">PFSInput</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.util.PFSInput.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"><p>A Message Descriptor</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.util.PFSInput.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.branch</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.commit"><code class="name">var <span class="ident">commit</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.commit</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.empty_files"><code class="name">var <span class="ident">empty_files</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.empty_files</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.glob"><code class="name">var <span class="ident">glob</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.glob</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.join_on"><code class="name">var <span class="ident">join_on</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.join_on</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.lazy"><code class="name">var <span class="ident">lazy</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.lazy</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.name</p></section>
+</dd>
+<dt id="python_pachyderm.util.PFSInput.repo"><code class="name">var <span class="ident">repo</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.PFSInput.repo</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.util.ParallelismSpec"><code class="flex name class">
+<span>class <span class="ident">ParallelismSpec</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.util.ParallelismSpec.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"><p>A Message Descriptor</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.util.ParallelismSpec.coefficient"><code class="name">var <span class="ident">coefficient</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ParallelismSpec.coefficient</p></section>
+</dd>
+<dt id="python_pachyderm.util.ParallelismSpec.constant"><code class="name">var <span class="ident">constant</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.ParallelismSpec.constant</p></section>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.util.Transform"><code class="flex name class">
+<span>class <span class="ident">Transform</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>google.protobuf.pyext._message.CMessage</li>
+<li>google.protobuf.message.Message</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="python_pachyderm.util.Transform.DESCRIPTOR"><code class="name">var <span class="ident">DESCRIPTOR</span></code></dt>
+<dd>
+<section class="desc"><p>A Message Descriptor</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.EnvEntry"><code class="name">var <span class="ident">EnvEntry</span></code></dt>
+<dd>
+<section class="desc"><p>A ProtocolMessage</p></section>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="python_pachyderm.util.Transform.accept_return_code"><code class="name">var <span class="ident">accept_return_code</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.accept_return_code</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.cmd"><code class="name">var <span class="ident">cmd</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.cmd</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.debug"><code class="name">var <span class="ident">debug</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.debug</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.dockerfile"><code class="name">var <span class="ident">dockerfile</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.dockerfile</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.env"><code class="name">var <span class="ident">env</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.env</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.err_cmd"><code class="name">var <span class="ident">err_cmd</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.err_cmd</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.err_stdin"><code class="name">var <span class="ident">err_stdin</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.err_stdin</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.image"><code class="name">var <span class="ident">image</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.image</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.image_pull_secrets"><code class="name">var <span class="ident">image_pull_secrets</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.image_pull_secrets</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.secrets"><code class="name">var <span class="ident">secrets</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.secrets</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.stdin"><code class="name">var <span class="ident">stdin</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.stdin</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.user"><code class="name">var <span class="ident">user</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.user</p></section>
+</dd>
+<dt id="python_pachyderm.util.Transform.working_dir"><code class="name">var <span class="ident">working_dir</span></code></dt>
+<dd>
+<section class="desc"><p>Field pps.Transform.working_dir</p></section>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm" href="index.html">python_pachyderm</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="python_pachyderm.util.create_python_pipeline" href="#python_pachyderm.util.create_python_pipeline">create_python_pipeline</a></code></li>
+<li><code><a title="python_pachyderm.util.put_files" href="#python_pachyderm.util.put_files">put_files</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.util.Input" href="#python_pachyderm.util.Input">Input</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.util.Input.DESCRIPTOR" href="#python_pachyderm.util.Input.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.cron" href="#python_pachyderm.util.Input.cron">cron</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.cross" href="#python_pachyderm.util.Input.cross">cross</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.git" href="#python_pachyderm.util.Input.git">git</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.join" href="#python_pachyderm.util.Input.join">join</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.pfs" href="#python_pachyderm.util.Input.pfs">pfs</a></code></li>
+<li><code><a title="python_pachyderm.util.Input.union" href="#python_pachyderm.util.Input.union">union</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.util.PFSInput" href="#python_pachyderm.util.PFSInput">PFSInput</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.util.PFSInput.DESCRIPTOR" href="#python_pachyderm.util.PFSInput.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.branch" href="#python_pachyderm.util.PFSInput.branch">branch</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.commit" href="#python_pachyderm.util.PFSInput.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.empty_files" href="#python_pachyderm.util.PFSInput.empty_files">empty_files</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.glob" href="#python_pachyderm.util.PFSInput.glob">glob</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.join_on" href="#python_pachyderm.util.PFSInput.join_on">join_on</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.lazy" href="#python_pachyderm.util.PFSInput.lazy">lazy</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.name" href="#python_pachyderm.util.PFSInput.name">name</a></code></li>
+<li><code><a title="python_pachyderm.util.PFSInput.repo" href="#python_pachyderm.util.PFSInput.repo">repo</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.util.ParallelismSpec" href="#python_pachyderm.util.ParallelismSpec">ParallelismSpec</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.util.ParallelismSpec.DESCRIPTOR" href="#python_pachyderm.util.ParallelismSpec.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.util.ParallelismSpec.coefficient" href="#python_pachyderm.util.ParallelismSpec.coefficient">coefficient</a></code></li>
+<li><code><a title="python_pachyderm.util.ParallelismSpec.constant" href="#python_pachyderm.util.ParallelismSpec.constant">constant</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.util.Transform" href="#python_pachyderm.util.Transform">Transform</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.util.Transform.DESCRIPTOR" href="#python_pachyderm.util.Transform.DESCRIPTOR">DESCRIPTOR</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.EnvEntry" href="#python_pachyderm.util.Transform.EnvEntry">EnvEntry</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.accept_return_code" href="#python_pachyderm.util.Transform.accept_return_code">accept_return_code</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.cmd" href="#python_pachyderm.util.Transform.cmd">cmd</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.debug" href="#python_pachyderm.util.Transform.debug">debug</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.dockerfile" href="#python_pachyderm.util.Transform.dockerfile">dockerfile</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.env" href="#python_pachyderm.util.Transform.env">env</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.err_cmd" href="#python_pachyderm.util.Transform.err_cmd">err_cmd</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.err_stdin" href="#python_pachyderm.util.Transform.err_stdin">err_stdin</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.image" href="#python_pachyderm.util.Transform.image">image</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.image_pull_secrets" href="#python_pachyderm.util.Transform.image_pull_secrets">image_pull_secrets</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.secrets" href="#python_pachyderm.util.Transform.secrets">secrets</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.stdin" href="#python_pachyderm.util.Transform.stdin">stdin</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.user" href="#python_pachyderm.util.Transform.user">user</a></code></li>
+<li><code><a title="python_pachyderm.util.Transform.working_dir" href="#python_pachyderm.util.Transform.working_dir">working_dir</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

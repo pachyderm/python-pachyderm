@@ -4,7 +4,7 @@ PACHYDERM_VERSION ?= $(shell jq -r .pachyderm version.json)
 docs:
 	rm -rf build dist
 	python3 setup.py clean build install
-	pdoc3 --html --html-dir docs python_pachyderm
+	pdoc --html --html-dir docs python_pachyderm
 
 docker-build-proto:
 	cd proto && \

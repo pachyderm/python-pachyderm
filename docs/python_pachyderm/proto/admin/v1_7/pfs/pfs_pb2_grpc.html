@@ -1,0 +1,2502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Generated by the gRPC Python protocol compiler plugin. DO NOT EDIT!
+import grpc
+
+from python_pachyderm.proto.admin.v1_7.pfs import pfs_pb2 as client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
+
+
+class APIStub(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def __init__(self, channel):
+    &#34;&#34;&#34;Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    &#34;&#34;&#34;
+    self.CreateRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/CreateRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateRepoRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
+        )
+    self.ListRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
+        )
+    self.DeleteRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.StartCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/StartCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.FromString,
+        )
+    self.FinishCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/FinishCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.ListCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfos.FromString,
+        )
+    self.ListCommitStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/ListCommitStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.DeleteCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.FlushCommit = channel.unary_stream(
+        &#39;/pfs_1_7.API/FlushCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.SubscribeCommit = channel.unary_stream(
+        &#39;/pfs_1_7.API/SubscribeCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.BuildCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/BuildCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.FromString,
+        )
+    self.CreateBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/CreateBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
+        )
+    self.ListBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
+        )
+    self.DeleteBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.PutFile = channel.stream_unary(
+        &#39;/pfs_1_7.API/PutFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.CopyFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/CopyFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.GetFile = channel.unary_stream(
+        &#39;/pfs_1_7.API/GetFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.InspectFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.ListFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
+        )
+    self.ListFileStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/ListFileStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.GlobFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/GlobFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
+        )
+    self.GlobFileStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/GlobFileStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.DiffFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/DiffFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileResponse.FromString,
+        )
+    self.DeleteFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.DeleteAll = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteAll&#39;,
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class APIServicer(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def CreateRepo(self, request, context):
+    &#34;&#34;&#34;Repo rpcs
+    CreateRepo creates a new repo.
+    An error is returned if the repo already exists.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectRepo(self, request, context):
+    &#34;&#34;&#34;InspectRepo returns info about a repo.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListRepo(self, request, context):
+    &#34;&#34;&#34;ListRepo returns info about all repos.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteRepo(self, request, context):
+    &#34;&#34;&#34;DeleteRepo deletes a repo.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def StartCommit(self, request, context):
+    &#34;&#34;&#34;Commit rpcs
+    StartCommit creates a new write commit from a parent commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def FinishCommit(self, request, context):
+    &#34;&#34;&#34;FinishCommit turns a write commit into a read commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectCommit(self, request, context):
+    &#34;&#34;&#34;InspectCommit returns the info about a commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListCommit(self, request, context):
+    &#34;&#34;&#34;ListCommit returns info about all commits. This is deprecated in favor of
+    ListCommitStream.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListCommitStream(self, request, context):
+    &#34;&#34;&#34;ListCommitStream is like ListCommit, but returns its results in a GRPC stream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteCommit(self, request, context):
+    &#34;&#34;&#34;DeleteCommit deletes a commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def FlushCommit(self, request, context):
+    &#34;&#34;&#34;FlushCommit waits for downstream commits to finish
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def SubscribeCommit(self, request, context):
+    &#34;&#34;&#34;SubscribeCommit subscribes for new commits on a given branch
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def BuildCommit(self, request, context):
+    &#34;&#34;&#34;BuildCommit builds a commit that&#39;s backed by the given tree
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CreateBranch(self, request, context):
+    &#34;&#34;&#34;CreateBranch creates a new branch
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectBranch(self, request, context):
+    &#34;&#34;&#34;InspectBranch returns info about a branch.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListBranch(self, request, context):
+    &#34;&#34;&#34;ListBranch returns info about the heads of branches.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteBranch(self, request, context):
+    &#34;&#34;&#34;DeleteBranch deletes a branch; note that the commits still exist.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def PutFile(self, request_iterator, context):
+    &#34;&#34;&#34;File rpcs
+    PutFile writes the specified file to pfs.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CopyFile(self, request, context):
+    &#34;&#34;&#34;CopyFile copies the contents of one file to another.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetFile(self, request, context):
+    &#34;&#34;&#34;GetFile returns a byte stream of the contents of the file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectFile(self, request, context):
+    &#34;&#34;&#34;InspectFile returns info about a file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListFile(self, request, context):
+    &#34;&#34;&#34;ListFile returns info about all files. This is deprecated in favor of
+    ListFileStream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListFileStream(self, request, context):
+    &#34;&#34;&#34;ListFileStream is a streaming version of ListFile
+    TODO(msteffen): When the dash has been updated to use ListFileStream,
+    replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GlobFile(self, request, context):
+    &#34;&#34;&#34;GlobFile returns info about all files. This is deprecated in favor of
+    GlobFileStream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GlobFileStream(self, request, context):
+    &#34;&#34;&#34;GlobFileStream is a streaming version of GlobFile
+    TODO(msteffen): When the dash has been updated to use GlobFileStream,
+    replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DiffFile(self, request, context):
+    &#34;&#34;&#34;DiffFile returns the differences between 2 paths at 2 commits.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteFile(self, request, context):
+    &#34;&#34;&#34;DeleteFile deletes a file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteAll(self, request, context):
+    &#34;&#34;&#34;DeleteAll deletes everything
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+
+def add_APIServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      &#39;CreateRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CreateRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateRepoRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectRepoRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
+      ),
+      &#39;ListRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoResponse.SerializeToString,
+      ),
+      &#39;DeleteRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;StartCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.StartCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.StartCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
+      ),
+      &#39;FinishCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.FinishCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FinishCommitRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;ListCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfos.SerializeToString,
+      ),
+      &#39;ListCommitStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListCommitStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;DeleteCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;FlushCommit&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.FlushCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FlushCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;SubscribeCommit&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.SubscribeCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;BuildCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.BuildCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BuildCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
+      ),
+      &#39;CreateBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CreateBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
+      ),
+      &#39;ListBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
+      ),
+      &#39;DeleteBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;PutFile&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;CopyFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CopyFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CopyFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;GetFile&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;InspectFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;ListFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
+      ),
+      &#39;ListFileStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListFileStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;GlobFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.GlobFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
+      ),
+      &#39;GlobFileStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GlobFileStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;DiffFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DiffFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileResponse.SerializeToString,
+      ),
+      &#39;DeleteFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;DeleteAll&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteAll,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      &#39;pfs_1_7.API&#39;, rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class ObjectAPIStub(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def __init__(self, channel):
+    &#34;&#34;&#34;Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    &#34;&#34;&#34;
+    self.PutObject = channel.stream_unary(
+        &#39;/pfs_1_7.ObjectAPI/PutObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+        )
+    self.PutObjectSplit = channel.stream_unary(
+        &#39;/pfs_1_7.ObjectAPI/PutObjectSplit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Objects.FromString,
+        )
+    self.GetObject = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.GetObjects = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.TagObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/TagObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.TagObjectRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/InspectObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
+        )
+    self.CheckObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/CheckObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectResponse.FromString,
+        )
+    self.ListObjects = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/ListObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+        )
+    self.DeleteObjects = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/DeleteObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.FromString,
+        )
+    self.GetTag = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetTag&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.InspectTag = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/InspectTag&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
+        )
+    self.ListTags = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/ListTags&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsResponse.FromString,
+        )
+    self.DeleteTags = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/DeleteTags&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.FromString,
+        )
+    self.Compact = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/Compact&#39;,
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class ObjectAPIServicer(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def PutObject(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def PutObjectSplit(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def TagObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CheckObject(self, request, context):
+    &#34;&#34;&#34;CheckObject checks if an object exists in the blob store without
+    actually reading the object.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetTag(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectTag(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListTags(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteTags(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def Compact(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+
+def add_ObjectAPIServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      &#39;PutObject&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+      ),
+      &#39;PutObjectSplit&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutObjectSplit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Objects.SerializeToString,
+      ),
+      &#39;GetObject&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;GetObjects&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetObjectsRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;TagObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.TagObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.TagObjectRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
+      ),
+      &#39;CheckObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CheckObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectResponse.SerializeToString,
+      ),
+      &#39;ListObjects&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListObjectsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+      ),
+      &#39;DeleteObjects&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.SerializeToString,
+      ),
+      &#39;GetTag&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetTag,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;InspectTag&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectTag,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
+      ),
+      &#39;ListTags&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListTags,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsResponse.SerializeToString,
+      ),
+      &#39;DeleteTags&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteTags,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.SerializeToString,
+      ),
+      &#39;Compact&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.Compact,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      &#39;pfs_1_7.ObjectAPI&#39;, rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_APIServicer_to_server"><code class="name flex">
+<span>def <span class="ident">add_APIServicer_to_server</span></span>(<span>servicer, server)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_APIServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      &#39;CreateRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CreateRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateRepoRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectRepoRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
+      ),
+      &#39;ListRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoResponse.SerializeToString,
+      ),
+      &#39;DeleteRepo&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteRepo,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;StartCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.StartCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.StartCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
+      ),
+      &#39;FinishCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.FinishCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FinishCommitRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;ListCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfos.SerializeToString,
+      ),
+      &#39;ListCommitStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListCommitStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;DeleteCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;FlushCommit&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.FlushCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FlushCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;SubscribeCommit&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.SubscribeCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+      ),
+      &#39;BuildCommit&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.BuildCommit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BuildCommitRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.SerializeToString,
+      ),
+      &#39;CreateBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CreateBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
+      ),
+      &#39;ListBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
+      ),
+      &#39;DeleteBranch&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteBranch,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;PutFile&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;CopyFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CopyFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CopyFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;GetFile&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;InspectFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;ListFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.ListFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
+      ),
+      &#39;ListFileStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListFileStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;GlobFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.GlobFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.SerializeToString,
+      ),
+      &#39;GlobFileStream&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GlobFileStream,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.SerializeToString,
+      ),
+      &#39;DiffFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DiffFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileResponse.SerializeToString,
+      ),
+      &#39;DeleteFile&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteFile,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteFileRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;DeleteAll&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteAll,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      &#39;pfs_1_7.API&#39;, rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server"><code class="name flex">
+<span>def <span class="ident">add_ObjectAPIServicer_to_server</span></span>(<span>servicer, server)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_ObjectAPIServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      &#39;PutObject&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+      ),
+      &#39;PutObjectSplit&#39;: grpc.stream_unary_rpc_method_handler(
+          servicer.PutObjectSplit,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Objects.SerializeToString,
+      ),
+      &#39;GetObject&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;GetObjects&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetObjectsRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;TagObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.TagObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.TagObjectRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      &#39;InspectObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
+      ),
+      &#39;CheckObject&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.CheckObject,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectResponse.SerializeToString,
+      ),
+      &#39;ListObjects&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListObjectsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+      ),
+      &#39;DeleteObjects&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteObjects,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.SerializeToString,
+      ),
+      &#39;GetTag&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.GetTag,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      &#39;InspectTag&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.InspectTag,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.SerializeToString,
+      ),
+      &#39;ListTags&#39;: grpc.unary_stream_rpc_method_handler(
+          servicer.ListTags,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsResponse.SerializeToString,
+      ),
+      &#39;DeleteTags&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteTags,
+          request_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.FromString,
+          response_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.SerializeToString,
+      ),
+      &#39;Compact&#39;: grpc.unary_unary_rpc_method_handler(
+          servicer.Compact,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      &#39;pfs_1_7.ObjectAPI&#39;, rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer"><code class="flex name class">
+<span>class <span class="ident">APIServicer</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APIServicer(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def CreateRepo(self, request, context):
+    &#34;&#34;&#34;Repo rpcs
+    CreateRepo creates a new repo.
+    An error is returned if the repo already exists.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectRepo(self, request, context):
+    &#34;&#34;&#34;InspectRepo returns info about a repo.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListRepo(self, request, context):
+    &#34;&#34;&#34;ListRepo returns info about all repos.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteRepo(self, request, context):
+    &#34;&#34;&#34;DeleteRepo deletes a repo.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def StartCommit(self, request, context):
+    &#34;&#34;&#34;Commit rpcs
+    StartCommit creates a new write commit from a parent commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def FinishCommit(self, request, context):
+    &#34;&#34;&#34;FinishCommit turns a write commit into a read commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectCommit(self, request, context):
+    &#34;&#34;&#34;InspectCommit returns the info about a commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListCommit(self, request, context):
+    &#34;&#34;&#34;ListCommit returns info about all commits. This is deprecated in favor of
+    ListCommitStream.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListCommitStream(self, request, context):
+    &#34;&#34;&#34;ListCommitStream is like ListCommit, but returns its results in a GRPC stream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteCommit(self, request, context):
+    &#34;&#34;&#34;DeleteCommit deletes a commit.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def FlushCommit(self, request, context):
+    &#34;&#34;&#34;FlushCommit waits for downstream commits to finish
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def SubscribeCommit(self, request, context):
+    &#34;&#34;&#34;SubscribeCommit subscribes for new commits on a given branch
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def BuildCommit(self, request, context):
+    &#34;&#34;&#34;BuildCommit builds a commit that&#39;s backed by the given tree
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CreateBranch(self, request, context):
+    &#34;&#34;&#34;CreateBranch creates a new branch
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectBranch(self, request, context):
+    &#34;&#34;&#34;InspectBranch returns info about a branch.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListBranch(self, request, context):
+    &#34;&#34;&#34;ListBranch returns info about the heads of branches.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteBranch(self, request, context):
+    &#34;&#34;&#34;DeleteBranch deletes a branch; note that the commits still exist.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def PutFile(self, request_iterator, context):
+    &#34;&#34;&#34;File rpcs
+    PutFile writes the specified file to pfs.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CopyFile(self, request, context):
+    &#34;&#34;&#34;CopyFile copies the contents of one file to another.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetFile(self, request, context):
+    &#34;&#34;&#34;GetFile returns a byte stream of the contents of the file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectFile(self, request, context):
+    &#34;&#34;&#34;InspectFile returns info about a file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListFile(self, request, context):
+    &#34;&#34;&#34;ListFile returns info about all files. This is deprecated in favor of
+    ListFileStream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListFileStream(self, request, context):
+    &#34;&#34;&#34;ListFileStream is a streaming version of ListFile
+    TODO(msteffen): When the dash has been updated to use ListFileStream,
+    replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GlobFile(self, request, context):
+    &#34;&#34;&#34;GlobFile returns info about all files. This is deprecated in favor of
+    GlobFileStream
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GlobFileStream(self, request, context):
+    &#34;&#34;&#34;GlobFileStream is a streaming version of GlobFile
+    TODO(msteffen): When the dash has been updated to use GlobFileStream,
+    replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DiffFile(self, request, context):
+    &#34;&#34;&#34;DiffFile returns the differences between 2 paths at 2 commits.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteFile(self, request, context):
+    &#34;&#34;&#34;DeleteFile deletes a file.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteAll(self, request, context):
+    &#34;&#34;&#34;DeleteAll deletes everything
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.BuildCommit"><code class="name flex">
+<span>def <span class="ident">BuildCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>BuildCommit builds a commit that's backed by the given tree</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def BuildCommit(self, request, context):
+  &#34;&#34;&#34;BuildCommit builds a commit that&#39;s backed by the given tree
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CopyFile"><code class="name flex">
+<span>def <span class="ident">CopyFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>CopyFile copies the contents of one file to another.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CopyFile(self, request, context):
+  &#34;&#34;&#34;CopyFile copies the contents of one file to another.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateBranch"><code class="name flex">
+<span>def <span class="ident">CreateBranch</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>CreateBranch creates a new branch</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CreateBranch(self, request, context):
+  &#34;&#34;&#34;CreateBranch creates a new branch
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateRepo"><code class="name flex">
+<span>def <span class="ident">CreateRepo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Repo rpcs
+CreateRepo creates a new repo.
+An error is returned if the repo already exists.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CreateRepo(self, request, context):
+  &#34;&#34;&#34;Repo rpcs
+  CreateRepo creates a new repo.
+  An error is returned if the repo already exists.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteAll"><code class="name flex">
+<span>def <span class="ident">DeleteAll</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DeleteAll deletes everything</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteAll(self, request, context):
+  &#34;&#34;&#34;DeleteAll deletes everything
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch"><code class="name flex">
+<span>def <span class="ident">DeleteBranch</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DeleteBranch deletes a branch; note that the commits still exist.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteBranch(self, request, context):
+  &#34;&#34;&#34;DeleteBranch deletes a branch; note that the commits still exist.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit"><code class="name flex">
+<span>def <span class="ident">DeleteCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DeleteCommit deletes a commit.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteCommit(self, request, context):
+  &#34;&#34;&#34;DeleteCommit deletes a commit.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteFile"><code class="name flex">
+<span>def <span class="ident">DeleteFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DeleteFile deletes a file.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteFile(self, request, context):
+  &#34;&#34;&#34;DeleteFile deletes a file.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo"><code class="name flex">
+<span>def <span class="ident">DeleteRepo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DeleteRepo deletes a repo.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteRepo(self, request, context):
+  &#34;&#34;&#34;DeleteRepo deletes a repo.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DiffFile"><code class="name flex">
+<span>def <span class="ident">DiffFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>DiffFile returns the differences between 2 paths at 2 commits.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DiffFile(self, request, context):
+  &#34;&#34;&#34;DiffFile returns the differences between 2 paths at 2 commits.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FinishCommit"><code class="name flex">
+<span>def <span class="ident">FinishCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>FinishCommit turns a write commit into a read commit.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def FinishCommit(self, request, context):
+  &#34;&#34;&#34;FinishCommit turns a write commit into a read commit.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FlushCommit"><code class="name flex">
+<span>def <span class="ident">FlushCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>FlushCommit waits for downstream commits to finish</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def FlushCommit(self, request, context):
+  &#34;&#34;&#34;FlushCommit waits for downstream commits to finish
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GetFile"><code class="name flex">
+<span>def <span class="ident">GetFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>GetFile returns a byte stream of the contents of the file.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GetFile(self, request, context):
+  &#34;&#34;&#34;GetFile returns a byte stream of the contents of the file.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFile"><code class="name flex">
+<span>def <span class="ident">GlobFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>GlobFile returns info about all files. This is deprecated in favor of
+GlobFileStream</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GlobFile(self, request, context):
+  &#34;&#34;&#34;GlobFile returns info about all files. This is deprecated in favor of
+  GlobFileStream
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream"><code class="name flex">
+<span>def <span class="ident">GlobFileStream</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>GlobFileStream is a streaming version of GlobFile
+TODO(msteffen): When the dash has been updated to use GlobFileStream,
+replace GlobFile with this RPC (<a href="https://github.com/pachyderm/dash/issues/201">https://github.com/pachyderm/dash/issues/201</a>)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GlobFileStream(self, request, context):
+  &#34;&#34;&#34;GlobFileStream is a streaming version of GlobFile
+  TODO(msteffen): When the dash has been updated to use GlobFileStream,
+  replace GlobFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectBranch"><code class="name flex">
+<span>def <span class="ident">InspectBranch</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>InspectBranch returns info about a branch.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectBranch(self, request, context):
+  &#34;&#34;&#34;InspectBranch returns info about a branch.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectCommit"><code class="name flex">
+<span>def <span class="ident">InspectCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>InspectCommit returns the info about a commit.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectCommit(self, request, context):
+  &#34;&#34;&#34;InspectCommit returns the info about a commit.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectFile"><code class="name flex">
+<span>def <span class="ident">InspectFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>InspectFile returns info about a file.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectFile(self, request, context):
+  &#34;&#34;&#34;InspectFile returns info about a file.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectRepo"><code class="name flex">
+<span>def <span class="ident">InspectRepo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>InspectRepo returns info about a repo.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectRepo(self, request, context):
+  &#34;&#34;&#34;InspectRepo returns info about a repo.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListBranch"><code class="name flex">
+<span>def <span class="ident">ListBranch</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListBranch returns info about the heads of branches.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListBranch(self, request, context):
+  &#34;&#34;&#34;ListBranch returns info about the heads of branches.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommit"><code class="name flex">
+<span>def <span class="ident">ListCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListCommit returns info about all commits. This is deprecated in favor of
+ListCommitStream.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListCommit(self, request, context):
+  &#34;&#34;&#34;ListCommit returns info about all commits. This is deprecated in favor of
+  ListCommitStream.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream"><code class="name flex">
+<span>def <span class="ident">ListCommitStream</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListCommitStream is like ListCommit, but returns its results in a GRPC stream</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListCommitStream(self, request, context):
+  &#34;&#34;&#34;ListCommitStream is like ListCommit, but returns its results in a GRPC stream
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFile"><code class="name flex">
+<span>def <span class="ident">ListFile</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListFile returns info about all files. This is deprecated in favor of
+ListFileStream</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListFile(self, request, context):
+  &#34;&#34;&#34;ListFile returns info about all files. This is deprecated in favor of
+  ListFileStream
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFileStream"><code class="name flex">
+<span>def <span class="ident">ListFileStream</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListFileStream is a streaming version of ListFile
+TODO(msteffen): When the dash has been updated to use ListFileStream,
+replace ListFile with this RPC (<a href="https://github.com/pachyderm/dash/issues/201">https://github.com/pachyderm/dash/issues/201</a>)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListFileStream(self, request, context):
+  &#34;&#34;&#34;ListFileStream is a streaming version of ListFile
+  TODO(msteffen): When the dash has been updated to use ListFileStream,
+  replace ListFile with this RPC (https://github.com/pachyderm/dash/issues/201)
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListRepo"><code class="name flex">
+<span>def <span class="ident">ListRepo</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>ListRepo returns info about all repos.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListRepo(self, request, context):
+  &#34;&#34;&#34;ListRepo returns info about all repos.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.PutFile"><code class="name flex">
+<span>def <span class="ident">PutFile</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>File rpcs
+PutFile writes the specified file to pfs.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PutFile(self, request_iterator, context):
+  &#34;&#34;&#34;File rpcs
+  PutFile writes the specified file to pfs.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.StartCommit"><code class="name flex">
+<span>def <span class="ident">StartCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Commit rpcs
+StartCommit creates a new write commit from a parent commit.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def StartCommit(self, request, context):
+  &#34;&#34;&#34;Commit rpcs
+  StartCommit creates a new write commit from a parent commit.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit"><code class="name flex">
+<span>def <span class="ident">SubscribeCommit</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>SubscribeCommit subscribes for new commits on a given branch</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def SubscribeCommit(self, request, context):
+  &#34;&#34;&#34;SubscribeCommit subscribes for new commits on a given branch
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIStub"><code class="flex name class">
+<span>class <span class="ident">APIStub</span></span>
+<span>(</span><span>channel)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Constructor.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>channel</code></strong></dt>
+<dd>A grpc.Channel.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APIStub(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def __init__(self, channel):
+    &#34;&#34;&#34;Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    &#34;&#34;&#34;
+    self.CreateRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/CreateRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateRepoRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
+        )
+    self.ListRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
+        )
+    self.DeleteRepo = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteRepo&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.StartCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/StartCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.FromString,
+        )
+    self.FinishCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/FinishCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.ListCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfos.FromString,
+        )
+    self.ListCommitStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/ListCommitStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.DeleteCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteCommitRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.FlushCommit = channel.unary_stream(
+        &#39;/pfs_1_7.API/FlushCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.SubscribeCommit = channel.unary_stream(
+        &#39;/pfs_1_7.API/SubscribeCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+        )
+    self.BuildCommit = channel.unary_unary(
+        &#39;/pfs_1_7.API/BuildCommit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BuildCommitRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Commit.FromString,
+        )
+    self.CreateBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/CreateBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
+        )
+    self.ListBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
+        )
+    self.DeleteBranch = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteBranch&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteBranchRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.PutFile = channel.stream_unary(
+        &#39;/pfs_1_7.API/PutFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.CopyFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/CopyFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.GetFile = channel.unary_stream(
+        &#39;/pfs_1_7.API/GetFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.InspectFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/InspectFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.ListFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/ListFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
+        )
+    self.ListFileStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/ListFileStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.GlobFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/GlobFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfos.FromString,
+        )
+    self.GlobFileStream = channel.unary_stream(
+        &#39;/pfs_1_7.API/GlobFileStream&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.FileInfo.FromString,
+        )
+    self.DiffFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/DiffFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DiffFileResponse.FromString,
+        )
+    self.DeleteFile = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteFile&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteFileRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.DeleteAll = channel.unary_unary(
+        &#39;/pfs_1_7.API/DeleteAll&#39;,
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer"><code class="flex name class">
+<span>class <span class="ident">ObjectAPIServicer</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ObjectAPIServicer(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def PutObject(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def PutObjectSplit(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def TagObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectObject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def CheckObject(self, request, context):
+    &#34;&#34;&#34;CheckObject checks if an object exists in the blob store without
+    actually reading the object.
+    &#34;&#34;&#34;
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteObjects(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def GetTag(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def InspectTag(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def ListTags(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def DeleteTags(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)
+
+  def Compact(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details(&#39;Method not implemented!&#39;)
+    raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject"><code class="name flex">
+<span>def <span class="ident">CheckObject</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>CheckObject checks if an object exists in the blob store without
+actually reading the object.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CheckObject(self, request, context):
+  &#34;&#34;&#34;CheckObject checks if an object exists in the blob store without
+  actually reading the object.
+  &#34;&#34;&#34;
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact"><code class="name flex">
+<span>def <span class="ident">Compact</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Compact(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects"><code class="name flex">
+<span>def <span class="ident">DeleteObjects</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteObjects(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags"><code class="name flex">
+<span>def <span class="ident">DeleteTags</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DeleteTags(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject"><code class="name flex">
+<span>def <span class="ident">GetObject</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GetObject(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects"><code class="name flex">
+<span>def <span class="ident">GetObjects</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GetObjects(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag"><code class="name flex">
+<span>def <span class="ident">GetTag</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def GetTag(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject"><code class="name flex">
+<span>def <span class="ident">InspectObject</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectObject(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag"><code class="name flex">
+<span>def <span class="ident">InspectTag</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def InspectTag(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects"><code class="name flex">
+<span>def <span class="ident">ListObjects</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListObjects(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags"><code class="name flex">
+<span>def <span class="ident">ListTags</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ListTags(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject"><code class="name flex">
+<span>def <span class="ident">PutObject</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PutObject(self, request_iterator, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit"><code class="name flex">
+<span>def <span class="ident">PutObjectSplit</span></span>(<span>self, request_iterator, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PutObjectSplit(self, request_iterator, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject"><code class="name flex">
+<span>def <span class="ident">TagObject</span></span>(<span>self, request, context)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def TagObject(self, request, context):
+  # missing associated documentation comment in .proto file
+  pass
+  context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+  context.set_details(&#39;Method not implemented!&#39;)
+  raise NotImplementedError(&#39;Method not implemented!&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIStub"><code class="flex name class">
+<span>class <span class="ident">ObjectAPIStub</span></span>
+<span>(</span><span>channel)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Constructor.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>channel</code></strong></dt>
+<dd>A grpc.Channel.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ObjectAPIStub(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def __init__(self, channel):
+    &#34;&#34;&#34;Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    &#34;&#34;&#34;
+    self.PutObject = channel.stream_unary(
+        &#39;/pfs_1_7.ObjectAPI/PutObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+        )
+    self.PutObjectSplit = channel.stream_unary(
+        &#39;/pfs_1_7.ObjectAPI/PutObjectSplit&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.PutObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Objects.FromString,
+        )
+    self.GetObject = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.GetObjects = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.GetObjectsRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.TagObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/TagObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.TagObjectRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.InspectObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/InspectObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
+        )
+    self.CheckObject = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/CheckObject&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.CheckObjectResponse.FromString,
+        )
+    self.ListObjects = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/ListObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListObjectsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Object.FromString,
+        )
+    self.DeleteObjects = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/DeleteObjects&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteObjectsResponse.FromString,
+        )
+    self.GetTag = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/GetTag&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.InspectTag = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/InspectTag&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.Tag.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ObjectInfo.FromString,
+        )
+    self.ListTags = channel.unary_stream(
+        &#39;/pfs_1_7.ObjectAPI/ListTags&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.ListTagsResponse.FromString,
+        )
+    self.DeleteTags = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/DeleteTags&#39;,
+        request_serializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsRequest.SerializeToString,
+        response_deserializer=client_dot_admin_dot_v1__7_dot_pfs_dot_pfs__pb2.DeleteTagsResponse.FromString,
+        )
+    self.Compact = channel.unary_unary(
+        &#39;/pfs_1_7.ObjectAPI/Compact&#39;,
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs" href="index.html">python_pachyderm.proto.admin.v1_7.pfs</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_APIServicer_to_server" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_APIServicer_to_server">add_APIServicer_to_server</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.add_ObjectAPIServicer_to_server">add_ObjectAPIServicer_to_server</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer">APIServicer</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.BuildCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.BuildCommit">BuildCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CopyFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CopyFile">CopyFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateBranch" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateBranch">CreateBranch</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateRepo" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.CreateRepo">CreateRepo</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteAll" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteAll">DeleteAll</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteBranch">DeleteBranch</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteCommit">DeleteCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteFile">DeleteFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DeleteRepo">DeleteRepo</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DiffFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.DiffFile">DiffFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FinishCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FinishCommit">FinishCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FlushCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.FlushCommit">FlushCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GetFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GetFile">GetFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFile">GlobFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.GlobFileStream">GlobFileStream</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectBranch" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectBranch">InspectBranch</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectCommit">InspectCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectFile">InspectFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectRepo" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.InspectRepo">InspectRepo</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListBranch" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListBranch">ListBranch</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommit">ListCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListCommitStream">ListCommitStream</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFile">ListFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFileStream" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListFileStream">ListFileStream</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListRepo" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.ListRepo">ListRepo</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.PutFile" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.PutFile">PutFile</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.StartCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.StartCommit">StartCommit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIServicer.SubscribeCommit">SubscribeCommit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIStub" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.APIStub">APIStub</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer">ObjectAPIServicer</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.CheckObject">CheckObject</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.Compact">Compact</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteObjects">DeleteObjects</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.DeleteTags">DeleteTags</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObject">GetObject</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetObjects">GetObjects</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.GetTag">GetTag</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectObject">InspectObject</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.InspectTag">InspectTag</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListObjects">ListObjects</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.ListTags">ListTags</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObject">PutObject</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.PutObjectSplit">PutObjectSplit</a></code></li>
+<li><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIServicer.TagObject">TagObject</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIStub" href="#python_pachyderm.proto.admin.v1_7.pfs.pfs_pb2_grpc.ObjectAPIStub">ObjectAPIStub</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
