@@ -17,14 +17,14 @@ matrix:
   include:
     # python 3.5
     - python: 3.5
-      env: PACHYDERM_VERSION=1.9.10
+      env: PACHYDERM_VERSION=1.9.11
     - python: 3.5
       env: PACHYDERM_VERSION=1.9.0
     - python: 3.5
       env: PACHYDERM_VERSION=1.8.8
     # python 3.7
     - python: 3.7
-      env: PACHYDERM_VERSION=1.9.10
+      env: PACHYDERM_VERSION=1.9.11
     - python: 3.7
       env: PACHYDERM_VERSION=1.9.0
     - python: 3.7
@@ -33,11 +33,11 @@ matrix:
     - python: 3.7
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=1.9.10
+        - PACHYDERM_VERSION=1.9.11
     - python: 3.7
       env:
         - TOXENV=examples
-        - PACHYDERM_VERSION=1.9.10
+        - PACHYDERM_VERSION=1.9.11
 
 install:
 - make ci-install
