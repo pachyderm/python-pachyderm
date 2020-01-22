@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0
+
+- Support for pachyderm v1.9.11 (PR #170)
+    - Removed `scale_down_threshold` from `Client.create_pipeline`
+    - Added `job_id` to `Client.run_pipeline`
+    - Added `Client.run_cron`
+    - Added `Client.batch_transaction`
+
 ## 2.6.0
 
 - Faster `put_files` by putting multiple files in a single request (PR #166)
