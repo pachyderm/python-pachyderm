@@ -4,8 +4,10 @@ services:
 - docker
 cache:
   directories:
-    - $HOME/.cache/go-build
-    - $HOME/cached-deps
+    - ${HOME}/.cache
+    - ${HOME}/cached-deps
+    - ${HOME}/gopath/pkg/mod
+    - "$(python3 -c 'import site; print(site.USER_BASE)')"
 language: python
 env:
   global:
@@ -15,14 +17,14 @@ matrix:
   include:
     # python 3.5
     - python: 3.5
-      env: PACHYDERM_VERSION=1.9.7
+      env: PACHYDERM_VERSION=1.9.11
     - python: 3.5
       env: PACHYDERM_VERSION=1.9.0
     - python: 3.5
       env: PACHYDERM_VERSION=1.8.8
     # python 3.7
     - python: 3.7
-      env: PACHYDERM_VERSION=1.9.7
+      env: PACHYDERM_VERSION=1.9.11
     - python: 3.7
       env: PACHYDERM_VERSION=1.9.0
     - python: 3.7
@@ -31,11 +33,11 @@ matrix:
     - python: 3.7
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=1.9.7
+        - PACHYDERM_VERSION=1.9.11
     - python: 3.7
       env:
         - TOXENV=examples
-        - PACHYDERM_VERSION=1.9.7
+        - PACHYDERM_VERSION=1.9.11
 
 install:
 - make ci-install

@@ -105,6 +105,11 @@ class APIStub(object):
         request_serializer=client_dot_pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
+    self.RunCron = channel.unary_unary(
+        '/pps.API/RunCron',
+        request_serializer=client_dot_pps_dot_pps__pb2.RunCronRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
     self.DeleteAll = channel.unary_unary(
         '/pps.API/DeleteAll',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -124,6 +129,11 @@ class APIStub(object):
         '/pps.API/ActivateAuth',
         request_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
         response_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
+        )
+    self.UpdateJobState = channel.unary_unary(
+        '/pps.API/UpdateJobState',
+        request_serializer=client_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
@@ -259,6 +269,13 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def RunCron(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def DeleteAll(self, request, context):
     """DeleteAll deletes everything
     """
@@ -283,6 +300,13 @@ class APIServicer(object):
   def ActivateAuth(self, request, context):
     """An internal call that causes PPS to put itself into an auth-enabled state
     (all pipeline have tokens, correct permissions, etcd)
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateJobState(self, request, context):
+    """An internal call used to move a job from one state to another
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -381,6 +405,11 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pps_dot_pps__pb2.RunPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
+      'RunCron': grpc.unary_unary_rpc_method_handler(
+          servicer.RunCron,
+          request_deserializer=client_dot_pps_dot_pps__pb2.RunCronRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
       'DeleteAll': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteAll,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
@@ -400,6 +429,11 @@ def add_APIServicer_to_server(servicer, server):
           servicer.ActivateAuth,
           request_deserializer=client_dot_pps_dot_pps__pb2.ActivateAuthRequest.FromString,
           response_serializer=client_dot_pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
+      ),
+      'UpdateJobState': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateJobState,
+          request_deserializer=client_dot_pps_dot_pps__pb2.UpdateJobStateRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

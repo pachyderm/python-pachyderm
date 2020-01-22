@@ -8,6 +8,30 @@ import python_pachyderm
 from tests import util
 
 
+@util.skip_if_below_pachyderm_version(1, 9, 10)
+def test_batch_transaction():
+    client = python_pachyderm.Client()
+    expected_repo_count = len(client.list_repo()) + 3
+
+    def create_repo_request():
+        return python_pachyderm.TransactionRequest(
+            create_repo=python_pachyderm.CreateRepoRequest(
+                repo=python_pachyderm.Repo(
+                    name=util.test_repo_name("test_batch_transaction")
+                )
+            )
+        )
+
+    transaction = client.batch_transaction([
+        create_repo_request(),
+        create_repo_request(),
+        create_repo_request(),
+    ])
+
+    assert len(client.list_transaction()) == 0
+    assert len(client.list_repo()) == expected_repo_count
+
+
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr():
     client = python_pachyderm.Client()

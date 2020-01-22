@@ -26,7 +26,8 @@ init:
 	git submodule update --init
 
 ci-install:
-	sudo apt-get install jq
+	sudo apt-get update
+	sudo apt-get install jq socat
 	cd proto/pachyderm && \
 		sudo etc/testing/travis_cache.sh && \
 		sudo etc/testing/travis_install.sh && \

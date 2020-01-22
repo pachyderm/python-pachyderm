@@ -150,8 +150,7 @@ class PPSMixin:
 
     def create_pipeline(self, pipeline_name, transform, parallelism_spec=None,
                         hashtree_spec=None, egress=None, update=None, output_branch=None,
-                        scale_down_threshold=None, resource_requests=None,
-                        resource_limits=None, input=None, description=None, cache_size=None,
+                        resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None,
                         enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None,
                         job_timeout=None, salt=None, standby=None, datum_tries=None,
@@ -172,7 +171,6 @@ class PPSMixin:
         an upsert.
         * `output_branch`: An optional string representing the branch to output
         results on.
-        * `scale_down_threshold`: An optional `Duration` object.
         * `resource_requests`: An optional `ResourceSpec` object.
         * `resource_limits`: An optional `ResourceSpec` object.
         * `input`: An optional `Input` object.
@@ -203,7 +201,6 @@ class PPSMixin:
             egress=egress,
             update=update,
             output_branch=output_branch,
-            scale_down_threshold=scale_down_threshold,
             resource_requests=resource_requests,
             resource_limits=resource_limits,
             input=input,
@@ -388,7 +385,7 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name))
 
-    def run_pipeline(self, pipeline_name, provenance=None):
+    def run_pipeline(self, pipeline_name, provenance=None, job_id=None):
         """
         Runs a pipeline.
 
@@ -397,11 +394,28 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `provenance`: An optional iterable of `CommitProvenance` objects
         representing the pipeline execution provenance.
+        * `job_id`: An optional string specifying a specific job ID to run.
         """
         return self._req(
             Service.PPS, "RunPipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             provenance=provenance,
+            job_id=job_id,
+        )
+
+    def run_cron(self, pipeline_name):
+        """
+        Explicitly triggers a pipeline with one or more cron inputs to run
+        now.
+
+        Params:
+
+        * `pipeline_name`: A string representing the pipeline name.
+        """
+
+        return self._req(
+            Service.PPS, "RunCron",
+            pipeline=pps_proto.Pipeline(name=pipeline_name),
         )
 
     def delete_all(self):

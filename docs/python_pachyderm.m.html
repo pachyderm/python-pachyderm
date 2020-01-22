@@ -1113,6 +1113,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.BatchTransactionRequest">BatchTransactionRequest</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Block">Block</a></span>
         
         </li>
@@ -1173,6 +1177,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.authenticate_github">authenticate_github</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authenticate_one_time_password">authenticate_one_time_password</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authorize">authorize</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.batch_transaction">batch_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.binary">binary</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.commit">commit</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.copy_file">copy_file</a></li>
@@ -1244,6 +1249,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.restart_datum">restart_datum</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.restore">restore</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.revoke_auth_token">revoke_auth_token</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.run_cron">run_cron</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.run_pipeline">run_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.set_acl">set_acl</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.set_auth_configuration">set_auth_configuration</a></li>
@@ -1850,10 +1856,6 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.PipelineInput">PipelineInput</a></span>
-        
-        </li>
-        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.PipelineState">PipelineState</a></span>
         
         </li>
@@ -1915,6 +1917,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.RpcError">RpcError</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.RunCronRequest">RunCronRequest</a></span>
         
         </li>
         <li class="mono">
@@ -2076,6 +2082,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.UInt64Value">UInt64Value</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.UpdateJobStateRequest">UpdateJobStateRequest</a></span>
         
         </li>
         <li class="mono">
@@ -2964,6 +2974,56 @@ pipeline. Defaults to <code>python</code>.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.AuthorizeResponse.authorized" class="name">var <span class="ident">authorized</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.BatchTransactionRequest" class="name">class <span class="ident">BatchTransactionRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.BatchTransactionRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.BatchTransactionRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.BatchTransactionRequest.requests" class="name">var <span class="ident">requests</span></p>
             
 
             
@@ -4028,6 +4088,28 @@ caller needs to perform an action.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.Client.batch_transaction">
+    <p>def <span class="ident">batch_transaction</span>(</p><p>self, requests)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Executes a batch transaction.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>requests</code>: A list of <code>TransactionRequest</code> objects.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.Client.binary">
     <p>def <span class="ident">binary</span>(</p><p>self)</p>
     </div>
@@ -4136,7 +4218,7 @@ the branch provenance.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.create_pipeline">
-    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None)</p>
+    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None)</p>
     </div>
     
 
@@ -4158,7 +4240,6 @@ http://docs.pachyderm.io/en/latest/reference/pipeline_spec.html</p>
 an upsert.</li>
 <li><code>output_branch</code>: An optional string representing the branch to output
 results on.</li>
-<li><code>scale_down_threshold</code>: An optional <code>Duration</code> object.</li>
 <li><code>resource_requests</code>: An optional <code>ResourceSpec</code> object.</li>
 <li><code>resource_limits</code>: An optional <code>ResourceSpec</code> object.</li>
 <li><code>input</code>: An optional <code>Input</code> object.</li>
@@ -5817,8 +5898,31 @@ revoked.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.Client.run_cron">
+    <p>def <span class="ident">run_cron</span>(</p><p>self, pipeline_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Explicitly triggers a pipeline with one or more cron inputs to run
+now.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>pipeline_name</code>: A string representing the pipeline name.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.Client.run_pipeline">
-    <p>def <span class="ident">run_pipeline</span>(</p><p>self, pipeline_name, provenance=None)</p>
+    <p>def <span class="ident">run_pipeline</span>(</p><p>self, pipeline_name, provenance=None, job_id=None)</p>
     </div>
     
 
@@ -5832,6 +5936,7 @@ revoked.</li>
 <li><code>pipeline_name</code>: A string representing the pipeline name.</li>
 <li><code>provenance</code>: An optional iterable of <code>CommitProvenance</code> objects
 representing the pipeline execution provenance.</li>
+<li><code>job_id</code>: An optional string specifying a specific job ID to run.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -6417,6 +6522,36 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.CommitInfo.subvenance" class="name">var <span class="ident">subvenance</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CommitInfo.subvenant_commits_failure" class="name">var <span class="ident">subvenant_commits_failure</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CommitInfo.subvenant_commits_success" class="name">var <span class="ident">subvenant_commits_success</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CommitInfo.subvenant_commits_total" class="name">var <span class="ident">subvenant_commits_total</span></p>
             
 
             
@@ -7307,16 +7442,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.CreatePipelineRequest.salt" class="name">var <span class="ident">salt</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.CreatePipelineRequest.scale_down_threshold" class="name">var <span class="ident">scale_down_threshold</span></p>
             
 
             
@@ -16114,16 +16239,6 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.PipelineInfo.scale_down_threshold" class="name">var <span class="ident">scale_down_threshold</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.PipelineInfo.scheduling_spec" class="name">var <span class="ident">scheduling_spec</span></p>
             
 
@@ -16265,116 +16380,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.PipelineInfos.pipeline_info" class="name">var <span class="ident">pipeline_info</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.PipelineInput" class="name">class <span class="ident">PipelineInput</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.branch" class="name">var <span class="ident">branch</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.from" class="name">var <span class="ident">from</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.glob" class="name">var <span class="ident">glob</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.join_on" class="name">var <span class="ident">join_on</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.lazy" class="name">var <span class="ident">lazy</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.name" class="name">var <span class="ident">name</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.PipelineInput.repo" class="name">var <span class="ident">repo</span></p>
             
 
             
@@ -17437,6 +17442,56 @@ commit.</li>
       </div>
       
       <div class="item">
+      <p id="python_pachyderm.RunCronRequest" class="name">class <span class="ident">RunCronRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.RunCronRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.RunCronRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.RunCronRequest.pipeline" class="name">var <span class="ident">pipeline</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
       <p id="python_pachyderm.RunPipelineRequest" class="name">class <span class="ident">RunPipelineRequest</span></p>
       
   
@@ -17465,6 +17520,16 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.RunPipelineRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.RunPipelineRequest.job_id" class="name">var <span class="ident">job_id</span></p>
             
 
             
@@ -19496,6 +19561,16 @@ commit.</li>
 </div>
 
             </div>
+            <div class="item">
+            <p id="python_pachyderm.TransactionRequest.update_job_state" class="name">var <span class="ident">update_job_state</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
@@ -19818,6 +19893,76 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.UInt64Value.value" class="name">var <span class="ident">value</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.UpdateJobStateRequest" class="name">class <span class="ident">UpdateJobStateRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.UpdateJobStateRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.UpdateJobStateRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.UpdateJobStateRequest.job" class="name">var <span class="ident">job</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.UpdateJobStateRequest.reason" class="name">var <span class="ident">reason</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.UpdateJobStateRequest.state" class="name">var <span class="ident">state</span></p>
             
 
             

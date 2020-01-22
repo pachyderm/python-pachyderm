@@ -56,9 +56,10 @@ BLACKLISTED_METHODS = {
     # delete_all is ignored because we implement PPS' delete_all anyway
     # build_commit is ignored because it's for internal use only
     Service.PFS: ["delete_all", "build_commit"],
-    # activate_auth is ignored because it's an internal function
+    # activate_auth is ignored because it's for internal use only
     # create_job is ignored because it's for internal use only
-    Service.PPS: ["activate_auth", "create_job"],
+    # update_job_state is ignored because it's for internal use only
+    Service.PPS: ["activate_auth", "create_job", "update_job_state"],
 }
 
 RENAMED_METHODS = {
@@ -251,6 +252,9 @@ RENAMED_ARGS = {
     "run_pipeline": [
         ("pipeline", "pipeline_name"),
     ],
+    "run_cron": [
+        ("pipeline", "pipeline_name"),
+    ],
     "start_pipeline": [
         ("pipeline", "pipeline_name"),
     ],
@@ -343,11 +347,11 @@ def lint_service(service):
         for mixin_method_name in renamed_mixin_method_names:
             # find if this method isn't implemented
             if mixin_method_name not in mixin_method_names:
-                yield "missing method: {}".format(mixin_method_name)
+                yield "service {}: missing method: {}".format(service.name, mixin_method_name)
                 continue
 
             for warning in lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
-                yield "{}: {}".format(service.name, warning)
+                yield "service {}: {}".format(service.name, warning)
 
 def main():
     warned = False
