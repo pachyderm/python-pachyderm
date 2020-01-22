@@ -166,6 +166,9 @@ def test_get_pipeline_logs():
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
     assert next(logs) is not None
 
+# job logs are available in 1.8.x, but they frequently fail due to bugs that
+# are resolved in 1.9.0
+@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_get_job_logs():
     sandbox = Sandbox("get_logs_logs")
     job_id = sandbox.wait_for_job()
