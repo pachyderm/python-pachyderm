@@ -66,8 +66,8 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
     return client._req(Service.PFS, "PutFile", req=reqs())
 
 
-def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None,
-                           pipeline_kwargs=None, image=None, update=False):
+def create_python_pipeline(client, path, input=None, pipeline_name=None, image_pull_secrets=None, debug=None,
+                           env=None, secrets=None, image=None, update=False, **pipeline_kwargs):
     """
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally at `path`. `path` can either
@@ -119,7 +119,7 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
     * `client`: The `Client` instance to use.
     * `path`: The directory containing the python pipeline source, or an
     individual python file.
-    * `input`: An `Input` object specifying the pipeline input.
+    * `input`: An optional `Input` object specifying the pipeline input.
     * `pipeline_name`: An optional string specifying the pipeline name.
     Defaults to using the last directory name in `path`.
     * `image_pull_secrets`: An optional list of strings specifying the
@@ -129,10 +129,14 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
     details.
     * `debug`: An optional bool specifying whether debug logging should be
     enabled for the pipeline. Defaults to `False`.
-    * `pipeline_kwargs`: Keyword arguments to forward to `create_pipeline`.
+    * `env`: An optional mapping of string keys to string values specifying
+    custom environment variables.
+    * `secrets`: An optional list of `Secret` objects for secret environment
+    variables.
     * `image`: An optional string specifying the docker image to use for the
     pipeline. Defaults to `python`.
     * `update`: Whether to act as an upsert.
+    * `pipeline_kwargs`: Keyword arguments to forward to `create_pipeline`.
     """
 
     # Verify & set defaults for arguments
@@ -155,11 +159,6 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
         raise Exception("could not derive pipeline name")
 
     image = image or "python:3"
-    pipeline_kwargs = pipeline_kwargs or {}
-
-    for param in ("pipeline_name", "transform", "input", "update"):
-        if param in pipeline_kwargs:
-            raise Exception("cannot specify the pipeline kwarg '%s'".format(param))
 
     # Create the source repo
     source_repo_name = "{}_source".format(pipeline_name)
@@ -226,8 +225,10 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
                 put_templated_script("build.sh", BUILDER_SCRIPT)
 
     # Create the pipeline
-    inputs = [Input(pfs=PFSInput(glob="/", repo=source_repo_name)), input]
+    inputs = [Input(pfs=PFSInput(glob="/", repo=source_repo_name))]
 
+    if input is not None:
+        inputs.append(input)
     if build_pipeline_name is not None:
         inputs.append(Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)))
 
@@ -238,8 +239,10 @@ def create_python_pipeline(client, path, input, pipeline_name=None, image_pull_s
             cmd=["bash", "/pfs/{}/run.sh".format(source_repo_name)],
             image_pull_secrets=image_pull_secrets,
             debug=debug,
+            env=env,
+            secrets=secrets,
         ),
-        input=Input(cross=inputs),
+        input=Input(cross=inputs) if len(inputs) > 1 else inputs[0],
         update=update,
         **pipeline_kwargs
     )
