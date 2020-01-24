@@ -22,23 +22,11 @@ class Experiment:
         self.version = 1
         self._pipelines = {}
 
-    def _add_pipeline(self, pipeline_name, is_python_pipeline, args, kwargs):
-        self._pipelines[pipeline_name] = (is_python_pipeline, args, kwargs)
-
     def add_pipeline(self, pipeline_name, transform, **kwargs):
         if not transform.env:
             transform.env = {} 
         transform.env["PACHYDERM_EXPERIMENT_NAME"] = self.name
-        transform.env["PACHYDERM_EXPERIMENT_VERSION"] = self.version
-        self._pipelines[pipeline_name] = (False, (transform,), kwargs)
-
-    def add_python_pipeline(self, pipeline_name, path, **kwargs):
-        if "env" not in kwargs:
-            kwargs["env"] = {}
-        kwargs["env"]["PACHYDERM_EXPERIMENT_NAME"] = self.name
-        kwargs["env"]["PACHYDERM_EXPERIMENT_VERSION"] = self.version
-        self._pipelines[pipeline_name] = (is_python_pipeline, args, kwargs)
-        self._add_pipeline(pipeline_name, True, (path,), kwargs)
+        self._pipelines[pipeline_name] = (transform, kwargs)
 
     def validate(self):
         if self.name not in self._pipelines:
@@ -75,14 +63,11 @@ class PEFMixin:
     def list_experiments(self, history=None):
         raise NotImplementedError()
 
-    def create_experiment(self, experiment_builder):
-        experiment_builder.validate()
+    def create_experiment(self, experiment):
+        experiment.validate()
 
-        for (pipeline_name, (is_python_pipeline, args, kwargs)) in experiment_builder._pipelines.items():
-            if is_python_pipeline:
-                util.create_python_pipeline(self, *args, pipeline_name=pipeline_name, **kwargs)
-            else:
-                self.create_pipeline(pipeline_name, *args, **kwargs)
+        for (pipeline_name, (transform, kwargs)) in experiment._pipelines.items():
+            self.create_pipeline(pipeline_name, transform, **kwargs)
 
     def delete_experiment(self, name):
         raise NotImplementedError()
