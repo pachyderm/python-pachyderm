@@ -5,6 +5,7 @@ from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumT
 
 from .client import Client
 from .util import put_files, create_python_pipeline
+from .mixin.pef import Experiment
 from grpc import RpcError
 
 __all__ = ["Client", "RpcError", "put_files", "create_python_pipeline"]

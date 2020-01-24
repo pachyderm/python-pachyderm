@@ -10,6 +10,7 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
+from .mixin.pef import PEFMixin
 
 
 class Client(
@@ -22,6 +23,7 @@ class Client(
     PPSMixin,
     TransactionMixin,
     VersionMixin,
+    PEFMixin,
     object
 ):
     def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
