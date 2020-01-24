@@ -19,7 +19,6 @@ def _walk_input_names(input):
 class Experiment:
     def __init__(self, name):
         self.name = name
-        self.version = 1
         self._pipelines = {}
 
     def add_pipeline(self, pipeline_name, transform, **kwargs):
