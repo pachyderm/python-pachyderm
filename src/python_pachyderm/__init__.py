@@ -8,7 +8,7 @@ from .spout import SpoutProducer
 from .util import put_files, create_python_pipeline
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError", "Spout", "put_files", "create_python_pipeline"]
+__all__ = ["Client", "RpcError", "SpoutProducer", "put_files", "create_python_pipeline"]
 
 
 def _import_protos(path):

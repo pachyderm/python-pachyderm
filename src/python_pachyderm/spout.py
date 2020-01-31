@@ -4,6 +4,7 @@ import time
 import io
 import stat
 
+
 class SpoutProducer:
     def __init__(self, max_attempts=10, sleep_time=1):
         self.f = None
@@ -21,7 +22,7 @@ class SpoutProducer:
                     f2 = os.fdopen(f1, "wb")
                     self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
                     return self
-                except OSError as e:
+                except OSError:
                     attempts += 1
                     if attempts == self.max_attempts:
                         raise

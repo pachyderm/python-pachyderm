@@ -24,7 +24,7 @@ def main():
         input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="printer")),
     )
 
-    # jobs = list(sandbox.client.list_job(pipeline_name="echoer"))
+    # jobs = list(client.list_job(pipeline_name="echoer"))
     # print(jobs)
 
 if __name__ == '__main__':
