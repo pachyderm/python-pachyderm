@@ -52,7 +52,7 @@ class SpoutManager:
         finally:
             os.umask(umask_original)
 
-    def __exit__(self):
+    def __exit__(self, type, value, traceback):
         self.f.close()
 
     def add_from_fileobj(self, path, size, fileobj):
