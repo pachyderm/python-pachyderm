@@ -10,22 +10,19 @@ def main():
     client = python_pachyderm.Client()
 
     client.create_pipeline(
-        pipeline_name="printer",
+        pipeline_name="producer",
         transform=python_pachyderm.Transform(
             cmd=["python3", "/app/main.py"],
-            image="ysimonson/pachyderm_spout_printer",
+            image="ysimonson/pachyderm_spout_producer",
         ),
         spout=python_pachyderm.Spout(overwrite=False),
     )
 
     python_pachyderm.create_python_pipeline(
         client,
-        relpath("echoer"),
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="printer")),
+        relpath("consumer"),
+        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="producer")),
     )
-
-    # jobs = list(client.list_job(pipeline_name="echoer"))
-    # print(jobs)
 
 if __name__ == '__main__':
     main()

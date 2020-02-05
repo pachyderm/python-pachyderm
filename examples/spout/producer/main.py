@@ -5,7 +5,7 @@ import python_pachyderm
 
 def main():
     while True:
-        with python_pachyderm.SpoutProducer() as spout:
+        with python_pachyderm.SpoutManager() as spout:
             spout.add_from_bytes("foo", b"#")
         time.sleep(1.0)
 
