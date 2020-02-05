@@ -34,11 +34,26 @@ class SpoutManager:
         self.sleep_time = 1
 
     def __enter__(self):
-        return self
+        attempts = 0
+        umask_original = os.umask(0o777 ^ stat.S_IWUSR)
+
+        try:
+            while True:
+                try:
+                    f1 = os.open("/pfs/out", os.O_WRONLY, stat.S_IWUSR)
+                    f2 = os.fdopen(f1, "wb")
+                    self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
+                    return self
+                except OSError:
+                    attempts += 1
+                    if attempts == self.max_attempts:
+                        raise
+                    time.sleep(self.sleep_time)
+        finally:
+            os.umask(umask_original)
 
     def __exit__(self, type, value, traceback):
-        if self.f is None:
-            self.f.close()
+        self.f.close()
 
     def add_from_fileobj(self, path, size, fileobj):
         """
@@ -51,28 +66,10 @@ class SpoutManager:
         * `fileobj`: The file-like object to add.
         """
 
-        attempts = 0
-        umask_original = os.umask(0o777 ^ stat.S_IWUSR)
-
-        try:
-            while True:
-                try:
-                    if self.f is None:
-                        f1 = os.open("/pfs/out", os.O_WRONLY, stat.S_IWUSR)
-                        f2 = os.fdopen(f1, "wb")
-                        self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
-
-                    tar_info = tarfile.TarInfo(path)
-                    tar_info.size = size
-                    tar_info.mode = 0o600
-                    self.f.addfile(tarinfo=tar_info, fileobj=fileobj)
-                except:
-                    attempts += 1
-                    if attempts == self.max_attempts:
-                        raise
-                    time.sleep(self.sleep_time)
-        finally:
-            os.umask(umask_original)
+        tar_info = tarfile.TarInfo(path)
+        tar_info.size = size
+        tar_info.mode = 0o600
+        self.f.addfile(tarinfo=tar_info, fileobj=fileobj)
 
     def add_from_bytes(self, path, bytes):
         """
