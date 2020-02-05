@@ -1,4 +1,5 @@
 import os
+import time
 
 from .service import Service
 from .mixin import pfs
@@ -246,3 +247,15 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
         update=update,
         **pipeline_kwargs
     )
+
+def retry(f, times=10, sleep=1):
+    attempts = 0
+
+    while True:
+        try:
+            f()
+        except:
+            attempts += 1
+            if attempts >= times:
+                raise
+            time.sleep(sleep)

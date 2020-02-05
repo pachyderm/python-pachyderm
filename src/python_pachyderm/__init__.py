@@ -5,10 +5,10 @@ from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumT
 
 from .client import Client
 from .spout import SpoutManager
-from .util import put_files, create_python_pipeline
+from .util import put_files, create_python_pipeline, retry
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError", "SpoutManager", "put_files", "create_python_pipeline"]
+__all__ = ["Client", "RpcError", "SpoutManager", "put_files", "create_python_pipeline", "retry"]
 
 
 def _import_protos(path):

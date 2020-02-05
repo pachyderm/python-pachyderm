@@ -1,6 +1,5 @@
 import os
 import tarfile
-import time
 import io
 import stat
 
@@ -17,38 +16,21 @@ class SpoutManager:
     ```
     """
 
-    def __init__(self, max_attempts=10, sleep_time=1):
+    def __init__(self):
         """
         Creates a new spout manager.
-
-        Params:
-
-        * `max_attempts`: An optional int specifying the maximum number of
-        times the manager should attempt to open the spout tarpipe.
-        * `sleep_time`: An optional int specifying the sleep time between
-        attempting to open the spout tarpipe.
         """
 
         self.f = None
-        self.max_attempts = max_attempts
-        self.sleep_time = 1
 
     def __enter__(self):
-        attempts = 0
         umask_original = os.umask(0o777 ^ stat.S_IWUSR)
 
         try:
-            while True:
-                try:
-                    f1 = os.open("/pfs/out", os.O_WRONLY, stat.S_IWUSR)
-                    f2 = os.fdopen(f1, "wb")
-                    self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
-                    return self
-                except OSError:
-                    attempts += 1
-                    if attempts == self.max_attempts:
-                        raise
-                    time.sleep(self.sleep_time)
+            f1 = os.open("/pfs/out", os.O_WRONLY, stat.S_IWUSR)
+            f2 = os.fdopen(f1, "wb")
+            self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
+            return self
         finally:
             os.umask(umask_original)
 
