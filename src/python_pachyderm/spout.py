@@ -5,8 +5,30 @@ import io
 import stat
 
 
-class SpoutProducer:
+class SpoutManager:
+    """
+    A convenience context manager for creating spouts, allowing you to create spout code like:
+
+    ```
+    while True:
+        with SpoutManager() as spout:
+            spout.add_from_bytes("foo", b"#")
+        time.sleep(1.0)
+    ```
+    """
+
     def __init__(self, max_attempts=10, sleep_time=1):
+        """
+        Creates a new spout manager.
+
+        Params:
+
+        * `max_attempts`: An optional int specifying the maximum number of
+        times the manager should attempt to open the spout tarpipe.
+        * `sleep_time`: An optional int specifying the sleep time between
+        attempting to open the spout tarpipe.
+        """
+
         self.f = None
         self.max_attempts = max_attempts
         self.sleep_time = 1
@@ -34,14 +56,29 @@ class SpoutProducer:
         self.f.close()
 
     def add_from_fileobj(self, path, size, fileobj):
+        """
+        Adds a file to the spout from a file-like object.
+
+        Params:
+
+        * `path`: The path to the file in the spout.
+        * `size`: The size of the file.
+        * `fileobj`: The file-like object to add.
+        """
+
         tar_info = tarfile.TarInfo(path)
         tar_info.size = size
         tar_info.mode = 0o600
         self.f.addfile(tarinfo=tar_info, fileobj=fileobj)
 
     def add_from_bytes(self, path, bytes):
-        self.add_from_fileobj(path, len(bytes), io.BytesIO(bytes))
+        """
+        Adds a file to the spout from a bytestring.
 
-    def add_from_path(self, local_path, spout_path=None):
-        with open(local_path, "rb") as f:
-            self.add_from_fileobj(spout_path or local_path, os.path.getsize(local_path), f)
+        Params:
+
+        * `path`: The path to the file in the spout.
+        * `bytes`: The bytestring representing the file contents.
+        """
+
+        self.add_from_fileobj(path, len(bytes), io.BytesIO(bytes))
