@@ -7,7 +7,7 @@ def main():
     while True:
         with python_pachyderm.SpoutProducer() as spout:
             spout.add_from_bytes("foo", b"#")
-        time.sleep(5.0)
+        time.sleep(1.0)
 
 if __name__ == "__main__":
     main()
