@@ -254,6 +254,7 @@ def retry(f, times=10, sleep=1):
     while True:
         try:
             f()
+            return
         except:
             attempts += 1
             if attempts >= times:
