@@ -6,7 +6,8 @@ import stat
 
 class SpoutManager:
     """
-    A convenience context manager for creating spouts, allowing you to create spout code like:
+    A convenience context manager for creating spouts, allowing you to create
+    spout code like:
 
     ```
     while True:
