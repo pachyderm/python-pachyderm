@@ -75,23 +75,17 @@ class Client(
         * `transaction_id`: The ID of the transaction to run operations on.
         """
 
-        from kubernetes import client, config
-        config.load_incluster_config()
-        v1 = client.CoreV1Api()
-        pods = v1.list_namespaced_pod("", label_selector="app=pachd, suite=pachyderm").items
-
-        if len(pods) == 0:
-            raise Exception("no candidate pachd pods found")
-        elif len(pods) > 1:
-            raise Exception("multiple candidate pachd pods found")
-
-        pod = pods[0]
-        host = pod.status.pod_ip
-
-        try:
-            port = next((p for p in pod.spec.containers[0].ports if p.name == 'peer-port')).container_port
-        except Exception as e:
-            raise Exception("could not derive the pachd peer port: {}".format(e))
+        if "PACHD_PEER_SERVICE_HOST" in os.environ and "PACHD_PEER_SERVICE_PORT" in os.environ:
+            # Try to use the pachd peer service if it's available. This is
+            # only supported in pachyderm>=1.10, but is more reliable because
+            # it'll work when TLS is enabled on the cluster.
+            host = os.environ["PACHD_PEER_SERVICE_HOST"]
+            port = int(os.environ["PACHD_PEER_SERVICE_PORT"])
+        else:
+            # Otherwise use the normal service host/port, which will not work
+            # when TLS is enabled on the cluster.
+            host = os.environ["PACHD_SERVICE_HOST"]
+            port = int(os.environ["PACHD_SERVICE_PORT"])
 
         return cls(host=host, port=port, auth_token=auth_token, transaction_id=transaction_id)
 
