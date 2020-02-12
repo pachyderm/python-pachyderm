@@ -13,23 +13,9 @@ def test_client_init_with_args():
     assert client.address == 'pachd.example.com:54321'
 
 
-def test_client_new_in_cluster(monkeypatch):
-    monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
-    monkeypatch.setenv('PACHD_SERVICE_PORT', '12345')
-    client = python_pachyderm.Client.new_in_cluster()
-    assert client.address == 'pachd.example.com:12345'
-
-
 def test_client_new_in_cluster_missing_envs():
     with pytest.raises(Exception):
         client = python_pachyderm.Client.new_in_cluster()
-
-
-def test_client_new_from_pachd_address(monkeypatch):
-    monkeypatch.setenv('PACHD_SERVICE_HOST', 'pachd.example.com')
-    monkeypatch.setenv('PACHD_SERVICE_PORT', '12345')
-    client = python_pachyderm.Client.new_in_cluster()
-    assert client.address == 'pachd.example.com:12345'
 
 
 def test_client_new_from_pachd_address():
