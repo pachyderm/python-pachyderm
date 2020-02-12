@@ -80,7 +80,9 @@ class Client(
         v1 = client.CoreV1Api()
         pods = v1.list_namespaced_pod("", label_selector="app=pachd, suite=pachyderm").items
 
-        if len(pods) != 1:
+        if len(pods) == 0:
+            raise Exception("no candidate pachd pods found")
+        elif len(pods) > 1:
             raise Exception("multiple candidate pachd pods found")
 
         pod = pods[0]
