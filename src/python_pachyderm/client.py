@@ -64,7 +64,7 @@ class Client(
         self._metadata = self._build_metadata()
 
     @classmethod
-    def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+    def new_in_cluster(cls, auth_token=None, transaction_id=None):
         """
         Creates a Pachyderm client that operates within a Pachyderm cluster.
 
@@ -72,13 +72,26 @@ class Client(
 
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string.
         * `transaction_id`: The ID of the transaction to run operations on.
         """
 
-        host = os.environ["PACHD_SERVICE_HOST"]
-        port = int(os.environ["PACHD_SERVICE_PORT"])
-        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+        from kubernetes import client, config
+        config.load_incluster_config()
+        v1 = client.CoreV1Api()
+        pods = v1.list_namespaced_pod("", label_selector="app=pachd, suite=pachyderm").items
+
+        if len(pods) != 1:
+            raise Exception("multiple candidate pachd pods found")
+
+        pod = pods[0]
+        host = pod.status.pod_ip
+
+        try:
+            port = next((p for p in pod.spec.containers[0].ports if p.name == 'peer-port')).container_port
+        except Exception as e:
+            raise Exception("could not derive the pachd peer port: {}".format(e))
+
+        return cls(host=host, port=port, auth_token=auth_token, transaction_id=transaction_id)
 
     @classmethod
     def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
