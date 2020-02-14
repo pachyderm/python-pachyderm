@@ -1,5 +1,6 @@
 import io
 import tarfile
+import contextlib
 
 
 class SpoutManager:
@@ -15,12 +16,13 @@ class SpoutManager:
     ```
     """
 
-    def __init__(self):
+    def __init__(self, marker_filename=None):
         """
         Creates a new spout manager.
         """
 
         self.f = None
+        self.marker_filename = marker_filename
 
     def __enter__(self):
         self.f = tarfile.open(fileobj=open("/pfs/out", "wb"), mode="w|", encoding="utf-8")
@@ -28,6 +30,17 @@ class SpoutManager:
 
     def __exit__(self, type, value, traceback):
         self.f.close()
+
+    @contextlib.contextmanager
+    def marker(self):
+        """
+        Gets the marker file as a context manager.
+        """
+
+        if self.marker_filename is None:
+            raise Exception("no marker filename set")
+        with open("/pfs/{}".format(self.marker_filename), "r") as f:
+            yield f
 
     def add_from_fileobj(self, path, size, fileobj):
         """
@@ -56,3 +69,30 @@ class SpoutManager:
         """
 
         self.add_from_fileobj(path, len(bytes), io.BytesIO(bytes))
+
+    def add_marker_from_fileobj(self, size, fileobj):
+        """
+        Writes to the marker file from a file-like object.
+
+        Params:
+
+        * `size`: The size of the file.
+        * `fileobj`: The file-like object to add.
+        """
+
+        if self.marker_filename is None:
+            raise Exception("no marker filename set")
+        self.add_from_fileobj(self.marker_filename, size, fileobj)
+
+    def add_marker_from_bytes(self, bytes):
+        """
+        Adds to the marker from a bytestring.
+
+        Params:
+
+        * `bytes`: The bytestring representing the file contents.
+        """
+
+        if self.marker_filename is None:
+            raise Exception("no marker filename set")
+        self.add_from_fileobj(self.marker_filename, len(bytes), io.BytesIO(bytes))
