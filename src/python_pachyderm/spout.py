@@ -1,7 +1,5 @@
-import os
-import tarfile
 import io
-import stat
+import tarfile
 
 
 class SpoutManager:
