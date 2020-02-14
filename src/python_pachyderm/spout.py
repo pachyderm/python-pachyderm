@@ -25,15 +25,8 @@ class SpoutManager:
         self.f = None
 
     def __enter__(self):
-        umask_original = os.umask(0o777 ^ stat.S_IWUSR)
-
-        try:
-            f1 = os.open("/pfs/out", os.O_WRONLY, stat.S_IWUSR)
-            f2 = os.fdopen(f1, "wb")
-            self.f = tarfile.open(fileobj=f2, mode="w|", encoding="utf-8")
-            return self
-        finally:
-            os.umask(umask_original)
+        self.f = tarfile.open(fileobj=open("/pfs/out", "wb"), mode="w|", encoding="utf-8")
+        return self
 
     def __exit__(self, type, value, traceback):
         self.f.close()
