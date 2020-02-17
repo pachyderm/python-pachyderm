@@ -47,7 +47,6 @@ setup(
         'protobuf>=3.11.2', 'grpcio>=1.26.0'
     ],
     extras_require = {
-        "in_cluster": ["kubernetes>=10.0.1"],
         "system_certs": ["certifi>=2019.11.28"],
     },
     test_suite='tests',
