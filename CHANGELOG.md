@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- Use pachd peer service where available in `Client.new_in_cluster`, to support TLS-enabled clusters (PR #176)
+
 ## 3.0.0
 
 - Support for pachyderm v1.9.11 (PR #170)
