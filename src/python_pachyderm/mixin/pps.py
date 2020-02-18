@@ -418,6 +418,46 @@ class PPSMixin:
             pipeline=pps_proto.Pipeline(name=pipeline_name),
         )
 
+    def create_secret(self, file):
+        """
+        Creates a new secret.
+
+        Params:
+
+        * `file`: A bytestring representing the secret contents.
+        """
+
+        return self._req(Service.PPS, "CreateSecret", file=file)
+
+    def delete_secret(self, secret_name):
+        """
+        Deletes a new secret.
+
+        Params:
+
+        * `secret_name`: The name of the secret to delete.
+        """
+        secret = pps_proto.Secret(name=secret_name)
+        return self._req(Service.PPS, "DeleteSecret", secret=secret)
+
+    def list_secret(self):
+        """
+        Lists secrets. Returns a list of `SecretInfo` objects.
+        """
+
+        return self._req(Service.PPS, "ListSecret").secret_info
+
+    def inspect_secret(self, secret_name):
+        """
+        Inspects a secret.
+
+        Params:
+
+        * `secret_name`: The name of the secret to inspect.
+        """
+        secret = pps_proto.Secret(name=secret_name)
+        return self._req(Service.PPS, "InspectSecret", secret=secret)
+
     def delete_all(self):
         """
         Deletes everything in pachyderm.

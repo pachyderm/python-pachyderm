@@ -152,6 +152,22 @@ def test_run_cron():
         sandbox.client.run_cron(sandbox.pipeline_repo_name)
     assert "pipeline must have a cron input" in str(e.value)
 
+@util.skip_if_below_pachyderm_version(1, 9, 12)
+def test_secrets():
+    sandbox = Sandbox("secrets")
+    
+    sandbox.client.create_secret(b"""{
+        "kind": "Secret",
+        "apiVersion": "v1",
+        "metadata": {
+            "name": "test-secret",
+            "creationTimestamp": null
+        },
+        "data": {
+            "mykey": "bXktdmFsdWU="
+        }
+    }""")
+
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
     job_id = sandbox.wait_for_job()
