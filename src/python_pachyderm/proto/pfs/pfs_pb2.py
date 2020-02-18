@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='pfs',
   syntax='proto3',
   serialized_options=_b('Z-github.com/pachyderm/pachyderm/src/client/pfs'),
-  serialized_pb=_b('\n\x14\x63lient/pfs/pfs.proto\x12\x03pfs\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x16\x63lient/auth/auth.proto\"\x14\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\"/\n\x06\x42ranch\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xbc\x01\n\nBranchInfo\x12\x1b\n\x06\x62ranch\x18\x04 \x01(\x0b\x32\x0b.pfs.Branch\x12\x19\n\x04head\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\nprovenance\x18\x03 \x03(\x0b\x32\x0b.pfs.Branch\x12\x1f\n\nsubvenance\x18\x05 \x03(\x0b\x32\x0b.pfs.Branch\x12&\n\x11\x64irect_provenance\x18\x06 \x03(\x0b\x32\x0b.pfs.Branch\x12\x0c\n\x04name\x18\x01 \x01(\t\"3\n\x0b\x42ranchInfos\x12$\n\x0b\x62ranch_info\x18\x01 \x03(\x0b\x32\x0f.pfs.BranchInfo\"1\n\x04\x46ile\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\"\x15\n\x05\x42lock\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x16\n\x06Object\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x13\n\x03Tag\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xc4\x01\n\x08RepoInfo\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x1d\n\x08\x62ranches\x18\x07 \x03(\x0b\x32\x0b.pfs.Branch\x12$\n\tauth_info\x18\x06 \x01(\x0b\x32\x11.pfs.RepoAuthInfoJ\x04\x08\x04\x10\x05\"1\n\x0cRepoAuthInfo\x12!\n\x0c\x61\x63\x63\x65ss_level\x18\x01 \x01(\x0e\x32\x0b.auth.Scope\"-\n\x0c\x43ommitOrigin\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.pfs.OriginKind\"-\n\x06\x43ommit\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\n\n\x02id\x18\x02 \x01(\t\"E\n\x0b\x43ommitRange\x12\x1a\n\x05lower\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1a\n\x05upper\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\"L\n\x10\x43ommitProvenance\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0b.pfs.Branch\"\xe7\x04\n\nCommitInfo\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x06\x62ranch\x18\x0f \x01(\x0b\x32\x0b.pfs.Branch\x12!\n\x06origin\x18\x11 \x01(\x0b\x32\x11.pfs.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x08 \x01(\t\x12\"\n\rparent_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\"\n\rchild_commits\x18\x0b \x03(\x0b\x32\x0b.pfs.Commit\x12+\n\x07started\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x05 \x01(\x04\x12)\n\nprovenance\x18\x10 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x18\n\x10ready_provenance\x18\x0c \x01(\x03\x12$\n\nsubvenance\x18\t \x03(\x0b\x32\x10.pfs.CommitRange\x12\x19\n\x04tree\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\r \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x0e \x01(\x0b\x32\x0b.pfs.Object\x12!\n\x19subvenant_commits_success\x18\x12 \x01(\x03\x12!\n\x19subvenant_commits_failure\x18\x13 \x01(\x03\x12\x1f\n\x17subvenant_commits_total\x18\x14 \x01(\x03J\x04\x08\x06\x10\x07J\x04\x08\n\x10\x0b\"\xe8\x01\n\x08\x46ileInfo\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12 \n\tfile_type\x18\x02 \x01(\x0e\x32\r.pfs.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12-\n\tcommitted\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08\x63hildren\x18\x06 \x03(\t\x12\x1c\n\x07objects\x18\x08 \x03(\x0b\x32\x0b.pfs.Object\x12 \n\tblockRefs\x18\t \x03(\x0b\x32\r.pfs.BlockRef\x12\x0c\n\x04hash\x18\x07 \x01(\x0c\")\n\tByteRange\x12\r\n\x05lower\x18\x01 \x01(\x04\x12\r\n\x05upper\x18\x02 \x01(\x04\"D\n\x08\x42lockRef\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\x1d\n\x05range\x18\x02 \x01(\x0b\x32\x0e.pfs.ByteRange\"K\n\nObjectInfo\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"\x19\n\x05Merge\x12\x10\n\x08prefixes\x18\x01 \x03(\t\"&\n\x05Shard\x12\x1d\n\x05range\x18\x01 \x01(\x0b\x32\x0e.pfs.PathRange\")\n\tPathRange\x12\r\n\x05lower\x18\x01 \x01(\t\x12\r\n\x05upper\x18\x02 \x01(\t\"W\n\x11\x43reateRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06update\x18\x04 \x01(\x08J\x04\x08\x02\x10\x03\"-\n\x12InspectRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"\x17\n\x0fListRepoRequestJ\x04\x08\x01\x10\x02\"4\n\x10ListRepoResponse\x12 \n\trepo_info\x18\x01 \x03(\x0b\x32\r.pfs.RepoInfo\"H\n\x11\x44\x65leteRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"\x87\x01\n\x12StartCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12)\n\nprovenance\x18\x05 \x03(\x0b\x32\x15.pfs.CommitProvenanceJ\x04\x08\x02\x10\x03\"\xe6\x01\n\x12\x42uildCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\t\x12)\n\nprovenance\x18\x06 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\x07 \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x08 \x01(\x0b\x32\x0b.pfs.Object\x12\n\n\x02ID\x18\x05 \x01(\t\x12\x12\n\nsize_bytes\x18\t \x01(\x04J\x04\x08\x02\x10\x03\"\xbe\x01\n\x13\x46inishCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\x05 \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\x12\x12\n\nsize_bytes\x18\x06 \x01(\x04\x12\r\n\x05\x65mpty\x18\x04 \x01(\x08\"Z\n\x14InspectCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12%\n\x0b\x62lock_state\x18\x02 \x01(\x0e\x32\x10.pfs.CommitState\"\x81\x01\n\x11ListCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x19\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x17\n\x02to\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\"3\n\x0b\x43ommitInfos\x12$\n\x0b\x63ommit_info\x18\x01 \x03(\x0b\x32\x0f.pfs.CommitInfo\"\x80\x01\n\x13\x43reateBranchRequest\x12\x19\n\x04head\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x10\n\x08s_branch\x18\x02 \x01(\t\x12\x1b\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0b.pfs.Branch\x12\x1f\n\nprovenance\x18\x04 \x03(\x0b\x32\x0b.pfs.Branch\"3\n\x14InspectBranchRequest\x12\x1b\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0b.pfs.Branch\"=\n\x11ListBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"A\n\x13\x44\x65leteBranchRequest\x12\x1b\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0b.pfs.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"2\n\x13\x44\x65leteCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"O\n\x12\x46lushCommitRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x08to_repos\x18\x02 \x03(\x0b\x32\t.pfs.Repo\"\xa2\x01\n\x16SubscribeCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12#\n\x04prov\x18\x05 \x01(\x0b\x32\x15.pfs.CommitProvenance\x12\x19\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\x05state\x18\x04 \x01(\x0e\x32\x10.pfs.CommitState\"S\n\x0eGetFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x03\x12\x12\n\nsize_bytes\x18\x03 \x01(\x03\"\x1f\n\x0eOverwriteIndex\x12\r\n\x05index\x18\x01 \x01(\x03\"\x84\x02\n\x0ePutFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\r\n\x05value\x18\x03 \x01(\x0c\x12\x0b\n\x03url\x18\x05 \x01(\t\x12\x11\n\trecursive\x18\x06 \x01(\x08\x12!\n\tdelimiter\x18\x07 \x01(\x0e\x32\x0e.pfs.Delimiter\x12\x1a\n\x12target_file_datums\x18\x08 \x01(\x03\x12\x19\n\x11target_file_bytes\x18\t \x01(\x03\x12\x16\n\x0eheader_records\x18\x0b \x01(\x03\x12,\n\x0foverwrite_index\x18\n \x01(\x0b\x32\x13.pfs.OverwriteIndexJ\x04\x08\x02\x10\x03J\x04\x08\x04\x10\x05\"f\n\rPutFileRecord\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\x12\x13\n\x0bobject_hash\x18\x02 \x01(\t\x12,\n\x0foverwrite_index\x18\x03 \x01(\x0b\x32\x13.pfs.OverwriteIndex\"\x9f\x01\n\x0ePutFileRecords\x12\r\n\x05split\x18\x01 \x01(\x08\x12#\n\x07records\x18\x02 \x03(\x0b\x32\x12.pfs.PutFileRecord\x12\x11\n\ttombstone\x18\x03 \x01(\x08\x12\"\n\x06header\x18\x04 \x01(\x0b\x32\x12.pfs.PutFileRecord\x12\"\n\x06\x66ooter\x18\x05 \x01(\x0b\x32\x12.pfs.PutFileRecord\"T\n\x0f\x43opyFileRequest\x12\x16\n\x03src\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x16\n\x03\x64st\x18\x02 \x01(\x0b\x32\t.pfs.File\x12\x11\n\toverwrite\x18\x03 \x01(\x08\"-\n\x12InspectFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"I\n\x0fListFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x0c\n\x04\x66ull\x18\x02 \x01(\x08\x12\x0f\n\x07history\x18\x03 \x01(\x03\"*\n\x0fWalkFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"?\n\x0fGlobFileRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\"-\n\tFileInfos\x12 \n\tfile_info\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\"\\\n\x0f\x44iffFileRequest\x12\x1b\n\x08new_file\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x08old_file\x18\x02 \x01(\x0b\x32\t.pfs.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"V\n\x10\x44iffFileResponse\x12 \n\tnew_files\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\x12 \n\told_files\x18\x02 \x03(\x0b\x32\r.pfs.FileInfo\",\n\x11\x44\x65leteFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"\x1a\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"T\n\x10PutObjectRequest\x12\r\n\x05value\x18\x01 \x01(\x0c\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\x12\x19\n\x05\x62lock\x18\x03 \x01(\x0b\x32\n.pfs.Block\"T\n\x13\x43reateObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"o\n\x11GetObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x12\n\ntotal_size\x18\x04 \x01(\x04\";\n\x0fPutBlockRequest\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\r\n\x05value\x18\x02 \x01(\x0c\",\n\x0fGetBlockRequest\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\"r\n\x10GetBlocksRequest\x12 \n\tblockRefs\x18\x01 \x03(\x0b\x32\r.pfs.BlockRef\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x12\n\ntotal_size\x18\x04 \x01(\x04\"\x12\n\x10ListBlockRequest\"G\n\x10TagObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"\x14\n\x12ListObjectsRequest\"9\n\x0fListTagsRequest\x12\x0e\n\x06prefix\x18\x01 \x01(\t\x12\x16\n\x0einclude_object\x18\x02 \x01(\x08\"F\n\x10ListTagsResponse\x12\x15\n\x03tag\x18\x01 \x01(\x0b\x32\x08.pfs.Tag\x12\x1b\n\x06object\x18\x02 \x01(\x0b\x32\x0b.pfs.Object\"4\n\x14\x44\x65leteObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\"\x17\n\x15\x44\x65leteObjectsResponse\"+\n\x11\x44\x65leteTagsRequest\x12\x16\n\x04tags\x18\x01 \x03(\x0b\x32\x08.pfs.Tag\"\x14\n\x12\x44\x65leteTagsResponse\"1\n\x12\x43heckObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\"%\n\x13\x43heckObjectResponse\x12\x0e\n\x06\x65xists\x18\x01 \x01(\x08\"\'\n\x07Objects\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\"\xe0\x01\n\x0bObjectIndex\x12.\n\x07objects\x18\x01 \x03(\x0b\x32\x1d.pfs.ObjectIndex.ObjectsEntry\x12(\n\x04tags\x18\x02 \x03(\x0b\x32\x1a.pfs.ObjectIndex.TagsEntry\x1a=\n\x0cObjectsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef:\x02\x38\x01\x1a\x38\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.pfs.Object:\x02\x38\x01**\n\nOriginKind\x12\x08\n\x04USER\x10\x00\x12\x08\n\x04\x41UTO\x10\x01\x12\x08\n\x04\x46SCK\x10\x02*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*3\n\x0b\x43ommitState\x12\x0b\n\x07STARTED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x46INISHED\x10\x02*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\x9c\x0e\n\x03\x41PI\x12>\n\nCreateRepo\x12\x16.pfs.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x37\n\x0bInspectRepo\x12\x17.pfs.InspectRepoRequest\x1a\r.pfs.RepoInfo\"\x00\x12\x39\n\x08ListRepo\x12\x14.pfs.ListRepoRequest\x1a\x15.pfs.ListRepoResponse\"\x00\x12>\n\nDeleteRepo\x12\x16.pfs.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x0bStartCommit\x12\x17.pfs.StartCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x46inishCommit\x12\x18.pfs.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectCommit\x12\x19.pfs.InspectCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x12\x38\n\nListCommit\x12\x16.pfs.ListCommitRequest\x1a\x10.pfs.CommitInfos\"\x00\x12?\n\x10ListCommitStream\x12\x16.pfs.ListCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x42\n\x0c\x44\x65leteCommit\x12\x18.pfs.DeleteCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0b\x46lushCommit\x12\x17.pfs.FlushCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x43\n\x0fSubscribeCommit\x12\x1b.pfs.SubscribeCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x35\n\x0b\x42uildCommit\x12\x17.pfs.BuildCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x43reateBranch\x12\x18.pfs.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectBranch\x12\x19.pfs.InspectBranchRequest\x1a\x0f.pfs.BranchInfo\"\x00\x12\x38\n\nListBranch\x12\x16.pfs.ListBranchRequest\x1a\x10.pfs.BranchInfos\"\x00\x12\x42\n\x0c\x44\x65leteBranch\x12\x18.pfs.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x07PutFile\x12\x13.pfs.PutFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12:\n\x08\x43opyFile\x12\x14.pfs.CopyFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12?\n\x07GetFile\x12\x13.pfs.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x37\n\x0bInspectFile\x12\x17.pfs.InspectFileRequest\x1a\r.pfs.FileInfo\"\x00\x12\x32\n\x08ListFile\x12\x14.pfs.ListFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x39\n\x0eListFileStream\x12\x14.pfs.ListFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x33\n\x08WalkFile\x12\x14.pfs.WalkFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x32\n\x08GlobFile\x12\x14.pfs.GlobFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x39\n\x0eGlobFileStream\x12\x14.pfs.GlobFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x39\n\x08\x44iffFile\x12\x14.pfs.DiffFileRequest\x1a\x15.pfs.DiffFileResponse\"\x00\x12>\n\nDeleteFile\x12\x16.pfs.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\x04\x46sck\x12\x10.pfs.FsckRequest\x1a\x11.pfs.FsckResponse\"\x00\x30\x01\x32\xd1\t\n\tObjectAPI\x12\x33\n\tPutObject\x12\x15.pfs.PutObjectRequest\x1a\x0b.pfs.Object\"\x00(\x01\x12\x39\n\x0ePutObjectSplit\x12\x15.pfs.PutObjectRequest\x1a\x0c.pfs.Objects\"\x00(\x01\x12?\n\nPutObjects\x12\x15.pfs.PutObjectRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x42\n\x0c\x43reateObject\x12\x18.pfs.CreateObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x39\n\tGetObject\x12\x0b.pfs.Object\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetObjects\x12\x16.pfs.GetObjectsRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12<\n\x08PutBlock\x12\x14.pfs.PutBlockRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x41\n\x08GetBlock\x12\x14.pfs.GetBlockRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x43\n\tGetBlocks\x12\x15.pfs.GetBlocksRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x32\n\tListBlock\x12\x15.pfs.ListBlockRequest\x1a\n.pfs.Block\"\x00\x30\x01\x12<\n\tTagObject\x12\x15.pfs.TagObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\rInspectObject\x12\x0b.pfs.Object\x1a\x0f.pfs.ObjectInfo\"\x00\x12\x42\n\x0b\x43heckObject\x12\x17.pfs.CheckObjectRequest\x1a\x18.pfs.CheckObjectResponse\"\x00\x12;\n\x0bListObjects\x12\x17.pfs.ListObjectsRequest\x1a\x0f.pfs.ObjectInfo\"\x00\x30\x01\x12H\n\rDeleteObjects\x12\x19.pfs.DeleteObjectsRequest\x1a\x1a.pfs.DeleteObjectsResponse\"\x00\x12\x33\n\x06GetTag\x12\x08.pfs.Tag\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12)\n\nInspectTag\x12\x08.pfs.Tag\x1a\x0f.pfs.ObjectInfo\"\x00\x12;\n\x08ListTags\x12\x14.pfs.ListTagsRequest\x1a\x15.pfs.ListTagsResponse\"\x00\x30\x01\x12?\n\nDeleteTags\x12\x16.pfs.DeleteTagsRequest\x1a\x17.pfs.DeleteTagsResponse\"\x00\x12;\n\x07\x43ompact\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x42/Z-github.com/pachyderm/pachyderm/src/client/pfsb\x06proto3')
+  serialized_pb=_b('\n\x14\x63lient/pfs/pfs.proto\x12\x03pfs\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x16\x63lient/auth/auth.proto\"\x14\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\"/\n\x06\x42ranch\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xbc\x01\n\nBranchInfo\x12\x1b\n\x06\x62ranch\x18\x04 \x01(\x0b\x32\x0b.pfs.Branch\x12\x19\n\x04head\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\nprovenance\x18\x03 \x03(\x0b\x32\x0b.pfs.Branch\x12\x1f\n\nsubvenance\x18\x05 \x03(\x0b\x32\x0b.pfs.Branch\x12&\n\x11\x64irect_provenance\x18\x06 \x03(\x0b\x32\x0b.pfs.Branch\x12\x0c\n\x04name\x18\x01 \x01(\t\"3\n\x0b\x42ranchInfos\x12$\n\x0b\x62ranch_info\x18\x01 \x03(\x0b\x32\x0f.pfs.BranchInfo\"1\n\x04\x46ile\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\"\x15\n\x05\x42lock\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x16\n\x06Object\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x13\n\x03Tag\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xc4\x01\n\x08RepoInfo\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x1d\n\x08\x62ranches\x18\x07 \x03(\x0b\x32\x0b.pfs.Branch\x12$\n\tauth_info\x18\x06 \x01(\x0b\x32\x11.pfs.RepoAuthInfoJ\x04\x08\x04\x10\x05\"1\n\x0cRepoAuthInfo\x12!\n\x0c\x61\x63\x63\x65ss_level\x18\x01 \x01(\x0e\x32\x0b.auth.Scope\"-\n\x0c\x43ommitOrigin\x12\x1d\n\x04kind\x18\x01 \x01(\x0e\x32\x0f.pfs.OriginKind\"-\n\x06\x43ommit\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\n\n\x02id\x18\x02 \x01(\t\"E\n\x0b\x43ommitRange\x12\x1a\n\x05lower\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1a\n\x05upper\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\"L\n\x10\x43ommitProvenance\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0b.pfs.Branch\"\xe7\x04\n\nCommitInfo\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x06\x62ranch\x18\x0f \x01(\x0b\x32\x0b.pfs.Branch\x12!\n\x06origin\x18\x11 \x01(\x0b\x32\x11.pfs.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x08 \x01(\t\x12\"\n\rparent_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\"\n\rchild_commits\x18\x0b \x03(\x0b\x32\x0b.pfs.Commit\x12+\n\x07started\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x05 \x01(\x04\x12)\n\nprovenance\x18\x10 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x18\n\x10ready_provenance\x18\x0c \x01(\x03\x12$\n\nsubvenance\x18\t \x03(\x0b\x32\x10.pfs.CommitRange\x12\x19\n\x04tree\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\r \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x0e \x01(\x0b\x32\x0b.pfs.Object\x12!\n\x19subvenant_commits_success\x18\x12 \x01(\x03\x12!\n\x19subvenant_commits_failure\x18\x13 \x01(\x03\x12\x1f\n\x17subvenant_commits_total\x18\x14 \x01(\x03J\x04\x08\x06\x10\x07J\x04\x08\n\x10\x0b\"\xe8\x01\n\x08\x46ileInfo\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12 \n\tfile_type\x18\x02 \x01(\x0e\x32\r.pfs.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12-\n\tcommitted\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08\x63hildren\x18\x06 \x03(\t\x12\x1c\n\x07objects\x18\x08 \x03(\x0b\x32\x0b.pfs.Object\x12 \n\tblockRefs\x18\t \x03(\x0b\x32\r.pfs.BlockRef\x12\x0c\n\x04hash\x18\x07 \x01(\x0c\")\n\tByteRange\x12\r\n\x05lower\x18\x01 \x01(\x04\x12\r\n\x05upper\x18\x02 \x01(\x04\"D\n\x08\x42lockRef\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\x1d\n\x05range\x18\x02 \x01(\x0b\x32\x0e.pfs.ByteRange\"K\n\nObjectInfo\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"\x19\n\x05Merge\x12\x10\n\x08prefixes\x18\x01 \x03(\t\"&\n\x05Shard\x12\x1d\n\x05range\x18\x01 \x01(\x0b\x32\x0e.pfs.PathRange\")\n\tPathRange\x12\r\n\x05lower\x18\x01 \x01(\t\x12\r\n\x05upper\x18\x02 \x01(\t\"W\n\x11\x43reateRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06update\x18\x04 \x01(\x08J\x04\x08\x02\x10\x03\"-\n\x12InspectRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\"\x17\n\x0fListRepoRequestJ\x04\x08\x01\x10\x02\"4\n\x10ListRepoResponse\x12 \n\trepo_info\x18\x01 \x03(\x0b\x32\r.pfs.RepoInfo\"H\n\x11\x44\x65leteRepoRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"\x87\x01\n\x12StartCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12)\n\nprovenance\x18\x05 \x03(\x0b\x32\x15.pfs.CommitProvenanceJ\x04\x08\x02\x10\x03\"\xe6\x01\n\x12\x42uildCommitRequest\x12\x1b\n\x06parent\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06\x62ranch\x18\x04 \x01(\t\x12)\n\nprovenance\x18\x06 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\x07 \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x08 \x01(\x0b\x32\x0b.pfs.Object\x12\n\n\x02ID\x18\x05 \x01(\t\x12\x12\n\nsize_bytes\x18\t \x01(\x04J\x04\x08\x02\x10\x03\"\xbe\x01\n\x13\x46inishCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x19\n\x04tree\x18\x03 \x01(\x0b\x32\x0b.pfs.Object\x12\x1a\n\x05trees\x18\x05 \x03(\x0b\x32\x0b.pfs.Object\x12\x1b\n\x06\x64\x61tums\x18\x07 \x01(\x0b\x32\x0b.pfs.Object\x12\x12\n\nsize_bytes\x18\x06 \x01(\x04\x12\r\n\x05\x65mpty\x18\x04 \x01(\x08\"Z\n\x14InspectCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12%\n\x0b\x62lock_state\x18\x02 \x01(\x0e\x32\x10.pfs.CommitState\"\x81\x01\n\x11ListCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x19\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x17\n\x02to\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\"3\n\x0b\x43ommitInfos\x12$\n\x0b\x63ommit_info\x18\x01 \x03(\x0b\x32\x0f.pfs.CommitInfo\"\x80\x01\n\x13\x43reateBranchRequest\x12\x19\n\x04head\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x10\n\x08s_branch\x18\x02 \x01(\t\x12\x1b\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0b.pfs.Branch\x12\x1f\n\nprovenance\x18\x04 \x03(\x0b\x32\x0b.pfs.Branch\"3\n\x14InspectBranchRequest\x12\x1b\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0b.pfs.Branch\"=\n\x11ListBranchRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"A\n\x13\x44\x65leteBranchRequest\x12\x1b\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0b.pfs.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"2\n\x13\x44\x65leteCommitRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\"O\n\x12\x46lushCommitRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12\x1b\n\x08to_repos\x18\x02 \x03(\x0b\x32\t.pfs.Repo\"\xa2\x01\n\x16SubscribeCommitRequest\x12\x17\n\x04repo\x18\x01 \x01(\x0b\x32\t.pfs.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12#\n\x04prov\x18\x05 \x01(\x0b\x32\x15.pfs.CommitProvenance\x12\x19\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\x05state\x18\x04 \x01(\x0e\x32\x10.pfs.CommitState\"S\n\x0eGetFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x03\x12\x12\n\nsize_bytes\x18\x03 \x01(\x03\"\x1f\n\x0eOverwriteIndex\x12\r\n\x05index\x18\x01 \x01(\x03\"\x84\x02\n\x0ePutFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\r\n\x05value\x18\x03 \x01(\x0c\x12\x0b\n\x03url\x18\x05 \x01(\t\x12\x11\n\trecursive\x18\x06 \x01(\x08\x12!\n\tdelimiter\x18\x07 \x01(\x0e\x32\x0e.pfs.Delimiter\x12\x1a\n\x12target_file_datums\x18\x08 \x01(\x03\x12\x19\n\x11target_file_bytes\x18\t \x01(\x03\x12\x16\n\x0eheader_records\x18\x0b \x01(\x03\x12,\n\x0foverwrite_index\x18\n \x01(\x0b\x32\x13.pfs.OverwriteIndexJ\x04\x08\x02\x10\x03J\x04\x08\x04\x10\x05\"\x88\x01\n\rPutFileRecord\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\x12\x13\n\x0bobject_hash\x18\x02 \x01(\t\x12,\n\x0foverwrite_index\x18\x03 \x01(\x0b\x32\x13.pfs.OverwriteIndex\x12 \n\tblock_ref\x18\x04 \x01(\x0b\x32\r.pfs.BlockRef\"\x9f\x01\n\x0ePutFileRecords\x12\r\n\x05split\x18\x01 \x01(\x08\x12#\n\x07records\x18\x02 \x03(\x0b\x32\x12.pfs.PutFileRecord\x12\x11\n\ttombstone\x18\x03 \x01(\x08\x12\"\n\x06header\x18\x04 \x01(\x0b\x32\x12.pfs.PutFileRecord\x12\"\n\x06\x66ooter\x18\x05 \x01(\x0b\x32\x12.pfs.PutFileRecord\"T\n\x0f\x43opyFileRequest\x12\x16\n\x03src\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x16\n\x03\x64st\x18\x02 \x01(\x0b\x32\t.pfs.File\x12\x11\n\toverwrite\x18\x03 \x01(\x08\"-\n\x12InspectFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"I\n\x0fListFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x0c\n\x04\x66ull\x18\x02 \x01(\x08\x12\x0f\n\x07history\x18\x03 \x01(\x03\"*\n\x0fWalkFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"?\n\x0fGlobFileRequest\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\"-\n\tFileInfos\x12 \n\tfile_info\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\"\\\n\x0f\x44iffFileRequest\x12\x1b\n\x08new_file\x18\x01 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x08old_file\x18\x02 \x01(\x0b\x32\t.pfs.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"V\n\x10\x44iffFileResponse\x12 \n\tnew_files\x18\x01 \x03(\x0b\x32\r.pfs.FileInfo\x12 \n\told_files\x18\x02 \x03(\x0b\x32\r.pfs.FileInfo\",\n\x11\x44\x65leteFileRequest\x12\x17\n\x04\x66ile\x18\x01 \x01(\x0b\x32\t.pfs.File\"\x1a\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"T\n\x10PutObjectRequest\x12\r\n\x05value\x18\x01 \x01(\x0c\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\x12\x19\n\x05\x62lock\x18\x03 \x01(\x0b\x32\n.pfs.Block\"T\n\x13\x43reateObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12 \n\tblock_ref\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef\"o\n\x11GetObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x12\n\ntotal_size\x18\x04 \x01(\x04\";\n\x0fPutBlockRequest\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\x12\r\n\x05value\x18\x02 \x01(\x0c\",\n\x0fGetBlockRequest\x12\x19\n\x05\x62lock\x18\x01 \x01(\x0b\x32\n.pfs.Block\"r\n\x10GetBlocksRequest\x12 \n\tblockRefs\x18\x01 \x03(\x0b\x32\r.pfs.BlockRef\x12\x14\n\x0coffset_bytes\x18\x02 \x01(\x04\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x12\n\ntotal_size\x18\x04 \x01(\x04\"\x12\n\x10ListBlockRequest\"G\n\x10TagObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\x12\x16\n\x04tags\x18\x02 \x03(\x0b\x32\x08.pfs.Tag\"\x14\n\x12ListObjectsRequest\"9\n\x0fListTagsRequest\x12\x0e\n\x06prefix\x18\x01 \x01(\t\x12\x16\n\x0einclude_object\x18\x02 \x01(\x08\"F\n\x10ListTagsResponse\x12\x15\n\x03tag\x18\x01 \x01(\x0b\x32\x08.pfs.Tag\x12\x1b\n\x06object\x18\x02 \x01(\x0b\x32\x0b.pfs.Object\"4\n\x14\x44\x65leteObjectsRequest\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\"\x17\n\x15\x44\x65leteObjectsResponse\"+\n\x11\x44\x65leteTagsRequest\x12\x16\n\x04tags\x18\x01 \x03(\x0b\x32\x08.pfs.Tag\"\x14\n\x12\x44\x65leteTagsResponse\"1\n\x12\x43heckObjectRequest\x12\x1b\n\x06object\x18\x01 \x01(\x0b\x32\x0b.pfs.Object\"%\n\x13\x43heckObjectResponse\x12\x0e\n\x06\x65xists\x18\x01 \x01(\x08\"\'\n\x07Objects\x12\x1c\n\x07objects\x18\x01 \x03(\x0b\x32\x0b.pfs.Object\"\xe0\x01\n\x0bObjectIndex\x12.\n\x07objects\x18\x01 \x03(\x0b\x32\x1d.pfs.ObjectIndex.ObjectsEntry\x12(\n\x04tags\x18\x02 \x03(\x0b\x32\x1a.pfs.ObjectIndex.TagsEntry\x1a=\n\x0cObjectsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.pfs.BlockRef:\x02\x38\x01\x1a\x38\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.pfs.Object:\x02\x38\x01**\n\nOriginKind\x12\x08\n\x04USER\x10\x00\x12\x08\n\x04\x41UTO\x10\x01\x12\x08\n\x04\x46SCK\x10\x02*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*3\n\x0b\x43ommitState\x12\x0b\n\x07STARTED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x46INISHED\x10\x02*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\x9c\x0e\n\x03\x41PI\x12>\n\nCreateRepo\x12\x16.pfs.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x37\n\x0bInspectRepo\x12\x17.pfs.InspectRepoRequest\x1a\r.pfs.RepoInfo\"\x00\x12\x39\n\x08ListRepo\x12\x14.pfs.ListRepoRequest\x1a\x15.pfs.ListRepoResponse\"\x00\x12>\n\nDeleteRepo\x12\x16.pfs.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x0bStartCommit\x12\x17.pfs.StartCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x46inishCommit\x12\x18.pfs.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectCommit\x12\x19.pfs.InspectCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x12\x38\n\nListCommit\x12\x16.pfs.ListCommitRequest\x1a\x10.pfs.CommitInfos\"\x00\x12?\n\x10ListCommitStream\x12\x16.pfs.ListCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x42\n\x0c\x44\x65leteCommit\x12\x18.pfs.DeleteCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0b\x46lushCommit\x12\x17.pfs.FlushCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x43\n\x0fSubscribeCommit\x12\x1b.pfs.SubscribeCommitRequest\x1a\x0f.pfs.CommitInfo\"\x00\x30\x01\x12\x35\n\x0b\x42uildCommit\x12\x17.pfs.BuildCommitRequest\x1a\x0b.pfs.Commit\"\x00\x12\x42\n\x0c\x43reateBranch\x12\x18.pfs.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\rInspectBranch\x12\x19.pfs.InspectBranchRequest\x1a\x0f.pfs.BranchInfo\"\x00\x12\x38\n\nListBranch\x12\x16.pfs.ListBranchRequest\x1a\x10.pfs.BranchInfos\"\x00\x12\x42\n\x0c\x44\x65leteBranch\x12\x18.pfs.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x07PutFile\x12\x13.pfs.PutFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12:\n\x08\x43opyFile\x12\x14.pfs.CopyFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12?\n\x07GetFile\x12\x13.pfs.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x37\n\x0bInspectFile\x12\x17.pfs.InspectFileRequest\x1a\r.pfs.FileInfo\"\x00\x12\x32\n\x08ListFile\x12\x14.pfs.ListFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x39\n\x0eListFileStream\x12\x14.pfs.ListFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x33\n\x08WalkFile\x12\x14.pfs.WalkFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x32\n\x08GlobFile\x12\x14.pfs.GlobFileRequest\x1a\x0e.pfs.FileInfos\"\x00\x12\x39\n\x0eGlobFileStream\x12\x14.pfs.GlobFileRequest\x1a\r.pfs.FileInfo\"\x00\x30\x01\x12\x39\n\x08\x44iffFile\x12\x14.pfs.DiffFileRequest\x1a\x15.pfs.DiffFileResponse\"\x00\x12>\n\nDeleteFile\x12\x16.pfs.DeleteFileRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\x04\x46sck\x12\x10.pfs.FsckRequest\x1a\x11.pfs.FsckResponse\"\x00\x30\x01\x32\xd1\t\n\tObjectAPI\x12\x33\n\tPutObject\x12\x15.pfs.PutObjectRequest\x1a\x0b.pfs.Object\"\x00(\x01\x12\x39\n\x0ePutObjectSplit\x12\x15.pfs.PutObjectRequest\x1a\x0c.pfs.Objects\"\x00(\x01\x12?\n\nPutObjects\x12\x15.pfs.PutObjectRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x42\n\x0c\x43reateObject\x12\x18.pfs.CreateObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x39\n\tGetObject\x12\x0b.pfs.Object\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetObjects\x12\x16.pfs.GetObjectsRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12<\n\x08PutBlock\x12\x14.pfs.PutBlockRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x41\n\x08GetBlock\x12\x14.pfs.GetBlockRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x43\n\tGetBlocks\x12\x15.pfs.GetBlocksRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x32\n\tListBlock\x12\x15.pfs.ListBlockRequest\x1a\n.pfs.Block\"\x00\x30\x01\x12<\n\tTagObject\x12\x15.pfs.TagObjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\rInspectObject\x12\x0b.pfs.Object\x1a\x0f.pfs.ObjectInfo\"\x00\x12\x42\n\x0b\x43heckObject\x12\x17.pfs.CheckObjectRequest\x1a\x18.pfs.CheckObjectResponse\"\x00\x12;\n\x0bListObjects\x12\x17.pfs.ListObjectsRequest\x1a\x0f.pfs.ObjectInfo\"\x00\x30\x01\x12H\n\rDeleteObjects\x12\x19.pfs.DeleteObjectsRequest\x1a\x1a.pfs.DeleteObjectsResponse\"\x00\x12\x33\n\x06GetTag\x12\x08.pfs.Tag\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12)\n\nInspectTag\x12\x08.pfs.Tag\x1a\x0f.pfs.ObjectInfo\"\x00\x12;\n\x08ListTags\x12\x14.pfs.ListTagsRequest\x1a\x15.pfs.ListTagsResponse\"\x00\x30\x01\x12?\n\nDeleteTags\x12\x16.pfs.DeleteTagsRequest\x1a\x17.pfs.DeleteTagsResponse\"\x00\x12;\n\x07\x43ompact\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x42/Z-github.com/pachyderm/pachyderm/src/client/pfsb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,client_dot_auth_dot_auth__pb2.DESCRIPTOR,])
 
@@ -50,8 +50,8 @@ _ORIGINKIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6538,
-  serialized_end=6580,
+  serialized_start=6573,
+  serialized_end=6615,
 )
 _sym_db.RegisterEnumDescriptor(_ORIGINKIND)
 
@@ -77,8 +77,8 @@ _FILETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6582,
-  serialized_end=6625,
+  serialized_start=6617,
+  serialized_end=6660,
 )
 _sym_db.RegisterEnumDescriptor(_FILETYPE)
 
@@ -104,8 +104,8 @@ _COMMITSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6627,
-  serialized_end=6678,
+  serialized_start=6662,
+  serialized_end=6713,
 )
 _sym_db.RegisterEnumDescriptor(_COMMITSTATE)
 
@@ -139,8 +139,8 @@ _DELIMITER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=6680,
-  serialized_end=6739,
+  serialized_start=6715,
+  serialized_end=6774,
 )
 _sym_db.RegisterEnumDescriptor(_DELIMITER)
 
@@ -2132,6 +2132,13 @@ _PUTFILERECORD = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='block_ref', full_name='pfs.PutFileRecord.block_ref', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -2144,8 +2151,8 @@ _PUTFILERECORD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4350,
-  serialized_end=4452,
+  serialized_start=4351,
+  serialized_end=4487,
 )
 
 
@@ -2203,8 +2210,8 @@ _PUTFILERECORDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4455,
-  serialized_end=4614,
+  serialized_start=4490,
+  serialized_end=4649,
 )
 
 
@@ -2248,8 +2255,8 @@ _COPYFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4616,
-  serialized_end=4700,
+  serialized_start=4651,
+  serialized_end=4735,
 )
 
 
@@ -2279,8 +2286,8 @@ _INSPECTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4702,
-  serialized_end=4747,
+  serialized_start=4737,
+  serialized_end=4782,
 )
 
 
@@ -2324,8 +2331,8 @@ _LISTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4749,
-  serialized_end=4822,
+  serialized_start=4784,
+  serialized_end=4857,
 )
 
 
@@ -2355,8 +2362,8 @@ _WALKFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4824,
-  serialized_end=4866,
+  serialized_start=4859,
+  serialized_end=4901,
 )
 
 
@@ -2393,8 +2400,8 @@ _GLOBFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4868,
-  serialized_end=4931,
+  serialized_start=4903,
+  serialized_end=4966,
 )
 
 
@@ -2424,8 +2431,8 @@ _FILEINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4933,
-  serialized_end=4978,
+  serialized_start=4968,
+  serialized_end=5013,
 )
 
 
@@ -2469,8 +2476,8 @@ _DIFFFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4980,
-  serialized_end=5072,
+  serialized_start=5015,
+  serialized_end=5107,
 )
 
 
@@ -2507,8 +2514,8 @@ _DIFFFILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5074,
-  serialized_end=5160,
+  serialized_start=5109,
+  serialized_end=5195,
 )
 
 
@@ -2538,8 +2545,8 @@ _DELETEFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5162,
-  serialized_end=5206,
+  serialized_start=5197,
+  serialized_end=5241,
 )
 
 
@@ -2569,8 +2576,8 @@ _FSCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5208,
-  serialized_end=5234,
+  serialized_start=5243,
+  serialized_end=5269,
 )
 
 
@@ -2607,8 +2614,8 @@ _FSCKRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5236,
-  serialized_end=5278,
+  serialized_start=5271,
+  serialized_end=5313,
 )
 
 
@@ -2652,8 +2659,8 @@ _PUTOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5280,
-  serialized_end=5364,
+  serialized_start=5315,
+  serialized_end=5399,
 )
 
 
@@ -2690,8 +2697,8 @@ _CREATEOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5366,
-  serialized_end=5450,
+  serialized_start=5401,
+  serialized_end=5485,
 )
 
 
@@ -2742,8 +2749,8 @@ _GETOBJECTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5452,
-  serialized_end=5563,
+  serialized_start=5487,
+  serialized_end=5598,
 )
 
 
@@ -2780,8 +2787,8 @@ _PUTBLOCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5565,
-  serialized_end=5624,
+  serialized_start=5600,
+  serialized_end=5659,
 )
 
 
@@ -2811,8 +2818,8 @@ _GETBLOCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5626,
-  serialized_end=5670,
+  serialized_start=5661,
+  serialized_end=5705,
 )
 
 
@@ -2863,8 +2870,8 @@ _GETBLOCKSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5672,
-  serialized_end=5786,
+  serialized_start=5707,
+  serialized_end=5821,
 )
 
 
@@ -2887,8 +2894,8 @@ _LISTBLOCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5788,
-  serialized_end=5806,
+  serialized_start=5823,
+  serialized_end=5841,
 )
 
 
@@ -2925,8 +2932,8 @@ _TAGOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5808,
-  serialized_end=5879,
+  serialized_start=5843,
+  serialized_end=5914,
 )
 
 
@@ -2949,8 +2956,8 @@ _LISTOBJECTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5881,
-  serialized_end=5901,
+  serialized_start=5916,
+  serialized_end=5936,
 )
 
 
@@ -2987,8 +2994,8 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5903,
-  serialized_end=5960,
+  serialized_start=5938,
+  serialized_end=5995,
 )
 
 
@@ -3025,8 +3032,8 @@ _LISTTAGSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5962,
-  serialized_end=6032,
+  serialized_start=5997,
+  serialized_end=6067,
 )
 
 
@@ -3056,8 +3063,8 @@ _DELETEOBJECTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6034,
-  serialized_end=6086,
+  serialized_start=6069,
+  serialized_end=6121,
 )
 
 
@@ -3080,8 +3087,8 @@ _DELETEOBJECTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6088,
-  serialized_end=6111,
+  serialized_start=6123,
+  serialized_end=6146,
 )
 
 
@@ -3111,8 +3118,8 @@ _DELETETAGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6113,
-  serialized_end=6156,
+  serialized_start=6148,
+  serialized_end=6191,
 )
 
 
@@ -3135,8 +3142,8 @@ _DELETETAGSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6158,
-  serialized_end=6178,
+  serialized_start=6193,
+  serialized_end=6213,
 )
 
 
@@ -3166,8 +3173,8 @@ _CHECKOBJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6180,
-  serialized_end=6229,
+  serialized_start=6215,
+  serialized_end=6264,
 )
 
 
@@ -3197,8 +3204,8 @@ _CHECKOBJECTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6231,
-  serialized_end=6268,
+  serialized_start=6266,
+  serialized_end=6303,
 )
 
 
@@ -3228,8 +3235,8 @@ _OBJECTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6270,
-  serialized_end=6309,
+  serialized_start=6305,
+  serialized_end=6344,
 )
 
 
@@ -3266,8 +3273,8 @@ _OBJECTINDEX_OBJECTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6417,
-  serialized_end=6478,
+  serialized_start=6452,
+  serialized_end=6513,
 )
 
 _OBJECTINDEX_TAGSENTRY = _descriptor.Descriptor(
@@ -3303,8 +3310,8 @@ _OBJECTINDEX_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6480,
-  serialized_end=6536,
+  serialized_start=6515,
+  serialized_end=6571,
 )
 
 _OBJECTINDEX = _descriptor.Descriptor(
@@ -3340,8 +3347,8 @@ _OBJECTINDEX = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6312,
-  serialized_end=6536,
+  serialized_start=6347,
+  serialized_end=6571,
 )
 
 _BRANCH.fields_by_name['repo'].message_type = _REPO
@@ -3424,6 +3431,7 @@ _PUTFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _PUTFILEREQUEST.fields_by_name['delimiter'].enum_type = _DELIMITER
 _PUTFILEREQUEST.fields_by_name['overwrite_index'].message_type = _OVERWRITEINDEX
 _PUTFILERECORD.fields_by_name['overwrite_index'].message_type = _OVERWRITEINDEX
+_PUTFILERECORD.fields_by_name['block_ref'].message_type = _BLOCKREF
 _PUTFILERECORDS.fields_by_name['records'].message_type = _PUTFILERECORD
 _PUTFILERECORDS.fields_by_name['header'].message_type = _PUTFILERECORD
 _PUTFILERECORDS.fields_by_name['footer'].message_type = _PUTFILERECORD
@@ -4094,8 +4102,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=6742,
-  serialized_end=8562,
+  serialized_start=6777,
+  serialized_end=8597,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateRepo',
@@ -4379,8 +4387,8 @@ _OBJECTAPI = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=8565,
-  serialized_end=9798,
+  serialized_start=8600,
+  serialized_end=9833,
   methods=[
   _descriptor.MethodDescriptor(
     name='PutObject',

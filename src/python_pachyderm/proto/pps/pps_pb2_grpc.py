@@ -110,6 +110,26 @@ class APIStub(object):
         request_serializer=client_dot_pps_dot_pps__pb2.RunCronRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
+    self.CreateSecret = channel.unary_unary(
+        '/pps.API/CreateSecret',
+        request_serializer=client_dot_pps_dot_pps__pb2.CreateSecretRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.DeleteSecret = channel.unary_unary(
+        '/pps.API/DeleteSecret',
+        request_serializer=client_dot_pps_dot_pps__pb2.DeleteSecretRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.ListSecret = channel.unary_unary(
+        '/pps.API/ListSecret',
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=client_dot_pps_dot_pps__pb2.SecretInfos.FromString,
+        )
+    self.InspectSecret = channel.unary_unary(
+        '/pps.API/InspectSecret',
+        request_serializer=client_dot_pps_dot_pps__pb2.InspectSecretRequest.SerializeToString,
+        response_deserializer=client_dot_pps_dot_pps__pb2.SecretInfo.FromString,
+        )
     self.DeleteAll = channel.unary_unary(
         '/pps.API/DeleteAll',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -276,6 +296,34 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CreateSecret(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteSecret(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListSecret(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def InspectSecret(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def DeleteAll(self, request, context):
     """DeleteAll deletes everything
     """
@@ -409,6 +457,26 @@ def add_APIServicer_to_server(servicer, server):
           servicer.RunCron,
           request_deserializer=client_dot_pps_dot_pps__pb2.RunCronRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'CreateSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateSecret,
+          request_deserializer=client_dot_pps_dot_pps__pb2.CreateSecretRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'DeleteSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteSecret,
+          request_deserializer=client_dot_pps_dot_pps__pb2.DeleteSecretRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'ListSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.ListSecret,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=client_dot_pps_dot_pps__pb2.SecretInfos.SerializeToString,
+      ),
+      'InspectSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.InspectSecret,
+          request_deserializer=client_dot_pps_dot_pps__pb2.InspectSecretRequest.FromString,
+          response_serializer=client_dot_pps_dot_pps__pb2.SecretInfo.SerializeToString,
       ),
       'DeleteAll': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteAll,
