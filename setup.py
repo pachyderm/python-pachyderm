@@ -44,8 +44,11 @@ setup(
     ],
     keywords=['pachyderm',],
     install_requires=[
-        'protobuf>=3.11.2', 'grpcio>=1.26.0', 'certifi>=2019.11.28'
+        'protobuf>=3.11.2', 'grpcio>=1.26.0'
     ],
+    extras_require = {
+        "system_certs": ["certifi>=2019.11.28"],
+    },
     test_suite='tests',
     tests_require=['pytest'],
     setup_requires=['pytest-runner'],

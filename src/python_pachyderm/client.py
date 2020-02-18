@@ -64,7 +64,7 @@ class Client(
         self._metadata = self._build_metadata()
 
     @classmethod
-    def new_in_cluster(cls, auth_token=None, root_certs=None, transaction_id=None):
+    def new_in_cluster(cls, auth_token=None, transaction_id=None):
         """
         Creates a Pachyderm client that operates within a Pachyderm cluster.
 
@@ -72,13 +72,22 @@ class Client(
 
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string.
         * `transaction_id`: The ID of the transaction to run operations on.
         """
 
-        host = os.environ["PACHD_SERVICE_HOST"]
-        port = int(os.environ["PACHD_SERVICE_PORT"])
-        return cls(host=host, port=port, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+        if "PACHD_PEER_SERVICE_HOST" in os.environ and "PACHD_PEER_SERVICE_PORT" in os.environ:
+            # Try to use the pachd peer service if it's available. This is
+            # only supported in pachyderm>=1.10, but is more reliable because
+            # it'll work when TLS is enabled on the cluster.
+            host = os.environ["PACHD_PEER_SERVICE_HOST"]
+            port = int(os.environ["PACHD_PEER_SERVICE_PORT"])
+        else:
+            # Otherwise use the normal service host/port, which will not work
+            # when TLS is enabled on the cluster.
+            host = os.environ["PACHD_SERVICE_HOST"]
+            port = int(os.environ["PACHD_SERVICE_PORT"])
+
+        return cls(host=host, port=port, auth_token=auth_token, transaction_id=transaction_id)
 
     @classmethod
     def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
