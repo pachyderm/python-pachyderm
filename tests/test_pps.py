@@ -148,25 +148,32 @@ def test_run_cron():
 
     # this should trigger an error because the sandbox pipeline doesn't have a
     # cron input
-    with pytest.raises(python_pachyderm.RpcError) as e:
+    with pytest.raises(python_pachyderm.RpcError):
         sandbox.client.run_cron(sandbox.pipeline_repo_name)
     assert "pipeline must have a cron input" in str(e.value)
 
 @util.skip_if_below_pachyderm_version(1, 9, 12)
 def test_secrets():
     sandbox = Sandbox("secrets")
-    
-    sandbox.client.create_secret(b"""{
-        "kind": "Secret",
-        "apiVersion": "v1",
-        "metadata": {
-            "name": "test-secret",
-            "creationTimestamp": null
-        },
-        "data": {
-            "mykey": "bXktdmFsdWU="
-        }
-    }""")
+
+    sandbox.client.create_secret("test-secret", {
+        "mykey": "my-value",
+    })
+
+    secret = sandbox.client.inspect_secret("test-secret")
+    assert secret.secret.name == "test-secret"
+
+    secrets = sandbox.client.list_secret()
+    assert len(secrets) == 1
+    assert secrets[0].secret.name == "test-secret"
+
+    sandbox.client.delete_secret("test-secret")
+
+    with pytest.raises(python_pachyderm.RpcError):
+        sandbox.client.inspect_secret("test-secret")
+
+    secrets = sandbox.client.list_secret()
+    assert len(secrets) == 0
 
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
