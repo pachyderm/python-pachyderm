@@ -1,3 +1,6 @@
+import json
+import base64
+
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
 from python_pachyderm.service import Service
 from .util import commit_from
@@ -418,16 +421,40 @@ class PPSMixin:
             pipeline=pps_proto.Pipeline(name=pipeline_name),
         )
 
-    def create_secret(self, file):
+    def create_secret(self, secret_name, data, labels=None, annotations=None):
         """
         Creates a new secret.
 
         Params:
 
-        * `file`: A bytestring representing the secret contents.
+        * `secret_name`: The name of the secret to create.
+        * `data`: A dict of string keys -> string or bytestring values to
+        store in the secret. Each key must consist of alphanumeric characters,
+        `-`, `_` or `.`.
+        * `labels`: A dict of string keys -> string values representing the
+        kubernetes labels to attach to the secret.
+        * `annotations`: A dict representing the kubernetes annotations to
+        attach to the secret.
         """
 
-        return self._req(Service.PPS, "CreateSecret", file=file)
+        encoded_data = {}
+        for k, v in data.items():
+            if isinstance(v, str):
+                v = v.encode("utf8")
+            encoded_data[k] = base64.b64encode(v).decode("utf8")
+
+        f = json.dumps({
+            "kind": "Secret",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": secret_name,
+                "labels": labels,
+                "annotations": annotations,
+            },
+            "data": encoded_data,
+        }).encode("utf8")
+
+        return self._req(Service.PPS, "CreateSecret", file=f)
 
     def delete_secret(self, secret_name):
         """
@@ -445,7 +472,10 @@ class PPSMixin:
         Lists secrets. Returns a list of `SecretInfo` objects.
         """
 
-        return self._req(Service.PPS, "ListSecret").secret_info
+        return self._req(
+            Service.PPS, "ListSecret",
+            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
+        ).secret_info
 
     def inspect_secret(self, secret_name):
         """
@@ -464,7 +494,7 @@ class PPSMixin:
         """
         return self._req(
             Service.PPS, "DeleteAll",
-            req=pps_proto.google_dot_pps_proto.uf_dot_empty__pb2.Empty(),
+            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
         )
 
     def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
