@@ -44,6 +44,7 @@ ci-setup:
 	pachctl version
 
 release:
+	git checkout master
 	rm -rf build dist
 	python setup.py sdist
 	twine upload dist/*
