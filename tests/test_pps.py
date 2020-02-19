@@ -148,7 +148,8 @@ def test_run_cron():
 
     # this should trigger an error because the sandbox pipeline doesn't have a
     # cron input
-    with pytest.raises(python_pachyderm.RpcError):
+    # NOTE: `e` is used after the context
+    with pytest.raises(python_pachyderm.RpcError) as e:
         sandbox.client.run_cron(sandbox.pipeline_repo_name)
     assert "pipeline must have a cron input" in str(e.value)
 
