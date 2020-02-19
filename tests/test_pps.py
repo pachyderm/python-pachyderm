@@ -154,25 +154,26 @@ def test_run_cron():
 
 @util.skip_if_below_pachyderm_version(1, 9, 12)
 def test_secrets():
-    sandbox = Sandbox("secrets")
+    client = python_pachyderm.Client()
+    secret_name = util.test_repo_name("test-secrets")
 
-    sandbox.client.create_secret("test-secret", {
+    client.create_secret(secret_name, {
         "mykey": "my-value",
     })
 
-    secret = sandbox.client.inspect_secret("test-secret")
-    assert secret.secret.name == "test-secret"
+    secret = client.inspect_secret(secret_name)
+    assert secret.secret.name == secret_name
 
-    secrets = sandbox.client.list_secret()
+    secrets = client.list_secret()
     assert len(secrets) == 1
-    assert secrets[0].secret.name == "test-secret"
+    assert secrets[0].secret.name == secret_name
 
-    sandbox.client.delete_secret("test-secret")
+    client.delete_secret(secret_name)
 
     with pytest.raises(python_pachyderm.RpcError):
-        sandbox.client.inspect_secret("test-secret")
+        client.inspect_secret(secret_name)
 
-    secrets = sandbox.client.list_secret()
+    secrets = client.list_secret()
     assert len(secrets) == 0
 
 def test_get_pipeline_logs():
