@@ -15,7 +15,10 @@ def main():
             cmd=["python3", "/app/main.py"],
             image="ysimonson/pachyderm_spout_producer",
         ),
-        spout=python_pachyderm.Spout(overwrite=False),
+        spout=python_pachyderm.Spout(
+            overwrite=False,
+            marker="marker",
+        ),
     )
 
     python_pachyderm.create_python_pipeline(
