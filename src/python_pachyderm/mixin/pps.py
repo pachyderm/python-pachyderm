@@ -347,7 +347,7 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "ListPipeline", history=history)
 
-    def delete_pipeline(self, pipeline_name, force=None):
+    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None):
         """
         Deletes a pipeline.
 
@@ -355,8 +355,15 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
+        * `keep_repo`: Whether to keep the repo.
         """
-        return self._req(Service.PPS, "DeletePipeline", pipeline=pps_proto.Pipeline(name=pipeline_name), force=force)
+        return self._req(
+            Service.PPS,
+            "DeletePipeline",
+            pipeline=pps_proto.Pipeline(name=pipeline_name),
+            force=force,
+            keep_repo=keep_repo
+        )
 
     def delete_all_pipelines(self, force=None):
         """
