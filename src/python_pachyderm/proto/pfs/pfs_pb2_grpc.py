@@ -166,6 +166,16 @@ class APIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.FsckRequest.SerializeToString,
         response_deserializer=client_dot_pfs_dot_pfs__pb2.FsckResponse.FromString,
         )
+    self.PutTar = channel.stream_unary(
+        '/pfs.API/PutTar',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.PutTarRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.GetTar = channel.unary_stream(
+        '/pfs.API/GetTar',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.GetTarRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
 
 
 class APIServicer(object):
@@ -393,6 +403,20 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def PutTar(self, request_iterator, context):
+    """RPCs specific to the new storage layer. 
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetTar(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -545,6 +569,16 @@ def add_APIServicer_to_server(servicer, server):
           servicer.Fsck,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.FsckRequest.FromString,
           response_serializer=client_dot_pfs_dot_pfs__pb2.FsckResponse.SerializeToString,
+      ),
+      'PutTar': grpc.stream_unary_rpc_method_handler(
+          servicer.PutTar,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.PutTarRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'GetTar': grpc.unary_stream_rpc_method_handler(
+          servicer.GetTar,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.GetTarRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

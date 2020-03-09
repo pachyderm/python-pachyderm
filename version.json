@@ -1,4 +1,4 @@
 {
-    "pachyderm": "1.9.12",
+    "pachyderm": "1.10.0-rc4",
     "python-pachyderm": "3.1.0"
 }

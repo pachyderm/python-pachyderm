@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='pps',
   syntax='proto3',
   serialized_options=_b('Z-github.com/pachyderm/pachyderm/src/client/pps'),
-  serialized_pb=_b('\n\x14\x63lient/pps/pps.proto\x12\x03pps\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x14\x63lient/pfs/pfs.proto\"M\n\x0bSecretMount\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\t\x12\x12\n\nmount_path\x18\x02 \x01(\t\x12\x0f\n\x07\x65nv_var\x18\x03 \x01(\t\"\xcd\x02\n\tTransform\x12\r\n\x05image\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x03(\t\x12\x0f\n\x07\x65rr_cmd\x18\r \x03(\t\x12$\n\x03\x65nv\x18\x03 \x03(\x0b\x32\x17.pps.Transform.EnvEntry\x12!\n\x07secrets\x18\x04 \x03(\x0b\x32\x10.pps.SecretMount\x12\x1a\n\x12image_pull_secrets\x18\t \x03(\t\x12\r\n\x05stdin\x18\x05 \x03(\t\x12\x11\n\terr_stdin\x18\x0e \x03(\t\x12\x1a\n\x12\x61\x63\x63\x65pt_return_code\x18\x06 \x03(\x03\x12\r\n\x05\x64\x65\x62ug\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\n \x01(\t\x12\x13\n\x0bworking_dir\x18\x0b \x01(\t\x12\x12\n\ndockerfile\x18\x0c \x01(\t\x1a*\n\x08\x45nvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x17\n\x05TFJob\x12\x0e\n\x06tf_job\x18\x01 \x01(\t\"\x15\n\x06\x45gress\x12\x0b\n\x03URL\x18\x01 \x01(\t\"\x11\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\"\xb9\x01\n\x07Service\x12\x15\n\rinternal_port\x18\x01 \x01(\x05\x12\x15\n\rexternal_port\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x32\n\x0b\x61nnotations\x18\x05 \x03(\x0b\x32\x1d.pps.Service.AnnotationsEntry\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x05Spout\x12\x11\n\toverwrite\x18\x01 \x01(\x08\x12\x1d\n\x07service\x18\x02 \x01(\x0b\x32\x0c.pps.Service\x12\x0e\n\x06marker\x18\x03 \x01(\t\"\x88\x01\n\x08PFSInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\x12\x0c\n\x04glob\x18\x05 \x01(\t\x12\x0f\n\x07join_on\x18\x08 \x01(\t\x12\x0c\n\x04lazy\x18\x06 \x01(\x08\x12\x13\n\x0b\x65mpty_files\x18\x07 \x01(\x08\"\x83\x01\n\tCronInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x03 \x01(\t\x12\x0c\n\x04spec\x18\x04 \x01(\t\x12\x11\n\toverwrite\x18\x06 \x01(\x08\x12)\n\x05start\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"E\n\x08GitInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\"\xad\x01\n\x05Input\x12\x1a\n\x03pfs\x18\x06 \x01(\x0b\x32\r.pps.PFSInput\x12\x18\n\x04join\x18\x07 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05\x63ross\x18\x02 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05union\x18\x03 \x03(\x0b\x32\n.pps.Input\x12\x1c\n\x04\x63ron\x18\x04 \x01(\x0b\x32\x0e.pps.CronInput\x12\x1a\n\x03git\x18\x05 \x01(\x0b\x32\r.pps.GitInput\"Q\n\x08JobInput\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04glob\x18\x02 \x01(\t\x12\x0c\n\x04lazy\x18\x03 \x01(\x08\">\n\x0fParallelismSpec\x12\x10\n\x08\x63onstant\x18\x02 \x01(\x04\x12\x13\n\x0b\x63oefficient\x18\x03 \x01(\x01J\x04\x08\x01\x10\x02\" \n\x0cHashtreeSpec\x12\x10\n\x08\x63onstant\x18\x01 \x01(\x04\"\'\n\tInputFile\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"*\n\x05\x44\x61tum\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\x03job\x18\x02 \x01(\x0b\x32\x08.pps.Job\"\xa3\x01\n\tDatumInfo\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\x12\x1e\n\x05state\x18\x02 \x01(\x0e\x32\x0f.pps.DatumState\x12 \n\x05stats\x18\x03 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x1c\n\tpfs_state\x18\x04 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32\r.pfs.FileInfo\"s\n\tAggregate\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x0c\n\x04mean\x18\x02 \x01(\x01\x12\x0e\n\x06stddev\x18\x03 \x01(\x01\x12\x18\n\x10\x66ifth_percentile\x18\x04 \x01(\x01\x12\x1f\n\x17ninety_fifth_percentile\x18\x05 \x01(\x01\"\xcf\x01\n\x0cProcessStats\x12\x30\n\rdownload_time\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x64ownload_bytes\x18\x04 \x01(\x04\x12\x14\n\x0cupload_bytes\x18\x05 \x01(\x04\"\xd7\x01\n\x15\x41ggregateProcessStats\x12%\n\rdownload_time\x18\x01 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x0e.pps.Aggregate\x12#\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x0e.pps.Aggregate\x12&\n\x0e\x64ownload_bytes\x18\x04 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cupload_bytes\x18\x05 \x01(\x0b\x32\x0e.pps.Aggregate\"\xb2\x01\n\x0cWorkerStatus\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x02 \x01(\t\x12\x1c\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x0e.pps.InputFile\x12+\n\x07started\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12 \n\x05stats\x18\x05 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x12\n\nqueue_size\x18\x06 \x01(\x03\"Z\n\x0cResourceSpec\x12\x0b\n\x03\x63pu\x18\x01 \x01(\x02\x12\x0e\n\x06memory\x18\x02 \x01(\t\x12\x19\n\x03gpu\x18\x05 \x01(\x0b\x32\x0c.pps.GPUSpec\x12\x0c\n\x04\x64isk\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"\'\n\x07GPUSpec\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x03\"\xb7\x03\n\x0b\x45tcdJobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x12\n\ndata_total\x18\x07 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x08 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x0f \x01(\x03\x12 \n\x05stats\x18\t \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18\n \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\x0b \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x0c \x01(\t\x12+\n\x07started\x18\r \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x0e \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xdc\t\n\x07JobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1f\n\x08pipeline\x18\x03 \x01(\x0b\x32\r.pps.Pipeline\x12\x18\n\x10pipeline_version\x18\r \x01(\x04\x12 \n\x0bspec_commit\x18/ \x01(\x0b\x32\x0b.pfs.Commit\x12.\n\x10parallelism_spec\x18\x0c \x01(\x0b\x32\x14.pps.ParallelismSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12\x1c\n\nparent_job\x18\x06 \x01(\x0b\x32\x08.pps.Job\x12+\n\x07started\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\"\n\routput_commit\x18\t \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\n \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12\x1d\n\x07service\x18\x0e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\x1e\n\x0boutput_repo\x18\x12 \x01(\x0b\x32\t.pfs.Repo\x12\x15\n\routput_branch\x18\x11 \x01(\t\x12\x0f\n\x07restart\x18\x14 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x16 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1e \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18( \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18. \x01(\x03\x12\x12\n\ndata_total\x18\x17 \x01(\x03\x12 \n\x05stats\x18\x1f \x01(\x0b\x32\x11.pps.ProcessStats\x12(\n\rworker_status\x18\x18 \x03(\x0b\x32\x11.pps.WorkerStatus\x12,\n\x11resource_requests\x18\x19 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18$ \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x1a \x01(\x0b\x32\n.pps.Input\x12#\n\nnew_branch\x18\x1b \x01(\x0b\x32\x0f.pfs.BranchInfo\x12!\n\x0cstats_commit\x18\x1d \x01(\x0b\x32\x0b.pfs.Commit\x12\x14\n\x0c\x65nable_stats\x18  \x01(\x08\x12\x0c\n\x04salt\x18! \x01(\t\x12\"\n\nchunk_spec\x18% \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18& \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\' \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0b\x64\x61tum_tries\x18) \x01(\x03\x12,\n\x0fscheduling_spec\x18* \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18+ \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\tJ\x04\x08\x04\x10\x05J\x04\x08\x05\x10\x06J\x04\x08\x1c\x10\x1dJ\x04\x08\"\x10#\"7\n\x06Worker\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1f\n\x05state\x18\x02 \x01(\x0e\x32\x10.pps.WorkerState\"*\n\x08JobInfos\x12\x1e\n\x08job_info\x18\x01 \x03(\x0b\x32\x0c.pps.JobInfo\"\x18\n\x08Pipeline\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xa3\x02\n\x10\x45tcdPipelineInfo\x12!\n\x05state\x18\x01 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0e\n\x06reason\x18\x04 \x01(\t\x12 \n\x0bspec_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x38\n\njob_counts\x18\x03 \x03(\x0b\x32$.pps.EtcdPipelineInfo.JobCountsEntry\x12\x12\n\nauth_token\x18\x05 \x01(\t\x12%\n\x0elast_job_state\x18\x06 \x01(\x0e\x32\r.pps.JobState\x12\x13\n\x0bparallelism\x18\x07 \x01(\x04\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xa0\t\n\x0cPipelineInfo\x12\n\n\x02id\x18\x11 \x01(\t\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07version\x18\x0b \x01(\x04\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1a\n\x06tf_job\x18. \x01(\x0b\x32\n.pps.TFJob\x12.\n\x10parallelism_spec\x18\n \x01(\x0b\x32\x14.pps.ParallelismSpec\x12(\n\rhashtree_spec\x18* \x01(\x0b\x32\x11.pps.HashtreeSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\x05state\x18\x07 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0f\n\x07stopped\x18& \x01(\x08\x12\x14\n\x0crecent_error\x18\x08 \x01(\t\x12\x34\n\njob_counts\x18\t \x03(\x0b\x32 .pps.PipelineInfo.JobCountsEntry\x12%\n\x0elast_job_state\x18+ \x01(\x0e\x32\r.pps.JobState\x12\x15\n\routput_branch\x18\x10 \x01(\t\x12,\n\x11resource_requests\x18\x13 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x1f \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x14 \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x15 \x01(\t\x12\x12\n\ncache_size\x18\x17 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x18 \x01(\x08\x12\x0c\n\x04salt\x18\x19 \x01(\t\x12\x0e\n\x06reason\x18\x1c \x01(\t\x12\x16\n\x0emax_queue_size\x18\x1d \x01(\x03\x12\x1d\n\x07service\x18\x1e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18  \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18! \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\" \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0bgithook_url\x18# \x01(\t\x12 \n\x0bspec_commit\x18$ \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07standby\x18% \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\' \x01(\x03\x12,\n\x0fscheduling_spec\x18( \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18) \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\t\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01J\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x16\x10\x17J\x04\x08\x1a\x10\x1bJ\x04\x08\x1b\x10\x1cJ\x04\x08\x12\x10\x13\"9\n\rPipelineInfos\x12(\n\rpipeline_info\x18\x01 \x03(\x0b\x32\x11.pps.PipelineInfo\"\xa3\x04\n\x10\x43reateJobRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x19 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x1a \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x1b \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1c \x01(\x03\x12\x12\n\ndata_total\x18\x1d \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x1e \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x1f \x01(\x03\x12 \n\x05stats\x18  \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18! \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\" \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12+\n\x07started\x18$ \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18% \x01(\x0b\x32\x1a.google.protobuf.TimestampJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x01\x10\x02J\x04\x08\n\x10\x0bJ\x04\x08\x07\x10\x08J\x04\x08\t\x10\nJ\x04\x08\x08\x10\tJ\x04\x08\x0c\x10\rJ\x04\x08\x0b\x10\x0cJ\x04\x08\r\x10\x0eJ\x04\x08\x0e\x10\x0fJ\x04\x08\x15\x10\x16J\x04\x08\x0f\x10\x10J\x04\x08\x10\x10\x11J\x04\x08\x11\x10\x12J\x04\x08\x12\x10\x13J\x04\x08\x13\x10\x14J\x04\x08\x14\x10\x15J\x04\x08\x16\x10\x17J\x04\x08\x17\x10\x18J\x04\x08\x18\x10\x19\"c\n\x11InspectJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x62lock_state\x18\x02 \x01(\x08\"\x97\x01\n\x0eListJobRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12!\n\x0cinput_commit\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07history\x18\x04 \x01(\x03\x12\x0c\n\x04\x66ull\x18\x05 \x01(\x08\"T\n\x0f\x46lushJobRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12#\n\x0cto_pipelines\x18\x02 \x03(\x0b\x32\r.pps.Pipeline\")\n\x10\x44\x65leteJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"\'\n\x0eStopJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"\\\n\x15UpdateJobStateRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1c\n\x05state\x18\x02 \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x03 \x01(\t\"\xad\x01\n\x0eGetLogsRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x03 \x03(\t\x12\x19\n\x05\x64\x61tum\x18\x06 \x01(\x0b\x32\n.pps.Datum\x12\x0e\n\x06master\x18\x05 \x01(\x08\x12\x0e\n\x06\x66ollow\x18\x07 \x01(\x08\x12\x0c\n\x04tail\x18\x08 \x01(\x03J\x04\x08\x04\x10\x05\"\xcd\x01\n\nLogMessage\x12\x15\n\rpipeline_name\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x03 \x01(\t\x12\x11\n\tworker_id\x18\x07 \x01(\t\x12\x10\n\x08\x64\x61tum_id\x18\t \x01(\t\x12\x0e\n\x06master\x18\n \x01(\x08\x12\x1c\n\x04\x64\x61ta\x18\x04 \x03(\x0b\x32\x0e.pps.InputFile\x12\x0c\n\x04user\x18\x08 \x01(\x08\x12&\n\x02ts\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07message\x18\x06 \x01(\t\"B\n\x13RestartDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x02 \x03(\t\"0\n\x13InspectDatumRequest\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\"J\n\x10ListDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x11\n\tpage_size\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"[\n\x11ListDatumResponse\x12#\n\x0b\x64\x61tum_infos\x18\x01 \x03(\x0b\x32\x0e.pps.DatumInfo\x12\x13\n\x0btotal_pages\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"`\n\x17ListDatumStreamResponse\x12\"\n\ndatum_info\x18\x01 \x01(\x0b\x32\x0e.pps.DatumInfo\x12\x13\n\x0btotal_pages\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"/\n\tChunkSpec\x12\x0e\n\x06number\x18\x01 \x01(\x03\x12\x12\n\nsize_bytes\x18\x02 \x01(\x03\"\xa0\x01\n\x0eSchedulingSpec\x12<\n\rnode_selector\x18\x01 \x03(\x0b\x32%.pps.SchedulingSpec.NodeSelectorEntry\x12\x1b\n\x13priority_class_name\x18\x02 \x01(\t\x1a\x33\n\x11NodeSelectorEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xfb\x06\n\x15\x43reatePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x1a\n\x06tf_job\x18# \x01(\x0b\x32\n.pps.TFJob\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12.\n\x10parallelism_spec\x18\x07 \x01(\x0b\x32\x14.pps.ParallelismSpec\x12(\n\rhashtree_spec\x18\x1f \x01(\x0b\x32\x11.pps.HashtreeSpec\x12\x1b\n\x06\x65gress\x18\t \x01(\x0b\x32\x0b.pps.Egress\x12\x0e\n\x06update\x18\x05 \x01(\x08\x12\x15\n\routput_branch\x18\n \x01(\t\x12,\n\x11resource_requests\x18\x0c \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x16 \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\r \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x0e \x01(\t\x12\x12\n\ncache_size\x18\x10 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x11 \x01(\x08\x12\x11\n\treprocess\x18\x12 \x01(\x08\x12\x16\n\x0emax_queue_size\x18\x14 \x01(\x03\x12\x1d\n\x07service\x18\x15 \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18! \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18\x17 \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18\x18 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\x19 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0c\n\x04salt\x18\x1a \x01(\t\x12\x0f\n\x07standby\x18\x1b \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\x1c \x01(\x03\x12,\n\x0fscheduling_spec\x18\x1d \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18\x1e \x01(\t\x12\x11\n\tpod_patch\x18  \x01(\t\x12 \n\x0bspec_commit\x18\" \x01(\x0b\x32\x0b.pfs.CommitJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x0b\x10\x0cJ\x04\x08\x0f\x10\x10J\x04\x08\x13\x10\x14\"9\n\x16InspectPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"G\n\x13ListPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07history\x18\x02 \x01(\x03\"`\n\x15\x44\x65letePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0b\n\x03\x61ll\x18\x04 \x01(\x08\x12\r\n\x05\x66orce\x18\x05 \x01(\x08J\x04\x08\x02\x10\x03J\x04\x08\x03\x10\x04\"7\n\x14StartPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"6\n\x13StopPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"v\n\x12RunPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12)\n\nprovenance\x18\x02 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x0e\n\x06job_id\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"1\n\x0eRunCronRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"#\n\x13\x43reateSecretRequest\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\"2\n\x13\x44\x65leteSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"3\n\x14InspectSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"\x16\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\"o\n\nSecretInfo\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x36\n\x12\x63reation_timestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"3\n\x0bSecretInfos\x12$\n\x0bsecret_info\x18\x01 \x03(\x0b\x32\x0f.pps.SecretInfo\"-\n\x15GarbageCollectRequest\x12\x14\n\x0cmemory_bytes\x18\x01 \x01(\x03\"\x18\n\x16GarbageCollectResponse\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse*p\n\x08JobState\x12\x10\n\x0cJOB_STARTING\x10\x00\x12\x0f\n\x0bJOB_RUNNING\x10\x01\x12\x0f\n\x0bJOB_FAILURE\x10\x02\x12\x0f\n\x0bJOB_SUCCESS\x10\x03\x12\x0e\n\nJOB_KILLED\x10\x04\x12\x0f\n\x0bJOB_MERGING\x10\x05*O\n\nDatumState\x12\n\n\x06\x46\x41ILED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07SKIPPED\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\r\n\tRECOVERED\x10\x04*?\n\x0bWorkerState\x12\x0f\n\x0bPOD_RUNNING\x10\x00\x12\x0f\n\x0bPOD_SUCCESS\x10\x01\x12\x0e\n\nPOD_FAILED\x10\x02*\x96\x01\n\rPipelineState\x12\x15\n\x11PIPELINE_STARTING\x10\x00\x12\x14\n\x10PIPELINE_RUNNING\x10\x01\x12\x17\n\x13PIPELINE_RESTARTING\x10\x02\x12\x14\n\x10PIPELINE_FAILURE\x10\x03\x12\x13\n\x0fPIPELINE_PAUSED\x10\x04\x12\x14\n\x10PIPELINE_STANDBY\x10\x05\x32\xf6\r\n\x03\x41PI\x12.\n\tCreateJob\x12\x15.pps.CreateJobRequest\x1a\x08.pps.Job\"\x00\x12\x34\n\nInspectJob\x12\x16.pps.InspectJobRequest\x1a\x0c.pps.JobInfo\"\x00\x12/\n\x07ListJob\x12\x13.pps.ListJobRequest\x1a\r.pps.JobInfos\"\x00\x12\x36\n\rListJobStream\x12\x13.pps.ListJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12\x32\n\x08\x46lushJob\x12\x14.pps.FlushJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12<\n\tDeleteJob\x12\x15.pps.DeleteJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07StopJob\x12\x13.pps.StopJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x0cInspectDatum\x12\x18.pps.InspectDatumRequest\x1a\x0e.pps.DatumInfo\"\x00\x12<\n\tListDatum\x12\x15.pps.ListDatumRequest\x1a\x16.pps.ListDatumResponse\"\x00\x12J\n\x0fListDatumStream\x12\x15.pps.ListDatumRequest\x1a\x1c.pps.ListDatumStreamResponse\"\x00\x30\x01\x12\x42\n\x0cRestartDatum\x12\x18.pps.RestartDatumRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x46\n\x0e\x43reatePipeline\x12\x1a.pps.CreatePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0fInspectPipeline\x12\x1b.pps.InspectPipelineRequest\x1a\x11.pps.PipelineInfo\"\x00\x12>\n\x0cListPipeline\x12\x18.pps.ListPipelineRequest\x1a\x12.pps.PipelineInfos\"\x00\x12\x46\n\x0e\x44\x65letePipeline\x12\x1a.pps.DeletePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x44\n\rStartPipeline\x12\x19.pps.StartPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0cStopPipeline\x12\x18.pps.StopPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12@\n\x0bRunPipeline\x12\x17.pps.RunPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07RunCron\x12\x13.pps.RunCronRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x43reateSecret\x12\x18.pps.CreateSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x44\x65leteSecret\x12\x18.pps.DeleteSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\nListSecret\x12\x16.google.protobuf.Empty\x1a\x10.pps.SecretInfos\"\x00\x12=\n\rInspectSecret\x12\x19.pps.InspectSecretRequest\x1a\x0f.pps.SecretInfo\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x33\n\x07GetLogs\x12\x13.pps.GetLogsRequest\x1a\x0f.pps.LogMessage\"\x00\x30\x01\x12K\n\x0eGarbageCollect\x12\x1a.pps.GarbageCollectRequest\x1a\x1b.pps.GarbageCollectResponse\"\x00\x12\x45\n\x0c\x41\x63tivateAuth\x12\x18.pps.ActivateAuthRequest\x1a\x19.pps.ActivateAuthResponse\"\x00\x12\x46\n\x0eUpdateJobState\x12\x1a.pps.UpdateJobStateRequest\x1a\x16.google.protobuf.Empty\"\x00\x42/Z-github.com/pachyderm/pachyderm/src/client/ppsb\x06proto3')
+  serialized_pb=_b('\n\x14\x63lient/pps/pps.proto\x12\x03pps\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x14\x63lient/pfs/pfs.proto\"M\n\x0bSecretMount\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\t\x12\x12\n\nmount_path\x18\x02 \x01(\t\x12\x0f\n\x07\x65nv_var\x18\x03 \x01(\t\"\xcd\x02\n\tTransform\x12\r\n\x05image\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x03(\t\x12\x0f\n\x07\x65rr_cmd\x18\r \x03(\t\x12$\n\x03\x65nv\x18\x03 \x03(\x0b\x32\x17.pps.Transform.EnvEntry\x12!\n\x07secrets\x18\x04 \x03(\x0b\x32\x10.pps.SecretMount\x12\x1a\n\x12image_pull_secrets\x18\t \x03(\t\x12\r\n\x05stdin\x18\x05 \x03(\t\x12\x11\n\terr_stdin\x18\x0e \x03(\t\x12\x1a\n\x12\x61\x63\x63\x65pt_return_code\x18\x06 \x03(\x03\x12\r\n\x05\x64\x65\x62ug\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\n \x01(\t\x12\x13\n\x0bworking_dir\x18\x0b \x01(\t\x12\x12\n\ndockerfile\x18\x0c \x01(\t\x1a*\n\x08\x45nvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x17\n\x05TFJob\x12\x0e\n\x06tf_job\x18\x01 \x01(\t\"\x15\n\x06\x45gress\x12\x0b\n\x03URL\x18\x01 \x01(\t\"\x11\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\"\xcd\x01\n\x08Metadata\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.pps.Metadata.AnnotationsEntry\x12)\n\x06labels\x18\x02 \x03(\x0b\x32\x19.pps.Metadata.LabelsEntry\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"Q\n\x07Service\x12\x15\n\rinternal_port\x18\x01 \x01(\x05\x12\x15\n\rexternal_port\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\"I\n\x05Spout\x12\x11\n\toverwrite\x18\x01 \x01(\x08\x12\x1d\n\x07service\x18\x02 \x01(\x0b\x32\x0c.pps.Service\x12\x0e\n\x06marker\x18\x03 \x01(\t\"\x94\x01\n\x08PFSInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\x12\x0c\n\x04glob\x18\x05 \x01(\t\x12\x0f\n\x07join_on\x18\x08 \x01(\t\x12\x0c\n\x04lazy\x18\x06 \x01(\x08\x12\x13\n\x0b\x65mpty_files\x18\x07 \x01(\x08\x12\n\n\x02s3\x18\t \x01(\x08\"\x83\x01\n\tCronInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x03 \x01(\t\x12\x0c\n\x04spec\x18\x04 \x01(\t\x12\x11\n\toverwrite\x18\x06 \x01(\x08\x12)\n\x05start\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"E\n\x08GitInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\"\xad\x01\n\x05Input\x12\x1a\n\x03pfs\x18\x06 \x01(\x0b\x32\r.pps.PFSInput\x12\x18\n\x04join\x18\x07 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05\x63ross\x18\x02 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05union\x18\x03 \x03(\x0b\x32\n.pps.Input\x12\x1c\n\x04\x63ron\x18\x04 \x01(\x0b\x32\x0e.pps.CronInput\x12\x1a\n\x03git\x18\x05 \x01(\x0b\x32\r.pps.GitInput\"Q\n\x08JobInput\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04glob\x18\x02 \x01(\t\x12\x0c\n\x04lazy\x18\x03 \x01(\x08\">\n\x0fParallelismSpec\x12\x10\n\x08\x63onstant\x18\x02 \x01(\x04\x12\x13\n\x0b\x63oefficient\x18\x03 \x01(\x01J\x04\x08\x01\x10\x02\" \n\x0cHashtreeSpec\x12\x10\n\x08\x63onstant\x18\x01 \x01(\x04\"\'\n\tInputFile\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"*\n\x05\x44\x61tum\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\x03job\x18\x02 \x01(\x0b\x32\x08.pps.Job\"\xa3\x01\n\tDatumInfo\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\x12\x1e\n\x05state\x18\x02 \x01(\x0e\x32\x0f.pps.DatumState\x12 \n\x05stats\x18\x03 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x1c\n\tpfs_state\x18\x04 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32\r.pfs.FileInfo\"s\n\tAggregate\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x0c\n\x04mean\x18\x02 \x01(\x01\x12\x0e\n\x06stddev\x18\x03 \x01(\x01\x12\x18\n\x10\x66ifth_percentile\x18\x04 \x01(\x01\x12\x1f\n\x17ninety_fifth_percentile\x18\x05 \x01(\x01\"\xcf\x01\n\x0cProcessStats\x12\x30\n\rdownload_time\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x64ownload_bytes\x18\x04 \x01(\x04\x12\x14\n\x0cupload_bytes\x18\x05 \x01(\x04\"\xd7\x01\n\x15\x41ggregateProcessStats\x12%\n\rdownload_time\x18\x01 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x0e.pps.Aggregate\x12#\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x0e.pps.Aggregate\x12&\n\x0e\x64ownload_bytes\x18\x04 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cupload_bytes\x18\x05 \x01(\x0b\x32\x0e.pps.Aggregate\"\xb2\x01\n\x0cWorkerStatus\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x02 \x01(\t\x12\x1c\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x0e.pps.InputFile\x12+\n\x07started\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12 \n\x05stats\x18\x05 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x12\n\nqueue_size\x18\x06 \x01(\x03\"Z\n\x0cResourceSpec\x12\x0b\n\x03\x63pu\x18\x01 \x01(\x02\x12\x0e\n\x06memory\x18\x02 \x01(\t\x12\x19\n\x03gpu\x18\x05 \x01(\x0b\x32\x0c.pps.GPUSpec\x12\x0c\n\x04\x64isk\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"\'\n\x07GPUSpec\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x03\"\xb7\x03\n\x0b\x45tcdJobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x12\n\ndata_total\x18\x07 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x08 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x0f \x01(\x03\x12 \n\x05stats\x18\t \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18\n \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\x0b \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x0c \x01(\t\x12+\n\x07started\x18\r \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x0e \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xdc\t\n\x07JobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1f\n\x08pipeline\x18\x03 \x01(\x0b\x32\r.pps.Pipeline\x12\x18\n\x10pipeline_version\x18\r \x01(\x04\x12 \n\x0bspec_commit\x18/ \x01(\x0b\x32\x0b.pfs.Commit\x12.\n\x10parallelism_spec\x18\x0c \x01(\x0b\x32\x14.pps.ParallelismSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12\x1c\n\nparent_job\x18\x06 \x01(\x0b\x32\x08.pps.Job\x12+\n\x07started\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\"\n\routput_commit\x18\t \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\n \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12\x1d\n\x07service\x18\x0e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\x1e\n\x0boutput_repo\x18\x12 \x01(\x0b\x32\t.pfs.Repo\x12\x15\n\routput_branch\x18\x11 \x01(\t\x12\x0f\n\x07restart\x18\x14 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x16 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1e \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18( \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18. \x01(\x03\x12\x12\n\ndata_total\x18\x17 \x01(\x03\x12 \n\x05stats\x18\x1f \x01(\x0b\x32\x11.pps.ProcessStats\x12(\n\rworker_status\x18\x18 \x03(\x0b\x32\x11.pps.WorkerStatus\x12,\n\x11resource_requests\x18\x19 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18$ \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x1a \x01(\x0b\x32\n.pps.Input\x12#\n\nnew_branch\x18\x1b \x01(\x0b\x32\x0f.pfs.BranchInfo\x12!\n\x0cstats_commit\x18\x1d \x01(\x0b\x32\x0b.pfs.Commit\x12\x14\n\x0c\x65nable_stats\x18  \x01(\x08\x12\x0c\n\x04salt\x18! \x01(\t\x12\"\n\nchunk_spec\x18% \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18& \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\' \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0b\x64\x61tum_tries\x18) \x01(\x03\x12,\n\x0fscheduling_spec\x18* \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18+ \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\tJ\x04\x08\x04\x10\x05J\x04\x08\x05\x10\x06J\x04\x08\x1c\x10\x1dJ\x04\x08\"\x10#\"7\n\x06Worker\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1f\n\x05state\x18\x02 \x01(\x0e\x32\x10.pps.WorkerState\"*\n\x08JobInfos\x12\x1e\n\x08job_info\x18\x01 \x03(\x0b\x32\x0c.pps.JobInfo\"\x18\n\x08Pipeline\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xa3\x02\n\x10\x45tcdPipelineInfo\x12!\n\x05state\x18\x01 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0e\n\x06reason\x18\x04 \x01(\t\x12 \n\x0bspec_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x38\n\njob_counts\x18\x03 \x03(\x0b\x32$.pps.EtcdPipelineInfo.JobCountsEntry\x12\x12\n\nauth_token\x18\x05 \x01(\t\x12%\n\x0elast_job_state\x18\x06 \x01(\x0e\x32\r.pps.JobState\x12\x13\n\x0bparallelism\x18\x07 \x01(\x04\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xd1\t\n\x0cPipelineInfo\x12\n\n\x02id\x18\x11 \x01(\t\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07version\x18\x0b \x01(\x04\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1a\n\x06tf_job\x18. \x01(\x0b\x32\n.pps.TFJob\x12.\n\x10parallelism_spec\x18\n \x01(\x0b\x32\x14.pps.ParallelismSpec\x12(\n\rhashtree_spec\x18* \x01(\x0b\x32\x11.pps.HashtreeSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\x05state\x18\x07 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0f\n\x07stopped\x18& \x01(\x08\x12\x14\n\x0crecent_error\x18\x08 \x01(\t\x12\x34\n\njob_counts\x18\t \x03(\x0b\x32 .pps.PipelineInfo.JobCountsEntry\x12%\n\x0elast_job_state\x18+ \x01(\x0e\x32\r.pps.JobState\x12\x15\n\routput_branch\x18\x10 \x01(\t\x12,\n\x11resource_requests\x18\x13 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x1f \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x14 \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x15 \x01(\t\x12\x12\n\ncache_size\x18\x17 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x18 \x01(\x08\x12\x0c\n\x04salt\x18\x19 \x01(\t\x12\x0e\n\x06reason\x18\x1c \x01(\t\x12\x16\n\x0emax_queue_size\x18\x1d \x01(\x03\x12\x1d\n\x07service\x18\x1e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18  \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18! \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\" \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0bgithook_url\x18# \x01(\t\x12 \n\x0bspec_commit\x18$ \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07standby\x18% \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\' \x01(\x03\x12,\n\x0fscheduling_spec\x18( \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18) \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\t\x12\x0e\n\x06s3_out\x18/ \x01(\x08\x12\x1f\n\x08metadata\x18\x30 \x01(\x0b\x32\r.pps.Metadata\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01J\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x16\x10\x17J\x04\x08\x1a\x10\x1bJ\x04\x08\x1b\x10\x1cJ\x04\x08\x12\x10\x13\"9\n\rPipelineInfos\x12(\n\rpipeline_info\x18\x01 \x03(\x0b\x32\x11.pps.PipelineInfo\"\xa3\x04\n\x10\x43reateJobRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x19 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x1a \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x1b \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1c \x01(\x03\x12\x12\n\ndata_total\x18\x1d \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x1e \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x1f \x01(\x03\x12 \n\x05stats\x18  \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18! \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\" \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12+\n\x07started\x18$ \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18% \x01(\x0b\x32\x1a.google.protobuf.TimestampJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x01\x10\x02J\x04\x08\n\x10\x0bJ\x04\x08\x07\x10\x08J\x04\x08\t\x10\nJ\x04\x08\x08\x10\tJ\x04\x08\x0c\x10\rJ\x04\x08\x0b\x10\x0cJ\x04\x08\r\x10\x0eJ\x04\x08\x0e\x10\x0fJ\x04\x08\x15\x10\x16J\x04\x08\x0f\x10\x10J\x04\x08\x10\x10\x11J\x04\x08\x11\x10\x12J\x04\x08\x12\x10\x13J\x04\x08\x13\x10\x14J\x04\x08\x14\x10\x15J\x04\x08\x16\x10\x17J\x04\x08\x17\x10\x18J\x04\x08\x18\x10\x19\"c\n\x11InspectJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x62lock_state\x18\x02 \x01(\x08\"\x97\x01\n\x0eListJobRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12!\n\x0cinput_commit\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07history\x18\x04 \x01(\x03\x12\x0c\n\x04\x66ull\x18\x05 \x01(\x08\"T\n\x0f\x46lushJobRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12#\n\x0cto_pipelines\x18\x02 \x03(\x0b\x32\r.pps.Pipeline\")\n\x10\x44\x65leteJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"\'\n\x0eStopJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"\\\n\x15UpdateJobStateRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1c\n\x05state\x18\x02 \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x03 \x01(\t\"\xad\x01\n\x0eGetLogsRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x03 \x03(\t\x12\x19\n\x05\x64\x61tum\x18\x06 \x01(\x0b\x32\n.pps.Datum\x12\x0e\n\x06master\x18\x05 \x01(\x08\x12\x0e\n\x06\x66ollow\x18\x07 \x01(\x08\x12\x0c\n\x04tail\x18\x08 \x01(\x03J\x04\x08\x04\x10\x05\"\xcd\x01\n\nLogMessage\x12\x15\n\rpipeline_name\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x03 \x01(\t\x12\x11\n\tworker_id\x18\x07 \x01(\t\x12\x10\n\x08\x64\x61tum_id\x18\t \x01(\t\x12\x0e\n\x06master\x18\n \x01(\x08\x12\x1c\n\x04\x64\x61ta\x18\x04 \x03(\x0b\x32\x0e.pps.InputFile\x12\x0c\n\x04user\x18\x08 \x01(\x08\x12&\n\x02ts\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07message\x18\x06 \x01(\t\"B\n\x13RestartDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x02 \x03(\t\"0\n\x13InspectDatumRequest\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\"J\n\x10ListDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x11\n\tpage_size\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"[\n\x11ListDatumResponse\x12#\n\x0b\x64\x61tum_infos\x18\x01 \x03(\x0b\x32\x0e.pps.DatumInfo\x12\x13\n\x0btotal_pages\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"`\n\x17ListDatumStreamResponse\x12\"\n\ndatum_info\x18\x01 \x01(\x0b\x32\x0e.pps.DatumInfo\x12\x13\n\x0btotal_pages\x18\x02 \x01(\x03\x12\x0c\n\x04page\x18\x03 \x01(\x03\"/\n\tChunkSpec\x12\x0e\n\x06number\x18\x01 \x01(\x03\x12\x12\n\nsize_bytes\x18\x02 \x01(\x03\"\xa0\x01\n\x0eSchedulingSpec\x12<\n\rnode_selector\x18\x01 \x03(\x0b\x32%.pps.SchedulingSpec.NodeSelectorEntry\x12\x1b\n\x13priority_class_name\x18\x02 \x01(\t\x1a\x33\n\x11NodeSelectorEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xac\x07\n\x15\x43reatePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x1a\n\x06tf_job\x18# \x01(\x0b\x32\n.pps.TFJob\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12.\n\x10parallelism_spec\x18\x07 \x01(\x0b\x32\x14.pps.ParallelismSpec\x12(\n\rhashtree_spec\x18\x1f \x01(\x0b\x32\x11.pps.HashtreeSpec\x12\x1b\n\x06\x65gress\x18\t \x01(\x0b\x32\x0b.pps.Egress\x12\x0e\n\x06update\x18\x05 \x01(\x08\x12\x15\n\routput_branch\x18\n \x01(\t\x12\x0e\n\x06s3_out\x18$ \x01(\x08\x12,\n\x11resource_requests\x18\x0c \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x16 \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\r \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x0e \x01(\t\x12\x12\n\ncache_size\x18\x10 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x11 \x01(\x08\x12\x11\n\treprocess\x18\x12 \x01(\x08\x12\x16\n\x0emax_queue_size\x18\x14 \x01(\x03\x12\x1d\n\x07service\x18\x15 \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18! \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18\x17 \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18\x18 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\x19 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0c\n\x04salt\x18\x1a \x01(\t\x12\x0f\n\x07standby\x18\x1b \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\x1c \x01(\x03\x12,\n\x0fscheduling_spec\x18\x1d \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18\x1e \x01(\t\x12\x11\n\tpod_patch\x18  \x01(\t\x12 \n\x0bspec_commit\x18\" \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\x08metadata\x18. \x01(\x0b\x32\r.pps.MetadataJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x0b\x10\x0cJ\x04\x08\x0f\x10\x10J\x04\x08\x13\x10\x14\"9\n\x16InspectPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"G\n\x13ListPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07history\x18\x02 \x01(\x03\"s\n\x15\x44\x65letePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0b\n\x03\x61ll\x18\x04 \x01(\x08\x12\r\n\x05\x66orce\x18\x05 \x01(\x08\x12\x11\n\tkeep_repo\x18\x06 \x01(\x08J\x04\x08\x02\x10\x03J\x04\x08\x03\x10\x04\"7\n\x14StartPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"6\n\x13StopPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"v\n\x12RunPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12)\n\nprovenance\x18\x02 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x0e\n\x06job_id\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"1\n\x0eRunCronRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"#\n\x13\x43reateSecretRequest\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\"2\n\x13\x44\x65leteSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"3\n\x14InspectSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"\x16\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\"o\n\nSecretInfo\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x36\n\x12\x63reation_timestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"3\n\x0bSecretInfos\x12$\n\x0bsecret_info\x18\x01 \x03(\x0b\x32\x0f.pps.SecretInfo\"-\n\x15GarbageCollectRequest\x12\x14\n\x0cmemory_bytes\x18\x01 \x01(\x03\"\x18\n\x16GarbageCollectResponse\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse*p\n\x08JobState\x12\x10\n\x0cJOB_STARTING\x10\x00\x12\x0f\n\x0bJOB_RUNNING\x10\x01\x12\x0f\n\x0bJOB_FAILURE\x10\x02\x12\x0f\n\x0bJOB_SUCCESS\x10\x03\x12\x0e\n\nJOB_KILLED\x10\x04\x12\x0f\n\x0bJOB_MERGING\x10\x05*O\n\nDatumState\x12\n\n\x06\x46\x41ILED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07SKIPPED\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\r\n\tRECOVERED\x10\x04*?\n\x0bWorkerState\x12\x0f\n\x0bPOD_RUNNING\x10\x00\x12\x0f\n\x0bPOD_SUCCESS\x10\x01\x12\x0e\n\nPOD_FAILED\x10\x02*\x96\x01\n\rPipelineState\x12\x15\n\x11PIPELINE_STARTING\x10\x00\x12\x14\n\x10PIPELINE_RUNNING\x10\x01\x12\x17\n\x13PIPELINE_RESTARTING\x10\x02\x12\x14\n\x10PIPELINE_FAILURE\x10\x03\x12\x13\n\x0fPIPELINE_PAUSED\x10\x04\x12\x14\n\x10PIPELINE_STANDBY\x10\x05\x32\xf6\r\n\x03\x41PI\x12.\n\tCreateJob\x12\x15.pps.CreateJobRequest\x1a\x08.pps.Job\"\x00\x12\x34\n\nInspectJob\x12\x16.pps.InspectJobRequest\x1a\x0c.pps.JobInfo\"\x00\x12/\n\x07ListJob\x12\x13.pps.ListJobRequest\x1a\r.pps.JobInfos\"\x00\x12\x36\n\rListJobStream\x12\x13.pps.ListJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12\x32\n\x08\x46lushJob\x12\x14.pps.FlushJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12<\n\tDeleteJob\x12\x15.pps.DeleteJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07StopJob\x12\x13.pps.StopJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x0cInspectDatum\x12\x18.pps.InspectDatumRequest\x1a\x0e.pps.DatumInfo\"\x00\x12<\n\tListDatum\x12\x15.pps.ListDatumRequest\x1a\x16.pps.ListDatumResponse\"\x00\x12J\n\x0fListDatumStream\x12\x15.pps.ListDatumRequest\x1a\x1c.pps.ListDatumStreamResponse\"\x00\x30\x01\x12\x42\n\x0cRestartDatum\x12\x18.pps.RestartDatumRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x46\n\x0e\x43reatePipeline\x12\x1a.pps.CreatePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0fInspectPipeline\x12\x1b.pps.InspectPipelineRequest\x1a\x11.pps.PipelineInfo\"\x00\x12>\n\x0cListPipeline\x12\x18.pps.ListPipelineRequest\x1a\x12.pps.PipelineInfos\"\x00\x12\x46\n\x0e\x44\x65letePipeline\x12\x1a.pps.DeletePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x44\n\rStartPipeline\x12\x19.pps.StartPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0cStopPipeline\x12\x18.pps.StopPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12@\n\x0bRunPipeline\x12\x17.pps.RunPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07RunCron\x12\x13.pps.RunCronRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x43reateSecret\x12\x18.pps.CreateSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x44\x65leteSecret\x12\x18.pps.DeleteSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\nListSecret\x12\x16.google.protobuf.Empty\x1a\x10.pps.SecretInfos\"\x00\x12=\n\rInspectSecret\x12\x19.pps.InspectSecretRequest\x1a\x0f.pps.SecretInfo\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x33\n\x07GetLogs\x12\x13.pps.GetLogsRequest\x1a\x0f.pps.LogMessage\"\x00\x30\x01\x12K\n\x0eGarbageCollect\x12\x1a.pps.GarbageCollectRequest\x1a\x1b.pps.GarbageCollectResponse\"\x00\x12\x45\n\x0c\x41\x63tivateAuth\x12\x18.pps.ActivateAuthRequest\x1a\x19.pps.ActivateAuthResponse\"\x00\x12\x46\n\x0eUpdateJobState\x12\x1a.pps.UpdateJobStateRequest\x1a\x16.google.protobuf.Empty\"\x00\x42/Z-github.com/pachyderm/pachyderm/src/client/ppsb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,client_dot_pfs_dot_pfs__pb2.DESCRIPTOR,])
 
@@ -62,8 +62,8 @@ _JOBSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=9967,
-  serialized_end=10079,
+  serialized_start=10199,
+  serialized_end=10311,
 )
 _sym_db.RegisterEnumDescriptor(_JOBSTATE)
 
@@ -97,8 +97,8 @@ _DATUMSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10081,
-  serialized_end=10160,
+  serialized_start=10313,
+  serialized_end=10392,
 )
 _sym_db.RegisterEnumDescriptor(_DATUMSTATE)
 
@@ -124,8 +124,8 @@ _WORKERSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10162,
-  serialized_end=10225,
+  serialized_start=10394,
+  serialized_end=10457,
 )
 _sym_db.RegisterEnumDescriptor(_WORKERSTATE)
 
@@ -163,8 +163,8 @@ _PIPELINESTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10228,
-  serialized_end=10378,
+  serialized_start=10460,
+  serialized_end=10610,
 )
 _sym_db.RegisterEnumDescriptor(_PIPELINESTATE)
 
@@ -489,22 +489,22 @@ _JOB = _descriptor.Descriptor(
 )
 
 
-_SERVICE_ANNOTATIONSENTRY = _descriptor.Descriptor(
+_METADATA_ANNOTATIONSENTRY = _descriptor.Descriptor(
   name='AnnotationsEntry',
-  full_name='pps.Service.AnnotationsEntry',
+  full_name='pps.Metadata.AnnotationsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.Service.AnnotationsEntry.key', index=0,
+      name='key', full_name='pps.Metadata.AnnotationsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='pps.Service.AnnotationsEntry.value', index=1,
+      name='value', full_name='pps.Metadata.AnnotationsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -522,9 +522,84 @@ _SERVICE_ANNOTATIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=763,
-  serialized_end=813,
+  serialized_start=736,
+  serialized_end=786,
 )
+
+_METADATA_LABELSENTRY = _descriptor.Descriptor(
+  name='LabelsEntry',
+  full_name='pps.Metadata.LabelsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='pps.Metadata.LabelsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='pps.Metadata.LabelsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=788,
+  serialized_end=833,
+)
+
+_METADATA = _descriptor.Descriptor(
+  name='Metadata',
+  full_name='pps.Metadata',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='annotations', full_name='pps.Metadata.annotations', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='labels', full_name='pps.Metadata.labels', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_METADATA_ANNOTATIONSENTRY, _METADATA_LABELSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=628,
+  serialized_end=833,
+)
+
 
 _SERVICE = _descriptor.Descriptor(
   name='Service',
@@ -561,17 +636,10 @@ _SERVICE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='annotations', full_name='pps.Service.annotations', index=4,
-      number=5, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[_SERVICE_ANNOTATIONSENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   serialized_options=None,
@@ -580,8 +648,8 @@ _SERVICE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=628,
-  serialized_end=813,
+  serialized_start=835,
+  serialized_end=916,
 )
 
 
@@ -625,8 +693,8 @@ _SPOUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=815,
-  serialized_end=888,
+  serialized_start=918,
+  serialized_end=991,
 )
 
 
@@ -693,6 +761,13 @@ _PFSINPUT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='s3', full_name='pps.PFSInput.s3', index=8,
+      number=9, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -705,8 +780,8 @@ _PFSINPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=891,
-  serialized_end=1027,
+  serialized_start=994,
+  serialized_end=1142,
 )
 
 
@@ -771,8 +846,8 @@ _CRONINPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1030,
-  serialized_end=1161,
+  serialized_start=1145,
+  serialized_end=1276,
 )
 
 
@@ -823,8 +898,8 @@ _GITINPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1163,
-  serialized_end=1232,
+  serialized_start=1278,
+  serialized_end=1347,
 )
 
 
@@ -889,8 +964,8 @@ _INPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1235,
-  serialized_end=1408,
+  serialized_start=1350,
+  serialized_end=1523,
 )
 
 
@@ -941,8 +1016,8 @@ _JOBINPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1410,
-  serialized_end=1491,
+  serialized_start=1525,
+  serialized_end=1606,
 )
 
 
@@ -979,8 +1054,8 @@ _PARALLELISMSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1493,
-  serialized_end=1555,
+  serialized_start=1608,
+  serialized_end=1670,
 )
 
 
@@ -1010,8 +1085,8 @@ _HASHTREESPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1557,
-  serialized_end=1589,
+  serialized_start=1672,
+  serialized_end=1704,
 )
 
 
@@ -1048,8 +1123,8 @@ _INPUTFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1591,
-  serialized_end=1630,
+  serialized_start=1706,
+  serialized_end=1745,
 )
 
 
@@ -1086,8 +1161,8 @@ _DATUM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1632,
-  serialized_end=1674,
+  serialized_start=1747,
+  serialized_end=1789,
 )
 
 
@@ -1145,8 +1220,8 @@ _DATUMINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1677,
-  serialized_end=1840,
+  serialized_start=1792,
+  serialized_end=1955,
 )
 
 
@@ -1204,8 +1279,8 @@ _AGGREGATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1842,
-  serialized_end=1957,
+  serialized_start=1957,
+  serialized_end=2072,
 )
 
 
@@ -1263,8 +1338,8 @@ _PROCESSSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1960,
-  serialized_end=2167,
+  serialized_start=2075,
+  serialized_end=2282,
 )
 
 
@@ -1322,8 +1397,8 @@ _AGGREGATEPROCESSSTATS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2170,
-  serialized_end=2385,
+  serialized_start=2285,
+  serialized_end=2500,
 )
 
 
@@ -1388,8 +1463,8 @@ _WORKERSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2388,
-  serialized_end=2566,
+  serialized_start=2503,
+  serialized_end=2681,
 )
 
 
@@ -1440,8 +1515,8 @@ _RESOURCESPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2568,
-  serialized_end=2658,
+  serialized_start=2683,
+  serialized_end=2773,
 )
 
 
@@ -1478,8 +1553,8 @@ _GPUSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2660,
-  serialized_end=2699,
+  serialized_start=2775,
+  serialized_end=2814,
 )
 
 
@@ -1607,8 +1682,8 @@ _ETCDJOBINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2702,
-  serialized_end=3141,
+  serialized_start=2817,
+  serialized_end=3256,
 )
 
 
@@ -1904,8 +1979,8 @@ _JOBINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3144,
-  serialized_end=4388,
+  serialized_start=3259,
+  serialized_end=4503,
 )
 
 
@@ -1942,8 +2017,8 @@ _WORKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4390,
-  serialized_end=4445,
+  serialized_start=4505,
+  serialized_end=4560,
 )
 
 
@@ -1973,8 +2048,8 @@ _JOBINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4447,
-  serialized_end=4489,
+  serialized_start=4562,
+  serialized_end=4604,
 )
 
 
@@ -2004,8 +2079,8 @@ _PIPELINE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4491,
-  serialized_end=4515,
+  serialized_start=4606,
+  serialized_end=4630,
 )
 
 
@@ -2042,8 +2117,8 @@ _ETCDPIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4761,
-  serialized_end=4809,
+  serialized_start=4876,
+  serialized_end=4924,
 )
 
 _ETCDPIPELINEINFO = _descriptor.Descriptor(
@@ -2114,8 +2189,8 @@ _ETCDPIPELINEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4518,
-  serialized_end=4809,
+  serialized_start=4633,
+  serialized_end=4924,
 )
 
 
@@ -2152,8 +2227,8 @@ _PIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4761,
-  serialized_end=4809,
+  serialized_start=4876,
+  serialized_end=4924,
 )
 
 _PIPELINEINFO = _descriptor.Descriptor(
@@ -2415,6 +2490,20 @@ _PIPELINEINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='s3_out', full_name='pps.PipelineInfo.s3_out', index=36,
+      number=47, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='pps.PipelineInfo.metadata', index=37,
+      number=48, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -2427,8 +2516,8 @@ _PIPELINEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4812,
-  serialized_end=5996,
+  serialized_start=4927,
+  serialized_end=6160,
 )
 
 
@@ -2458,8 +2547,8 @@ _PIPELINEINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5998,
-  serialized_end=6055,
+  serialized_start=6162,
+  serialized_end=6219,
 )
 
 
@@ -2580,8 +2669,8 @@ _CREATEJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6058,
-  serialized_end=6605,
+  serialized_start=6222,
+  serialized_end=6769,
 )
 
 
@@ -2625,8 +2714,8 @@ _INSPECTJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6607,
-  serialized_end=6706,
+  serialized_start=6771,
+  serialized_end=6870,
 )
 
 
@@ -2684,8 +2773,8 @@ _LISTJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6709,
-  serialized_end=6860,
+  serialized_start=6873,
+  serialized_end=7024,
 )
 
 
@@ -2722,8 +2811,8 @@ _FLUSHJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6862,
-  serialized_end=6946,
+  serialized_start=7026,
+  serialized_end=7110,
 )
 
 
@@ -2753,8 +2842,8 @@ _DELETEJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6948,
-  serialized_end=6989,
+  serialized_start=7112,
+  serialized_end=7153,
 )
 
 
@@ -2784,8 +2873,8 @@ _STOPJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6991,
-  serialized_end=7030,
+  serialized_start=7155,
+  serialized_end=7194,
 )
 
 
@@ -2829,8 +2918,8 @@ _UPDATEJOBSTATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7032,
-  serialized_end=7124,
+  serialized_start=7196,
+  serialized_end=7288,
 )
 
 
@@ -2902,8 +2991,8 @@ _GETLOGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7127,
-  serialized_end=7300,
+  serialized_start=7291,
+  serialized_end=7464,
 )
 
 
@@ -2989,8 +3078,8 @@ _LOGMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7303,
-  serialized_end=7508,
+  serialized_start=7467,
+  serialized_end=7672,
 )
 
 
@@ -3027,8 +3116,8 @@ _RESTARTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7510,
-  serialized_end=7576,
+  serialized_start=7674,
+  serialized_end=7740,
 )
 
 
@@ -3058,8 +3147,8 @@ _INSPECTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7578,
-  serialized_end=7626,
+  serialized_start=7742,
+  serialized_end=7790,
 )
 
 
@@ -3103,8 +3192,8 @@ _LISTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7628,
-  serialized_end=7702,
+  serialized_start=7792,
+  serialized_end=7866,
 )
 
 
@@ -3148,8 +3237,8 @@ _LISTDATUMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7704,
-  serialized_end=7795,
+  serialized_start=7868,
+  serialized_end=7959,
 )
 
 
@@ -3193,8 +3282,8 @@ _LISTDATUMSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7797,
-  serialized_end=7893,
+  serialized_start=7961,
+  serialized_end=8057,
 )
 
 
@@ -3231,8 +3320,8 @@ _CHUNKSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7895,
-  serialized_end=7942,
+  serialized_start=8059,
+  serialized_end=8106,
 )
 
 
@@ -3269,8 +3358,8 @@ _SCHEDULINGSPEC_NODESELECTORENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8054,
-  serialized_end=8105,
+  serialized_start=8218,
+  serialized_end=8269,
 )
 
 _SCHEDULINGSPEC = _descriptor.Descriptor(
@@ -3306,8 +3395,8 @@ _SCHEDULINGSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7945,
-  serialized_end=8105,
+  serialized_start=8109,
+  serialized_end=8269,
 )
 
 
@@ -3375,141 +3464,155 @@ _CREATEPIPELINEREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='resource_requests', full_name='pps.CreatePipelineRequest.resource_requests', index=8,
+      name='s3_out', full_name='pps.CreatePipelineRequest.s3_out', index=8,
+      number=36, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='resource_requests', full_name='pps.CreatePipelineRequest.resource_requests', index=9,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='resource_limits', full_name='pps.CreatePipelineRequest.resource_limits', index=9,
+      name='resource_limits', full_name='pps.CreatePipelineRequest.resource_limits', index=10,
       number=22, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='input', full_name='pps.CreatePipelineRequest.input', index=10,
+      name='input', full_name='pps.CreatePipelineRequest.input', index=11,
       number=13, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='description', full_name='pps.CreatePipelineRequest.description', index=11,
+      name='description', full_name='pps.CreatePipelineRequest.description', index=12,
       number=14, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='cache_size', full_name='pps.CreatePipelineRequest.cache_size', index=12,
+      name='cache_size', full_name='pps.CreatePipelineRequest.cache_size', index=13,
       number=16, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='enable_stats', full_name='pps.CreatePipelineRequest.enable_stats', index=13,
+      name='enable_stats', full_name='pps.CreatePipelineRequest.enable_stats', index=14,
       number=17, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='reprocess', full_name='pps.CreatePipelineRequest.reprocess', index=14,
+      name='reprocess', full_name='pps.CreatePipelineRequest.reprocess', index=15,
       number=18, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='max_queue_size', full_name='pps.CreatePipelineRequest.max_queue_size', index=15,
+      name='max_queue_size', full_name='pps.CreatePipelineRequest.max_queue_size', index=16,
       number=20, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='service', full_name='pps.CreatePipelineRequest.service', index=16,
+      name='service', full_name='pps.CreatePipelineRequest.service', index=17,
       number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='spout', full_name='pps.CreatePipelineRequest.spout', index=17,
+      name='spout', full_name='pps.CreatePipelineRequest.spout', index=18,
       number=33, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='chunk_spec', full_name='pps.CreatePipelineRequest.chunk_spec', index=18,
+      name='chunk_spec', full_name='pps.CreatePipelineRequest.chunk_spec', index=19,
       number=23, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='datum_timeout', full_name='pps.CreatePipelineRequest.datum_timeout', index=19,
+      name='datum_timeout', full_name='pps.CreatePipelineRequest.datum_timeout', index=20,
       number=24, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='job_timeout', full_name='pps.CreatePipelineRequest.job_timeout', index=20,
+      name='job_timeout', full_name='pps.CreatePipelineRequest.job_timeout', index=21,
       number=25, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='salt', full_name='pps.CreatePipelineRequest.salt', index=21,
+      name='salt', full_name='pps.CreatePipelineRequest.salt', index=22,
       number=26, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='standby', full_name='pps.CreatePipelineRequest.standby', index=22,
+      name='standby', full_name='pps.CreatePipelineRequest.standby', index=23,
       number=27, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='datum_tries', full_name='pps.CreatePipelineRequest.datum_tries', index=23,
+      name='datum_tries', full_name='pps.CreatePipelineRequest.datum_tries', index=24,
       number=28, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='scheduling_spec', full_name='pps.CreatePipelineRequest.scheduling_spec', index=24,
+      name='scheduling_spec', full_name='pps.CreatePipelineRequest.scheduling_spec', index=25,
       number=29, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='pod_spec', full_name='pps.CreatePipelineRequest.pod_spec', index=25,
+      name='pod_spec', full_name='pps.CreatePipelineRequest.pod_spec', index=26,
       number=30, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='pod_patch', full_name='pps.CreatePipelineRequest.pod_patch', index=26,
+      name='pod_patch', full_name='pps.CreatePipelineRequest.pod_patch', index=27,
       number=32, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='spec_commit', full_name='pps.CreatePipelineRequest.spec_commit', index=27,
+      name='spec_commit', full_name='pps.CreatePipelineRequest.spec_commit', index=28,
       number=34, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='pps.CreatePipelineRequest.metadata', index=29,
+      number=46, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3526,8 +3629,8 @@ _CREATEPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8108,
-  serialized_end=8999,
+  serialized_start=8272,
+  serialized_end=9212,
 )
 
 
@@ -3557,8 +3660,8 @@ _INSPECTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9001,
-  serialized_end=9058,
+  serialized_start=9214,
+  serialized_end=9271,
 )
 
 
@@ -3595,8 +3698,8 @@ _LISTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9060,
-  serialized_end=9131,
+  serialized_start=9273,
+  serialized_end=9344,
 )
 
 
@@ -3628,6 +3731,13 @@ _DELETEPIPELINEREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='keep_repo', full_name='pps.DeletePipelineRequest.keep_repo', index=3,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -3640,8 +3750,8 @@ _DELETEPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9133,
-  serialized_end=9229,
+  serialized_start=9346,
+  serialized_end=9461,
 )
 
 
@@ -3671,8 +3781,8 @@ _STARTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9231,
-  serialized_end=9286,
+  serialized_start=9463,
+  serialized_end=9518,
 )
 
 
@@ -3702,8 +3812,8 @@ _STOPPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9288,
-  serialized_end=9342,
+  serialized_start=9520,
+  serialized_end=9574,
 )
 
 
@@ -3747,8 +3857,8 @@ _RUNPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9344,
-  serialized_end=9462,
+  serialized_start=9576,
+  serialized_end=9694,
 )
 
 
@@ -3778,8 +3888,8 @@ _RUNCRONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9464,
-  serialized_end=9513,
+  serialized_start=9696,
+  serialized_end=9745,
 )
 
 
@@ -3809,8 +3919,8 @@ _CREATESECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9515,
-  serialized_end=9550,
+  serialized_start=9747,
+  serialized_end=9782,
 )
 
 
@@ -3840,8 +3950,8 @@ _DELETESECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9552,
-  serialized_end=9602,
+  serialized_start=9784,
+  serialized_end=9834,
 )
 
 
@@ -3871,8 +3981,8 @@ _INSPECTSECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9604,
-  serialized_end=9655,
+  serialized_start=9836,
+  serialized_end=9887,
 )
 
 
@@ -3902,8 +4012,8 @@ _SECRET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9657,
-  serialized_end=9679,
+  serialized_start=9889,
+  serialized_end=9911,
 )
 
 
@@ -3947,8 +4057,8 @@ _SECRETINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9681,
-  serialized_end=9792,
+  serialized_start=9913,
+  serialized_end=10024,
 )
 
 
@@ -3978,8 +4088,8 @@ _SECRETINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9794,
-  serialized_end=9845,
+  serialized_start=10026,
+  serialized_end=10077,
 )
 
 
@@ -4009,8 +4119,8 @@ _GARBAGECOLLECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9847,
-  serialized_end=9892,
+  serialized_start=10079,
+  serialized_end=10124,
 )
 
 
@@ -4033,8 +4143,8 @@ _GARBAGECOLLECTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9894,
-  serialized_end=9918,
+  serialized_start=10126,
+  serialized_end=10150,
 )
 
 
@@ -4057,8 +4167,8 @@ _ACTIVATEAUTHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9920,
-  serialized_end=9941,
+  serialized_start=10152,
+  serialized_end=10173,
 )
 
 
@@ -4081,15 +4191,17 @@ _ACTIVATEAUTHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9943,
-  serialized_end=9965,
+  serialized_start=10175,
+  serialized_end=10197,
 )
 
 _TRANSFORM_ENVENTRY.containing_type = _TRANSFORM
 _TRANSFORM.fields_by_name['env'].message_type = _TRANSFORM_ENVENTRY
 _TRANSFORM.fields_by_name['secrets'].message_type = _SECRETMOUNT
-_SERVICE_ANNOTATIONSENTRY.containing_type = _SERVICE
-_SERVICE.fields_by_name['annotations'].message_type = _SERVICE_ANNOTATIONSENTRY
+_METADATA_ANNOTATIONSENTRY.containing_type = _METADATA
+_METADATA_LABELSENTRY.containing_type = _METADATA
+_METADATA.fields_by_name['annotations'].message_type = _METADATA_ANNOTATIONSENTRY
+_METADATA.fields_by_name['labels'].message_type = _METADATA_LABELSENTRY
 _SPOUT.fields_by_name['service'].message_type = _SERVICE
 _CRONINPUT.fields_by_name['start'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _INPUT.fields_by_name['pfs'].message_type = _PFSINPUT
@@ -4178,6 +4290,7 @@ _PIPELINEINFO.fields_by_name['datum_timeout'].message_type = google_dot_protobuf
 _PIPELINEINFO.fields_by_name['job_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _PIPELINEINFO.fields_by_name['spec_commit'].message_type = client_dot_pfs_dot_pfs__pb2._COMMIT
 _PIPELINEINFO.fields_by_name['scheduling_spec'].message_type = _SCHEDULINGSPEC
+_PIPELINEINFO.fields_by_name['metadata'].message_type = _METADATA
 _PIPELINEINFOS.fields_by_name['pipeline_info'].message_type = _PIPELINEINFO
 _CREATEJOBREQUEST.fields_by_name['pipeline'].message_type = _PIPELINE
 _CREATEJOBREQUEST.fields_by_name['output_commit'].message_type = client_dot_pfs_dot_pfs__pb2._COMMIT
@@ -4225,6 +4338,7 @@ _CREATEPIPELINEREQUEST.fields_by_name['datum_timeout'].message_type = google_dot
 _CREATEPIPELINEREQUEST.fields_by_name['job_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _CREATEPIPELINEREQUEST.fields_by_name['scheduling_spec'].message_type = _SCHEDULINGSPEC
 _CREATEPIPELINEREQUEST.fields_by_name['spec_commit'].message_type = client_dot_pfs_dot_pfs__pb2._COMMIT
+_CREATEPIPELINEREQUEST.fields_by_name['metadata'].message_type = _METADATA
 _INSPECTPIPELINEREQUEST.fields_by_name['pipeline'].message_type = _PIPELINE
 _LISTPIPELINEREQUEST.fields_by_name['pipeline'].message_type = _PIPELINE
 _DELETEPIPELINEREQUEST.fields_by_name['pipeline'].message_type = _PIPELINE
@@ -4243,6 +4357,7 @@ DESCRIPTOR.message_types_by_name['Transform'] = _TRANSFORM
 DESCRIPTOR.message_types_by_name['TFJob'] = _TFJOB
 DESCRIPTOR.message_types_by_name['Egress'] = _EGRESS
 DESCRIPTOR.message_types_by_name['Job'] = _JOB
+DESCRIPTOR.message_types_by_name['Metadata'] = _METADATA
 DESCRIPTOR.message_types_by_name['Service'] = _SERVICE
 DESCRIPTOR.message_types_by_name['Spout'] = _SPOUT
 DESCRIPTOR.message_types_by_name['PFSInput'] = _PFSINPUT
@@ -4352,20 +4467,35 @@ Job = _reflection.GeneratedProtocolMessageType('Job', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Job)
 
-Service = _reflection.GeneratedProtocolMessageType('Service', (_message.Message,), {
+Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Message,), {
 
   'AnnotationsEntry' : _reflection.GeneratedProtocolMessageType('AnnotationsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _SERVICE_ANNOTATIONSENTRY,
+    'DESCRIPTOR' : _METADATA_ANNOTATIONSENTRY,
     '__module__' : 'client.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.Service.AnnotationsEntry)
+    # @@protoc_insertion_point(class_scope:pps.Metadata.AnnotationsEntry)
     })
   ,
+
+  'LabelsEntry' : _reflection.GeneratedProtocolMessageType('LabelsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _METADATA_LABELSENTRY,
+    '__module__' : 'client.pps.pps_pb2'
+    # @@protoc_insertion_point(class_scope:pps.Metadata.LabelsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _METADATA,
+  '__module__' : 'client.pps.pps_pb2'
+  # @@protoc_insertion_point(class_scope:pps.Metadata)
+  })
+_sym_db.RegisterMessage(Metadata)
+_sym_db.RegisterMessage(Metadata.AnnotationsEntry)
+_sym_db.RegisterMessage(Metadata.LabelsEntry)
+
+Service = _reflection.GeneratedProtocolMessageType('Service', (_message.Message,), {
   'DESCRIPTOR' : _SERVICE,
   '__module__' : 'client.pps.pps_pb2'
   # @@protoc_insertion_point(class_scope:pps.Service)
   })
 _sym_db.RegisterMessage(Service)
-_sym_db.RegisterMessage(Service.AnnotationsEntry)
 
 Spout = _reflection.GeneratedProtocolMessageType('Spout', (_message.Message,), {
   'DESCRIPTOR' : _SPOUT,
@@ -4807,7 +4937,8 @@ _sym_db.RegisterMessage(ActivateAuthResponse)
 
 DESCRIPTOR._options = None
 _TRANSFORM_ENVENTRY._options = None
-_SERVICE_ANNOTATIONSENTRY._options = None
+_METADATA_ANNOTATIONSENTRY._options = None
+_METADATA_LABELSENTRY._options = None
 _ETCDPIPELINEINFO_JOBCOUNTSENTRY._options = None
 _PIPELINEINFO_JOBCOUNTSENTRY._options = None
 _SCHEDULINGSPEC_NODESELECTORENTRY._options = None
@@ -4818,8 +4949,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=10381,
-  serialized_end=12163,
+  serialized_start=10613,
+  serialized_end=12395,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateJob',
