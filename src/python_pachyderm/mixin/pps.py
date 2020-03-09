@@ -151,13 +151,12 @@ class PPSMixin:
             job=pps_proto.Job(id=job_id), data_filters=data_filters,
         )
 
-    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None,
-                        hashtree_spec=None, egress=None, update=None, output_branch=None,
-                        resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None,
-                        enable_stats=None, reprocess=None, max_queue_size=None,
-                        service=None, chunk_spec=None, datum_timeout=None,
-                        job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None):
+    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None,
+                        update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None,
+                        description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
+                        service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
+                        datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None,
+                        metadata=None, s3_out=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -194,6 +193,9 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
+        * `metadata`: An optional `Metadata` object.
+        * `s3_out`: An optional bool specifying whether the output repo should
+        be exposed as an s3 gateway bucket.
         """
         return self._req(
             Service.PPS, "CreatePipeline",
