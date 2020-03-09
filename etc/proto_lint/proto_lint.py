@@ -55,7 +55,9 @@ PROTO_OBJECT_BUILTINS = set([
 BLACKLISTED_METHODS = {
     # delete_all is ignored because we implement PPS' delete_all anyway
     # build_commit is ignored because it's for internal use only
-    Service.PFS: ["delete_all", "build_commit"],
+    # put_tar is ignored because it's for internal use only
+    # get_tar is ignored because it's for internal use only
+    Service.PFS: ["delete_all", "build_commit", "put_tar", "get_tar"],
     # activate_auth is ignored because it's for internal use only
     # create_job is ignored because it's for internal use only
     # update_job_state is ignored because it's for internal use only
@@ -165,6 +167,9 @@ RENAMED_ARGS = {
     ],
     "inspect_repo": [
         ("repo", "repo_name"),
+    ],
+    "inspect_secret": [
+        ("secret", "secret_name"),
     ],
     "list_branch": [
         ("repo", "repo_name"),
