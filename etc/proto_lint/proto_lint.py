@@ -127,6 +127,9 @@ RENAMED_ARGS = {
         ("head", "commit"),
         ("s_branch", None),
     ],
+    "create_secret": [
+        ("file", ("secret_name", "data", "labels", "annotations")),
+    ],
     "copy_file": [
         ("src", ("source_commit", "source_path")),
         ("dst", ("dest_commit", "dest_path")),
@@ -219,6 +222,9 @@ RENAMED_ARGS = {
     "delete_pipeline": [
         ("pipeline", "pipeline_name"),
         ("all", None),
+    ],
+    "delete_secret": [
+        ("secret", "secret_name"),
     ],
     "flush_job": [
         ("to_pipelines", "pipeline_names"),
