@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.0
+
+- Support for pachyderm v1.10 (PR #178)
+    - Added support for specifying pipeline metadata
+    - Added support for s3 sidecar instances
+    - Added support for secrets
+- First-class support for building spout producer and consumer pipelines (PR #173, #178)
+- Support for connecting to pachd in-cluster with TLS enabled (PR #176)
+
 ## 3.1.0
 
 - Use pachd peer service where available in `Client.new_in_cluster`, to support TLS-enabled clusters (PR #176)
