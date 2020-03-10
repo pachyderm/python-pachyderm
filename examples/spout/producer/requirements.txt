@@ -1,1 +1,1 @@
--e git+https://github.com/pachyderm/python-pachyderm.git#egg=python-pachyderm
+-e git+https://github.com/pachyderm/python-pachyderm.git@spout-markers#egg=python-pachyderm

@@ -1,3 +1,6 @@
+import json
+import base64
+
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
 from python_pachyderm.service import Service
 from .util import commit_from
@@ -148,13 +151,12 @@ class PPSMixin:
             job=pps_proto.Job(id=job_id), data_filters=data_filters,
         )
 
-    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None,
-                        hashtree_spec=None, egress=None, update=None, output_branch=None,
-                        resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None,
-                        enable_stats=None, reprocess=None, max_queue_size=None,
-                        service=None, chunk_spec=None, datum_timeout=None,
-                        job_timeout=None, salt=None, standby=None, datum_tries=None,
-                        scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None):
+    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None,
+                        update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None,
+                        description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
+                        service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
+                        datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None,
+                        metadata=None, s3_out=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -191,6 +193,9 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
+        * `metadata`: An optional `Metadata` object.
+        * `s3_out`: An optional bool specifying whether the output repo should
+        be exposed as an s3 gateway bucket.
         """
         return self._req(
             Service.PPS, "CreatePipeline",
@@ -344,7 +349,7 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "ListPipeline", history=history)
 
-    def delete_pipeline(self, pipeline_name, force=None):
+    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None):
         """
         Deletes a pipeline.
 
@@ -352,8 +357,15 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
+        * `keep_repo`: Whether to keep the repo.
         """
-        return self._req(Service.PPS, "DeletePipeline", pipeline=pps_proto.Pipeline(name=pipeline_name), force=force)
+        return self._req(
+            Service.PPS,
+            "DeletePipeline",
+            pipeline=pps_proto.Pipeline(name=pipeline_name),
+            force=force,
+            keep_repo=keep_repo
+        )
 
     def delete_all_pipelines(self, force=None):
         """
@@ -418,13 +430,80 @@ class PPSMixin:
             pipeline=pps_proto.Pipeline(name=pipeline_name),
         )
 
+    def create_secret(self, secret_name, data, labels=None, annotations=None):
+        """
+        Creates a new secret.
+
+        Params:
+
+        * `secret_name`: The name of the secret to create.
+        * `data`: A dict of string keys -> string or bytestring values to
+        store in the secret. Each key must consist of alphanumeric characters,
+        `-`, `_` or `.`.
+        * `labels`: A dict of string keys -> string values representing the
+        kubernetes labels to attach to the secret.
+        * `annotations`: A dict representing the kubernetes annotations to
+        attach to the secret.
+        """
+
+        encoded_data = {}
+        for k, v in data.items():
+            if isinstance(v, str):
+                v = v.encode("utf8")
+            encoded_data[k] = base64.b64encode(v).decode("utf8")
+
+        f = json.dumps({
+            "kind": "Secret",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": secret_name,
+                "labels": labels,
+                "annotations": annotations,
+            },
+            "data": encoded_data,
+        }).encode("utf8")
+
+        return self._req(Service.PPS, "CreateSecret", file=f)
+
+    def delete_secret(self, secret_name):
+        """
+        Deletes a new secret.
+
+        Params:
+
+        * `secret_name`: The name of the secret to delete.
+        """
+        secret = pps_proto.Secret(name=secret_name)
+        return self._req(Service.PPS, "DeleteSecret", secret=secret)
+
+    def list_secret(self):
+        """
+        Lists secrets. Returns a list of `SecretInfo` objects.
+        """
+
+        return self._req(
+            Service.PPS, "ListSecret",
+            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
+        ).secret_info
+
+    def inspect_secret(self, secret_name):
+        """
+        Inspects a secret.
+
+        Params:
+
+        * `secret_name`: The name of the secret to inspect.
+        """
+        secret = pps_proto.Secret(name=secret_name)
+        return self._req(Service.PPS, "InspectSecret", secret=secret)
+
     def delete_all(self):
         """
         Deletes everything in pachyderm.
         """
         return self._req(
             Service.PPS, "DeleteAll",
-            req=pps_proto.google_dot_pps_proto.uf_dot_empty__pb2.Empty(),
+            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
         )
 
     def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,

@@ -3,7 +3,7 @@
 import datetime
 
 def main():
-    with open("/pfs/producer/foo", "r") as f:
+    with open("/pfs/producer/content", "r") as f:
         print(datetime.datetime.now(), f.read())
 
 if __name__ == "__main__":
