@@ -7,7 +7,6 @@
     - Added support for s3 sidecar instances
     - Added support for secrets
 - First-class support for building spout producer and consumer pipelines (PR #173, #178)
-- Support for connecting to pachd in-cluster with TLS enabled (PR #176)
 
 ## 3.1.0
 
