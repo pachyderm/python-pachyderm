@@ -40,6 +40,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
     keywords=['pachyderm',],
@@ -52,5 +53,5 @@ setup(
     test_suite='tests',
     tests_require=['pytest'],
     setup_requires=['pytest-runner'],
-    python_requires='>=3.4',
+    python_requires='>=3.5',
 )
