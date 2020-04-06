@@ -1184,6 +1184,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.create_branch">create_branch</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.create_pipeline">create_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.create_repo">create_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.create_secret">create_secret</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.create_tf_job_pipeline">create_tf_job_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.deactivate_auth">deactivate_auth</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.deactivate_enterprise">deactivate_enterprise</a></li>
@@ -1197,6 +1198,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.delete_job">delete_job</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.delete_pipeline">delete_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.delete_repo">delete_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.delete_secret">delete_secret</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.delete_transaction">delete_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.diff_file">diff_file</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.dump">dump</a></li>
@@ -1232,6 +1234,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.inspect_job">inspect_job</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.inspect_pipeline">inspect_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.inspect_repo">inspect_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.inspect_secret">inspect_secret</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.inspect_transaction">inspect_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_branch">list_branch</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_commit">list_commit</a></li>
@@ -1240,6 +1243,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.list_job">list_job</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_pipeline">list_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_repo">list_repo</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.list_secret">list_secret</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_transaction">list_transaction</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.modify_admins">modify_admins</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.modify_members">modify_members</a></li>
@@ -1300,6 +1304,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.Compaction">Compaction</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.CopyFileRequest">CopyFileRequest</a></span>
         
         </li>
@@ -1321,6 +1329,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.CreateRepoRequest">CreateRepoRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.CreateSecretRequest">CreateSecretRequest</a></span>
         
         </li>
         <li class="mono">
@@ -1381,6 +1393,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.DeleteRepoRequest">DeleteRepoRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.DeleteSecretRequest">DeleteSecretRequest</a></span>
         
         </li>
         <li class="mono">
@@ -1608,6 +1624,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.GetTarRequest">GetTarRequest</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.GetUsersRequest">GetUsersRequest</a></span>
         
         </li>
@@ -1669,6 +1689,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.InspectRepoRequest">InspectRepoRequest</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.InspectSecretRequest">InspectSecretRequest</a></span>
         
         </li>
         <li class="mono">
@@ -1768,7 +1792,7 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.Merge">Merge</a></span>
+        <span class="class_name"><a href="#python_pachyderm.Metadata">Metadata</a></span>
         
         </li>
         <li class="mono">
@@ -1809,6 +1833,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Op">Op</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.Op1_10">Op1_10</a></span>
         
         </li>
         <li class="mono">
@@ -1884,6 +1912,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.PutTarRequest">PutTarRequest</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Repo">Repo</a></span>
         
         </li>
@@ -1940,6 +1972,18 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.SecretInfo">SecretInfo</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.SecretInfos">SecretInfos</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.SecretMount">SecretMount</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Service">Service</a></span>
         
         </li>
@@ -1982,6 +2026,20 @@ table {
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Spout">Spout</a></span>
         
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.SpoutManager">SpoutManager</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_from_bytes">add_from_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_from_fileobj">add_from_fileobj</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_marker_from_bytes">add_marker_from_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_marker_from_fileobj">add_marker_from_fileobj</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.marker">marker</a></li>
+  </ul>
+
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.StartCommitRequest">StartCommitRequest</a></span>
@@ -2146,7 +2204,7 @@ table {
       
   <div class="item">
     <div class="name def" id="python_pachyderm.create_python_pipeline">
-    <p>def <span class="ident">create_python_pipeline</span>(</p><p>client, path, input, pipeline_name=None, image_pull_secrets=None, debug=None, pipeline_kwargs=None, image=None, update=False)</p>
+    <p>def <span class="ident">create_python_pipeline</span>(</p><p>client, path, input=None, pipeline_name=None, image_pull_secrets=None, debug=None, env=None, secrets=None, image=None, update=False, **pipeline_kwargs)</p>
     </div>
     
 
@@ -2204,7 +2262,7 @@ execution process.</li>
 <li><code>client</code>: The <code>Client</code> instance to use.</li>
 <li><code>path</code>: The directory containing the python pipeline source, or an
 individual python file.</li>
-<li><code>input</code>: An <code>Input</code> object specifying the pipeline input.</li>
+<li><code>input</code>: An optional <code>Input</code> object specifying the pipeline input.</li>
 <li><code>pipeline_name</code>: An optional string specifying the pipeline name.
 Defaults to using the last directory name in <code>path</code>.</li>
 <li><code>image_pull_secrets</code>: An optional list of strings specifying the
@@ -2214,10 +2272,14 @@ docker registry will be used. See the pipeline spec document for more
 details.</li>
 <li><code>debug</code>: An optional bool specifying whether debug logging should be
 enabled for the pipeline. Defaults to <code>False</code>.</li>
-<li><code>pipeline_kwargs</code>: Keyword arguments to forward to <code>create_pipeline</code>.</li>
+<li><code>env</code>: An optional mapping of string keys to string values specifying
+custom environment variables.</li>
+<li><code>secrets</code>: An optional list of <code>Secret</code> objects for secret environment
+variables.</li>
 <li><code>image</code>: An optional string specifying the docker image to use for the
 pipeline. Defaults to <code>python</code>.</li>
 <li><code>update</code>: Whether to act as an upsert.</li>
+<li><code>pipeline_kwargs</code>: Keyword arguments to forward to <code>create_pipeline</code>.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -3846,7 +3908,7 @@ unspecified, this will load default certs from certifi.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.new_in_cluster">
-    <p>def <span class="ident">new_in_cluster</span>(</p><p>cls, auth_token=None, root_certs=None, transaction_id=None)</p>
+    <p>def <span class="ident">new_in_cluster</span>(</p><p>cls, auth_token=None, transaction_id=None)</p>
     </div>
     
 
@@ -3859,7 +3921,6 @@ unspecified, this will load default certs from certifi.</li>
 <ul>
 <li><code>auth_token</code>: The authentication token; used if authentication is
 enabled on the cluster. Default to <code>None</code>.</li>
-<li><code>root_certs</code>: The PEM-encoded root certificates as byte string.</li>
 <li><code>transaction_id</code>: The ID of the transaction to run operations on.</li>
 </ul>
 </div>
@@ -4218,7 +4279,7 @@ the branch provenance.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.create_pipeline">
-    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None)</p>
+    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None, update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None, metadata=None, s3_out=None)</p>
     </div>
     
 
@@ -4260,6 +4321,9 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>pod_patch</code>: An optional string.</li>
 <li><code>spout</code>: An optional <code>Spout</code> object.</li>
 <li><code>spec_commit</code>: An optional <code>Commit</code> object.</li>
+<li><code>metadata</code>: An optional <code>Metadata</code> object.</li>
+<li><code>s3_out</code>: An optional bool specifying whether the output repo should
+be exposed as an s3 gateway bucket.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -4288,6 +4352,35 @@ database dumps etc.</p>
 <li><code>repo_name</code>: Name of the repo.</li>
 <li><code>description</code>: An optional string describing the repo.</li>
 <li><code>update</code>: Whether to update if the repo already exists.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.create_secret">
+    <p>def <span class="ident">create_secret</span>(</p><p>self, secret_name, data, labels=None, annotations=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a new secret.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>secret_name</code>: The name of the secret to create.</li>
+<li><code>data</code>: A dict of string keys -> string or bytestring values to
+store in the secret. Each key must consist of alphanumeric characters,
+<code>-</code>, <code>_</code> or <code>.</code>.</li>
+<li><code>labels</code>: A dict of string keys -> string values representing the
+kubernetes labels to attach to the secret.</li>
+<li><code>annotations</code>: A dict representing the kubernetes annotations to
+attach to the secret.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -4561,7 +4654,7 @@ commit.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.delete_pipeline">
-    <p>def <span class="ident">delete_pipeline</span>(</p><p>self, pipeline_name, force=None)</p>
+    <p>def <span class="ident">delete_pipeline</span>(</p><p>self, pipeline_name, force=None, keep_repo=None)</p>
     </div>
     
 
@@ -4574,6 +4667,7 @@ commit.</li>
 <ul>
 <li><code>pipeline_name</code>: A string representing the pipeline name.</li>
 <li><code>force</code>: Whether to force delete.</li>
+<li><code>keep_repo</code>: Whether to keep the repo.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -4598,6 +4692,28 @@ commit.</li>
 <li><code>repo_name</code>: The name of the repo.</li>
 <li><code>force</code>: If set to true, the repo will be removed regardless of
 errors. This argument should be used with care.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.delete_secret">
+    <p>def <span class="ident">delete_secret</span>(</p><p>self, secret_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Deletes a new secret.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>secret_name</code>: The name of the secret to delete.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -5440,6 +5556,28 @@ pipelines.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.Client.inspect_secret">
+    <p>def <span class="ident">inspect_secret</span>(</p><p>self, secret_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Inspects a secret.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>secret_name</code>: The name of the secret to inspect.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.Client.inspect_transaction">
     <p>def <span class="ident">inspect_transaction</span>(</p><p>self, transaction)</p>
     </div>
@@ -5652,6 +5790,22 @@ pipelines.</li>
     
   
     <div class="desc"><p>Returns info about all repos, as a list of <code>RepoInfo</code> objects.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.list_secret">
+    <p>def <span class="ident">list_secret</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Lists secrets. Returns a list of <code>SecretInfo</code> objects.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -6291,6 +6445,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.ClusterInfo.deployment_id" class="name">var <span class="ident">deployment_id</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.ClusterInfo.id" class="name">var <span class="ident">id</span></p>
             
 
@@ -6820,6 +6984,56 @@ commit.</li>
           <li><a href="/builtins.int.ext">builtins.int</a></li>
           <li><a href="/enum.Enum.ext">enum.Enum</a></li>
           </ul>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.Compaction" class="name">class <span class="ident">Compaction</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.Compaction.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Compaction.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Compaction.prefixes" class="name">var <span class="ident">prefixes</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
@@ -7361,6 +7575,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.CreatePipelineRequest.metadata" class="name">var <span class="ident">metadata</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.CreatePipelineRequest.output_branch" class="name">var <span class="ident">output_branch</span></p>
             
 
@@ -7432,6 +7656,16 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.CreatePipelineRequest.resource_requests" class="name">var <span class="ident">resource_requests</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CreatePipelineRequest.s3_out" class="name">var <span class="ident">s3_out</span></p>
             
 
             
@@ -7592,6 +7826,56 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.CreateRepoRequest.update" class="name">var <span class="ident">update</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.CreateSecretRequest" class="name">class <span class="ident">CreateSecretRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.CreateSecretRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CreateSecretRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CreateSecretRequest.file" class="name">var <span class="ident">file</span></p>
             
 
             
@@ -8351,6 +8635,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.DeletePipelineRequest.keep_repo" class="name">var <span class="ident">keep_repo</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.DeletePipelineRequest.pipeline" class="name">var <span class="ident">pipeline</span></p>
             
 
@@ -8422,6 +8716,56 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.DeleteRepoRequest.repo" class="name">var <span class="ident">repo</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.DeleteSecretRequest" class="name">class <span class="ident">DeleteSecretRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.DeleteSecretRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.DeleteSecretRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.DeleteSecretRequest.secret" class="name">var <span class="ident">secret</span></p>
             
 
             
@@ -9450,6 +9794,16 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.EtcdPipelineInfo.last_job_state" class="name">var <span class="ident">last_job_state</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.EtcdPipelineInfo.parallelism" class="name">var <span class="ident">parallelism</span></p>
             
 
             
@@ -11802,6 +12156,56 @@ commit.</li>
       </div>
       
       <div class="item">
+      <p id="python_pachyderm.GetTarRequest" class="name">class <span class="ident">GetTarRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.GetTarRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.GetTarRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.GetTarRequest.file" class="name">var <span class="ident">file</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
       <p id="python_pachyderm.GetUsersRequest" class="name">class <span class="ident">GetUsersRequest</span></p>
       
   
@@ -12780,6 +13184,56 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.InspectRepoRequest.repo" class="name">var <span class="ident">repo</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.InspectSecretRequest" class="name">class <span class="ident">InspectSecretRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.InspectSecretRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.InspectSecretRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.InspectSecretRequest.secret" class="name">var <span class="ident">secret</span></p>
             
 
             
@@ -14612,7 +15066,7 @@ commit.</li>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.Merge" class="name">class <span class="ident">Merge</span></p>
+      <p id="python_pachyderm.Metadata" class="name">class <span class="ident">Metadata</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -14629,7 +15083,7 @@ commit.</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.Merge.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.Metadata.AnnotationsEntry" class="name">var <span class="ident">AnnotationsEntry</span></p>
             
 
             
@@ -14639,7 +15093,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.Merge.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.Metadata.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -14649,7 +15103,37 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.Merge.prefixes" class="name">var <span class="ident">prefixes</span></p>
+            <p id="python_pachyderm.Metadata.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Metadata.LabelsEntry" class="name">var <span class="ident">LabelsEntry</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Metadata.annotations" class="name">var <span class="ident">annotations</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Metadata.labels" class="name">var <span class="ident">labels</span></p>
             
 
             
@@ -15209,6 +15693,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.Op.op1_10" class="name">var <span class="ident">op1_10</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.Op.op1_7" class="name">var <span class="ident">op1_7</span></p>
             
 
@@ -15230,6 +15724,136 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.Op.op1_9" class="name">var <span class="ident">op1_9</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.Op1_10" class="name">class <span class="ident">Op1_10</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.block" class="name">var <span class="ident">block</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.branch" class="name">var <span class="ident">branch</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.commit" class="name">var <span class="ident">commit</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.create_object" class="name">var <span class="ident">create_object</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.job" class="name">var <span class="ident">job</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.object" class="name">var <span class="ident">object</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.pipeline" class="name">var <span class="ident">pipeline</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.repo" class="name">var <span class="ident">repo</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_10.tag" class="name">var <span class="ident">tag</span></p>
             
 
             
@@ -15758,6 +16382,16 @@ commit.</li>
 </div>
 
             </div>
+            <div class="item">
+            <p id="python_pachyderm.PFSInput.s3" class="name">var <span class="ident">s3</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
@@ -16139,6 +16773,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.PipelineInfo.metadata" class="name">var <span class="ident">metadata</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.PipelineInfo.output_branch" class="name">var <span class="ident">output_branch</span></p>
             
 
@@ -16220,6 +16864,16 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.PipelineInfo.resource_requests" class="name">var <span class="ident">resource_requests</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PipelineInfo.s3_out" class="name">var <span class="ident">s3_out</span></p>
             
 
             
@@ -16599,6 +17253,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.PutFileRecord.block_ref" class="name">var <span class="ident">block_ref</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.PutFileRecord.object_hash" class="name">var <span class="ident">object_hash</span></p>
             
 
@@ -16910,6 +17574,66 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.PutObjectRequest.value" class="name">var <span class="ident">value</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.PutTarRequest" class="name">class <span class="ident">PutTarRequest</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.PutTarRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutTarRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutTarRequest.commit" class="name">var <span class="ident">commit</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutTarRequest.data" class="name">var <span class="ident">data</span></p>
             
 
             
@@ -17689,37 +18413,207 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.Secret.env_var" class="name">var <span class="ident">env_var</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.Secret.key" class="name">var <span class="ident">key</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.Secret.mount_path" class="name">var <span class="ident">mount_path</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.Secret.name" class="name">var <span class="ident">name</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.SecretInfo" class="name">class <span class="ident">SecretInfo</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfo.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfo.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfo.creation_timestamp" class="name">var <span class="ident">creation_timestamp</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfo.secret" class="name">var <span class="ident">secret</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfo.type" class="name">var <span class="ident">type</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.SecretInfos" class="name">class <span class="ident">SecretInfos</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfos.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfos.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretInfos.secret_info" class="name">var <span class="ident">secret_info</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.SecretMount" class="name">class <span class="ident">SecretMount</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.env_var" class="name">var <span class="ident">env_var</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.key" class="name">var <span class="ident">key</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.mount_path" class="name">var <span class="ident">mount_path</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SecretMount.name" class="name">var <span class="ident">name</span></p>
             
 
             
@@ -17749,16 +18643,6 @@ commit.</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.Service.AnnotationsEntry" class="name">var <span class="ident">AnnotationsEntry</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.Service.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
@@ -17770,16 +18654,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.Service.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.Service.annotations" class="name">var <span class="ident">annotations</span></p>
             
 
             
@@ -18319,6 +19193,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.Spout.marker" class="name">var <span class="ident">marker</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.Spout.overwrite" class="name">var <span class="ident">overwrite</span></p>
             
 
@@ -18338,6 +19222,173 @@ commit.</li>
 </div>
 
             </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.SpoutManager" class="name">class <span class="ident">SpoutManager</span></p>
+      
+  
+    <div class="desc"><p>A convenience context manager for creating spouts, allowing you to create
+spout code like:</p>
+
+<pre><code>while True:
+    with SpoutManager() as spout:
+        spout.add_from_bytes("foo", b"#")
+    time.sleep(1.0)
+</code></pre>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.SpoutManager.f" class="name">var <span class="ident">f</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.SpoutManager.marker_filename" class="name">var <span class="ident">marker_filename</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, marker_filename=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a new spout manager.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.add_from_bytes">
+    <p>def <span class="ident">add_from_bytes</span>(</p><p>self, path, bytes)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a file to the spout from a bytestring.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>path</code>: The path to the file in the spout.</li>
+<li><code>bytes</code>: The bytestring representing the file contents.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.add_from_fileobj">
+    <p>def <span class="ident">add_from_fileobj</span>(</p><p>self, path, size, fileobj)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a file to the spout from a file-like object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>path</code>: The path to the file in the spout.</li>
+<li><code>size</code>: The size of the file.</li>
+<li><code>fileobj</code>: The file-like object to add.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.add_marker_from_bytes">
+    <p>def <span class="ident">add_marker_from_bytes</span>(</p><p>self, bytes)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds to the marker from a bytestring.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>bytes</code>: The bytestring representing the file contents.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.add_marker_from_fileobj">
+    <p>def <span class="ident">add_marker_from_fileobj</span>(</p><p>self, size, fileobj)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Writes to the marker file from a file-like object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>size</code>: The size of the file.</li>
+<li><code>fileobj</code>: The file-like object to add.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutManager.marker">
+    <p>def <span class="ident">marker</span>(</p><p>*args, **kwds)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Gets the marker file as a context manager.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
       </div>
       
