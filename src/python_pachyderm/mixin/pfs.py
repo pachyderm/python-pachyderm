@@ -70,6 +70,26 @@ def put_file_from_bytestring(commit, path, value, delimiter=None, target_file_da
 
 
 class PFSFile:
+    """
+    The contents of a file stored in PFS. You can treat these as either
+    file-like objects, like so:
+
+    ```
+    source_file = client.get_file("montage/master", "/montage.png")
+    with open("montage.png", "wb") as dest_file:
+        shutil.copyfileobj(source_file, dest_file)
+    ```
+
+    Or as an iterator of bytes, like so:
+
+    ```
+    source_file = client.get_file("montage/master", "/montage.png")
+    with open("montage.png", "wb") as dest_file:
+        for chunk in source_file:
+            dest_file.write(chunk)
+    ```
+    """
+
     def __init__(self, res):
         self.res = res
         self.buf = []
@@ -550,7 +570,8 @@ class PFSMixin:
 
     def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
         """
-        Returns an iterator of the contents of a file at a specific commit.
+        Returns a `PFSFile` object, containing the contents of a file stored
+        in PFS.
 
         Params:
 
