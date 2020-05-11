@@ -9,6 +9,8 @@
 # functionality (`create_repo`, `create_pipeline`).
 
 import os
+import shutil
+import tempfile
 import python_pachyderm
 
 def relpath(path):
@@ -38,11 +40,21 @@ def main():
         ])
     )
 
-    # Add some images, recursively inserting content from the images
-    # directory. Alternatively, you could use `client.put_file_url` or
-    # `client_put_file_bytes`.
     with client.commit("images", "master") as commit:
+        # Add some images, recursively inserting content from the images
+        # directory. Alternatively, you could use `client.put_file_url` or
+        # `client_put_file_bytes`.
         python_pachyderm.put_files(client, relpath("images"), commit, "/")
+
+    # Wait for the commit (and its downstream commits) to finish
+    for _ in client.flush_commit([commit]):
+        pass
+
+    # Get the montage
+    source_file = client.get_file("montage/master", "/montage.png")
+    with tempfile.NamedTemporaryFile(suffix="montage.png", delete=False) as dest_file:
+        shutil.copyfileobj(source_file, dest_file)
+        print("montage written to {}".format(dest_file.name))
 
 if __name__ == '__main__':
     main()
