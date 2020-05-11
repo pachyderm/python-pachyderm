@@ -166,9 +166,15 @@ def test_put_file_bytes_bytestring_with_overwrite():
     with client.commit(repo_name, 'mybranch') as c:
         client.put_file_bytes(c, 'file.dat', b'FOO', overwrite_index=2)
 
+    # read the file as an iterator
     file = list(client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat'))
     assert file == [b'DATA', b'DATA', b'FOO']
 
+    # read the file as a file-like object
+    file = client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat')
+    assert file.read(1) == b'D'
+    assert file.read(5) == b'ATADA'
+    assert file.read() == b'TAFOO'
 
 def test_put_file_bytes_filelike():
     """

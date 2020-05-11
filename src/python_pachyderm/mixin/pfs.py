@@ -69,6 +69,32 @@ def put_file_from_bytestring(commit, path, value, delimiter=None, target_file_da
         )
 
 
+class PFSFile:
+    def __init__(self, res):
+        self.res = res
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return next(self.res).value
+
+    def close(self):
+        self.res.cancel()
+
+    def read(self, size=-1):
+        buf = []
+        remaining = size if size >= 0 else 2 ** 32
+
+        try:
+            while remaining > 0:
+                buf.append(next(self))
+        except StopIteration:
+            pass
+
+        return b"".join(buf)
+
+
 class PFSMixin:
     def create_repo(self, repo_name, description=None, update=None):
         """
@@ -530,8 +556,7 @@ class PFSMixin:
             offset_bytes=offset_bytes,
             size_bytes=size_bytes,
         )
-        for item in res:
-            yield item.value
+        return PFSFile(res)
 
     def inspect_file(self, commit, path):
         """
