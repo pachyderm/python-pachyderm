@@ -72,6 +72,7 @@ def put_file_from_bytestring(commit, path, value, delimiter=None, target_file_da
 class PFSFile:
     def __init__(self, res):
         self.res = res
+        self.buf = []
 
     def __iter__(self):
         return self
@@ -86,9 +87,22 @@ class PFSFile:
         buf = []
         remaining = size if size >= 0 else 2 ** 32
 
+        if self.buf:
+            buf.append(self.buf[:remaining])
+            self.buf = self.buf[remaining:]
+            remaining -= len(buf[-1])
+
         try:
             while remaining > 0:
-                buf.append(next(self))
+                b = next(self)
+
+                if len(b) > remaining:
+                    buf.append(b[:remaining])
+                    self.buf = b[remaining:]
+                else:
+                    buf.append(b)
+
+                remaining -= len(buf[-1])
         except StopIteration:
             pass
 
