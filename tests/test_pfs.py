@@ -173,8 +173,10 @@ def test_put_file_bytes_bytestring_with_overwrite():
     # read the file as a file-like object
     file = client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat')
     assert file.read(1) == b'D'
+    assert file.read(0) == b''
     assert file.read(5) == b'ATADA'
     assert file.read() == b'TAFOO'
+    assert file.read(0) == b''
 
 def test_put_file_bytes_filelike():
     """
