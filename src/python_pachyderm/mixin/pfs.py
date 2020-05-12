@@ -104,6 +104,9 @@ class PFSFile:
         self.res.cancel()
 
     def read(self, size=-1):
+        if self.res.cancelled():
+            return b""
+
         buf = []
         remaining = size if size >= 0 else 2 ** 32
 
