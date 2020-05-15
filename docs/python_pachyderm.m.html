@@ -1860,6 +1860,17 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.PFSFile">PFSFile</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.PFSFile.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.PFSFile.close">close</a></li>
+    <li class="mono"><a href="#python_pachyderm.PFSFile.read">read</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.PFSInput">PFSInput</a></span>
         
         </li>
@@ -5136,7 +5147,8 @@ lifetime of this token, in seconds.</li>
 
     
   
-    <div class="desc"><p>Returns an iterator of the contents of a file at a specific commit.</p>
+    <div class="desc"><p>Returns a <code>PFSFile</code> object, containing the contents of a file stored
+in PFS.</p>
 
 <p>Params:</p>
 
@@ -16262,6 +16274,100 @@ commit.</li>
 </div>
 
             </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.PFSFile" class="name">class <span class="ident">PFSFile</span></p>
+      
+  
+    <div class="desc"><p>The contents of a file stored in PFS. You can treat these as either
+file-like objects, like so:</p>
+
+<pre><code>source_file = client.get_file("montage/master", "/montage.png")
+with open("montage.png", "wb") as dest_file:
+    shutil.copyfileobj(source_file, dest_file)
+</code></pre>
+
+<p>Or as an iterator of bytes, like so:</p>
+
+<pre><code>source_file = client.get_file("montage/master", "/montage.png")
+with open("montage.png", "wb") as dest_file:
+    for chunk in source_file:
+        dest_file.write(chunk)
+</code></pre>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.PFSFile.buf" class="name">var <span class="ident">buf</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PFSFile.res" class="name">var <span class="ident">res</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PFSFile.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, res)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PFSFile.close">
+    <p>def <span class="ident">close</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PFSFile.read">
+    <p>def <span class="ident">read</span>(</p><p>self, size=-1)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
       </div>
       

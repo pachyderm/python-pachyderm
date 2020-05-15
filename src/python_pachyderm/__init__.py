@@ -3,12 +3,13 @@ import importlib as _importlib
 import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
+from .mixin.pfs import PFSFile
 from .client import Client
 from .spout import SpoutManager
 from .util import put_files, create_python_pipeline
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError", "SpoutManager", "put_files", "create_python_pipeline"]
+__all__ = ["Client", "RpcError", "SpoutManager", "put_files", "create_python_pipeline", "PFSFile"]
 
 
 def _import_protos(path):
