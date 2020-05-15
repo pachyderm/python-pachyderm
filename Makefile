@@ -52,7 +52,7 @@ ci-setup:
 release:
 	git checkout master
 	rm -rf build dist
-	python setup.py sdist
+	python3 setup.py sdist
 	twine upload dist/*
 
 lint:
