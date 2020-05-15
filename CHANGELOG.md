@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+
+- `Client.get_file` now returns a file-like object (though the usage pattern is still supported) (PR #187)
+
 ## 4.0.0
 
 - Support for pachyderm v1.10 (PR #178)
