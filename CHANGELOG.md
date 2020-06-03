@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.2.0
+
+- Allow for customization of spout directory for testing (PR #188)
+- Fixed `put_file_bytes` failing for large files (PR #189)
+
+## 4.1.0
+
+- Support file-like operations on `get_file` results (PR #187)
+
 ## 4.0.0
 
 - Support for pachyderm v1.10 (PR #178)
