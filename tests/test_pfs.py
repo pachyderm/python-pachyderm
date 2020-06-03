@@ -217,6 +217,23 @@ def test_put_file_bytes_iterable():
     assert len(files) == 1
 
 
+def test_put_file_bytes_large():
+    """
+    Put a file larger than the maximum message size.
+    """
+
+    client, repo_name = sandbox("put_file_bytes_large")
+
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'file.dat', b'DATA')
+
+    commit_infos = list(client.list_commit(repo_name))
+    assert len(commit_infos) == 1
+    assert commit_infos[0].commit.id == c.id
+    files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
+    assert len(files) == 1
+
+
 def test_put_file_url():
     client, repo_name = sandbox("put_file_url")
 

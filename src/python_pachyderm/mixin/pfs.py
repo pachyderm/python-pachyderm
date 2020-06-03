@@ -7,7 +7,7 @@ from python_pachyderm.service import Service
 from .util import commit_from
 
 
-BUFFER_SIZE = 20 * 1024 * 1024
+BUFFER_SIZE = 19 * 1024 * 1024
 
 
 def put_file_from_filelike(commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None,
