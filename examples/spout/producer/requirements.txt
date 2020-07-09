@@ -1,1 +1,1 @@
-python-pachyderm>=4.0.0
+-e git://github.com/pachyderm/python-pachyderm.git@fix-spout-manager#egg=python-pachyderm
