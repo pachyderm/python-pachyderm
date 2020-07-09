@@ -39,9 +39,13 @@ class SpoutManager:
         self.f = tarfile.open(fileobj=self.uf, mode="w|", encoding="utf-8")
         return self
 
-    def __exit__(self, type, value, traceback):
-        self.f.close()
-        self.uf.close()
+    def __exit__(self, t, value, traceback):
+        try:
+            self.f.close()
+            self.uf.close()
+        except:
+            if type is None:
+                raise
 
     @contextlib.contextmanager
     def marker(self):
