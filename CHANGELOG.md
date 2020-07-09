@@ -1,8 +1,13 @@
 # Changelog
 
+## 4.2.0
+
+- Allow for customization of spout directory for testing (PR #188)
+- Fixed `put_file_bytes` failing for large files (PR #189)
+
 ## 4.1.0
 
-- `Client.get_file` now returns a file-like object (though the usage pattern is still supported) (PR #187)
+- Support file-like operations on `get_file` results (PR #187)
 
 ## 4.0.0
 

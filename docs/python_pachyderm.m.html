@@ -19370,17 +19370,37 @@ spout code like:</p>
 </div>
 
             </div>
+            <div class="item">
+            <p id="python_pachyderm.SpoutManager.pfs_directory" class="name">var <span class="ident">pfs_directory</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
           <h3>Methods</h3>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.SpoutManager.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, marker_filename=None)</p>
+    <p>def <span class="ident">__init__</span>(</p><p>self, marker_filename=None, pfs_directory=&#39;/pfs&#39;)</p>
     </div>
     
 
     
   
     <div class="desc"><p>Creates a new spout manager.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>marker_filename</code>: The name of the file for storing markers. If
+unspecified, marker-related operations will fail.</li>
+<li><code>pfs_directory</code>: The directory for PFS content. Usually this
+shouldn't be explicitly specified, unless the spout manager is being
+tested outside of a real Pachyderm pipeline.</li>
+</ul>
 </div>
   <div class="source_cont">
 </div>

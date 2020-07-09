@@ -1,4 +1,5 @@
 import io
+import os
 import tarfile
 import contextlib
 
@@ -16,16 +17,25 @@ class SpoutManager:
     ```
     """
 
-    def __init__(self, marker_filename=None):
+    def __init__(self, marker_filename=None, pfs_directory="/pfs"):
         """
         Creates a new spout manager.
+
+        Params:
+
+        * `marker_filename`: The name of the file for storing markers. If
+        unspecified, marker-related operations will fail.
+        * `pfs_directory`: The directory for PFS content. Usually this
+        shouldn't be explicitly specified, unless the spout manager is being
+        tested outside of a real Pachyderm pipeline.
         """
 
         self.f = None
         self.marker_filename = marker_filename
+        self.pfs_directory = pfs_directory
 
     def __enter__(self):
-        self.uf = open("/pfs/out", "wb")
+        self.uf = open(os.path.join(self.pfs_directory, "out"), "wb")
         self.f = tarfile.open(fileobj=self.uf, mode="w|", encoding="utf-8")
         return self
 
@@ -41,7 +51,7 @@ class SpoutManager:
 
         if self.marker_filename is None:
             raise Exception("no marker filename set")
-        with open("/pfs/{}".format(self.marker_filename), "r") as f:
+        with open(os.path.join(self.pfs_directory, self.marker_filename), "r") as f:
             yield f
 
     def add_from_fileobj(self, path, size, fileobj):
