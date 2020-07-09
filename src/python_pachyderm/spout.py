@@ -25,11 +25,13 @@ class SpoutManager:
         self.marker_filename = marker_filename
 
     def __enter__(self):
-        self.f = tarfile.open(fileobj=open("/pfs/out", "wb"), mode="w|", encoding="utf-8")
+        self.uf = open("/pfs/out", "wb")
+        self.f = tarfile.open(fileobj=self.uf, mode="w|", encoding="utf-8")
         return self
 
     def __exit__(self, type, value, traceback):
         self.f.close()
+        self.uf.close()
 
     @contextlib.contextmanager
     def marker(self):
