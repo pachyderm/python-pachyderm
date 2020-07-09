@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-import datetime
+import os
 
 def main():
-    with open("/pfs/producer/content", "r") as f:
-        print(datetime.datetime.now(), f.read())
+    for filename in os.listdir("/pfs/producer"):
+        with open(os.path.join("/pfs/producer", filename), "r") as f:
+            print(filename, f.read())
 
 if __name__ == "__main__":
     main()
