@@ -42,10 +42,14 @@ class SpoutManager:
     def __exit__(self, t, value, traceback):
         try:
             self.f.close()
+        except BrokenPipeError:
+            # ignore these errors since the file is closed anyway
+            pass
+        try:
             self.uf.close()
-        except:
-            if type is None:
-                raise
+        except BrokenPipeError:
+            # ignore these errors since the file is closed anyway
+            pass
 
     @contextlib.contextmanager
     def marker(self):
