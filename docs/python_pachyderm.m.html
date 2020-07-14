@@ -3985,7 +3985,7 @@ enabled on the cluster. Default to <code>None</code>.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, host=&#39;localhost&#39;, port=30650, auth_token=None, root_certs=None, transaction_id=None, tls=None)</p>
+    <p>def <span class="ident">__init__</span>(</p><p>self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None)</p>
     </div>
     
 
@@ -3996,8 +3996,9 @@ enabled on the cluster. Default to <code>None</code>.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>host</code>: The pachd host.</li>
-<li><code>port</code>: The pachd port.</li>
+<li><code>host</code>: The pachd host. Default is 'localhost', which is used with
+<code>pachctl port-forward</code>.</li>
+<li><code>port</code>: The port to connect to. Default is 30650.</li>
 <li><code>auth_token</code>: The authentication token; used if authentication is
 enabled on the cluster. Defaults to <code>None</code>.</li>
 <li><code>root_certs</code>:  The PEM-encoded root certificates as byte string.</li>

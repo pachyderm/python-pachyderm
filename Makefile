@@ -9,8 +9,7 @@ docs:
 	# packages, and will generate different docs.
 	# 2) pdoc will frequently ignore virtualenv anyways.
 	rm -rf build dist
-	python3 setup.py clean build
-	python3 setup.py install # may require sudo depending on the environment
+	python3 setup.py clean build install
 	pdoc --html --html-dir docs python_pachyderm
 
 docker-build-proto:

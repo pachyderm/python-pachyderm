@@ -24,14 +24,15 @@ class Client(
     VersionMixin,
     object
 ):
-    def __init__(self, host="localhost", port=30650, auth_token=None, root_certs=None, transaction_id=None, tls=None):
+    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
         """
         Creates a Pachyderm client.
 
         Params:
 
-        * `host`: The pachd host.
-        * `port`: The pachd port.
+        * `host`: The pachd host. Default is 'localhost', which is used with
+        `pachctl port-forward`.
+        * `port`: The port to connect to. Default is 30650.
         * `auth_token`: The authentication token; used if authentication is
         enabled on the cluster. Defaults to `None`.
         * `root_certs`:  The PEM-encoded root certificates as byte string.
@@ -40,6 +41,9 @@ class Client(
         specified, they are used; otherwise, we use the certs provided by
         certifi.
         """
+
+        host = host or "localhost"
+        port = port or 30650
 
         if auth_token is None:
             auth_token = os.environ.get("PACH_PYTHON_AUTH_TOKEN")
