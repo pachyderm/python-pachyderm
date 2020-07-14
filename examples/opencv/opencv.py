@@ -17,6 +17,16 @@ def relpath(path):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
 
 def main():
+    # Connects to a pachyderm cluster on the default host:port
+    # (`localhost:30650`). This will work for certain environments (e.g. k8s
+    # running on docker for mac), as well as when port forwarding is being
+    # used. For other setups, you'll want one of the alternatives:
+    # 1) To connect to pachyderm when this script is running inside the
+    #    cluster, use `python_pachyderm.Client.new_in_cluster()`.
+    # 2) To connect to pachyderm via a pachd address, use
+    #    `python_pachyderm.Client.new_from_pachd_address`.
+    # 3) To explicitly set the host and port, pass parameters into
+    #   `python_pachyderm.Client()`.
     client = python_pachyderm.Client()
 
     # Create a repo called images
