@@ -7,7 +7,7 @@ from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
 # Default script for running python code with wheels in a pipeline that was
 # deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITH_WHEELS = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 
 cd /pfs/{source_repo_name}
@@ -18,7 +18,7 @@ python main.py
 # Default script for running python code without wheels in a pipeline that was
 # deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITHOUT_WHEELS = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 
 cd /pfs/{source_repo_name}
@@ -28,7 +28,7 @@ python main.py
 # Default script for building python wheels for a pipeline that was deployed
 # with `create_python_pipeline`.
 BUILDER_SCRIPT = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 python --version
 pip --version
