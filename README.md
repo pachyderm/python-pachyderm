@@ -20,7 +20,12 @@ Here's an example that creates a repo and adds a file:
 
 ```python
 import python_pachyderm
+
+# Connects to a pachyderm cluster on localhost:30650. For other options, see
+# the API docs.
 client = python_pachyderm.Client()
+
+# Create a repo called `test` and insert some data in a commit.
 client.create_repo('test')
 with client.commit('test', 'master') as c:
     client.put_file_bytes(c, '/dir_a/data.txt', b'DATA')
