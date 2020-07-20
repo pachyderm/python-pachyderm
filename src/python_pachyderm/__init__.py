@@ -6,10 +6,19 @@ from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumT
 from .mixin.pfs import PFSFile
 from .client import Client
 from .spout import SpoutManager
-from .util import put_files, create_python_pipeline
+from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
 from grpc import RpcError
 
-__all__ = ["Client", "RpcError", "SpoutManager", "put_files", "create_python_pipeline", "PFSFile"]
+__all__ = [
+    "Client",
+    "RpcError",
+    "SpoutManager",
+    "put_files",
+    "create_python_pipeline",
+    "PFSFile",
+    "parse_json_pipeline_spec",
+    "parse_dict_pipeline_spec",
+]
 
 
 def _import_protos(path):

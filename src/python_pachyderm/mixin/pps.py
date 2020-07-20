@@ -227,6 +227,20 @@ class PPSMixin:
             spec_commit=spec_commit,
         )
 
+    def create_pipeline_from_request(self, req):
+        """
+        Creates a pipeline from a `CreatePipelineRequest` object. Usually this
+        would be used in conjunction with `util.parse_json_pipeline_spec` or
+        `util.parse_dict_pipeline_spec`. If you're in pure python and not
+        working with a pipeline spec file, the sibling method
+        `create_pipeline` is more ergonomic.
+
+        Params:
+
+        * `req`: A `CreatePipelineRequest` object.
+        """
+        return self._req(Service.PPS, "CreatePipeline", req=req)
+
     def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None,
                                hashtree_spec=None, egress=None, update=None, output_branch=None,
                                scale_down_threshold=None, resource_requests=None,
