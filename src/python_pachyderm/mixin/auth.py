@@ -1,3 +1,4 @@
+import warnings
 from python_pachyderm.service import Service
 
 
@@ -53,18 +54,43 @@ class AuthMixin:
         """
         Returns a list of strings specifying the cluster admins.
         """
+        warnings.warn("deprecated in 1.11, use 'get_cluster_role_bindings' instead", DeprecationWarning)
         return self._req(Service.AUTH, "GetAdmins").admins
 
     def modify_admins(self, add=None, remove=None):
         """
         Adds and/or removes admins.
-
         Params:
-
         * `add`: An optional list of strings specifying admins to add.
         * `remove`: An optional list of strings specifying admins to remove.
         """
+        warnings.warn("deprecated in 1.11, use 'modify_cluster_role_binding' instead", DeprecationWarning)
         return self._req(Service.AUTH, "ModifyAdmins", add=add or [], remove=remove or [])
+
+    def get_cluster_role_bindings(self):
+        """
+        Returns the current set of cluster role bindings.
+        """
+        return self._req(Service.AUTH, "GetClusterRoleBindings")
+
+    def modify_cluster_role_binding(self, principal, roles=None):
+        """
+        Sets the list of admin roles for a principal.
+
+        Params:
+
+        * `principal`: A string specifying the principal.
+        * `roles`: An optional `ClusterRoles` object specifying cluster-wide
+        permissions the principal has. If unspecified, all roles are revoked
+        for the principal.
+        """
+        return self._req(Service.AUTH, "ModifyClusterRoleBinding", principal=principal, roles=roles)
+
+    def get_oidc_login(self):
+        """
+        Returns the OIDC login configuration.
+        """
+        return self._req(Service.AUTH, "GetOIDCLogin")
 
     def authenticate_github(self, github_token):
         """
@@ -81,6 +107,17 @@ class AuthMixin:
         retrieve the corresponding GitHub username.)
         """
         return self._req(Service.AUTH, "Authenticate", github_token=github_token).pach_token
+
+    def authenticate_oidc(self, oidc_state):
+        """
+        Authenticates a user to the Pachyderm cluster via OIDC. Returns a
+        string that can be used for making authenticated requests.
+
+        Params:
+
+        * `oidc_state`: A string of the OIDC state token.
+        """
+        return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
 
     def authenticate_one_time_password(self, one_time_password):
         """
