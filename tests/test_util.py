@@ -3,6 +3,7 @@
 """Tests of utility functions."""
 
 import os
+import json
 import tempfile
 
 import grpc
@@ -11,15 +12,51 @@ import pytest
 import python_pachyderm
 from tests import util
 
-TEST_MAIN_SOURCE = """
+# script that copies a file using just stdlibs
+TEST_STDLIB_SOURCE = """
 from shutil import copyfile
 print("copying")
 copyfile("/pfs/{}/file.dat", "/pfs/out/file.dat")
 """
 
+# script that copies a file with padding and colorized output, using
+# third-party libraries (defined in `TEST_REQUIREMENTS_SOURCE`.)
+TEST_LIB_SOURCE = """
+from termcolor import cprint
+from leftpad import left_pad
+
+cprint('copying', 'green')
+
+with open('/pfs/{}/file.dat', 'r') as f:
+    contents = f.read()
+
+with open('/pfs/out/file.dat', 'w') as f:
+    f.write(left_pad(contents, 5))
+"""
+
 TEST_REQUIREMENTS_SOURCE = """
 # WCGW?
 leftpad==0.1.2
+termcolor==1.1.0
+"""
+
+TEST_PIPELINE_SPEC = """
+{
+  "pipeline": {
+    "name": "foobar"
+  },
+  "description": "A pipeline that performs image edge detection by using the OpenCV library.",
+  "input": {
+    "pfs": {
+      "glob": "/*",
+      "repo": "images"
+    }
+  },
+  "transform": {
+    "cmd": [ "python3", "/edges.py" ],
+    "image": "pachyderm/opencv"
+  }
+}
 """
 
 def check_expected_files(client, commit, expected):
@@ -91,7 +128,7 @@ def test_create_python_pipeline():
     # requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
         with open(os.path.join(d, "main.py"), "w") as f:
-            f.write(TEST_MAIN_SOURCE.format(repo_name))
+            f.write(TEST_LIB_SOURCE.format(repo_name))
         with open(os.path.join(d, "requirements.txt"), "w") as f:
             f.write(TEST_REQUIREMENTS_SOURCE)
 
@@ -110,6 +147,7 @@ def test_create_python_pipeline():
     check_expected_files(client, "{}_build/master".format(pipeline_name), set([
         "/",
         "/leftpad-0.1.2-py3-none-any.whl",
+        "/termcolor-1.1.0-py3-none-any.whl",
     ]))
 
     check_expected_files(client, "{}/master".format(pipeline_name), set([
@@ -118,17 +156,16 @@ def test_create_python_pipeline():
     ]))
 
     file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b'DATA']
+    assert file == [b' DATA']
 
     # 4) create a pipeline from a directory without a requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
         with open(os.path.join(d, "main.py"), "w") as f:
-            f.write(TEST_MAIN_SOURCE.format(repo_name))
+            f.write(TEST_STDLIB_SOURCE.format(repo_name))
 
         python_pachyderm.create_python_pipeline(
             client, d, pfs_input,
             pipeline_name=pipeline_name,
-            #pipeline_kwargs=dict(reprocess=True),
             update=True,
         )
 
@@ -150,13 +187,12 @@ def test_create_python_pipeline():
 
     # 5) create a pipeline from just a single file
     with tempfile.NamedTemporaryFile(suffix="python_pachyderm", mode="w") as f:
-        f.write(TEST_MAIN_SOURCE.format(repo_name))
+        f.write(TEST_STDLIB_SOURCE.format(repo_name))
         f.flush()
 
         python_pachyderm.create_python_pipeline(
             client, f.name, pfs_input,
             pipeline_name=pipeline_name,
-            #pipeline_kwargs=dict(reprocess=True),
             update=True,
         )
 
@@ -175,3 +211,27 @@ def test_create_python_pipeline():
 
     file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
     assert file == [b'DATA']
+
+def test_parse_json_pipeline_spec():
+    req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
+    check_pipeline_spec(req)
+
+def test_parse_dict_pipeline_spec():
+    req = python_pachyderm.parse_dict_pipeline_spec(json.loads(TEST_PIPELINE_SPEC))
+    check_pipeline_spec(req)
+
+def check_pipeline_spec(req):
+    assert req == python_pachyderm.CreatePipelineRequest(
+        pipeline=python_pachyderm.Pipeline(name="foobar"),
+        description="A pipeline that performs image edge detection by using the OpenCV library.",
+        input=python_pachyderm.Input(
+            pfs=python_pachyderm.PFSInput(
+                glob="/*",
+                repo="images"
+            ),
+        ),
+        transform=python_pachyderm.Transform(
+            cmd=["python3", "/edges.py"],
+            image="pachyderm/opencv",
+        )
+    )

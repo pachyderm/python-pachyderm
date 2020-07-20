@@ -2,12 +2,14 @@ import os
 
 from .service import Service
 from .mixin import pfs
-from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec
+from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec, CreatePipelineRequest
+
+from google.protobuf import json_format
 
 # Default script for running python code with wheels in a pipeline that was
 # deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITH_WHEELS = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 
 cd /pfs/{source_repo_name}
@@ -18,7 +20,7 @@ python main.py
 # Default script for running python code without wheels in a pipeline that was
 # deployed with `create_python_pipeline`.
 RUNNER_SCRIPT_WITHOUT_WHEELS = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 
 cd /pfs/{source_repo_name}
@@ -28,7 +30,7 @@ python main.py
 # Default script for building python wheels for a pipeline that was deployed
 # with `create_python_pipeline`.
 BUILDER_SCRIPT = """
-#!/bin/bash
+#!/bin/sh
 set -{set_args}
 python --version
 pip --version
@@ -246,3 +248,17 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
         update=update,
         **pipeline_kwargs
     )
+
+
+def parse_json_pipeline_spec(j):
+    """
+    Parses a string of JSON into a `CreatePipelineRequest` protobuf.
+    """
+    return json_format.Parse(j, CreatePipelineRequest())
+
+
+def parse_dict_pipeline_spec(d):
+    """
+    Parses a dict of serialized JSON into a `CreatePipelineRequest` protobuf.
+    """
+    return json_format.ParseDict(d, CreatePipelineRequest())
