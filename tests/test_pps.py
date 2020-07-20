@@ -88,8 +88,12 @@ def test_datums():
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
     assert datum.state == python_pachyderm.DatumState.SUCCESS
 
-    # Just ensure this doesn't raise an exception
-    sandbox.client.restart_datum(job_id)
+    # Skip this check in >=1.11.0, due to a bug:
+    # https://github.com/pachyderm/pachyderm/issues/5123
+    # TODO: remove this check once the bug is fixed
+    if util.test_pachyderm_version() < (1, 11, 0):
+        # Just ensure this doesn't raise an exception
+        sandbox.client.restart_datum(job_id)
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")

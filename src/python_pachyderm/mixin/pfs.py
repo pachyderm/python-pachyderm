@@ -437,8 +437,8 @@ class PFSMixin:
             force=force,
         )
 
-    def put_file_bytes(self, commit, path, value, delimiter=None,
-                       target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None):
+    def put_file_bytes(self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None,
+                       overwrite_index=None, header_records=None):
         """
         Uploads a binary bytes array as file(s) in a certain path.
 
