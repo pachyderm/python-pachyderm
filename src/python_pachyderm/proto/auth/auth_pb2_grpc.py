@@ -44,6 +44,16 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.ModifyAdminsRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.ModifyAdminsResponse.FromString,
         )
+    self.GetClusterRoleBindings = channel.unary_unary(
+        '/auth.API/GetClusterRoleBindings',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetClusterRoleBindingsRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetClusterRoleBindingsResponse.FromString,
+        )
+    self.ModifyClusterRoleBinding = channel.unary_unary(
+        '/auth.API/ModifyClusterRoleBinding',
+        request_serializer=client_dot_auth_dot_auth__pb2.ModifyClusterRoleBindingRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.ModifyClusterRoleBindingResponse.FromString,
+        )
     self.Authenticate = channel.unary_unary(
         '/auth.API/Authenticate',
         request_serializer=client_dot_auth_dot_auth__pb2.AuthenticateRequest.SerializeToString,
@@ -78,6 +88,11 @@ class APIStub(object):
         '/auth.API/SetACL',
         request_serializer=client_dot_auth_dot_auth__pb2.SetACLRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.SetACLResponse.FromString,
+        )
+    self.GetOIDCLogin = channel.unary_unary(
+        '/auth.API/GetOIDCLogin',
+        request_serializer=client_dot_auth_dot_auth__pb2.GetOIDCLoginRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.GetOIDCLoginResponse.FromString,
         )
     self.GetAuthToken = channel.unary_unary(
         '/auth.API/GetAuthToken',
@@ -156,14 +171,28 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def GetAdmins(self, request, context):
-    """GetAdmins returns the current list of cluster admins
+    """Deprecated. GetAdmins returns the current list of cluster super admins
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def ModifyAdmins(self, request, context):
-    """ModifyAdmins adds or removes admins from the cluster
+    """Deprecated. ModifyAdmins adds or removes super admins from the cluster
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetClusterRoleBindings(self, request, context):
+    """GetClusterRoleBindings returns the current set of cluster role bindings
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ModifyClusterRoleBinding(self, request, context):
+    """ModifyAdmin sets the list of admin roles for a principal
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -212,6 +241,13 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def SetACL(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetOIDCLogin(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -307,6 +343,16 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_auth_dot_auth__pb2.ModifyAdminsRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.ModifyAdminsResponse.SerializeToString,
       ),
+      'GetClusterRoleBindings': grpc.unary_unary_rpc_method_handler(
+          servicer.GetClusterRoleBindings,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetClusterRoleBindingsRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetClusterRoleBindingsResponse.SerializeToString,
+      ),
+      'ModifyClusterRoleBinding': grpc.unary_unary_rpc_method_handler(
+          servicer.ModifyClusterRoleBinding,
+          request_deserializer=client_dot_auth_dot_auth__pb2.ModifyClusterRoleBindingRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.ModifyClusterRoleBindingResponse.SerializeToString,
+      ),
       'Authenticate': grpc.unary_unary_rpc_method_handler(
           servicer.Authenticate,
           request_deserializer=client_dot_auth_dot_auth__pb2.AuthenticateRequest.FromString,
@@ -341,6 +387,11 @@ def add_APIServicer_to_server(servicer, server):
           servicer.SetACL,
           request_deserializer=client_dot_auth_dot_auth__pb2.SetACLRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.SetACLResponse.SerializeToString,
+      ),
+      'GetOIDCLogin': grpc.unary_unary_rpc_method_handler(
+          servicer.GetOIDCLogin,
+          request_deserializer=client_dot_auth_dot_auth__pb2.GetOIDCLoginRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.GetOIDCLoginResponse.SerializeToString,
       ),
       'GetAuthToken': grpc.unary_unary_rpc_method_handler(
           servicer.GetAuthToken,
