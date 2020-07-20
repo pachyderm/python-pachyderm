@@ -249,11 +249,13 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
         **pipeline_kwargs
     )
 
+
 def parse_json_pipeline_spec(j):
     """
     Parses a string of JSON into a `CreatePipelineRequest` protobuf.
     """
     return json_format.Parse(j, CreatePipelineRequest())
+
 
 def parse_dict_pipeline_spec(d):
     """
