@@ -3,12 +3,14 @@ import importlib as _importlib
 import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
-from .version import __version__
 from .mixin.pfs import PFSFile
 from .client import Client
 from .spout import SpoutManager
 from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
 from grpc import RpcError
+
+from .version import __version__
+__version__ = __version__
 
 __all__ = [
     "Client",
