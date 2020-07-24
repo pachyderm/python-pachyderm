@@ -5,6 +5,7 @@
 import python_pachyderm
 import json
 from os.path import join
+from os.path import dirname
 
 def test_local_version():
     with open(join(dirname(__file__), "version.json"), "r") as f:
