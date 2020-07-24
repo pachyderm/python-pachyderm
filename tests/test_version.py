@@ -8,7 +8,7 @@ from os.path import join
 from os.path import dirname
 
 def test_local_version():
-    with open(join(dirname(__file__), "version.json"), "r") as f:
+    with open(join(dirname(dirname(__file__)), "version.json"), "r") as f:
         j = json.load(f)
         version = j["python-pachyderm"]
     assert python_pachyderm.__version__ == version 
