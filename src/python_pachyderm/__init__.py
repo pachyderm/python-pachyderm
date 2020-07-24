@@ -3,6 +3,7 @@ import importlib as _importlib
 import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
+from .version import __version__
 from .mixin.pfs import PFSFile
 from .client import Client
 from .spout import SpoutManager

@@ -22,3 +22,6 @@ __pycache__/
 
 # VSCode
 .vscode
+
+# python-pachyderm
+src/python_pachyderm/version.py
