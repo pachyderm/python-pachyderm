@@ -9,6 +9,9 @@ from .spout import SpoutManager
 from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
 from grpc import RpcError
 
+from .version import __version__
+__version__ = __version__
+
 __all__ = [
     "Client",
     "RpcError",

@@ -17,6 +17,9 @@ with open(join(dirname(__file__), "version.json"), "r") as f:
     j = json.load(f)
     version = j["python-pachyderm"]
 
+with open(join(dirname(__file__), 'src', 'python_pachyderm','version.py'), 'w') as f:
+    f.write("__version__ = '{}'\n".format(version))
+
 setup(
     name='python-pachyderm',
     version=version,
