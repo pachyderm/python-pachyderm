@@ -3,6 +3,7 @@
 """Tests PFS-related functionality"""
 
 import pytest
+import tempfile
 from io import BytesIO
 
 import python_pachyderm
@@ -225,7 +226,7 @@ def test_put_file_bytes_large():
     client, repo_name = sandbox("put_file_bytes_large")
 
     with client.commit(repo_name) as c:
-        client.put_file_bytes(c, 'file.dat', b'DATA')
+        client.put_file_bytes(c, 'file.dat', b'#'*(21*1024*1024))
 
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
@@ -244,6 +245,36 @@ def test_put_file_url():
     assert len(files) == 1
     assert files[0].file.path == '/index.html'
 
+
+def test_put_file_atomic():
+    client, repo_name = sandbox("put_file_atomic")
+    commit = (repo_name, "master")
+
+    with tempfile.NamedTemporaryFile() as f:
+        with client.put_file_client() as pfc:
+            pfc.put_file_from_fileobj(commit, 'file1.dat', BytesIO(b'DATA1'))
+            pfc.put_file_from_bytes(commit, 'file2.dat', b'DATA1')
+            pfc.put_file_from_url(commit, "index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
+
+            f.write(b'DATA3')
+            f.flush()
+            pfc.put_file_from_filepath(commit, "file3.dat", f.name)
+
+    files = list(client.list_file(commit, '.'))
+    assert len(files) == 4
+    assert files[0].file.path == '/file1.dat'
+    assert files[1].file.path == '/file2.dat'
+    assert files[2].file.path == '/file3.dat'
+    assert files[3].file.path == '/index.html'
+
+    with client.put_file_client() as pfc:
+        pfc.delete_file(commit, "/file1.dat")
+        pfc.delete_file(commit, "/file2.dat")
+        pfc.delete_file(commit, "/file3.dat")
+
+    files = list(client.list_file(commit, '.'))
+    assert len(files) == 1
+    assert files[0].file.path == '/index.html'
 
 def test_copy_file():
     client, repo_name = sandbox("copy_file")

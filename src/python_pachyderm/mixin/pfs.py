@@ -382,9 +382,9 @@ class PFSMixin:
 
     @contextmanager
     def put_file_client(self):
-        client = PutFileClient()
-        yield client
-        self._req(Service.PFS, "PutFile", req=client._reqs())
+        pfc = PutFileClient()
+        yield pfc
+        self._req(Service.PFS, "PutFile", req=pfc._reqs())
 
     def put_file_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
                        target_file_bytes=None, overwrite_index=None, header_records=None):
@@ -408,9 +408,9 @@ class PFSMixin:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -420,9 +420,9 @@ class PFSMixin:
                 "'put_file_bytes' with an iterable 'value' is deprecated, use file-like objects or bytestrings instead",
                 DeprecationWarning,
             )
-            pfs_file = pfs_proto.File(commit=commit_from(commit), path=path)
             reqs = _put_file_from_iterable_reqs(
-                pfs_file, value,
+                value,
+                file=pfs_proto.File(commit=commit_from(commit), path=path),
                 delimiter=delimiter,
                 target_file_datums=target_file_datums,
                 target_file_bytes=target_file_bytes,
@@ -442,7 +442,7 @@ class PFSMixin:
                     header_records=header_records,
                 )
             else:
-                return pfc.put_file_from_bytestring(
+                return pfc.put_file_from_bytes(
                     commit, path, value,
                     delimiter=delimiter,
                     target_file_datums=target_file_datums,
@@ -473,9 +473,9 @@ class PFSMixin:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -484,7 +484,6 @@ class PFSMixin:
         with self.put_file_client() as pfc:
             pfc.put_file_from_url(
                 commit, path, url,
-                url=url,
                 delimiter=delimiter,
                 recursive=recursive,
                 target_file_datums=target_file_datums,
@@ -690,9 +689,9 @@ class PutFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -702,7 +701,7 @@ class PutFileClient:
             delimiter=delimiter,
             target_file_datums=target_file_datums,
             target_file_bytes=target_file_bytes,
-            overwrite_index=overwrite_index,
+            overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
             header_records=header_records,
         ))
 
@@ -726,9 +725,9 @@ class PutFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -738,7 +737,7 @@ class PutFileClient:
             delimiter=delimiter,
             target_file_datums=target_file_datums,
             target_file_bytes=target_file_bytes,
-            overwrite_index=overwrite_index,
+            overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
             header_records=header_records,
         ))
 
@@ -762,9 +761,9 @@ class PutFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -800,9 +799,9 @@ class PutFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional `OverwriteIndex` object. This is the
-        object index where the write starts from.  All existing objects
-        starting from the index are deleted.
+        * `overwrite_index`: An optional int. This is the object index where
+        the write starts from.  All existing objects starting from the index
+        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -814,7 +813,7 @@ class PutFileClient:
             recursive=recursive,
             target_file_datums=target_file_datums,
             target_file_bytes=target_file_bytes,
-            overwrite_index=overwrite_index,
+            overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
             header_records=header_records,
         ))
 
@@ -847,7 +846,7 @@ class _AtomicPutFilepathOp(_AtomicOp):
 
     def reqs(self):
         with open(self.local_path, "rb") as f:
-            yield from _put_file_from_fileobj_reqs(self.pfs_file, f, **self.kwargs)
+            yield from _put_file_from_fileobj_reqs(f, **self.kwargs)
 
 
 class _AtomicPutFileobjOp(_AtomicOp):
@@ -856,10 +855,10 @@ class _AtomicPutFileobjOp(_AtomicOp):
         self.value = value
 
     def reqs(self):
-        yield from _put_file_from_fileobj_reqs(self.pfs_file, self.value, **self.kwargs)
+        yield from _put_file_from_fileobj_reqs(self.value, **self.kwargs)
 
 
-def _put_file_from_fileobj_reqs(pfs_file, value, **kwargs):
+def _put_file_from_fileobj_reqs(value, **kwargs):
     for i in itertools.count():
         chunk = value.read(BUFFER_SIZE)
 
@@ -867,14 +866,14 @@ def _put_file_from_fileobj_reqs(pfs_file, value, **kwargs):
             return
 
         if i == 0:
-            yield pfs_proto.PutFileRequest(file=pfs_file, value=chunk, **kwargs)
+            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
         else:
             yield pfs_proto.PutFileRequest(value=chunk)
 
 
-def _put_file_from_iterable_reqs(pfs_file, value, **kwargs):
+def _put_file_from_iterable_reqs(value, **kwargs):
     for i, chunk in enumerate(value):
         if i == 0:
-            yield pfs_proto.PutFileRequest(file=pfs_file, value=chunk, **kwargs)
+            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
         else:
             yield pfs_proto.PutFileRequest(value=chunk)
