@@ -30,17 +30,21 @@ class SpoutManager:
         tested outside of a real Pachyderm pipeline.
         """
 
-        self.f = None
+        self._pipe = open(os.path.join(self.pfs_directory, "out"), "wb")
+        self._tarstream = None
         self.marker_filename = marker_filename
         self.pfs_directory = pfs_directory
 
     def __enter__(self):
-        f = open(os.path.join(self.pfs_directory, "out"), "wb")
-        self.f = tarfile.open(fileobj=f, mode="w|", encoding="utf-8")
+        self._tarstream = tarfile.open(fileobj=self._pipe, mode="w|", encoding="utf-8")
         return self
 
     def __exit__(self, type, value, traceback):
-        self.f.close()
+        self._tarstream.close()
+
+    def close(self):
+        self._tarstream.close()
+        self._pipe.close()
 
     @contextlib.contextmanager
     def marker(self):
@@ -67,7 +71,7 @@ class SpoutManager:
         tar_info = tarfile.TarInfo(path)
         tar_info.size = size
         tar_info.mode = 0o600
-        self.f.addfile(tarinfo=tar_info, fileobj=fileobj)
+        self._tarstream.addfile(tarinfo=tar_info, fileobj=fileobj)
 
     def add_from_bytes(self, path, bytes):
         """
