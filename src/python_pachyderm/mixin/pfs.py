@@ -384,7 +384,7 @@ class PFSMixin:
     def put_file_client(self):
         client = PutFileClient()
         yield client
-        return self._req(Service.PFS, "PutFile", req=client._reqs())
+        self._req(Service.PFS, "PutFile", req=client._reqs())
 
     def put_file_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
                        target_file_bytes=None, overwrite_index=None, header_records=None):
