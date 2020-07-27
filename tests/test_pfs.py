@@ -267,14 +267,16 @@ def test_put_file_atomic():
     assert files[2].file.path == '/file3.dat'
     assert files[3].file.path == '/index.html'
 
-    with client.put_file_client() as pfc:
-        pfc.delete_file(commit, "/file1.dat")
-        pfc.delete_file(commit, "/file2.dat")
-        pfc.delete_file(commit, "/file3.dat")
+    # atomic deletes are only supported in 1.11.0 onwards
+    if util.test_pachyderm_version() >= (1, 11, 0):
+        with client.put_file_client() as pfc:
+            pfc.delete_file(commit, "/file1.dat")
+            pfc.delete_file(commit, "/file2.dat")
+            pfc.delete_file(commit, "/file3.dat")
 
-    files = list(client.list_file(commit, '.'))
-    assert len(files) == 1
-    assert files[0].file.path == '/index.html'
+        files = list(client.list_file(commit, '.'))
+        assert len(files) == 1
+        assert files[0].file.path == '/index.html'
 
 def test_copy_file():
     client, repo_name = sandbox("copy_file")
