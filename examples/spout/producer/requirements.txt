@@ -1,2 +1,1 @@
-# python-pachyderm>=4.0.0
-git+https://github.com/pachyderm/python-pachyderm.git@reopenable-tarstream
+python-pachyderm>=6.0.0
