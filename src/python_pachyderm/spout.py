@@ -30,10 +30,10 @@ class SpoutManager:
         tested outside of a real Pachyderm pipeline.
         """
 
-        self._pipe = open(os.path.join(self.pfs_directory, "out"), "wb")
-        self._tarstream = None
         self.marker_filename = marker_filename
         self.pfs_directory = pfs_directory
+        self._pipe = open(os.path.join(self.pfs_directory, "out"), "wb")
+        self._tarstream = None
 
     def __enter__(self):
         self._tarstream = tarfile.open(fileobj=self._pipe, mode="w|", encoding="utf-8")
