@@ -88,8 +88,12 @@ def test_datums():
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
     assert datum.state == python_pachyderm.DatumState.SUCCESS
 
-    # Just ensure this doesn't raise an exception
-    sandbox.client.restart_datum(job_id)
+    # Skip this check in >=1.11.0, due to a bug:
+    # https://github.com/pachyderm/pachyderm/issues/5123
+    # TODO: remove this check once the bug is fixed
+    if util.test_pachyderm_version() < (1, 11, 0):
+        # Just ensure this doesn't raise an exception
+        sandbox.client.restart_datum(job_id)
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
@@ -204,3 +208,27 @@ def test_get_job_logs():
     # Just make sure these spit out some logs
     logs = sandbox.client.get_job_logs(job_id)
     assert next(logs) is not None
+
+def test_create_pipeline_from_request():
+    client = python_pachyderm.Client()
+
+    repo_name = util.create_test_repo(client, "test_create_pipeline_from_request")
+    pipeline_name = util.test_repo_name("test_create_pipeline_from_request")
+
+    # more or less a copy of the opencv demo's edges pipeline spec
+    client.create_pipeline_from_request(python_pachyderm.CreatePipelineRequest(
+        pipeline=python_pachyderm.Pipeline(name=pipeline_name),
+        description="A pipeline that performs image edge detection by using the OpenCV library.",
+        input=python_pachyderm.Input(
+            pfs=python_pachyderm.PFSInput(
+                glob="/*",
+                repo=repo_name,
+            ),
+        ),
+        transform=python_pachyderm.Transform(
+            cmd=["echo", "hi"],
+            image="pachyderm/opencv",
+        )
+    ))
+
+    assert any(p.pipeline.name == pipeline_name for p in client.list_pipeline().pipeline_info)

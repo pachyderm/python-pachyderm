@@ -3,6 +3,7 @@
 """Tests of utility functions."""
 
 import os
+import json
 import tempfile
 
 import grpc
@@ -37,6 +38,25 @@ TEST_REQUIREMENTS_SOURCE = """
 # WCGW?
 leftpad==0.1.2
 termcolor==1.1.0
+"""
+
+TEST_PIPELINE_SPEC = """
+{
+  "pipeline": {
+    "name": "foobar"
+  },
+  "description": "A pipeline that performs image edge detection by using the OpenCV library.",
+  "input": {
+    "pfs": {
+      "glob": "/*",
+      "repo": "images"
+    }
+  },
+  "transform": {
+    "cmd": [ "python3", "/edges.py" ],
+    "image": "pachyderm/opencv"
+  }
+}
 """
 
 def check_expected_files(client, commit, expected):
@@ -191,3 +211,27 @@ def test_create_python_pipeline():
 
     file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
     assert file == [b'DATA']
+
+def test_parse_json_pipeline_spec():
+    req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
+    check_pipeline_spec(req)
+
+def test_parse_dict_pipeline_spec():
+    req = python_pachyderm.parse_dict_pipeline_spec(json.loads(TEST_PIPELINE_SPEC))
+    check_pipeline_spec(req)
+
+def check_pipeline_spec(req):
+    assert req == python_pachyderm.CreatePipelineRequest(
+        pipeline=python_pachyderm.Pipeline(name="foobar"),
+        description="A pipeline that performs image edge detection by using the OpenCV library.",
+        input=python_pachyderm.Input(
+            pfs=python_pachyderm.PFSInput(
+                glob="/*",
+                repo="images"
+            ),
+        ),
+        transform=python_pachyderm.Transform(
+            cmd=["python3", "/edges.py"],
+            image="pachyderm/opencv",
+        )
+    )

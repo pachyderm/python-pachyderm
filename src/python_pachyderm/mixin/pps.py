@@ -7,7 +7,7 @@ from .util import commit_from
 
 
 class PPSMixin:
-    def inspect_job(self, job_id, block_state=None, output_commit=None):
+    def inspect_job(self, job_id, block_state=None, output_commit=None, full=None):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
 
@@ -17,12 +17,14 @@ class PPSMixin:
         * `block_state`: If true, block until the job completes.
         * `output_commit`: An optional tuple, string, or `Commit` object
         representing an output commit to filter on.
+        * `full`: If true, include worker status.
         """
         return self._req(
             Service.PPS, "InspectJob",
             job=pps_proto.Job(id=job_id),
             block_state=block_state,
             output_commit=commit_from(output_commit) if output_commit is not None else None,
+            full=full,
         )
 
     def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None, full=None):
@@ -156,7 +158,7 @@ class PPSMixin:
                         description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
                         datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None,
-                        metadata=None, s3_out=None):
+                        metadata=None, s3_out=None, sidecar_resource_limits=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -196,6 +198,8 @@ class PPSMixin:
         * `metadata`: An optional `Metadata` object.
         * `s3_out`: An optional bool specifying whether the output repo should
         be exposed as an s3 gateway bucket.
+        * `sidecar_resource_limits`: An optional `ResourceSpec` setting
+        resource limits for the pipeline sidecar.
         """
         return self._req(
             Service.PPS, "CreatePipeline",
@@ -225,7 +229,22 @@ class PPSMixin:
             pod_patch=pod_patch,
             spout=spout,
             spec_commit=spec_commit,
+            sidecar_resource_limits=sidecar_resource_limits,
         )
+
+    def create_pipeline_from_request(self, req):
+        """
+        Creates a pipeline from a `CreatePipelineRequest` object. Usually this
+        would be used in conjunction with `util.parse_json_pipeline_spec` or
+        `util.parse_dict_pipeline_spec`. If you're in pure python and not
+        working with a pipeline spec file, the sibling method
+        `create_pipeline` is more ergonomic.
+
+        Params:
+
+        * `req`: A `CreatePipelineRequest` object.
+        """
+        return self._req(Service.PPS, "CreatePipeline", req=req)
 
     def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None,
                                hashtree_spec=None, egress=None, update=None, output_branch=None,
@@ -506,8 +525,8 @@ class PPSMixin:
             req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
         )
 
-    def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None,
-                          datum=None, follow=None, tail=None):
+    def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None, datum=None, follow=None, tail=None,
+                          use_loki_backend=None):
         """
         Gets logs for a pipeline. Yields `LogMessage` objects.
 
@@ -527,6 +546,8 @@ class PPSMixin:
         * `tail`: An optional int. If nonzero, the number of lines from the end
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
+        * `use_loki_backend`: Whether to use loki as a backend for fetching
+        logs. Requires a loki-enabled cluster.
         """
         return self._req(
             Service.PPS, "GetLogs",
@@ -536,10 +557,10 @@ class PPSMixin:
             datum=datum,
             follow=follow,
             tail=tail,
+            use_loki_backend=use_loki_backend,
         )
 
-    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None,
-                     tail=None):
+    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None, tail=None, use_loki_backend=None):
         """
         Gets logs for a job. Yields `LogMessage` objects.
 
@@ -557,6 +578,8 @@ class PPSMixin:
         * `tail`: An optional int. If nonzero, the number of lines from the end
         of the logs to return.  Note: tail applies per container, so you will
         get tail * <number of pods> total lines back.
+        * `use_loki_backend`: Whether to use loki as a backend for fetching
+        logs. Requires a loki-enabled cluster.
         """
         return self._req(
             Service.PPS, "GetLogs",
@@ -565,6 +588,7 @@ class PPSMixin:
             datum=datum,
             follow=follow,
             tail=tail,
+            use_loki_backend=use_loki_backend,
         )
 
     def garbage_collect(self, memory_bytes=None):

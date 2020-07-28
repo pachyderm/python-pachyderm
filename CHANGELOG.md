@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.0.0
+
+- Support for pachyderm v1.11 (PR #201)
+    - Deprecated `Client.get_admins` and `Client.modify_admins`
+    - Added support getting/setting cluster role bindings
+    - Added support for OIDC login
+    - Added the `full` flag to `Client.inspect_job`
+    - Added `sidecar_resource_limits` for `Client.list_job`
+    - Added Loki backend query support for log fetch functions
+- Better support for working with pipeline spec files (PR #200)
+    - Added `parse_json_pipeline_spec` and `parse_dict_pipeline_spec` for parsing JSON spec files
+    - Added `create_pipeline_from_request` for creating a pipeline from a parsed pipeline spec
+- Use `sh` rather than `bash` in python pipelines for better compatibility with custom images (PR #196)
+
 ## 4.2.0
 
 - Allow for customization of spout directory for testing (PR #188)

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+A linter that helps ensure we maintain parity between the protobuf definitions
+and what's available in the higher-level `Client`. We have this because I got
+sick of manually working my way through all the protobufs on every release.
+"""
+
 import sys
 import inspect
 import string
@@ -53,24 +59,38 @@ PROTO_OBJECT_BUILTINS = set([
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
-    # delete_all is ignored because we implement PPS' delete_all anyway
-    # build_commit is ignored because it's for internal use only
-    # put_tar is ignored because it's for internal use only
-    # get_tar is ignored because it's for internal use only
-    Service.PFS: ["delete_all", "build_commit", "put_tar", "get_tar"],
-    # activate_auth is ignored because it's for internal use only
-    # create_job is ignored because it's for internal use only
-    # update_job_state is ignored because it's for internal use only
-    Service.PPS: ["activate_auth", "create_job", "update_job_state"],
+    Service.PFS: [
+        # delete_all is ignored because we implement PPS' delete_all anyway
+        "delete_all",
+        # the following are ignored because they're for internal use only
+        "build_commit",
+        "put_tar",
+        "get_tar",
+        # ignore storage v2 for now
+        "get_tar_conditional_v2",
+        "file_operation_v2",
+        "list_file_v2",
+        "glob_file_v2",
+        "get_tar_v2",
+    ],
+    Service.PPS: [
+        # the following are ignored because they're for internal use only
+        "activate_auth",
+        "create_job",
+        "update_job_state",
+    ],
 }
 
+# Mapping of what the linter would by default expect a proto name to be, to
+# it's actual name
 RENAMED_METHODS = {
     Service.AUTH: {
         "activate": ["activate_auth"],
         "deactivate": ["deactivate_auth"],
-        "authenticate": ["authenticate_github", "authenticate_one_time_password"],
+        "authenticate": ["authenticate_github", "authenticate_oidc", "authenticate_one_time_password"],
         "get_a_c_l": ["get_acl"],
         "set_a_c_l": ["set_acl"],
+        "get_o_i_d_c_login": ["get_oidc_login"],
         "get_configuration": ["get_auth_configuration"],
         "set_configuration": ["set_auth_configuration"],
     },
@@ -96,6 +116,17 @@ RENAMED_METHODS = {
     }
 }
 
+# Mapping of renamed method arguments. Multiple times of remappings are
+# supported:
+# * An argument can simply be renamed: `("old_arg_name", "new_arg_name")`
+# * An argument can be renamed to multiple arguments:
+#   `("old_arg_name", ("new_arg_name_1", ("new_arg_name_2"))`
+# * Multiple arguments can be renamed to a single argument:
+#   `(("old_arg_name_1", "old_arg_name_2"), "new_arg_name")`
+# * We can specify that a method isn't expected to have an argument:
+#   `("ignored_arg_name", None)`
+# * We can also specify that a method has an argument that isn't in the
+#   protos: `(None, "ignored_arg_name")`
 RENAMED_ARGS = {
     # admin
     "extract_pipeline": [
@@ -110,9 +141,15 @@ RENAMED_ARGS = {
     # auth
     "authenticate_github": [
         ("one_time_password", None),
+        ("oidc_state", None),
     ],
     "authenticate_one_time_password": [
         ("github_token", None),
+        ("oidc_state", None),
+    ],
+    "authenticate_oidc": [
+        ("github_token", None),
+        ("one_time_password", None),
     ],
     # debug
     "profile_cpu": [
@@ -190,10 +227,14 @@ RENAMED_ARGS = {
         ("file", ("commit", "path")),
         ("url", None),
         ("recursive", None),
+        # TODO: would be good to support this at some point
+        ("delete", None),
     ],
     "put_file_url": [
         ("file", ("commit", "path")),
         ("value", None),
+        # TODO: would be good to support this at some point
+        ("delete", None),
     ],
     "start_commit": [
         ("parent", ("repo_name", "parent")),

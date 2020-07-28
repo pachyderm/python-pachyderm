@@ -17,6 +17,9 @@ with open(join(dirname(__file__), "version.json"), "r") as f:
     j = json.load(f)
     version = j["python-pachyderm"]
 
+with open(join(dirname(__file__), 'src', 'python_pachyderm','version.py'), 'w') as f:
+    f.write("__version__ = '{}'\n".format(version))
+
 setup(
     name='python-pachyderm',
     version=version,
@@ -45,7 +48,7 @@ setup(
     ],
     keywords=['pachyderm',],
     install_requires=[
-        'protobuf>=3.11.2', 'grpcio>=1.26.0'
+        'protobuf>=3.11.2', 'grpcio>=1.26.0',
     ],
     extras_require = {
         "system_certs": ["certifi>=2019.11.28"],
