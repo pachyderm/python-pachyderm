@@ -382,6 +382,11 @@ class PFSMixin:
 
     @contextmanager
     def put_file_client(self):
+        """
+        A context manager that gives a `PutFileClient`. When the context
+        manager exits, any operations enqueued from the `PutFileClient` are
+        executed in a single, atomic `PutFile` call.
+        """
         pfc = PutFileClient()
         yield pfc
         self._req(Service.PFS, "PutFile", req=pfc._reqs())
@@ -420,7 +425,7 @@ class PFSMixin:
                 "'put_file_bytes' with an iterable 'value' is deprecated, use file-like objects or bytestrings instead",
                 DeprecationWarning,
             )
-            reqs = _put_file_from_iterable_reqs(
+            reqs = put_file_from_iterable_reqs(
                 value,
                 file=pfs_proto.File(commit=commit_from(commit), path=path),
                 delimiter=delimiter,
@@ -696,7 +701,7 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(_AtomicPutFilepathOp(
+        self._ops.append(AtomicPutFilepathOp(
             commit, pfs_path, local_path,
             delimiter=delimiter,
             target_file_datums=target_file_datums,
@@ -732,7 +737,7 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(_AtomicPutFileobjOp(
+        self._ops.append(AtomicPutFileobjOp(
             commit, path, value,
             delimiter=delimiter,
             target_file_datums=target_file_datums,
@@ -806,7 +811,7 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(_AtomicOp(
+        self._ops.append(AtomicOp(
             commit, path,
             url=url,
             delimiter=delimiter,
@@ -827,38 +832,54 @@ class PutFileClient:
         commit.
         * `path`: The path to the file.
         """
-        self._ops.append(_AtomicOp(commit, path, delete=True))
+        self._ops.append(AtomicOp(commit, path, delete=True))
 
 
-class _AtomicOp:
+class AtomicOp:
+    """
+    Represents an operation in a `PutFile` call.
+    """
+
     def __init__(self, commit, path, **kwargs):
         kwargs["file"] = pfs_proto.File(commit=commit_from(commit), path=path)
         self.kwargs = kwargs
 
     def reqs(self):
+        """
+        Yields one or more protobuf `PutFileRequests`, which are then enqueued
+        into the request's channel.
+        """
         yield pfs_proto.PutFileRequest(**self.kwargs)
 
 
-class _AtomicPutFilepathOp(_AtomicOp):
+class AtomicPutFilepathOp(AtomicOp):
+    """
+    A `PutFile` operation to put a file locally stored at a given path. This
+    file is opened on-demand, which helps with minimizing the number of open
+    files.
+    """
+
     def __init__(self, commit, pfs_path, local_path, **kwargs):
         super().__init__(commit, pfs_path, **kwargs)
         self.local_path = local_path
 
     def reqs(self):
         with open(self.local_path, "rb") as f:
-            yield from _put_file_from_fileobj_reqs(f, **self.kwargs)
+            yield from put_file_from_fileobj_reqs(f, **self.kwargs)
 
 
-class _AtomicPutFileobjOp(_AtomicOp):
+class AtomicPutFileobjOp(AtomicOp):
+    """A `PutFile` operation to put a file from a file-like object."""
+
     def __init__(self, commit, path, value, **kwargs):
         super().__init__(commit, path, **kwargs)
         self.value = value
 
     def reqs(self):
-        yield from _put_file_from_fileobj_reqs(self.value, **self.kwargs)
+        yield from put_file_from_fileobj_reqs(self.value, **self.kwargs)
 
 
-def _put_file_from_fileobj_reqs(value, **kwargs):
+def put_file_from_fileobj_reqs(value, **kwargs):
     for i in itertools.count():
         chunk = value.read(BUFFER_SIZE)
 
@@ -871,7 +892,7 @@ def _put_file_from_fileobj_reqs(value, **kwargs):
             yield pfs_proto.PutFileRequest(value=chunk)
 
 
-def _put_file_from_iterable_reqs(value, **kwargs):
+def put_file_from_iterable_reqs(value, **kwargs):
     for i, chunk in enumerate(value):
         if i == 0:
             yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
