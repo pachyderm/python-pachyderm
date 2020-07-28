@@ -33,17 +33,8 @@ class SpoutManager:
         self.marker_filename = marker_filename
         self.pfs_directory = pfs_directory
         self._pipe = open(os.path.join(self.pfs_directory, "out"), "wb")
-        self._tarstream = None
-
-    def __enter__(self):
-        self._tarstream = tarfile.open(fileobj=self._pipe, mode="w|", encoding="utf-8")
-        return self
-
-    def __exit__(self, type, value, traceback):
-        self._tarstream.close()
 
     def close(self):
-        self._tarstream.close()
         self._pipe.close()
 
     @contextlib.contextmanager
@@ -56,6 +47,20 @@ class SpoutManager:
             raise Exception("no marker filename set")
         with open(os.path.join(self.pfs_directory, self.marker_filename), "r") as f:
             yield f
+
+    @contextlib.contextmanager
+    def commit(self):
+        spout_commit = SpoutCommit(self._pipe, marker_filename=self.marker_filename)
+        yield spout_commit
+        spout_commit.close()
+
+class SpoutCommit:
+    def __init__(self, pipe, marker_filename=None):
+        self._tarstream = tarfile.open(fileobj=pipe, mode="w|", encoding="utf-8")
+        self.marker_filename = marker_filename
+
+    def close(self):
+        self._tarstream.close()
 
     def add_from_fileobj(self, path, size, fileobj):
         """
