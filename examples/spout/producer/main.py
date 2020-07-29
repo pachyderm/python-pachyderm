@@ -20,8 +20,8 @@ def main():
         contents += b"#"
 
         with manager.commit() as commit:
-            commit.add_marker_from_bytes(contents)
-            commit.add_from_bytes("content", contents)
+            commit.put_marker_from_bytes(contents)
+            commit.put_file_from_bytes("content", contents)
 
         time.sleep(5.0)
 

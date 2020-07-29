@@ -10,10 +10,11 @@ class SpoutManager:
     spout code like:
 
     ```
-    while True:
-        with SpoutManager() as spout:
-            spout.add_from_bytes("foo", b"#")
-        time.sleep(1.0)
+    with SpoutManager() as spout:
+        while True:
+            with spout.commit() as commit:
+                commit.add_from_bytes("foo", b"#")
+            time.sleep(1.0)
     ```
     """
 
@@ -33,6 +34,7 @@ class SpoutManager:
         self.marker_filename = marker_filename
         self.pfs_directory = pfs_directory
         self._pipe = open(os.path.join(self.pfs_directory, "out"), "wb")
+        self._has_open_commit = False
 
     def close(self):
         self._pipe.close()
@@ -50,19 +52,32 @@ class SpoutManager:
 
     @contextlib.contextmanager
     def commit(self):
+        """
+        Opens a commit on the spout. When the context manager exits, any added
+        files will be committed.
+        """
+        if self._has_open_commit:
+            raise Exception("spout commit context manager already opened")
         spout_commit = SpoutCommit(self._pipe, marker_filename=self.marker_filename)
+        self._has_open_commit = True
         yield spout_commit
         spout_commit.close()
+        self._has_open_commit = False
 
 class SpoutCommit:
+    """
+    Represents a commit on a spout, permitting the addition of files.
+    """
+
     def __init__(self, pipe, marker_filename=None):
         self._tarstream = tarfile.open(fileobj=pipe, mode="w|", encoding="utf-8")
         self.marker_filename = marker_filename
 
     def close(self):
+        """Closes the commit"""
         self._tarstream.close()
 
-    def add_from_fileobj(self, path, size, fileobj):
+    def put_file_from_fileobj(self, path, size, fileobj):
         """
         Adds a file to the spout from a file-like object.
 
@@ -78,7 +93,7 @@ class SpoutCommit:
         tar_info.mode = 0o600
         self._tarstream.addfile(tarinfo=tar_info, fileobj=fileobj)
 
-    def add_from_bytes(self, path, bytes):
+    def put_file_from_bytes(self, path, bytes):
         """
         Adds a file to the spout from a bytestring.
 
@@ -88,9 +103,9 @@ class SpoutCommit:
         * `bytes`: The bytestring representing the file contents.
         """
 
-        self.add_from_fileobj(path, len(bytes), io.BytesIO(bytes))
+        self.put_file_from_fileobj(path, len(bytes), io.BytesIO(bytes))
 
-    def add_marker_from_fileobj(self, size, fileobj):
+    def put_marker_from_fileobj(self, size, fileobj):
         """
         Writes to the marker file from a file-like object.
 
@@ -102,9 +117,9 @@ class SpoutCommit:
 
         if self.marker_filename is None:
             raise Exception("no marker filename set")
-        self.add_from_fileobj(self.marker_filename, size, fileobj)
+        self.put_file_from_fileobj(self.marker_filename, size, fileobj)
 
-    def add_marker_from_bytes(self, bytes):
+    def put_marker_from_bytes(self, bytes):
         """
         Adds to the marker from a bytestring.
 
@@ -115,4 +130,4 @@ class SpoutCommit:
 
         if self.marker_filename is None:
             raise Exception("no marker filename set")
-        self.add_from_fileobj(self.marker_filename, len(bytes), io.BytesIO(bytes))
+        self.put_file_from_fileobj(self.marker_filename, len(bytes), io.BytesIO(bytes))
