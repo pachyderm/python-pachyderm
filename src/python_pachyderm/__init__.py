@@ -5,17 +5,16 @@ from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumT
 
 from .mixin.pfs import PFSFile, PutFileClient
 from .client import Client
-from .spout import SpoutManager
+from .spout import SpoutManager, SpoutCommit
 from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
 from grpc import RpcError
 
-from .version import __version__
-__version__ = __version__
 
 __all__ = [
     "Client",
     "RpcError",
     "SpoutManager",
+    "SpoutCommit",
     "put_files",
     "create_python_pipeline",
     "PFSFile",
@@ -23,6 +22,18 @@ __all__ = [
     "parse_json_pipeline_spec",
     "parse_dict_pipeline_spec",
 ]
+
+
+try:
+    from .version import __version__
+    __version__ = __version__
+except ModuleNotFoundError:
+    # The version module is dynamically generated at install time, so if
+    # referencing python-pachyderm without having installed it, the import
+    # will fail -- so we just ignore import failures here.
+    pass
+else:
+    __all__.append("__version__")
 
 
 def _import_protos(path):

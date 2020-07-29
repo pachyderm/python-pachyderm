@@ -1052,6 +1052,13 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
+    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.__version__">__version__</a></li>
+  </ul>
+
+    </li>
 
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
@@ -2133,15 +2140,27 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.SpoutCommit">SpoutCommit</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.close">close</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.put_file_from_bytes">put_file_from_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.put_file_from_fileobj">put_file_from_fileobj</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.put_marker_from_bytes">put_marker_from_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutCommit.put_marker_from_fileobj">put_marker_from_fileobj</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.SpoutManager">SpoutManager</a></span>
         
           
   <ul>
     <li class="mono"><a href="#python_pachyderm.SpoutManager.__init__">__init__</a></li>
-    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_from_bytes">add_from_bytes</a></li>
-    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_from_fileobj">add_from_fileobj</a></li>
-    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_marker_from_bytes">add_marker_from_bytes</a></li>
-    <li class="mono"><a href="#python_pachyderm.SpoutManager.add_marker_from_fileobj">add_marker_from_fileobj</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.close">close</a></li>
+    <li class="mono"><a href="#python_pachyderm.SpoutManager.commit">commit</a></li>
     <li class="mono"><a href="#python_pachyderm.SpoutManager.marker">marker</a></li>
   </ul>
 
@@ -2304,6 +2323,15 @@ table {
   </header>
 
   <section id="section-items">
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="python_pachyderm.__version__" class="name">var <span class="ident">__version__</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -21068,17 +21096,10 @@ converted to a header and applied to all file shards.</li>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.SpoutManager" class="name">class <span class="ident">SpoutManager</span></p>
+      <p id="python_pachyderm.SpoutCommit" class="name">class <span class="ident">SpoutCommit</span></p>
       
   
-    <div class="desc"><p>A convenience context manager for creating spouts, allowing you to create
-spout code like:</p>
-
-<pre><code>while True:
-    with SpoutManager() as spout:
-        spout.add_from_bytes("foo", b"#")
-    time.sleep(1.0)
-</code></pre>
+    <div class="desc"><p>Represents a commit on a spout, permitting the addition of files.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -21087,7 +21108,7 @@ spout code like:</p>
       <div class="class">
           <h3>Instance variables</h3>
             <div class="item">
-            <p id="python_pachyderm.SpoutManager.f" class="name">var <span class="ident">f</span></p>
+            <p id="python_pachyderm.SpoutCommit.marker_filename" class="name">var <span class="ident">marker_filename</span></p>
             
 
             
@@ -21096,6 +21117,154 @@ spout code like:</p>
 </div>
 
             </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, pipe, marker_filename=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.close">
+    <p>def <span class="ident">close</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Closes the commit</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.put_file_from_bytes">
+    <p>def <span class="ident">put_file_from_bytes</span>(</p><p>self, path, bytes)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a file to the spout from a bytestring.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>path</code>: The path to the file in the spout.</li>
+<li><code>bytes</code>: The bytestring representing the file contents.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.put_file_from_fileobj">
+    <p>def <span class="ident">put_file_from_fileobj</span>(</p><p>self, path, size, fileobj)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a file to the spout from a file-like object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>path</code>: The path to the file in the spout.</li>
+<li><code>size</code>: The size of the file.</li>
+<li><code>fileobj</code>: The file-like object to add.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.put_marker_from_bytes">
+    <p>def <span class="ident">put_marker_from_bytes</span>(</p><p>self, bytes)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds to the marker from a bytestring.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>bytes</code>: The bytestring representing the file contents.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.SpoutCommit.put_marker_from_fileobj">
+    <p>def <span class="ident">put_marker_from_fileobj</span>(</p><p>self, size, fileobj)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Writes to the marker file from a file-like object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>size</code>: The size of the file.</li>
+<li><code>fileobj</code>: The file-like object to add.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.SpoutManager" class="name">class <span class="ident">SpoutManager</span></p>
+      
+  
+    <div class="desc"><p>A convenience context manager for creating spouts, allowing you to create
+spout code like:</p>
+
+<pre><code>with SpoutManager() as spout:
+    while True:
+        with spout.commit() as commit:
+            commit.add_from_bytes("foo", b"#")
+        time.sleep(1.0)
+</code></pre>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Instance variables</h3>
             <div class="item">
             <p id="python_pachyderm.SpoutManager.marker_filename" class="name">var <span class="ident">marker_filename</span></p>
             
@@ -21145,22 +21314,13 @@ tested outside of a real Pachyderm pipeline.</li>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.SpoutManager.add_from_bytes">
-    <p>def <span class="ident">add_from_bytes</span>(</p><p>self, path, bytes)</p>
+    <div class="name def" id="python_pachyderm.SpoutManager.close">
+    <p>def <span class="ident">close</span>(</p><p>self)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Adds a file to the spout from a bytestring.</p>
-
-<p>Params:</p>
-
-<ul>
-<li><code>path</code>: The path to the file in the spout.</li>
-<li><code>bytes</code>: The bytestring representing the file contents.</li>
-</ul>
-</div>
   <div class="source_cont">
 </div>
 
@@ -21168,67 +21328,15 @@ tested outside of a real Pachyderm pipeline.</li>
   
             
   <div class="item">
-    <div class="name def" id="python_pachyderm.SpoutManager.add_from_fileobj">
-    <p>def <span class="ident">add_from_fileobj</span>(</p><p>self, path, size, fileobj)</p>
+    <div class="name def" id="python_pachyderm.SpoutManager.commit">
+    <p>def <span class="ident">commit</span>(</p><p>*args, **kwds)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Adds a file to the spout from a file-like object.</p>
-
-<p>Params:</p>
-
-<ul>
-<li><code>path</code>: The path to the file in the spout.</li>
-<li><code>size</code>: The size of the file.</li>
-<li><code>fileobj</code>: The file-like object to add.</li>
-</ul>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.SpoutManager.add_marker_from_bytes">
-    <p>def <span class="ident">add_marker_from_bytes</span>(</p><p>self, bytes)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Adds to the marker from a bytestring.</p>
-
-<p>Params:</p>
-
-<ul>
-<li><code>bytes</code>: The bytestring representing the file contents.</li>
-</ul>
-</div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="python_pachyderm.SpoutManager.add_marker_from_fileobj">
-    <p>def <span class="ident">add_marker_from_fileobj</span>(</p><p>self, size, fileobj)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Writes to the marker file from a file-like object.</p>
-
-<p>Params:</p>
-
-<ul>
-<li><code>size</code>: The size of the file.</li>
-<li><code>fileobj</code>: The file-like object to add.</li>
-</ul>
+    <div class="desc"><p>Opens a commit on the spout. When the context manager exits, any added
+files will be committed.</p>
 </div>
   <div class="source_cont">
 </div>
