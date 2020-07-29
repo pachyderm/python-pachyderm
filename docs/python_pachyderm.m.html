@@ -6277,8 +6277,10 @@ commit.</li>
 written to.</li>
 <li><code>value</code>: The file contents as bytes, represented as a file-like
 object, bytestring, or iterator of bytestrings.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
@@ -6335,8 +6337,10 @@ server which performs the request.</p>
 commit.</li>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>recursive</code>: allow for recursive scraping of some types URLs, for
 example on s3:// URLs.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
@@ -18726,8 +18730,10 @@ commit.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file contents as a bytestring.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
@@ -18766,8 +18772,10 @@ commit.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file-like object.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
@@ -18809,8 +18817,10 @@ commit.</li>
 <li><code>pfs_path</code>: A string specifying the path in the repo the file(s)
 will be written to.</li>
 <li><code>local_path</code>: A string specifying the local file path.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
@@ -18849,8 +18859,10 @@ server which performs the request.</p>
 commit.</li>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>recursive</code>: allow for recursive scraping of some types URLs, for
 example on s3:// URLs.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
