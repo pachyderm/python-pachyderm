@@ -14,5 +14,5 @@ from tests import util
 def test_enterprise():
     client = python_pachyderm.Client()
     client.activate_enterprise(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
-    assert client.get_enterprise_state().state == python_pachyderm.State.ACTIVE
+    assert client.get_enterprise_state().state == python_pachyderm.State.ACTIVE.value
     client.deactivate_enterprise()

@@ -142,8 +142,8 @@ class AuthMixin:
 
         * `repo`: A string specifying the repo name that the caller wants
         access to.
-        * `scope`: A `Scope` object specifying the access level that the
-        caller needs to perform an action.
+        * `scope`: An int specifying the access level that the caller needs to
+        perform an action. See the `Scope` enum for variants.
         """
         return self._req(Service.AUTH, "Authorize", repo=repo, scope=scope).authorized
 
@@ -184,8 +184,8 @@ class AuthMixin:
         no ":"), then it's assumed to be a github user's principal.
         * `repo`: A string specifying the object to which `username`s access
         level is being granted/revoked.
-        * `scope`: A `Scope` object specifying the access level that
-        `username` will now have.
+        * `scope`: An int specifying the access level that `username` will now
+        have. See the `Scope` enum for variants.
         """
         return self._req(Service.AUTH, "SetScope", username=username, repo=repo, scope=scope)
 

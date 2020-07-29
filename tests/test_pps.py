@@ -59,7 +59,7 @@ def test_stop_job():
     except:
         # if it failed, it should be because the job already finished
         job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JobState.JOB_SUCCESS
+        assert job.state == python_pachyderm.JobState.JOB_SUCCESS.value
     else:
         # This is necessary because `StopJob` does not wait for the job to be
         # killed before returning a result.
@@ -67,7 +67,7 @@ def test_stop_job():
         # https://github.com/pachyderm/pachyderm/issues/3856
         time.sleep(1)
         job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JobState.JOB_KILLED
+        assert job.state == python_pachyderm.JobState.JOB_KILLED.value
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
@@ -86,7 +86,7 @@ def test_datums():
     datums = list(sandbox.client.list_datum(job_id))
     assert len(datums) == 1
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
-    assert datum.state == python_pachyderm.DatumState.SUCCESS
+    assert datum.state == python_pachyderm.DatumState.SUCCESS.value
 
     # Skip this check in >=1.11.0, due to a bug:
     # https://github.com/pachyderm/pachyderm/issues/5123
