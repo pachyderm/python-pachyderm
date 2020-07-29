@@ -227,13 +227,11 @@ RENAMED_ARGS = {
         ("file", ("commit", "path")),
         ("url", None),
         ("recursive", None),
-        # TODO: would be good to support this at some point
         ("delete", None),
     ],
     "put_file_url": [
         ("file", ("commit", "path")),
         ("value", None),
-        # TODO: would be good to support this at some point
         ("delete", None),
     ],
     "start_commit": [
