@@ -47,10 +47,7 @@ def _import_protos(path):
 
         if isinstance(value, _EnumTypeWrapper):
             # Dynamically define an enum class that is exported
-            enum_values = _enum._EnumDict()
-            enum_values.update(dict(value.items()))
-            enum_class = type(key, (_enum.IntEnum,), enum_values)
-            g[key] = enum_class
+            g[key] = _enum.Enum(key, {k: v for (k, v) in value.items()})
         else:
             # Export the value
             g[key] = value
