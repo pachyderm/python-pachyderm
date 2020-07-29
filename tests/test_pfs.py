@@ -366,10 +366,10 @@ def test_list_file():
     files = list(client.list_file(c, '/'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FileType.FILE
+    assert files[0].file_type == python_pachyderm.FileType.FILE.value
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == python_pachyderm.FileType.FILE
+    assert files[1].file_type == python_pachyderm.FileType.FILE.value
     assert files[1].file.path == "/file2.dat"
 
 def test_walk_file():
@@ -397,16 +397,16 @@ def test_glob_file():
     files = list(client.glob_file(c, '/*.dat'))
     assert len(files) == 2
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FileType.FILE
+    assert files[0].file_type == python_pachyderm.FileType.FILE.value
     assert files[0].file.path == "/file1.dat"
     assert files[1].size_bytes == 4
-    assert files[1].file_type == python_pachyderm.FileType.FILE
+    assert files[1].file_type == python_pachyderm.FileType.FILE.value
     assert files[1].file.path == "/file2.dat"
 
     files = list(client.glob_file(c, '/*1.dat'))
     assert len(files) == 1
     assert files[0].size_bytes == 4
-    assert files[0].file_type == python_pachyderm.FileType.FILE
+    assert files[0].file_type == python_pachyderm.FileType.FILE.value
     assert files[0].file.path == "/file1.dat"
 
 def test_delete_file():

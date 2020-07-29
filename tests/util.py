@@ -64,7 +64,7 @@ def create_test_pipeline(client, test_name):
 
 def wait_for_job(client, commit):
     # block until the commit is ready
-    client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY)
+    client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY.value)
 
     # while the commit is ready, the job might not be listed on the first
     # call, so repeatedly list jobs until it's available

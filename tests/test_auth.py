@@ -56,7 +56,7 @@ def test_one_time_password():
 @util.skip_if_no_enterprise()
 def test_authorize():
     with sandbox() as client:
-        assert client.authorize("foobar", python_pachyderm.Scope.READER)
+        assert client.authorize("foobar", python_pachyderm.Scope.READER.value)
 
 @util.skip_if_no_enterprise()
 def test_who_am_i():
@@ -70,10 +70,10 @@ def test_scope():
     with sandbox() as client:
         repo = util.create_test_repo(client, "test_scope")
         scopes = client.get_scope("robot:root", repo)
-        assert all(s == python_pachyderm.Scope.NONE for s in scopes)
-        client.set_scope("robot:root", repo, python_pachyderm.Scope.READER)
+        assert all(s == python_pachyderm.Scope.NONE.value for s in scopes)
+        client.set_scope("robot:root", repo, python_pachyderm.Scope.READER.value)
         scopes = client.get_scope("robot:root", repo)
-        assert all(s == python_pachyderm.Scope.NONE for s in scopes)
+        assert all(s == python_pachyderm.Scope.NONE.value for s in scopes)
 
 @util.skip_if_no_enterprise()
 def test_acl():
@@ -82,7 +82,7 @@ def test_acl():
         assert len(acl.entries) == 1
         assert len(acl.robot_entries) == 0
         assert acl.entries[0].username == "robot:root"
-        assert acl.entries[0].scope == python_pachyderm.Scope.OWNER
+        assert acl.entries[0].scope == python_pachyderm.Scope.OWNER.value
         return acl
 
     with sandbox() as client:
