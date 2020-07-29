@@ -292,9 +292,9 @@ class PFSMixin:
         Params:
 
         * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `block_state`: Causes inspect commit to block until the commit is in
-        the desired commit state.
+        commit. 
+        * An optional int that causes this method to block until the commit is
+        in the desired commit state. See the `CommitState` enum.
         """
         return self._req(Service.PFS, "InspectCommit", commit=commit_from(commit), block_state=block_state)
 

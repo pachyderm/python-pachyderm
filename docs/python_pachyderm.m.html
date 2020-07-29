@@ -4393,8 +4393,8 @@ the caller has at least <code>scope</code>-level access to <code>repo</code>.</p
 <ul>
 <li><code>repo</code>: A string specifying the repo name that the caller wants
 access to.</li>
-<li><code>scope</code>: A <code>Scope</code> object specifying the access level that the
-caller needs to perform an action.</li>
+<li><code>scope</code>: An int specifying the access level that the caller needs to
+perform an action. See the <code>Scope</code> enum for variants.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -5739,9 +5739,9 @@ commit.</li>
 
 <ul>
 <li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
-commit.</li>
-<li><code>block_state</code>: Causes inspect commit to block until the commit is in
-the desired commit state.</li>
+commit. </li>
+<li>An optional int that causes this method to block until the commit is
+in the desired commit state. See the <code>CommitState</code> enum.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -6530,8 +6530,8 @@ prefix username with "robot:". If 'username' has no prefix (i.e.
 no ":"), then it's assumed to be a github user's principal.</li>
 <li><code>repo</code>: A string specifying the object to which <code>username</code>s access
 level is being granted/revoked.</li>
-<li><code>scope</code>: A <code>Scope</code> object specifying the access level that
-<code>username</code> will now have.</li>
+<li><code>scope</code>: An int specifying the access level that <code>username</code> will now
+have. See the <code>Scope</code> enum for variants.</li>
 </ul>
 </div>
   <div class="source_cont">
