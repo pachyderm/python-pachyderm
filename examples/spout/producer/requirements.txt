@@ -1,1 +1,1 @@
-python-pachyderm>=4.0.0
+python-pachyderm>=6.0.0

@@ -2,10 +2,11 @@
 
 """Tests for versioning-related functionality."""
 
-import python_pachyderm
 import json
 from os.path import join
 from os.path import dirname
+
+import python_pachyderm
 
 def test_local_version():
     with open(join(dirname(dirname(__file__)), "version.json"), "r") as f:
