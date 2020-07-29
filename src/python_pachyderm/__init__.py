@@ -9,8 +9,6 @@ from .spout import SpoutManager
 from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
 from grpc import RpcError
 
-from .version import __version__
-__version__ = __version__
 
 __all__ = [
     "Client",
@@ -22,6 +20,18 @@ __all__ = [
     "parse_json_pipeline_spec",
     "parse_dict_pipeline_spec",
 ]
+
+
+try:
+    from .version import __version__
+    __version__ = __version__
+except ModuleNotFoundError:
+    # The version module is dynamically generated at install time, so if
+    # referencing python-pachyderm without having installed it, the import
+    # will fail -- so we just ignore import failures here.
+    pass
+else:
+    __all__.append("__version__")
 
 
 def _import_protos(path):
