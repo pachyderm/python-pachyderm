@@ -405,8 +405,10 @@ class PFSMixin:
         written to.
         * `value`: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
@@ -468,8 +470,10 @@ class PFSMixin:
         commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
         * `target_file_datums`: An optional int. Specifies the target number of
@@ -686,8 +690,10 @@ class PutFileClient:
         * `pfs_path`: A string specifying the path in the repo the file(s)
         will be written to.
         * `local_path`: A string specifying the local file path.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
@@ -722,8 +728,10 @@ class PutFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file-like object.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
@@ -758,8 +766,10 @@ class PutFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `target_file_datums`: An optional int. Specifies the target number of
         datums in each written file. It may be lower if data does not split
         evenly, but will never be higher, unless the value is 0.
@@ -794,8 +804,10 @@ class PutFileClient:
         commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `delimiter`: Optional. causes data to be broken up into separate
-        files with `path` as a prefix.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
         * `target_file_datums`: An optional int. Specifies the target number of
