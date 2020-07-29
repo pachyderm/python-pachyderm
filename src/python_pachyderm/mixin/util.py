@@ -13,6 +13,3 @@ def commit_from(src, allow_just_repo=False):
     if not allow_just_repo:
         raise ValueError("Invalid commit type")
     return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
-
-def enum_value_from(value):
-    return value if isinstance(value, int) else value.value
