@@ -64,6 +64,7 @@ class SpoutManager:
         spout_commit.close()
         self._has_open_commit = False
 
+
 class SpoutCommit:
     """
     Represents a commit on a spout, permitting the addition of files.
