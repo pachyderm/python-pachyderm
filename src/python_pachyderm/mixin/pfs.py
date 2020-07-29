@@ -292,7 +292,7 @@ class PFSMixin:
         Params:
 
         * `commit`: A tuple, string, or `Commit` object representing the
-        commit. 
+        commit.
         * An optional int that causes this method to block until the commit is
         in the desired commit state. See the `CommitState` enum.
         """
