@@ -1,7 +1,5 @@
 import os
 
-from .service import Service
-from .mixin import pfs
 from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec, CreatePipelineRequest
 
 from google.protobuf import json_format
@@ -51,21 +49,16 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
     * `source_path`: The directory to recursively insert content from.
     * `commit`: The `Commit` object to use for inserting files.
     * `dest_path`: The destination path in PFS.
-    * `kwargs`: Keyword arguments to forward to `put_file_bytes`.
+    * `kwargs`: Keyword arguments to forward. See
+    `PutFileClient.put_file_from_fileobj` for details.
     """
 
-    def reqs():
+    with client.put_file_client() as pfc:
         for root, _, filenames in os.walk(source_path):
             for filename in filenames:
                 source_filepath = os.path.join(root, filename)
                 dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
-
-                with open(source_filepath, "rb") as f:
-                    yield from pfs.put_file_from_filelike(commit, dest_filepath, f, **kwargs)
-
-    # Call the lower-level `PutFile` function, because the higher-level ones
-    # only support putting a single file at a time
-    return client._req(Service.PFS, "PutFile", req=reqs())
+                pfc.put_file_from_filepath(commit, dest_filepath, source_filepath, **kwargs)
 
 
 def create_python_pipeline(client, path, input=None, pipeline_name=None, image_pull_secrets=None, debug=None,

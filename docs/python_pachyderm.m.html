@@ -1260,6 +1260,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.modify_members">modify_members</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.profile_cpu">profile_cpu</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.put_file_bytes">put_file_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.put_file_client">put_file_client</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.put_file_url">put_file_url</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.restart_datum">restart_datum</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.restore">restore</a></li>
@@ -1978,6 +1979,20 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.PutFileClient">PutFileClient</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.delete_file">delete_file</a></li>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.put_file_from_bytes">put_file_from_bytes</a></li>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.put_file_from_fileobj">put_file_from_fileobj</a></li>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.put_file_from_filepath">put_file_from_filepath</a></li>
+    <li class="mono"><a href="#python_pachyderm.PutFileClient.put_file_from_url">put_file_from_url</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.PutFileRecord">PutFileRecord</a></span>
         
         </li>
@@ -2428,7 +2443,8 @@ pipeline. Defaults to <code>python</code>.</li>
 <li><code>source_path</code>: The directory to recursively insert content from.</li>
 <li><code>commit</code>: The <code>Commit</code> object to use for inserting files.</li>
 <li><code>dest_path</code>: The destination path in PFS.</li>
-<li><code>kwargs</code>: Keyword arguments to forward to <code>put_file_bytes</code>.</li>
+<li><code>kwargs</code>: Keyword arguments to forward. See
+<code>PutFileClient.put_file_from_fileobj</code> for details.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -6249,7 +6265,8 @@ profiler.</li>
 
     
   
-    <div class="desc"><p>Uploads a binary bytes array as file(s) in a certain path.</p>
+    <div class="desc"><p>Uploads a PFS file from a file-like object, bytestring, or iterator
+of bytestrings.</p>
 
 <p>Params:</p>
 
@@ -6260,21 +6277,41 @@ commit.</li>
 written to.</li>
 <li><code>value</code>: The file contents as bytes, represented as a file-like
 object, bytestring, or iterator of bytestrings.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
 datums in each written file. It may be lower if data does not split
 evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional <code>OverwriteIndex</code> object. This is the
-object index where the write starts from.  All existing objects
-starting from the index are deleted.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
 </ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.put_file_client">
+    <p>def <span class="ident">put_file_client</span>(</p><p>*args, **kwds)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>A context manager that gives a <code>PutFileClient</code>. When the context
+manager exits, any operations enqueued from the <code>PutFileClient</code> are
+executed in a single, atomic <code>PutFile</code> call.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -6291,8 +6328,7 @@ converted to a header and applied to all file shards.</li>
     
   
     <div class="desc"><p>Puts a file using the content found at a URL. The URL is sent to the
-server which performs the request. Note that this is not a standard
-PFS function.</p>
+server which performs the request.</p>
 
 <p>Params:</p>
 
@@ -6301,8 +6337,10 @@ PFS function.</p>
 commit.</li>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
-<li><code>delimiter</code>: Optional. causes data to be broken up into separate
-files with <code>path</code> as a prefix.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
 <li><code>recursive</code>: allow for recursive scraping of some types URLs, for
 example on s3:// URLs.</li>
 <li><code>target_file_datums</code>: An optional int. Specifies the target number of
@@ -6311,9 +6349,9 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional <code>OverwriteIndex</code> object. This is the
-object index where the write starts from.  All existing objects
-starting from the index are deleted.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -18618,6 +18656,234 @@ with open("montage.png", "wb") as dest_file:
 </div>
 
             </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.PutFileClient" class="name">class <span class="ident">PutFileClient</span></p>
+      
+  
+    <div class="desc"><p><code>PutFileClient</code> puts or deletes PFS files atomically.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.delete_file">
+    <p>def <span class="ident">delete_file</span>(</p><p>self, commit, path)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Deletes a file.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: The path to the file.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.put_file_from_bytes">
+    <p>def <span class="ident">put_file_from_bytes</span>(</p><p>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Uploads a PFS file from a bytestring.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path in the repo the file(s) will be
+written to.</li>
+<li><code>value</code>: The file contents as a bytestring.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter<code>
+is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.put_file_from_fileobj">
+    <p>def <span class="ident">put_file_from_fileobj</span>(</p><p>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Uploads a PFS file from a file-like object.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path in the repo the file(s) will be
+written to.</li>
+<li><code>value</code>: The file-like object.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter<code>
+is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.put_file_from_filepath">
+    <p>def <span class="ident">put_file_from_filepath</span>(</p><p>self, commit, pfs_path, local_path, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Uploads a PFS file from a local path at a specified path. This will
+lazily open files, which will prevent too many files from being
+opened, or too much memory being consumed, when atomically putting
+many files.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>pfs_path</code>: A string specifying the path in the repo the file(s)
+will be written to.</li>
+<li><code>local_path</code>: A string specifying the local file path.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter<code>
+is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.PutFileClient.put_file_from_url">
+    <p>def <span class="ident">put_file_from_url</span>(</p><p>self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Puts a file using the content found at a URL. The URL is sent to the
+server which performs the request.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path to the file.</li>
+<li><code>url</code>: A string specifying the url of the file to put.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>recursive</code>: allow for recursive scraping of some types URLs, for
+example on s3:// URLs.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>overwrite_index</code>: An optional int. This is the object index where
+the write starts from.  All existing objects starting from the index
+are deleted.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter<code>
+is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
       </div>
       
