@@ -89,6 +89,14 @@ convenient to run specific tests. To do so:
 * Install python-pachyderm into the virtualenv: `pip install -e .`
 * Run the test: `py.test tests -k <test name>`
 
+### Linting
+
+To run the linter locally:
+
+* Setup & initialize virtualenv
+* Install `flake8`
+* Run `make lint`
+
 ## Rebuilding API docs
 
 We use [pdoc](https://github.com/mitmproxy/pdoc) for API documentation. It
