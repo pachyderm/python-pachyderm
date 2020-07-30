@@ -87,6 +87,9 @@ convenient to run specific tests. To do so:
     * `grpcio>=1.26.0`
     * `certifi>=2019.11.28`
 * Install python-pachyderm into the virtualenv: `pip install -e .`
+* Start the cluster to run on `localhost:30650` -- if the cluster is not
+exposed on `localhost`, you can use `pachctl port-forward` to proxy
+connections.
 * Run the test: `py.test tests -k <test name>`
 
 ### Linting
