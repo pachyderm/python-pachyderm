@@ -76,8 +76,8 @@ test suite, because it tests several variants of python and pachyderm.
 
 ### Run one-off tests
 
-The full test suite takes a long time to run, so it's generally more
-convenient to run specific tests. To do so:
+The full test suite takes a long time to run, and will be run anyway in CI, so
+locally it's usually more convenient to run specific tests. To do so:
 
 * Setup & initialize virtualenv
 * Install the dependencies specified in `tox.ini` -- as of 30-7-20, this is:
