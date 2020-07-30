@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.0
+
+- Changes to the interface of enums dynamically generated from protos (PR #207)
+- Changes to the `SpoutManager` interface to better support commits (PR #206)
+- Added support for putting or deleting many PFS files in an atomic commit (PR #204)
+- Deprecated `Client.put_file_bytes` with an iterable of bytestrings (PR #204)
+- Added version number to build (PR #203)
+
 ## 5.0.0
 
 - Support for pachyderm v1.11 (PR #201)
