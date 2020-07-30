@@ -59,6 +59,36 @@ To rebuild protobuf code:
 * Update `version.json` to reference the version of Pachyderm you want to pull
 * Run `make src/python_pachyderm/proto`
 
+## Testing
+
+### Full test suite
+
+To execute the full test suite:
+
+* Install `tox`
+* Start the cluster to run on `localhost:30650` -- if the cluster is not
+exposed on `localhost`, you can use `pachctl port-forward` to proxy
+connections.
+* From the repo root, run `tox`.
+
+Note that CI will still be more comprehensive than a locally executing full
+test suite, because it tests several variants of python and pachyderm.
+
+### Run one-off tests
+
+The full test suite takes a long time to run, so it's generally more
+convenient to run specific tests. To do so:
+
+* Setup & initialize virtualenv
+* Install the dependencies specified in `tox.ini` -- as of 30-7-20, this is:
+    * `pytest==5.3.4`
+    * `pytest-runner==5.2`
+    * `protobuf>=3.11.2`
+    * `grpcio>=1.26.0`
+    * `certifi>=2019.11.28`
+* Install python-pachyderm into the virtualenv: `pip install -e .`
+* Run the test: `py.test tests -k <test name>`
+
 ## Rebuilding API docs
 
 We use [pdoc](https://github.com/mitmproxy/pdoc) for API documentation. It
