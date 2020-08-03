@@ -46,12 +46,3 @@ However, if for whatever reason you need to know which version of pachyderm core
 ## Contributing
 
 This driver is co-maintained by Pachyderm and the community. If you're looking to contribute to the project, this is a fantastic place to get involved. Take a look at [the contributing guide](./contributing.md) for more info.
-
-### Getting started
-
-To run tests, clone the repo, [install jq](https://stedolan.github.io/jq/), then run:
-
-```
-make init
-tox
-```
