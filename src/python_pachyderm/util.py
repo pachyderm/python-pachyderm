@@ -1,6 +1,7 @@
 import os
+import warnings
 
-from .proto.pps.pps_pb2 import Input, Transform, PFSInput, ParallelismSpec, CreatePipelineRequest
+from .proto.pps.pps_pb2 import Transform, CreatePipelineRequest, BuildSpec
 
 from google.protobuf import json_format
 
@@ -65,49 +66,17 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
                            env=None, secrets=None, image=None, update=False, **pipeline_kwargs):
     """
     Utility function for creating (or updating) a pipeline specially built for
-    executing python code that is stored locally at `path`. `path` can either
-    reference a directory with python code, or a single python file.
+    executing python code that is stored locally at `path`.
 
-    A normal pipeline creation process (i.e. a call to
-    `client.create_pipeline`) requires you to first build and push a container
-    image with the source and dependencies baked in. As an alternative
-    process, this function circumvents container image creation by creating:
+    A normal pipeline creation process requires you to first build and push a
+    container image with the source and dependencies baked in. As an alternative
+    process, this function circumvents container image creation by using build
+    step-enabled pipelines. See the pachyderm core docs for more info.
 
-    1) a PFS repo that stores the source code at `path`.
-    2) If there's a `requirements.txt` in `path`, a  pipeline for building the
-    dependencies into wheels.
-    3) A pipeline for executing the PFS stored source code with the built
-    dependencies.
-
-    This is what the DAG looks like:
-
-    ```
-    .------------------------.      .-----------------------.
-    | <pipeline_name>_source | ---▶ | <pipeline_name>_build |
-    '------------------------'      '-----------------------'
-                 |                 /
-                 ▼                /
-        .-----------------.      /
-        | <pipeline_name> | ◀---'
-        '-----------------'
-                 ▲
-                 |
-            .---------.
-            | <input> |
-            '---------'
-
-    ```
-
-    (without a `requirements.txt`, there is no build pipeline.)
-
-    If `path` references a directory, it should have following:
+    If `path` references a directory, it should have:
 
     * A `main.py`, as the pipeline entry-point.
     * An optional `requirements.txt` that specifies pip requirements.
-    * An optional `build.sh` if you wish to override the default build
-    process.
-    * An optional `run.sh` if you wish to override the default pipeline
-    execution process.
 
     Params:
 
@@ -129,115 +98,21 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
     * `secrets`: An optional list of `Secret` objects for secret environment
     variables.
     * `image`: An optional string specifying the docker image to use for the
-    pipeline. Defaults to `python`.
+    pipeline. Defaults to using pachyderm's official python language builder.
     * `update`: Whether to act as an upsert.
     * `pipeline_kwargs`: Keyword arguments to forward to `create_pipeline`.
     """
 
-    # Verify & set defaults for arguments
-    if not os.path.exists(path):
-        raise Exception("path does not exist")
-
-    if not os.path.isfile(path) and not os.path.exists(os.path.join(path, "main.py")):
-        raise Exception("no main.py detected")
-
-    if pipeline_name is None:
-        pipeline_name = os.path.basename(path)
-        if os.path.isfile(path):
-            if path.endswith(".py"):
-                pipeline_name = pipeline_name[:-3]
-        else:
-            if path.endswith("/"):
-                pipeline_name = os.path.basename(path[:-1])
-
-    if not pipeline_name:
-        raise Exception("could not derive pipeline name")
-
-    image = image or "python:3"
-
-    # Create the source repo
-    source_repo_name = "{}_source".format(pipeline_name)
-
-    client.create_repo(
-        source_repo_name,
-        description="python_pachyderm.create_python_pipeline: source code for pipeline {}.".format(pipeline_name),
-        update=update,
-    )
-
-    # Create the build pipeline
-    build_pipeline_name = None
-    if os.path.exists(os.path.join(path, "requirements.txt")):
-        build_pipeline_name = "{}_build".format(pipeline_name)
-
-    if build_pipeline_name is not None:
-        build_pipeline_desc = """
-            python_pachyderm.create_python_pipeline: build artifacts for pipeline {}.
-        """.format(pipeline_name).strip()
-
-        client.create_pipeline(
-            build_pipeline_name,
-            Transform(
-                image=image,
-                cmd=["bash", "/pfs/{}/build.sh".format(source_repo_name)],
-                image_pull_secrets=image_pull_secrets,
-                debug=debug,
-            ),
-            input=Input(pfs=PFSInput(glob="/", repo=source_repo_name)),
-            update=update,
-            description=build_pipeline_desc,
-            parallelism_spec=ParallelismSpec(constant=1),
-        )
-
-    source_commit_desc = "python_pachyderm.create_python_pipeline: sync source code."
-    with client.commit(source_repo_name, branch="master", description=source_commit_desc) as commit:
-        # Utility function for inserting build.sh/run.sh
-        def put_templated_script(filename, template):
-            client.put_file_bytes(commit, filename, template.format(
-                set_args="ex" if debug else "e",
-                source_repo_name=source_repo_name,
-                build_pipeline_name=build_pipeline_name,
-            ).encode("utf8"))
-
-        # Delete any existing source code
-        if update:
-            client.delete_file(commit, "/")
-
-        # Insert the source code
-        if build_pipeline_name is None:
-            if os.path.isfile(path):
-                with open(path, "rb") as f:
-                    client.put_file_bytes(commit, "main.py", f)
-            else:
-                put_files(client, path, commit, "/")
-
-            put_templated_script("run.sh", RUNNER_SCRIPT_WITHOUT_WHEELS)
-        else:
-            put_files(client, path, commit, "/")
-
-            if not os.path.exists(os.path.join(path, "run.sh")):
-                put_templated_script("run.sh", RUNNER_SCRIPT_WITH_WHEELS)
-            if not os.path.exists(os.path.join(path, "build.sh")):
-                put_templated_script("build.sh", BUILDER_SCRIPT)
-
-    # Create the pipeline
-    inputs = [Input(pfs=PFSInput(glob="/", repo=source_repo_name))]
-
-    if input is not None:
-        inputs.append(input)
-    if build_pipeline_name is not None:
-        inputs.append(Input(pfs=PFSInput(glob="/", repo=build_pipeline_name)))
-
     return client.create_pipeline(
         pipeline_name,
         Transform(
-            image=image,
-            cmd=["bash", "/pfs/{}/run.sh".format(source_repo_name)],
             image_pull_secrets=image_pull_secrets,
             debug=debug,
             env=env,
             secrets=secrets,
+            build=BuildSpec(path=path, image=image) if image else BuildSpec(path=path, language="python")
         ),
-        input=Input(cross=inputs) if len(inputs) > 1 else inputs[0],
+        input=input,
         update=update,
         **pipeline_kwargs
     )

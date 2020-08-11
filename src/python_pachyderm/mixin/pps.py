@@ -1,5 +1,7 @@
+import os
 import json
 import base64
+from pathlib import Path
 
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
 from python_pachyderm.service import Service
@@ -201,6 +203,79 @@ class PPSMixin:
         * `sidecar_resource_limits`: An optional `ResourceSpec` setting
         resource limits for the pipeline sidecar.
         """
+
+        # Support for build step-enabled pipelines. This is a python port of
+        # the equivalent functionality in pachyderm core's
+        # 'src/server/pps/cmds/cmds.go', and any changes made here likely have
+        # to be reflected there as well.
+        if transform is not None and transform.build is not None:
+            if spout is not None:
+                raise Exception("build step-enabled pipelines do not work with spouts")
+            if input is None:
+                raise Exception("no `input` specified")
+            if (not transform.build.language) and (not transform.build.image):
+                raise Exception("must specify either a build `language` or `image`")
+            if transform.build.language and transform.build.image:
+                raise Exception("cannot specify both a build `language` and `image`")
+            if any(pipeline_input_name(i) in ("build", "source") for i in pipeline_inputs(input)):
+                raise Exception("build step-enabled pipelines cannot have inputs with the name 'build' or 'source', as they are reserved for build assets")
+
+            build_path = Path(transform.build.path or ".")
+            if not build_path.exists():
+                raise Exception("build path {} does not exist".format(build_path))
+            if (build_path / ".pachignore").exists():
+                warnings.warn("detected a '.pachignore' file, but it's unsupported by python_pachyderm -- use `pachctl` instead", RuntimeWarning)
+
+            build_pipeline_name = "{}_build".format(pipeline_name)
+            
+            image = transform.build.image
+            if not image:
+                version = self.get_remote_version()
+                image = "pachyderm/{}-build:{}.{}.{}{}".format(transform.build.language, version.major, version.minor, version.micro, version.additional)
+            if not transform.image:
+                transform.image = image
+
+            def create_build_pipeline_input(name):
+                return pps_proto.Input(
+                    pfs=pps_proto.PFSInput(
+                        name=name,
+                        glob="/",
+                        repo=build_pipeline_name,
+                        branch=name,
+                    )
+                )
+
+            self.create_repo(build_pipeline_name, update=True)
+
+            self.create_pipeline(
+                build_pipeline_name,
+                pps_proto.Transform(image=image, cmd=["sh", "./build.sh"]),
+                parallelism_spec=pps_proto.ParallelismSpec(constant=1),
+                input=create_build_pipeline_input("source"),
+                output_branch="build",
+                update=update,
+            )
+
+            with self.put_file_client() as pfc:
+                if update:
+                    pfc.delete_file((build_pipeline_name, "source"), "/")
+                for root, _, filenames in os.walk(build_path):
+                    for filename in filenames:
+                        source_filepath = os.path.join(root, filename)
+                        dest_filepath = os.path.join("/", os.path.relpath(source_filepath, start=build_path))
+                        pfc.put_file_from_filepath((build_pipeline_name, "source"), dest_filepath, source_filepath)
+
+            input = pps_proto.Input(
+                cross=[
+                    create_build_pipeline_input("source"),
+                    create_build_pipeline_input("build"),
+                    input,
+                ]
+            )
+
+            if not transform.cmd:
+                transform.cmd = ["sh", "/pfs/build/run.sh"]
+
         return self._req(
             Service.PPS, "CreatePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
@@ -602,3 +677,35 @@ class PPSMixin:
         precise garbage collection (at the cost of more memory usage).
         """
         return self._req(Service.PPS, "GarbageCollect", memory_bytes=memory_bytes)
+
+
+def pipeline_input_name(i):
+    if i is None:
+        return None
+    if i.pfs is not None:
+        return i.pfs.name
+    if i.cross is not None:
+        if len(i.cross) > 0:
+            return pipeline_input_name(i.cross[0])
+    if i.join is not None:
+        if len(i.join) > 0:
+            return pipeline_input_name(i.join[0])
+    if i.union is not None:
+        if len(i.union) > 0:
+            return pipeline_input_name(i.union[0])
+    return None
+
+
+def pipeline_inputs(root):
+    if root is None:
+        return
+    elif root.cross is not None:
+        for i in root.cross:
+            yield from pipeline_inputs(i)
+    elif root.join is not None:
+        for i in root.join:
+            yield from pipeline_inputs(i)
+    elif root.union is not None:
+        for i in root.union:
+            yield from pipeline_inputs(i)
+    yield i
