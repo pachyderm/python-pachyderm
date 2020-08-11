@@ -62,8 +62,9 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
                 pfc.put_file_from_filepath(commit, dest_filepath, source_filepath, **kwargs)
 
 
-def create_python_pipeline(client, path, pipeline_name=None, image_pull_secrets=None, debug=None,
-                           env=None, secrets=None, image=None, update=False, **pipeline_kwargs):
+def create_python_pipeline(client, path, input=None, pipeline_name=None, image_pull_secrets=None,
+                           debug=None, env=None, secrets=None, image=None, update=False,
+                           **pipeline_kwargs):
     """
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally at `path`.
@@ -83,6 +84,7 @@ def create_python_pipeline(client, path, pipeline_name=None, image_pull_secrets=
     * `client`: The `Client` instance to use.
     * `path`: The directory containing the python pipeline source, or an
     individual python file.
+    * `input`: An optional `Input` object specifying the pipeline input.
     * `pipeline_name`: An optional string specifying the pipeline name.
     Defaults to using the last directory name in `path`.
     * `image_pull_secrets`: An optional list of strings specifying the
@@ -112,6 +114,7 @@ def create_python_pipeline(client, path, pipeline_name=None, image_pull_secrets=
             build=BuildSpec(path=path, image=image) if image else BuildSpec(path=path, language="python"),
         ),
         update=update,
+        input=input,
         **pipeline_kwargs
     )
 
