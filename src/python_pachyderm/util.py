@@ -1,5 +1,4 @@
 import os
-import warnings
 
 from .proto.pps.pps_pb2 import Transform, CreatePipelineRequest, BuildSpec
 

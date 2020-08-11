@@ -1,6 +1,7 @@
 import os
 import json
 import base64
+import warnings
 from pathlib import Path
 
 from python_pachyderm.proto.pps import pps_pb2 as pps_proto
@@ -218,20 +219,27 @@ class PPSMixin:
             if transform.build.language and transform.build.image:
                 raise Exception("cannot specify both a build `language` and `image`")
             if any(pipeline_input_name(i) in ("build", "source") for i in pipeline_inputs(input)):
-                raise Exception("build step-enabled pipelines cannot have inputs with the name 'build' or 'source', as they are reserved for build assets")
+                raise Exception(
+                    "build step-enabled pipelines cannot have inputs with the name "
+                    + "'build' or 'source', as they are reserved for build assets"
+                )
 
             build_path = Path(transform.build.path or ".")
             if not build_path.exists():
                 raise Exception("build path {} does not exist".format(build_path))
             if (build_path / ".pachignore").exists():
-                warnings.warn("detected a '.pachignore' file, but it's unsupported by python_pachyderm -- use `pachctl` instead", RuntimeWarning)
+                warnings.warn(
+                    "detected a '.pachignore' file, but it's unsupported by python_pachyderm -- use `pachctl` instead",
+                    RuntimeWarning
+                )
 
             build_pipeline_name = "{}_build".format(pipeline_name)
-            
+
             image = transform.build.image
             if not image:
                 version = self.get_remote_version()
-                image = "pachyderm/{}-build:{}.{}.{}{}".format(transform.build.language, version.major, version.minor, version.micro, version.additional)
+                version_str = "{}.{}.{}{}".format(version.major, version.minor, version.micro, version.additional)
+                image = "pachyderm/{}-build:{}".format(transform.build.language, version_str)
             if not transform.image:
                 transform.image = image
 
