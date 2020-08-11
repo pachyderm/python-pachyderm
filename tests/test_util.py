@@ -117,12 +117,12 @@ def test_create_python_pipeline():
     # 1) create a pipeline from a file that does not exist - should
     # fail
     with pytest.raises(Exception):
-        python_pachyderm.create_python_pipeline(client, "./foobar2000", pfs_input)
+        python_pachyderm.create_python_pipeline(client, "./foobar2000", input=pfs_input)
 
     # 2) create a pipeline from an empty directory - should fail
     with pytest.raises(Exception):
         with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
-            python_pachyderm.create_python_pipeline(client, d, pfs_input)
+            python_pachyderm.create_python_pipeline(client, d, input=pfs_input)
 
     # 3) create a pipeline from a directory with a main.py and
     # requirements.txt
@@ -132,7 +132,7 @@ def test_create_python_pipeline():
         with open(os.path.join(d, "requirements.txt"), "w") as f:
             f.write(TEST_REQUIREMENTS_SOURCE)
 
-        python_pachyderm.create_python_pipeline(client, d, pfs_input, pipeline_name=pipeline_name)
+        python_pachyderm.create_python_pipeline(client, d, input=pfs_input, pipeline_name=pipeline_name)
 
     list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
 
@@ -164,7 +164,8 @@ def test_create_python_pipeline():
             f.write(TEST_STDLIB_SOURCE.format(repo_name))
 
         python_pachyderm.create_python_pipeline(
-            client, d, pfs_input,
+            client, d,
+            input=pfs_input,
             pipeline_name=pipeline_name,
             update=True,
         )
@@ -191,7 +192,8 @@ def test_create_python_pipeline():
         f.flush()
 
         python_pachyderm.create_python_pipeline(
-            client, f.name, pfs_input,
+            client, f.name,
+            input=pfs_input,
             pipeline_name=pipeline_name,
             update=True,
         )
