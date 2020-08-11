@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from .proto.pps.pps_pb2 import Transform, CreatePipelineRequest, BuildSpec
 
@@ -61,7 +62,7 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
                 pfc.put_file_from_filepath(commit, dest_filepath, source_filepath, **kwargs)
 
 
-def create_python_pipeline(client, path, input=None, pipeline_name=None, image_pull_secrets=None, debug=None,
+def create_python_pipeline(client, path, pipeline_name=None, image_pull_secrets=None, debug=None,
                            env=None, secrets=None, image=None, update=False, **pipeline_kwargs):
     """
     Utility function for creating (or updating) a pipeline specially built for
@@ -82,7 +83,6 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
     * `client`: The `Client` instance to use.
     * `path`: The directory containing the python pipeline source, or an
     individual python file.
-    * `input`: An optional `Input` object specifying the pipeline input.
     * `pipeline_name`: An optional string specifying the pipeline name.
     Defaults to using the last directory name in `path`.
     * `image_pull_secrets`: An optional list of strings specifying the
@@ -103,15 +103,14 @@ def create_python_pipeline(client, path, input=None, pipeline_name=None, image_p
     """
 
     return client.create_pipeline(
-        pipeline_name,
+        pipeline_name or Path(path).name,
         Transform(
             image_pull_secrets=image_pull_secrets,
             debug=debug,
             env=env,
             secrets=secrets,
-            build=BuildSpec(path=path, image=image) if image else BuildSpec(path=path, language="python")
+            build=BuildSpec(path=path, image=image) if image else BuildSpec(path=path, language="python"),
         ),
-        input=input,
         update=update,
         **pipeline_kwargs
     )

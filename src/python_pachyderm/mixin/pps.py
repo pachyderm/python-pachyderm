@@ -209,10 +209,10 @@ class PPSMixin:
         # the equivalent functionality in pachyderm core's
         # 'src/server/pps/cmds/cmds.go', and any changes made here likely have
         # to be reflected there as well.
-        if transform is not None and transform.build is not None:
-            if spout is not None:
+        if transform.build.image or transform.build.language or transform.build.path:
+            if spout:
                 raise Exception("build step-enabled pipelines do not work with spouts")
-            if input is None:
+            if not input:
                 raise Exception("no `input` specified")
             if (not transform.build.language) and (not transform.build.image):
                 raise Exception("must specify either a build `language` or `image`")
@@ -255,9 +255,10 @@ class PPSMixin:
 
             self.create_repo(build_pipeline_name, update=True)
 
-            self.create_pipeline(
-                build_pipeline_name,
-                pps_proto.Transform(image=image, cmd=["sh", "./build.sh"]),
+            self._req(
+                Service.PPS, "CreatePipeline",
+                pipeline=pps_proto.Pipeline(name=build_pipeline_name),
+                transform=pps_proto.Transform(image=image, cmd=["sh", "./build.sh"]),
                 parallelism_spec=pps_proto.ParallelismSpec(constant=1),
                 input=create_build_pipeline_input("source"),
                 output_branch="build",
@@ -282,7 +283,7 @@ class PPSMixin:
             )
 
             if not transform.cmd:
-                transform.cmd = ["sh", "/pfs/build/run.sh"]
+                transform.cmd[:] = ["sh", "/pfs/build/run.sh"]
 
         return self._req(
             Service.PPS, "CreatePipeline",
@@ -716,4 +717,4 @@ def pipeline_inputs(root):
     elif root.union is not None:
         for i in root.union:
             yield from pipeline_inputs(i)
-    yield i
+    yield root

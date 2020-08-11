@@ -37,13 +37,17 @@ def main():
     python_pachyderm.create_python_pipeline(
         client,
         relpath("edges"),
-        python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
+        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
     )
 
     # Create the montage pipeline
     client.create_pipeline(
         "montage",
-        transform=python_pachyderm.Transform(cmd=["sh"], image="v4tech/imagemagick", stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]),
+        transform=python_pachyderm.Transform(
+            cmd=["sh"],
+            image="v4tech/imagemagick",
+            stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]
+        ),
         input=python_pachyderm.Input(cross=[
             python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="images")),
             python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="edges")),
