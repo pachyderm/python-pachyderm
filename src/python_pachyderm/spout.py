@@ -13,7 +13,7 @@ class SpoutManager:
     with SpoutManager() as spout:
         while True:
             with spout.commit() as commit:
-                commit.add_from_bytes("foo", b"#")
+                commit.put_file_from_bytes("foo", b"#")
             time.sleep(1.0)
     ```
     """
