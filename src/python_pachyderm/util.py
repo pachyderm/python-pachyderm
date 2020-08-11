@@ -11,7 +11,7 @@ RUNNER_SCRIPT_WITH_WHEELS = """
 set -{set_args}
 
 cd /pfs/{source_repo_name}
-pip install /pfs/{build_pipeline_name}/*.whl
+pip install /pfs/{build_pipeline_name}/*.whl /pfs/{build_pipeline_name}/*.tar.gz
 python main.py
 """
 
@@ -34,7 +34,7 @@ python --version
 pip --version
 
 cd /pfs/{source_repo_name}
-test -f requirements.txt && pip wheel -r requirements.txt -w /pfs/out
+test -f requirements.txt && pip download -r requirements.txt -d /pfs/out
 """
 
 
