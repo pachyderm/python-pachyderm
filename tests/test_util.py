@@ -104,6 +104,21 @@ def test_put_files():
 
     check_expected_files(client, commit, expected)
 
+def test_create_python_pipeline_bad_path():
+    client = python_pachyderm.Client()
+    repo_name = util.create_test_repo(client, "create_python_pipeline_bad_path")
+
+    # create some sample data
+    with client.commit(repo_name, "master") as commit:
+        client.put_file_bytes(commit, 'file.dat', b'DATA')
+
+    # create a pipeline from a file that does not exist - should fail
+    with pytest.raises(Exception):
+        python_pachyderm.create_python_pipeline(
+            client, "./foobar2000",
+            input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)),
+        )
+
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     repo_name = util.create_test_repo(client, "create_python_pipeline")
@@ -114,51 +129,46 @@ def test_create_python_pipeline():
     with client.commit(repo_name, "master") as commit:
         client.put_file_bytes(commit, 'file.dat', b'DATA')
 
-    # 1) create a pipeline from a file that does not exist - should
-    # fail
-    with pytest.raises(Exception):
-        python_pachyderm.create_python_pipeline(client, "./foobar2000", input=pfs_input)
+    # convenience function for verifying results
+    def check_results(extra_source_files, extra_build_files):
+        list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
 
-    # 2) create a pipeline from an empty directory - should fail
-    with pytest.raises(Exception):
-        with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
-            python_pachyderm.create_python_pipeline(client, d, input=pfs_input)
+        check_expected_files(client, "{}_build/source".format(pipeline_name), set([
+            "/",
+            "/main.py",
+            *extra_source_files,
+        ]))
 
-    # 3) create a pipeline from a directory with a main.py and
-    # requirements.txt
+        check_expected_files(client, "{}_build/build".format(pipeline_name), set([
+            "/",
+            "/run.sh",
+            *extra_build_files,
+        ]))
+
+        check_expected_files(client, "{}/master".format(pipeline_name), set([
+            "/",
+            "/file.dat",
+        ]))
+
+        file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
+        assert file == [b' DATA']
+
+    # 1) create a pipeline from a directory with a main.py and requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
         with open(os.path.join(d, "main.py"), "w") as f:
             f.write(TEST_LIB_SOURCE.format(repo_name))
         with open(os.path.join(d, "requirements.txt"), "w") as f:
             f.write(TEST_REQUIREMENTS_SOURCE)
 
-        python_pachyderm.create_python_pipeline(client, d, input=pfs_input, pipeline_name=pipeline_name)
+        python_pachyderm.create_python_pipeline(
+            client, d,
+            input=pfs_input,
+            pipeline_name=pipeline_name,
+        )
 
-    list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
+    check_results(["/requirements.txt"], ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"])
 
-    check_expected_files(client, "{}_source/master".format(pipeline_name), set([
-        "/",
-        "/main.py",
-        "/requirements.txt",
-        "/build.sh",
-        "/run.sh",
-    ]))
-
-    check_expected_files(client, "{}_build/master".format(pipeline_name), set([
-        "/",
-        "/leftpad-0.1.2-py3-none-any.whl",
-        "/termcolor-1.1.0-py3-none-any.whl",
-    ]))
-
-    check_expected_files(client, "{}/master".format(pipeline_name), set([
-        "/",
-        "/file.dat",
-    ]))
-
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b' DATA']
-
-    # 4) create a pipeline from a directory without a requirements.txt
+    # 2) update pipeline from a directory without a requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
         with open(os.path.join(d, "main.py"), "w") as f:
             f.write(TEST_STDLIB_SOURCE.format(repo_name))
@@ -170,49 +180,7 @@ def test_create_python_pipeline():
             update=True,
         )
 
-    list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
-
-    check_expected_files(client, "{}_source/master".format(pipeline_name), set([
-        "/",
-        "/main.py",
-        "/run.sh",
-    ]))
-
-    check_expected_files(client, "{}/master".format(pipeline_name), set([
-        "/",
-        "/file.dat",
-    ]))
-
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b'DATA']
-
-    # 5) create a pipeline from just a single file
-    with tempfile.NamedTemporaryFile(suffix="python_pachyderm", mode="w") as f:
-        f.write(TEST_STDLIB_SOURCE.format(repo_name))
-        f.flush()
-
-        python_pachyderm.create_python_pipeline(
-            client, f.name,
-            input=pfs_input,
-            pipeline_name=pipeline_name,
-            update=True,
-        )
-
-    list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
-
-    check_expected_files(client, "{}_source/master".format(pipeline_name), set([
-        "/",
-        "/main.py",
-        "/run.sh",
-    ]))
-
-    check_expected_files(client, "{}/master".format(pipeline_name), set([
-        "/",
-        "/file.dat",
-    ]))
-
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b'DATA']
+    check_results([], [])
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)

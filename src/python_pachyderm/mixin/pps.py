@@ -271,7 +271,7 @@ class PPSMixin:
                 for root, _, filenames in os.walk(str(build_path)):
                     for filename in filenames:
                         source_filepath = os.path.join(root, filename)
-                        dest_filepath = os.path.join("/", os.path.relpath(source_filepath, start=build_path))
+                        dest_filepath = os.path.join("/", os.path.relpath(source_filepath, start=str(build_path)))
                         pfc.put_file_from_filepath((build_pipeline_name, "source"), dest_filepath, source_filepath)
 
             input = pps_proto.Input(
