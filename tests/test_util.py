@@ -168,19 +168,21 @@ def test_create_python_pipeline():
 
     check_results(["/requirements.txt"], ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"])
 
-    # 2) update pipeline from a directory without a requirements.txt
-    with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
-        with open(os.path.join(d, "main.py"), "w") as f:
-            f.write(TEST_STDLIB_SOURCE.format(repo_name))
+    # TODO: re-enable this test when this issue is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/5188
+    # # 2) update pipeline from a directory without a requirements.txt
+    # with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
+    #     with open(os.path.join(d, "main.py"), "w") as f:
+    #         f.write(TEST_STDLIB_SOURCE.format(repo_name))
 
-        python_pachyderm.create_python_pipeline(
-            client, d,
-            input=pfs_input,
-            pipeline_name=pipeline_name,
-            update=True,
-        )
+    #     python_pachyderm.create_python_pipeline(
+    #         client, d,
+    #         input=pfs_input,
+    #         pipeline_name=pipeline_name,
+    #         update=True,
+    #     )
 
-    check_results([], [])
+    # check_results([], [])
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
