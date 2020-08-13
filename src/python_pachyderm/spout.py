@@ -10,11 +10,11 @@ class SpoutManager:
     spout code like:
 
     ```
-    with SpoutManager() as spout:
-        while True:
-            with spout.commit() as commit:
-                commit.add_from_bytes("foo", b"#")
-            time.sleep(1.0)
+    spout = SpoutManager()
+    while True:
+        with spout.commit() as commit:
+            commit.put_file_from_bytes("foo", b"#")
+        time.sleep(1.0)
     ```
     """
 
