@@ -26,9 +26,10 @@ class BadClusterDeploymentID(ConfigError):
     cluster deployment ID than what is stored in the config file
     """
     def __init__(self, expected_deployment_id, actual_deployment_id):
-        error_message_template = "connected to the wrong cluster (context cluster deployment ID = '{}' vs reported " \
-            + "cluster deployment ID = '{}')"
-        super().__init__(error_message_template.format(expected_deployment_id, actual_deployment_id))
+        super().__init__("connected to the wrong cluster ('{}' vs '{}')".format(
+            expected_deployment_id,
+            actual_deployment_id
+        ))
         self.expected_deployment_id = expected_deployment_id
         self.actual_deployment_id = actual_deployment_id
 
