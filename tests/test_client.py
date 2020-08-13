@@ -72,6 +72,7 @@ def test_client_new_from_pachd_address():
     assert client.address == "::1:80"
 
 def test_client_new_from_config():
+    # should fail because there's no active context
     with pytest.raises(python_pachyderm.ConfigError):
         python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
             {
@@ -83,6 +84,7 @@ def test_client_new_from_config():
             }
         """))
 
+    # should fail since the context 'local' is missing
     with pytest.raises(python_pachyderm.ConfigError):
         python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
             {
@@ -93,6 +95,7 @@ def test_client_new_from_config():
             }
         """))
 
+    # check that pachd address and other context fields are respected
     client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
         {
           "v2": {
@@ -113,6 +116,7 @@ def test_client_new_from_config():
     assert client.auth_token == "bar"
     assert client.transaction_id == "baz"
 
+    # port forwarders should be respected
     client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
         {
           "v2": {
@@ -129,6 +133,7 @@ def test_client_new_from_config():
     """))
     assert client.address == "localhost:10101"
 
+    # empty context should default ot localhost:30650
     client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
         {
           "v2": {
