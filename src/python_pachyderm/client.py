@@ -168,12 +168,12 @@ class Client(
         try:
             active_context = j["v2"]["active_context"]
         except:
-            raise ConfigError("config has no active context")
+            raise ConfigError("no active context")
 
         try:
             context = j["v2"]["contexts"][active_context]
         except:
-            raise ConfigError("config is missing active context '{}'".format(active_context))
+            raise ConfigError("missing active context '{}'".format(active_context))
 
         auth_token = context.get("session_token")
         root_certs = context.get("server_cas")
