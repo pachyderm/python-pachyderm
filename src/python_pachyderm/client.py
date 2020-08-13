@@ -1,4 +1,6 @@
 import os
+import json
+from pathlib import Path
 from urllib.parse import urlparse
 
 from .mixin.admin import AdminMixin
@@ -10,6 +12,25 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
+
+
+class ConfigError(Exception):
+    """Error for issues related to the pachyderm config file"""
+    def __init__(self, message):
+        super().__init__(message)
+
+
+class BadClusterDeploymentID(ConfigError):
+    """
+    Error triggered when connected to a cluster that reports back a different
+    cluster deployment ID than what is stored in the config file
+    """
+    def __init__(self, expected_deployment_id, actual_deployment_id):
+        error_message_template = "connected to the wrong cluster (context cluster deployment ID = '{}' vs reported " \
+            + "cluster deployment ID = '{}')"
+        super().__init__(error_message_template.format(expected_deployment_id, actual_deployment_id))
+        self.expected_deployment_id = expected_deployment_id
+        self.actual_deployment_id = actual_deployment_id
 
 
 class Client(
@@ -123,6 +144,57 @@ class Client(
             transaction_id=transaction_id,
             tls=u.scheme == "grpcs" or u.scheme == "https",
         )
+
+    @classmethod
+    def new_from_config(cls, config_file=None):
+        """
+        Creates a Pachyderm client from a config file, which can either be
+        passed in as a file-like object, or if unset, defaults to loading from
+        '~/.pachyderm/config.json'.
+
+        Params:
+
+        * `config_file`: An optional file-like object containing the config
+        json file. If unspecified, we load the config from the default
+        location ('~/.pachyderm/config.json'.)
+        """
+
+        if config_file is None:
+            with open(str(Path.home() / ".pachyderm/config.json"), "r") as config_file:
+                j = json.load(config_file)
+        else:
+            j = json.load(config_file)
+
+        try:
+            active_context = j["v2"]["active_context"]
+        except:
+            raise ConfigError("config has no active context")
+
+        try:
+            context = j["v2"]["contexts"][active_context]
+        except:
+            raise ConfigError("config is missing active context '{}'".format(active_context))
+
+        auth_token = context.get("session_token")
+        root_certs = context.get("server_cas")
+        transaction_id = context.get("active_transaction")
+
+        pachd_address = context.get("pachd_address")
+        if pachd_address:
+            client = cls.new_from_pachd_address(pachd_address, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+        else:
+            port_forwarders = context.get("port_forwarders", {})
+            pachd_port = port_forwarders.get("pachd", 30650)
+            pachd_address = "grpc://localhost:{}".format(pachd_port)
+            client = cls.new_from_pachd_address(pachd_address, auth_token=auth_token, transaction_id=transaction_id)
+
+        expected_deployment_id = context.get("cluster_deployment_id")
+        if expected_deployment_id:
+            cluster_info = client.inspect_cluster()
+            if cluster_info.deployment_id != expected_deployment_id:
+                raise BadClusterDeploymentID(expected_deployment_id, cluster_info.deployment_id)
+
+        return client
 
     @property
     def auth_token(self):
