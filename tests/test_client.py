@@ -1,5 +1,8 @@
+import io
+
 import pytest
 import python_pachyderm
+from tests import util
 
 """Tests generic client functionality"""
 
@@ -67,3 +70,108 @@ def test_client_new_from_pachd_address():
 
     client = python_pachyderm.Client.new_from_pachd_address("[::1]:80")
     assert client.address == "::1:80"
+
+def test_client_new_from_config():
+    # should fail because there's no active context
+    with pytest.raises(python_pachyderm.ConfigError):
+        python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+            {
+              "v2": {
+                "contexts": {
+                  "local": { }
+                }
+              }
+            }
+        """))
+
+    # should fail since the context 'local' is missing
+    with pytest.raises(python_pachyderm.ConfigError):
+        python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+            {
+              "v2": {
+                "active_context": "local",
+                "contexts": { }
+              }
+            }
+        """))
+
+    # check that pachd address and other context fields are respected
+    client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": {
+                "pachd_address": "grpcs://172.17.0.6:30650",
+                "server_cas": "foo",
+                "session_token": "bar",
+                "active_transaction": "baz"
+              }
+            }
+          }
+        }
+    """))
+    assert client.address == "172.17.0.6:30650"
+    assert client.root_certs == "foo"
+    assert client.auth_token == "bar"
+    assert client.transaction_id == "baz"
+
+    # port forwarders should be respected
+    client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": {
+                "port_forwarders": {
+                  "pachd": 10101
+                }
+              }
+            }
+          }
+        }
+    """))
+    assert client.address == "localhost:10101"
+
+    # empty context should default ot localhost:30650
+    client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": { }
+            }
+          }
+        }
+    """))
+    assert client.address == "localhost:30650"
+
+    # verifies that a bad cluster ID triggers an error
+    with pytest.raises(python_pachyderm.BadClusterDeploymentID):
+        client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+            {
+              "v2": {
+                "active_context": "local",
+                "contexts": {
+                  "local": {
+                    "cluster_deployment_id": "foobar"
+                  }
+                }
+              }
+            }
+        """))
+
+    # verifies that a good cluster ID does not trigger an error
+    client = python_pachyderm.Client.new_from_config(config_file=io.StringIO("""
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": {
+                "cluster_deployment_id": "%s"
+              }
+            }
+          }
+        }
+    """ % util.get_cluster_deployment_id()))
+    assert client.address == "localhost:30650"

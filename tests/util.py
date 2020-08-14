@@ -75,3 +75,8 @@ def wait_for_job(client, commit):
 
         assert time.time() - start_time < 60.0, "timed out waiting for job"
         time.sleep(1)
+
+def get_cluster_deployment_id():
+    client = python_pachyderm.Client()
+    cluster_info = client.inspect_cluster()
+    return cluster_info.deployment_id
