@@ -168,12 +168,12 @@ class Client(
 
         try:
             active_context = j["v2"]["active_context"]
-        except:
+        except KeyError:
             raise ConfigError("no active context")
 
         try:
             context = j["v2"]["contexts"][active_context]
-        except:
+        except KeyError:
             raise ConfigError("missing active context '{}'".format(active_context))
 
         auth_token = context.get("session_token")
@@ -182,12 +182,21 @@ class Client(
 
         pachd_address = context.get("pachd_address")
         if pachd_address:
-            client = cls.new_from_pachd_address(pachd_address, auth_token=auth_token, root_certs=root_certs, transaction_id=transaction_id)
+            client = cls.new_from_pachd_address(
+                pachd_address,
+                auth_token=auth_token,
+                root_certs=root_certs,
+                transaction_id=transaction_id
+            )
         else:
             port_forwarders = context.get("port_forwarders", {})
             pachd_port = port_forwarders.get("pachd", 30650)
             pachd_address = "grpc://localhost:{}".format(pachd_port)
-            client = cls.new_from_pachd_address(pachd_address, auth_token=auth_token, transaction_id=transaction_id)
+            client = cls.new_from_pachd_address(
+                pachd_address,
+                auth_token=auth_token,
+                transaction_id=transaction_id
+            )
 
         expected_deployment_id = context.get("cluster_deployment_id")
         if expected_deployment_id:
