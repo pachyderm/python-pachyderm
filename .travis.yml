@@ -17,14 +17,14 @@ matrix:
   include:
     # python 3.5
     - python: 3.5
-      env: PACHYDERM_VERSION=1.11.0
+      env: PACHYDERM_VERSION=1.11.2
     - python: 3.5
       env: PACHYDERM_VERSION=1.10.0
     - python: 3.5
       env: PACHYDERM_VERSION=1.9.0
     # python 3.8
     - python: 3.8
-      env: PACHYDERM_VERSION=1.11.0
+      env: PACHYDERM_VERSION=1.11.2
     - python: 3.8
       env: PACHYDERM_VERSION=1.10.0
     - python: 3.8

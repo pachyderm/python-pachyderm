@@ -1,20 +1,22 @@
 from python_pachyderm.service import Service
+from python_pachyderm.proto.debug import debug_pb2 as debug_proto
 
 
 class DebugMixin:
-    def dump(self, recursed=None):
+    def dump(self, filter=None):
         """
         Gets a debug dump. Yields byte arrays.
 
         Params:
 
         * `recursed`: An optional bool.
+        * `filter`: An optional `Filter` object.
         """
-        res = self._req(Service.DEBUG, "Dump", recursed=recursed)
+        res = self._req(Service.DEBUG, "Dump", filter=filter)
         for item in res:
             yield item.value
 
-    def profile_cpu(self, duration):
+    def profile_cpu(self, duration, filter=None):
         """
         Gets a CPU profile. Yields byte arrays.
 
@@ -22,15 +24,21 @@ class DebugMixin:
 
         * `duration`: A `Duration` object specifying how long to run the CPU
         profiler.
+        * `filter`: An optional `Filter` object.
         """
-        res = self._req(Service.DEBUG, "Profile", profile="cpu", duration=duration)
+        profile = debug_proto.Profile(name="cpu", duration=duration)
+        res = self._req(Service.DEBUG, "Profile", profile=profile, filter=filter)
         for item in res:
             yield item.value
 
-    def binary(self):
+    def binary(self, filter=None):
         """
         Gets the pachd binary. Yields byte arrays.
+
+        Params:
+
+        * `filter`: An optional `Filter` object.
         """
-        res = self._req(Service.DEBUG, "Binary")
+        res = self._req(Service.DEBUG, "Binary", filter=filter)
         for item in res:
             yield item.value

@@ -72,6 +72,8 @@ BLACKLISTED_METHODS = {
         "list_file_v2",
         "glob_file_v2",
         "get_tar_v2",
+        "walk_file_v2",
+        "inspect_file_v2",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
@@ -154,6 +156,7 @@ RENAMED_ARGS = {
     # debug
     "profile_cpu": [
         ("profile", None),
+        (None, "duration"),
     ],
     # PFS
     "create_repo": [

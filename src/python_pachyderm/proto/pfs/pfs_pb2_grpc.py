@@ -191,6 +191,16 @@ class APIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.SerializeToString,
         response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.FromString,
         )
+    self.InspectFileV2 = channel.unary_unary(
+        '/pfs.API/InspectFileV2',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.SerializeToString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.FromString,
+        )
+    self.WalkFileV2 = channel.unary_stream(
+        '/pfs.API/WalkFileV2',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.SerializeToString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.FromString,
+        )
 
 
 class APIServicer(object):
@@ -453,6 +463,20 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def InspectFileV2(self, request, context):
+    """InspectFileV2 returns info about a file.
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def WalkFileV2(self, request, context):
+    """WalkFileV2 walks over all the files under a directory, including children of children.
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -629,6 +653,16 @@ def add_APIServicer_to_server(servicer, server):
       'GlobFileV2': grpc.unary_stream_rpc_method_handler(
           servicer.GlobFileV2,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.GlobFileRequest.FromString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.SerializeToString,
+      ),
+      'InspectFileV2': grpc.unary_unary_rpc_method_handler(
+          servicer.InspectFileV2,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.InspectFileRequest.FromString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.SerializeToString,
+      ),
+      'WalkFileV2': grpc.unary_stream_rpc_method_handler(
+          servicer.WalkFileV2,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.WalkFileRequest.FromString,
           response_serializer=client_dot_pfs_dot_pfs__pb2.FileInfoV2.SerializeToString,
       ),
   }
