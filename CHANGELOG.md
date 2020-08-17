@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Support for constructing a `Client` from a Pachyderm config file (PR #220)
+- Support for pachyderm v1.11.2 (PR #213)
+    - Tweaks to debug service functions
+- Support for build-step enabled pipelines (PR #213)
+- Switched `create_python_pipeline` to use build-step enabled pipelines (PR #213)
+
 ## 6.0.0
 
 - Changes to the interface of enums dynamically generated from protos (PR #207)
