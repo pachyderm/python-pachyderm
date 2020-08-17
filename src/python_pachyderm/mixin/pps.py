@@ -218,7 +218,7 @@ class PPSMixin:
                 raise Exception("must specify either a build `language` or `image`")
             if transform.build.language and transform.build.image:
                 raise Exception("cannot specify both a build `language` and `image`")
-            if any(pipeline_input_name(i) in ("build", "source") for i in pipeline_inputs(input)):
+            if any(i.pfs is not None and i.pfs.name in ("build", "source") for i in pipeline_inputs(input)):
                 raise Exception(
                     "build step-enabled pipelines cannot have inputs with the name "
                     + "'build' or 'source', as they are reserved for build assets"
@@ -686,23 +686,6 @@ class PPSMixin:
         precise garbage collection (at the cost of more memory usage).
         """
         return self._req(Service.PPS, "GarbageCollect", memory_bytes=memory_bytes)
-
-
-def pipeline_input_name(i):
-    if i is None:
-        return None
-    if i.pfs is not None:
-        return i.pfs.name
-    if i.cross is not None:
-        if len(i.cross) > 0:
-            return pipeline_input_name(i.cross[0])
-    if i.join is not None:
-        if len(i.join) > 0:
-            return pipeline_input_name(i.join[0])
-    if i.union is not None:
-        if len(i.union) > 0:
-            return pipeline_input_name(i.union[0])
-    return None
 
 
 def pipeline_inputs(root):
