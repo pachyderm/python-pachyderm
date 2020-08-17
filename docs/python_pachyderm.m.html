@@ -1122,6 +1122,15 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.BadClusterDeploymentID">BadClusterDeploymentID</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.BadClusterDeploymentID.__init__">__init__</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.BatchTransactionRequest">BatchTransactionRequest</a></span>
         
         </li>
@@ -1182,6 +1191,7 @@ table {
         
           
   <ul>
+    <li class="mono"><a href="#python_pachyderm.Client.new_from_config">new_from_config</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.new_from_pachd_address">new_from_pachd_address</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.new_in_cluster">new_in_cluster</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.__init__">__init__</a></li>
@@ -1333,6 +1343,15 @@ table {
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Compaction">Compaction</a></span>
         
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.ConfigError">ConfigError</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#python_pachyderm.ConfigError.__init__">__init__</a></li>
+  </ul>
+
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.CopyFileRequest">CopyFileRequest</a></span>
@@ -1919,6 +1938,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.Op1_12">Op1_12</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Op1_7">Op1_7</a></span>
         
         </li>
@@ -2344,49 +2367,18 @@ table {
     
   
     <div class="desc"><p>Utility function for creating (or updating) a pipeline specially built for
-executing python code that is stored locally at <code>path</code>. <code>path</code> can either
-reference a directory with python code, or a single python file.</p>
+executing python code that is stored locally at <code>path</code>.</p>
 
-<p>A normal pipeline creation process (i.e. a call to
-<code>client.create_pipeline</code>) requires you to first build and push a container
-image with the source and dependencies baked in. As an alternative
-process, this function circumvents container image creation by creating:</p>
+<p>A normal pipeline creation process requires you to first build and push a
+container image with the source and dependencies baked in. As an alternative
+process, this function circumvents container image creation by using build
+step-enabled pipelines. See the pachyderm core docs for more info.</p>
 
-<p>1) a PFS repo that stores the source code at <code>path</code>.
-2) If there's a <code>requirements.txt</code> in <code>path</code>, a  pipeline for building the
-dependencies into wheels.
-3) A pipeline for executing the PFS stored source code with the built
-dependencies.</p>
-
-<p>This is what the DAG looks like:</p>
-
-<pre><code>.------------------------.      .-----------------------.
-| &lt;pipeline_name&gt;_source | ---▶ | &lt;pipeline_name&gt;_build |
-'------------------------'      '-----------------------'
-             |                 /
-             ▼                /
-    .-----------------.      /
-    | &lt;pipeline_name&gt; | ◀---'
-    '-----------------'
-             ▲
-             |
-        .---------.
-        | &lt;input&gt; |
-        '---------'
-
-</code></pre>
-
-<p>(without a <code>requirements.txt</code>, there is no build pipeline.)</p>
-
-<p>If <code>path</code> references a directory, it should have following:</p>
+<p>If <code>path</code> references a directory, it should have:</p>
 
 <ul>
 <li>A <code>main.py</code>, as the pipeline entry-point.</li>
 <li>An optional <code>requirements.txt</code> that specifies pip requirements.</li>
-<li>An optional <code>build.sh</code> if you wish to override the default build
-process.</li>
-<li>An optional <code>run.sh</code> if you wish to override the default pipeline
-execution process.</li>
 </ul>
 
 <p>Params:</p>
@@ -2410,7 +2402,7 @@ custom environment variables.</li>
 <li><code>secrets</code>: An optional list of <code>Secret</code> objects for secret environment
 variables.</li>
 <li><code>image</code>: An optional string specifying the docker image to use for the
-pipeline. Defaults to <code>python</code>.</li>
+pipeline. Defaults to using pachyderm's official python language builder.</li>
 <li><code>update</code>: Whether to act as an upsert.</li>
 <li><code>pipeline_kwargs</code>: Keyword arguments to forward to <code>create_pipeline</code>.</li>
 </ul>
@@ -3220,6 +3212,84 @@ pipeline. Defaults to <code>python</code>.</li>
 </div>
 
             </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.BadClusterDeploymentID" class="name">class <span class="ident">BadClusterDeploymentID</span></p>
+      
+  
+    <div class="desc"><p>Error triggered when connected to a cluster that reports back a different
+cluster deployment ID than what is stored in the config file</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#python_pachyderm.ConfigError">ConfigError</a></li>
+          <li><a href="/builtins.Exception.ext">builtins.Exception</a></li>
+          <li><a href="/builtins.BaseException.ext">builtins.BaseException</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.BadClusterDeploymentID.args" class="name">var <span class="ident">args</span></p>
+            
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#python_pachyderm.ConfigError">ConfigError</a></code>.<code><a href="#python_pachyderm.ConfigError.args">args</a></code>
+    </p>
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.BadClusterDeploymentID.actual_deployment_id" class="name">var <span class="ident">actual_deployment_id</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.BadClusterDeploymentID.expected_deployment_id" class="name">var <span class="ident">expected_deployment_id</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.BadClusterDeploymentID.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, expected_deployment_id, actual_deployment_id)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#python_pachyderm.ConfigError">ConfigError</a></code>.<code><a href="#python_pachyderm.ConfigError.__init__">__init__</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
       </div>
       
@@ -4157,6 +4227,32 @@ pipeline. Defaults to <code>python</code>.</li>
           <h3>Static methods</h3>
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.Client.new_from_config">
+    <p>def <span class="ident">new_from_config</span>(</p><p>cls, config_file=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a Pachyderm client from a config file, which can either be
+passed in as a file-like object, or if unset, defaults to loading from
+'~/.pachyderm/config.json'.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>config_file</code>: An optional file-like object containing the config
+json file. If unspecified, we load the config from the default
+location ('~/.pachyderm/config.json'.)</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.Client.new_from_pachd_address">
     <p>def <span class="ident">new_from_pachd_address</span>(</p><p>cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None)</p>
     </div>
@@ -4471,13 +4567,19 @@ perform an action. See the <code>Scope</code> enum for variants.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.binary">
-    <p>def <span class="ident">binary</span>(</p><p>self)</p>
+    <p>def <span class="ident">binary</span>(</p><p>self, filter=None)</p>
     </div>
     
 
     
   
     <div class="desc"><p>Gets the pachd binary. Yields byte arrays.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>filter</code>: An optional <code>Filter</code> object.</li>
+</ul>
 </div>
   <div class="source_cont">
 </div>
@@ -5103,7 +5205,7 @@ commit for the old file.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.dump">
-    <p>def <span class="ident">dump</span>(</p><p>self, recursed=None)</p>
+    <p>def <span class="ident">dump</span>(</p><p>self, filter=None)</p>
     </div>
     
 
@@ -5115,6 +5217,7 @@ commit for the old file.</li>
 
 <ul>
 <li><code>recursed</code>: An optional bool.</li>
+<li><code>filter</code>: An optional <code>Filter</code> object.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -6264,7 +6367,7 @@ for the principal.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.profile_cpu">
-    <p>def <span class="ident">profile_cpu</span>(</p><p>self, duration)</p>
+    <p>def <span class="ident">profile_cpu</span>(</p><p>self, duration, filter=None)</p>
     </div>
     
 
@@ -6277,6 +6380,7 @@ for the principal.</li>
 <ul>
 <li><code>duration</code>: A <code>Duration</code> object specifying how long to run the CPU
 profiler.</li>
+<li><code>filter</code>: An optional <code>Filter</code> object.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -7610,6 +7714,53 @@ commit.</li>
 </div>
 
             </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.ConfigError" class="name">class <span class="ident">ConfigError</span></p>
+      
+  
+    <div class="desc"><p>Error for issues related to the pachyderm config file</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/builtins.Exception.ext">builtins.Exception</a></li>
+          <li><a href="/builtins.BaseException.ext">builtins.BaseException</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.ConfigError.args" class="name">var <span class="ident">args</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.ConfigError.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, message)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
       </div>
       </div>
       
@@ -17295,6 +17446,16 @@ commit.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.Op.op1_12" class="name">var <span class="ident">op1_12</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.Op.op1_7" class="name">var <span class="ident">op1_7</span></p>
             
 
@@ -17576,6 +17737,136 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.Op1_11.tag" class="name">var <span class="ident">tag</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.Op1_12" class="name">class <span class="ident">Op1_12</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.block" class="name">var <span class="ident">block</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.branch" class="name">var <span class="ident">branch</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.commit" class="name">var <span class="ident">commit</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.create_object" class="name">var <span class="ident">create_object</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.job" class="name">var <span class="ident">job</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.object" class="name">var <span class="ident">object</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.pipeline" class="name">var <span class="ident">pipeline</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.repo" class="name">var <span class="ident">repo</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.Op1_12.tag" class="name">var <span class="ident">tag</span></p>
             
 
             
@@ -21823,11 +22114,11 @@ converted to a header and applied to all file shards.</li>
     <div class="desc"><p>A convenience context manager for creating spouts, allowing you to create
 spout code like:</p>
 
-<pre><code>with SpoutManager() as spout:
-    while True:
-        with spout.commit() as commit:
-            commit.add_from_bytes("foo", b"#")
-        time.sleep(1.0)
+<pre><code>spout = SpoutManager()
+while True:
+    with spout.commit() as commit:
+        commit.put_file_from_bytes("foo", b"#")
+    time.sleep(1.0)
 </code></pre>
 </div>
   <div class="source_cont">
@@ -24173,6 +24464,26 @@ files will be committed.</p>
             </div>
             <div class="item">
             <p id="python_pachyderm.WorkerStatus.data" class="name">var <span class="ident">data</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.WorkerStatus.data_processed" class="name">var <span class="ident">data_processed</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.WorkerStatus.data_recovered" class="name">var <span class="ident">data_recovered</span></p>
             
 
             
