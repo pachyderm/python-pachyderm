@@ -15,6 +15,7 @@ def test_dump():
         assert len(b) > 0
 
 
+@util.skip_if_below_pachyderm_version(1, 11, 2)
 def test_profile_cpu():
     client = python_pachyderm.Client()
     for b in client.profile_cpu(python_pachyderm.Duration(seconds=1)):
