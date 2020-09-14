@@ -60,8 +60,10 @@ class SpoutManager:
             raise Exception("spout commit context manager already opened")
         spout_commit = SpoutCommit(self._pipe, marker_filename=self.marker_filename)
         self._has_open_commit = True
-        yield spout_commit
-        spout_commit.close()
+        try:
+            yield spout_commit
+        finally:
+            spout_commit.close()
         self._has_open_commit = False
 
 
