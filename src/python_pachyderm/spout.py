@@ -64,7 +64,7 @@ class SpoutManager:
             yield spout_commit
         finally:
             spout_commit.close()
-        self._has_open_commit = False
+            self._has_open_commit = False
 
 
 class SpoutCommit:
