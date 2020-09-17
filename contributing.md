@@ -86,11 +86,17 @@ locally it's usually more convenient to run specific tests. To do so:
     * `protobuf>=3.11.2`
     * `grpcio>=1.26.0`
     * `certifi>=2019.11.28`
+* Alternatively, you can use `tox` to create a virtual environment for you:
+  ```
+  mkdir venvdir
+  tox --devenv venvdir -e py38 # one possible environment
+  source ./venvdir/bin/activate # activate python environment
+  ```
 * Install python-pachyderm into the virtualenv: `pip install -e .`
 * Start the cluster to run on `localhost:30650` -- if the cluster is not
 exposed on `localhost`, you can use `pachctl port-forward` to proxy
 connections.
-* Run the test: `py.test tests -k <test name>`
+* Run the test: `python3 -m pytest tests -k <test name>`
 
 ### Linting
 
