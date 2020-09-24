@@ -119,6 +119,19 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
 
+    def authenticate_id_token(self, id_token):
+        """
+        Authenticates a user to the Pachyderm cluster using an ID token issued
+        by the OIDC provider. The token must include the Pachyderm client_id
+        in the set of audiences to be valid. Returns a string that can be used
+        for making authenticated requests.
+
+        Params:
+
+        * `id_token`: A string of the ID token.
+        """
+        return self._req(Service.AUTH, "Authenticate", id_token=id_token).pach_token
+
     def authenticate_one_time_password(self, one_time_password):
         """
         Authenticates a user to the Pachyderm cluster using a one-time
