@@ -202,6 +202,20 @@ def test_put_file_bytes_filelike():
     files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
+def test_put_file_bytes_file_zero_byte():
+    """
+    Start and finish a commit using a context manager while putting a file
+    from a file-like object.
+    """
+
+    client, repo_name = sandbox("put_file_bytes_file_zero_byte")
+
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'file.dat', BytesIO(b''))
+
+
+    files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
+    assert len(files) == 1
 
 def test_put_file_bytes_iterable():
     """
@@ -234,6 +248,21 @@ def test_put_file_bytes_large():
     files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
+def test_put_file_bytes_zero_bytes():
+    """
+    Put a file larger than the maximum message size.
+    """
+
+    client, repo_name = sandbox("put_file_bytes_zero_bytes")
+
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'file.dat', b'')
+
+    commit_infos = list(client.list_commit(repo_name))
+    assert len(commit_infos) == 1
+    assert commit_infos[0].commit.id == c.id
+    files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
+    assert len(files) == 1
 
 def test_put_file_url():
     client, repo_name = sandbox("put_file_url")
