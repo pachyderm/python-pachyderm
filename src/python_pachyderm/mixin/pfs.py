@@ -934,9 +934,6 @@ def put_file_from_fileobj_reqs(value, **kwargs):
     for i in itertools.count():
         chunk = value.read(BUFFER_SIZE)
 
-        if len(chunk) == 0:
-            return
-
         if i == 0:
             yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
         else:
