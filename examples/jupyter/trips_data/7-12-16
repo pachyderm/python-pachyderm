@@ -1,3 +1,2 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:360468023e0948900db115130e5339086a9a68cff30cfd71b0b8f82715ce8e3e
-size 338
+Date,Trips over the past 24-hours (midnight to 11:59pm),Cumulative trips (since launch):,Miles traveled today (midnight to 11:59 pm),Miles traveled to date:,Total Annual Members (All Time),24-Hour Passes Purchased (midnight to 11:59 pm),3-Day Passes Purchased (midnight to 11:59 pm)
+7/12/16,56515,30558480,120414,57999834,181571,1472,192

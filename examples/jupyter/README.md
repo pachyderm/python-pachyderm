@@ -5,7 +5,6 @@ In this example, we'll use a combination of Jupyter notebooks, Pandas, and Pachy
 * Pandas
 * Matplotlib
 * Jupyter
-* [git lfs](https://git-lfs.github.com/)
 
 Then point your Jupyter notebook to `investigate-unexpected-sales.ipynb` in this directory.
 
