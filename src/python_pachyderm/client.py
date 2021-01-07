@@ -161,8 +161,14 @@ class Client(
         """
 
         if config_file is None:
-            with open(str(Path.home() / ".pachyderm/config.json"), "r") as config_file:
-                j = json.load(config_file)
+            try:
+                # Search for config file in default home location 
+                with open(str(Path.home() / ".pachyderm/config.json"), "r") as config_file:
+                    j = json.load(config_file)
+            except FileNotFoundError:
+                # If not found, search in "/pachctl" (default mount for spout)
+                with open("/pachctl/config.json", "r") as config_file:
+                    j = json.load(config_file)
         else:
             j = json.load(config_file)
 
