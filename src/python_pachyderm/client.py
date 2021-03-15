@@ -84,6 +84,10 @@ class Client(
         self._auth_token = auth_token
         self._transaction_id = transaction_id
         self._metadata = self._build_metadata()
+        if not auth_token and os.environ.get("PACH_PYTHON_OIDC_TOKEN"):
+            resp = self.authenticate_id_token(os.environ.get("PACH_PYTHON_OIDC_TOKEN"))
+            self._auth_token = resp
+            self._metadata = self._build_metadata()
 
     @classmethod
     def new_in_cluster(cls, auth_token=None, transaction_id=None):
