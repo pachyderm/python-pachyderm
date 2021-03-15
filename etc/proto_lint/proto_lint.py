@@ -74,6 +74,8 @@ BLACKLISTED_METHODS = {
         "get_tar_v2",
         "walk_file_v2",
         "inspect_file_v2",
+        "clear_commit_v2",
+        "diff_file_v2",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
@@ -144,14 +146,17 @@ RENAMED_ARGS = {
     "authenticate_github": [
         ("one_time_password", None),
         ("oidc_state", None),
+        ("id_token", None),
     ],
     "authenticate_one_time_password": [
         ("github_token", None),
         ("oidc_state", None),
+        ("id_token", None),
     ],
     "authenticate_oidc": [
         ("github_token", None),
         ("one_time_password", None),
+        ("id_token", None),
     ],
     # debug
     "profile_cpu": [
