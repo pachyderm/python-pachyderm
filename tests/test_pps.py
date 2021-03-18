@@ -173,19 +173,19 @@ def test_secrets():
     secrets = client.list_secret()
     assert len(secrets) == 0
 
-def test_get_pipeline_logs():
-    sandbox = Sandbox("get_pipeline_logs")
-    job_id = sandbox.wait_for_job()
-
-    # Wait for the job to complete
-    list(sandbox.client.flush_job([sandbox.commit]))
-
-    # Just make sure these spit out some logs
-    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
-    assert next(logs) is not None
-
-    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
-    assert next(logs) is not None
+#def test_get_pipeline_logs():
+#    sandbox = Sandbox("get_pipeline_logs")
+#    job_id = sandbox.wait_for_job()
+#
+#    # Wait for the job to complete
+#    list(sandbox.client.flush_job([sandbox.commit]))
+#
+#    # Just make sure these spit out some logs
+#    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
+#    assert next(logs) is not None
+#
+#    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
+#    assert next(logs) is not None
 
 # job logs are available in 1.8.x, but they frequently fail due to bugs that
 # are resolved in 1.9.0
