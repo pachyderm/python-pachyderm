@@ -1,7 +1,6 @@
 dist: xenial
-sudo: required
 services:
-- docker
+  - docker
 cache:
   directories:
     - ${HOME}/.cache
@@ -9,35 +8,27 @@ cache:
     - ${HOME}/gopath/pkg/mod
     - "$(python3 -c 'import site; print(site.USER_BASE)')"
 language: python
+python:
+  - "3.8"
+  - "3.5"
 env:
   global:
     - PATH=$HOME/cached-deps:$PATH
+  jobs:
+    - PACHYDERM_VERSION=1.12.4
+    - PACHYDERM_VERSION=1.11.9
 
-matrix:
+jobs:
   include:
-    # python 3.5
-    - python: 3.5
-      env: PACHYDERM_VERSION=1.11.2
-    - python: 3.5
-      env: PACHYDERM_VERSION=1.10.0
-    - python: 3.5
-      env: PACHYDERM_VERSION=1.9.0
-    # python 3.8
-    - python: 3.8
-      env: PACHYDERM_VERSION=1.11.2
-    - python: 3.8
-      env: PACHYDERM_VERSION=1.10.0
-    - python: 3.8
-      env: PACHYDERM_VERSION=1.9.0
     # other tests
     - python: 3.8
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=1.11.0
+        - PACHYDERM_VERSION=1.12.4
     - python: 3.8
       env:
         - TOXENV=examples
-        - PACHYDERM_VERSION=1.11.0
+        - PACHYDERM_VERSION=1.12.4
 
 install:
 - make ci-install
