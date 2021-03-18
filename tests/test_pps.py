@@ -52,22 +52,14 @@ def test_stop_job():
     sandbox = Sandbox("stop_job")
     job_id = sandbox.wait_for_job()
 
-    # This may fail if the job finished between the last call and here, so
-    # ignore _Rendezvous errors.
-    try:
-        sandbox.client.stop_job(job_id)
-    except:
-        # if it failed, it should be because the job already finished
-        job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JobState.JOB_SUCCESS.value
-    else:
-        # This is necessary because `StopJob` does not wait for the job to be
-        # killed before returning a result.
-        # TODO: remove once this is fixed:
-        # https://github.com/pachyderm/pachyderm/issues/3856
-        time.sleep(1)
-        job = sandbox.client.inspect_job(job_id)
-        assert job.state == python_pachyderm.JobState.JOB_KILLED.value
+    sandbox.client.stop_job(job_id)
+    # This is necessary because `StopJob` does not wait for the job to be killed before returning a result.
+    # TODO: remove once this is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/3856
+    time.sleep(1)
+    job = sandbox.client.inspect_job(job_id)
+    # We race to stop the job before it finishes - if we lose the race, it will be in state JOB_SUCCESS
+    assert job.state == python_pachyderm.JobState.JOB_KILLED.value or job.state == python_pachyderm.JobState.JOB_SUCCESS.value
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
