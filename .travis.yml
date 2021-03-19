@@ -38,6 +38,7 @@ script:
 - tox
 after_script:
 - kubectl describe pods
+- kubectl logs --previous deployment/pachd
 
 before_cache:
   # Make sure cache dirs have the necessary permissions for Travis to traverse
