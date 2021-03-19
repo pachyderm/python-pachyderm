@@ -36,6 +36,8 @@ before_script:
 - make ci-setup
 script:
 - tox
+after_script:
+- kubectl describe pods
 
 before_cache:
   # Make sure cache dirs have the necessary permissions for Travis to traverse
