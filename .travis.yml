@@ -25,11 +25,11 @@ jobs:
       env:
         - TOXENV=lint
         - PACHYDERM_VERSION=1.12.4
-    - python: 3.8
-      env:
-        - TOXENV=examples
-        - PACHYDERM_VERSION=1.12.4
-
+    # Re-enable examples once 1.12.6 is released with libgl in the python build image
+    #- python: 3.8
+    #  env:
+    #    - TOXENV=examples
+    #    - PACHYDERM_VERSION=1.12.4
 install:
 - make ci-install
 before_script:
