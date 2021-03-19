@@ -22,12 +22,11 @@ src/python_pachyderm/proto: docker-build-proto
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
-	find ./proto/pachyderm/src/client -regex ".*\.proto" \
+	find ./proto/pachyderm/src -regex ".*\.proto" \
+	| grep -v 'internal' \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
-	test -d src/python_pachyderm/proto && rm -rf src/python_pachyderm/proto
-	mv src/python_pachyderm/client src/python_pachyderm/proto
 	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
 
 init:
