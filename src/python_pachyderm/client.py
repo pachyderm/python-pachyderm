@@ -166,7 +166,7 @@ class Client(
 
         if config_file is None:
             try:
-                # Search for config file in default home location 
+                # Search for config file in default home location
                 with open(str(Path.home() / ".pachyderm/config.json"), "r") as config_file:
                     j = json.load(config_file)
             except FileNotFoundError:

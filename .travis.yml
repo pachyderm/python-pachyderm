@@ -25,10 +25,6 @@ jobs:
       env:
         - TOXENV=lint
         - PACHYDERM_VERSION=1.12.4
-    - python: 3.8
-      env:
-        - TOXENV=examples
-        - PACHYDERM_VERSION=1.12.4
 
 install:
 - make ci-install
