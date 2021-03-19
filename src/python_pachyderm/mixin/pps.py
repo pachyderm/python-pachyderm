@@ -302,6 +302,7 @@ class PPSMixin:
             enable_stats=enable_stats,
             reprocess=reprocess,
             max_queue_size=max_queue_size,
+            metadata=metadata,
             service=service,
             chunk_spec=chunk_spec,
             datum_timeout=datum_timeout,
