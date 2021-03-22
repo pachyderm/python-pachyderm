@@ -24,6 +24,11 @@ class APIStub(object):
         request_serializer=client_dot_enterprise_dot_enterprise__pb2.GetStateRequest.SerializeToString,
         response_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetStateResponse.FromString,
         )
+    self.GetActivationCode = channel.unary_unary(
+        '/enterprise.API/GetActivationCode',
+        request_serializer=client_dot_enterprise_dot_enterprise__pb2.GetActivationCodeRequest.SerializeToString,
+        response_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetActivationCodeResponse.FromString,
+        )
     self.Deactivate = channel.unary_unary(
         '/enterprise.API/Deactivate',
         request_serializer=client_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
@@ -44,6 +49,13 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def GetState(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetActivationCode(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -75,6 +87,11 @@ def add_APIServicer_to_server(servicer, server):
           servicer.GetState,
           request_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetStateRequest.FromString,
           response_serializer=client_dot_enterprise_dot_enterprise__pb2.GetStateResponse.SerializeToString,
+      ),
+      'GetActivationCode': grpc.unary_unary_rpc_method_handler(
+          servicer.GetActivationCode,
+          request_deserializer=client_dot_enterprise_dot_enterprise__pb2.GetActivationCodeRequest.FromString,
+          response_serializer=client_dot_enterprise_dot_enterprise__pb2.GetActivationCodeResponse.SerializeToString,
       ),
       'Deactivate': grpc.unary_unary_rpc_method_handler(
           servicer.Deactivate,

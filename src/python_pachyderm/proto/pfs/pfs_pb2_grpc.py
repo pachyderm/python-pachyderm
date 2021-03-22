@@ -181,6 +181,16 @@ class APIStub(object):
         request_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.SerializeToString,
         response_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponseV2.FromString,
         )
+    self.CreateTmpFileSet = channel.stream_unary(
+        '/pfs.API/CreateTmpFileSet',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.FileOperationRequestV2.SerializeToString,
+        response_deserializer=client_dot_pfs_dot_pfs__pb2.CreateTmpFileSetResponse.FromString,
+        )
+    self.RenewTmpFileSet = channel.unary_unary(
+        '/pfs.API/RenewTmpFileSet',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.RenewTmpFileSetRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
     self.ClearCommitV2 = channel.unary_unary(
         '/pfs.API/ClearCommitV2',
         request_serializer=client_dot_pfs_dot_pfs__pb2.ClearCommitRequestV2.SerializeToString,
@@ -428,8 +438,22 @@ class APIServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def DiffFileV2(self, request, context):
-    """DiffFile returns the differences between 2 paths at 2 commits.
+    """DiffFileV2 returns the differences between 2 paths at 2 commits.
     it streams back one file at a time which is either from the new path, or the old path
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateTmpFileSet(self, request_iterator, context):
+    """CreateTmpFileSet creates a new temp fileset
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def RenewTmpFileSet(self, request, context):
+    """RenewTmpFileSet prevents the temporary fileset from being deleted for a set amount of time
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -610,6 +634,16 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=client_dot_pfs_dot_pfs__pb2.DiffFileRequest.FromString,
           response_serializer=client_dot_pfs_dot_pfs__pb2.DiffFileResponseV2.SerializeToString,
       ),
+      'CreateTmpFileSet': grpc.stream_unary_rpc_method_handler(
+          servicer.CreateTmpFileSet,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.FileOperationRequestV2.FromString,
+          response_serializer=client_dot_pfs_dot_pfs__pb2.CreateTmpFileSetResponse.SerializeToString,
+      ),
+      'RenewTmpFileSet': grpc.unary_unary_rpc_method_handler(
+          servicer.RenewTmpFileSet,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.RenewTmpFileSetRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
       'ClearCommitV2': grpc.unary_unary_rpc_method_handler(
           servicer.ClearCommitV2,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.ClearCommitRequestV2.FromString,
@@ -740,6 +774,11 @@ class ObjectAPIStub(object):
         '/pfs.ObjectAPI/GetObjDirect',
         request_serializer=client_dot_pfs_dot_pfs__pb2.GetObjDirectRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+        )
+    self.DeleteObjDirect = channel.unary_unary(
+        '/pfs.ObjectAPI/DeleteObjDirect',
+        request_serializer=client_dot_pfs_dot_pfs__pb2.DeleteObjDirectRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
@@ -904,6 +943,13 @@ class ObjectAPIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DeleteObjDirect(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_ObjectAPIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -1016,6 +1062,11 @@ def add_ObjectAPIServicer_to_server(servicer, server):
           servicer.GetObjDirect,
           request_deserializer=client_dot_pfs_dot_pfs__pb2.GetObjDirectRequest.FromString,
           response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+      ),
+      'DeleteObjDirect': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteObjDirect,
+          request_deserializer=client_dot_pfs_dot_pfs__pb2.DeleteObjDirectRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

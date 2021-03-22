@@ -134,6 +134,16 @@ class APIStub(object):
         request_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.SerializeToString,
         response_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.FromString,
         )
+    self.ExtractAuthTokens = channel.unary_unary(
+        '/auth.API/ExtractAuthTokens',
+        request_serializer=client_dot_auth_dot_auth__pb2.ExtractAuthTokensRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.ExtractAuthTokensResponse.FromString,
+        )
+    self.RestoreAuthToken = channel.unary_unary(
+        '/auth.API/RestoreAuthToken',
+        request_serializer=client_dot_auth_dot_auth__pb2.RestoreAuthTokenRequest.SerializeToString,
+        response_deserializer=client_dot_auth_dot_auth__pb2.RestoreAuthTokenResponse.FromString,
+        )
 
 
 class APIServicer(object):
@@ -310,6 +320,20 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ExtractAuthTokens(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def RestoreAuthToken(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -432,6 +456,16 @@ def add_APIServicer_to_server(servicer, server):
           servicer.GetOneTimePassword,
           request_deserializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordRequest.FromString,
           response_serializer=client_dot_auth_dot_auth__pb2.GetOneTimePasswordResponse.SerializeToString,
+      ),
+      'ExtractAuthTokens': grpc.unary_unary_rpc_method_handler(
+          servicer.ExtractAuthTokens,
+          request_deserializer=client_dot_auth_dot_auth__pb2.ExtractAuthTokensRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.ExtractAuthTokensResponse.SerializeToString,
+      ),
+      'RestoreAuthToken': grpc.unary_unary_rpc_method_handler(
+          servicer.RestoreAuthToken,
+          request_deserializer=client_dot_auth_dot_auth__pb2.RestoreAuthTokenRequest.FromString,
+          response_serializer=client_dot_auth_dot_auth__pb2.RestoreAuthTokenResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
