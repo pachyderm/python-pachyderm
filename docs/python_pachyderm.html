@@ -632,9 +632,7 @@ table {
     color: #e08524;
     transition: color .3s ease-in-out;
   }
-  p, pre {
-    white-space: pre-wrap;
-  }
+
   pre, code, .mono, .name {
     font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
   }
@@ -1187,6 +1185,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.ClearCommitRequestV2">ClearCommitRequestV2</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.Client">Client</a></span>
         
           
@@ -1198,6 +1200,7 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.activate_auth">activate_auth</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.activate_enterprise">activate_enterprise</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authenticate_github">authenticate_github</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.authenticate_id_token">authenticate_id_token</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authenticate_oidc">authenticate_oidc</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authenticate_one_time_password">authenticate_one_time_password</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.authorize">authorize</a></li>
@@ -1474,6 +1477,10 @@ table {
         
         </li>
         <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.DiffFileResponseV2">DiffFileResponseV2</a></span>
+        
+        </li>
+        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.DoubleValue">DoubleValue</a></span>
         
         </li>
@@ -1539,10 +1546,6 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.FileInfo">FileInfo</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.FileInfoV2">FileInfoV2</a></span>
         
         </li>
         <li class="mono">
@@ -1699,14 +1702,6 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.GetStateResponse">GetStateResponse</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.GetTarConditionalRequestV2">GetTarConditionalRequestV2</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.GetTarConditionalResponseV2">GetTarConditionalResponseV2</a></span>
         
         </li>
         <li class="mono">
@@ -3033,6 +3028,16 @@ pipeline. Defaults to using pachyderm's official python language builder.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.AuthenticateRequest.id_token" class="name">var <span class="ident">id_token</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.AuthenticateRequest.oidc_state" class="name">var <span class="ident">oidc_state</span></p>
             
 
@@ -4204,6 +4209,56 @@ cluster deployment ID than what is stored in the config file</p>
       </div>
       
       <div class="item">
+      <p id="python_pachyderm.ClearCommitRequestV2" class="name">class <span class="ident">ClearCommitRequestV2</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.ClearCommitRequestV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.ClearCommitRequestV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.ClearCommitRequestV2.commit" class="name">var <span class="ident">commit</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
       <p id="python_pachyderm.Client" class="name">class <span class="ident">Client</span></p>
       
   
@@ -4460,6 +4515,31 @@ setting this value to a given string will automatically authenticate
 the caller as a GitHub user whose username is that string (unless this
 "looks like" a GitHub access code, in which case Pachyderm does
 retrieve the corresponding GitHub username.)</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.authenticate_id_token">
+    <p>def <span class="ident">authenticate_id_token</span>(</p><p>self, id_token)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Authenticates a user to the Pachyderm cluster using an ID token issued
+by the OIDC provider. The token must include the Pachyderm client_id
+in the set of audiences to be valid. Returns a string that can be used
+for making authenticated requests.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>id_token</code>: A string of the ID token.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -10003,6 +10083,66 @@ commit.</li>
       </div>
       
       <div class="item">
+      <p id="python_pachyderm.DiffFileResponseV2" class="name">class <span class="ident">DiffFileResponseV2</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.DiffFileResponseV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.DiffFileResponseV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.DiffFileResponseV2.new_file" class="name">var <span class="ident">new_file</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.DiffFileResponseV2.old_file" class="name">var <span class="ident">old_file</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
       <p id="python_pachyderm.DoubleValue" class="name">class <span class="ident">DoubleValue</span></p>
       
   
@@ -11179,66 +11319,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.FileInfo.size_bytes" class="name">var <span class="ident">size_bytes</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.FileInfoV2" class="name">class <span class="ident">FileInfoV2</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.FileInfoV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.FileInfoV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.FileInfoV2.file" class="name">var <span class="ident">file</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.FileInfoV2.hash" class="name">var <span class="ident">hash</span></p>
             
 
             
@@ -13518,136 +13598,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.GetStateResponse.state" class="name">var <span class="ident">state</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.GetTarConditionalRequestV2" class="name">class <span class="ident">GetTarConditionalRequestV2</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalRequestV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalRequestV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalRequestV2.file" class="name">var <span class="ident">file</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalRequestV2.skip" class="name">var <span class="ident">skip</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.GetTarConditionalResponseV2" class="name">class <span class="ident">GetTarConditionalResponseV2</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalResponseV2.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalResponseV2.EOF" class="name">var <span class="ident">EOF</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalResponseV2.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalResponseV2.data" class="name">var <span class="ident">data</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetTarConditionalResponseV2.file_info" class="name">var <span class="ident">file_info</span></p>
             
 
             
