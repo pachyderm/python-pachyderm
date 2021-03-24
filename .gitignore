@@ -10,6 +10,9 @@ __pycache__/
 *~
 .DS_Store
 
+# ignore vim temporary files
+.*.sw*
+
 # due to using tox and pytest
 .tox
 .cache
