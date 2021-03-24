@@ -481,10 +481,10 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
         * `keep_repo`: Whether to keep the repo.
-        * `split_transaction`: On optional bool that controls whether Pachyderm
-          attempts to delete the entire pipeline in a single database transaction.
-          Setting this to `True` can work around certain Pachyderm errors, but, if
-          set, the `delete_repo` call may need to be retried.
+        * `split_transaction`: An optional bool that controls whether Pachyderm
+          attempts to delete the pipeline in a single database transaction.
+          Setting this to `True` can work around certain Pachyderm errors, but,
+          if set, the `delete_repo` call may need to be retried.
         """
         return self._req(
             Service.PPS,
