@@ -2,7 +2,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from pps import pps_pb2 as pps_dot_pps__pb2
+from python_pachyderm.proto.pps import pps_pb2 as src_dot_pps_dot_pps__pb2
 
 
 class APIStub(object):
@@ -17,108 +17,108 @@ class APIStub(object):
     """
     self.CreateJob = channel.unary_unary(
         '/pps.API/CreateJob',
-        request_serializer=pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.Job.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.Job.FromString,
         )
     self.InspectJob = channel.unary_unary(
         '/pps.API/InspectJob',
-        request_serializer=pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.JobInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.JobInfo.FromString,
         )
     self.ListJob = channel.unary_stream(
         '/pps.API/ListJob',
-        request_serializer=pps_dot_pps__pb2.ListJobRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.JobInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.JobInfo.FromString,
         )
     self.FlushJob = channel.unary_stream(
         '/pps.API/FlushJob',
-        request_serializer=pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.JobInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.JobInfo.FromString,
         )
     self.DeleteJob = channel.unary_unary(
         '/pps.API/DeleteJob',
-        request_serializer=pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StopJob = channel.unary_unary(
         '/pps.API/StopJob',
-        request_serializer=pps_dot_pps__pb2.StopJobRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.InspectDatum = channel.unary_unary(
         '/pps.API/InspectDatum',
-        request_serializer=pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.DatumInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.DatumInfo.FromString,
         )
     self.ListDatum = channel.unary_stream(
         '/pps.API/ListDatum',
-        request_serializer=pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.DatumInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.DatumInfo.FromString,
         )
     self.RestartDatum = channel.unary_unary(
         '/pps.API/RestartDatum',
-        request_serializer=pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.CreatePipeline = channel.unary_unary(
         '/pps.API/CreatePipeline',
-        request_serializer=pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.InspectPipeline = channel.unary_unary(
         '/pps.API/InspectPipeline',
-        request_serializer=pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.PipelineInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
         )
     self.ListPipeline = channel.unary_unary(
         '/pps.API/ListPipeline',
-        request_serializer=pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.PipelineInfos.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
         )
     self.DeletePipeline = channel.unary_unary(
         '/pps.API/DeletePipeline',
-        request_serializer=pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StartPipeline = channel.unary_unary(
         '/pps.API/StartPipeline',
-        request_serializer=pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StopPipeline = channel.unary_unary(
         '/pps.API/StopPipeline',
-        request_serializer=pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.RunPipeline = channel.unary_unary(
         '/pps.API/RunPipeline',
-        request_serializer=pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.RunCron = channel.unary_unary(
         '/pps.API/RunCron',
-        request_serializer=pps_dot_pps__pb2.RunCronRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.RunCronRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.CreateSecret = channel.unary_unary(
         '/pps.API/CreateSecret',
-        request_serializer=pps_dot_pps__pb2.CreateSecretRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.CreateSecretRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.DeleteSecret = channel.unary_unary(
         '/pps.API/DeleteSecret',
-        request_serializer=pps_dot_pps__pb2.DeleteSecretRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.DeleteSecretRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.ListSecret = channel.unary_unary(
         '/pps.API/ListSecret',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.SecretInfos.FromString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.SecretInfos.FromString,
         )
     self.InspectSecret = channel.unary_unary(
         '/pps.API/InspectSecret',
-        request_serializer=pps_dot_pps__pb2.InspectSecretRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.SecretInfo.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.InspectSecretRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.SecretInfo.FromString,
         )
     self.DeleteAll = channel.unary_unary(
         '/pps.API/DeleteAll',
@@ -127,17 +127,17 @@ class APIStub(object):
         )
     self.GetLogs = channel.unary_stream(
         '/pps.API/GetLogs',
-        request_serializer=pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.LogMessage.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.LogMessage.FromString,
         )
     self.ActivateAuth = channel.unary_unary(
         '/pps.API/ActivateAuth',
-        request_serializer=pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.ActivateAuthResponse.FromString,
+        request_serializer=src_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
         )
     self.UpdateJobState = channel.unary_unary(
         '/pps.API/UpdateJobState',
-        request_serializer=pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
+        request_serializer=src_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
@@ -327,108 +327,108 @@ def add_APIServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'CreateJob': grpc.unary_unary_rpc_method_handler(
           servicer.CreateJob,
-          request_deserializer=pps_dot_pps__pb2.CreateJobRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.Job.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.CreateJobRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.Job.SerializeToString,
       ),
       'InspectJob': grpc.unary_unary_rpc_method_handler(
           servicer.InspectJob,
-          request_deserializer=pps_dot_pps__pb2.InspectJobRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.JobInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.InspectJobRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
       ),
       'ListJob': grpc.unary_stream_rpc_method_handler(
           servicer.ListJob,
-          request_deserializer=pps_dot_pps__pb2.ListJobRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.JobInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
       ),
       'FlushJob': grpc.unary_stream_rpc_method_handler(
           servicer.FlushJob,
-          request_deserializer=pps_dot_pps__pb2.FlushJobRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.JobInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.FlushJobRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
       ),
       'DeleteJob': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteJob,
-          request_deserializer=pps_dot_pps__pb2.DeleteJobRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.DeleteJobRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StopJob': grpc.unary_unary_rpc_method_handler(
           servicer.StopJob,
-          request_deserializer=pps_dot_pps__pb2.StopJobRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.StopJobRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'InspectDatum': grpc.unary_unary_rpc_method_handler(
           servicer.InspectDatum,
-          request_deserializer=pps_dot_pps__pb2.InspectDatumRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.DatumInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.InspectDatumRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.DatumInfo.SerializeToString,
       ),
       'ListDatum': grpc.unary_stream_rpc_method_handler(
           servicer.ListDatum,
-          request_deserializer=pps_dot_pps__pb2.ListDatumRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.DatumInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.ListDatumRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.DatumInfo.SerializeToString,
       ),
       'RestartDatum': grpc.unary_unary_rpc_method_handler(
           servicer.RestartDatum,
-          request_deserializer=pps_dot_pps__pb2.RestartDatumRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.RestartDatumRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'CreatePipeline': grpc.unary_unary_rpc_method_handler(
           servicer.CreatePipeline,
-          request_deserializer=pps_dot_pps__pb2.CreatePipelineRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.CreatePipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'InspectPipeline': grpc.unary_unary_rpc_method_handler(
           servicer.InspectPipeline,
-          request_deserializer=pps_dot_pps__pb2.InspectPipelineRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.PipelineInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.InspectPipelineRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.PipelineInfo.SerializeToString,
       ),
       'ListPipeline': grpc.unary_unary_rpc_method_handler(
           servicer.ListPipeline,
-          request_deserializer=pps_dot_pps__pb2.ListPipelineRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.PipelineInfos.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.ListPipelineRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.PipelineInfos.SerializeToString,
       ),
       'DeletePipeline': grpc.unary_unary_rpc_method_handler(
           servicer.DeletePipeline,
-          request_deserializer=pps_dot_pps__pb2.DeletePipelineRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.DeletePipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StartPipeline': grpc.unary_unary_rpc_method_handler(
           servicer.StartPipeline,
-          request_deserializer=pps_dot_pps__pb2.StartPipelineRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.StartPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StopPipeline': grpc.unary_unary_rpc_method_handler(
           servicer.StopPipeline,
-          request_deserializer=pps_dot_pps__pb2.StopPipelineRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.StopPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'RunPipeline': grpc.unary_unary_rpc_method_handler(
           servicer.RunPipeline,
-          request_deserializer=pps_dot_pps__pb2.RunPipelineRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.RunPipelineRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'RunCron': grpc.unary_unary_rpc_method_handler(
           servicer.RunCron,
-          request_deserializer=pps_dot_pps__pb2.RunCronRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.RunCronRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'CreateSecret': grpc.unary_unary_rpc_method_handler(
           servicer.CreateSecret,
-          request_deserializer=pps_dot_pps__pb2.CreateSecretRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.CreateSecretRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'DeleteSecret': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteSecret,
-          request_deserializer=pps_dot_pps__pb2.DeleteSecretRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.DeleteSecretRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'ListSecret': grpc.unary_unary_rpc_method_handler(
           servicer.ListSecret,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=pps_dot_pps__pb2.SecretInfos.SerializeToString,
+          response_serializer=src_dot_pps_dot_pps__pb2.SecretInfos.SerializeToString,
       ),
       'InspectSecret': grpc.unary_unary_rpc_method_handler(
           servicer.InspectSecret,
-          request_deserializer=pps_dot_pps__pb2.InspectSecretRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.SecretInfo.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.InspectSecretRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.SecretInfo.SerializeToString,
       ),
       'DeleteAll': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteAll,
@@ -437,17 +437,17 @@ def add_APIServicer_to_server(servicer, server):
       ),
       'GetLogs': grpc.unary_stream_rpc_method_handler(
           servicer.GetLogs,
-          request_deserializer=pps_dot_pps__pb2.GetLogsRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.LogMessage.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.GetLogsRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.LogMessage.SerializeToString,
       ),
       'ActivateAuth': grpc.unary_unary_rpc_method_handler(
           servicer.ActivateAuth,
-          request_deserializer=pps_dot_pps__pb2.ActivateAuthRequest.FromString,
-          response_serializer=pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.ActivateAuthRequest.FromString,
+          response_serializer=src_dot_pps_dot_pps__pb2.ActivateAuthResponse.SerializeToString,
       ),
       'UpdateJobState': grpc.unary_unary_rpc_method_handler(
           servicer.UpdateJobState,
-          request_deserializer=pps_dot_pps__pb2.UpdateJobStateRequest.FromString,
+          request_deserializer=src_dot_pps_dot_pps__pb2.UpdateJobStateRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
