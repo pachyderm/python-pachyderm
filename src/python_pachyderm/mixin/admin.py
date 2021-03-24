@@ -4,7 +4,9 @@ from python_pachyderm.service import Service
 
 
 class AdminMixin:
-    def extract(self, url=None, no_objects=None, no_repos=None, no_pipelines=None):
+    def extract(self,
+                url=None, no_objects=None, no_repos=None, no_pipelines=None,
+                no_auth=None, no_enterprise=None):
         """
         Extracts cluster data for backup. Yields `Op` objects.
 
@@ -18,10 +20,16 @@ class AdminMixin:
           repos, commits and branches.
         * `no_pipelines`: An optional bool. If true, will cause extract to
           omit pipelines.
+        * `no_auth`: An optional bool. If true, will cause extract to omit
+          acls, tokens, etc.
+        * `no_enterprise`: An optional bool. If true, will cause extract to
+          omit any enterprise activation key (which may break auth restore)
         """
         return self._req(
             Service.ADMIN, "Extract",
-            URL=url or "", no_objects=no_objects, no_repos=no_repos, no_pipelines=no_pipelines,
+            URL=url or "",
+            no_objects=no_objects, no_repos=no_repos, no_pipelines=no_pipelines,
+            no_auth=no_auth, no_enterprise=no_enterprise,
         )
 
     def extract_pipeline(self, pipeline_name):

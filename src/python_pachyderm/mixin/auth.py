@@ -3,7 +3,7 @@ from python_pachyderm.service import Service
 
 
 class AuthMixin:
-    def activate_auth(self, subject, github_token=None):
+    def activate_auth(self, subject, github_token=None, root_token=None):
         """
         Activates auth, creating an initial set of admins. Returns a string
         that can be used for making authenticated requests.
@@ -18,14 +18,24 @@ class AuthMixin:
           Pachyderm will generate a new token for the robot user; this token
           will be the only way to administer this cluster until more admins
           are added.
-        * An optional string. This is the token returned by GitHub and used to
-        authenticate the caller. When Pachyderm is deployed locally, setting
-        this value to a given string will automatically authenticate the
-        caller as a GitHub user whose username is that string (unless this
-        "looks like" a GitHub access code, in which case Pachyderm does
-        retrieve the corresponding GitHub username)
+        * `github_token`: An optional string. This is the token returned by
+          GitHub and used to authenticate the caller. When Pachyderm is deployed
+          locally, setting this value to a given string will automatically
+          authenticate the caller as a GitHub user whose username is that string
+          (unless this "looks like" a GitHub access code, in which case
+          Pachyderm does retrieve the corresponding GitHub username)
+        * `root_token`: An optional string. If specified, this string becomes
+          the Pachyderm cluster root user's token. Currently this is only used
+          for testing and Pachyderm internals (migration), so we're avoiding
+          support for this field in the python-pachyderm client until we find a
+          use for them (feel free to file an issue in
+          github.com/pachyderm/pachyderm)
         """
-        return self._req(Service.AUTH, "Activate", subject=subject, github_token=github_token).pach_token
+        # TODO(msteffen): Add support for branch triggers
+        if trigger is not None:
+            raise NotImplementedError('branch triggers are not supported yet.')
+        return self._req(Service.AUTH, "Activate", subject=subject,
+                         github_token=github_token, root_token=root_token).pach_token
 
     def deactivate_auth(self):
         """
@@ -319,3 +329,27 @@ class AuthMixin:
         lifetime of this token, in seconds.
         """
         return self._req(Service.AUTH, "GetOneTimePassword", subject=subject, ttl=ttl).code
+
+    def extract_auth_tokens(self):
+        """
+        This maps to an internal function that is only used for migration.
+        Pachyderm's `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we're avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        """
+        raise NotImplementedError('extract/restore are for testing and internal use only')
+
+    def restore_auth_token(self, token=None):
+        """
+        This maps to an internal function that is only used for migration.
+        Pachyderm's `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we're avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        """
+        raise NotImplementedError('extract/restore are for testing and internal use only')

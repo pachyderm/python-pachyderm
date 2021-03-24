@@ -113,7 +113,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "ListRepo").repo_info
 
-    def delete_repo(self, repo_name, force=None):
+    def delete_repo(self, repo_name, force=None, split_transaction=None):
         """
         Deletes a repo and reclaims the storage space it was using.
 
@@ -121,7 +121,11 @@ class PFSMixin:
 
         * `repo_name`: The name of the repo.
         * `force`: If set to true, the repo will be removed regardless of
-        errors. This argument should be used with care.
+          errors. This argument should be used with care.
+        * `split_transaction`: On optional bool that controls whether Pachyderm
+          attempts to delete the entire repo in a single database transaction.
+          Setting this to `True` can work around certain Pachyderm errors, but,
+          if set, the `delete_repo` call may need to be retried.
         """
         return self._req(Service.PFS, "DeleteRepo", repo=pfs_proto.Repo(name=repo_name), force=force, all=False)
 
@@ -322,7 +326,8 @@ class PFSMixin:
             getattr(req, 'from').CopyFrom(pfs_proto.Commit(repo=repo, id=from_commit_id))
         return self._req(Service.PFS, "SubscribeCommit", req=req)
 
-    def create_branch(self, repo_name, branch_name, commit=None, provenance=None):
+    def create_branch(self, repo_name, branch_name, commit=None,
+                      provenance=None, trigger=None):
         """
         Creates a new branch.
 
@@ -331,15 +336,17 @@ class PFSMixin:
         * `repo_name`: A string specifying the name of the repo.
         * `branch_name`: A string specifying the new branch name.
         * `commit`: An optional tuple, string, or `Commit` object representing
-        the head commit of the branch.
+          the head commit of the branch.
         * `provenance`: An optional iterable of `Branch` objects representing
-        the branch provenance.
+          the branch provenance.
+        * `trigger`: An optional `Trigger` object controlling which the head of
+          `branch_name` is moved.
         """
         return self._req(
             Service.PFS, "CreateBranch",
             branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
             head=commit_from(commit) if commit is not None else None,
-            provenance=provenance,
+            provenance=provenance, trigger=trigger,
         )
 
     def inspect_branch(self, repo_name, branch_name):
@@ -661,6 +668,36 @@ class PFSMixin:
             old_file=old_file,
             shallow=shallow,
         )
+
+    def create_tmp_file_set(self):
+        """
+        Creates a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we're avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        """
+        raise NotImplementedError('temporary filesets are internal-use-only')
+
+    def renew_tmp_file_set(self, fileset_id, ttl_seconds):
+        """
+        Renews a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we're avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        * `ttl_seconds`: A int determining the number of seconds to keep alive
+        the temporary fileset
+        """
+        raise NotImplementedError('temporary filesets are internal-use-only')
 
 
 class PutFileClient:
