@@ -22,7 +22,7 @@ src/python_pachyderm/proto: docker-build-proto
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
-	find ./proto/pachyderm/src -regex ".*\.proto" \
+	find ./proto/pachyderm/ -regex ".*\.proto" \
 	| grep -v 'internal' \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
@@ -41,12 +41,12 @@ ci-install:
 	sudo dpkg -i /tmp/pachctl.deb
 	pip install tox tox-travis
 
-ci-setup:
+ci-setup: 
 	docker version
 	which pachctl
-	cd proto/pachyderm && make launch-kube
+	etc/kube/start-minikube.sh
 	pachctl deploy local
-	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
+	until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
 
 release:
