@@ -19,14 +19,15 @@ docker-build-proto:
 
 src/python_pachyderm/proto: docker-build-proto
 	@echo "Building with pachyderm core v$(PACHYDERM_VERSION)"
+	rm -rf src/python_pachyderm/proto
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
 	find ./proto/pachyderm/src/client -regex ".*\.proto" \
+	| grep -v 'internal' \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
-	test -d src/python_pachyderm/proto && rm -rf src/python_pachyderm/proto
 	mv src/python_pachyderm/client src/python_pachyderm/proto
 	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
 
@@ -45,9 +46,9 @@ ci-install:
 ci-setup:
 	docker version
 	which pachctl
-	cd proto/pachyderm && make launch-kube
+	etc/kube/start-minikube.sh
 	pachctl deploy local
-	until timeout 1s ./proto/pachyderm/etc/kube/check_ready.sh app=pachd; do sleep 1; done
+	until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
 
 release:
