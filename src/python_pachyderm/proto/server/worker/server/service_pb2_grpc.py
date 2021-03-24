@@ -2,8 +2,8 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from pps import pps_pb2 as pps_dot_pps__pb2
-from server.worker.server import service_pb2 as server_dot_worker_dot_server_dot_service__pb2
+from python_pachyderm.proto.pps import pps_pb2 as src_dot_pps_dot_pps__pb2
+from python_pachyderm.proto.server.worker.server import service_pb2 as src_dot_server_dot_worker_dot_server_dot_service__pb2
 
 
 class WorkerStub(object):
@@ -19,12 +19,12 @@ class WorkerStub(object):
     self.Status = channel.unary_unary(
         '/server.Worker/Status',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=pps_dot_pps__pb2.WorkerStatus.FromString,
+        response_deserializer=src_dot_pps_dot_pps__pb2.WorkerStatus.FromString,
         )
     self.Cancel = channel.unary_unary(
         '/server.Worker/Cancel',
-        request_serializer=server_dot_worker_dot_server_dot_service__pb2.CancelRequest.SerializeToString,
-        response_deserializer=server_dot_worker_dot_server_dot_service__pb2.CancelResponse.FromString,
+        request_serializer=src_dot_server_dot_worker_dot_server_dot_service__pb2.CancelRequest.SerializeToString,
+        response_deserializer=src_dot_server_dot_worker_dot_server_dot_service__pb2.CancelResponse.FromString,
         )
 
 
@@ -52,12 +52,12 @@ def add_WorkerServicer_to_server(servicer, server):
       'Status': grpc.unary_unary_rpc_method_handler(
           servicer.Status,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=pps_dot_pps__pb2.WorkerStatus.SerializeToString,
+          response_serializer=src_dot_pps_dot_pps__pb2.WorkerStatus.SerializeToString,
       ),
       'Cancel': grpc.unary_unary_rpc_method_handler(
           servicer.Cancel,
-          request_deserializer=server_dot_worker_dot_server_dot_service__pb2.CancelRequest.FromString,
-          response_serializer=server_dot_worker_dot_server_dot_service__pb2.CancelResponse.SerializeToString,
+          request_deserializer=src_dot_server_dot_worker_dot_server_dot_service__pb2.CancelRequest.FromString,
+          response_serializer=src_dot_server_dot_worker_dot_server_dot_service__pb2.CancelResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
