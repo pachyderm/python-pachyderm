@@ -142,7 +142,7 @@ class PPSMixin:
         * `page_size`: An optional int specifying the size of the page.
         * `page`: An optional int specifying the page number.
         * `input`: An optional `Input` object. If set in lieu of `job_id`,
-          list_datum returns that datums that would be used for a hypothetical
+          list_datum returns the datums that would be given to a hypothetical
           job that used `input` as its input spec. Exactly one of `job_id`
           (real) or `input` (hypothetical) must be set.
         """
@@ -469,7 +469,7 @@ class PPSMixin:
           restrict the list of jobs returned, for convenience
         """
         return self._req(Service.PPS, "ListPipeline", history=history,
-                         jqFilter=jqFilter)
+                         allow_incomplete=allow_incomplete, jqFilter=jqFilter)
 
     def delete_pipeline(self, pipeline_name, force=None, keep_repo=None,
                         split_transaction=None):

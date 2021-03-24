@@ -122,12 +122,14 @@ class PFSMixin:
         * `repo_name`: The name of the repo.
         * `force`: If set to true, the repo will be removed regardless of
           errors. This argument should be used with care.
-        * `split_transaction`: On optional bool that controls whether Pachyderm
+        * `split_transaction`: An optional bool that controls whether Pachyderm
           attempts to delete the entire repo in a single database transaction.
           Setting this to `True` can work around certain Pachyderm errors, but,
           if set, the `delete_repo` call may need to be retried.
         """
-        return self._req(Service.PFS, "DeleteRepo", repo=pfs_proto.Repo(name=repo_name), force=force, all=False)
+        return self._req(Service.PFS, "DeleteRepo",
+                         repo=pfs_proto.Repo(name=repo_name), force=force,
+                         all=False, split_transaction=split_transaction)
 
     def delete_all_repos(self, force=None):
         """
@@ -339,7 +341,7 @@ class PFSMixin:
           the head commit of the branch.
         * `provenance`: An optional iterable of `Branch` objects representing
           the branch provenance.
-        * `trigger`: An optional `Trigger` object controlling which the head of
+        * `trigger`: An optional `Trigger` object controlling when the head of
           `branch_name` is moved.
         """
         return self._req(

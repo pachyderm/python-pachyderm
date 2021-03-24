@@ -25,17 +25,16 @@ class AuthMixin:
           (unless this "looks like" a GitHub access code, in which case
           Pachyderm does retrieve the corresponding GitHub username)
         * `root_token`: An optional string. If specified, this string becomes
-          the Pachyderm cluster root user's token. Currently this is only used
-          for testing and Pachyderm internals (migration), so we're avoiding
-          support for this field in the python-pachyderm client until we find a
-          use for them (feel free to file an issue in
+          the Pachyderm cluster root user's token (otherwise, Pachyderm
+          generates a root token, which is generally safer). Currently this is
+          only used for testing and Pachyderm internals (migration), so we're
+          avoiding support for this field in the python-pachyderm client until
+          we find a use for it (feel free to file an issue in
           github.com/pachyderm/pachyderm)
         """
-        # TODO(msteffen): Add support for branch triggers
-        if trigger is not None:
-            raise NotImplementedError('branch triggers are not supported yet.')
-        return self._req(Service.AUTH, "Activate", subject=subject,
-                         github_token=github_token, root_token=root_token).pach_token
+        if root_token is not None:
+            raise NotImplementedError('root_token is not supported in python_pachyderm')
+        return self._req(Service.AUTH, "Activate", subject=subject, github_token=github_token).pach_token
 
     def deactivate_auth(self):
         """
