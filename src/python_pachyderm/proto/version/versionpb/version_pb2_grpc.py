@@ -2,7 +2,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from version.versionpb import version_pb2 as version_dot_versionpb_dot_version__pb2
+from python_pachyderm.proto.version.versionpb import version_pb2 as src_dot_version_dot_versionpb_dot_version__pb2
 
 
 class APIStub(object):
@@ -18,7 +18,7 @@ class APIStub(object):
     self.GetVersion = channel.unary_unary(
         '/versionpb.API/GetVersion',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=version_dot_versionpb_dot_version__pb2.Version.FromString,
+        response_deserializer=src_dot_version_dot_versionpb_dot_version__pb2.Version.FromString,
         )
 
 
@@ -39,7 +39,7 @@ def add_APIServicer_to_server(servicer, server):
       'GetVersion': grpc.unary_unary_rpc_method_handler(
           servicer.GetVersion,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=version_dot_versionpb_dot_version__pb2.Version.SerializeToString,
+          response_serializer=src_dot_version_dot_versionpb_dot_version__pb2.Version.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

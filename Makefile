@@ -19,6 +19,7 @@ docker-build-proto:
 
 src/python_pachyderm/proto: docker-build-proto
 	@echo "Building with pachyderm core v$(PACHYDERM_VERSION)"
+	rm -rf src/python_pachyderm/proto
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
@@ -27,6 +28,7 @@ src/python_pachyderm/proto: docker-build-proto
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
+	mv src/python_pachyderm/proto/src/* src/python_pachyderm/proto
 	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
 
 init:
