@@ -15,8 +15,7 @@ env:
   global:
     - PATH=$HOME/cached-deps:$PATH
   jobs:
-    - PACHYDERM_VERSION=1.12.5
-    - PACHYDERM_VERSION=1.11.9
+    - PACHYDERM_VERSION=2.0.0-alpha.8
 
 jobs:
   include:
@@ -24,7 +23,7 @@ jobs:
     - python: 3.8
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=1.12.5
+        - PACHYDERM_VERSION=2.0.0-alpha.8
     # Re-enable examples once 1.12.6 is released with libgl in the python build image
     #- python: 3.8
     #  env:
