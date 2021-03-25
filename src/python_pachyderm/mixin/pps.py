@@ -65,7 +65,7 @@ class PPSMixin:
             input_commit = [commit_from(input_commit)]
 
         return self._req(
-            Service.PPS, "ListJobStream",
+            Service.PPS, "ListJob",
             pipeline=pps_proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None,
             input_commit=input_commit,
             output_commit=commit_from(output_commit) if output_commit is not None else None,
@@ -131,9 +131,9 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id=None, page_size=None, page=None, input=None, status_only=None):
+    def list_datum(self, job_id=None, page_size=None, page=None, input=None):
         """
-        Lists datums. Yields `ListDatumStreamResponse` objects.
+        Lists datums. Yields `DatumInfo` objects.
 
         Params:
 
@@ -147,10 +147,9 @@ class PPSMixin:
           (real) or `input` (hypothetical) must be set.
         """
         return self._req(
-            Service.PPS, "ListDatumStream",
+            Service.PPS, "ListDatum",
             job=pps_proto.Job(id=job_id), page_size=page_size, page=page,
-            input=input,
-            status_only=status_only,
+            input=input
         )
 
     def restart_datum(self, job_id, data_filters=None):
@@ -167,13 +166,12 @@ class PPSMixin:
             job=pps_proto.Job(id=job_id), data_filters=data_filters,
         )
 
-    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, hashtree_spec=None, egress=None,
+    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, egress=None, no_skip=None,
                         update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None,
                         description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
                         datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None,
-                        metadata=None, s3_out=None, sidecar_resource_limits=None, reprocess_spec=None,
-                        autoscaling=None):
+                        metadata=None, s3_out=None, sidecar_resource_limits=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -184,7 +182,6 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `transform`: A `Transform` object.
         * `parallelism_spec`: An optional `ParallelismSpec` object.
-        * `hashtree_spec`: An optional `HashtreeSpec` object.
         * `egress`: An optional `Egress` object.
         * `update`: An optional bool specifying whether this should behave as
         an upsert.
@@ -214,6 +211,7 @@ class PPSMixin:
         * `s3_out`: An optional bool specifying whether the output repo should
         be exposed as an s3 gateway bucket.
         * `sidecar_resource_limits`: An optional `ResourceSpec` setting
+        * `no_skip`: An optional bool specifying whether to skip already-processed data
         resource limits for the pipeline sidecar.
         """
 
@@ -302,7 +300,6 @@ class PPSMixin:
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             transform=transform,
             parallelism_spec=parallelism_spec,
-            hashtree_spec=hashtree_spec,
             egress=egress,
             update=update,
             output_branch=output_branch,
@@ -327,8 +324,7 @@ class PPSMixin:
             spout=spout,
             spec_commit=spec_commit,
             sidecar_resource_limits=sidecar_resource_limits,
-            reprocess_spec=reprocess_spec,
-            autoscaling=autoscaling,
+            no_skip=no_skip,
         )
 
     def create_pipeline_from_request(self, req):
@@ -345,8 +341,8 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "CreatePipeline", req=req)
 
-    def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None,
-                               hashtree_spec=None, egress=None, update=None, output_branch=None,
+    def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None, no_skip=None,
+                               egress=None, update=None, output_branch=None,
                                scale_down_threshold=None, resource_requests=None,
                                resource_limits=None, input=None, description=None, cache_size=None,
                                enable_stats=None, reprocess=None, max_queue_size=None,
@@ -365,7 +361,6 @@ class PPSMixin:
         when running in a Kubernetes cluster on which kubeflow has been
         installed.
         * `parallelism_spec`: An optional `ParallelismSpec` object.
-        * `hashtree_spec`: An optional `HashtreeSpec` object.
         * `egress`: An optional `Egress` object.
         * `update`: An optional bool specifying whether this should behave as
         an upsert.
@@ -392,13 +387,13 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
+        * `no_skip`: An optional bool specifying whether to skip already-processed data
         """
         return self._req(
             Service.PPS, "CreatePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             tf_job=tf_job,
             parallelism_spec=parallelism_spec,
-            hashtree_spec=hashtree_spec,
             egress=egress,
             update=update,
             output_branch=output_branch,
@@ -422,6 +417,7 @@ class PPSMixin:
             pod_patch=pod_patch,
             spout=spout,
             spec_commit=spec_commit,
+            no_skip=no_skip,
         )
 
     def inspect_pipeline(self, pipeline_name, history=None):
@@ -710,18 +706,6 @@ class PPSMixin:
             use_loki_backend=use_loki_backend,
             since=since,
         )
-
-    def garbage_collect(self, memory_bytes=None):
-        """
-        Runs garbage collection.
-
-        Params:
-
-        * `memory_bytes`: An optional int specifying how much memory to use in
-        computing which objects are alive. A larger number will result in more
-        precise garbage collection (at the cost of more memory usage).
-        """
-        return self._req(Service.PPS, "GarbageCollect", memory_bytes=memory_bytes)
 
 
 def pipeline_inputs(root):
