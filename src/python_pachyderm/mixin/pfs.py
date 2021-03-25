@@ -931,21 +931,25 @@ class AtomicPutFileobjOp(AtomicOp):
 
 
 def put_file_from_fileobj_reqs(value, **kwargs):
-    for i in itertools.count():
-        chunk = value.read(BUFFER_SIZE)
-        if i == 0:
-            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-        elif len(chunk) > 0:
-            yield pfs_proto.PutFileRequest(value=chunk)
-        
-        # Check for EOF after sending at least one PutFileRequest
-        if len(chunk) == 0:
-            return
-
+    def f_iter():
+        while True:
+          chunk = value.read(BUFFER_SIZE)
+          if len(chunk) > 0:
+              yield chunk
+          else:
+              break
+    return put_file_from_iterable_reqs(f_iter(), **kwargs)
 
 def put_file_from_iterable_reqs(value, **kwargs):
-    for i, chunk in enumerate(value):
-        if i == 0:
-            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-        else:
-            yield pfs_proto.PutFileRequest(value=chunk)
+    value = iter(value)
+    for i in itertools.count():
+        try:
+            chunk = next(value)
+        except StopIteration:
+            chunk = b''
+            return # 'finally' block still executes--ensure at least one request
+        finally:
+            if i == 0:
+                yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
+            elif len(chunk) > 0:
+                yield pfs_proto.PutFileRequest(value=chunk)
