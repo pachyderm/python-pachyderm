@@ -56,7 +56,7 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         """
-        return self._req(Service.AUTH, "ModifyClusterRoleBinding", principal=principal, roles=roles)
+        return self._req(Service.AUTH, "ModifyRoleBinding", resource=resource, principal=principal, roles=roles)
 
     def get_oidc_login(self):
         """
