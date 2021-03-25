@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='debug',
   syntax='proto3',
   serialized_options=b'Z/github.com/pachyderm/pachyderm/src/client/debug',
-  serialized_pb=b'\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x14\x63lient/pps/pps.proto\"P\n\x0eProfileRequest\x12\x1f\n\x07profile\x18\x01 \x01(\x0b\x32\x0e.debug.Profile\x12\x1d\n\x06\x66ilter\x18\x02 \x01(\x0b\x32\r.debug.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"g\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12!\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.PipelineH\x00\x12\x1f\n\x06worker\x18\x03 \x01(\x0b\x32\r.debug.WorkerH\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\".\n\rBinaryRequest\x12\x1d\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\r.debug.Filter\",\n\x0b\x44umpRequest\x12\x1d\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\r.debug.Filter2\xc8\x01\n\x05\x44\x65\x62ug\x12\x41\n\x07Profile\x12\x15.debug.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12?\n\x06\x42inary\x12\x14.debug.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42\x31Z/github.com/pachyderm/pachyderm/src/client/debugb\x06proto3'
+  serialized_pb=b'\n\x18\x63lient/debug/debug.proto\x12\x05\x64\x65\x62ug\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x14\x63lient/pps/pps.proto\"P\n\x0eProfileRequest\x12\x1f\n\x07profile\x18\x01 \x01(\x0b\x32\x0e.debug.Profile\x12\x1d\n\x06\x66ilter\x18\x02 \x01(\x0b\x32\r.debug.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"g\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12!\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.PipelineH\x00\x12\x1f\n\x06worker\x18\x03 \x01(\x0b\x32\r.debug.WorkerH\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\".\n\rBinaryRequest\x12\x1d\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\r.debug.Filter\";\n\x0b\x44umpRequest\x12\x1d\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\r.debug.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\x32\xc8\x01\n\x05\x44\x65\x62ug\x12\x41\n\x07Profile\x12\x15.debug.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12?\n\x06\x42inary\x12\x14.debug.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12;\n\x04\x44ump\x12\x12.debug.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42\x31Z/github.com/pachyderm/pachyderm/src/client/debugb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,client_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
@@ -235,6 +235,13 @@ _DUMPREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='debug.DumpRequest.limit', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -248,7 +255,7 @@ _DUMPREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=469,
-  serialized_end=513,
+  serialized_end=528,
 )
 
 _PROFILEREQUEST.fields_by_name['profile'].message_type = _PROFILE
@@ -326,8 +333,8 @@ _DEBUG = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=516,
-  serialized_end=716,
+  serialized_start=531,
+  serialized_end=731,
   methods=[
   _descriptor.MethodDescriptor(
     name='Profile',

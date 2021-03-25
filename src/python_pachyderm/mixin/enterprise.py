@@ -27,3 +27,10 @@ class EnterpriseMixin:
     def deactivate_enterprise(self):
         """Deactivates enterprise."""
         return self._req(Service.ENTERPRISE, "Deactivate")
+
+    def get_activation_code(self):
+        """
+        Returns the enterprise code used to activate Pachdyerm Enterprise in
+        this cluster.
+        """
+        return self._req(Service.ENTERPRISE, "GetActivationCode")

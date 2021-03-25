@@ -30,18 +30,19 @@ class PPSMixin:
             full=full,
         )
 
-    def list_job(self, pipeline_name=None, input_commit=None, output_commit=None, history=None, full=None):
+    def list_job(self, pipeline_name=None, input_commit=None,
+                 output_commit=None, history=None, full=None, jqFilter=None):
         """
         Lists jobs. Yields `JobInfo` objects.
 
         Params:
 
         * `pipeline_name`: An optional string representing a pipeline name to
-        filter on.
+          filter on.
         * `input_commit`: An optional list of tuples, strings, or `Commit`
-        objects representing input commits to filter on.
+          objects representing input commits to filter on.
         * `output_commit`: An optional tuple, string, or `Commit` object
-        representing an output commit to filter on.
+          representing an output commit to filter on.
         * `history`: An optional int that indicates to return jobs from
           historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
@@ -50,11 +51,13 @@ class PPSMixin:
             * 2: etc.
             * -1: Return jobs from all historical versions.
         * `full`: An optional bool indicating whether the result should
-        include all pipeline details in each `JobInfo`, or limited information
-        including name and status, but excluding information in the pipeline
-        spec. Leaving this `None` (or `False`) can make the call significantly
-        faster in clusters with a large number of pipelines and jobs. Note
-        that if `input_commit` is set, this field is coerced to `True`.
+          include all pipeline details in each `JobInfo`, or limited information
+          including name and status, but excluding information in the pipeline
+          spec. Leaving this `None` (or `False`) can make the call significantly
+          faster in clusters with a large number of pipelines and jobs. Note
+          that if `input_commit` is set, this field is coerced to `True`.
+        * `jqFilter`: An optional string containing a `jq` filter that can
+          restrict the list of jobs returned, for convenience
         """
         if isinstance(input_commit, list):
             input_commit = [commit_from(ic) for ic in input_commit]
@@ -68,6 +71,7 @@ class PPSMixin:
             output_commit=commit_from(output_commit) if output_commit is not None else None,
             history=history,
             full=full,
+            jqFilter=jqFilter,
         )
 
     def flush_job(self, commits, pipeline_names=None):
@@ -127,19 +131,25 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id, page_size=None, page=None):
+    def list_datum(self, job_id=None, page_size=None, page=None, input=None):
         """
         Lists datums. Yields `ListDatumStreamResponse` objects.
 
         Params:
 
-        * `job_id`: The ID of the job.
+        * `job_id`: An optional int specifying the ID of a job. Exactly one of
+          `job_id` (real) or `input` (hypothetical) must be set.
         * `page_size`: An optional int specifying the size of the page.
         * `page`: An optional int specifying the page number.
+        * `input`: An optional `Input` object. If set in lieu of `job_id`,
+          list_datum returns the datums that would be given to a hypothetical
+          job that used `input` as its input spec. Exactly one of `job_id`
+          (real) or `input` (hypothetical) must be set.
         """
         return self._req(
             Service.PPS, "ListDatumStream",
             job=pps_proto.Job(id=job_id), page_size=page_size, page=page,
+            input=input
         )
 
     def restart_datum(self, job_id, data_filters=None):
@@ -436,7 +446,7 @@ class PPSMixin:
             assert len(pipelines) <= 1
             return pipelines[0] if len(pipelines) else None
 
-    def list_pipeline(self, history=None):
+    def list_pipeline(self, history=None, allow_incomplete=None, jqFilter=None):
         """
         Lists pipelines. Returns a `PipelineInfos` object.
 
@@ -444,16 +454,25 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         * `history`: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
+          historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
               pipelines.
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
+        * `allow_incomplete`: An optional boolean that, if set to `True`, causes
+          `list_pipeline` to return PipelineInfos with incomplete data where the
+          pipeline spec cannot beretrieved. Incomplete PipelineInfos will have a
+          nil Transform field, but will have the fields present in
+          EtcdPipelineInfo.
+        * `jqFilter`: An optional string containing a `jq` filter that can
+          restrict the list of jobs returned, for convenience
         """
-        return self._req(Service.PPS, "ListPipeline", history=history)
+        return self._req(Service.PPS, "ListPipeline", history=history,
+                         allow_incomplete=allow_incomplete, jqFilter=jqFilter)
 
-    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None):
+    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None,
+                        split_transaction=None):
         """
         Deletes a pipeline.
 
@@ -462,13 +481,18 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
         * `keep_repo`: Whether to keep the repo.
+        * `split_transaction`: An optional bool that controls whether Pachyderm
+          attempts to delete the pipeline in a single database transaction.
+          Setting this to `True` can work around certain Pachyderm errors, but,
+          if set, the `delete_repo` call may need to be retried.
         """
         return self._req(
             Service.PPS,
             "DeletePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             force=force,
-            keep_repo=keep_repo
+            keep_repo=keep_repo,
+            split_transaction=split_transaction,
         )
 
     def delete_all_pipelines(self, force=None):
@@ -611,28 +635,30 @@ class PPSMixin:
         )
 
     def get_pipeline_logs(self, pipeline_name, data_filters=None, master=None, datum=None, follow=None, tail=None,
-                          use_loki_backend=None):
+                          use_loki_backend=None, since=None):
         """
         Gets logs for a pipeline. Yields `LogMessage` objects.
 
         Params:
 
         * `pipeline_name`: A string representing a pipeline to get
-        logs of.
+          logs of.
         * `data_filters`: An optional iterable of strings specifying the names
-        of input files from which we want processing logs. This may contain
-        multiple files, to query pipelines that contain multiple inputs. Each
-        filter may be an absolute path of a file within a pps repo, or it may
-        be a hash for that file (to search for files at specific versions.)
+          of input files from which we want processing logs. This may contain
+          multiple files, to query pipelines that contain multiple inputs. Each
+          filter may be an absolute path of a file within a pps repo, or it may
+          be a hash for that file (to search for files at specific versions.)
         * `master`: An optional bool.
         * `datum`: An optional `Datum` object.
         * `follow`: An optional bool specifying whether logs should continue to
-        stream forever.
+          stream forever.
         * `tail`: An optional int. If nonzero, the number of lines from the end
-        of the logs to return.  Note: tail applies per container, so you will
-        get tail * <number of pods> total lines back.
+          of the logs to return.  Note: tail applies per container, so you will
+          get tail * <number of pods> total lines back.
         * `use_loki_backend`: Whether to use loki as a backend for fetching
-        logs. Requires a loki-enabled cluster.
+          logs. Requires a loki-enabled cluster.
+        * `since`: An optional `Duration` object specifying the start time for
+          returned logs
         """
         return self._req(
             Service.PPS, "GetLogs",
@@ -643,9 +669,11 @@ class PPSMixin:
             follow=follow,
             tail=tail,
             use_loki_backend=use_loki_backend,
+            since=since,
         )
 
-    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None, tail=None, use_loki_backend=None):
+    def get_job_logs(self, job_id, data_filters=None, datum=None, follow=None,
+                     tail=None, use_loki_backend=None, since=None):
         """
         Gets logs for a job. Yields `LogMessage` objects.
 
@@ -653,18 +681,20 @@ class PPSMixin:
 
         * `job_id`: A string representing a job to get logs of.
         * `data_filters`: An optional iterable of strings specifying the names
-        of input files from which we want processing logs. This may contain
-        multiple files, to query pipelines that contain multiple inputs. Each
-        filter may be an absolute path of a file within a pps repo, or it may
-        be a hash for that file (to search for files at specific versions.)
+          of input files from which we want processing logs. This may contain
+          multiple files, to query pipelines that contain multiple inputs. Each
+          filter may be an absolute path of a file within a pps repo, or it may
+          be a hash for that file (to search for files at specific versions.)
         * `datum`: An optional `Datum` object.
         * `follow`: An optional bool specifying whether logs should continue to
-        stream forever.
+          stream forever.
         * `tail`: An optional int. If nonzero, the number of lines from the end
-        of the logs to return.  Note: tail applies per container, so you will
-        get tail * <number of pods> total lines back.
+          of the logs to return.  Note: tail applies per container, so you will
+          get tail * <number of pods> total lines back.
         * `use_loki_backend`: Whether to use loki as a backend for fetching
-        logs. Requires a loki-enabled cluster.
+          logs. Requires a loki-enabled cluster.
+        * `since`: An optional `Duration` object specifying the start time for
+          returned logs
         """
         return self._req(
             Service.PPS, "GetLogs",
@@ -674,6 +704,7 @@ class PPSMixin:
             follow=follow,
             tail=tail,
             use_loki_backend=use_loki_backend,
+            since=since,
         )
 
     def garbage_collect(self, memory_bytes=None):

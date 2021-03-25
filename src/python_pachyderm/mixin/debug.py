@@ -3,7 +3,7 @@ from python_pachyderm.proto.debug import debug_pb2 as debug_proto
 
 
 class DebugMixin:
-    def dump(self, filter=None):
+    def dump(self, filter=None, limit=None):
         """
         Gets a debug dump. Yields byte arrays.
 
@@ -11,8 +11,10 @@ class DebugMixin:
 
         * `recursed`: An optional bool.
         * `filter`: An optional `Filter` object.
+        * `limit`: An optional int, limiting the number of commits/jobs returned
+          for each repo/pipeline in the dump
         """
-        res = self._req(Service.DEBUG, "Dump", filter=filter)
+        res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
         for item in res:
             yield item.value
 
@@ -23,7 +25,7 @@ class DebugMixin:
         Params:
 
         * `duration`: A `Duration` object specifying how long to run the CPU
-        profiler.
+          profiler.
         * `filter`: An optional `Filter` object.
         """
         profile = debug_proto.Profile(name="cpu", duration=duration)
