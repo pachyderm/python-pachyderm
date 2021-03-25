@@ -186,6 +186,7 @@ class PFSMixin:
             provenance=provenance,
         )
 
+<<<<<<< HEAD
     def finish_commit(
         self,
         commit,
@@ -196,6 +197,9 @@ class PFSMixin:
         size_bytes=None,
         empty=None,
     ):
+=======
+    def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
+>>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -206,11 +210,6 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `description`: An optional string describing this commit.
-        * `input_tree_object_hash`: An optional string specifying an input tree
-        object hash.
-        * `tree_object_hashes`: A list of zero or more strings specifying
-        object hashes for the output trees.
-        * `datum_object_hash`: An optional string specifying an object hash.
         * `size_bytes`: An optional int.
         * `empty`: An optional bool. If set, the commit will be closed (its
         `finished` field will be set to the current time) but its `tree` will
@@ -221,6 +220,7 @@ class PFSMixin:
             "FinishCommit",
             commit=commit_from(commit),
             description=description,
+<<<<<<< HEAD
             tree=pfs_proto.Object(hash=input_tree_object_hash)
             if input_tree_object_hash is not None
             else None,
@@ -230,6 +230,8 @@ class PFSMixin:
             datums=pfs_proto.Object(hash=datum_object_hash)
             if datum_object_hash is not None
             else None,
+=======
+>>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
             size_bytes=size_bytes,
             empty=empty,
         )
@@ -302,6 +304,7 @@ class PFSMixin:
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
+<<<<<<< HEAD
             getattr(req, "from").CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommitStream", req=req)
 
@@ -315,6 +318,10 @@ class PFSMixin:
         commit.
         """
         return self._req(Service.PFS, "DeleteCommit", commit=commit_from(commit))
+=======
+            getattr(req, 'from').CopyFrom(commit_from(from_commit))
+        return self._req(Service.PFS, "ListCommit", req=req)
+>>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
 
     def flush_commit(self, commits, repos=None):
         """
@@ -685,8 +692,12 @@ class PFSMixin:
         included.
         """
         return self._req(
+<<<<<<< HEAD
             Service.PFS,
             "ListFileStream",
+=======
+            Service.PFS, "ListFile",
+>>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
             file=pfs_proto.File(commit=commit_from(commit), path=path),
             history=history,
             full=include_contents,
@@ -719,9 +730,13 @@ class PFSMixin:
         commit.
         * `pattern`: A string representing a glob pattern.
         """
+<<<<<<< HEAD
         return self._req(
             Service.PFS, "GlobFileStream", commit=commit_from(commit), pattern=pattern
         )
+=======
+        return self._req(Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern)
+>>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
 
     def delete_file(self, commit, path):
         """
