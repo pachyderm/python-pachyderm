@@ -32,8 +32,6 @@ class AuthMixin:
           we find a use for it (feel free to file an issue in
           github.com/pachyderm/pachyderm)
         """
-        if root_token is not None:
-            raise NotImplementedError('root_token is not supported in python_pachyderm')
         return self._req(Service.AUTH, "Activate", subject=subject, github_token=github_token).pach_token
 
     def deactivate_auth(self):
