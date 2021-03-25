@@ -18,7 +18,8 @@ from python_pachyderm.proto.enterprise import enterprise_pb2 as enterprise_proto
 from python_pachyderm.proto.enterprise import enterprise_pb2_grpc as enterprise_grpc
 from python_pachyderm.proto.health import health_pb2 as health_proto
 from python_pachyderm.proto.health import health_pb2_grpc as health_grpc
-
+from python_pachyderm.proto.license import license_pb2 as license_proto
+from python_pachyderm.proto.license import license_pb2_grpc as license_grpc
 
 class Service(Enum):
     ADMIN = 0
@@ -30,6 +31,7 @@ class Service(Enum):
     PPS = 6
     TRANSACTION = 7
     VERSION = 8
+    LICENSE = 9
 
     @property
     def grpc_module(self):
@@ -62,6 +64,7 @@ GRPC_MODULES = {
     Service.DEBUG: debug_grpc,
     Service.ENTERPRISE: enterprise_grpc,
     Service.HEALTH: health_grpc,
+    Service.LICENSE: license_grpc,
     Service.PFS: pfs_grpc,
     Service.PPS: pps_grpc,
     Service.TRANSACTION: transaction_grpc,
@@ -73,7 +76,7 @@ PROTO_MODULES = {
     Service.AUTH: auth_proto,
     Service.DEBUG: debug_proto,
     Service.ENTERPRISE: enterprise_proto,
-    Service.HEALTH: health_proto,
+    Service.LICENSE: license_proto,
     Service.PFS: pfs_proto,
     Service.PPS: pps_proto,
     Service.TRANSACTION: transaction_proto,

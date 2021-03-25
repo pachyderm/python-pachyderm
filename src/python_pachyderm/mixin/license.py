@@ -15,7 +15,7 @@ class LicenseMixin:
         primarily used for testing), and is only applied if it's earlier than
         the signed expiration time in `activation_code`.
         """
-        return self._req(Service.LICENSE, "Activate", activation_code=activation_code, expires=expires).info
+        return self._req(Service.LICENSE, "Activate", activation_code=activation_code, expires=expires)
 
     def add_cluster(self, cluster_id, address, secret=None):
         """
@@ -57,7 +57,7 @@ class LicenseMixin:
         """
         return self._req(Service.LICENSE, "ListClusters")
 
-   def delete_all(self):
+    def delete_all(self):
         """
         Remove all clusters and deactivate the license service.
         """
