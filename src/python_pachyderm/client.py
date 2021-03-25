@@ -8,6 +8,7 @@ from .mixin.auth import AuthMixin
 from .mixin.debug import DebugMixin
 from .mixin.enterprise import EnterpriseMixin
 from .mixin.health import HealthMixin
+from .mixin.license import LicenseMixin
 from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
@@ -43,6 +44,7 @@ class Client(
     DebugMixin,
     EnterpriseMixin,
     HealthMixin,
+    LicenseMixin,
     PFSMixin,
     PPSMixin,
     TransactionMixin,

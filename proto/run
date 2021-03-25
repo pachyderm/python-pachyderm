@@ -2,7 +2,7 @@
 
 tar xf /dev/stdin
 
-OUTDIR=src/python_pachyderm/proto
+OUTDIR=src/python_pachyderm/
 mkdir -p $OUTDIR
 
 for i in $(find ./proto/pachyderm/src -name "*.proto"); do \
@@ -18,8 +18,8 @@ for i in $(find ./proto/pachyderm/src -name "*.proto" | grep -v "proto/pachyderm
     perl -pi.bak -e 's/import "((?!google).*)"/import "src\/$1"/' $i
 done
 
-# skip pkg because protos in there aren't part of the public API
-for i in $(find ./proto/pachyderm/src -name "*.proto" | grep -v "proto/pachyderm/src/internal"); do \
+# skip pkg and server because protos in there aren't part of the public API
+for i in $(find ./proto/pachyderm/src -name "*.proto" | grep -v "proto/pachyderm/src/internal" | grep -v 'proto/pachyderm/src/server'); do \
     python3 -m grpc_tools.protoc -I./proto/pachyderm --python_out=$OUTDIR --grpc_python_out=$OUTDIR ${i}; \
 done
 

@@ -12,16 +12,7 @@ class EnterpriseMixin:
         * `cluster_id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         """
-<<<<<<< HEAD
-        return self._req(
-            Service.ENTERPRISE,
-            "Activate",
-            activation_code=activation_code,
-            expires=expires,
-        ).info
-=======
-        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=cluster_id, secret=secret).info
->>>>>>> 586aa52 (Update enterprise service mixin)
+        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=cluster_id, secret=secret)
 
     def get_enterprise_state(self):
         """
