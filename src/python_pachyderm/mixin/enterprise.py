@@ -2,20 +2,17 @@ from python_pachyderm.service import Service
 
 
 class EnterpriseMixin:
-    def activate_enterprise(self, activation_code, expires=None):
+    def activate_enterprise(self, license_server, cluster_id, secret):
         """
-        Activates enterprise. Returns a `TokenInfo` object.
+        Activates enterprise by registering with a license server. Returns a `TokenInfo` object.
 
         Params:
 
-        * `activation_code`: A string specifying a Pachyderm enterprise
-        activation code. New users can obtain trial activation codes.
-        * `expires`: An optional `Timestamp` object indicating when this
-        activation code will expire. This should not generally be set (it's
-        primarily used for testing), and is only applied if it's earlier than
-        the signed expiration time in `activation_code`.
+        * `license_server`: The Pachyderm Enterprise Server to register with.
+        * `cluster_id`: The unique ID for this cluster.
+        * `secret`: The secret for registering this cluster.
         """
-        return self._req(Service.ENTERPRISE, "Activate", activation_code=activation_code, expires=expires).info
+        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=cluster_id, secret=secret).info
 
     def get_enterprise_state(self):
         """
