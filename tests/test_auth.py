@@ -4,6 +4,7 @@
 
 import os
 from contextlib import contextmanager
+from time import sleep
 
 import pytest
 
@@ -16,7 +17,7 @@ def sandbox():
     client = python_pachyderm.Client()
     client.activate_enterprise(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
     root_auth_token = None
-    
+
     try:
         root_auth_token = client.activate_auth("robot:root")
         client.auth_token = root_auth_token
@@ -44,8 +45,17 @@ def test_admins():
         users = client.get_admins()
         assert users == ["robot:root"]
         client.modify_admins(add=["robot:someuser"])
-        users = client.get_admins()
-        assert set(users) == set(["robot:root", "robot:someuser"])
+
+        # Retry this check three times, in case admin cache is slow
+        expected = set(["robot:root", "robot:someuser"])
+        for i in range(3):
+            users = client.get_admins()
+            if set(users) == expected:
+                return # success
+            sleep(3)
+        print("expected admins {} but got {}".format(expected, set(users)))
+        raise
+
 
 @util.skip_if_no_enterprise()
 def test_one_time_password():
