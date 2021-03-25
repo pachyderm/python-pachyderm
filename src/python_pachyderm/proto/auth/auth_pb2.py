@@ -387,13 +387,6 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='root_token', full_name='auth.ActivateRequest.root_token', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -542,20 +535,6 @@ _OIDCCONFIG = _descriptor.Descriptor(
     _descriptor.FieldDescriptor(
       name='localhost_issuer', full_name='auth.OIDCConfig.localhost_issuer', index=6,
       number=7, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='additional_scopes', full_name='auth.IDProvider.OIDCOptions.additional_scopes', index=4,
-      number=5, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='ignore_email_verified', full_name='auth.IDProvider.OIDCOptions.ignore_email_verified', index=5,
-      number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -2619,41 +2598,6 @@ RestoreAuthTokenResponse = _reflection.GeneratedProtocolMessageType('RestoreAuth
   })
 _sym_db.RegisterMessage(RestoreAuthTokenResponse)
 
-HashedAuthToken = _reflection.GeneratedProtocolMessageType('HashedAuthToken', (_message.Message,), {
-  'DESCRIPTOR' : _HASHEDAUTHTOKEN,
-  '__module__' : 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.HashedAuthToken)
-  })
-_sym_db.RegisterMessage(HashedAuthToken)
-
-ExtractAuthTokensRequest = _reflection.GeneratedProtocolMessageType('ExtractAuthTokensRequest', (_message.Message,), {
-  'DESCRIPTOR' : _EXTRACTAUTHTOKENSREQUEST,
-  '__module__' : 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ExtractAuthTokensRequest)
-  })
-_sym_db.RegisterMessage(ExtractAuthTokensRequest)
-
-ExtractAuthTokensResponse = _reflection.GeneratedProtocolMessageType('ExtractAuthTokensResponse', (_message.Message,), {
-  'DESCRIPTOR' : _EXTRACTAUTHTOKENSRESPONSE,
-  '__module__' : 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ExtractAuthTokensResponse)
-  })
-_sym_db.RegisterMessage(ExtractAuthTokensResponse)
-
-RestoreAuthTokenRequest = _reflection.GeneratedProtocolMessageType('RestoreAuthTokenRequest', (_message.Message,), {
-  'DESCRIPTOR' : _RESTOREAUTHTOKENREQUEST,
-  '__module__' : 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RestoreAuthTokenRequest)
-  })
-_sym_db.RegisterMessage(RestoreAuthTokenRequest)
-
-RestoreAuthTokenResponse = _reflection.GeneratedProtocolMessageType('RestoreAuthTokenResponse', (_message.Message,), {
-  'DESCRIPTOR' : _RESTOREAUTHTOKENRESPONSE,
-  '__module__' : 'client.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RestoreAuthTokenResponse)
-  })
-_sym_db.RegisterMessage(RestoreAuthTokenResponse)
-
 
 DESCRIPTOR._options = None
 _ROLES_ROLESENTRY._options = None
@@ -2845,24 +2789,6 @@ _API = _descriptor.ServiceDescriptor(
     name='RestoreAuthToken',
     full_name='auth.API.RestoreAuthToken',
     index=19,
-    containing_service=None,
-    input_type=_RESTOREAUTHTOKENREQUEST,
-    output_type=_RESTOREAUTHTOKENRESPONSE,
-    serialized_options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ExtractAuthTokens',
-    full_name='auth.API.ExtractAuthTokens',
-    index=24,
-    containing_service=None,
-    input_type=_EXTRACTAUTHTOKENSREQUEST,
-    output_type=_EXTRACTAUTHTOKENSRESPONSE,
-    serialized_options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='RestoreAuthToken',
-    full_name='auth.API.RestoreAuthToken',
-    index=25,
     containing_service=None,
     input_type=_RESTOREAUTHTOKENREQUEST,
     output_type=_RESTOREAUTHTOKENRESPONSE,

@@ -10,12 +10,14 @@ import pytest
 
 import python_pachyderm
 from tests import util
-
+from python_pachyderm.proto.auth import auth_pb2
 
 @contextmanager
 def sandbox():
     client = python_pachyderm.Client()
-    client.activate_enterprise(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
+    client.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
+    client.add_cluster("localhost", "localhost:650", secret="secret")
+    client.activate_enterprise("localhost:650", "localhost", "secret")
     root_auth_token = None
 
     try:
@@ -37,10 +39,10 @@ def sandbox():
 def test_auth_configuration():
     with sandbox() as client:
         config = client.get_auth_configuration()
-        client.set_auth_configuration(config)
+        client.set_auth_configuration(auth_pb2.OIDCConfig(issuer="http://localhost:658"))
 
 @util.skip_if_no_enterprise()
-def test_admins():
+def test_cluster_role_bindings():
     with sandbox() as client:
         users = client.get_admins()
         assert users == ["robot:root"]
@@ -58,12 +60,6 @@ def test_admins():
 
 
 @util.skip_if_no_enterprise()
-def test_one_time_password():
-    with sandbox() as client:
-        otp = client.get_one_time_password()
-        client.authenticate_one_time_password(otp)
-
-@util.skip_if_no_enterprise()
 def test_authorize():
     with sandbox() as client:
         assert client.authorize("foobar", python_pachyderm.Scope.READER.value)
@@ -76,7 +72,7 @@ def test_who_am_i():
         assert i.is_admin
 
 @util.skip_if_no_enterprise()
-def test_scope():
+def test_repo_role_bindings():
     with sandbox() as client:
         repo = util.create_test_repo(client, "test_scope")
         scopes = client.get_scope("robot:root", repo)
@@ -86,25 +82,9 @@ def test_scope():
         assert all(s == python_pachyderm.Scope.NONE.value for s in scopes)
 
 @util.skip_if_no_enterprise()
-def test_acl():
-    def verify_acl(client, repo):
-        acl = client.get_acl(repo)
-        assert len(acl.entries) == 1
-        assert len(acl.robot_entries) == 0
-        assert acl.entries[0].username == "robot:root"
-        assert acl.entries[0].scope == python_pachyderm.Scope.OWNER.value
-        return acl
-
+def test_robot_token():
     with sandbox() as client:
-        repo = util.create_test_repo(client, "test_acl")
-        acl = verify_acl(client, repo)
-        client.set_acl(repo, acl.entries)
-        verify_acl(client, repo)
-
-@util.skip_if_no_enterprise()
-def test_auth_token():
-    with sandbox() as client:
-        auth_token = client.get_auth_token("robot:root", ttl=30)
+        auth_token = client.get_robot_token("robot:root", ttl=30)
         assert auth_token.subject == "robot:root"
         client.extend_auth_token(auth_token.token, 60)
         client.revoke_auth_token(auth_token.token)
