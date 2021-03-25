@@ -2,11 +2,17 @@
 
 ## Unreleased
 
+## 6.1.0
+
 - Support for constructing a `Client` from a Pachyderm config file (PR #220)
 - Support for pachyderm v1.11.2 (PR #213)
     - Tweaks to debug service functions
 - Support for build-step enabled pipelines (PR #213)
 - Switched `create_python_pipeline` to use build-step enabled pipelines (PR #213)
+- Add support for authenticating with OIDC ID tokens (PR #228)
+- Clients automatically authenticate with an ID token in the PACH_PYTHON_OIDC_TOKEN env var (PR #236)
+- Add the metadata field to the response from create_pipeline (PR #234)
+- Add new_from_config to construct a client from a pachctl config file (PR #220)
 
 ## 6.0.0
 
