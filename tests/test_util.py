@@ -59,7 +59,6 @@ TEST_PIPELINE_SPEC = """
 }
 """
 
-
 def check_expected_files(client, commit, expected):
     for fi in client.walk_file(commit, "/"):
         path = fi.file.path
@@ -68,7 +67,6 @@ def check_expected_files(client, commit, expected):
 
     for path in expected:
         assert False, "expected path not found: {}".format(path)
-
 
 def test_put_files():
     client = python_pachyderm.Client()
@@ -106,77 +104,51 @@ def test_put_files():
 
     check_expected_files(client, commit, expected)
 
-
 def test_create_python_pipeline_bad_path():
     client = python_pachyderm.Client()
     repo_name = util.create_test_repo(client, "create_python_pipeline_bad_path")
 
     # create some sample data
     with client.commit(repo_name, "master") as commit:
-        client.put_file_bytes(commit, "file.dat", b"DATA")
+        client.put_file_bytes(commit, 'file.dat', b'DATA')
 
     # create a pipeline from a file that does not exist - should fail
     with pytest.raises(Exception):
         python_pachyderm.create_python_pipeline(
-            client,
-            "./foobar2000",
-            input=python_pachyderm.Input(
-                pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)
-            ),
+            client, "./foobar2000",
+            input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)),
         )
 
-
-@util.skip_if_below_pachyderm_version(1, 11, 2)
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     repo_name = util.create_test_repo(client, "create_python_pipeline")
-    pfs_input = python_pachyderm.Input(
-        pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)
-    )
+    pfs_input = python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name))
     pipeline_name = util.test_repo_name("create_python_pipeline", prefix="pipeline")
 
     # create some sample data
     with client.commit(repo_name, "master") as commit:
-        client.put_file_bytes(commit, "file.dat", b"DATA")
+        client.put_file_bytes(commit, 'file.dat', b'DATA')
 
     # convenience function for verifying expected files exist
     def check_all_expected_files(extra_source_files, extra_build_files):
         list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
 
-        check_expected_files(
-            client,
-            "{}_build/source".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/main.py",
-                    *extra_source_files,
-                ]
-            ),
-        )
+        check_expected_files(client, "{}_build/source".format(pipeline_name), set([
+            "/",
+            "/main.py",
+            *extra_source_files,
+        ]))
 
-        check_expected_files(
-            client,
-            "{}_build/build".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/run.sh",
-                    *extra_build_files,
-                ]
-            ),
-        )
+        check_expected_files(client, "{}_build/build".format(pipeline_name), set([
+            "/",
+            "/run.sh",
+            *extra_build_files,
+        ]))
 
-        check_expected_files(
-            client,
-            "{}/master".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/file.dat",
-                ]
-            ),
-        )
+        check_expected_files(client, "{}/master".format(pipeline_name), set([
+            "/",
+            "/file.dat",
+        ]))
 
     # 1) create a pipeline from a directory with a main.py and requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -186,8 +158,7 @@ def test_create_python_pipeline():
             f.write(TEST_REQUIREMENTS_SOURCE)
 
         python_pachyderm.create_python_pipeline(
-            client,
-            d,
+            client, d,
             input=pfs_input,
             pipeline_name=pipeline_name,
         )
@@ -196,8 +167,8 @@ def test_create_python_pipeline():
         ["/requirements.txt"],
         ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
     )
-    file = list(client.get_file("{}/master".format(pipeline_name), "file.dat"))
-    assert file == [b" DATA"]
+    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
+    assert file == [b' DATA']
 
     # 2) update pipeline from a directory without a requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -205,37 +176,36 @@ def test_create_python_pipeline():
             f.write(TEST_STDLIB_SOURCE.format(repo_name))
 
         python_pachyderm.create_python_pipeline(
-            client,
-            d,
+            client, d,
             input=pfs_input,
             pipeline_name=pipeline_name,
             update=True,
         )
 
     check_all_expected_files([], [])
-    file = list(client.get_file("{}/master".format(pipeline_name), "file.dat"))
-    assert file == [b"DATA"]
-
+    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
+    assert file == [b'DATA']
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
     check_pipeline_spec(req)
 
-
 def test_parse_dict_pipeline_spec():
     req = python_pachyderm.parse_dict_pipeline_spec(json.loads(TEST_PIPELINE_SPEC))
     check_pipeline_spec(req)
-
 
 def check_pipeline_spec(req):
     assert req == python_pachyderm.CreatePipelineRequest(
         pipeline=python_pachyderm.Pipeline(name="foobar"),
         description="A pipeline that performs image edge detection by using the OpenCV library.",
         input=python_pachyderm.Input(
-            pfs=python_pachyderm.PFSInput(glob="/*", repo="images"),
+            pfs=python_pachyderm.PFSInput(
+                glob="/*",
+                repo="images"
+            ),
         ),
         transform=python_pachyderm.Transform(
             cmd=["python3", "/edges.py"],
             image="pachyderm/opencv",
-        ),
+        )
     )
