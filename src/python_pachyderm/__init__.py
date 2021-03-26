@@ -3,7 +3,7 @@ import importlib as _importlib
 import enum as _enum
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
 
-from .mixin.pfs import PFSFile, PutFileClient
+from .mixin.pfs import PFSFile, ModifyFileClient
 from .client import Client, ConfigError, BadClusterDeploymentID
 from .spout import SpoutManager, SpoutCommit
 from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
@@ -18,7 +18,7 @@ __all__ = [
     "put_files",
     "create_python_pipeline",
     "PFSFile",
-    "PutFileClient",
+    "ModifyFileClient",
     "parse_json_pipeline_spec",
     "parse_dict_pipeline_spec",
     "ConfigError",
