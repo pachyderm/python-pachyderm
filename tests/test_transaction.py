@@ -5,10 +5,8 @@
 import pytest
 
 import python_pachyderm
-from tests import util
 
 
-@util.skip_if_below_pachyderm_version(1, 9, 10)
 def test_batch_transaction():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo()) + 3
@@ -32,7 +30,6 @@ def test_batch_transaction():
     assert len(client.list_repo()) == expected_repo_count
 
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo()) + 2
@@ -50,7 +47,6 @@ def test_transaction_context_mgr():
     assert len(client.list_transaction()) == 0
     assert len(client.list_repo()) == expected_repo_count
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_nested():
     client = python_pachyderm.Client()
     
@@ -64,7 +60,6 @@ def test_transaction_context_mgr_nested():
 
         assert client.transaction_id == old_transaction_id
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_exception():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo())
@@ -78,7 +73,6 @@ def test_transaction_context_mgr_exception():
     assert len(client.list_transaction()) == 0
     assert len(client.list_repo()) == expected_repo_count
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_delete_transaction():
     client = python_pachyderm.Client()
     expected_repo_count = len(client.list_repo())
@@ -97,7 +91,6 @@ def test_delete_transaction():
         # re-deleting should cause an error
         client.delete_transaction(transaction)
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_delete_all_transactions():
     client = python_pachyderm.Client()
     client.start_transaction()

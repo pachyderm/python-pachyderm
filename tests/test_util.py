@@ -119,7 +119,6 @@ def test_create_python_pipeline_bad_path():
             input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)),
         )
 
-@util.skip_if_below_pachyderm_version(1, 11, 2)
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     repo_name = util.create_test_repo(client, "create_python_pipeline")
