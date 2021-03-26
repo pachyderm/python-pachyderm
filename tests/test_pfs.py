@@ -468,7 +468,6 @@ def test_inspect_branch():
     branch = client.inspect_branch(repo_name, "foobar")
     assert branch.branch.name == "foobar"
 
-@util.skip_if_below_pachyderm_version(1, 9, 7)
 def test_fsck():
     client = python_pachyderm.Client()
     assert len(list(client.fsck())) == 0
