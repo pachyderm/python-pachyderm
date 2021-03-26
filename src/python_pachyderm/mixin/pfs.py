@@ -91,8 +91,7 @@ class PFSMixin:
         * `update`: Whether to update if the repo already exists.
         """
         return self._req(
-            Service.PFS,
-            "CreateRepo",
+            Service.PFS, "CreateRepo",
             repo=pfs_proto.Repo(name=repo_name),
             description=description,
             update=update,
@@ -106,9 +105,7 @@ class PFSMixin:
 
         * `repo_name`: Name of the repo.
         """
-        return self._req(
-            Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name)
-        )
+        return self._req(Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name))
 
     def list_repo(self):
         """
@@ -116,7 +113,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "ListRepo").repo_info
 
-    def delete_repo(self, repo_name, force=None, split_transaction=None):
+    def delete_repo(self, repo_name, force=None):
         """
         Deletes a repo and reclaims the storage space it was using.
 
@@ -125,19 +122,10 @@ class PFSMixin:
         * `repo_name`: The name of the repo.
         * `force`: If set to true, the repo will be removed regardless of
           errors. This argument should be used with care.
-        * `split_transaction`: An optional bool that controls whether Pachyderm
-          attempts to delete the entire repo in a single database transaction.
-          Setting this to `True` can work around certain Pachyderm errors, but,
-          if set, the `delete_repo` call may need to be retried.
         """
-        return self._req(
-            Service.PFS,
-            "DeleteRepo",
-            repo=pfs_proto.Repo(name=repo_name),
-            force=force,
-            all=False,
-            split_transaction=split_transaction,
-        )
+        return self._req(Service.PFS, "DeleteRepo",
+                         repo=pfs_proto.Repo(name=repo_name), force=force,
+                         all=False)
 
     def delete_all_repos(self, force=None):
         """
@@ -150,12 +138,10 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "DeleteRepo", force=force, all=True)
 
-    def start_commit(
-        self, repo_name, branch=None, parent=None, description=None, provenance=None
-    ):
+    def start_commit(self, repo_name, branch=None, parent=None, description=None, provenance=None):
         """
         Begins the process of committing data to a Repo. Once started you can
-        write to the Commit with PutFile and when all the data has been
+        write to the Commit with ModifyFile and when all the data has been
         written you must finish the Commit with FinishCommit. NOTE, data is
         not persisted until FinishCommit is called. A Commit object is
         returned.
@@ -178,32 +164,18 @@ class PFSMixin:
         specifying the commit provenance.
         """
         return self._req(
-            Service.PFS,
-            "StartCommit",
+            Service.PFS, "StartCommit",
             parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
             branch=branch,
             description=description,
             provenance=provenance,
         )
 
-<<<<<<< HEAD
-    def finish_commit(
-        self,
-        commit,
-        description=None,
-        input_tree_object_hash=None,
-        tree_object_hashes=None,
-        datum_object_hash=None,
-        size_bytes=None,
-        empty=None,
-    ):
-=======
     def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
->>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
-        future attempts to write to it with PutFile will error.
+        future attempts to write to it with ModifyFile will error.
 
         Params:
 
@@ -216,22 +188,9 @@ class PFSMixin:
         be left nil.
         """
         return self._req(
-            Service.PFS,
-            "FinishCommit",
+            Service.PFS, "FinishCommit",
             commit=commit_from(commit),
             description=description,
-<<<<<<< HEAD
-            tree=pfs_proto.Object(hash=input_tree_object_hash)
-            if input_tree_object_hash is not None
-            else None,
-            trees=[pfs_proto.Object(hash=h) for h in tree_object_hashes]
-            if tree_object_hashes is not None
-            else None,
-            datums=pfs_proto.Object(hash=datum_object_hash)
-            if datum_object_hash is not None
-            else None,
-=======
->>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
             size_bytes=size_bytes,
             empty=empty,
         )
@@ -273,16 +232,9 @@ class PFSMixin:
         * An optional int that causes this method to block until the commit is
         in the desired commit state. See the `CommitState` enum.
         """
-        return self._req(
-            Service.PFS,
-            "InspectCommit",
-            commit=commit_from(commit),
-            block_state=block_state,
-        )
+        return self._req(Service.PFS, "InspectCommit", commit=commit_from(commit), block_state=block_state)
 
-    def list_commit(
-        self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
-    ):
+    def list_commit(self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None):
         """
         Lists commits. Yields `CommitInfo` objects.
 
@@ -298,30 +250,12 @@ class PFSMixin:
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
         """
-        req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
-        )
+        req = pfs_proto.ListCommitRequest(repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse)
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
-<<<<<<< HEAD
-            getattr(req, "from").CopyFrom(commit_from(from_commit))
-        return self._req(Service.PFS, "ListCommitStream", req=req)
-
-    def delete_commit(self, commit):
-        """
-        Deletes a commit.
-
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        """
-        return self._req(Service.PFS, "DeleteCommit", commit=commit_from(commit))
-=======
             getattr(req, 'from').CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommit", req=req)
->>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
 
     def flush_commit(self, commits, repos=None):
         """
@@ -346,17 +280,12 @@ class PFSMixin:
         specified, only commits within these repos will be flushed.
         """
         return self._req(
-            Service.PFS,
-            "FlushCommit",
+            Service.PFS, "FlushCommit",
             commits=[commit_from(c) for c in commits],
-            to_repos=[pfs_proto.Repo(name=r) for r in repos]
-            if repos is not None
-            else None,
+            to_repos=[pfs_proto.Repo(name=r) for r in repos] if repos is not None else None,
         )
 
-    def subscribe_commit(
-        self, repo_name, branch, from_commit_id=None, state=None, prov=None
-    ):
+    def subscribe_commit(self, repo_name, branch, from_commit_id=None, state=None, prov=None):
         """
         Yields `CommitInfo` objects as commits occur.
 
@@ -370,18 +299,13 @@ class PFSMixin:
         * `prov`: An optional `CommitProvenance` object.
         """
         repo = pfs_proto.Repo(name=repo_name)
-        req = pfs_proto.SubscribeCommitRequest(
-            repo=repo, branch=branch, state=state, prov=prov
-        )
+        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state, prov=prov)
         if from_commit_id is not None:
-            getattr(req, "from").CopyFrom(
-                pfs_proto.Commit(repo=repo, id=from_commit_id)
-            )
+            getattr(req, 'from').CopyFrom(pfs_proto.Commit(repo=repo, id=from_commit_id))
         return self._req(Service.PFS, "SubscribeCommit", req=req)
 
-    def create_branch(
-        self, repo_name, branch_name, commit=None, provenance=None, trigger=None
-    ):
+    def create_branch(self, repo_name, branch_name, commit=None,
+                      provenance=None, trigger=None):
         """
         Creates a new branch.
 
@@ -397,14 +321,10 @@ class PFSMixin:
           `branch_name` is moved.
         """
         return self._req(
-            Service.PFS,
-            "CreateBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
-            ),
+            Service.PFS, "CreateBranch",
+            branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
             head=commit_from(commit) if commit is not None else None,
-            provenance=provenance,
-            trigger=trigger,
+            provenance=provenance, trigger=trigger,
         )
 
     def inspect_branch(self, repo_name, branch_name):
@@ -412,11 +332,8 @@ class PFSMixin:
         Inspects a branch. Returns a `BranchInfo` object.
         """
         return self._req(
-            Service.PFS,
-            "InspectBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
-            ),
+            Service.PFS, "InspectBranch",
+            branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
         )
 
     def list_branch(self, repo_name, reverse=None):
@@ -428,12 +345,7 @@ class PFSMixin:
 
         * `repo_name`: A string specifying the repo name.
         """
-        return self._req(
-            Service.PFS,
-            "ListBranch",
-            repo=pfs_proto.Repo(name=repo_name),
-            reverse=reverse,
-        ).branch_info
+        return self._req(Service.PFS, "ListBranch", repo=pfs_proto.Repo(name=repo_name), reverse=reverse).branch_info
 
     def delete_branch(self, repo_name, branch_name, force=None):
         """
@@ -448,36 +360,24 @@ class PFSMixin:
         * `force`: A bool specifying whether to force the branch deletion.
         """
         return self._req(
-            Service.PFS,
-            "DeleteBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
-            ),
+            Service.PFS, "DeleteBranch",
+            branch=pfs_proto.Branch(repo=pfs_proto.Repo(name=repo_name), name=branch_name),
             force=force,
         )
 
     @contextmanager
     def put_file_client(self):
         """
-        A context manager that gives a `PutFileClient`. When the context
-        manager exits, any operations enqueued from the `PutFileClient` are
-        executed in a single, atomic `PutFile` call.
+        A context manager that gives a `ModifyFileClient`. When the context
+        manager exits, any operations enqueued from the `ModifyFileClient` are
+        executed in a single, atomic `ModifyFile` call.
         """
-        pfc = PutFileClient()
+        pfc = ModifyFileClient()
         yield pfc
-        self._req(Service.PFS, "PutFile", req=pfc._reqs())
+        self._req(Service.PFS, "ModifyFile", req=pfc._reqs())
 
-    def put_file_bytes(
-        self,
-        commit,
-        path,
-        value,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
+                       target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a file-like object, bytestring, or iterator
         of bytestrings.
@@ -507,60 +407,28 @@ class PFSMixin:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        if isinstance(value, collections.abc.Iterable) and not isinstance(
-            value, (str, bytes)
-        ):
-            warnings.warn(
-                "'put_file_bytes' with an iterable 'value' is deprecated, use file-like objects or bytestrings instead",
-                DeprecationWarning,
-            )
-            reqs = put_file_from_iterable_reqs(
-                value,
-                file=pfs_proto.File(commit=commit_from(commit), path=path),
-                delimiter=delimiter,
-                target_file_datums=target_file_datums,
-                target_file_bytes=target_file_bytes,
-                overwrite_index=overwrite_index,
-                header_records=header_records,
-            )
-            return self._req(Service.PFS, "PutFile", req=reqs)
-
         with self.put_file_client() as pfc:
             if hasattr(value, "read"):
                 return pfc.put_file_from_fileobj(
-                    commit,
-                    path,
-                    value,
-                    delimiter=delimiter,
-                    target_file_datums=target_file_datums,
-                    target_file_bytes=target_file_bytes,
-                    overwrite_index=overwrite_index,
-                    header_records=header_records,
+                    commit, path, value,
+                    #delimiter=delimiter,
+                    #target_file_datums=target_file_datums,
+                    #target_file_bytes=target_file_bytes,
+                    #overwrite_index=overwrite_index,
+                    #header_records=header_records,
                 )
             else:
                 return pfc.put_file_from_bytes(
-                    commit,
-                    path,
-                    value,
-                    delimiter=delimiter,
-                    target_file_datums=target_file_datums,
-                    target_file_bytes=target_file_bytes,
-                    overwrite_index=overwrite_index,
-                    header_records=header_records,
+                    commit, path, value,
+                    #delimiter=delimiter,
+                    #target_file_datums=target_file_datums,
+                    #target_file_bytes=target_file_bytes,
+                    #overwrite_index=overwrite_index,
+                    #header_records=header_records,
                 )
 
-    def put_file_url(
-        self,
-        commit,
-        path,
-        url,
-        delimiter=None,
-        recursive=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
+                     target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
@@ -593,20 +461,16 @@ class PFSMixin:
 
         with self.put_file_client() as pfc:
             pfc.put_file_from_url(
-                commit,
-                path,
-                url,
-                delimiter=delimiter,
+                commit, path, url,
+                #delimiter=delimiter,
                 recursive=recursive,
-                target_file_datums=target_file_datums,
-                target_file_bytes=target_file_bytes,
-                overwrite_index=overwrite_index,
-                header_records=header_records,
+                #target_file_datums=target_file_datums,
+                #target_file_bytes=target_file_bytes,
+                #overwrite_index=overwrite_index,
+                #header_records=header_records,
             )
 
-    def copy_file(
-        self, source_commit, source_path, dest_commit, dest_path, overwrite=None
-    ):
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
         """
         Efficiently copies files already in PFS. Note that the destination
         repo cannot be an output repo, or the copy operation will (as of
@@ -624,8 +488,7 @@ class PFSMixin:
         destination file if it already exists.
         """
         return self._req(
-            Service.PFS,
-            "CopyFile",
+            Service.PFS, "CopyFile",
             src=pfs_proto.File(commit=commit_from(source_commit), path=source_path),
             dst=pfs_proto.File(commit=commit_from(dest_commit), path=dest_path),
             overwrite=overwrite,
@@ -649,11 +512,10 @@ class PFSMixin:
         data will be returned.
         """
         res = self._req(
-            Service.PFS,
-            "GetFile",
+            Service.PFS, "GetFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path),
-            offset_bytes=offset_bytes,
-            size_bytes=size_bytes,
+            #offset_bytes=offset_bytes,
+            #size_bytes=size_bytes,
         )
         return PFSFile(res)
 
@@ -667,11 +529,7 @@ class PFSMixin:
         commit.
         * `path`: A string specifying the path to the file.
         """
-        return self._req(
-            Service.PFS,
-            "InspectFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-        )
+        return self._req(Service.PFS, "InspectFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
 
     def list_file(self, commit, path, history=None, include_contents=None):
         """
@@ -692,14 +550,9 @@ class PFSMixin:
         included.
         """
         return self._req(
-<<<<<<< HEAD
-            Service.PFS,
-            "ListFileStream",
-=======
             Service.PFS, "ListFile",
->>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
             file=pfs_proto.File(commit=commit_from(commit), path=path),
-            history=history,
+            #history=history,
             full=include_contents,
         )
 
@@ -714,11 +567,7 @@ class PFSMixin:
         commit.
         * `path`: The path to the directory.
         """
-        return self._req(
-            Service.PFS,
-            "WalkFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-        )
+        return self._req(Service.PFS, "WalkFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
 
     def glob_file(self, commit, pattern):
         """
@@ -730,13 +579,7 @@ class PFSMixin:
         commit.
         * `pattern`: A string representing a glob pattern.
         """
-<<<<<<< HEAD
-        return self._req(
-            Service.PFS, "GlobFileStream", commit=commit_from(commit), pattern=pattern
-        )
-=======
         return self._req(Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern)
->>>>>>> e474792 (Rename and remove PFS RPCs that have changed)
 
     def delete_file(self, commit, path):
         """
@@ -751,11 +594,8 @@ class PFSMixin:
         commit.
         * `path`: The path to the file.
         """
-        return self._req(
-            Service.PFS,
-            "DeleteFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-        )
+        with self.put_file_client() as pfc:
+            return pfc.delete_file(commit_from(commit), path)
 
     def fsck(self, fix=None):
         """
@@ -763,9 +603,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "Fsck", fix=fix)
 
-    def diff_file(
-        self, new_commit, new_path, old_commit=None, old_path=None, shallow=None
-    ):
+    def diff_file(self, new_commit, new_path, old_commit=None, old_path=None, shallow=None):
         """
         Diffs two files. If `old_commit` or `old_path` are not specified, the
         same path in the parent of the file specified by `new_commit` and
@@ -788,8 +626,7 @@ class PFSMixin:
             old_file = None
 
         return self._req(
-            Service.PFS,
-            "DiffFile",
+            Service.PFS, "DiffFile",
             new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
             old_file=old_file,
             shallow=shallow,
@@ -807,7 +644,7 @@ class PFSMixin:
 
         * `fileset_id`: A string identifying the fileset.
         """
-        raise NotImplementedError("temporary filesets are internal-use-only")
+        raise NotImplementedError('temporary filesets are internal-use-only')
 
     def renew_tmp_file_set(self, fileset_id, ttl_seconds):
         """
@@ -823,12 +660,12 @@ class PFSMixin:
         * `ttl_seconds`: A int determining the number of seconds to keep alive
         the temporary fileset
         """
-        raise NotImplementedError("temporary filesets are internal-use-only")
+        raise NotImplementedError('temporary filesets are internal-use-only')
 
 
-class PutFileClient:
+class ModifyFileClient:
     """
-    `PutFileClient` puts or deletes PFS files atomically.
+    `ModifyFileClient` puts or deletes PFS files atomically.
     """
 
     def __init__(self):
@@ -836,19 +673,11 @@ class PutFileClient:
 
     def _reqs(self):
         for op in self._ops:
-            yield from op.reqs()
+            for r in op.reqs():
+                yield r 
 
-    def put_file_from_filepath(
-        self,
-        commit,
-        pfs_path,
-        local_path,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_from_filepath(self, commit, pfs_path, local_path, delimiter=None, target_file_datums=None,
+                               target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a local path at a specified path. This will
         lazily open files, which will prevent too many files from being
@@ -879,32 +708,17 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(
-            AtomicPutFilepathOp(
-                commit,
-                pfs_path,
-                local_path,
-                delimiter=delimiter,
-                target_file_datums=target_file_datums,
-                target_file_bytes=target_file_bytes,
-                overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-                if overwrite_index is not None
-                else None,
-                header_records=header_records,
-            )
-        )
+        self._ops.append(AtomicModifyFilepathOp(
+            commit, pfs_path, local_path,
+            #delimiter=delimiter,
+            #target_file_datums=target_file_datums,
+            #target_file_bytes=target_file_bytes,
+            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
+            #header_records=header_records,
+        ))
 
-    def put_file_from_fileobj(
-        self,
-        commit,
-        path,
-        value,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_from_fileobj(self, commit, path, value, delimiter=None, target_file_datums=None,
+                              target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a file-like object.
 
@@ -932,32 +746,17 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(
-            AtomicPutFileobjOp(
-                commit,
-                path,
-                value,
-                delimiter=delimiter,
-                target_file_datums=target_file_datums,
-                target_file_bytes=target_file_bytes,
-                overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-                if overwrite_index is not None
-                else None,
-                header_records=header_records,
-            )
-        )
+        self._ops.append(AtomicModifyFileobjOp(
+            commit, path, value,
+            #delimiter=delimiter,
+            #target_file_datums=target_file_datums,
+            #target_file_bytes=target_file_bytes,
+            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
+            #header_records=header_records,
+        ))
 
-    def put_file_from_bytes(
-        self,
-        commit,
-        path,
-        value,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_from_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
+                            target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a bytestring.
 
@@ -986,28 +785,16 @@ class PutFileClient:
         converted to a header and applied to all file shards.
         """
         self.put_file_from_fileobj(
-            commit,
-            path,
-            io.BytesIO(value),
-            delimiter=delimiter,
-            target_file_datums=target_file_datums,
-            target_file_bytes=target_file_bytes,
-            overwrite_index=overwrite_index,
-            header_records=header_records,
+            commit, path, io.BytesIO(value),
+            #delimiter=delimiter,
+            #target_file_datums=target_file_datums,
+            #target_file_bytes=target_file_bytes,
+            #overwrite_index=overwrite_index,
+            #header_records=header_records,
         )
 
-    def put_file_from_url(
-        self,
-        commit,
-        path,
-        url,
-        delimiter=None,
-        recursive=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        overwrite_index=None,
-        header_records=None,
-    ):
+    def put_file_from_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
+                          target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
@@ -1037,21 +824,15 @@ class PutFileClient:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        self._ops.append(
-            AtomicOp(
-                commit,
-                path,
-                url=url,
-                delimiter=delimiter,
-                recursive=recursive,
-                target_file_datums=target_file_datums,
-                target_file_bytes=target_file_bytes,
-                overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-                if overwrite_index is not None
-                else None,
-                header_records=header_records,
-            )
-        )
+        self._ops.append(AtomicModifyFileURLOp(
+            commit, path, url,
+            recursive=recursive,
+            #delimiter=delimiter,
+            #target_file_datums=target_file_datums,
+            #target_file_bytes=target_file_bytes,
+            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
+            #header_records=header_records,
+        ))
 
     def delete_file(self, commit, path):
         """
@@ -1063,63 +844,76 @@ class PutFileClient:
         commit.
         * `path`: The path to the file.
         """
-        self._ops.append(AtomicOp(commit, path, delete=True))
+        self._ops.append(AtomicDeleteFileOp(commit, path))
 
 
 class AtomicOp:
     """
-    Represents an operation in a `PutFile` call.
+    Represents an operation in a `ModifyFile` call.
     """
 
-    def __init__(self, commit, path, **kwargs):
-        kwargs["file"] = pfs_proto.File(commit=commit_from(commit), path=path)
-        self.kwargs = kwargs
+    def __init__(self, commit, path):
+        self.commit = commit_from(commit)
+        self.path = path
 
     def reqs(self):
         """
-        Yields one or more protobuf `PutFileRequests`, which are then enqueued
+        Yields one or more protobuf `ModifyFileRequests`, which are then enqueued
         into the request's channel.
         """
-        yield pfs_proto.PutFileRequest(**self.kwargs)
+        pass
 
 
-class AtomicPutFilepathOp(AtomicOp):
+class AtomicModifyFilepathOp(AtomicOp):
     """
-    A `PutFile` operation to put a file locally stored at a given path. This
+    A `ModifyFile` operation to put a file locally stored at a given path. This
     file is opened on-demand, which helps with minimizing the number of open
     files.
     """
 
-    def __init__(self, commit, pfs_path, local_path, **kwargs):
-        super().__init__(commit, pfs_path, **kwargs)
+    def __init__(self, commit, pfs_path, local_path):
+        super().__init__(commit, pfs_path)
         self.local_path = local_path
 
     def reqs(self):
         with open(self.local_path, "rb") as f:
-            yield from put_file_from_fileobj_reqs(f, **self.kwargs)
+            for i, chunk in enumerate(f):
+                yield put_file_req(self.commit, self.path, chunk, i==0, False)
+        yield put_file_req(self.commit, self.path, None, False, True)
 
 
-class AtomicPutFileobjOp(AtomicOp):
-    """A `PutFile` operation to put a file from a file-like object."""
+class AtomicModifyFileobjOp(AtomicOp):
+    """A `ModifyFile` operation to put a file from a file-like object."""
 
     def __init__(self, commit, path, value, **kwargs):
         super().__init__(commit, path, **kwargs)
         self.value = value
 
     def reqs(self):
-        yield from put_file_from_fileobj_reqs(self.value, **self.kwargs)
+        for i in itertools.count():
+            chunk = self.value.read(BUFFER_SIZE)
+            if len(chunk) == 0:
+                yield put_file_req(self.commit, self.path, None, False, True)
+                return
+            yield put_file_req(self.commit, self.path, chunk, i==0, False)
 
+class AtomicModifyFileURLOp(AtomicOp):
+    """A `ModifyFile` operation to put a file from a URL."""
+    def __init__(self, commit, path, url, recursive=False, **kwargs):
+        super().__init__(commit, path, **kwargs)
+        self.url = url
+        self.recursive = recursive
 
-def put_file_from_fileobj_reqs(fileish, **kwargs):
-    chunked_iter = itertools.takewhile(
-        lambda chunk: len(chunk) > 0, map(fileish.read, itertools.repeat(BUFFER_SIZE))
-    )
-    return put_file_from_iterable_reqs(chunked_iter, **kwargs)
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(commit=self.commit, append_file=pfs_proto.AppendFile(url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive)))
 
+class AtomicDeleteFileOp(AtomicOp):
+    """A `ModifyFile` operation to delete a file."""
+    def __init__(self, commit, pfs_path):
+        super().__init__(commit, pfs_path)
 
-def put_file_from_iterable_reqs(value, **kwargs):
-    for i, chunk in enumerate(itertools.chain(value, [None])):
-        if i == 0:
-            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-        elif chunk is not None:
-            yield pfs_proto.PutFileRequest(value=chunk)
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path))
+
+def put_file_req(commit, path, chunk, overwrite, eof):
+    return pfs_proto.ModifyFileRequest(commit=commit, append_file=pfs_proto.AppendFile(raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof)))
