@@ -930,15 +930,11 @@ class AtomicPutFileobjOp(AtomicOp):
         yield from put_file_from_fileobj_reqs(self.value, **self.kwargs)
 
 
-def put_file_from_fileobj_reqs(value, **kwargs):
-    def f_iter():
-        while True:
-            chunk = value.read(BUFFER_SIZE)
-            if len(chunk) > 0:
-                yield chunk
-            else:
-                break
-    return put_file_from_iterable_reqs(f_iter(), **kwargs)
+def put_file_from_fileobj_reqs(fileish, **kwargs):
+    chunked_iter = itertools.takewhile(
+        lambda chunk: len(chunk) > 0,
+        map(fileish.read, itertools.repeat(BUFFER_SIZE)))
+    return put_file_from_iterable_reqs(chunked_iter, **kwargs)
 
 
 def put_file_from_iterable_reqs(value, **kwargs):
