@@ -78,7 +78,7 @@ def test_datums():
 
     datums = list(sandbox.client.list_datum(job_id))
     assert len(datums) == 1
-    datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
+    datum = sandbox.client.inspect_datum(job_id, datums[0].datum.id)
     assert datum.state == python_pachyderm.DatumState.SUCCESS.value
 
     # Skip this check in >=1.11.0, due to a bug:
