@@ -48,7 +48,7 @@ ci-setup:
 	docker version
 	which pachctl
 	etc/kube/start-minikube.sh
-	pachctl deploy local
+	echo 'y' | pachctl deploy local
 	until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done
 	pachctl version
 
