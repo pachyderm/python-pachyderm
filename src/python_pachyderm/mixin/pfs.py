@@ -938,15 +938,8 @@ def put_file_from_fileobj_reqs(fileish, **kwargs):
 
 
 def put_file_from_iterable_reqs(value, **kwargs):
-    value = iter(value)
-    for i in itertools.count():
-        try:
-            chunk = next(value)
-        except StopIteration:
-            chunk = b''
-            return  # 'finally' block still executes--ensure at least one req.
-        finally:
-            if i == 0:
-                yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-            elif len(chunk) > 0:
-                yield pfs_proto.PutFileRequest(value=chunk)
+    for i, chunk in enumerate(itertools.chain(value, [None])):
+        if i == 0:
+            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
+        elif chunk is not None:
+            yield pfs_proto.PutFileRequest(value=chunk)
