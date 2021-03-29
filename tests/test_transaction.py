@@ -6,6 +6,8 @@ import pytest
 
 import python_pachyderm
 
+from tests import util
+
 
 def test_batch_transaction():
     client = python_pachyderm.Client()

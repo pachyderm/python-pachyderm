@@ -351,7 +351,7 @@ class PPSMixin:
                 update=update,
             )
 
-            with self.put_file_client() as pfc:
+            with self.modify_file_client() as pfc:
                 if update:
                     pfc.delete_file((build_pipeline_name, "source"), "/")
                 for root, _, filenames in os.walk(str(build_path)):
