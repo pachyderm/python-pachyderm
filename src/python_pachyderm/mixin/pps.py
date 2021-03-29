@@ -131,7 +131,7 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id=None, page_size=None, page=None, input=None):
+    def list_datum(self, job_id=None):
         """
         Lists datums. Yields `DatumInfo` objects.
 
@@ -139,17 +139,10 @@ class PPSMixin:
 
         * `job_id`: An optional int specifying the ID of a job. Exactly one of
           `job_id` (real) or `input` (hypothetical) must be set.
-        * `page_size`: An optional int specifying the size of the page.
-        * `page`: An optional int specifying the page number.
-        * `input`: An optional `Input` object. If set in lieu of `job_id`,
-          list_datum returns the datums that would be given to a hypothetical
-          job that used `input` as its input spec. Exactly one of `job_id`
-          (real) or `input` (hypothetical) must be set.
         """
         return self._req(
             Service.PPS, "ListDatum",
-            job=pps_proto.Job(id=job_id), page_size=page_size, page=page,
-            input=input
+            job=pps_proto.Job(id=job_id),
         )
 
     def restart_datum(self, job_id, data_filters=None):
@@ -471,8 +464,7 @@ class PPSMixin:
         return self._req(Service.PPS, "ListPipeline", history=history,
                          allow_incomplete=allow_incomplete, jqFilter=jqFilter)
 
-    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None,
-                        split_transaction=None):
+    def delete_pipeline(self, pipeline_name, force=None, keep_repo=None):
         """
         Deletes a pipeline.
 
@@ -481,10 +473,6 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `force`: Whether to force delete.
         * `keep_repo`: Whether to keep the repo.
-        * `split_transaction`: An optional bool that controls whether Pachyderm
-          attempts to delete the pipeline in a single database transaction.
-          Setting this to `True` can work around certain Pachyderm errors, but,
-          if set, the `delete_repo` call may need to be retried.
         """
         return self._req(
             Service.PPS,
@@ -492,7 +480,6 @@ class PPSMixin:
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             force=force,
             keep_repo=keep_repo,
-            split_transaction=split_transaction,
         )
 
     def delete_all_pipelines(self, force=None):

@@ -366,13 +366,13 @@ class PFSMixin:
         )
 
     @contextmanager
-    def put_file_client(self):
+    def modify_file_client(self, commit):
         """
         A context manager that gives a `ModifyFileClient`. When the context
         manager exits, any operations enqueued from the `ModifyFileClient` are
         executed in a single, atomic `ModifyFile` call.
         """
-        pfc = ModifyFileClient()
+        pfc = ModifyFileClient(commit)
         yield pfc
         self._req(Service.PFS, "ModifyFile", req=pfc._reqs())
 
@@ -407,10 +407,10 @@ class PFSMixin:
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
-        with self.put_file_client() as pfc:
+        with self.modify_file_client(commit) as pfc:
             if hasattr(value, "read"):
                 return pfc.put_file_from_fileobj(
-                    commit, path, value,
+                    path, value,
                     #delimiter=delimiter,
                     #target_file_datums=target_file_datums,
                     #target_file_bytes=target_file_bytes,
@@ -419,7 +419,7 @@ class PFSMixin:
                 )
             else:
                 return pfc.put_file_from_bytes(
-                    commit, path, value,
+                    path, value,
                     #delimiter=delimiter,
                     #target_file_datums=target_file_datums,
                     #target_file_bytes=target_file_bytes,
@@ -459,9 +459,9 @@ class PFSMixin:
         converted to a header and applied to all file shards.
         """
 
-        with self.put_file_client() as pfc:
+        with self.modify_file_client(commit) as pfc:
             pfc.put_file_from_url(
-                commit, path, url,
+                path, url,
                 #delimiter=delimiter,
                 recursive=recursive,
                 #target_file_datums=target_file_datums,
@@ -594,8 +594,8 @@ class PFSMixin:
         commit.
         * `path`: The path to the file.
         """
-        with self.put_file_client() as pfc:
-            return pfc.delete_file(commit_from(commit), path)
+        with self.modify_file_client(commit) as pfc:
+            return pfc.delete_file(path)
 
     def fsck(self, fix=None):
         """
@@ -668,15 +668,18 @@ class ModifyFileClient:
     `ModifyFileClient` puts or deletes PFS files atomically.
     """
 
-    def __init__(self):
+    def __init__(self, commit):
         self._ops = []
+        self.commit = commit
 
     def _reqs(self):
+        yield put_file_req(commit_from(self.commit))
         for op in self._ops:
             for r in op.reqs():
+                print(r)
                 yield r 
 
-    def put_file_from_filepath(self, commit, pfs_path, local_path, delimiter=None, target_file_datums=None,
+    def put_file_from_filepath(self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None,
                                target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a local path at a specified path. This will
@@ -686,11 +689,11 @@ class ModifyFileClient:
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
         * `pfs_path`: A string specifying the path in the repo the file(s)
         will be written to.
         * `local_path`: A string specifying the local file path.
+        * `overwrite`: Optional. When true, the existing file is replaced with 
+        new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -709,7 +712,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFilepathOp(
-            commit, pfs_path, local_path,
+            pfs_path, local_path, overwrite
             #delimiter=delimiter,
             #target_file_datums=target_file_datums,
             #target_file_bytes=target_file_bytes,
@@ -717,18 +720,18 @@ class ModifyFileClient:
             #header_records=header_records,
         ))
 
-    def put_file_from_fileobj(self, commit, path, value, delimiter=None, target_file_datums=None,
+    def put_file_from_fileobj(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
                               target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a file-like object.
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file-like object.
+        * `overwrite`: Optional. When true, the existing file is replaced with 
+        new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -747,7 +750,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileobjOp(
-            commit, path, value,
+            path, value, overwrite,
             #delimiter=delimiter,
             #target_file_datums=target_file_datums,
             #target_file_bytes=target_file_bytes,
@@ -755,18 +758,18 @@ class ModifyFileClient:
             #header_records=header_records,
         ))
 
-    def put_file_from_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
+    def put_file_from_bytes(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
                             target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Uploads a PFS file from a bytestring.
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
+        * `overwrite`: Optional. When true, the existing file is replaced with 
+        new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -785,7 +788,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self.put_file_from_fileobj(
-            commit, path, io.BytesIO(value),
+            path, io.BytesIO(value), overwrite,
             #delimiter=delimiter,
             #target_file_datums=target_file_datums,
             #target_file_bytes=target_file_bytes,
@@ -793,7 +796,7 @@ class ModifyFileClient:
             #header_records=header_records,
         )
 
-    def put_file_from_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
+    def put_file_from_url(self, path, url, overwrite=False, delimiter=None, recursive=None, target_file_datums=None,
                           target_file_bytes=None, overwrite_index=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
@@ -801,10 +804,10 @@ class ModifyFileClient:
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
+        * `overwrite`: Optional. When true, the existing file is replaced with 
+        new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -825,7 +828,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileURLOp(
-            commit, path, url,
+            path, url, overwrite,
             recursive=recursive,
             #delimiter=delimiter,
             #target_file_datums=target_file_datums,
@@ -834,7 +837,7 @@ class ModifyFileClient:
             #header_records=header_records,
         ))
 
-    def delete_file(self, commit, path):
+    def delete_file(self, path):
         """
         Deletes a file.
 
@@ -844,7 +847,7 @@ class ModifyFileClient:
         commit.
         * `path`: The path to the file.
         """
-        self._ops.append(AtomicDeleteFileOp(commit, path))
+        self._ops.append(AtomicDeleteFileOp(path))
 
 
 class AtomicOp:
@@ -852,8 +855,7 @@ class AtomicOp:
     Represents an operation in a `ModifyFile` call.
     """
 
-    def __init__(self, commit, path):
-        self.commit = commit_from(commit)
+    def __init__(self, path):
         self.path = path
 
     def reqs(self):
@@ -871,49 +873,52 @@ class AtomicModifyFilepathOp(AtomicOp):
     files.
     """
 
-    def __init__(self, commit, pfs_path, local_path):
-        super().__init__(commit, pfs_path)
+    def __init__(self, pfs_path, local_path, overwrite):
+        super().__init__(pfs_path)
         self.local_path = local_path
+        self.overwrite = overwrite
 
     def reqs(self):
         with open(self.local_path, "rb") as f:
             for i, chunk in enumerate(f):
-                yield put_file_req(self.commit, self.path, chunk, i==0, False)
-        yield put_file_req(self.commit, self.path, None, False, True)
+                yield put_file_req(path=self.path, chunk=chunk, overwrite=self.overwrite)
+        yield put_file_req(path=self.path, eof=True, overwrite=self.overwrite)
 
 
 class AtomicModifyFileobjOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a file-like object."""
 
-    def __init__(self, commit, path, value, **kwargs):
-        super().__init__(commit, path, **kwargs)
+    def __init__(self, path, value, overwrite, **kwargs):
+        super().__init__(path, **kwargs)
         self.value = value
+        self.overwrite = overwrite
 
     def reqs(self):
         for i in itertools.count():
             chunk = self.value.read(BUFFER_SIZE)
             if len(chunk) == 0:
-                yield put_file_req(self.commit, self.path, None, False, True)
+                yield put_file_req(path=self.path, overwrite=self.overwrite, eof=True)
                 return
-            yield put_file_req(self.commit, self.path, chunk, i==0, False)
+            yield put_file_req(path=self.path, chunk=chunk, overwrite=self.overwrite)
 
 class AtomicModifyFileURLOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
-    def __init__(self, commit, path, url, recursive=False, **kwargs):
-        super().__init__(commit, path, **kwargs)
+    def __init__(self, path, url, overwrite, recursive=False, **kwargs):
+        super().__init__(path, **kwargs)
         self.url = url
         self.recursive = recursive
+        self.overwrite = overwrite
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(commit=self.commit, append_file=pfs_proto.AppendFile(url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive)))
+        yield pfs_proto.ModifyFileRequest(append_file=pfs_proto.AppendFile(url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive), overwrite=self.overwrite))
 
 class AtomicDeleteFileOp(AtomicOp):
     """A `ModifyFile` operation to delete a file."""
-    def __init__(self, commit, pfs_path):
-        super().__init__(commit, pfs_path)
+    def __init__(self, pfs_path):
+        super().__init__(pfs_path)
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path))
+        yield pfs_proto.ModifyFileRequest(delete_file=pfs_proto.DeleteFile(file=self.path))
 
-def put_file_req(commit, path, chunk, overwrite, eof):
+def put_file_req(commit=None, path=None, chunk=None, overwrite=False, eof=False):
     return pfs_proto.ModifyFileRequest(commit=commit, append_file=pfs_proto.AppendFile(raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof)))
