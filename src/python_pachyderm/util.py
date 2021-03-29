@@ -54,31 +54,17 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
     `PutFileClient.put_file_from_fileobj` for details.
     """
 
-    with client.put_file_client() as pfc:
+    with client.modify_file_client(commit) as pfc:
         for root, _, filenames in os.walk(source_path):
             for filename in filenames:
                 source_filepath = os.path.join(root, filename)
-                dest_filepath = os.path.join(
-                    dest_path, os.path.relpath(source_filepath, start=source_path)
-                )
-                pfc.put_file_from_filepath(
-                    commit, dest_filepath, source_filepath, **kwargs
-                )
+                dest_filepath = os.path.join(dest_path, os.path.relpath(source_filepath, start=source_path))
+                pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
 
 
-def create_python_pipeline(
-    client,
-    path,
-    input=None,
-    pipeline_name=None,
-    image_pull_secrets=None,
-    debug=None,
-    env=None,
-    secrets=None,
-    image=None,
-    update=False,
-    **pipeline_kwargs
-):
+def create_python_pipeline(client, path, input=None, pipeline_name=None, image_pull_secrets=None,
+                           debug=None, env=None, secrets=None, image=None, update=False,
+                           **pipeline_kwargs):
     """
     Utility function for creating (or updating) a pipeline specially built for
     executing python code that is stored locally at `path`.
@@ -125,9 +111,7 @@ def create_python_pipeline(
             debug=debug,
             env=env,
             secrets=secrets,
-            build=BuildSpec(path=path, image=image)
-            if image
-            else BuildSpec(path=path, language="python"),
+            build=BuildSpec(path=path, image=image) if image else BuildSpec(path=path, language="python"),
         ),
         update=update,
         input=input,
