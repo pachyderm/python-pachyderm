@@ -167,8 +167,8 @@ def test_create_python_pipeline():
         ["/requirements.txt"],
         ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
     )
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b' DATA']
+    file = client.get_file('{}/master'.format(pipeline_name), 'file.dat')
+    assert file.read() == b' DATA'
 
     # 2) update pipeline from a directory without a requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -183,8 +183,8 @@ def test_create_python_pipeline():
         )
 
     check_all_expected_files([], [])
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b'DATA']
+    file = client.get_file('{}/master'.format(pipeline_name), 'file.dat')
+    assert file.read() == b'DATA'
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
