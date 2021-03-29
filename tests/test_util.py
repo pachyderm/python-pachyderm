@@ -93,12 +93,12 @@ def test_put_files():
         python_pachyderm.put_files(client, d, commit, "/sub")
         python_pachyderm.put_files(client, d, commit, "/sub/")
 
-    expected = set(["/", "/sub"])
+    expected = set(["/", "/sub/"])
     for i in range(5):
-        expected.add("/{}".format(i))
+        expected.add("/{}/".format(i))
         expected.add("/{}.txt".format(i))
         expected.add("/{}/{}.txt".format(i, i))
-        expected.add("/sub/{}".format(i))
+        expected.add("/sub/{}/".format(i))
         expected.add("/sub/{}.txt".format(i))
         expected.add("/sub/{}/{}.txt".format(i, i))
 

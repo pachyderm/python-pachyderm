@@ -244,7 +244,6 @@ def test_put_file_bytes_large():
 #            pfc.put_file_from_filepath("file3.dat", f.name)
 #
 #    files = list(client.list_file(commit, ''))
-#    print(files)
 #    #assert len(files) == 4
 #    assert files[0].file.path == '/file1.dat'
 #    assert files[1].file.path == '/file2.dat'
@@ -267,7 +266,6 @@ def test_put_file_atomic():
             pfc.put_file_from_filepath("file3.dat", f.name)
 
     files = list(client.list_file(commit, ''))
-    print(files)
     #assert len(files) == 4
     assert files[0].file.path == '/file1.dat'
     assert files[1].file.path == '/file2.dat'
