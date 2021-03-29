@@ -53,7 +53,7 @@ ci-setup:
 	pachctl version
 
 release:
-	git checkout master
+	git checkout v7.x
 	rm -rf build dist
 	python3 setup.py sdist
 	twine upload dist/*
@@ -62,4 +62,4 @@ lint:
 	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=80
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
-.PHONY: docker-build-proto init ci-install ci-setup release lint
+.PHONY: docs docker-build-proto init ci-install ci-setup release lint
