@@ -2,6 +2,7 @@ import io
 import warnings
 import itertools
 import collections
+import tarfile
 from contextlib import contextmanager
 
 from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
@@ -11,34 +12,14 @@ from .util import commit_from
 
 BUFFER_SIZE = 19 * 1024 * 1024
 
-
-class PFSFile:
+class FileTarstream:
     """
-    The contents of a file stored in PFS. You can treat these as either
-    file-like objects, like so:
-
-    ```
-    source_file = client.get_file("montage/master", "/montage.png")
-    with open("montage.png", "wb") as dest_file:
-        shutil.copyfileobj(source_file, dest_file)
-    ```
-
-    Or as an iterator of bytes, like so:
-
-    ```
-    source_file = client.get_file("montage/master", "/montage.png")
-    with open("montage.png", "wb") as dest_file:
-        for chunk in source_file:
-            dest_file.write(chunk)
-    ```
+    Implements a file-like interface over a GRPC byte stream, 
+    so we can use tarfile to decode the file contents.
     """
-
     def __init__(self, res):
         self.res = res
         self.buf = []
-
-    def __iter__(self):
-        return self
 
     def __next__(self):
         return next(self.res).value
@@ -73,7 +54,26 @@ class PFSFile:
             pass
 
         return b"".join(buf)
+      
 
+class PFSFile:
+    """
+    The contents of a file stored in PFS. You can treat these as file-like objects, 
+    like so:
+
+    ```
+    source_file = client.get_file("montage/master", "/montage.png")
+    with open("montage.png", "wb") as dest_file:
+        shutil.copyfileobj(source_file, dest_file)
+    ```
+    """
+
+    def __init__(self, stream):
+        f = tarfile.open(fileobj=stream, mode='r|*')
+        self._file = f.extractfile(f.next())
+
+    def read(self, size=-1):
+        return self._file.read(size)
 
 class PFSMixin:
     def create_repo(self, repo_name, description=None, update=None):
@@ -517,7 +517,7 @@ class PFSMixin:
             #offset_bytes=offset_bytes,
             #size_bytes=size_bytes,
         )
-        return PFSFile(res)
+        return PFSFile(FileTarstream(res))
 
     def inspect_file(self, commit, path):
         """
