@@ -268,14 +268,14 @@ class PPSMixin:
                 update=update,
             )
 
-            with self.modify_file_client() as pfc:
+            with self.modify_file_client((build_pipeline_name, "source")) as pfc:
                 if update:
-                    pfc.delete_file((build_pipeline_name, "source"), "/")
+                    pfc.delete_file("/")
                 for root, _, filenames in os.walk(str(build_path)):
                     for filename in filenames:
                         source_filepath = os.path.join(root, filename)
                         dest_filepath = os.path.join("/", os.path.relpath(source_filepath, start=str(build_path)))
-                        pfc.put_file_from_filepath((build_pipeline_name, "source"), dest_filepath, source_filepath)
+                        pfc.put_file_from_filepath(dest_filepath, source_filepath)
 
             input = pps_proto.Input(
                 cross=[
