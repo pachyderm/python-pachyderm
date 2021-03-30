@@ -1,12 +1,11 @@
-import warnings
 from python_pachyderm.service import Service
 
 
 class AuthMixin:
     def activate_auth(self, root_token=None):
         """
-        Activates auth. Returns the root token for the cluster, an irrevocable superuser
-        credential that should be stored securely.
+        Activates auth. Returns the root token for the cluster, an
+        irrevocable superuser credential that should be stored securely.
 
         Params:
 
@@ -48,10 +47,10 @@ class AuthMixin:
 
     def modify_role_binding(self, resource, principal, roles=None):
         """
-        Sets the roles for a given principal on a resource. 
+        Sets the roles for a given principal on a resource.
 
         Params:
-      
+
         * `resource`: The resource to grant the roles on.
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
@@ -94,7 +93,7 @@ class AuthMixin:
 
         Params:
 
-        * `resource`: The resource the user wants access to 
+        * `resource`: The resource the user wants access to
         * `permissions`: A list of permissions the user wants to test.
         """
         return self._req(Service.AUTH, "Authorize", resource=resource, permissions=permissions)
@@ -111,7 +110,8 @@ class AuthMixin:
 
         Params:
         * `robot`: The name of the robot user.
-        * `ttl`: Optional. The expiration for the token. If empty, the token does not expire.
+        * `ttl`: Optional. The expiration for the token.
+        If empty, the token does not expire.
         """
         return self._req(Service.AUTH, "GetRobotToken", robot=robot, ttl=ttl).token
 

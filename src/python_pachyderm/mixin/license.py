@@ -17,45 +17,52 @@ class LicenseMixin:
         """
         return self._req(Service.LICENSE, "Activate", activation_code=activation_code, expires=expires)
 
-    def add_cluster(self, cluster_id, address, secret=None):
+    def add_cluster(self, id, address, secret=None):
         """
         Register a cluster with the license service.
 
         Params:
 
-        * `cluster_id`: A unique ID to identify the cluster.
+        * `id`: A unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
-        * `secret`: Optional. A shared secret for the cluster to use to authenticate.
+        * `secret`: Optional. A shared secret for the cluster to use
+        to authenticate.
         If not specified, a random secret will be generated and returned.
         """
-        return self._req(Service.LICENSE, "AddCluster", id=cluster_id, address=address, secret=secret)
+        return self._req(Service.LICENSE, "AddCluster", id=id, address=address, secret=secret)
 
-    def update_cluster(self, cluster_id, address):
+    def update_cluster(self, id, address):
         """
         Update a cluster registered with the license service.
 
         Params:
 
-        * `cluster_id`: The unique ID to identify the cluster.
+        * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         """
-        return self._req(Service.LICENSE, "UpdateCluster", id=cluster_id, address=address)
+        return self._req(Service.LICENSE, "UpdateCluster", id=id, address=address)
 
-    def delete_cluster(self, cluster_id):
+    def delete_cluster(self, id):
         """
         Delete a cluster registered with the license service.
 
         Params:
 
-        * `cluster_id`: The unique ID to identify the cluster.
+        * `id`: The unique ID to identify the cluster.
         """
-        return self._req(Service.LICENSE, "DeleteCluster", id=cluster_id)
+        return self._req(Service.LICENSE, "DeleteCluster", id=id)
 
     def list_clusters(self):
         """
         List clusters registered with the license service.
         """
         return self._req(Service.LICENSE, "ListClusters")
+
+    def get_activation_code(self):
+        """
+        Returns the enterprise code used to activate the server.
+        """
+        return self._req(Service.LICENSE, "GetActivationCode")
 
     def delete_all_license(self):
         """

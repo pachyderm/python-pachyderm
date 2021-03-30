@@ -23,6 +23,8 @@ SERVICE_MIXINS = {
     Service.DEBUG: mixin.debug.DebugMixin,
     Service.ENTERPRISE: mixin.enterprise.EnterpriseMixin,
     Service.HEALTH: mixin.health.HealthMixin,
+    Service.IDENTITY: mixin.identity.IdentityMixin,
+    Service.LICENSE: mixin.license.LicenseMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
     Service.TRANSACTION: mixin.transaction.TransactionMixin,
@@ -66,22 +68,33 @@ BLACKLISTED_METHODS = {
         "build_commit",
         "put_tar",
         "get_tar",
-        # ignore storage v2 for now
-        "get_tar_conditional_v2",
-        "file_operation_v2",
-        "list_file_v2",
-        "glob_file_v2",
-        "get_tar_v2",
-        "walk_file_v2",
-        "inspect_file_v2",
-        "clear_commit_v2",
-        "diff_file_v2",
+        "activate_auth",
+        # TODO: add these new API methods
+        "renew_fileset",
+        "squash_commit",
+        "clear_commit",
+        "modify_file",
+        "add_fileset",
+        "get_fileset",
+        "create_fileset",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
         "activate_auth",
         "create_job",
         "update_job_state",
+    ],
+    Service.AUTH: [
+        "get_auth_token",
+        "extend_auth_token",
+    ],
+    Service.ENTERPRISE: [
+        # internal RPC only
+        "heartbeat",
+    ],
+    Service.LICENSE: [
+        # internal RPC only
+        "heartbeat",
     ],
 }
 
@@ -91,7 +104,7 @@ RENAMED_METHODS = {
     Service.AUTH: {
         "activate": ["activate_auth"],
         "deactivate": ["deactivate_auth"],
-        "authenticate": ["authenticate_github", "authenticate_oidc", "authenticate_one_time_password"],
+        "authenticate": ["authenticate_oidc"],
         "get_a_c_l": ["get_acl"],
         "set_a_c_l": ["set_acl"],
         "get_o_i_d_c_login": ["get_oidc_login"],
@@ -105,6 +118,23 @@ RENAMED_METHODS = {
         "activate": ["activate_enterprise"],
         "get_state": ["get_enterprise_state"],
         "deactivate": ["deactivate_enterprise"],
+    },
+    Service.LICENSE: {
+        "activate": ["activate_license"],
+        "delete_all": ["delete_all_license"],
+    },
+    Service.IDENTITY: {
+        "get_i_d_p_connector": ["get_idp_connector"],
+        "delete_i_d_p_connector": ["delete_idp_connector"],
+        "list_i_d_p_connectors": ["list_idp_connectors"],
+        "create_i_d_p_connector": ["create_idp_connector"],
+        "update_i_d_p_connector": ["update_idp_connector"],
+	"get_o_i_d_c_client": ["get_oidc_client"],
+        "delete_o_i_d_c_client": ["delete_oidc_client"],
+        "list_o_i_d_c_clients": ["list_oidc_clients"],
+        "create_o_i_d_c_client": ["create_oidc_client"],
+        "update_o_i_d_c_client": ["update_oidc_client"],
+        "delete_all": ["delete_all_identity"],
     },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
@@ -132,27 +162,7 @@ RENAMED_METHODS = {
 # * We can also specify that a method has an argument that isn't in the
 #   protos: `(None, "ignored_arg_name")`
 RENAMED_ARGS = {
-    # admin
-    "extract_pipeline": [
-        ("pipeline", "pipeline_name"),
-    ],
-    "extract": [
-        ("URL", "url"),
-    ],
-    "restore": [
-        (("op", "URL"), "requests"),
-    ],
     # auth
-    "authenticate_github": [
-        ("one_time_password", None),
-        ("oidc_state", None),
-        ("id_token", None),
-    ],
-    "authenticate_one_time_password": [
-        ("github_token", None),
-        ("oidc_state", None),
-        ("id_token", None),
-    ],
     "authenticate_oidc": [
         ("github_token", None),
         ("one_time_password", None),

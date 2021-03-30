@@ -23,6 +23,7 @@ from python_pachyderm.proto.license import license_pb2_grpc as license_grpc
 from python_pachyderm.proto.identity import identity_pb2 as identity_proto
 from python_pachyderm.proto.identity import identity_pb2_grpc as identity_grpc
 
+
 class Service(Enum):
     ADMIN = 0
     AUTH = 1
@@ -80,6 +81,7 @@ PROTO_MODULES = {
     Service.AUTH: auth_proto,
     Service.DEBUG: debug_proto,
     Service.ENTERPRISE: enterprise_proto,
+    Service.HEALTH: health_proto,
     Service.IDENTITY: identity_proto,
     Service.LICENSE: license_proto,
     Service.PFS: pfs_proto,
