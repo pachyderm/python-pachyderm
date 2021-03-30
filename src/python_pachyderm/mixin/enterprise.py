@@ -2,17 +2,18 @@ from python_pachyderm.service import Service
 
 
 class EnterpriseMixin:
-    def activate_enterprise(self, license_server, cluster_id, secret):
+    def activate_enterprise(self, license_server, id, secret):
         """
-        Activates enterprise by registering with a license server. Returns a `TokenInfo` object.
+        Activates enterprise by registering with a license server.
+        Returns a `TokenInfo` object.
 
         Params:
 
         * `license_server`: The Pachyderm Enterprise Server to register with.
-        * `cluster_id`: The unique ID for this cluster.
+        * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         """
-        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=cluster_id, secret=secret)
+        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=id, secret=secret)
 
     def get_enterprise_state(self):
         """

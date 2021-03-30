@@ -1,7 +1,5 @@
 import io
-import warnings
 import itertools
-import collections
 import tarfile
 from contextlib import contextmanager
 
@@ -12,9 +10,10 @@ from .util import commit_from
 
 BUFFER_SIZE = 19 * 1024 * 1024
 
+
 class FileTarstream:
     """
-    Implements a file-like interface over a GRPC byte stream, 
+    Implements a file-like interface over a GRPC byte stream,
     so we can use tarfile to decode the file contents.
     """
     def __init__(self, res):
@@ -54,12 +53,12 @@ class FileTarstream:
             pass
 
         return b"".join(buf)
-      
+
 
 class PFSFile:
     """
-    The contents of a file stored in PFS. You can treat these as file-like objects, 
-    like so:
+    The contents of a file stored in PFS. You can treat these as
+    file-like objects, like so:
 
     ```
     source_file = client.get_file("montage/master", "/montage.png")
@@ -74,6 +73,7 @@ class PFSFile:
 
     def read(self, size=-1):
         return self._file.read(size)
+
 
 class PFSMixin:
     def create_repo(self, repo_name, description=None, update=None):
@@ -411,20 +411,20 @@ class PFSMixin:
             if hasattr(value, "read"):
                 return pfc.put_file_from_fileobj(
                     path, value,
-                    #delimiter=delimiter,
-                    #target_file_datums=target_file_datums,
-                    #target_file_bytes=target_file_bytes,
-                    #overwrite_index=overwrite_index,
-                    #header_records=header_records,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # overwrite_index=overwrite_index,
+                    # header_records=header_records,
                 )
             else:
                 return pfc.put_file_from_bytes(
                     path, value,
-                    #delimiter=delimiter,
-                    #target_file_datums=target_file_datums,
-                    #target_file_bytes=target_file_bytes,
-                    #overwrite_index=overwrite_index,
-                    #header_records=header_records,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # overwrite_index=overwrite_index,
+                    # header_records=header_records,
                 )
 
     def put_file_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
@@ -462,15 +462,15 @@ class PFSMixin:
         with self.modify_file_client(commit) as pfc:
             pfc.put_file_from_url(
                 path, url,
-                #delimiter=delimiter,
                 recursive=recursive,
-                #target_file_datums=target_file_datums,
-                #target_file_bytes=target_file_bytes,
-                #overwrite_index=overwrite_index,
-                #header_records=header_records,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # overwrite_index=overwrite_index,
+                # header_records=header_records,
             )
 
-    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None):
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None, tag=None):
         """
         Efficiently copies files already in PFS. Note that the destination
         repo cannot be an output repo, or the copy operation will (as of
@@ -492,9 +492,10 @@ class PFSMixin:
             src=pfs_proto.File(commit=commit_from(source_commit), path=source_path),
             dst=pfs_proto.File(commit=commit_from(dest_commit), path=dest_path),
             overwrite=overwrite,
+            tag=tag,
         )
 
-    def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
+    def get_file(self, commit, path, URL=None):
         """
         Returns a `PFSFile` object, containing the contents of a file stored
         in PFS.
@@ -504,18 +505,10 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `path`: A string specifying the path of the file.
-        * `offset_bytes`: An optional int. Specifies a number of bytes that
-        should be skipped in the beginning of the file.
-        * `size_bytes`: An optional int. limits the total amount of data
-        returned, note you will get fewer bytes than size if you pass a value
-        larger than the size of the file. If size is set to 0 then all of the
-        data will be returned.
         """
         res = self._req(
             Service.PFS, "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-            #offset_bytes=offset_bytes,
-            #size_bytes=size_bytes,
+            file=pfs_proto.File(commit=commit_from(commit), path=path, url=URL),
         )
         return PFSFile(FileTarstream(res))
 
@@ -531,7 +524,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "InspectFile", file=pfs_proto.File(commit=commit_from(commit), path=path))
 
-    def list_file(self, commit, path, history=None, include_contents=None):
+    def list_file(self, commit, path, include_contents=None):
         """
         Lists the files in a directory.
 
@@ -540,20 +533,14 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `path`: The path to the directory.
-        * `history`: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
-         0: Return jobs from the current version of the pipeline or pipelines.
-         1: Return the above and jobs from the next most recent version
-         2: etc.
-        -1: Return jobs from all historical versions.
         * `include_contents`: An optional bool. If `True`, file contents are
         included.
         """
         return self._req(
             Service.PFS, "ListFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path),
-            #history=history,
             full=include_contents,
+            # history=history,
         )
 
     def walk_file(self, commit, path):
@@ -676,7 +663,7 @@ class ModifyFileClient:
         yield put_file_req(commit_from(self.commit))
         for op in self._ops:
             for r in op.reqs():
-                yield r 
+                yield r
 
     def put_file_from_filepath(self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None,
                                target_file_bytes=None, overwrite_index=None, header_records=None):
@@ -691,7 +678,7 @@ class ModifyFileClient:
         * `pfs_path`: A string specifying the path in the repo the file(s)
         will be written to.
         * `local_path`: A string specifying the local file path.
-        * `overwrite`: Optional. When true, the existing file is replaced with 
+        * `overwrite`: Optional. When true, the existing file is replaced with
         new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
@@ -712,11 +699,12 @@ class ModifyFileClient:
         """
         self._ops.append(AtomicModifyFilepathOp(
             pfs_path, local_path, overwrite
-            #delimiter=delimiter,
-            #target_file_datums=target_file_datums,
-            #target_file_bytes=target_file_bytes,
-            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
-            #header_records=header_records,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
+            #      if overwrite_index is not None else None,
+            # header_records=header_records,
         ))
 
     def put_file_from_fileobj(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
@@ -729,7 +717,7 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file-like object.
-        * `overwrite`: Optional. When true, the existing file is replaced with 
+        * `overwrite`: Optional. When true, the existing file is replaced with
         new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
@@ -750,11 +738,12 @@ class ModifyFileClient:
         """
         self._ops.append(AtomicModifyFileobjOp(
             path, value, overwrite,
-            #delimiter=delimiter,
-            #target_file_datums=target_file_datums,
-            #target_file_bytes=target_file_bytes,
-            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
-            #header_records=header_records,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
+            #     if overwrite_index is not None else None,
+            # header_records=header_records,
         ))
 
     def put_file_from_bytes(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
@@ -767,7 +756,7 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
-        * `overwrite`: Optional. When true, the existing file is replaced with 
+        * `overwrite`: Optional. When true, the existing file is replaced with
         new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
@@ -788,11 +777,11 @@ class ModifyFileClient:
         """
         self.put_file_from_fileobj(
             path, io.BytesIO(value), overwrite,
-            #delimiter=delimiter,
-            #target_file_datums=target_file_datums,
-            #target_file_bytes=target_file_bytes,
-            #overwrite_index=overwrite_index,
-            #header_records=header_records,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # overwrite_index=overwrite_index,
+            # header_records=header_records,
         )
 
     def put_file_from_url(self, path, url, overwrite=False, delimiter=None, recursive=None, target_file_datums=None,
@@ -805,7 +794,7 @@ class ModifyFileClient:
 
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `overwrite`: Optional. When true, the existing file is replaced with 
+        * `overwrite`: Optional. When true, the existing file is replaced with
         new data. When false, the new data is appended to the existing file.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
@@ -829,11 +818,12 @@ class ModifyFileClient:
         self._ops.append(AtomicModifyFileURLOp(
             path, url, overwrite,
             recursive=recursive,
-            #delimiter=delimiter,
-            #target_file_datums=target_file_datums,
-            #target_file_bytes=target_file_bytes,
-            #overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index) if overwrite_index is not None else None,
-            #header_records=header_records,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
+            #     if overwrite_index is not None else None,
+            # header_records=header_records,
         ))
 
     def delete_file(self, path):
@@ -859,8 +849,8 @@ class AtomicOp:
 
     def reqs(self):
         """
-        Yields one or more protobuf `ModifyFileRequests`, which are then enqueued
-        into the request's channel.
+        Yields one or more protobuf `ModifyFileRequests`, which are then
+        enqueued into the request's channel.
         """
         pass
 
@@ -900,6 +890,7 @@ class AtomicModifyFileobjOp(AtomicOp):
                 return
             yield put_file_req(path=self.path, chunk=chunk, overwrite=self.overwrite)
 
+
 class AtomicModifyFileURLOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
     def __init__(self, path, url, overwrite, recursive=False, **kwargs):
@@ -909,7 +900,11 @@ class AtomicModifyFileURLOp(AtomicOp):
         self.overwrite = overwrite
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(append_file=pfs_proto.AppendFile(url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive), overwrite=self.overwrite))
+        yield pfs_proto.ModifyFileRequest(append_file=pfs_proto.AppendFile(
+             url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive),
+             overwrite=self.overwrite
+        ))
+
 
 class AtomicDeleteFileOp(AtomicOp):
     """A `ModifyFile` operation to delete a file."""
@@ -919,5 +914,9 @@ class AtomicDeleteFileOp(AtomicOp):
     def reqs(self):
         yield pfs_proto.ModifyFileRequest(delete_file=pfs_proto.DeleteFile(file=self.path))
 
+
 def put_file_req(commit=None, path=None, chunk=None, overwrite=False, eof=False):
-    return pfs_proto.ModifyFileRequest(commit=commit, append_file=pfs_proto.AppendFile(raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof)))
+    return pfs_proto.ModifyFileRequest(
+        commit=commit,
+        append_file=pfs_proto.AppendFile(raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof))
+    )
