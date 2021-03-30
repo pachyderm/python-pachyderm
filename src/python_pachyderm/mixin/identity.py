@@ -1,4 +1,3 @@
-import warnings
 from python_pachyderm.service import Service
 
 
@@ -8,7 +7,7 @@ class IdentityMixin:
         Configure the embedded identity server.
 
         Params:
-        
+
         * `issuer`: The issuer for the identity server.
         """
         return self._req(Service.IDENTITY, "SetIdentityServerConfig", config=config)
@@ -24,6 +23,12 @@ class IdentityMixin:
         Create an IDP connector in the identity server.
         """
         return self._req(Service.IDENTITY, "CreateIDPConnector", connector=connector)
+
+    def list_idp_connectors(self):
+        """
+        List IDP connectors in the identity server.
+        """
+        return self._req(Service.IDENTITY, "ListIDPConnectors")
 
     def update_idp_connector(self, connector):
         """
@@ -66,6 +71,12 @@ class IdentityMixin:
         Delete an OIDC client in the identity server.
         """
         return self._req(Service.IDENTITY, "DeleteOIDCClient", id=id)
+
+    def list_oidc_clients(self):
+        """
+        List OIDC clients in the identity server.
+        """
+        return self._req(Service.IDENTITY, "ListOIDCClients")
 
     def delete_all_identity(self):
         """

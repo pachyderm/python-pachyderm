@@ -23,6 +23,8 @@ SERVICE_MIXINS = {
     Service.DEBUG: mixin.debug.DebugMixin,
     Service.ENTERPRISE: mixin.enterprise.EnterpriseMixin,
     Service.HEALTH: mixin.health.HealthMixin,
+    Service.IDENTITY: mixin.identity.IdentityMixin,
+    Service.LICENSE: mixin.license.LicenseMixin,
     Service.PFS: mixin.pfs.PFSMixin,
     Service.PPS: mixin.pps.PPSMixin,
     Service.TRANSACTION: mixin.transaction.TransactionMixin,
@@ -31,33 +33,31 @@ SERVICE_MIXINS = {
 
 # Attributes of proto objects that are ignored, because they are built-in from
 # the protobuf compiler
-PROTO_OBJECT_BUILTINS = set(
-    [
-        "ByteSize",
-        "Clear",
-        "ClearExtension",
-        "ClearField",
-        "CopyFrom",
-        "DESCRIPTOR",
-        "DiscardUnknownFields",
-        "Extensions",
-        "FindInitializationErrors",
-        "FromString",
-        "HasExtension",
-        "HasField",
-        "IsInitialized",
-        "ListFields",
-        "MergeFrom",
-        "MergeFromString",
-        "ParseFromString",
-        "RegisterExtension",
-        "SerializePartialToString",
-        "SerializeToString",
-        "SetInParent",
-        "UnknownFields",
-        "WhichOneof",
-    ]
-)
+PROTO_OBJECT_BUILTINS = set([
+    'ByteSize',
+    'Clear',
+    'ClearExtension',
+    'ClearField',
+    'CopyFrom',
+    'DESCRIPTOR',
+    'DiscardUnknownFields',
+    'Extensions',
+    'FindInitializationErrors',
+    'FromString',
+    'HasExtension',
+    'HasField',
+    'IsInitialized',
+    'ListFields',
+    'MergeFrom',
+    'MergeFromString',
+    'ParseFromString',
+    'RegisterExtension',
+    'SerializePartialToString',
+    'SerializeToString',
+    'SetInParent',
+    'UnknownFields',
+    'WhichOneof'
+])
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
@@ -68,22 +68,33 @@ BLACKLISTED_METHODS = {
         "build_commit",
         "put_tar",
         "get_tar",
-        # ignore storage v2 for now
-        "get_tar_conditional_v2",
-        "file_operation_v2",
-        "list_file_v2",
-        "glob_file_v2",
-        "get_tar_v2",
-        "walk_file_v2",
-        "inspect_file_v2",
-        "clear_commit_v2",
-        "diff_file_v2",
+        "activate_auth",
+        # TODO: add these new API methods
+        "renew_fileset",
+        "squash_commit",
+        "clear_commit",
+        "modify_file",
+        "add_fileset",
+        "get_fileset",
+        "create_fileset",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
         "activate_auth",
         "create_job",
         "update_job_state",
+    ],
+    Service.AUTH: [
+        "get_auth_token",
+        "extend_auth_token",
+    ],
+    Service.ENTERPRISE: [
+        # internal RPC only
+        "heartbeat",
+    ],
+    Service.LICENSE: [
+        # internal RPC only
+        "heartbeat",
     ],
 }
 
@@ -93,11 +104,7 @@ RENAMED_METHODS = {
     Service.AUTH: {
         "activate": ["activate_auth"],
         "deactivate": ["deactivate_auth"],
-        "authenticate": [
-            "authenticate_github",
-            "authenticate_oidc",
-            "authenticate_one_time_password",
-        ],
+        "authenticate": ["authenticate_oidc"],
         "get_a_c_l": ["get_acl"],
         "set_a_c_l": ["set_acl"],
         "get_o_i_d_c_login": ["get_oidc_login"],
@@ -112,6 +119,23 @@ RENAMED_METHODS = {
         "get_state": ["get_enterprise_state"],
         "deactivate": ["deactivate_enterprise"],
     },
+    Service.LICENSE: {
+        "activate": ["activate_license"],
+        "delete_all": ["delete_all_license"],
+    },
+    Service.IDENTITY: {
+        "get_i_d_p_connector": ["get_idp_connector"],
+        "delete_i_d_p_connector": ["delete_idp_connector"],
+        "list_i_d_p_connectors": ["list_idp_connectors"],
+        "create_i_d_p_connector": ["create_idp_connector"],
+        "update_i_d_p_connector": ["update_idp_connector"],
+	"get_o_i_d_c_client": ["get_oidc_client"],
+        "delete_o_i_d_c_client": ["delete_oidc_client"],
+        "list_o_i_d_c_clients": ["list_oidc_clients"],
+        "create_o_i_d_c_client": ["create_oidc_client"],
+        "update_o_i_d_c_client": ["update_oidc_client"],
+        "delete_all": ["delete_all_identity"],
+    },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
     },
@@ -123,7 +147,7 @@ RENAMED_METHODS = {
     },
     Service.VERSION: {
         "get_version": ["get_remote_version"],
-    },
+    }
 }
 
 # Mapping of renamed method arguments. Multiple times of remappings are
@@ -138,27 +162,7 @@ RENAMED_METHODS = {
 # * We can also specify that a method has an argument that isn't in the
 #   protos: `(None, "ignored_arg_name")`
 RENAMED_ARGS = {
-    # admin
-    "extract_pipeline": [
-        ("pipeline", "pipeline_name"),
-    ],
-    "extract": [
-        ("URL", "url"),
-    ],
-    "restore": [
-        (("op", "URL"), "requests"),
-    ],
     # auth
-    "authenticate_github": [
-        ("one_time_password", None),
-        ("oidc_state", None),
-        ("id_token", None),
-    ],
-    "authenticate_one_time_password": [
-        ("github_token", None),
-        ("oidc_state", None),
-        ("id_token", None),
-    ],
     "authenticate_oidc": [
         ("github_token", None),
         ("one_time_password", None),
@@ -330,23 +334,17 @@ RENAMED_ARGS = {
     ],
 }
 
-
 def camel_to_snake(s):
     """Converts CamelCase strings to snake_case"""
-    return s[0].lower() + "".join(
-        "_{}".format(c.lower()) if c in UPPERCASE else c for c in s[1:]
-    )
-
+    return s[0].lower() + "".join("_{}".format(c.lower()) if c in UPPERCASE else c for c in s[1:])
 
 def attrs(obj):
     """Gets the non-private attributes of an object"""
     return [m for m in dir(obj) if not m.startswith("_")]
 
-
 def trim_suffix(s, suffix):
     """Removes a suffix from a string if it exists"""
-    return s[: -len(suffix)] if s.endswith(suffix) else s
-
+    return s[:-len(suffix)] if s.endswith(suffix) else s
 
 def args_set(values):
     s = set()
@@ -360,16 +358,11 @@ def args_set(values):
 
     return s
 
-
 def lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
     # get the mixin function and its arguments
-    request_cls = getattr(
-        proto_module, "{}Request".format(trim_suffix(grpc_method_name, "Stream")), None
-    )
+    request_cls = getattr(proto_module, "{}Request".format(trim_suffix(grpc_method_name, "Stream")), None)
     mixin_method = getattr(mixin_cls, mixin_method_name)
-    mixin_method_args = set(
-        a for a in inspect.getfullargspec(mixin_method).args if a != "self"
-    )
+    mixin_method_args = set(a for a in inspect.getfullargspec(mixin_method).args if a != "self")
 
     # give a warning for a python function that takes in arguments even
     # though there's no request object for the gRPC function, implying
@@ -380,9 +373,7 @@ def lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
         return
 
     # find which arguments differ between the python and gRPC implementation
-    request_args = set(
-        [n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS]
-    )
+    request_args = set([n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS])
     missing_args = request_args - mixin_method_args
     extra_args = mixin_method_args - request_args
 
@@ -396,7 +387,6 @@ def lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
     for arg in missing_args - ok_missing_args:
         yield "method {}: missing argument: {}".format(mixin_method_name, arg)
 
-
 def lint_service(service):
     """Lints a given service"""
 
@@ -407,9 +397,7 @@ def lint_service(service):
     grpc_method_names = set(attrs(grpc_cls))
 
     for grpc_method_name in grpc_method_names:
-        if (not grpc_method_name.endswith("Stream")) and "{}Stream".format(
-            grpc_method_name
-        ) in grpc_method_names:
+        if (not grpc_method_name.endswith("Stream")) and "{}Stream".format(grpc_method_name) in grpc_method_names:
             # skip methods with a streaming equivalent, since only the
             # streaming equivalent is implemented
             continue
@@ -422,23 +410,16 @@ def lint_service(service):
             continue
 
         # find if this method is renamed
-        renamed_mixin_method_names = RENAMED_METHODS.get(service, {}).get(
-            mixin_method_name, [mixin_method_name]
-        )
+        renamed_mixin_method_names = RENAMED_METHODS.get(service, {}).get(mixin_method_name, [mixin_method_name])
 
         for mixin_method_name in renamed_mixin_method_names:
             # find if this method isn't implemented
             if mixin_method_name not in mixin_method_names:
-                yield "service {}: missing method: {}".format(
-                    service.name, mixin_method_name
-                )
+                yield "service {}: missing method: {}".format(service.name, mixin_method_name)
                 continue
 
-            for warning in lint_method(
-                mixin_cls, proto_module, grpc_method_name, mixin_method_name
-            ):
+            for warning in lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
                 yield "service {}: {}".format(service.name, warning)
-
 
 def main():
     warned = False
@@ -449,7 +430,6 @@ def main():
             warned = True
 
     sys.exit(1 if warned else 0)
-
 
 if __name__ == "__main__":
     main()

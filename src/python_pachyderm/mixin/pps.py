@@ -107,7 +107,7 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "DeleteJob", job=pps_proto.Job(id=job_id))
 
-    def stop_job(self, job_id):
+    def stop_job(self, job_id, output_commit=None):
         """
         Stops a job by its ID.
 
@@ -115,7 +115,7 @@ class PPSMixin:
 
         * `job_id`: The ID of the job to stop.
         """
-        return self._req(Service.PPS, "StopJob", job=pps_proto.Job(id=job_id))
+        return self._req(Service.PPS, "StopJob", job=pps_proto.Job(id=job_id), output_commit=commit_from(output_commit))
 
     def inspect_datum(self, job_id, datum_id):
         """
@@ -204,7 +204,8 @@ class PPSMixin:
         * `s3_out`: An optional bool specifying whether the output repo should
         be exposed as an s3 gateway bucket.
         * `sidecar_resource_limits`: An optional `ResourceSpec` setting
-        * `no_skip`: An optional bool specifying whether to skip already-processed data
+        * `no_skip`: An optional bool specifying whether to skip
+        already-processed data
         resource limits for the pipeline sidecar.
         """
 
@@ -380,7 +381,8 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
-        * `no_skip`: An optional bool specifying whether to skip already-processed data
+        * `no_skip`: An optional bool specifying whether to skip
+        already-processed data
         """
         return self._req(
             Service.PPS, "CreatePipeline",
