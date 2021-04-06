@@ -9,14 +9,15 @@ cache:
     - "$(python3 -c 'import site; print(site.USER_BASE)')"
 language: python
 python:
-  - "3.8"
+  - "3.9"
   - "3.5"
 env:
   global:
     - PATH=$HOME/cached-deps:$PATH
   jobs:
+    # Most recent releases of the last two minor releases of Pachyderm
     - PACHYDERM_VERSION=1.12.5
-    - PACHYDERM_VERSION=1.11.9
+    - PACHYDERM_VERSION=1.13.0
 
 jobs:
   include:
