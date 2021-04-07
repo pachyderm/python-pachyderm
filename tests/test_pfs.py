@@ -202,6 +202,44 @@ def test_put_file_bytes_filelike():
     files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
     assert len(files) == 1
 
+def test_put_file_zero_bytes_pfc():
+    """
+    Put a zero-byte file using PutFileClient
+    """
+
+    client, repo_name = sandbox("put_file_bytes_file_zero_byte")
+
+    commit = '{}/master'.format(repo_name)
+    with client.put_file_client() as c:
+        c.put_file_from_bytes(commit, 'file.dat', b'')
+    files = list(client.list_file(commit, '.'))
+    assert len(files) == 1
+    fi = client.inspect_file(commit, 'file.dat')
+    assert fi.size_bytes == 0
+
+def test_put_file_bytes_zero_bytes_direct():
+    """
+    Put a zero-byte file using a bytestring iterator (tests zero-byte behavior
+    in put_file_from_iterable_reqs)
+    """
+
+    client, repo_name = sandbox("put_file_bytes_zero_bytes")
+
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'empty_iter.dat', [])
+    commit_infos = list(client.list_commit(repo_name))
+    assert len(commit_infos) == 1
+    assert commit_infos[0].commit.id == c.id
+    fi = client.inspect_file(c, 'empty_iter.dat')
+    assert fi.size_bytes == 0
+
+    with client.commit(repo_name) as c:
+        client.put_file_bytes(c, 'empty_bytestring.dat', [b''])
+    commit_infos = list(client.list_commit(repo_name))
+    assert len(commit_infos) == 2
+    assert commit_infos[0].commit.id == c.id
+    fi = client.inspect_file(c, 'empty_bytestring.dat')
+    assert fi.size_bytes == 0
 
 def test_put_file_bytes_iterable():
     """

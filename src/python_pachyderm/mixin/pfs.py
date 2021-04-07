@@ -930,22 +930,16 @@ class AtomicPutFileobjOp(AtomicOp):
         yield from put_file_from_fileobj_reqs(self.value, **self.kwargs)
 
 
-def put_file_from_fileobj_reqs(value, **kwargs):
-    for i in itertools.count():
-        chunk = value.read(BUFFER_SIZE)
-
-        if len(chunk) == 0:
-            return
-
-        if i == 0:
-            yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-        else:
-            yield pfs_proto.PutFileRequest(value=chunk)
+def put_file_from_fileobj_reqs(fileish, **kwargs):
+    chunked_iter = itertools.takewhile(
+        lambda chunk: len(chunk) > 0,
+        map(fileish.read, itertools.repeat(BUFFER_SIZE)))
+    return put_file_from_iterable_reqs(chunked_iter, **kwargs)
 
 
 def put_file_from_iterable_reqs(value, **kwargs):
-    for i, chunk in enumerate(value):
+    for i, chunk in enumerate(itertools.chain(value, [None])):
         if i == 0:
             yield pfs_proto.PutFileRequest(value=chunk, **kwargs)
-        else:
+        elif chunk is not None:
             yield pfs_proto.PutFileRequest(value=chunk)
