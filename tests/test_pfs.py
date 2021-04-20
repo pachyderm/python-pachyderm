@@ -277,6 +277,15 @@ def test_put_file_atomic():
     assert len(files) == 1
     assert files[0].file.path == '/index.html'
 
+def test_get_file():
+    client, repo_name = sandbox("put_file_atomic")
+    commit = (repo_name, "master")
+
+    with client.modify_file_client(commit) as pfc:
+        pfc.put_file_from_fileobj('file1.dat', BytesIO(b'DATA1'))
+
+    assert client.get_file(commit, 'file1.dat').read() == b'DATA1'
+
 def test_copy_file():
     client, repo_name = sandbox("copy_file")
 
