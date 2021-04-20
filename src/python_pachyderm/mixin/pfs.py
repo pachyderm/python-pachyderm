@@ -499,7 +499,8 @@ class PFSMixin:
         """
         res = self._req(
             Service.PFS, "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, url=URL),
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            URL=URL
         )
         return PFSFile(FileTarstream(res))
 
