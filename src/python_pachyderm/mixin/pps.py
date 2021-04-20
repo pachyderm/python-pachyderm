@@ -381,7 +381,7 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
-        * `reprocess_spec`: An optional string specifying how to handle 
+        * `reprocess_spec`: An optional string specifying how to handle
         already-processed data
         """
         return self._req(

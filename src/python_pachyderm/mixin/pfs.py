@@ -906,7 +906,7 @@ class AtomicCopyFileOp(AtomicOp):
 
     def reqs(self):
         yield pfs_proto.ModifyFileRequest(
-          commit=self.commit, 
+          commit=self.commit,
           copy_file=pfs_proto.CopyFile(
             append=self.append,
             tag=self.tag,
@@ -928,5 +928,8 @@ class AtomicDeleteFileOp(AtomicOp):
 def put_file_req(commit=None, path=None, chunk=None, append=False, eof=False):
     return pfs_proto.ModifyFileRequest(
         commit=commit,
-        put_file=pfs_proto.PutFile(append=append, raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof))
+        put_file=pfs_proto.PutFile(
+            append=append,
+            raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof)
+        )
     )
