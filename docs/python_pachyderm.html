@@ -1108,10 +1108,6 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.AppendFile">AppendFile</a></span>
-        
-        </li>
-        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.AuthenticateRequest">AuthenticateRequest</a></span>
         
         </li>
@@ -1259,7 +1255,9 @@ table {
     <li class="mono"><a href="#python_pachyderm.Client.list_commit">list_commit</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_datum">list_datum</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_file">list_file</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.list_idp_connectors">list_idp_connectors</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_job">list_job</a></li>
+    <li class="mono"><a href="#python_pachyderm.Client.list_oidc_clients">list_oidc_clients</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_pipeline">list_pipeline</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_repo">list_repo</a></li>
     <li class="mono"><a href="#python_pachyderm.Client.list_secret">list_secret</a></li>
@@ -1340,7 +1338,7 @@ table {
 
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.CopyFileRequest">CopyFileRequest</a></span>
+        <span class="class_name"><a href="#python_pachyderm.CopyFile">CopyFile</a></span>
         
         </li>
         <li class="mono">
@@ -1528,14 +1526,6 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.ExtendAuthTokenRequest">ExtendAuthTokenRequest</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.ExtendAuthTokenResponse">ExtendAuthTokenResponse</a></span>
-        
-        </li>
-        <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.ExtractAuthTokensRequest">ExtractAuthTokensRequest</a></span>
         
         </li>
@@ -1601,14 +1591,6 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.GetActivationCodeResponse">GetActivationCodeResponse</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.GetAuthTokenRequest">GetAuthTokenRequest</a></span>
-        
-        </li>
-        <li class="mono">
-        <span class="class_name"><a href="#python_pachyderm.GetAuthTokenResponse">GetAuthTokenResponse</a></span>
         
         </li>
         <li class="mono">
@@ -1881,6 +1863,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#python_pachyderm.ModifyFileClient.__init__">__init__</a></li>
+    <li class="mono"><a href="#python_pachyderm.ModifyFileClient.copy_file">copy_file</a></li>
     <li class="mono"><a href="#python_pachyderm.ModifyFileClient.delete_file">delete_file</a></li>
     <li class="mono"><a href="#python_pachyderm.ModifyFileClient.put_file_from_bytes">put_file_from_bytes</a></li>
     <li class="mono"><a href="#python_pachyderm.ModifyFileClient.put_file_from_fileobj">put_file_from_fileobj</a></li>
@@ -1961,6 +1944,10 @@ table {
         </li>
         <li class="mono">
         <span class="class_name"><a href="#python_pachyderm.ProcessStats">ProcessStats</a></span>
+        
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#python_pachyderm.PutFile">PutFile</a></span>
         
         </li>
         <li class="mono">
@@ -2979,96 +2966,6 @@ pipeline. Defaults to using pachyderm's official python language builder.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.AggregateProcessStats.upload_time" class="name">var <span class="ident">upload_time</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.AppendFile" class="name">class <span class="ident">AppendFile</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.overwrite" class="name">var <span class="ident">overwrite</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.raw_file_source" class="name">var <span class="ident">raw_file_source</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.tag" class="name">var <span class="ident">tag</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.tar_file_source" class="name">var <span class="ident">tar_file_source</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.AppendFile.url_file_source" class="name">var <span class="ident">url_file_source</span></p>
             
 
             
@@ -4141,8 +4038,8 @@ certifi.</li>
 
     
   
-    <div class="desc"><p>Activates auth. Returns the root token for the cluster, an irrevocable superuser
-credential that should be stored securely.</p>
+    <div class="desc"><p>Activates auth. Returns the root token for the cluster, an
+irrevocable superuser credential that should be stored securely.</p>
 
 <p>Params:</p>
 
@@ -4161,19 +4058,20 @@ only used for testing and Pachyderm internals (migration).</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.activate_enterprise">
-    <p>def <span class="ident">activate_enterprise</span>(</p><p>self, license_server, cluster_id, secret)</p>
+    <p>def <span class="ident">activate_enterprise</span>(</p><p>self, license_server, id, secret)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Activates enterprise by registering with a license server. Returns a <code>TokenInfo</code> object.</p>
+    <div class="desc"><p>Activates enterprise by registering with a license server.
+Returns a <code>TokenInfo</code> object.</p>
 
 <p>Params:</p>
 
 <ul>
 <li><code>license_server</code>: The Pachyderm Enterprise Server to register with.</li>
-<li><code>cluster_id</code>: The unique ID for this cluster.</li>
+<li><code>id</code>: The unique ID for this cluster.</li>
 <li><code>secret</code>: The secret for registering this cluster.</li>
 </ul>
 </div>
@@ -4212,7 +4110,7 @@ the signed expiration time in <code>activation_code</code>.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.add_cluster">
-    <p>def <span class="ident">add_cluster</span>(</p><p>self, cluster_id, address, secret=None)</p>
+    <p>def <span class="ident">add_cluster</span>(</p><p>self, id, address, secret=None)</p>
     </div>
     
 
@@ -4223,9 +4121,10 @@ the signed expiration time in <code>activation_code</code>.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>cluster_id</code>: A unique ID to identify the cluster.</li>
+<li><code>id</code>: A unique ID to identify the cluster.</li>
 <li><code>address</code>: A GRPC address for the license server to reach the cluster.</li>
-<li><code>secret</code>: Optional. A shared secret for the cluster to use to authenticate.
+<li><code>secret</code>: Optional. A shared secret for the cluster to use
+to authenticate.
 If not specified, a random secret will be generated and returned.</li>
 </ul>
 </div>
@@ -4296,7 +4195,7 @@ string that can be used for making authenticated requests.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>resource</code>: The resource the user wants access to </li>
+<li><code>resource</code>: The resource the user wants access to</li>
 <li><code>permissions</code>: A list of permissions the user wants to test.</li>
 </ul>
 </div>
@@ -4385,7 +4284,7 @@ the contents of the parent commit.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.copy_file">
-    <p>def <span class="ident">copy_file</span>(</p><p>self, source_commit, source_path, dest_commit, dest_path, overwrite=None)</p>
+    <p>def <span class="ident">copy_file</span>(</p><p>self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None)</p>
     </div>
     
 
@@ -4404,7 +4303,7 @@ commit for the source file.</li>
 <li><code>dest_commit</code>: A tuple, string, or <code>Commit</code> object representing the
 commit for the destination file.</li>
 <li><code>dest_path</code>: A string specifying the path of the destination file.</li>
-<li><code>overwrite</code>: An optional bool specifying whether to overwrite the
+<li><code>append</code>: An optional bool specifying whether to append to the
 destination file if it already exists.</li>
 </ul>
 </div>
@@ -4522,7 +4421,8 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>s3_out</code>: An optional bool specifying whether the output repo should
 be exposed as an s3 gateway bucket.</li>
 <li><code>sidecar_resource_limits</code>: An optional <code>ResourceSpec</code> setting</li>
-<li><code>no_skip</code>: An optional bool specifying whether to skip already-processed data
+<li><code>no_skip</code>: An optional bool specifying whether to skip
+already-processed data
 resource limits for the pipeline sidecar.</li>
 </ul>
 </div>
@@ -4661,7 +4561,8 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>pod_patch</code>: An optional string.</li>
 <li><code>spout</code>: An optional <code>Spout</code> object.</li>
 <li><code>spec_commit</code>: An optional <code>Commit</code> object.</li>
-<li><code>no_skip</code>: An optional bool specifying whether to skip already-processed data</li>
+<li><code>no_skip</code>: An optional bool specifying whether to skip
+already-processed data</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -4866,7 +4767,7 @@ branches they happen to be on.</p>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.delete_cluster">
-    <p>def <span class="ident">delete_cluster</span>(</p><p>self, cluster_id)</p>
+    <p>def <span class="ident">delete_cluster</span>(</p><p>self, id)</p>
     </div>
     
 
@@ -4877,7 +4778,7 @@ branches they happen to be on.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>cluster_id</code>: The unique ID to identify the cluster.</li>
+<li><code>id</code>: The unique ID to identify the cluster.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -5318,7 +5219,7 @@ this cluster.</p>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.get_file">
-    <p>def <span class="ident">get_file</span>(</p><p>self, commit, path, offset_bytes=None, size_bytes=None)</p>
+    <p>def <span class="ident">get_file</span>(</p><p>self, commit, path, URL=None)</p>
     </div>
     
 
@@ -5333,12 +5234,6 @@ in PFS.</p>
 <li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
 commit.</li>
 <li><code>path</code>: A string specifying the path of the file.</li>
-<li><code>offset_bytes</code>: An optional int. Specifies a number of bytes that
-should be skipped in the beginning of the file.</li>
-<li><code>size_bytes</code>: An optional int. limits the total amount of data
-returned, note you will get fewer bytes than size if you pass a value
-larger than the size of the file. If size is set to 0 then all of the
-data will be returned.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -5534,7 +5429,8 @@ returned logs</li>
 
 <p>Params:
 * <code>robot</code>: The name of the robot user.
-* <code>ttl</code>: Optional. The expiration for the token. If empty, the token does not expire.</p>
+* <code>ttl</code>: Optional. The expiration for the token.
+If empty, the token does not expire.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -5937,7 +5833,7 @@ returned.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.list_file">
-    <p>def <span class="ident">list_file</span>(</p><p>self, commit, path, history=None, include_contents=None)</p>
+    <p>def <span class="ident">list_file</span>(</p><p>self, commit, path, include_contents=None)</p>
     </div>
     
 
@@ -5951,15 +5847,25 @@ returned.</li>
 <li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
 commit.</li>
 <li><code>path</code>: The path to the directory.</li>
-<li><code>history</code>: An optional int that indicates to return jobs from
-historical versions of pipelines. Semantics are:
-0: Return jobs from the current version of the pipeline or pipelines.
-1: Return the above and jobs from the next most recent version
-2: etc.
--1: Return jobs from all historical versions.</li>
 <li><code>include_contents</code>: An optional bool. If <code>True</code>, file contents are
 included.</li>
 </ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.list_idp_connectors">
+    <p>def <span class="ident">list_idp_connectors</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>List IDP connectors in the identity server.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -6004,6 +5910,22 @@ that if <code>input_commit</code> is set, this field is coerced to <code>True</c
 <li><code>jqFilter</code>: An optional string containing a <code>jq</code> filter that can
 restrict the list of jobs returned, for convenience</li>
 </ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="python_pachyderm.Client.list_oidc_clients">
+    <p>def <span class="ident">list_oidc_clients</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>List OIDC clients in the identity server.</p>
 </div>
   <div class="source_cont">
 </div>
@@ -6147,7 +6069,7 @@ executed in a single, atomic <code>ModifyFile</code> call.</p>
 
     
   
-    <div class="desc"><p>Sets the roles for a given principal on a resource. </p>
+    <div class="desc"><p>Sets the roles for a given principal on a resource.</p>
 
 <p>Params:</p>
 
@@ -6565,7 +6487,7 @@ specifying the commit provenance.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.stop_job">
-    <p>def <span class="ident">stop_job</span>(</p><p>self, job_id)</p>
+    <p>def <span class="ident">stop_job</span>(</p><p>self, job_id, output_commit=None)</p>
     </div>
     
 
@@ -6654,7 +6576,7 @@ error occurred, or otherwise finished.</p>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.update_cluster">
-    <p>def <span class="ident">update_cluster</span>(</p><p>self, cluster_id, address)</p>
+    <p>def <span class="ident">update_cluster</span>(</p><p>self, id, address)</p>
     </div>
     
 
@@ -6665,7 +6587,7 @@ error occurred, or otherwise finished.</p>
 <p>Params:</p>
 
 <ul>
-<li><code>cluster_id</code>: The unique ID to identify the cluster.</li>
+<li><code>id</code>: The unique ID to identify the cluster.</li>
 <li><code>address</code>: A GRPC address for the license server to reach the cluster.</li>
 </ul>
 </div>
@@ -7497,7 +7419,7 @@ commit.</li>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.CopyFileRequest" class="name">class <span class="ident">CopyFileRequest</span></p>
+      <p id="python_pachyderm.CopyFile" class="name">class <span class="ident">CopyFile</span></p>
       
   
     <div class="desc"><p>A ProtocolMessage</p>
@@ -7514,7 +7436,7 @@ commit.</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            <p id="python_pachyderm.CopyFile.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
             
 
             
@@ -7524,7 +7446,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            <p id="python_pachyderm.CopyFile.Extensions" class="name">var <span class="ident">Extensions</span></p>
             
 
             
@@ -7534,7 +7456,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.dst" class="name">var <span class="ident">dst</span></p>
+            <p id="python_pachyderm.CopyFile.append" class="name">var <span class="ident">append</span></p>
             
 
             
@@ -7544,7 +7466,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.overwrite" class="name">var <span class="ident">overwrite</span></p>
+            <p id="python_pachyderm.CopyFile.dst" class="name">var <span class="ident">dst</span></p>
             
 
             
@@ -7554,7 +7476,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.src" class="name">var <span class="ident">src</span></p>
+            <p id="python_pachyderm.CopyFile.src" class="name">var <span class="ident">src</span></p>
             
 
             
@@ -7564,7 +7486,7 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CopyFileRequest.tag" class="name">var <span class="ident">tag</span></p>
+            <p id="python_pachyderm.CopyFile.tag" class="name">var <span class="ident">tag</span></p>
             
 
             
@@ -8234,16 +8156,6 @@ commit.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.CreatePipelineRequest.no_skip" class="name">var <span class="ident">no_skip</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.CreatePipelineRequest.output_branch" class="name">var <span class="ident">output_branch</span></p>
             
 
@@ -8295,6 +8207,16 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.CreatePipelineRequest.reprocess" class="name">var <span class="ident">reprocess</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.CreatePipelineRequest.reprocess_spec" class="name">var <span class="ident">reprocess_spec</span></p>
             
 
             
@@ -10823,106 +10745,6 @@ commit.</li>
       </div>
       
       <div class="item">
-      <p id="python_pachyderm.ExtendAuthTokenRequest" class="name">class <span class="ident">ExtendAuthTokenRequest</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenRequest.token" class="name">var <span class="ident">token</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenRequest.ttl" class="name">var <span class="ident">ttl</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.ExtendAuthTokenResponse" class="name">class <span class="ident">ExtendAuthTokenResponse</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.ExtendAuthTokenResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
       <p id="python_pachyderm.ExtractAuthTokensRequest" class="name">class <span class="ident">ExtractAuthTokensRequest</span></p>
       
   
@@ -11890,126 +11712,6 @@ commit.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.GetActivationCodeResponse.state" class="name">var <span class="ident">state</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.GetAuthTokenRequest" class="name">class <span class="ident">GetAuthTokenRequest</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenRequest.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenRequest.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenRequest.subject" class="name">var <span class="ident">subject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenRequest.ttl" class="name">var <span class="ident">ttl</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-      </div>
-      </div>
-      
-      <div class="item">
-      <p id="python_pachyderm.GetAuthTokenResponse" class="name">class <span class="ident">GetAuthTokenResponse</span></p>
-      
-  
-    <div class="desc"><p>A ProtocolMessage</p>
-</div>
-  <div class="source_cont">
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
-          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
-          </ul>
-          <h3>Class variables</h3>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenResponse.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenResponse.Extensions" class="name">var <span class="ident">Extensions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenResponse.subject" class="name">var <span class="ident">subject</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.GetAuthTokenResponse.token" class="name">var <span class="ident">token</span></p>
             
 
             
@@ -16381,6 +16083,28 @@ commit.</li>
   
             
   <div class="item">
+    <div class="name def" id="python_pachyderm.ModifyFileClient.copy_file">
+    <p>def <span class="ident">copy_file</span>(</p><p>self, source_commit, source_path, dest_path, append=None, tag=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Deletes a file.</p>
+
+<p>Params:</p>
+
+<ul>
+<li><code>path</code>: The path to the file.</li>
+</ul>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="python_pachyderm.ModifyFileClient.delete_file">
     <p>def <span class="ident">delete_file</span>(</p><p>self, path)</p>
     </div>
@@ -16393,8 +16117,6 @@ commit.</li>
 <p>Params:</p>
 
 <ul>
-<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
-commit.</li>
 <li><code>path</code>: The path to the file.</li>
 </ul>
 </div>
@@ -16420,7 +16142,7 @@ commit.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file contents as a bytestring.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with 
+<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
 new data. When false, the new data is appended to the existing file.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
@@ -16462,7 +16184,7 @@ converted to a header and applied to all file shards.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file-like object.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with 
+<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
 new data. When false, the new data is appended to the existing file.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
@@ -16507,7 +16229,7 @@ many files.</p>
 <li><code>pfs_path</code>: A string specifying the path in the repo the file(s)
 will be written to.</li>
 <li><code>local_path</code>: A string specifying the local file path.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with 
+<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
 new data. When false, the new data is appended to the existing file.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
@@ -16549,7 +16271,7 @@ server which performs the request.</p>
 <ul>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with 
+<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
 new data. When false, the new data is appended to the existing file.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
@@ -16617,16 +16339,6 @@ converted to a header and applied to all file shards.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.ModifyFileRequest.append_file" class="name">var <span class="ident">append_file</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.ModifyFileRequest.commit" class="name">var <span class="ident">commit</span></p>
             
 
@@ -16637,7 +16349,27 @@ converted to a header and applied to all file shards.</li>
 
             </div>
             <div class="item">
+            <p id="python_pachyderm.ModifyFileRequest.copy_file" class="name">var <span class="ident">copy_file</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
             <p id="python_pachyderm.ModifyFileRequest.delete_file" class="name">var <span class="ident">delete_file</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.ModifyFileRequest.put_file" class="name">var <span class="ident">put_file</span></p>
             
 
             
@@ -16997,16 +16729,6 @@ converted to a header and applied to all file shards.</li>
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.OIDCConfig.additional_scopes" class="name">var <span class="ident">additional_scopes</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.OIDCConfig.client_id" class="name">var <span class="ident">client_id</span></p>
             
 
@@ -17018,16 +16740,6 @@ converted to a header and applied to all file shards.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.OIDCConfig.client_secret" class="name">var <span class="ident">client_secret</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.OIDCConfig.ignore_email_verified" class="name">var <span class="ident">ignore_email_verified</span></p>
             
 
             
@@ -17058,6 +16770,26 @@ converted to a header and applied to all file shards.</li>
             </div>
             <div class="item">
             <p id="python_pachyderm.OIDCConfig.redirect_uri" class="name">var <span class="ident">redirect_uri</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.OIDCConfig.require_email_verified" class="name">var <span class="ident">require_email_verified</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.OIDCConfig.scopes" class="name">var <span class="ident">scopes</span></p>
             
 
             
@@ -17142,8 +16874,8 @@ converted to a header and applied to all file shards.</li>
       <p id="python_pachyderm.PFSFile" class="name">class <span class="ident">PFSFile</span></p>
       
   
-    <div class="desc"><p>The contents of a file stored in PFS. You can treat these as file-like objects, 
-like so:</p>
+    <div class="desc"><p>The contents of a file stored in PFS. You can treat these as
+file-like objects, like so:</p>
 
 <pre><code>source_file = client.get_file("montage/master", "/montage.png")
 with open("montage.png", "wb") as dest_file:
@@ -17446,16 +17178,6 @@ with open("montage.png", "wb") as dest_file:
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.Permission.CLUSTER_AUTH_EXTEND_TOKEN" class="name">var <span class="ident">CLUSTER_AUTH_EXTEND_TOKEN</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.Permission.CLUSTER_AUTH_EXTRACT_TOKENS" class="name">var <span class="ident">CLUSTER_AUTH_EXTRACT_TOKENS</span></p>
             
 
@@ -17497,16 +17219,6 @@ with open("montage.png", "wb") as dest_file:
             </div>
             <div class="item">
             <p id="python_pachyderm.Permission.CLUSTER_AUTH_GET_ROBOT_TOKEN" class="name">var <span class="ident">CLUSTER_AUTH_GET_ROBOT_TOKEN</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="python_pachyderm.Permission.CLUSTER_AUTH_GET_TOKEN" class="name">var <span class="ident">CLUSTER_AUTH_GET_TOKEN</span></p>
             
 
             
@@ -18256,16 +17968,6 @@ with open("montage.png", "wb") as dest_file:
 
             </div>
             <div class="item">
-            <p id="python_pachyderm.PipelineInfo.no_skip" class="name">var <span class="ident">no_skip</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
             <p id="python_pachyderm.PipelineInfo.output_branch" class="name">var <span class="ident">output_branch</span></p>
             
 
@@ -18327,6 +18029,16 @@ with open("montage.png", "wb") as dest_file:
             </div>
             <div class="item">
             <p id="python_pachyderm.PipelineInfo.recent_error" class="name">var <span class="ident">recent_error</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PipelineInfo.reprocess_spec" class="name">var <span class="ident">reprocess_spec</span></p>
             
 
             
@@ -18746,6 +18458,96 @@ with open("montage.png", "wb") as dest_file:
             </div>
             <div class="item">
             <p id="python_pachyderm.ProcessStats.upload_time" class="name">var <span class="ident">upload_time</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="python_pachyderm.PutFile" class="name">class <span class="ident">PutFile</span></p>
+      
+  
+    <div class="desc"><p>A ProtocolMessage</p>
+</div>
+  <div class="source_cont">
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="/google.protobuf.pyext._message.CMessage.ext">google.protobuf.pyext._message.CMessage</a></li>
+          <li><a href="/google.protobuf.message.Message.ext">google.protobuf.message.Message</a></li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.DESCRIPTOR" class="name">var <span class="ident">DESCRIPTOR</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.Extensions" class="name">var <span class="ident">Extensions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.append" class="name">var <span class="ident">append</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.raw_file_source" class="name">var <span class="ident">raw_file_source</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.tag" class="name">var <span class="ident">tag</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.tar_file_source" class="name">var <span class="ident">tar_file_source</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="python_pachyderm.PutFile.url_file_source" class="name">var <span class="ident">url_file_source</span></p>
             
 
             
