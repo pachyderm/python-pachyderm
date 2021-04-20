@@ -4303,8 +4303,8 @@ commit for the source file.</li>
 <li><code>dest_commit</code>: A tuple, string, or <code>Commit</code> object representing the
 commit for the destination file.</li>
 <li><code>dest_path</code>: A string specifying the path of the destination file.</li>
-<li><code>append</code>: An optional bool specifying whether to append to the
-destination file if it already exists.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -4376,7 +4376,7 @@ the branch provenance.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.create_pipeline">
-    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, egress=None, no_skip=None, update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None, metadata=None, s3_out=None, sidecar_resource_limits=None)</p>
+    <p>def <span class="ident">create_pipeline</span>(</p><p>self, pipeline_name, transform, parallelism_spec=None, egress=None, reprocess_spec=None, update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None, metadata=None, s3_out=None, sidecar_resource_limits=None)</p>
     </div>
     
 
@@ -4421,7 +4421,7 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>s3_out</code>: An optional bool specifying whether the output repo should
 be exposed as an s3 gateway bucket.</li>
 <li><code>sidecar_resource_limits</code>: An optional <code>ResourceSpec</code> setting</li>
-<li><code>no_skip</code>: An optional bool specifying whether to skip
+<li><code>reprocess_spec</code>: An optional string specifying how to handle
 already-processed data
 resource limits for the pipeline sidecar.</li>
 </ul>
@@ -4517,7 +4517,7 @@ attach to the secret.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.create_tf_job_pipeline">
-    <p>def <span class="ident">create_tf_job_pipeline</span>(</p><p>self, pipeline_name, tf_job, parallelism_spec=None, no_skip=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None)</p>
+    <p>def <span class="ident">create_tf_job_pipeline</span>(</p><p>self, pipeline_name, tf_job, parallelism_spec=None, reprocess_spec=None, egress=None, update=None, output_branch=None, scale_down_threshold=None, resource_requests=None, resource_limits=None, input=None, description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None, service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None, datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None)</p>
     </div>
     
 
@@ -4561,7 +4561,7 @@ to reprocess all datums. It only has meaning if <code>update</code> is <code>Tru
 <li><code>pod_patch</code>: An optional string.</li>
 <li><code>spout</code>: An optional <code>Spout</code> object.</li>
 <li><code>spec_commit</code>: An optional <code>Commit</code> object.</li>
-<li><code>no_skip</code>: An optional bool specifying whether to skip
+<li><code>reprocess_spec</code>: An optional string specifying how to handle 
 already-processed data</li>
 </ul>
 </div>
@@ -6111,7 +6111,7 @@ profiler.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.put_file_bytes">
-    <p>def <span class="ident">put_file_bytes</span>(</p><p>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_bytes</span>(</p><p>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, append=None, header_records=None)</p>
     </div>
     
 
@@ -6139,9 +6139,8 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -6155,7 +6154,7 @@ converted to a header and applied to all file shards.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.Client.put_file_url">
-    <p>def <span class="ident">put_file_url</span>(</p><p>self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_url</span>(</p><p>self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, append=None, header_records=None)</p>
     </div>
     
 
@@ -6183,9 +6182,8 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -16090,12 +16088,16 @@ commit.</li>
 
     
   
-    <div class="desc"><p>Deletes a file.</p>
+    <div class="desc"><p>Copy a file.</p>
 
 <p>Params:</p>
 
 <ul>
-<li><code>path</code>: The path to the file.</li>
+<li><code>source_commit</code>: The commit the source file is in.</li>
+<li><code>source_path</code>: The path to the source file.</li>
+<li><code>dest_path</code>: The path to the destination file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 </ul>
 </div>
   <div class="source_cont">
@@ -16128,7 +16130,7 @@ commit.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.ModifyFileClient.put_file_from_bytes">
-    <p>def <span class="ident">put_file_from_bytes</span>(</p><p>self, path, value, overwrite=False, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_from_bytes</span>(</p><p>self, path, value, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</p>
     </div>
     
 
@@ -16142,8 +16144,8 @@ commit.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file contents as a bytestring.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
-new data. When false, the new data is appended to the existing file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
 <code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
@@ -16154,9 +16156,6 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -16170,7 +16169,7 @@ converted to a header and applied to all file shards.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.ModifyFileClient.put_file_from_fileobj">
-    <p>def <span class="ident">put_file_from_fileobj</span>(</p><p>self, path, value, overwrite=False, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_from_fileobj</span>(</p><p>self, path, value, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</p>
     </div>
     
 
@@ -16184,8 +16183,8 @@ converted to a header and applied to all file shards.</li>
 <li><code>path</code>: A string specifying the path in the repo the file(s) will be
 written to.</li>
 <li><code>value</code>: The file-like object.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
-new data. When false, the new data is appended to the existing file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
 <code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
@@ -16196,9 +16195,6 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -16212,7 +16208,7 @@ converted to a header and applied to all file shards.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.ModifyFileClient.put_file_from_filepath">
-    <p>def <span class="ident">put_file_from_filepath</span>(</p><p>self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_from_filepath</span>(</p><p>self, pfs_path, local_path, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</p>
     </div>
     
 
@@ -16229,8 +16225,8 @@ many files.</p>
 <li><code>pfs_path</code>: A string specifying the path in the repo the file(s)
 will be written to.</li>
 <li><code>local_path</code>: A string specifying the local file path.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
-new data. When false, the new data is appended to the existing file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
 <code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
@@ -16241,9 +16237,6 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>
@@ -16257,7 +16250,7 @@ converted to a header and applied to all file shards.</li>
             
   <div class="item">
     <div class="name def" id="python_pachyderm.ModifyFileClient.put_file_from_url">
-    <p>def <span class="ident">put_file_from_url</span>(</p><p>self, path, url, overwrite=False, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, overwrite_index=None, header_records=None)</p>
+    <p>def <span class="ident">put_file_from_url</span>(</p><p>self, path, url, append=None, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, header_records=None)</p>
     </div>
     
 
@@ -16271,8 +16264,8 @@ server which performs the request.</p>
 <ul>
 <li><code>path</code>: A string specifying the path to the file.</li>
 <li><code>url</code>: A string specifying the url of the file to put.</li>
-<li><code>overwrite</code>: Optional. When true, the existing file is replaced with
-new data. When false, the new data is appended to the existing file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
 <li><code>delimiter</code>: An optional int. causes data to be broken up into
 separate files by the delimiter. e.g. if you used
 <code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
@@ -16285,9 +16278,6 @@ evenly, but will never be higher, unless the value is 0.</li>
 <li><code>target_file_bytes</code>: An optional int. Specifies the target number of
 bytes in each written file, files may have more or fewer bytes than
 the target.</li>
-<li><code>overwrite_index</code>: An optional int. This is the object index where
-the write starts from.  All existing objects starting from the index
-are deleted.</li>
 <li><code>header_records: An optional int for splitting data when</code>delimiter<code>
 is not</code>NONE<code>(or</code>SQL`). It specifies the number of records that are
 converted to a header and applied to all file shards.</li>

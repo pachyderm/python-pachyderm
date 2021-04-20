@@ -377,7 +377,7 @@ class PFSMixin:
         self._req(Service.PFS, "ModifyFile", req=pfc._reqs())
 
     def put_file_bytes(self, commit, path, value, delimiter=None, target_file_datums=None,
-                       target_file_bytes=None, overwrite_index=None, header_records=None):
+                       target_file_bytes=None, append=None, header_records=None):
         """
         Uploads a PFS file from a file-like object, bytestring, or iterator
         of bytestrings.
@@ -400,9 +400,8 @@ class PFSMixin:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -414,7 +413,6 @@ class PFSMixin:
                     # delimiter=delimiter,
                     # target_file_datums=target_file_datums,
                     # target_file_bytes=target_file_bytes,
-                    # overwrite_index=overwrite_index,
                     # header_records=header_records,
                 )
             else:
@@ -423,12 +421,11 @@ class PFSMixin:
                     # delimiter=delimiter,
                     # target_file_datums=target_file_datums,
                     # target_file_bytes=target_file_bytes,
-                    # overwrite_index=overwrite_index,
                     # header_records=header_records,
                 )
 
     def put_file_url(self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None,
-                     target_file_bytes=None, overwrite_index=None, header_records=None):
+                     target_file_bytes=None, append=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
@@ -451,9 +448,8 @@ class PFSMixin:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
@@ -463,10 +459,10 @@ class PFSMixin:
             pfc.put_file_from_url(
                 path, url,
                 recursive=recursive,
+                append=append,
                 # delimiter=delimiter,
                 # target_file_datums=target_file_datums,
                 # target_file_bytes=target_file_bytes,
-                # overwrite_index=overwrite_index,
                 # header_records=header_records,
             )
 
@@ -484,8 +480,8 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
-        * `append`: An optional bool specifying whether to append to the
-        destination file if it already exists.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         """
         with self.modify_file_client(dest_commit) as pfc:
             pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)
@@ -659,8 +655,8 @@ class ModifyFileClient:
             for r in op.reqs():
                 yield r
 
-    def put_file_from_filepath(self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None,
-                               target_file_bytes=None, overwrite_index=None, header_records=None):
+    def put_file_from_filepath(self, pfs_path, local_path, append=None, delimiter=None, target_file_datums=None,
+                               target_file_bytes=None, header_records=None):
         """
         Uploads a PFS file from a local path at a specified path. This will
         lazily open files, which will prevent too many files from being
@@ -672,8 +668,8 @@ class ModifyFileClient:
         * `pfs_path`: A string specifying the path in the repo the file(s)
         will be written to.
         * `local_path`: A string specifying the local file path.
-        * `overwrite`: Optional. When true, the existing file is replaced with
-        new data. When false, the new data is appended to the existing file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -684,25 +680,20 @@ class ModifyFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFilepathOp(
-            self.commit, pfs_path, local_path, overwrite,
+            self.commit, pfs_path, local_path, append,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
-            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-            #      if overwrite_index is not None else None,
             # header_records=header_records,
         ))
 
-    def put_file_from_fileobj(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
-                              target_file_bytes=None, overwrite_index=None, header_records=None):
+    def put_file_from_fileobj(self, path, value, append=None, delimiter=None, target_file_datums=None,
+                              target_file_bytes=None, header_records=None):
         """
         Uploads a PFS file from a file-like object.
 
@@ -711,8 +702,8 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file-like object.
-        * `overwrite`: Optional. When true, the existing file is replaced with
-        new data. When false, the new data is appended to the existing file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -723,25 +714,20 @@ class ModifyFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileobjOp(
-            self.commit, path, value, overwrite,
+            self.commit, path, value, append,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
-            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-            #     if overwrite_index is not None else None,
             # header_records=header_records,
         ))
 
-    def put_file_from_bytes(self, path, value, overwrite=False, delimiter=None, target_file_datums=None,
-                            target_file_bytes=None, overwrite_index=None, header_records=None):
+    def put_file_from_bytes(self, path, value, append=None, delimiter=None, target_file_datums=None,
+                            target_file_bytes=None, header_records=None):
         """
         Uploads a PFS file from a bytestring.
 
@@ -750,8 +736,8 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
-        * `overwrite`: Optional. When true, the existing file is replaced with
-        new data. When false, the new data is appended to the existing file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -762,24 +748,20 @@ class ModifyFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
         self.put_file_from_fileobj(
-            path, io.BytesIO(value), overwrite,
+            path, io.BytesIO(value), append,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
-            # overwrite_index=overwrite_index,
             # header_records=header_records,
         )
 
-    def put_file_from_url(self, path, url, overwrite=False, delimiter=None, recursive=None, target_file_datums=None,
-                          target_file_bytes=None, overwrite_index=None, header_records=None):
+    def put_file_from_url(self, path, url, append=None, delimiter=None, recursive=None, target_file_datums=None,
+                          target_file_bytes=None, header_records=None):
         """
         Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
@@ -788,8 +770,8 @@ class ModifyFileClient:
 
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `overwrite`: Optional. When true, the existing file is replaced with
-        new data. When false, the new data is appended to the existing file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         * `delimiter`: An optional int. causes data to be broken up into
         separate files by the delimiter. e.g. if you used
         `Delimiter.CSV.value`, a separate PFS file will be created for each
@@ -802,21 +784,16 @@ class ModifyFileClient:
         * `target_file_bytes`: An optional int. Specifies the target number of
         bytes in each written file, files may have more or fewer bytes than
         the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
         * `header_records: An optional int for splitting data when `delimiter`
         is not `NONE` (or `SQL`). It specifies the number of records that are
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileURLOp(
-            self.commit, path, url, overwrite,
+            self.commit, path, url, append,
             recursive=recursive,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
-            # overwrite_index=pfs_proto.OverwriteIndex(index=overwrite_index)
-            #     if overwrite_index is not None else None,
             # header_records=header_records,
         ))
 
@@ -832,11 +809,15 @@ class ModifyFileClient:
 
     def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
         """
-        Deletes a file.
+        Copy a file.
 
         Params:
 
-        * `path`: The path to the file.
+        * `source_commit`: The commit the source file is in.
+        * `source_path`: The path to the source file.
+        * `dest_path`: The path to the destination file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
         """
         self._ops.append(AtomicCopyFileOp(self.commit, source_commit, source_path, dest_path, append=append, tag=tag))
 
