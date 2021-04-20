@@ -470,7 +470,7 @@ class PFSMixin:
                 # header_records=header_records,
             )
 
-    def copy_file(self, source_commit, source_path, dest_commit, dest_path, overwrite=None, tag=None):
+    def copy_file(self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None):
         """
         Efficiently copies files already in PFS. Note that the destination
         repo cannot be an output repo, or the copy operation will (as of
@@ -484,16 +484,11 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
-        * `overwrite`: An optional bool specifying whether to overwrite the
+        * `append`: An optional bool specifying whether to append to the
         destination file if it already exists.
         """
-        return self._req(
-            Service.PFS, "CopyFile",
-            src=pfs_proto.File(commit=commit_from(source_commit), path=source_path),
-            dst=pfs_proto.File(commit=commit_from(dest_commit), path=dest_path),
-            overwrite=overwrite,
-            tag=tag,
-        )
+        with self.modify_file_client(dest_commit) as pfc:
+            pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)
 
     def get_file(self, commit, path, URL=None):
         """
@@ -657,12 +652,12 @@ class ModifyFileClient:
 
     def __init__(self, commit):
         self._ops = []
-        self.commit = commit
+        self.commit = commit_from(commit)
 
     def _reqs(self):
-        yield put_file_req(commit_from(self.commit))
         for op in self._ops:
             for r in op.reqs():
+                print(r)
                 yield r
 
     def put_file_from_filepath(self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None,
@@ -698,7 +693,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFilepathOp(
-            pfs_path, local_path, overwrite
+            self.commit, pfs_path, local_path, overwrite,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
@@ -737,7 +732,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileobjOp(
-            path, value, overwrite,
+            self.commit, path, value, overwrite,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
             # target_file_bytes=target_file_bytes,
@@ -816,7 +811,7 @@ class ModifyFileClient:
         converted to a header and applied to all file shards.
         """
         self._ops.append(AtomicModifyFileURLOp(
-            path, url, overwrite,
+            self.commit, path, url, overwrite,
             recursive=recursive,
             # delimiter=delimiter,
             # target_file_datums=target_file_datums,
@@ -832,11 +827,19 @@ class ModifyFileClient:
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
         * `path`: The path to the file.
         """
-        self._ops.append(AtomicDeleteFileOp(path))
+        self._ops.append(AtomicDeleteFileOp(self.commit, path))
+
+    def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
+        """
+        Deletes a file.
+
+        Params:
+
+        * `path`: The path to the file.
+        """
+        self._ops.append(AtomicCopyFileOp(self.commit, source_commit, source_path, dest_path, append=append, tag=tag))
 
 
 class AtomicOp:
@@ -844,7 +847,8 @@ class AtomicOp:
     Represents an operation in a `ModifyFile` call.
     """
 
-    def __init__(self, path):
+    def __init__(self, commit, path):
+        self.commit = commit
         self.path = path
 
     def reqs(self):
@@ -862,61 +866,86 @@ class AtomicModifyFilepathOp(AtomicOp):
     files.
     """
 
-    def __init__(self, pfs_path, local_path, overwrite):
-        super().__init__(pfs_path)
+    def __init__(self, commit, pfs_path, local_path, append):
+        super().__init__(commit, pfs_path)
         self.local_path = local_path
-        self.overwrite = overwrite
+        self.append = append
 
     def reqs(self):
         with open(self.local_path, "rb") as f:
             for i, chunk in enumerate(f):
-                yield put_file_req(path=self.path, chunk=chunk, overwrite=self.overwrite)
-        yield put_file_req(path=self.path, eof=True, overwrite=self.overwrite)
+                yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
+        yield put_file_req(commit=self.commit, path=self.path, eof=True)
 
 
 class AtomicModifyFileobjOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a file-like object."""
 
-    def __init__(self, path, value, overwrite, **kwargs):
-        super().__init__(path, **kwargs)
+    def __init__(self, commit, path, value, append, **kwargs):
+        super().__init__(commit, path, **kwargs)
         self.value = value
-        self.overwrite = overwrite
+        self.append = append
 
     def reqs(self):
         for i in itertools.count():
             chunk = self.value.read(BUFFER_SIZE)
             if len(chunk) == 0:
-                yield put_file_req(path=self.path, overwrite=self.overwrite, eof=True)
+                yield put_file_req(commit=self.commit, path=self.path, eof=True)
                 return
-            yield put_file_req(path=self.path, chunk=chunk, overwrite=self.overwrite)
+            yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
 
 
 class AtomicModifyFileURLOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
-    def __init__(self, path, url, overwrite, recursive=False, **kwargs):
-        super().__init__(path, **kwargs)
+    def __init__(self, commit, path, url, append, recursive=False, **kwargs):
+        super().__init__(commit, path, **kwargs)
         self.url = url
         self.recursive = recursive
-        self.overwrite = overwrite
+        self.append = append
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(append_file=pfs_proto.AppendFile(
+        yield pfs_proto.ModifyFileRequest(
+          commit=self.commit,
+          put_file=pfs_proto.PutFile(
              url_file_source=pfs_proto.URLFileSource(path=self.path, URL=self.url, recursive=self.recursive),
-             overwrite=self.overwrite
-        ))
+             append=self.append,
+          )
+        )
+
+
+class AtomicCopyFileOp(AtomicOp):
+    """A `ModifyFile` operation to copy a file."""
+    def __init__(self, target_commit, source_commit, source_path, dest_path, append, tag):
+        super().__init__(target_commit, dest_path)
+        self.source_commit = commit_from(source_commit)
+        self.source_path = source_path
+        self.dest_path = dest_path
+        self.tag = tag
+        self.append = append
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+          commit=self.commit, 
+          copy_file=pfs_proto.CopyFile(
+            append=self.append,
+            tag=self.tag,
+            dst=self.dest_path,
+            src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+          )
+        )
 
 
 class AtomicDeleteFileOp(AtomicOp):
     """A `ModifyFile` operation to delete a file."""
-    def __init__(self, pfs_path):
-        super().__init__(pfs_path)
+    def __init__(self, commit, pfs_path):
+        super().__init__(commit, pfs_path)
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(delete_file=pfs_proto.DeleteFile(file=self.path))
+        yield pfs_proto.ModifyFileRequest(commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path))
 
 
-def put_file_req(commit=None, path=None, chunk=None, overwrite=False, eof=False):
+def put_file_req(commit=None, path=None, chunk=None, append=False, eof=False):
     return pfs_proto.ModifyFileRequest(
         commit=commit,
-        append_file=pfs_proto.AppendFile(raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof))
+        put_file=pfs_proto.PutFile(append=append, raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof))
     )

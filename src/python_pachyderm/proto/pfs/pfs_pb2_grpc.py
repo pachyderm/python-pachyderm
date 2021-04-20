@@ -101,11 +101,6 @@ class APIStub(object):
         request_serializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.CopyFile = channel.unary_unary(
-        '/pfs.API/CopyFile',
-        request_serializer=src_dot_pfs_dot_pfs__pb2.CopyFileRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-        )
     self.GetFile = channel.unary_stream(
         '/pfs.API/GetFile',
         request_serializer=src_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
@@ -151,20 +146,20 @@ class APIStub(object):
         request_serializer=src_dot_pfs_dot_pfs__pb2.FsckRequest.SerializeToString,
         response_deserializer=src_dot_pfs_dot_pfs__pb2.FsckResponse.FromString,
         )
-    self.AddFileset = channel.unary_unary(
-        '/pfs.API/AddFileset',
-        request_serializer=src_dot_pfs_dot_pfs__pb2.AddFilesetRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+    self.CreateFileset = channel.stream_unary(
+        '/pfs.API/CreateFileset',
+        request_serializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
+        response_deserializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
         )
     self.GetFileset = channel.unary_unary(
         '/pfs.API/GetFileset',
         request_serializer=src_dot_pfs_dot_pfs__pb2.GetFilesetRequest.SerializeToString,
         response_deserializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
         )
-    self.CreateFileset = channel.stream_unary(
-        '/pfs.API/CreateFileset',
-        request_serializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
-        response_deserializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
+    self.AddFileset = channel.unary_unary(
+        '/pfs.API/AddFileset',
+        request_serializer=src_dot_pfs_dot_pfs__pb2.AddFilesetRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.RenewFileset = channel.unary_unary(
         '/pfs.API/RenewFileset',
@@ -296,14 +291,6 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CopyFile(self, request, context):
-    """CopyFile copies the contents of one file to another.
-    TODO: Make this a part of ModifyFile.
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def GetFile(self, request, context):
     """GetFile returns a byte stream of the contents of the file.
     """
@@ -367,9 +354,9 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AddFileset(self, request, context):
+  def CreateFileset(self, request_iterator, context):
     """Fileset API
-    AddFileset associates a fileset with a commit
+    CreateFileset creates a new fileset.
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -382,8 +369,8 @@ class APIServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateFileset(self, request_iterator, context):
-    """CreateFileset creates a new fileset.
+  def AddFileset(self, request, context):
+    """AddFileset associates a fileset with a commit
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -484,11 +471,6 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'CopyFile': grpc.unary_unary_rpc_method_handler(
-          servicer.CopyFile,
-          request_deserializer=src_dot_pfs_dot_pfs__pb2.CopyFileRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-      ),
       'GetFile': grpc.unary_stream_rpc_method_handler(
           servicer.GetFile,
           request_deserializer=src_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
@@ -534,20 +516,20 @@ def add_APIServicer_to_server(servicer, server):
           request_deserializer=src_dot_pfs_dot_pfs__pb2.FsckRequest.FromString,
           response_serializer=src_dot_pfs_dot_pfs__pb2.FsckResponse.SerializeToString,
       ),
-      'AddFileset': grpc.unary_unary_rpc_method_handler(
-          servicer.AddFileset,
-          request_deserializer=src_dot_pfs_dot_pfs__pb2.AddFilesetRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      'CreateFileset': grpc.stream_unary_rpc_method_handler(
+          servicer.CreateFileset,
+          request_deserializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.FromString,
+          response_serializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.SerializeToString,
       ),
       'GetFileset': grpc.unary_unary_rpc_method_handler(
           servicer.GetFileset,
           request_deserializer=src_dot_pfs_dot_pfs__pb2.GetFilesetRequest.FromString,
           response_serializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.SerializeToString,
       ),
-      'CreateFileset': grpc.stream_unary_rpc_method_handler(
-          servicer.CreateFileset,
-          request_deserializer=src_dot_pfs_dot_pfs__pb2.ModifyFileRequest.FromString,
-          response_serializer=src_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.SerializeToString,
+      'AddFileset': grpc.unary_unary_rpc_method_handler(
+          servicer.AddFileset,
+          request_deserializer=src_dot_pfs_dot_pfs__pb2.AddFilesetRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'RenewFileset': grpc.unary_unary_rpc_method_handler(
           servicer.RenewFileset,
