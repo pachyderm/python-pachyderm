@@ -159,7 +159,7 @@ class PPSMixin:
             job=pps_proto.Job(id=job_id), data_filters=data_filters,
         )
 
-    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, egress=None, no_skip=None,
+    def create_pipeline(self, pipeline_name, transform, parallelism_spec=None, egress=None, reprocess_spec=None,
                         update=None, output_branch=None, resource_requests=None, resource_limits=None, input=None,
                         description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
@@ -204,7 +204,7 @@ class PPSMixin:
         * `s3_out`: An optional bool specifying whether the output repo should
         be exposed as an s3 gateway bucket.
         * `sidecar_resource_limits`: An optional `ResourceSpec` setting
-        * `no_skip`: An optional bool specifying whether to skip
+        * `reprocess_spec`: An optional string specifying how to handle
         already-processed data
         resource limits for the pipeline sidecar.
         """
@@ -318,7 +318,7 @@ class PPSMixin:
             spout=spout,
             spec_commit=spec_commit,
             sidecar_resource_limits=sidecar_resource_limits,
-            no_skip=no_skip,
+            reprocess_spec=reprocess_spec,
         )
 
     def create_pipeline_from_request(self, req):
@@ -335,7 +335,7 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "CreatePipeline", req=req)
 
-    def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None, no_skip=None,
+    def create_tf_job_pipeline(self, pipeline_name, tf_job, parallelism_spec=None, reprocess_spec=None,
                                egress=None, update=None, output_branch=None,
                                scale_down_threshold=None, resource_requests=None,
                                resource_limits=None, input=None, description=None, cache_size=None,
@@ -381,7 +381,7 @@ class PPSMixin:
         * `pod_patch`: An optional string.
         * `spout`: An optional `Spout` object.
         * `spec_commit`: An optional `Commit` object.
-        * `no_skip`: An optional bool specifying whether to skip
+        * `reprocess_spec`: An optional string specifying how to handle 
         already-processed data
         """
         return self._req(
@@ -412,7 +412,7 @@ class PPSMixin:
             pod_patch=pod_patch,
             spout=spout,
             spec_commit=spec_commit,
-            no_skip=no_skip,
+            reprocess_spec=reprocess_spec,
         )
 
     def inspect_pipeline(self, pipeline_name, history=None):

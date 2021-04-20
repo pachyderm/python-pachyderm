@@ -657,7 +657,6 @@ class ModifyFileClient:
     def _reqs(self):
         for op in self._ops:
             for r in op.reqs():
-                print(r)
                 yield r
 
     def put_file_from_filepath(self, pfs_path, local_path, overwrite=False, delimiter=None, target_file_datums=None,
