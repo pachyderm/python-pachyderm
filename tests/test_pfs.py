@@ -152,41 +152,6 @@ def test_put_file_bytes_bytestring():
     assert len(files) == 1
 
 
-# def test_put_file_bytes_bytestring_with_overwrite():
-#     """
-#     Start and finish a commit using a context manager while putting a file
-#     from a bytesting.
-#     """
-# 
-#     client, repo_name = sandbox("put_file_bytes_bytestring_with_overwrite")
-# 
-#     with client.commit(repo_name, 'mybranch') as c:
-#         for i in range(5):
-#             client.put_file_bytes(c, 'file.dat', b'DATA')
-# 
-#     with client.commit(repo_name, 'mybranch') as c:
-#         client.put_file_bytes(c, 'file.dat', b'FOO', overwrite_index=2)
-# 
-#     # read the file as an iterator
-#     file = list(client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat'))
-#     assert file == [b'DATA', b'DATA', b'FOO']
-# 
-#     # read the file as a file-like object
-#     file = client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat')
-#     assert file.read(1) == b'D'
-#     assert file.read(0) == b''
-#     assert file.read(5) == b'ATADA'
-#     assert file.read() == b'TAFOO'
-#     assert file.read(0) == b''
-#     file.close() # should be a no-op
-#     assert file.read() == b''
-# 
-#     # read the file as a file-like object, but close before reading everything
-#     file = client.get_file('{}/{}'.format(repo_name, c.id), 'file.dat')
-#     assert file.read(1) == b'D'
-#     file.close()
-#     assert file.read() == b''
-
 def test_put_file_bytes_filelike():
     """
     Start and finish a commit using a context manager while putting a file
@@ -210,50 +175,27 @@ def test_put_file_zero_bytes_pfc():
     client, repo_name = sandbox("put_file_bytes_file_zero_byte")
 
     commit = '{}/master'.format(repo_name)
-    with client.put_file_client() as c:
-        c.put_file_from_bytes(commit, 'file.dat', b'')
-    files = list(client.list_file(commit, '.'))
+    with client.modify_file_client(commit) as c:
+        c.put_file_from_bytes('file.dat', b'')
+    files = list(client.list_file(commit, '/'))
     assert len(files) == 1
     fi = client.inspect_file(commit, 'file.dat')
     assert fi.size_bytes == 0
 
 def test_put_file_bytes_zero_bytes_direct():
     """
-    Put a zero-byte file using a bytestring iterator (tests zero-byte behavior
-    in put_file_from_iterable_reqs)
+    Put a zero-byte file using a bytestring 
     """
 
     client, repo_name = sandbox("put_file_bytes_zero_bytes")
 
     with client.commit(repo_name) as c:
-        client.put_file_bytes(c, 'empty_iter.dat', [])
+        client.put_file_bytes(c, 'empty_bytestring.dat', b'')
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
-    fi = client.inspect_file(c, 'empty_iter.dat')
-    assert fi.size_bytes == 0
-
-    with client.commit(repo_name) as c:
-        client.put_file_bytes(c, 'empty_bytestring.dat', [b''])
-    commit_infos = list(client.list_commit(repo_name))
-    assert len(commit_infos) == 2
-    assert commit_infos[0].commit.id == c.id
     fi = client.inspect_file(c, 'empty_bytestring.dat')
     assert fi.size_bytes == 0
-
-def test_put_file_bytes_iterable():
-    """
-    Start and finish a commit using a context manager while putting a file
-    from an iterator of bytes.
-    """
-
-    client, repo_name = sandbox("put_file_bytes_iterable")
-
-    with client.commit(repo_name) as c:
-        client.put_file_bytes(c, 'file.dat', [b'DATA'])
-
-    files = list(client.list_file('{}/{}'.format(repo_name, c.id), '.'))
-    assert len(files) == 1
 
 
 def test_put_file_bytes_large():
@@ -273,36 +215,36 @@ def test_put_file_bytes_large():
     assert len(files) == 1
 
 
-#def test_put_file_url():
-#    client, repo_name = sandbox("put_file_url")
-#
-#    with client.commit(repo_name) as c:
-#        client.put_file_url(c, "index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
-#
-#    files = list(client.list_file('{}/{}'.format(repo_name, c.id), ''))
-#    assert len(files) == 1
-#    assert files[0].file.path == '/index.html'
+def test_put_file_url():
+    client, repo_name = sandbox("put_file_url")
 
-#def test_put_file_empty():
-#    client, repo_name = sandbox("put_file_atomic")
-#    commit = (repo_name, "master")
+    with client.commit(repo_name) as c:
+        client.put_file_url(c, "index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
 
-#    with tempfile.NamedTemporaryFile() as f:
-#        with client.modify_file_client(commit) as pfc:
-#            pfc.put_file_from_fileobj('file1.dat', BytesIO(b''))
-#            pfc.put_file_from_url("index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
-#            pfc.put_file_from_bytes('file2.dat', b'DATA2')
-#
-#            f.write(b'DATA3')
-#            f.flush()
-#            pfc.put_file_from_filepath("file3.dat", f.name)
-#
-#    files = list(client.list_file(commit, ''))
-#    #assert len(files) == 4
-#    assert files[0].file.path == '/file1.dat'
-#    assert files[1].file.path == '/file2.dat'
-#    assert files[2].file.path == '/file3.dat'
-#    assert files[3].file.path == '/index.html'
+    files = list(client.list_file('{}/{}'.format(repo_name, c.id), ''))
+    assert len(files) == 1
+    assert files[0].file.path == '/index.html'
+
+def test_put_file_empty():
+    client, repo_name = sandbox("put_file_atomic")
+    commit = (repo_name, "master")
+
+    with tempfile.NamedTemporaryFile() as f:
+        with client.modify_file_client(commit) as pfc:
+            pfc.put_file_from_fileobj('file1.dat', BytesIO(b''))
+            pfc.put_file_from_url("index.html", "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html")
+            pfc.put_file_from_bytes('file2.dat', b'DATA2')
+
+            f.write(b'DATA3')
+            f.flush()
+            pfc.put_file_from_filepath("file3.dat", f.name)
+
+    files = list(client.list_file(commit, ''))
+    #assert len(files) == 4
+    assert files[0].file.path == '/file1.dat'
+    assert files[1].file.path == '/file2.dat'
+    assert files[2].file.path == '/file3.dat'
+    assert files[3].file.path == '/index.html'
 
 
 def test_put_file_atomic():
@@ -320,7 +262,7 @@ def test_put_file_atomic():
             pfc.put_file_from_filepath("file3.dat", f.name)
 
     files = list(client.list_file(commit, ''))
-    #assert len(files) == 4
+    assert len(files) == 4
     assert files[0].file.path == '/file1.dat'
     assert files[1].file.path == '/file2.dat'
     assert files[2].file.path == '/file3.dat'
