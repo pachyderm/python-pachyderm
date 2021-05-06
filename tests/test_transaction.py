@@ -22,11 +22,13 @@ def test_batch_transaction():
             )
         )
 
-    transaction = client.batch_transaction([
-        create_repo_request(),
-        create_repo_request(),
-        create_repo_request(),
-    ])
+    transaction = client.batch_transaction(
+        [
+            create_repo_request(),
+            create_repo_request(),
+            create_repo_request(),
+        ]
+    )
 
     assert len(client.list_transaction()) == 0
     assert len(client.list_repo()) == expected_repo_count
@@ -45,15 +47,18 @@ def test_transaction_context_mgr():
         assert len(transactions) == 1
         assert transactions[0].transaction.id == transaction.id
         assert client.inspect_transaction(transaction).transaction.id == transaction.id
-        assert client.inspect_transaction(transaction.id).transaction.id == transaction.id
+        assert (
+            client.inspect_transaction(transaction.id).transaction.id == transaction.id
+        )
 
     assert len(client.list_transaction()) == 0
     assert len(client.list_repo()) == expected_repo_count
 
+
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_nested():
     client = python_pachyderm.Client()
-    
+
     with client.transaction() as transaction:
         assert client.transaction_id is not None
         old_transaction_id = client.transaction_id
@@ -63,6 +68,7 @@ def test_transaction_context_mgr_nested():
             assert client.transaction_id != old_transaction_id
 
         assert client.transaction_id == old_transaction_id
+
 
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_transaction_context_mgr_exception():
@@ -77,6 +83,7 @@ def test_transaction_context_mgr_exception():
 
     assert len(client.list_transaction()) == 0
     assert len(client.list_repo()) == expected_repo_count
+
 
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_delete_transaction():
@@ -96,6 +103,7 @@ def test_delete_transaction():
     with pytest.raises(python_pachyderm.RpcError):
         # re-deleting should cause an error
         client.delete_transaction(transaction)
+
 
 @util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_delete_all_transactions():
