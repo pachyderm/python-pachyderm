@@ -8,7 +8,7 @@ def main():
     # note: the marker filename is set when creating a pipeline, i.e. in
     # `../main.py`.
     manager = python_pachyderm.SpoutManager(marker_filename="marker")
-    
+
     while True:
         try:
             with manager.marker() as marker_file:
@@ -24,6 +24,7 @@ def main():
             commit.put_file_from_bytes("content", contents)
 
         time.sleep(5.0)
+
 
 if __name__ == "__main__":
     main()

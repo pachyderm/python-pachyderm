@@ -3,8 +3,10 @@
 import os
 import python_pachyderm
 
+
 def relpath(path):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+
 
 def main():
     client = python_pachyderm.Client()
@@ -24,8 +26,11 @@ def main():
     python_pachyderm.create_python_pipeline(
         client,
         relpath("consumer"),
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="producer")),
+        input=python_pachyderm.Input(
+            pfs=python_pachyderm.PFSInput(glob="/", repo="producer")
+        ),
     )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

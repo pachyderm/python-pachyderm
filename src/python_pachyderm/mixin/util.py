@@ -7,7 +7,7 @@ def commit_from(src, allow_just_repo=False):
     elif isinstance(src, (tuple, list)) and len(src) == 2:
         return pfs_proto.Commit(repo=pfs_proto.Repo(name=src[0]), id=src[1])
     elif isinstance(src, str):
-        repo_name, commit_id = src.split('/', 1)
+        repo_name, commit_id = src.split("/", 1)
         return pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=commit_id)
 
     if not allow_just_repo:

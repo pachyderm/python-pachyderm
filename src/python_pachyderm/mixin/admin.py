@@ -4,9 +4,15 @@ from python_pachyderm.service import Service
 
 
 class AdminMixin:
-    def extract(self,
-                url=None, no_objects=None, no_repos=None, no_pipelines=None,
-                no_auth=None, no_enterprise=None):
+    def extract(
+        self,
+        url=None,
+        no_objects=None,
+        no_repos=None,
+        no_pipelines=None,
+        no_auth=None,
+        no_enterprise=None,
+    ):
         """
         Extracts cluster data for backup. Yields `Op` objects.
 
@@ -26,10 +32,14 @@ class AdminMixin:
           omit any enterprise activation key (which may break auth restore)
         """
         return self._req(
-            Service.ADMIN, "Extract",
+            Service.ADMIN,
+            "Extract",
             URL=url or "",
-            no_objects=no_objects, no_repos=no_repos, no_pipelines=no_pipelines,
-            no_auth=no_auth, no_enterprise=no_enterprise,
+            no_objects=no_objects,
+            no_repos=no_repos,
+            no_pipelines=no_pipelines,
+            no_auth=no_auth,
+            no_enterprise=no_enterprise,
         )
 
     def extract_pipeline(self, pipeline_name):
@@ -41,8 +51,11 @@ class AdminMixin:
         * `pipeline_name`: A string representing a pipeline name to extract.
         """
         return self._req(
-            Service.ADMIN, "ExtractPipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name) if pipeline_name is not None else None,
+            Service.ADMIN,
+            "ExtractPipeline",
+            pipeline=pps_proto.Pipeline(name=pipeline_name)
+            if pipeline_name is not None
+            else None,
         )
 
     def restore(self, requests):
@@ -59,4 +72,8 @@ class AdminMixin:
         """
         Inspects a cluster. Returns a `ClusterInfo` object.
         """
-        return self._req(Service.ADMIN, "InspectCluster", req=admin_grpc.google_dot_protobuf_dot_empty__pb2.Empty())
+        return self._req(
+            Service.ADMIN,
+            "InspectCluster",
+            req=admin_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+        )

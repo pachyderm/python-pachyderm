@@ -36,7 +36,11 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        return self._req(Service.TRANSACTION, "InspectTransaction", transaction=transaction_from(transaction))
+        return self._req(
+            Service.TRANSACTION,
+            "InspectTransaction",
+            transaction=transaction_from(transaction),
+        )
 
     def delete_transaction(self, transaction):
         """
@@ -46,7 +50,11 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        return self._req(Service.TRANSACTION, "DeleteTransaction", transaction=transaction_from(transaction))
+        return self._req(
+            Service.TRANSACTION,
+            "DeleteTransaction",
+            transaction=transaction_from(transaction),
+        )
 
     def delete_all_transactions(self):
         """
@@ -68,7 +76,11 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        return self._req(Service.TRANSACTION, "FinishTransaction", transaction=transaction_from(transaction))
+        return self._req(
+            Service.TRANSACTION,
+            "FinishTransaction",
+            transaction=transaction_from(transaction),
+        )
 
     @contextmanager
     def transaction(self):
