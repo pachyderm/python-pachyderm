@@ -2,7 +2,14 @@
 
 ## Getting started
 
-When you first clone this repo, make sure to pull submodules as well:
+Setup & initialize virtualenv, for example:
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Run the init script which pulls submodules as well as sets up the Python project and install development tools locally:
 
 ```bash
 make init
@@ -46,8 +53,9 @@ Code layout, as of 7/2020:
 
 ### Style
 
-We use `Black` as our Python code formatter, which means we follow the code style enforced by `Black`.
-You can check that your code changes match the expected style by running `make lint` locally.
+We use `black` as our Python code formatter. After running `make init`,
+there should be a pre-commit hook that runs `black` and `flake8` automatically.
+You can also check that your code changes match the expected style by running `make lint` locally.
 The linter will also run in CI and fail if there are any stylistic discrepancies.
 
 ### Rebuilding protobuf code
@@ -64,7 +72,7 @@ To rebuild protobuf code:
 
 To execute the full test suite:
 
-* Install `tox`
+* Install `tox` (should already be installed via `make init`)
 * Start the cluster to run on `localhost:30650` -- if the cluster is not
 exposed on `localhost`, you can use `pachctl port-forward` to proxy
 connections.
@@ -78,20 +86,13 @@ test suite, because it tests several variants of python and pachyderm.
 The full test suite takes a long time to run, and will be run anyway in CI, so
 locally it's usually more convenient to run specific tests. To do so:
 
-* Setup & initialize virtualenv
-* Install the dependencies specified in `tox.ini` -- as of 30-7-20, this is:
-    * `pytest==5.3.4`
-    * `pytest-runner==5.2`
-    * `protobuf>=3.11.2`
-    * `grpcio>=1.26.0`
-    * `certifi>=2019.11.28`
+* Setup & initialize virtualenv if you haven't done so already
 * Alternatively, you can use `tox` to create a virtual environment for you:
   ```
   mkdir venvdir
   tox --devenv venvdir -e py38 # one possible environment
   source ./venvdir/bin/activate # activate python environment
   ```
-* Install python-pachyderm into the virtualenv: `pip install -e .`
 * Start the cluster to run on `localhost:30650` -- if the cluster is not
 exposed on `localhost`, you can use `pachctl port-forward` to proxy
 connections.
@@ -99,11 +100,7 @@ connections.
 
 ### Linting
 
-To run the linter locally:
-
-* Setup & initialize virtualenv
-* Install `flake8`
-* Run `make lint`
+To run the linter locally, run `make lint`
 
 ## Rebuilding API docs
 
