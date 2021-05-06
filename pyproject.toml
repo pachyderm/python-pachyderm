@@ -1,7 +1,7 @@
 [tool.black]
-extend-exclude = '''
+force-exclude = '''
 /(
-  | proto
+    proto
   | src/python_pachyderm/proto
 )/
 '''
