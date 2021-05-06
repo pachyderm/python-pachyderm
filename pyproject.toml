@@ -1,0 +1,7 @@
+[tool.black]
+extend-exclude = '''
+/(
+  | proto
+  | src/python_pachyderm/proto
+)/
+'''

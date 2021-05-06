@@ -36,7 +36,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        # complete classifier list: http://pypi.python.org/pypi?%3Aaction=list_classifiers
+        # complete list: http://pypi.python.org/pypi?%3Aaction=list_classifiers
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3",
@@ -55,9 +55,15 @@ setup(
     ],
     extras_require={
         "system_certs": ["certifi>=2019.11.28"],
+        "DEV": [
+            "black>=21.5b0",
+            "flake8>=3.9.1",
+            "pre-commit>=2.12.1",
+            "pytest>=5.3.4",
+            "tox>=3.23.1",
+        ],
     },
     test_suite="tests",
-    tests_require=["pytest"],
     setup_requires=["pytest-runner"],
     python_requires=">=3.5",
 )

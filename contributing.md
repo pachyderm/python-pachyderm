@@ -5,7 +5,7 @@
 When you first clone this repo, make sure to pull submodules as well:
 
 ```bash
-git submodule update --init
+make init
 ```
 
 ## Code
@@ -46,10 +46,9 @@ Code layout, as of 7/2020:
 
 ### Style
 
-We follow PEP-8, with slightly loosened max line lengths. You can check that
-your code changes match the expected style by running `make lint` locally.
-The linter will also run in CI and fail if there are any stylistic
-discrepancies.
+We use `Black` as our Python code formatter, which means we follow the code style enforced by `Black`.
+You can check that your code changes match the expected style by running `make lint` locally.
+The linter will also run in CI and fail if there are any stylistic discrepancies.
 
 ### Rebuilding protobuf code
 
