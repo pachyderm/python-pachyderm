@@ -180,11 +180,11 @@ def test_put_file_bytes_bytestring_with_overwrite():
         client.put_file_bytes(c, "file.dat", b"FOO", overwrite_index=2)
 
     # read the file as an iterator
-    file = list(client.get_file("{}/{}".format(repo_name, c.id), "file.dat"))
+    file = list(client.get_file(repo_name, c.id, "file.dat"))
     assert file == [b"DATA", b"DATA", b"FOO"]
 
     # read the file as a file-like object
-    file = client.get_file("{}/{}".format(repo_name, c.id), "file.dat")
+    file = client.get_file(repo_name, c.id, "file.dat")
     assert file.read(1) == b"D"
     assert file.read(0) == b""
     assert file.read(5) == b"ATADA"
@@ -194,7 +194,7 @@ def test_put_file_bytes_bytestring_with_overwrite():
     assert file.read() == b""
 
     # read the file as a file-like object, but close before reading everything
-    file = client.get_file("{}/{}".format(repo_name, c.id), "file.dat")
+    file = client.get_file(repo_name, c.id, "file.dat")
     assert file.read(1) == b"D"
     file.close()
     assert file.read() == b""

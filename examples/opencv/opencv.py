@@ -77,7 +77,7 @@ def main():
         pass
 
     # Get the montage
-    source_file = client.get_file("montage/master", "/montage.png")
+    source_file = client.get_file("montage", "master", "/montage.png")
     with tempfile.NamedTemporaryFile(suffix="montage.png", delete=False) as dest_file:
         shutil.copyfileobj(source_file, dest_file)
         print("montage written to {}".format(dest_file.name))

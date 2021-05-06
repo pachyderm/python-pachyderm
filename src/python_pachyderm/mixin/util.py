@@ -13,3 +13,10 @@ def commit_from(src, allow_just_repo=False):
     if not allow_just_repo:
         raise ValueError("Invalid commit type")
     return pfs_proto.Commit(repo=pfs_proto.Repo(name=src))
+
+
+def pfs_file(repo: str, commit: str = "", path: str = "") -> pfs_proto.File:
+    return pfs_proto.File(
+        commit=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo), id=commit),
+        path=path,
+    )

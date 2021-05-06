@@ -208,7 +208,7 @@ RENAMED_ARGS = {
         ("to_repos", "repos"),
     ],
     "get_file": [
-        ("file", ("commit", "path")),
+        ("file", ("repo", "commit", "path")),
     ],
     "inspect_branch": [
         ("branch", ("repo_name", "branch_name")),

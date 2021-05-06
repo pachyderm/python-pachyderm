@@ -6,7 +6,7 @@ from contextlib import contextmanager
 
 from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.service import Service
-from .util import commit_from
+from .util import commit_from, pfs_file
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -18,7 +18,7 @@ class PFSFile:
     file-like objects, like so:
 
     ```
-    source_file = client.get_file("montage/master", "/montage.png")
+    source_file = client.get_file("montage", "master", "montage.png")
     with open("montage.png", "wb") as dest_file:
         shutil.copyfileobj(source_file, dest_file)
     ```
@@ -26,7 +26,7 @@ class PFSFile:
     Or as an iterator of bytes, like so:
 
     ```
-    source_file = client.get_file("montage/master", "/montage.png")
+    source_file = client.get_file("montage", "master", "montage.png")
     with open("montage.png", "wb") as dest_file:
         for chunk in source_file:
             dest_file.write(chunk)
@@ -624,16 +624,16 @@ class PFSMixin:
             overwrite=overwrite,
         )
 
-    def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
+    def get_file(self, repo, commit, path, offset_bytes=None, size_bytes=None):
         """
         Returns a `PFSFile` object, containing the contents of a file stored
         in PFS.
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path of the file.
+        * `repo`: A string specifying the repo name.
+        * `commit`: A string specifying the commit/branch name.
+        * `path`: A string specifying the file path relative to the '/' dir.
         * `offset_bytes`: An optional int. Specifies a number of bytes that
         should be skipped in the beginning of the file.
         * `size_bytes`: An optional int. limits the total amount of data
@@ -644,7 +644,7 @@ class PFSMixin:
         res = self._req(
             Service.PFS,
             "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            file=pfs_file(repo, commit, path),
             offset_bytes=offset_bytes,
             size_bytes=size_bytes,
         )
