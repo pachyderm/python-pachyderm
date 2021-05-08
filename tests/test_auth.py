@@ -13,6 +13,7 @@ from tests import util
 from python_pachyderm.proto.auth import auth_pb2
 from python_pachyderm.proto.identity import identity_pb2
 
+
 @contextmanager
 def sandbox():
     client = python_pachyderm.Client()
@@ -24,7 +25,9 @@ def sandbox():
     try:
         client.auth_token = "iamroot"
         client.activate_auth(client.auth_token)
-        client.set_identity_server_config(config=identity_pb2.IdentityServerConfig(issuer="http://localhost:658"))
+        client.set_identity_server_config(
+            config=identity_pb2.IdentityServerConfig(issuer="http://localhost:658")
+        )
         yield client
     finally:
         client.auth_token = "iamroot"
@@ -42,11 +45,20 @@ def sandbox():
             pass
         client.deactivate_enterprise()
 
+
 @util.skip_if_no_enterprise()
 def test_auth_configuration():
     with sandbox() as client:
         config = client.get_auth_configuration()
-        client.set_auth_configuration(auth_pb2.OIDCConfig(issuer="http://localhost:658", client_id="client", client_secret="secret", redirect_uri="http://test.example.com"))
+        client.set_auth_configuration(
+            auth_pb2.OIDCConfig(
+                issuer="http://localhost:658",
+                client_id="client",
+                client_secret="secret",
+                redirect_uri="http://test.example.com",
+            )
+        )
+
 
 @util.skip_if_no_enterprise()
 def test_cluster_role_bindings():
@@ -54,21 +66,29 @@ def test_cluster_role_bindings():
         cluster_resource = auth_pb2.Resource(type=auth_pb2.CLUSTER)
         binding = client.get_role_binding(cluster_resource)
         assert binding.binding.entries["pach:root"].roles["clusterAdmin"]
-        client.modify_role_binding(cluster_resource, "robot:someuser", roles=["clusterAdmin"])
+        client.modify_role_binding(
+            cluster_resource, "robot:someuser", roles=["clusterAdmin"]
+        )
 
         binding = client.get_role_binding(cluster_resource)
         assert binding.binding.entries["robot:someuser"].roles["clusterAdmin"]
-        
+
+
 @util.skip_if_no_enterprise()
 def test_authorize():
     with sandbox() as client:
-        assert client.authorize(auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"), [python_pachyderm.Permission.REPO_READ.value])
+        assert client.authorize(
+            auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
+            [python_pachyderm.Permission.REPO_READ.value],
+        )
+
 
 @util.skip_if_no_enterprise()
 def test_who_am_i():
     with sandbox() as client:
         i = client.who_am_i()
         assert i.username == "pach:root"
+
 
 @util.skip_if_no_enterprise()
 def test_robot_token():
@@ -79,6 +99,7 @@ def test_robot_token():
         client.revoke_auth_token(auth_token)
         with pytest.raises(python_pachyderm.RpcError):
             client.who_am_i()
+
 
 @util.skip_if_no_enterprise()
 def test_groups():
