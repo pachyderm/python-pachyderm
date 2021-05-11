@@ -13,6 +13,7 @@ from tests import util
 class Sandbox:
     def __init__(self, test_name):
         client = python_pachyderm.Client()
+        client.delete_all()
         commit, input_repo_name, pipeline_repo_name = util.create_test_pipeline(client, test_name)
         self.client = client
         self.commit = commit
