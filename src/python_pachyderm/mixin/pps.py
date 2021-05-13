@@ -131,7 +131,7 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id=None, page_size=None, page=None, input=None):
+    def list_datum(self, job_id=None, page_size=None, page=None, input=None, status_only=None):
         """
         Lists datums. Yields `ListDatumStreamResponse` objects.
 
@@ -149,7 +149,8 @@ class PPSMixin:
         return self._req(
             Service.PPS, "ListDatumStream",
             job=pps_proto.Job(id=job_id), page_size=page_size, page=page,
-            input=input
+            input=input,
+            status_only=status_only,
         )
 
     def restart_datum(self, job_id, data_filters=None):
@@ -171,7 +172,8 @@ class PPSMixin:
                         description=None, cache_size=None, enable_stats=None, reprocess=None, max_queue_size=None,
                         service=None, chunk_spec=None, datum_timeout=None, job_timeout=None, salt=None, standby=None,
                         datum_tries=None, scheduling_spec=None, pod_patch=None, spout=None, spec_commit=None,
-                        metadata=None, s3_out=None, sidecar_resource_limits=None):
+                        metadata=None, s3_out=None, sidecar_resource_limits=None, reprocess_spec=None,
+                        autoscaling=None):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
         document:
@@ -325,6 +327,8 @@ class PPSMixin:
             spout=spout,
             spec_commit=spec_commit,
             sidecar_resource_limits=sidecar_resource_limits,
+            reprocess_spec=reprocess_spec,
+            autoscaling=autoscaling,
         )
 
     def create_pipeline_from_request(self, req):
