@@ -17,7 +17,7 @@ env:
   jobs:
     # Most recent releases of the last two minor releases of Pachyderm
     - PACHYDERM_VERSION=1.12.5
-    - PACHYDERM_VERSION=1.13.0
+    - PACHYDERM_VERSION=1.13.2
 
 jobs:
   include:
@@ -25,11 +25,11 @@ jobs:
     - python: 3.8
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=1.13.0
+        - PACHYDERM_VERSION=1.13.2
     - python: 3.8
       env:
         - TOXENV=examples
-        - PACHYDERM_VERSION=1.13.0
+        - PACHYDERM_VERSION=1.13.2
 install:
 - make ci-install
 before_script:
