@@ -3,7 +3,7 @@
 set -Eex
 
 # Parse flags
-KUBE_VERSION=v1.21.1
+KUBE_VERSION="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
 while getopts ":v" opt; do
   case "${opt}" in
     v)
