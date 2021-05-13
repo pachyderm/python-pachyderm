@@ -35,7 +35,7 @@ install:
 before_script:
 - make ci-setup
 script:
-- tox
+- tox || etc/testing/kube_debug.sh
 after_script:
 - kubectl describe pods
 - kubectl logs --previous deployment/pachd
