@@ -148,7 +148,9 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id=None, page_size=None, page=None, input=None, status_only=None):
+    def list_datum(
+        self, job_id=None, page_size=None, page=None, input=None, status_only=None
+    ):
         """
         Lists datums. Yields `ListDatumStreamResponse` objects.
 
@@ -221,7 +223,7 @@ class PPSMixin:
         s3_out=None,
         sidecar_resource_limits=None,
         reprocess_spec=None,
-        autoscaling=None
+        autoscaling=None,
     ):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
