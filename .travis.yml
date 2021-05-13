@@ -35,10 +35,9 @@ install:
 before_script:
 - make ci-setup
 script:
-- tox || etc/testing/kube_debug.sh
+- tox
 after_script:
-- kubectl describe pods
-- kubectl logs --previous deployment/pachd
+- etc/testing/kube_debug.sh
 
 before_cache:
   # Make sure cache dirs have the necessary permissions for Travis to traverse
