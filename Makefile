@@ -55,7 +55,7 @@ ci-setup:
 	pachctl version
 
 release:
-	git checkout master
+	git checkout v6.x
 	rm -rf build dist
 	python3 setup.py sdist
 	twine upload dist/*
