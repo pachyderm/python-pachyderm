@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 6.2.0
+
+- Update Python PPS API
+  - `list_datum()` accepts new argument: `status_only`
+  - `create_pipeline()` accepts new arguments: `reprocess_spec`, `autoscaling`
+
 ## 6.1.0
 
 - Support for constructing a `Client` from a Pachyderm config file (PR #220)
