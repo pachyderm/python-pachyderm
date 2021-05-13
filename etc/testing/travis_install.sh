@@ -22,8 +22,8 @@ sudo apt-get install -y -qq \
   python3-setuptools \
   pkg-config \
   fuse \
+  git \
   conntrack # for minikube
-
 
 # Install kubectl
 # To get the latest kubectl version:
