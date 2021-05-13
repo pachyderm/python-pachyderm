@@ -1,6 +1,6 @@
 FROM python:3-onbuild
 LABEL maintainer="jdoliner@pachyderm.io"
 
-ADD run /
-ENTRYPOINT ["/run"]
+ADD run /bin
+ENTRYPOINT ["/bin/run"]
 WORKDIR /work
