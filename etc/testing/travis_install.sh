@@ -25,22 +25,40 @@ sudo apt-get install -y -qq \
   git \
   conntrack # for minikube
 
-# Install kubectl
+### Install kubectl
+# Check cache
+kubectl_valid="False"
+target_kubectl="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
+if [ ! -f ~/cached-deps/kubectl ]; then
+  kubectl_version="$( ~/cached-deps/kubectl version --client=true | grep "GitVersion" | sed 's/^.*GitVersion:"v\([0-9.]\+\)".*$/\1/g' )"
+  if [ "${kubectl_version}" == "${target_kubectl}" ]; then
+    kubectl_valid="True"
+  fi
+fi
+
 # To get the latest kubectl version:
 # curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
-if [ ! -f ~/cached-deps/kubectl ] ; then
-    KUBECTL_VERSION="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
-    curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+if [ "${kubectl_valid}" != "True" ]; then
+    curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/${target_kubectl}/bin/linux/amd64/kubectl && \
         chmod +x ./kubectl && \
         mv ./kubectl ~/cached-deps/kubectl
 fi
 
-# Install minikube
+### Install minikube
+# Check cache
+minikube_valid="False"
+target_minikube="$( jq -r .minikube <"$(git rev-parse --show-toplevel)/version.json" )"
+if [ ! -f ~/cached-deps/minikube ]; then
+  minikube_version="$( ~/cached-deps/minikube version | grep 'minikube version:' | sed 's/^.*v\([0-9.]\+\)$/\1/g' )"
+  if [ "${minikube_version}" == "${target_minikube}" ]; then
+    minikube_valid="True"
+  fi
+fi
+
 # To get the latest minikube version:
 # curl https://api.github.com/repos/kubernetes/minikube/releases | jq -r .[].tag_name | sort -V | tail -n1
-if [ ! -f ~/cached-deps/minikube ] ; then
-    MINIKUBE_VERSION="$( jq -r .minikube <"$(git rev-parse --show-toplevel)/version.json" )"
-    curl -L -o minikube https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 && \
+if [ "${minikube_valid}" != "True" ]; then
+    curl -L -o minikube https://storage.googleapis.com/minikube/releases/${target_minikube}/minikube-linux-amd64 && \
         chmod +x ./minikube && \
         mv ./minikube ~/cached-deps/minikube
 fi
