@@ -29,7 +29,7 @@ sudo apt-get install -y -qq \
 # Check cache
 kubectl_valid="False"
 target_kubectl="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
-if [ ! -f ~/cached-deps/kubectl ]; then
+if [ -f ~/cached-deps/kubectl ]; then
   kubectl_version="$( ~/cached-deps/kubectl version --client=true | grep "GitVersion" | sed 's/^.*GitVersion:"v\([0-9.]\+\)".*$/\1/g' )"
   if [ "${kubectl_version}" == "${target_kubectl}" ]; then
     kubectl_valid="True"
@@ -48,7 +48,7 @@ fi
 # Check cache
 minikube_valid="False"
 target_minikube="$( jq -r .minikube <"$(git rev-parse --show-toplevel)/version.json" )"
-if [ ! -f ~/cached-deps/minikube ]; then
+if [ -f ~/cached-deps/minikube ]; then
   minikube_version="$( ~/cached-deps/minikube version | grep 'minikube version:' | sed 's/^.*v\([0-9.]\+\)$/\1/g' )"
   if [ "${minikube_version}" == "${target_minikube}" ]; then
     minikube_valid="True"
