@@ -39,7 +39,7 @@ fi
 # To get the latest kubectl version:
 # curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
 if [ "${kubectl_valid}" != "True" ]; then
-    curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/${target_kubectl}/bin/linux/amd64/kubectl && \
+    curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v${target_kubectl}/bin/linux/amd64/kubectl && \
         chmod +x ./kubectl && \
         mv ./kubectl ~/cached-deps/kubectl
 fi
@@ -58,7 +58,7 @@ fi
 # To get the latest minikube version:
 # curl https://api.github.com/repos/kubernetes/minikube/releases | jq -r .[].tag_name | sort -V | tail -n1
 if [ "${minikube_valid}" != "True" ]; then
-    curl -L -o minikube https://storage.googleapis.com/minikube/releases/${target_minikube}/minikube-linux-amd64 && \
+    curl -L -o minikube https://storage.googleapis.com/minikube/releases/v${target_minikube}/minikube-linux-amd64 && \
         chmod +x ./minikube && \
         mv ./minikube ~/cached-deps/minikube
 fi
