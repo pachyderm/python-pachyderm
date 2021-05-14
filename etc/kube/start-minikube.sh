@@ -15,6 +15,7 @@ while getopts ":v" opt; do
       ;;
   esac
 done
+minikube version
 
 minikube_args=(
   "--vm-driver=none"
