@@ -3,15 +3,11 @@
 set -Eex
 
 # Parse flags
-VERSION=v1.13.0
-minikube_args=(
-  "--vm-driver=none"
-  "--kubernetes-version=${VERSION}"
-)
+KUBE_VERSION="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
 while getopts ":v" opt; do
   case "${opt}" in
     v)
-      VERSION="v${OPTARG}"
+      KUBE_VERSION="v${OPTARG}"
       ;;
     \?)
       echo "Invalid argument: ${opt}"
@@ -19,7 +15,12 @@ while getopts ":v" opt; do
       ;;
   esac
 done
+minikube version
 
+minikube_args=(
+  "--vm-driver=none"
+  "--kubernetes-version=${KUBE_VERSION}"
+)
 if [[ -n "${TRAVIS}" ]]; then
   minikube_args+=("--bootstrapper=kubeadm")
 fi
