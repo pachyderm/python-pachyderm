@@ -43,7 +43,7 @@ ci-install:
 	sudo dpkg -i /tmp/pachctl.deb
 	pip install tox tox-travis
 
-ci-setup: 
+ci-setup:
 	docker version
 	which pachctl
 	etc/kube/start-minikube.sh
