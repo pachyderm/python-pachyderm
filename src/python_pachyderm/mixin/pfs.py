@@ -68,6 +68,9 @@ class PFSFile:
     """
 
     def __init__(self, stream):
+        # Pachyderm's GetFile API returns its result (which may include several
+        # files, e.g. when getting a directory) as a tar stream--untar the
+        # response byte stream as we receive it from GetFile.
         f = tarfile.open(fileobj=stream, mode='r|*')
         self._file = f.extractfile(f.next())
 
