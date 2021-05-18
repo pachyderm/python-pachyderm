@@ -81,8 +81,8 @@ def test_datums():
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum.id)
     assert datum.state == python_pachyderm.DatumState.SUCCESS.value
 
-    # TODO: This requires catching a datum while it's being processed
-    # sandbox.client.restart_datum(job_id)
+    with pytest.raises(python_pachyderm.RpcError, match=r"datum matching filter \[.*\] could not be found for jobID"):
+        sandbox.client.restart_datum(job_id)
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")

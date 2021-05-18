@@ -334,17 +334,6 @@ def test_inspect_commit():
     assert len(commit.commit.id) == 32
     assert commit.commit.repo.name == repo_name
 
-#def test_delete_commit():
-#    client, repo_name = sandbox("delete_commit")
-#
-#    with client.commit(repo_name, 'master') as c:
-#        pass
-#
-#    commits = list(client.list_commit(repo_name))
-#    assert len(commits) == 1
-#    client.delete_commit("{}/master".format(repo_name))
-#    commits = list(client.list_commit(repo_name))
-#    assert len(commits) == 0
 
 def test_subscribe_commit():
     client, repo_name = sandbox("subscribe_commit")
@@ -490,7 +479,3 @@ def test_diff_file():
     diff = list(client.diff_file(new_commit, "file1.dat", old_commit, "file2.dat"))
     assert diff[0].new_file.file.path == "/file1.dat"
     assert diff[1].old_file.file.path == "/file2.dat"
-
-    #diff = list(client.diff_file(new_commit, "file1.dat"))
-    #assert diff[0].new_file.file.path == "/file1.dat"
-    #assert diff[0].old_file.file.path == "/file1.dat"

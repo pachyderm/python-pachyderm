@@ -74,8 +74,17 @@ class PFSFile:
         f = tarfile.open(fileobj=stream, mode='r|*')
         self._file = f.extractfile(f.next())
 
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.read()
+
     def read(self, size=-1):
         return self._file.read(size)
+
+    def close(self):
+        self._file.close()
 
 
 class PFSMixin:
