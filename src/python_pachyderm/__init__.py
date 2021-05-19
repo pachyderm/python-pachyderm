@@ -1,12 +1,19 @@
 import string as _string
 import importlib as _importlib
 import enum as _enum
-from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper as _EnumTypeWrapper
+from google.protobuf.internal.enum_type_wrapper import (
+    EnumTypeWrapper as _EnumTypeWrapper,
+)
 
 from .mixin.pfs import PFSFile, ModifyFileClient
 from .client import Client, ConfigError, BadClusterDeploymentID
 from .spout import SpoutManager, SpoutCommit
-from .util import put_files, create_python_pipeline, parse_json_pipeline_spec, parse_dict_pipeline_spec
+from .util import (
+    put_files,
+    create_python_pipeline,
+    parse_json_pipeline_spec,
+    parse_dict_pipeline_spec,
+)
 from grpc import RpcError
 
 
@@ -28,6 +35,7 @@ __all__ = [
 
 try:
     from .version import __version__
+
     __version__ = __version__
 except ModuleNotFoundError:
     # The version module is dynamically generated at install time, so if
@@ -69,7 +77,9 @@ def _import_protos(path):
         __all__.append(key)
 
     def should_import(key):
-        return key[0] in uppercase_letters and any(c in lowercase_letters for c in key[1:])
+        return key[0] in uppercase_letters and any(
+            c in lowercase_letters for c in key[1:]
+        )
 
     for key in dir(module):
         if should_import(key):

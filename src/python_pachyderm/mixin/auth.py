@@ -55,7 +55,13 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         """
-        return self._req(Service.AUTH, "ModifyRoleBinding", resource=resource, principal=principal, roles=roles)
+        return self._req(
+            Service.AUTH,
+            "ModifyRoleBinding",
+            resource=resource,
+            principal=principal,
+            roles=roles,
+        )
 
     def get_oidc_login(self):
         """
@@ -96,7 +102,9 @@ class AuthMixin:
         * `resource`: The resource the user wants access to
         * `permissions`: A list of permissions the user wants to test.
         """
-        return self._req(Service.AUTH, "Authorize", resource=resource, permissions=permissions)
+        return self._req(
+            Service.AUTH, "Authorize", resource=resource, permissions=permissions
+        )
 
     def who_am_i(self):
         """
@@ -135,7 +143,9 @@ class AuthMixin:
         * `username`: A string.
         * `groups`: A list of strings.
         """
-        return self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
+        return self._req(
+            Service.AUTH, "SetGroupsForUser", username=username, groups=groups
+        )
 
     def modify_members(self, group, add=None, remove=None):
         """
@@ -147,7 +157,13 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         """
-        return self._req(Service.AUTH, "ModifyMembers", group=group, add=add or [], remove=remove or [])
+        return self._req(
+            Service.AUTH,
+            "ModifyMembers",
+            group=group,
+            add=add or [],
+            remove=remove or [],
+        )
 
     def get_groups(self, username=None):
         """
@@ -180,7 +196,9 @@ class AuthMixin:
         python-pachyderm client until we find a use for it (feel free to file an
         issue in github.com/pachyderm/pachyderm).
         """
-        raise NotImplementedError('extract/restore are for testing and internal use only')
+        raise NotImplementedError(
+            "extract/restore are for testing and internal use only"
+        )
 
     def restore_auth_token(self, token=None):
         """
@@ -192,4 +210,6 @@ class AuthMixin:
         python-pachyderm client until we find a use for it (feel free to file an
         issue in github.com/pachyderm/pachyderm).
         """
-        raise NotImplementedError('extract/restore are for testing and internal use only')
+        raise NotImplementedError(
+            "extract/restore are for testing and internal use only"
+        )

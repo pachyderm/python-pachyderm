@@ -18,6 +18,7 @@ from .mixin.version import VersionMixin
 
 class ConfigError(Exception):
     """Error for issues related to the pachyderm config file"""
+
     def __init__(self, message):
         super().__init__(message)
 
@@ -27,11 +28,13 @@ class BadClusterDeploymentID(ConfigError):
     Error triggered when connected to a cluster that reports back a different
     cluster deployment ID than what is stored in the config file
     """
+
     def __init__(self, expected_deployment_id, actual_deployment_id):
-        super().__init__("connected to the wrong cluster ('{}' vs '{}')".format(
-            expected_deployment_id,
-            actual_deployment_id
-        ))
+        super().__init__(
+            "connected to the wrong cluster ('{}' vs '{}')".format(
+                expected_deployment_id, actual_deployment_id
+            )
+        )
         self.expected_deployment_id = expected_deployment_id
         self.actual_deployment_id = actual_deployment_id
 
@@ -48,9 +51,17 @@ class Client(
     PPSMixin,
     TransactionMixin,
     VersionMixin,
-    object
+    object,
 ):
-    def __init__(self, host=None, port=None, auth_token=None, root_certs=None, transaction_id=None, tls=None):
+    def __init__(
+        self,
+        host=None,
+        port=None,
+        auth_token=None,
+        root_certs=None,
+        transaction_id=None,
+        tls=None,
+    ):
         """
         Creates a Pachyderm client.
 
@@ -79,6 +90,7 @@ class Client(
         if tls and root_certs is None:
             # load default certs if none are specified
             import certifi
+
             with open(certifi.where(), "rb") as f:
                 root_certs = f.read()
 
@@ -105,7 +117,10 @@ class Client(
         * `transaction_id`: The ID of the transaction to run operations on.
         """
 
-        if "PACHD_PEER_SERVICE_HOST" in os.environ and "PACHD_PEER_SERVICE_PORT" in os.environ:
+        if (
+            "PACHD_PEER_SERVICE_HOST" in os.environ
+            and "PACHD_PEER_SERVICE_PORT" in os.environ
+        ):
             # Try to use the pachd peer service if it's available. This is
             # only supported in pachyderm>=1.10, but is more reliable because
             # it'll work when TLS is enabled on the cluster.
@@ -117,10 +132,14 @@ class Client(
             host = os.environ["PACHD_SERVICE_HOST"]
             port = int(os.environ["PACHD_SERVICE_PORT"])
 
-        return cls(host=host, port=port, auth_token=auth_token, transaction_id=transaction_id)
+        return cls(
+            host=host, port=port, auth_token=auth_token, transaction_id=transaction_id
+        )
 
     @classmethod
-    def new_from_pachd_address(cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None):
+    def new_from_pachd_address(
+        cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None
+    ):
         """
         Creates a Pachyderm client from a given pachd address.
 
@@ -178,7 +197,9 @@ class Client(
         else:
             try:
                 # Search for config file in default home location
-                with open(str(Path.home() / ".pachyderm/config.json"), "r") as config_file:
+                with open(
+                    str(Path.home() / ".pachyderm/config.json"), "r"
+                ) as config_file:
                     j = json.load(config_file)
             except FileNotFoundError:
                 # If not found, search in "/pachctl" (default mount for spout)
@@ -205,23 +226,23 @@ class Client(
                 pachd_address,
                 auth_token=auth_token,
                 root_certs=root_certs,
-                transaction_id=transaction_id
+                transaction_id=transaction_id,
             )
         else:
             port_forwarders = context.get("port_forwarders", {})
             pachd_port = port_forwarders.get("pachd", 30650)
             pachd_address = "grpc://localhost:{}".format(pachd_port)
             client = cls.new_from_pachd_address(
-                pachd_address,
-                auth_token=auth_token,
-                transaction_id=transaction_id
+                pachd_address, auth_token=auth_token, transaction_id=transaction_id
             )
 
         expected_deployment_id = context.get("cluster_deployment_id")
         if expected_deployment_id:
             cluster_info = client.inspect_cluster()
             if cluster_info.deployment_id != expected_deployment_id:
-                raise BadClusterDeploymentID(expected_deployment_id, cluster_info.deployment_id)
+                raise BadClusterDeploymentID(
+                    expected_deployment_id, cluster_info.deployment_id
+                )
 
         return client
 

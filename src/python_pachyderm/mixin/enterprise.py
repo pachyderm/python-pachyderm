@@ -13,7 +13,13 @@ class EnterpriseMixin:
         * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         """
-        return self._req(Service.ENTERPRISE, "Activate", license_server=license_server, id=id, secret=secret)
+        return self._req(
+            Service.ENTERPRISE,
+            "Activate",
+            license_server=license_server,
+            id=id,
+            secret=secret,
+        )
 
     def get_enterprise_state(self):
         """

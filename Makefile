@@ -33,6 +33,9 @@ src/python_pachyderm/proto: docker-build-proto
 
 init:
 	git submodule update --init
+	python -m pip install -U pip wheel setuptools
+	python -m pip install -e .[DEV]
+	pre-commit install
 
 ci-install:
 	sudo apt-get update
@@ -58,7 +61,8 @@ release:
 	twine upload dist/*
 
 lint:
-	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=80
+	black --check --diff .
+	flake8 .
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
 .PHONY: docs docker-build-proto init ci-install ci-setup release lint
