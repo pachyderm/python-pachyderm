@@ -93,12 +93,12 @@ def test_put_files():
         python_pachyderm.put_files(client, d, commit, "/sub")
         python_pachyderm.put_files(client, d, commit, "/sub/")
 
-    expected = set(["/", "/sub"])
+    expected = set(["/", "/sub/"])
     for i in range(5):
-        expected.add("/{}".format(i))
+        expected.add("/{}/".format(i))
         expected.add("/{}.txt".format(i))
         expected.add("/{}/{}.txt".format(i, i))
-        expected.add("/sub/{}".format(i))
+        expected.add("/sub/{}/".format(i))
         expected.add("/sub/{}.txt".format(i))
         expected.add("/sub/{}/{}.txt".format(i, i))
 
@@ -119,7 +119,6 @@ def test_create_python_pipeline_bad_path():
             input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)),
         )
 
-@util.skip_if_below_pachyderm_version(1, 11, 2)
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     repo_name = util.create_test_repo(client, "create_python_pipeline")
@@ -168,8 +167,8 @@ def test_create_python_pipeline():
         ["/requirements.txt"],
         ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
     )
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b' DATA']
+    file = client.get_file('{}/master'.format(pipeline_name), 'file.dat')
+    assert file.read() == b' DATA'
 
     # 2) update pipeline from a directory without a requirements.txt
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -184,8 +183,8 @@ def test_create_python_pipeline():
         )
 
     check_all_expected_files([], [])
-    file = list(client.get_file('{}/master'.format(pipeline_name), 'file.dat'))
-    assert file == [b'DATA']
+    file = client.get_file('{}/master'.format(pipeline_name), 'file.dat')
+    assert file.read() == b'DATA'
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)

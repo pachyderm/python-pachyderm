@@ -23,12 +23,12 @@ src/python_pachyderm/proto: docker-build-proto
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
-	find ./proto/pachyderm/src/client -regex ".*\.proto" \
+	find ./proto/pachyderm/ -regex ".*\.proto" \
 	| grep -v 'internal' \
 	| xargs tar cf - \
 	| docker run -i pachyderm_python_proto \
 	| tar xf -
-	mv src/python_pachyderm/client src/python_pachyderm/proto
+	mv src/python_pachyderm/src src/python_pachyderm/proto
 	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
 
 init:
@@ -61,4 +61,4 @@ lint:
 	flake8 src/python_pachyderm --exclude=src/python_pachyderm/proto --max-line-length=120 --max-doc-length=80
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
-.PHONY: docker-build-proto init ci-install ci-setup release lint
+.PHONY: docs docker-build-proto init ci-install ci-setup release lint

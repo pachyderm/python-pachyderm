@@ -78,23 +78,18 @@ def test_datums():
 
     datums = list(sandbox.client.list_datum(job_id))
     assert len(datums) == 1
-    datum = sandbox.client.inspect_datum(job_id, datums[0].datum_info.datum.id)
+    datum = sandbox.client.inspect_datum(job_id, datums[0].datum.id)
     assert datum.state == python_pachyderm.DatumState.SUCCESS.value
 
-    # Skip this check in >=1.11.0, due to a bug:
-    # https://github.com/pachyderm/pachyderm/issues/5123
-    # TODO: remove this check once the bug is fixed
-    if util.test_pachyderm_version() < (1, 11, 0):
-        # Just ensure this doesn't raise an exception
+    with pytest.raises(python_pachyderm.RpcError, match=r"datum matching filter \[.*\] could not be found for jobID"):
         sandbox.client.restart_datum(job_id)
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
-    if util.test_pachyderm_version() >= (1, 9, 0):
-        pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
-        assert pipeline.pipeline.name == sandbox.pipeline_repo_name
+    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
+    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
 
 def test_list_pipeline():
     sandbox = Sandbox("list_pipeline")
@@ -126,7 +121,6 @@ def test_restart_pipeline():
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert not pipeline.stopped
 
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_run_pipeline():
     sandbox = Sandbox("run_pipeline")
 
@@ -136,7 +130,6 @@ def test_run_pipeline():
     # just make sure it worked
     sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
 
-@util.skip_if_below_pachyderm_version(1, 9, 10)
 def test_run_cron():
     sandbox = Sandbox("run_cron")
 
@@ -150,7 +143,6 @@ def test_run_cron():
         sandbox.client.run_cron(sandbox.pipeline_repo_name)
     assert "pipeline must have a cron input" in str(e.value)
 
-@util.skip_if_below_pachyderm_version(1, 10, 0)
 def test_secrets():
     client = python_pachyderm.Client()
     secret_name = util.test_repo_name("test-secrets")
@@ -188,9 +180,6 @@ def test_get_pipeline_logs():
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
     assert next(logs) is not None
 
-# job logs are available in 1.8.x, but they frequently fail due to bugs that
-# are resolved in 1.9.0
-@util.skip_if_below_pachyderm_version(1, 9, 0)
 def test_get_job_logs():
     sandbox = Sandbox("get_logs_logs")
     job_id = sandbox.wait_for_job()
