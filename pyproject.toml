@@ -1,0 +1,7 @@
+[tool.black]
+force-exclude = '''
+/(
+    proto
+  | src/python_pachyderm/proto
+)/
+'''
