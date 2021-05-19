@@ -87,8 +87,6 @@ BLACKLISTED_METHODS = {
         "update_job_state",
     ],
     Service.AUTH: [
-        "get_auth_token",
-        "extend_auth_token",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
