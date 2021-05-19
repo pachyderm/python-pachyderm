@@ -73,13 +73,17 @@ class PFSFile:
         # files, e.g. when getting a directory) as a tar stream--untar the
         # response byte stream as we receive it from GetFile.
         f = tarfile.open(fileobj=stream, mode="r|*")
+        # TODO how to handle multiple files in the tar stream?
         self._file = f.extractfile(f.next())
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        return self.read()
+        x = self.read()
+        if not x:
+            raise StopIteration
+        return x
 
     def read(self, size=-1):
         return self._file.read(size)
