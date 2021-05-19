@@ -374,7 +374,7 @@ def test_inspect_commit():
 def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
 
-    with client.commit(repo_name, 'master') as c:
+    with client.commit(repo_name, 'master'):
         pass
 
     commits = list(client.list_commit(repo_name))
