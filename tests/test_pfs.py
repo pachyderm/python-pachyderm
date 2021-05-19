@@ -123,6 +123,7 @@ def test_finish_commit(commit_arg):
             if c.commit.id == commit.id and c.finished.seconds != 0
         ]
     )
+    assert commit_match_count == 1
     assert commit_infos[0].finished.seconds != 0
     assert commit_infos[0].finished.nanos != 0
 
@@ -321,7 +322,6 @@ def test_copy_file():
 
     with client.commit(repo_name, "master") as dest_commit:
         client.copy_file(src_commit, "file1.dat", dest_commit, "copy.dat")
-        # client.copy_file(src_commit, 'file2.dat', dest_commit, 'copy.dat', overwrite=True)
 
     files = list(client.list_file("{}/{}".format(repo_name, dest_commit.id), ""))
     assert len(files) == 3
@@ -366,7 +366,7 @@ def test_subscribe_commit():
     client, repo_name = sandbox("subscribe_commit")
     commits = client.subscribe_commit(repo_name, "master")
 
-    with client.commit(repo_name, "master") as c:
+    with client.commit(repo_name, "master"):
         pass
 
     commit = next(commits)
@@ -377,9 +377,9 @@ def test_subscribe_commit():
 def test_list_branch():
     client, repo_name = sandbox("list_branch")
 
-    with client.commit(repo_name, "master") as c:
+    with client.commit(repo_name, "master"):
         pass
-    with client.commit(repo_name, "develop") as c:
+    with client.commit(repo_name, "develop"):
         pass
 
     branches = client.list_branch(repo_name)
@@ -391,7 +391,7 @@ def test_list_branch():
 def test_delete_branch():
     client, repo_name = sandbox("delete_branch")
 
-    with client.commit(repo_name, "develop") as c:
+    with client.commit(repo_name, "develop"):
         pass
 
     branches = client.list_branch(repo_name)

@@ -22,7 +22,7 @@ def test_batch_transaction():
             )
         )
 
-    transaction = client.batch_transaction(
+    client.batch_transaction(
         [
             create_repo_request(),
             create_repo_request(),
@@ -57,11 +57,11 @@ def test_transaction_context_mgr():
 def test_transaction_context_mgr_nested():
     client = python_pachyderm.Client()
 
-    with client.transaction() as transaction:
+    with client.transaction():
         assert client.transaction_id is not None
         old_transaction_id = client.transaction_id
 
-        with client.transaction() as transaction:
+        with client.transaction():
             assert client.transaction_id is not None
             assert client.transaction_id != old_transaction_id
 
@@ -73,7 +73,7 @@ def test_transaction_context_mgr_exception():
     expected_repo_count = len(client.list_repo())
 
     with pytest.raises(Exception):
-        with client.transaction() as transaction:
+        with client.transaction():
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             raise Exception("oops!")

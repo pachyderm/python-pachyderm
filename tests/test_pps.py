@@ -5,7 +5,6 @@
 import time
 
 import pytest
-import grpc
 
 import python_pachyderm
 from tests import util
@@ -29,7 +28,7 @@ class Sandbox:
 
 def test_list_job():
     sandbox = Sandbox("list_job")
-    job_id = sandbox.wait_for_job()
+    sandbox.wait_for_job()
 
     jobs = list(sandbox.client.list_job())
     assert len(jobs) >= 1
@@ -65,12 +64,14 @@ def test_stop_job():
     job_id = sandbox.wait_for_job()
 
     sandbox.client.stop_job(job_id)
-    # This is necessary because `StopJob` does not wait for the job to be killed before returning a result.
+    # This is necessary because `StopJob` does not wait for the job to be
+    # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
     job = sandbox.client.inspect_job(job_id)
-    # We race to stop the job before it finishes - if we lose the race, it will be in state JOB_SUCCESS
+    # We race to stop the job before it finishes - if we lose the race, it will
+    # be in state JOB_SUCCESS
     assert (
         job.state == python_pachyderm.JobState.JOB_KILLED.value
         or job.state == python_pachyderm.JobState.JOB_SUCCESS.value
@@ -203,7 +204,7 @@ def test_secrets():
 
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
-    job_id = sandbox.wait_for_job()
+    sandbox.wait_for_job()
 
     # Wait for the job to complete
     list(sandbox.client.flush_job([sandbox.commit]))

@@ -32,7 +32,7 @@ def skip_if_below_pachyderm_version(major, minor, revision):
 
 
 def skip_if_no_enterprise():
-    test = os.environ.get("PACH_PYTHON_ENTERPRISE_CODE") == None
+    test = os.environ.get("PACH_PYTHON_ENTERPRISE_CODE") is None
     return pytest.mark.skipif(test, reason="enterprise code not available")
 
 

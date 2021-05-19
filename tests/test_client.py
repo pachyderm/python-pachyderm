@@ -19,7 +19,7 @@ def test_client_init_with_args():
 
 def test_client_new_in_cluster_missing_envs():
     with pytest.raises(Exception):
-        client = python_pachyderm.Client.new_in_cluster()
+        python_pachyderm.Client.new_in_cluster()
 
 
 def test_client_new_from_pachd_address():

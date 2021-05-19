@@ -62,7 +62,7 @@ release:
 
 lint:
 	black --check --diff .
-	flake8 src/python_pachyderm etc setup.py
+	flake8 .
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
 .PHONY: docs docker-build-proto init ci-install ci-setup release lint
