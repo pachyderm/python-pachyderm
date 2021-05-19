@@ -294,7 +294,7 @@ class PFSMixin:
             getattr(req, "from").CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommit", req=req)
 
-def squash_commit(self, commit):
+    def squash_commit(self, commit):
         """
         Squashes a commit.
         Params:
