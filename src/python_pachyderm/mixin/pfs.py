@@ -294,6 +294,15 @@ class PFSMixin:
             getattr(req, "from").CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommit", req=req)
 
+def squash_commit(self, commit):
+        """
+        Squashes a commit.
+        Params:
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        """
+        return self._req(Service.PFS, "SquashCommit", commit=commit_from(commit))
+
     def flush_commit(self, commits, repos=None):
         """
         Blocks until all of the commits which have a set of commits as

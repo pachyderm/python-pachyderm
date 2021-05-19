@@ -371,6 +371,17 @@ def test_inspect_commit():
     assert len(commit.commit.id) == 32
     assert commit.commit.repo.name == repo_name
 
+def test_squash_commit():
+    client, repo_name = sandbox("squash_commit")
+
+    with client.commit(repo_name, 'master') as c:
+        pass
+
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 1
+    client.squash_commit("{}/master".format(repo_name))
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 0
 
 def test_subscribe_commit():
     client, repo_name = sandbox("subscribe_commit")
