@@ -12,7 +12,9 @@ from os.path import join
 
 def test_spout_manager():
     with tempfile.TemporaryDirectory(suffix="pachyderm") as d:
-        manager = python_pachyderm.SpoutManager(pfs_directory=d, marker_filename="marker")
+        manager = python_pachyderm.SpoutManager(
+            pfs_directory=d, marker_filename="marker"
+        )
 
         with manager.commit() as commit:
             commit.put_file_from_bytes("foo1.txt", b"bar1")
@@ -38,9 +40,12 @@ def test_spout_manager():
             with t.extractfile("marker") as x:
                 assert x.read() == b"marker2"
 
+
 def test_spout_manager_nested_commits():
     with tempfile.TemporaryDirectory(suffix="pachyderm") as d:
-        manager = python_pachyderm.SpoutManager(pfs_directory=d, marker_filename="marker")
+        manager = python_pachyderm.SpoutManager(
+            pfs_directory=d, marker_filename="marker"
+        )
 
         with manager.commit() as commit:
             commit.put_file_from_bytes("foo1.txt", b"bar1")
@@ -50,9 +55,12 @@ def test_spout_manager_nested_commits():
                 with manager.commit() as commit:
                     pass
 
+
 def test_spout_manager_commit_state():
     with tempfile.TemporaryDirectory(suffix="pachyderm") as d:
-        manager = python_pachyderm.SpoutManager(pfs_directory=d, marker_filename="marker")
+        manager = python_pachyderm.SpoutManager(
+            pfs_directory=d, marker_filename="marker"
+        )
 
         for _ in range(3):
             with pytest.raises(Exception):
@@ -71,4 +79,3 @@ def test_spout_manager_commit_state():
                 assert x.read() == b"bar1"
             with t.extractfile("marker") as x:
                 assert x.read() == b"marker1"
-

@@ -15,7 +15,12 @@ class LicenseMixin:
         primarily used for testing), and is only applied if it's earlier than
         the signed expiration time in `activation_code`.
         """
-        return self._req(Service.LICENSE, "Activate", activation_code=activation_code, expires=expires)
+        return self._req(
+            Service.LICENSE,
+            "Activate",
+            activation_code=activation_code,
+            expires=expires,
+        )
 
     def add_cluster(self, id, address, secret=None):
         """
@@ -29,7 +34,9 @@ class LicenseMixin:
         to authenticate.
         If not specified, a random secret will be generated and returned.
         """
-        return self._req(Service.LICENSE, "AddCluster", id=id, address=address, secret=secret)
+        return self._req(
+            Service.LICENSE, "AddCluster", id=id, address=address, secret=secret
+        )
 
     def update_cluster(self, id, address):
         """

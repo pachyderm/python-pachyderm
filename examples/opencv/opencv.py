@@ -13,8 +13,10 @@ import shutil
 import tempfile
 import python_pachyderm
 
+
 def relpath(path):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+
 
 def main():
     # Connects to a pachyderm cluster on the default host:port
@@ -37,7 +39,9 @@ def main():
     python_pachyderm.create_python_pipeline(
         client,
         relpath("edges"),
-        input=python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/*", repo="images")),
+        input=python_pachyderm.Input(
+            pfs=python_pachyderm.PFSInput(glob="/*", repo="images")
+        ),
     )
 
     # Create the montage pipeline
@@ -46,12 +50,20 @@ def main():
         transform=python_pachyderm.Transform(
             cmd=["sh"],
             image="v4tech/imagemagick",
-            stdin=["montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"]
+            stdin=[
+                "montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"
+            ],
         ),
-        input=python_pachyderm.Input(cross=[
-            python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="images")),
-            python_pachyderm.Input(pfs=python_pachyderm.PFSInput(glob="/", repo="edges")),
-        ])
+        input=python_pachyderm.Input(
+            cross=[
+                python_pachyderm.Input(
+                    pfs=python_pachyderm.PFSInput(glob="/", repo="images")
+                ),
+                python_pachyderm.Input(
+                    pfs=python_pachyderm.PFSInput(glob="/", repo="edges")
+                ),
+            ]
+        ),
     )
 
     with client.commit("images", "master") as commit:
@@ -70,5 +82,6 @@ def main():
         shutil.copyfileobj(source_file, dest_file)
         print("montage written to {}".format(dest_file.name))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

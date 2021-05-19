@@ -23,7 +23,9 @@ def client():
 
     pc.auth_token = "iamroot"
     pc.activate_auth(pc.auth_token)
-    pc.set_identity_server_config(config=identity_pb2.IdentityServerConfig(issuer="http://localhost:658"))
+    pc.set_identity_server_config(
+        config=identity_pb2.IdentityServerConfig(issuer="http://localhost:658")
+    )
     yield pc
     # not redundant because auth_token could be overriden by tests
     pc.auth_token = "iamroot"
@@ -45,7 +47,14 @@ def client():
 @util.skip_if_no_enterprise()
 def test_auth_configuration(client):
     client.get_auth_configuration()
-    client.set_auth_configuration(auth_pb2.OIDCConfig(issuer="http://localhost:658", client_id="client", client_secret="secret", redirect_uri="http://test.example.com"))
+    client.set_auth_configuration(
+        auth_pb2.OIDCConfig(
+            issuer="http://localhost:658",
+            client_id="client",
+            client_secret="secret",
+            redirect_uri="http://test.example.com",
+        )
+    )
 
 
 @util.skip_if_no_enterprise()
@@ -53,7 +62,9 @@ def test_cluster_role_bindings(client):
     cluster_resource = auth_pb2.Resource(type=auth_pb2.CLUSTER)
     binding = client.get_role_binding(cluster_resource)
     assert binding.binding.entries["pach:root"].roles["clusterAdmin"]
-    client.modify_role_binding(cluster_resource, "robot:someuser", roles=["clusterAdmin"])
+    client.modify_role_binding(
+        cluster_resource, "robot:someuser", roles=["clusterAdmin"]
+    )
 
     binding = client.get_role_binding(cluster_resource)
     assert binding.binding.entries["robot:someuser"].roles["clusterAdmin"]
@@ -61,7 +72,10 @@ def test_cluster_role_bindings(client):
 
 @util.skip_if_no_enterprise()
 def test_authorize(client):
-    client.authorize(auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"), [python_pachyderm.Permission.REPO_READ.value])
+    client.authorize(
+        auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
+        [python_pachyderm.Permission.REPO_READ.value],
+    )
 
 
 @util.skip_if_no_enterprise()
