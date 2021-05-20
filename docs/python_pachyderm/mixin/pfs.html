@@ -1,0 +1,4265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>python_pachyderm.mixin.pfs API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.mixin.pfs</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import io
+import itertools
+import tarfile
+from contextlib import contextmanager
+
+from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm.service import Service
+from .util import commit_from
+
+
+BUFFER_SIZE = 19 * 1024 * 1024
+
+
+class FileTarstream:
+    &#34;&#34;&#34;
+    Implements a file-like interface over a GRPC byte stream,
+    so we can use tarfile to decode the file contents.
+    &#34;&#34;&#34;
+
+    def __init__(self, res):
+        self.res = res
+        self.buf = []
+
+    def __next__(self):
+        return next(self.res).value
+
+    def close(self):
+        self.res.cancel()
+
+    def read(self, size=-1):
+        if self.res.cancelled():
+            return b&#34;&#34;
+
+        buf = []
+        remaining = size if size &gt;= 0 else 2 ** 32
+
+        if self.buf:
+            buf.append(self.buf[:remaining])
+            self.buf = self.buf[remaining:]
+            remaining -= len(buf[-1])
+
+        try:
+            while remaining &gt; 0:
+                b = next(self)
+
+                if len(b) &gt; remaining:
+                    buf.append(b[:remaining])
+                    self.buf = b[remaining:]
+                else:
+                    buf.append(b)
+
+                remaining -= len(buf[-1])
+        except StopIteration:
+            pass
+
+        return b&#34;&#34;.join(buf)
+
+
+class PFSFile:
+    &#34;&#34;&#34;
+    The contents of a file stored in PFS. You can treat these as
+    file-like objects, like so:
+
+    ```
+    source_file = client.get_file(&#34;montage/master&#34;, &#34;/montage.png&#34;)
+    with open(&#34;montage.png&#34;, &#34;wb&#34;) as dest_file:
+        shutil.copyfileobj(source_file, dest_file)
+    ```
+    &#34;&#34;&#34;
+
+    def __init__(self, stream):
+        # Pachyderm&#39;s GetFile API returns its result (which may include several
+        # files, e.g. when getting a directory) as a tar stream--untar the
+        # response byte stream as we receive it from GetFile.
+        f = tarfile.open(fileobj=stream, mode=&#34;r|*&#34;)
+        # TODO how to handle multiple files in the tar stream?
+        self._file = f.extractfile(f.next())
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        x = self.read()
+        if not x:
+            raise StopIteration
+        return x
+
+    def read(self, size=-1):
+        return self._file.read(size)
+
+    def close(self):
+        self._file.close()
+
+
+class PFSMixin:
+    def create_repo(self, repo_name, description=None, update=None):
+        &#34;&#34;&#34;
+        Creates a new `Repo` object in PFS with the given name. Repos are the
+        top level data object in PFS and should be used to store data of a
+        similar type. For example rather than having a single `Repo` for an
+        entire project you might have separate `Repo`s for logs, metrics,
+        database dumps etc.
+
+        Params:
+
+        * `repo_name`: Name of the repo.
+        * `description`: An optional string describing the repo.
+        * `update`: Whether to update if the repo already exists.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;CreateRepo&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            description=description,
+            update=update,
+        )
+
+    def inspect_repo(self, repo_name):
+        &#34;&#34;&#34;
+        Returns info about a specific repo. Returns a `RepoInfo` object.
+
+        Params:
+
+        * `repo_name`: Name of the repo.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+        )
+
+    def list_repo(self):
+        &#34;&#34;&#34;
+        Returns info about all repos, as a list of `RepoInfo` objects.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info
+
+    def delete_repo(self, repo_name, force=None):
+        &#34;&#34;&#34;
+        Deletes a repo and reclaims the storage space it was using.
+
+        Params:
+
+        * `repo_name`: The name of the repo.
+        * `force`: If set to true, the repo will be removed regardless of
+          errors. This argument should be used with care.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;DeleteRepo&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            force=force,
+            all=False,
+        )
+
+    def delete_all_repos(self, force=None):
+        &#34;&#34;&#34;
+        Deletes all repos.
+
+        Params:
+
+        * `force`: If set to true, the repo will be removed regardless of
+        errors. This argument should be used with care.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;DeleteRepo&#34;, force=force, all=True)
+
+    def start_commit(
+        self, repo_name, branch=None, parent=None, description=None, provenance=None
+    ):
+        &#34;&#34;&#34;
+        Begins the process of committing data to a Repo. Once started you can
+        write to the Commit with ModifyFile and when all the data has been
+        written you must finish the Commit with FinishCommit. NOTE, data is
+        not persisted until FinishCommit is called. A Commit object is
+        returned.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * `description`: An optional string describing the commit.
+        * `provenance`: An optional iterable of `CommitProvenance` objects
+        specifying the commit provenance.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;StartCommit&#34;,
+            parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
+            branch=branch,
+            description=description,
+            provenance=provenance,
+        )
+
+    def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
+        &#34;&#34;&#34;
+        Ends the process of committing data to a Repo and persists the
+        Commit. Once a Commit is finished the data becomes immutable and
+        future attempts to write to it with ModifyFile will error.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `description`: An optional string describing this commit.
+        * `size_bytes`: An optional int.
+        * `empty`: An optional bool. If set, the commit will be closed (its
+        `finished` field will be set to the current time) but its `tree` will
+        be left nil.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;FinishCommit&#34;,
+            commit=commit_from(commit),
+            description=description,
+            size_bytes=size_bytes,
+            empty=empty,
+        )
+
+    @contextmanager
+    def commit(self, repo_name, branch=None, parent=None, description=None):
+        &#34;&#34;&#34;
+        A context manager for running operations within a commit.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * `description`: An optional string describing the commit.
+        &#34;&#34;&#34;
+        commit = self.start_commit(repo_name, branch, parent, description)
+        try:
+            yield commit
+        finally:
+            self.finish_commit(commit)
+
+    def inspect_commit(self, commit, block_state=None):
+        &#34;&#34;&#34;
+        Inspects a commit. Returns a `CommitInfo` object.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * An optional int that causes this method to block until the commit is
+        in the desired commit state. See the `CommitState` enum.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectCommit&#34;,
+            commit=commit_from(commit),
+            block_state=block_state,
+        )
+
+    def list_commit(
+        self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
+    ):
+        &#34;&#34;&#34;
+        Lists commits. Yields `CommitInfo` objects.
+
+        Params:
+
+        * `repo_name`: If only `repo_name` is given, all commits in the repo
+        are returned.
+        * `to_commit`: Optional. Only the ancestors of `to`, including `to`
+        itself, are considered.
+        * `from_commit`: Optional. Only the descendants of `from`, including
+        `from` itself, are considered.
+        * `number`: Optional. Determines how many commits are returned.  If
+        `number` is 0, all commits that match the aforementioned criteria are
+        returned.
+        &#34;&#34;&#34;
+        req = pfs_proto.ListCommitRequest(
+            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+        )
+        if to_commit is not None:
+            req.to.CopyFrom(commit_from(to_commit))
+        if from_commit is not None:
+            getattr(req, &#34;from&#34;).CopyFrom(commit_from(from_commit))
+        return self._req(Service.PFS, &#34;ListCommit&#34;, req=req)
+
+    def flush_commit(self, commits, repos=None):
+        &#34;&#34;&#34;
+        Blocks until all of the commits which have a set of commits as
+        provenance have finished. For commits to be considered they must have
+        all of the specified commits as provenance. This in effect waits for
+        all of the jobs that are triggered by a set of commits to complete.
+        It returns an error if any of the commits it&#39;s waiting on are
+        cancelled due to one of the jobs encountering an error during runtime.
+        Note that it&#39;s never necessary to call FlushCommit to run jobs,
+        they&#39;ll run no matter what, FlushCommit just allows you to wait for
+        them to complete and see their output once they do. This returns an
+        iterator of CommitInfo objects.
+
+        Yields `CommitInfo` objects.
+
+        Params:
+
+        * `commits`: A list of tuples, strings, or `Commit` objects
+        representing the commits to flush.
+        * `repos`: An optional list of strings specifying repo names. If
+        specified, only commits within these repos will be flushed.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;FlushCommit&#34;,
+            commits=[commit_from(c) for c in commits],
+            to_repos=[pfs_proto.Repo(name=r) for r in repos]
+            if repos is not None
+            else None,
+        )
+
+    def subscribe_commit(
+        self, repo_name, branch, from_commit_id=None, state=None, prov=None
+    ):
+        &#34;&#34;&#34;
+        Yields `CommitInfo` objects as commits occur.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying branch to subscribe to.
+        * `from_commit_id`: An optional string specifying the commit ID. Only
+        commits created since this commit are returned.
+        * `state`: The commit state to filter on.
+        * `prov`: An optional `CommitProvenance` object.
+        &#34;&#34;&#34;
+        repo = pfs_proto.Repo(name=repo_name)
+        req = pfs_proto.SubscribeCommitRequest(
+            repo=repo, branch=branch, state=state, prov=prov
+        )
+        if from_commit_id is not None:
+            getattr(req, &#34;from&#34;).CopyFrom(
+                pfs_proto.Commit(repo=repo, id=from_commit_id)
+            )
+        return self._req(Service.PFS, &#34;SubscribeCommit&#34;, req=req)
+
+    def create_branch(
+        self, repo_name, branch_name, commit=None, provenance=None, trigger=None
+    ):
+        &#34;&#34;&#34;
+        Creates a new branch.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch_name`: A string specifying the new branch name.
+        * `commit`: An optional tuple, string, or `Commit` object representing
+          the head commit of the branch.
+        * `provenance`: An optional iterable of `Branch` objects representing
+          the branch provenance.
+        * `trigger`: An optional `Trigger` object controlling when the head of
+          `branch_name` is moved.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;CreateBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+            head=commit_from(commit) if commit is not None else None,
+            provenance=provenance,
+            trigger=trigger,
+        )
+
+    def inspect_branch(self, repo_name, branch_name):
+        &#34;&#34;&#34;
+        Inspects a branch. Returns a `BranchInfo` object.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+        )
+
+    def list_branch(self, repo_name, reverse=None):
+        &#34;&#34;&#34;
+        Lists the active branch objects on a repo. Returns a list of
+        `BranchInfo` objects.
+
+        Params:
+
+        * `repo_name`: A string specifying the repo name.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;ListBranch&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            reverse=reverse,
+        ).branch_info
+
+    def delete_branch(self, repo_name, branch_name, force=None):
+        &#34;&#34;&#34;
+        Deletes a branch, but leaves the commits themselves intact. In other
+        words, those commits can still be accessed via commit IDs and other
+        branches they happen to be on.
+
+        Params:
+
+        * `repo_name`: A string specifying the repo name.
+        * `branch_name`: A string specifying the name of the branch to delete.
+        * `force`: A bool specifying whether to force the branch deletion.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;DeleteBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+            force=force,
+        )
+
+    @contextmanager
+    def modify_file_client(self, commit):
+        &#34;&#34;&#34;
+        A context manager that gives a `ModifyFileClient`. When the context
+        manager exits, any operations enqueued from the `ModifyFileClient` are
+        executed in a single, atomic `ModifyFile` call.
+        &#34;&#34;&#34;
+        pfc = ModifyFileClient(commit)
+        yield pfc
+        self._req(Service.PFS, &#34;ModifyFile&#34;, req=pfc._reqs())
+
+    def put_file_bytes(
+        self,
+        commit,
+        path,
+        value,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        append=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a file-like object, bytestring, or iterator
+        of bytestrings.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file contents as bytes, represented as a file-like
+        object, bytestring, or iterator of bytestrings.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        with self.modify_file_client(commit) as pfc:
+            if hasattr(value, &#34;read&#34;):
+                return pfc.put_file_from_fileobj(
+                    path,
+                    value,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # header_records=header_records,
+                )
+            else:
+                return pfc.put_file_from_bytes(
+                    path,
+                    value,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # header_records=header_records,
+                )
+
+    def put_file_url(
+        self,
+        commit,
+        path,
+        url,
+        delimiter=None,
+        recursive=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        append=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Puts a file using the content found at a URL. The URL is sent to the
+        server which performs the request.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path to the file.
+        * `url`: A string specifying the url of the file to put.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `recursive`: allow for recursive scraping of some types URLs, for
+        example on s3:// URLs.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+
+        with self.modify_file_client(commit) as pfc:
+            pfc.put_file_from_url(
+                path,
+                url,
+                recursive=recursive,
+                append=append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+
+    def copy_file(
+        self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None
+    ):
+        &#34;&#34;&#34;
+        Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of
+        1.9.0) silently fail.
+
+        Params:
+
+        * `source_commit`: A tuple, string, or `Commit` object representing the
+        commit for the source file.
+        * `source_path`: A string specifying the path of the source file.
+        * `dest_commit`: A tuple, string, or `Commit` object representing the
+        commit for the destination file.
+        * `dest_path`: A string specifying the path of the destination file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        &#34;&#34;&#34;
+        with self.modify_file_client(dest_commit) as pfc:
+            pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)
+
+    def get_file(self, commit, path, URL=None):
+        &#34;&#34;&#34;
+        Returns a `PFSFile` object, containing the contents of a file stored
+        in PFS.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path of the file.
+        &#34;&#34;&#34;
+        res = self._req(
+            Service.PFS,
+            &#34;GetFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            URL=URL,
+        )
+        return PFSFile(FileTarstream(res))
+
+    def inspect_file(self, commit, path):
+        &#34;&#34;&#34;
+        Inspects a file. Returns a `FileInfo` object.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path to the file.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+        )
+
+    def list_file(self, commit, path, include_contents=None):
+        &#34;&#34;&#34;
+        Lists the files in a directory.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the directory.
+        * `include_contents`: An optional bool. If `True`, file contents are
+        included.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;ListFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            full=include_contents,
+            # history=history,
+        )
+
+    def walk_file(self, commit, path):
+        &#34;&#34;&#34;
+        Walks over all descendant files in a directory. Returns a generator of
+        `FileInfo` objects.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the directory.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;WalkFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+        )
+
+    def glob_file(self, commit, pattern):
+        &#34;&#34;&#34;
+        Lists files that match a glob pattern. Yields `FileInfo` objects.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `pattern`: A string representing a glob pattern.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS, &#34;GlobFile&#34;, commit=commit_from(commit), pattern=pattern
+        )
+
+    def delete_file(self, commit, path):
+        &#34;&#34;&#34;
+        Deletes a file from a Commit. DeleteFile leaves a tombstone in the
+        Commit, assuming the file isn&#39;t written to later attempting to get the
+        file from the finished commit will result in not found error. The file
+        will of course remain intact in the Commit&#39;s parent.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the file.
+        &#34;&#34;&#34;
+        with self.modify_file_client(commit) as pfc:
+            return pfc.delete_file(path)
+
+    def fsck(self, fix=None):
+        &#34;&#34;&#34;
+        Performs a file system consistency check for PFS.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;Fsck&#34;, fix=fix)
+
+    def diff_file(
+        self, new_commit, new_path, old_commit=None, old_path=None, shallow=None
+    ):
+        &#34;&#34;&#34;
+        Diffs two files. If `old_commit` or `old_path` are not specified, the
+        same path in the parent of the file specified by `new_commit` and
+        `new_path` will be used.
+
+        Params:
+
+        * `new_commit`: A tuple, string, or `Commit` object representing the
+        commit for the new file.
+        * `new_path`: A string specifying the path of the new file.
+        * `old_commit`: A tuple, string, or `Commit` object representing the
+        commit for the old file.
+        * `old_path`: A string specifying the path of the old file.
+        * `shallow`: An optional bool specifying whether to do a shallow diff.
+        &#34;&#34;&#34;
+
+        if old_commit is not None and old_path is not None:
+            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+        else:
+            old_file = None
+
+        return self._req(
+            Service.PFS,
+            &#34;DiffFile&#34;,
+            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+            old_file=old_file,
+            shallow=shallow,
+        )
+
+    def create_tmp_file_set(self):
+        &#34;&#34;&#34;
+        Creates a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we&#39;re avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)
+
+    def renew_tmp_file_set(self, fileset_id, ttl_seconds):
+        &#34;&#34;&#34;
+        Renews a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we&#39;re avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        * `ttl_seconds`: A int determining the number of seconds to keep alive
+        the temporary fileset
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)
+
+
+class ModifyFileClient:
+    &#34;&#34;&#34;
+    `ModifyFileClient` puts or deletes PFS files atomically.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit):
+        self._ops = []
+        self.commit = commit_from(commit)
+
+    def _reqs(self):
+        for op in self._ops:
+            for r in op.reqs():
+                yield r
+
+    def put_file_from_filepath(
+        self,
+        pfs_path,
+        local_path,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a local path at a specified path. This will
+        lazily open files, which will prevent too many files from being
+        opened, or too much memory being consumed, when atomically putting
+        many files.
+
+        Params:
+
+        * `pfs_path`: A string specifying the path in the repo the file(s)
+        will be written to.
+        * `local_path`: A string specifying the local file path.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFilepathOp(
+                self.commit,
+                pfs_path,
+                local_path,
+                append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def put_file_from_fileobj(
+        self,
+        path,
+        value,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a file-like object.
+
+        Params:
+
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file-like object.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFileobjOp(
+                self.commit,
+                path,
+                value,
+                append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def put_file_from_bytes(
+        self,
+        path,
+        value,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a bytestring.
+
+        Params:
+
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file contents as a bytestring.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self.put_file_from_fileobj(
+            path,
+            io.BytesIO(value),
+            append,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )
+
+    def put_file_from_url(
+        self,
+        path,
+        url,
+        append=None,
+        delimiter=None,
+        recursive=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Puts a file using the content found at a URL. The URL is sent to the
+        server which performs the request.
+
+        Params:
+
+        * `path`: A string specifying the path to the file.
+        * `url`: A string specifying the url of the file to put.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `recursive`: allow for recursive scraping of some types URLs, for
+        example on s3:// URLs.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFileURLOp(
+                self.commit,
+                path,
+                url,
+                append,
+                recursive=recursive,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def delete_file(self, path):
+        &#34;&#34;&#34;
+        Deletes a file.
+
+        Params:
+
+        * `path`: The path to the file.
+        &#34;&#34;&#34;
+        self._ops.append(AtomicDeleteFileOp(self.commit, path))
+
+    def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
+        &#34;&#34;&#34;
+        Copy a file.
+
+        Params:
+
+        * `source_commit`: The commit the source file is in.
+        * `source_path`: The path to the source file.
+        * `dest_path`: The path to the destination file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicCopyFileOp(
+                self.commit,
+                source_commit,
+                source_path,
+                dest_path,
+                append=append,
+                tag=tag,
+            )
+        )
+
+
+class AtomicOp:
+    &#34;&#34;&#34;
+    Represents an operation in a `ModifyFile` call.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit, path):
+        self.commit = commit
+        self.path = path
+
+    def reqs(self):
+        &#34;&#34;&#34;
+        Yields one or more protobuf `ModifyFileRequests`, which are then
+        enqueued into the request&#39;s channel.
+        &#34;&#34;&#34;
+        pass
+
+
+class AtomicModifyFilepathOp(AtomicOp):
+    &#34;&#34;&#34;
+    A `ModifyFile` operation to put a file locally stored at a given path. This
+    file is opened on-demand, which helps with minimizing the number of open
+    files.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit, pfs_path, local_path, append):
+        super().__init__(commit, pfs_path)
+        self.local_path = local_path
+        self.append = append
+
+    def reqs(self):
+        with open(self.local_path, &#34;rb&#34;) as f:
+            for i, chunk in enumerate(f):
+                yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
+        yield put_file_req(commit=self.commit, path=self.path, eof=True)
+
+
+class AtomicModifyFileobjOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to put a file from a file-like object.&#34;&#34;&#34;
+
+    def __init__(self, commit, path, value, append, **kwargs):
+        super().__init__(commit, path, **kwargs)
+        self.value = value
+        self.append = append
+
+    def reqs(self):
+        for i in itertools.count():
+            chunk = self.value.read(BUFFER_SIZE)
+            if len(chunk) == 0:
+                yield put_file_req(commit=self.commit, path=self.path, eof=True)
+                return
+            yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
+
+
+class AtomicModifyFileURLOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to put a file from a URL.&#34;&#34;&#34;
+
+    def __init__(self, commit, path, url, append, recursive=False, **kwargs):
+        super().__init__(commit, path, **kwargs)
+        self.url = url
+        self.recursive = recursive
+        self.append = append
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit,
+            put_file=pfs_proto.PutFile(
+                url_file_source=pfs_proto.URLFileSource(
+                    path=self.path, URL=self.url, recursive=self.recursive
+                ),
+                append=self.append,
+            ),
+        )
+
+
+class AtomicCopyFileOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to copy a file.&#34;&#34;&#34;
+
+    def __init__(
+        self, target_commit, source_commit, source_path, dest_path, append, tag
+    ):
+        super().__init__(target_commit, dest_path)
+        self.source_commit = commit_from(source_commit)
+        self.source_path = source_path
+        self.dest_path = dest_path
+        self.tag = tag
+        self.append = append
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit,
+            copy_file=pfs_proto.CopyFile(
+                append=self.append,
+                tag=self.tag,
+                dst=self.dest_path,
+                src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+            ),
+        )
+
+
+class AtomicDeleteFileOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to delete a file.&#34;&#34;&#34;
+
+    def __init__(self, commit, pfs_path):
+        super().__init__(commit, pfs_path)
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path)
+        )
+
+
+def put_file_req(commit=None, path=None, chunk=None, append=False, eof=False):
+    return pfs_proto.ModifyFileRequest(
+        commit=commit,
+        put_file=pfs_proto.PutFile(
+            append=append,
+            raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof),
+        ),
+    )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.put_file_req"><code class="name flex">
+<span>def <span class="ident">put_file_req</span></span>(<span>commit=None, path=None, chunk=None, append=False, eof=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_req(commit=None, path=None, chunk=None, append=False, eof=False):
+    return pfs_proto.ModifyFileRequest(
+        commit=commit,
+        put_file=pfs_proto.PutFile(
+            append=append,
+            raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof),
+        ),
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.AtomicCopyFileOp"><code class="flex name class">
+<span>class <span class="ident">AtomicCopyFileOp</span></span>
+<span>(</span><span>target_commit, source_commit, source_path, dest_path, append, tag)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code>ModifyFile</code> operation to copy a file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicCopyFileOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to copy a file.&#34;&#34;&#34;
+
+    def __init__(
+        self, target_commit, source_commit, source_path, dest_path, append, tag
+    ):
+        super().__init__(target_commit, dest_path)
+        self.source_commit = commit_from(source_commit)
+        self.source_path = source_path
+        self.dest_path = dest_path
+        self.tag = tag
+        self.append = append
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit,
+            copy_file=pfs_proto.CopyFile(
+                append=self.append,
+                tag=self.tag,
+                dst=self.dest_path,
+                src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+            ),
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.AtomicDeleteFileOp"><code class="flex name class">
+<span>class <span class="ident">AtomicDeleteFileOp</span></span>
+<span>(</span><span>commit, pfs_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code>ModifyFile</code> operation to delete a file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicDeleteFileOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to delete a file.&#34;&#34;&#34;
+
+    def __init__(self, commit, pfs_path):
+        super().__init__(commit, pfs_path)
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path)
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.AtomicModifyFileURLOp"><code class="flex name class">
+<span>class <span class="ident">AtomicModifyFileURLOp</span></span>
+<span>(</span><span>commit, path, url, append, recursive=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code>ModifyFile</code> operation to put a file from a URL.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicModifyFileURLOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to put a file from a URL.&#34;&#34;&#34;
+
+    def __init__(self, commit, path, url, append, recursive=False, **kwargs):
+        super().__init__(commit, path, **kwargs)
+        self.url = url
+        self.recursive = recursive
+        self.append = append
+
+    def reqs(self):
+        yield pfs_proto.ModifyFileRequest(
+            commit=self.commit,
+            put_file=pfs_proto.PutFile(
+                url_file_source=pfs_proto.URLFileSource(
+                    path=self.path, URL=self.url, recursive=self.recursive
+                ),
+                append=self.append,
+            ),
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.AtomicModifyFileobjOp"><code class="flex name class">
+<span>class <span class="ident">AtomicModifyFileobjOp</span></span>
+<span>(</span><span>commit, path, value, append, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code>ModifyFile</code> operation to put a file from a file-like object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicModifyFileobjOp(AtomicOp):
+    &#34;&#34;&#34;A `ModifyFile` operation to put a file from a file-like object.&#34;&#34;&#34;
+
+    def __init__(self, commit, path, value, append, **kwargs):
+        super().__init__(commit, path, **kwargs)
+        self.value = value
+        self.append = append
+
+    def reqs(self):
+        for i in itertools.count():
+            chunk = self.value.read(BUFFER_SIZE)
+            if len(chunk) == 0:
+                yield put_file_req(commit=self.commit, path=self.path, eof=True)
+                return
+            yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.AtomicModifyFilepathOp"><code class="flex name class">
+<span>class <span class="ident">AtomicModifyFilepathOp</span></span>
+<span>(</span><span>commit, pfs_path, local_path, append)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A <code>ModifyFile</code> operation to put a file locally stored at a given path. This
+file is opened on-demand, which helps with minimizing the number of open
+files.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicModifyFilepathOp(AtomicOp):
+    &#34;&#34;&#34;
+    A `ModifyFile` operation to put a file locally stored at a given path. This
+    file is opened on-demand, which helps with minimizing the number of open
+    files.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit, pfs_path, local_path, append):
+        super().__init__(commit, pfs_path)
+        self.local_path = local_path
+        self.append = append
+
+    def reqs(self):
+        with open(self.local_path, &#34;rb&#34;) as f:
+            for i, chunk in enumerate(f):
+                yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
+        yield put_file_req(commit=self.commit, path=self.path, eof=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></b></code>:
+<ul class="hlist">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.AtomicOp"><code class="flex name class">
+<span>class <span class="ident">AtomicOp</span></span>
+<span>(</span><span>commit, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an operation in a <code>ModifyFile</code> call.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtomicOp:
+    &#34;&#34;&#34;
+    Represents an operation in a `ModifyFile` call.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit, path):
+        self.commit = commit
+        self.path = path
+
+    def reqs(self):
+        &#34;&#34;&#34;
+        Yields one or more protobuf `ModifyFileRequests`, which are then
+        enqueued into the request&#39;s channel.
+        &#34;&#34;&#34;
+        pass</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.mixin.pfs.AtomicCopyFileOp" href="#python_pachyderm.mixin.pfs.AtomicCopyFileOp">AtomicCopyFileOp</a></li>
+<li><a title="python_pachyderm.mixin.pfs.AtomicDeleteFileOp" href="#python_pachyderm.mixin.pfs.AtomicDeleteFileOp">AtomicDeleteFileOp</a></li>
+<li><a title="python_pachyderm.mixin.pfs.AtomicModifyFileURLOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFileURLOp">AtomicModifyFileURLOp</a></li>
+<li><a title="python_pachyderm.mixin.pfs.AtomicModifyFileobjOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFileobjOp">AtomicModifyFileobjOp</a></li>
+<li><a title="python_pachyderm.mixin.pfs.AtomicModifyFilepathOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFilepathOp">AtomicModifyFilepathOp</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.AtomicOp.reqs"><code class="name flex">
+<span>def <span class="ident">reqs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Yields one or more protobuf <code>ModifyFileRequests</code>, which are then
+enqueued into the request's channel.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reqs(self):
+    &#34;&#34;&#34;
+    Yields one or more protobuf `ModifyFileRequests`, which are then
+    enqueued into the request&#39;s channel.
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.FileTarstream"><code class="flex name class">
+<span>class <span class="ident">FileTarstream</span></span>
+<span>(</span><span>res)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Implements a file-like interface over a GRPC byte stream,
+so we can use tarfile to decode the file contents.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FileTarstream:
+    &#34;&#34;&#34;
+    Implements a file-like interface over a GRPC byte stream,
+    so we can use tarfile to decode the file contents.
+    &#34;&#34;&#34;
+
+    def __init__(self, res):
+        self.res = res
+        self.buf = []
+
+    def __next__(self):
+        return next(self.res).value
+
+    def close(self):
+        self.res.cancel()
+
+    def read(self, size=-1):
+        if self.res.cancelled():
+            return b&#34;&#34;
+
+        buf = []
+        remaining = size if size &gt;= 0 else 2 ** 32
+
+        if self.buf:
+            buf.append(self.buf[:remaining])
+            self.buf = self.buf[remaining:]
+            remaining -= len(buf[-1])
+
+        try:
+            while remaining &gt; 0:
+                b = next(self)
+
+                if len(b) &gt; remaining:
+                    buf.append(b[:remaining])
+                    self.buf = b[remaining:]
+                else:
+                    buf.append(b)
+
+                remaining -= len(buf[-1])
+        except StopIteration:
+            pass
+
+        return b&#34;&#34;.join(buf)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.FileTarstream.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    self.res.cancel()</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.FileTarstream.read"><code class="name flex">
+<span>def <span class="ident">read</span></span>(<span>self, size=-1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read(self, size=-1):
+    if self.res.cancelled():
+        return b&#34;&#34;
+
+    buf = []
+    remaining = size if size &gt;= 0 else 2 ** 32
+
+    if self.buf:
+        buf.append(self.buf[:remaining])
+        self.buf = self.buf[remaining:]
+        remaining -= len(buf[-1])
+
+    try:
+        while remaining &gt; 0:
+            b = next(self)
+
+            if len(b) &gt; remaining:
+                buf.append(b[:remaining])
+                self.buf = b[remaining:]
+            else:
+                buf.append(b)
+
+            remaining -= len(buf[-1])
+    except StopIteration:
+        pass
+
+    return b&#34;&#34;.join(buf)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="flex name class">
+<span>class <span class="ident">ModifyFileClient</span></span>
+<span>(</span><span>commit)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient" href="#python_pachyderm.mixin.pfs.ModifyFileClient">ModifyFileClient</a></code> puts or deletes PFS files atomically.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ModifyFileClient:
+    &#34;&#34;&#34;
+    `ModifyFileClient` puts or deletes PFS files atomically.
+    &#34;&#34;&#34;
+
+    def __init__(self, commit):
+        self._ops = []
+        self.commit = commit_from(commit)
+
+    def _reqs(self):
+        for op in self._ops:
+            for r in op.reqs():
+                yield r
+
+    def put_file_from_filepath(
+        self,
+        pfs_path,
+        local_path,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a local path at a specified path. This will
+        lazily open files, which will prevent too many files from being
+        opened, or too much memory being consumed, when atomically putting
+        many files.
+
+        Params:
+
+        * `pfs_path`: A string specifying the path in the repo the file(s)
+        will be written to.
+        * `local_path`: A string specifying the local file path.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFilepathOp(
+                self.commit,
+                pfs_path,
+                local_path,
+                append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def put_file_from_fileobj(
+        self,
+        path,
+        value,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a file-like object.
+
+        Params:
+
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file-like object.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFileobjOp(
+                self.commit,
+                path,
+                value,
+                append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def put_file_from_bytes(
+        self,
+        path,
+        value,
+        append=None,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a bytestring.
+
+        Params:
+
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file contents as a bytestring.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self.put_file_from_fileobj(
+            path,
+            io.BytesIO(value),
+            append,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )
+
+    def put_file_from_url(
+        self,
+        path,
+        url,
+        append=None,
+        delimiter=None,
+        recursive=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Puts a file using the content found at a URL. The URL is sent to the
+        server which performs the request.
+
+        Params:
+
+        * `path`: A string specifying the path to the file.
+        * `url`: A string specifying the url of the file to put.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `recursive`: allow for recursive scraping of some types URLs, for
+        example on s3:// URLs.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicModifyFileURLOp(
+                self.commit,
+                path,
+                url,
+                append,
+                recursive=recursive,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        )
+
+    def delete_file(self, path):
+        &#34;&#34;&#34;
+        Deletes a file.
+
+        Params:
+
+        * `path`: The path to the file.
+        &#34;&#34;&#34;
+        self._ops.append(AtomicDeleteFileOp(self.commit, path))
+
+    def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
+        &#34;&#34;&#34;
+        Copy a file.
+
+        Params:
+
+        * `source_commit`: The commit the source file is in.
+        * `source_path`: The path to the source file.
+        * `dest_path`: The path to the destination file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        &#34;&#34;&#34;
+        self._ops.append(
+            AtomicCopyFileOp(
+                self.commit,
+                source_commit,
+                source_path,
+                dest_path,
+                append=append,
+                tag=tag,
+            )
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.copy_file"><code class="name flex">
+<span>def <span class="ident">copy_file</span></span>(<span>self, source_commit, source_path, dest_path, append=None, tag=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Copy a file.</p>
+<p>Params:</p>
+<ul>
+<li><code>source_commit</code>: The commit the source file is in.</li>
+<li><code>source_path</code>: The path to the source file.</li>
+<li><code>dest_path</code>: The path to the destination file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
+    &#34;&#34;&#34;
+    Copy a file.
+
+    Params:
+
+    * `source_commit`: The commit the source file is in.
+    * `source_path`: The path to the source file.
+    * `dest_path`: The path to the destination file.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    &#34;&#34;&#34;
+    self._ops.append(
+        AtomicCopyFileOp(
+            self.commit,
+            source_commit,
+            source_path,
+            dest_path,
+            append=append,
+            tag=tag,
+        )
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.delete_file"><code class="name flex">
+<span>def <span class="ident">delete_file</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes a file.</p>
+<p>Params:</p>
+<ul>
+<li><code>path</code>: The path to the file.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_file(self, path):
+    &#34;&#34;&#34;
+    Deletes a file.
+
+    Params:
+
+    * `path`: The path to the file.
+    &#34;&#34;&#34;
+    self._ops.append(AtomicDeleteFileOp(self.commit, path))</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_bytes"><code class="name flex">
+<span>def <span class="ident">put_file_from_bytes</span></span>(<span>self, path, value, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uploads a PFS file from a bytestring.</p>
+<p>Params:</p>
+<ul>
+<li><code>path</code>: A string specifying the path in the repo the file(s) will be
+written to.</li>
+<li><code>value</code>: The file contents as a bytestring.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_from_bytes(
+    self,
+    path,
+    value,
+    append=None,
+    delimiter=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Uploads a PFS file from a bytestring.
+
+    Params:
+
+    * `path`: A string specifying the path in the repo the file(s) will be
+    written to.
+    * `value`: The file contents as a bytestring.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+    self.put_file_from_fileobj(
+        path,
+        io.BytesIO(value),
+        append,
+        # delimiter=delimiter,
+        # target_file_datums=target_file_datums,
+        # target_file_bytes=target_file_bytes,
+        # header_records=header_records,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_fileobj"><code class="name flex">
+<span>def <span class="ident">put_file_from_fileobj</span></span>(<span>self, path, value, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uploads a PFS file from a file-like object.</p>
+<p>Params:</p>
+<ul>
+<li><code>path</code>: A string specifying the path in the repo the file(s) will be
+written to.</li>
+<li><code>value</code>: The file-like object.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_from_fileobj(
+    self,
+    path,
+    value,
+    append=None,
+    delimiter=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Uploads a PFS file from a file-like object.
+
+    Params:
+
+    * `path`: A string specifying the path in the repo the file(s) will be
+    written to.
+    * `value`: The file-like object.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+    self._ops.append(
+        AtomicModifyFileobjOp(
+            self.commit,
+            path,
+            value,
+            append,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_filepath"><code class="name flex">
+<span>def <span class="ident">put_file_from_filepath</span></span>(<span>self, pfs_path, local_path, append=None, delimiter=None, target_file_datums=None, target_file_bytes=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uploads a PFS file from a local path at a specified path. This will
+lazily open files, which will prevent too many files from being
+opened, or too much memory being consumed, when atomically putting
+many files.</p>
+<p>Params:</p>
+<ul>
+<li><code>pfs_path</code>: A string specifying the path in the repo the file(s)
+will be written to.</li>
+<li><code>local_path</code>: A string specifying the local file path.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_from_filepath(
+    self,
+    pfs_path,
+    local_path,
+    append=None,
+    delimiter=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Uploads a PFS file from a local path at a specified path. This will
+    lazily open files, which will prevent too many files from being
+    opened, or too much memory being consumed, when atomically putting
+    many files.
+
+    Params:
+
+    * `pfs_path`: A string specifying the path in the repo the file(s)
+    will be written to.
+    * `local_path`: A string specifying the local file path.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+    self._ops.append(
+        AtomicModifyFilepathOp(
+            self.commit,
+            pfs_path,
+            local_path,
+            append,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_url"><code class="name flex">
+<span>def <span class="ident">put_file_from_url</span></span>(<span>self, path, url, append=None, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Puts a file using the content found at a URL. The URL is sent to the
+server which performs the request.</p>
+<p>Params:</p>
+<ul>
+<li><code>path</code>: A string specifying the path to the file.</li>
+<li><code>url</code>: A string specifying the url of the file to put.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>recursive</code>: allow for recursive scraping of some types URLs, for
+example on s3:// URLs.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_from_url(
+    self,
+    path,
+    url,
+    append=None,
+    delimiter=None,
+    recursive=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Puts a file using the content found at a URL. The URL is sent to the
+    server which performs the request.
+
+    Params:
+
+    * `path`: A string specifying the path to the file.
+    * `url`: A string specifying the url of the file to put.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `recursive`: allow for recursive scraping of some types URLs, for
+    example on s3:// URLs.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+    self._ops.append(
+        AtomicModifyFileURLOp(
+            self.commit,
+            path,
+            url,
+            append,
+            recursive=recursive,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSFile"><code class="flex name class">
+<span>class <span class="ident">PFSFile</span></span>
+<span>(</span><span>stream)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The contents of a file stored in PFS. You can treat these as
+file-like objects, like so:</p>
+<pre><code>source_file = client.get_file(&quot;montage/master&quot;, &quot;/montage.png&quot;)
+with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
+    shutil.copyfileobj(source_file, dest_file)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PFSFile:
+    &#34;&#34;&#34;
+    The contents of a file stored in PFS. You can treat these as
+    file-like objects, like so:
+
+    ```
+    source_file = client.get_file(&#34;montage/master&#34;, &#34;/montage.png&#34;)
+    with open(&#34;montage.png&#34;, &#34;wb&#34;) as dest_file:
+        shutil.copyfileobj(source_file, dest_file)
+    ```
+    &#34;&#34;&#34;
+
+    def __init__(self, stream):
+        # Pachyderm&#39;s GetFile API returns its result (which may include several
+        # files, e.g. when getting a directory) as a tar stream--untar the
+        # response byte stream as we receive it from GetFile.
+        f = tarfile.open(fileobj=stream, mode=&#34;r|*&#34;)
+        # TODO how to handle multiple files in the tar stream?
+        self._file = f.extractfile(f.next())
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        x = self.read()
+        if not x:
+            raise StopIteration
+        return x
+
+    def read(self, size=-1):
+        return self._file.read(size)
+
+    def close(self):
+        self._file.close()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.PFSFile.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    self._file.close()</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSFile.read"><code class="name flex">
+<span>def <span class="ident">read</span></span>(<span>self, size=-1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read(self, size=-1):
+    return self._file.read(size)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin"><code class="flex name class">
+<span>class <span class="ident">PFSMixin</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PFSMixin:
+    def create_repo(self, repo_name, description=None, update=None):
+        &#34;&#34;&#34;
+        Creates a new `Repo` object in PFS with the given name. Repos are the
+        top level data object in PFS and should be used to store data of a
+        similar type. For example rather than having a single `Repo` for an
+        entire project you might have separate `Repo`s for logs, metrics,
+        database dumps etc.
+
+        Params:
+
+        * `repo_name`: Name of the repo.
+        * `description`: An optional string describing the repo.
+        * `update`: Whether to update if the repo already exists.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;CreateRepo&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            description=description,
+            update=update,
+        )
+
+    def inspect_repo(self, repo_name):
+        &#34;&#34;&#34;
+        Returns info about a specific repo. Returns a `RepoInfo` object.
+
+        Params:
+
+        * `repo_name`: Name of the repo.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+        )
+
+    def list_repo(self):
+        &#34;&#34;&#34;
+        Returns info about all repos, as a list of `RepoInfo` objects.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info
+
+    def delete_repo(self, repo_name, force=None):
+        &#34;&#34;&#34;
+        Deletes a repo and reclaims the storage space it was using.
+
+        Params:
+
+        * `repo_name`: The name of the repo.
+        * `force`: If set to true, the repo will be removed regardless of
+          errors. This argument should be used with care.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;DeleteRepo&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            force=force,
+            all=False,
+        )
+
+    def delete_all_repos(self, force=None):
+        &#34;&#34;&#34;
+        Deletes all repos.
+
+        Params:
+
+        * `force`: If set to true, the repo will be removed regardless of
+        errors. This argument should be used with care.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;DeleteRepo&#34;, force=force, all=True)
+
+    def start_commit(
+        self, repo_name, branch=None, parent=None, description=None, provenance=None
+    ):
+        &#34;&#34;&#34;
+        Begins the process of committing data to a Repo. Once started you can
+        write to the Commit with ModifyFile and when all the data has been
+        written you must finish the Commit with FinishCommit. NOTE, data is
+        not persisted until FinishCommit is called. A Commit object is
+        returned.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * `description`: An optional string describing the commit.
+        * `provenance`: An optional iterable of `CommitProvenance` objects
+        specifying the commit provenance.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;StartCommit&#34;,
+            parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
+            branch=branch,
+            description=description,
+            provenance=provenance,
+        )
+
+    def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
+        &#34;&#34;&#34;
+        Ends the process of committing data to a Repo and persists the
+        Commit. Once a Commit is finished the data becomes immutable and
+        future attempts to write to it with ModifyFile will error.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `description`: An optional string describing this commit.
+        * `size_bytes`: An optional int.
+        * `empty`: An optional bool. If set, the commit will be closed (its
+        `finished` field will be set to the current time) but its `tree` will
+        be left nil.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;FinishCommit&#34;,
+            commit=commit_from(commit),
+            description=description,
+            size_bytes=size_bytes,
+            empty=empty,
+        )
+
+    @contextmanager
+    def commit(self, repo_name, branch=None, parent=None, description=None):
+        &#34;&#34;&#34;
+        A context manager for running operations within a commit.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying the branch name. This is a more
+        convenient way to build linear chains of commits. When a commit is
+        started with a non-empty branch the value of branch becomes an alias
+        for the created Commit. This enables a more intuitive access pattern.
+        When the commit is started on a branch the previous head of the branch
+        is used as the parent of the commit.
+        * `parent`: An optional `Commit` object specifying the parent commit.
+        Upon creation the new commit will appear identical to the parent
+        commit, data can safely be added to the new commit without affecting
+        the contents of the parent commit.
+        * `description`: An optional string describing the commit.
+        &#34;&#34;&#34;
+        commit = self.start_commit(repo_name, branch, parent, description)
+        try:
+            yield commit
+        finally:
+            self.finish_commit(commit)
+
+    def inspect_commit(self, commit, block_state=None):
+        &#34;&#34;&#34;
+        Inspects a commit. Returns a `CommitInfo` object.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * An optional int that causes this method to block until the commit is
+        in the desired commit state. See the `CommitState` enum.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectCommit&#34;,
+            commit=commit_from(commit),
+            block_state=block_state,
+        )
+
+    def list_commit(
+        self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
+    ):
+        &#34;&#34;&#34;
+        Lists commits. Yields `CommitInfo` objects.
+
+        Params:
+
+        * `repo_name`: If only `repo_name` is given, all commits in the repo
+        are returned.
+        * `to_commit`: Optional. Only the ancestors of `to`, including `to`
+        itself, are considered.
+        * `from_commit`: Optional. Only the descendants of `from`, including
+        `from` itself, are considered.
+        * `number`: Optional. Determines how many commits are returned.  If
+        `number` is 0, all commits that match the aforementioned criteria are
+        returned.
+        &#34;&#34;&#34;
+        req = pfs_proto.ListCommitRequest(
+            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+        )
+        if to_commit is not None:
+            req.to.CopyFrom(commit_from(to_commit))
+        if from_commit is not None:
+            getattr(req, &#34;from&#34;).CopyFrom(commit_from(from_commit))
+        return self._req(Service.PFS, &#34;ListCommit&#34;, req=req)
+
+    def flush_commit(self, commits, repos=None):
+        &#34;&#34;&#34;
+        Blocks until all of the commits which have a set of commits as
+        provenance have finished. For commits to be considered they must have
+        all of the specified commits as provenance. This in effect waits for
+        all of the jobs that are triggered by a set of commits to complete.
+        It returns an error if any of the commits it&#39;s waiting on are
+        cancelled due to one of the jobs encountering an error during runtime.
+        Note that it&#39;s never necessary to call FlushCommit to run jobs,
+        they&#39;ll run no matter what, FlushCommit just allows you to wait for
+        them to complete and see their output once they do. This returns an
+        iterator of CommitInfo objects.
+
+        Yields `CommitInfo` objects.
+
+        Params:
+
+        * `commits`: A list of tuples, strings, or `Commit` objects
+        representing the commits to flush.
+        * `repos`: An optional list of strings specifying repo names. If
+        specified, only commits within these repos will be flushed.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;FlushCommit&#34;,
+            commits=[commit_from(c) for c in commits],
+            to_repos=[pfs_proto.Repo(name=r) for r in repos]
+            if repos is not None
+            else None,
+        )
+
+    def subscribe_commit(
+        self, repo_name, branch, from_commit_id=None, state=None, prov=None
+    ):
+        &#34;&#34;&#34;
+        Yields `CommitInfo` objects as commits occur.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch`: A string specifying branch to subscribe to.
+        * `from_commit_id`: An optional string specifying the commit ID. Only
+        commits created since this commit are returned.
+        * `state`: The commit state to filter on.
+        * `prov`: An optional `CommitProvenance` object.
+        &#34;&#34;&#34;
+        repo = pfs_proto.Repo(name=repo_name)
+        req = pfs_proto.SubscribeCommitRequest(
+            repo=repo, branch=branch, state=state, prov=prov
+        )
+        if from_commit_id is not None:
+            getattr(req, &#34;from&#34;).CopyFrom(
+                pfs_proto.Commit(repo=repo, id=from_commit_id)
+            )
+        return self._req(Service.PFS, &#34;SubscribeCommit&#34;, req=req)
+
+    def create_branch(
+        self, repo_name, branch_name, commit=None, provenance=None, trigger=None
+    ):
+        &#34;&#34;&#34;
+        Creates a new branch.
+
+        Params:
+
+        * `repo_name`: A string specifying the name of the repo.
+        * `branch_name`: A string specifying the new branch name.
+        * `commit`: An optional tuple, string, or `Commit` object representing
+          the head commit of the branch.
+        * `provenance`: An optional iterable of `Branch` objects representing
+          the branch provenance.
+        * `trigger`: An optional `Trigger` object controlling when the head of
+          `branch_name` is moved.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;CreateBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+            head=commit_from(commit) if commit is not None else None,
+            provenance=provenance,
+            trigger=trigger,
+        )
+
+    def inspect_branch(self, repo_name, branch_name):
+        &#34;&#34;&#34;
+        Inspects a branch. Returns a `BranchInfo` object.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+        )
+
+    def list_branch(self, repo_name, reverse=None):
+        &#34;&#34;&#34;
+        Lists the active branch objects on a repo. Returns a list of
+        `BranchInfo` objects.
+
+        Params:
+
+        * `repo_name`: A string specifying the repo name.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;ListBranch&#34;,
+            repo=pfs_proto.Repo(name=repo_name),
+            reverse=reverse,
+        ).branch_info
+
+    def delete_branch(self, repo_name, branch_name, force=None):
+        &#34;&#34;&#34;
+        Deletes a branch, but leaves the commits themselves intact. In other
+        words, those commits can still be accessed via commit IDs and other
+        branches they happen to be on.
+
+        Params:
+
+        * `repo_name`: A string specifying the repo name.
+        * `branch_name`: A string specifying the name of the branch to delete.
+        * `force`: A bool specifying whether to force the branch deletion.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;DeleteBranch&#34;,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            ),
+            force=force,
+        )
+
+    @contextmanager
+    def modify_file_client(self, commit):
+        &#34;&#34;&#34;
+        A context manager that gives a `ModifyFileClient`. When the context
+        manager exits, any operations enqueued from the `ModifyFileClient` are
+        executed in a single, atomic `ModifyFile` call.
+        &#34;&#34;&#34;
+        pfc = ModifyFileClient(commit)
+        yield pfc
+        self._req(Service.PFS, &#34;ModifyFile&#34;, req=pfc._reqs())
+
+    def put_file_bytes(
+        self,
+        commit,
+        path,
+        value,
+        delimiter=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        append=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Uploads a PFS file from a file-like object, bytestring, or iterator
+        of bytestrings.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path in the repo the file(s) will be
+        written to.
+        * `value`: The file contents as bytes, represented as a file-like
+        object, bytestring, or iterator of bytestrings.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+        with self.modify_file_client(commit) as pfc:
+            if hasattr(value, &#34;read&#34;):
+                return pfc.put_file_from_fileobj(
+                    path,
+                    value,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # header_records=header_records,
+                )
+            else:
+                return pfc.put_file_from_bytes(
+                    path,
+                    value,
+                    # delimiter=delimiter,
+                    # target_file_datums=target_file_datums,
+                    # target_file_bytes=target_file_bytes,
+                    # header_records=header_records,
+                )
+
+    def put_file_url(
+        self,
+        commit,
+        path,
+        url,
+        delimiter=None,
+        recursive=None,
+        target_file_datums=None,
+        target_file_bytes=None,
+        append=None,
+        header_records=None,
+    ):
+        &#34;&#34;&#34;
+        Puts a file using the content found at a URL. The URL is sent to the
+        server which performs the request.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path to the file.
+        * `url`: A string specifying the url of the file to put.
+        * `delimiter`: An optional int. causes data to be broken up into
+        separate files by the delimiter. e.g. if you used
+        `Delimiter.CSV.value`, a separate PFS file will be created for each
+        row in the input CSV file, rather than one large CSV file.
+        * `recursive`: allow for recursive scraping of some types URLs, for
+        example on s3:// URLs.
+        * `target_file_datums`: An optional int. Specifies the target number of
+        datums in each written file. It may be lower if data does not split
+        evenly, but will never be higher, unless the value is 0.
+        * `target_file_bytes`: An optional int. Specifies the target number of
+        bytes in each written file, files may have more or fewer bytes than
+        the target.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        * `header_records: An optional int for splitting data when `delimiter`
+        is not `NONE` (or `SQL`). It specifies the number of records that are
+        converted to a header and applied to all file shards.
+        &#34;&#34;&#34;
+
+        with self.modify_file_client(commit) as pfc:
+            pfc.put_file_from_url(
+                path,
+                url,
+                recursive=recursive,
+                append=append,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+
+    def copy_file(
+        self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None
+    ):
+        &#34;&#34;&#34;
+        Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of
+        1.9.0) silently fail.
+
+        Params:
+
+        * `source_commit`: A tuple, string, or `Commit` object representing the
+        commit for the source file.
+        * `source_path`: A string specifying the path of the source file.
+        * `dest_commit`: A tuple, string, or `Commit` object representing the
+        commit for the destination file.
+        * `dest_path`: A string specifying the path of the destination file.
+        * `append`: An optional bool, if true the data is appended to the file,
+        if it already exists.
+        &#34;&#34;&#34;
+        with self.modify_file_client(dest_commit) as pfc:
+            pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)
+
+    def get_file(self, commit, path, URL=None):
+        &#34;&#34;&#34;
+        Returns a `PFSFile` object, containing the contents of a file stored
+        in PFS.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path of the file.
+        &#34;&#34;&#34;
+        res = self._req(
+            Service.PFS,
+            &#34;GetFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            URL=URL,
+        )
+        return PFSFile(FileTarstream(res))
+
+    def inspect_file(self, commit, path):
+        &#34;&#34;&#34;
+        Inspects a file. Returns a `FileInfo` object.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path to the file.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;InspectFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+        )
+
+    def list_file(self, commit, path, include_contents=None):
+        &#34;&#34;&#34;
+        Lists the files in a directory.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the directory.
+        * `include_contents`: An optional bool. If `True`, file contents are
+        included.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;ListFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+            full=include_contents,
+            # history=history,
+        )
+
+    def walk_file(self, commit, path):
+        &#34;&#34;&#34;
+        Walks over all descendant files in a directory. Returns a generator of
+        `FileInfo` objects.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the directory.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS,
+            &#34;WalkFile&#34;,
+            file=pfs_proto.File(commit=commit_from(commit), path=path),
+        )
+
+    def glob_file(self, commit, pattern):
+        &#34;&#34;&#34;
+        Lists files that match a glob pattern. Yields `FileInfo` objects.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `pattern`: A string representing a glob pattern.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.PFS, &#34;GlobFile&#34;, commit=commit_from(commit), pattern=pattern
+        )
+
+    def delete_file(self, commit, path):
+        &#34;&#34;&#34;
+        Deletes a file from a Commit. DeleteFile leaves a tombstone in the
+        Commit, assuming the file isn&#39;t written to later attempting to get the
+        file from the finished commit will result in not found error. The file
+        will of course remain intact in the Commit&#39;s parent.
+
+        Params:
+
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        * `path`: The path to the file.
+        &#34;&#34;&#34;
+        with self.modify_file_client(commit) as pfc:
+            return pfc.delete_file(path)
+
+    def fsck(self, fix=None):
+        &#34;&#34;&#34;
+        Performs a file system consistency check for PFS.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;Fsck&#34;, fix=fix)
+
+    def diff_file(
+        self, new_commit, new_path, old_commit=None, old_path=None, shallow=None
+    ):
+        &#34;&#34;&#34;
+        Diffs two files. If `old_commit` or `old_path` are not specified, the
+        same path in the parent of the file specified by `new_commit` and
+        `new_path` will be used.
+
+        Params:
+
+        * `new_commit`: A tuple, string, or `Commit` object representing the
+        commit for the new file.
+        * `new_path`: A string specifying the path of the new file.
+        * `old_commit`: A tuple, string, or `Commit` object representing the
+        commit for the old file.
+        * `old_path`: A string specifying the path of the old file.
+        * `shallow`: An optional bool specifying whether to do a shallow diff.
+        &#34;&#34;&#34;
+
+        if old_commit is not None and old_path is not None:
+            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+        else:
+            old_file = None
+
+        return self._req(
+            Service.PFS,
+            &#34;DiffFile&#34;,
+            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+            old_file=old_file,
+            shallow=shallow,
+        )
+
+    def create_tmp_file_set(self):
+        &#34;&#34;&#34;
+        Creates a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we&#39;re avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)
+
+    def renew_tmp_file_set(self, fileset_id, ttl_seconds):
+        &#34;&#34;&#34;
+        Renews a temporary fileset (used internally). Currently,
+        temp-fileset-related APIs are only used for Pachyderm internals (job
+        merging), so we&#39;re avoiding support for these functions until we find a
+        use for them (feel free to file an issue in
+        github.com/pachyderm/pachyderm)
+
+        Params:
+
+        * `fileset_id`: A string identifying the fileset.
+        * `ttl_seconds`: A int determining the number of seconds to keep alive
+        the temporary fileset
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.client.Client" href="../client.html#python_pachyderm.client.Client">Client</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.commit"><code class="name flex">
+<span>def <span class="ident">commit</span></span>(<span>self, repo_name, branch=None, parent=None, description=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A context manager for running operations within a commit.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the name of the repo.</li>
+<li><code>branch</code>: A string specifying the branch name. This is a more
+convenient way to build linear chains of commits. When a commit is
+started with a non-empty branch the value of branch becomes an alias
+for the created Commit. This enables a more intuitive access pattern.
+When the commit is started on a branch the previous head of the branch
+is used as the parent of the commit.</li>
+<li><code>parent</code>: An optional <code>Commit</code> object specifying the parent commit.
+Upon creation the new commit will appear identical to the parent
+commit, data can safely be added to the new commit without affecting
+the contents of the parent commit.</li>
+<li><code>description</code>: An optional string describing the commit.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def commit(self, repo_name, branch=None, parent=None, description=None):
+    &#34;&#34;&#34;
+    A context manager for running operations within a commit.
+
+    Params:
+
+    * `repo_name`: A string specifying the name of the repo.
+    * `branch`: A string specifying the branch name. This is a more
+    convenient way to build linear chains of commits. When a commit is
+    started with a non-empty branch the value of branch becomes an alias
+    for the created Commit. This enables a more intuitive access pattern.
+    When the commit is started on a branch the previous head of the branch
+    is used as the parent of the commit.
+    * `parent`: An optional `Commit` object specifying the parent commit.
+    Upon creation the new commit will appear identical to the parent
+    commit, data can safely be added to the new commit without affecting
+    the contents of the parent commit.
+    * `description`: An optional string describing the commit.
+    &#34;&#34;&#34;
+    commit = self.start_commit(repo_name, branch, parent, description)
+    try:
+        yield commit
+    finally:
+        self.finish_commit(commit)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.copy_file"><code class="name flex">
+<span>def <span class="ident">copy_file</span></span>(<span>self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Efficiently copies files already in PFS. Note that the destination
+repo cannot be an output repo, or the copy operation will (as of
+1.9.0) silently fail.</p>
+<p>Params:</p>
+<ul>
+<li><code>source_commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit for the source file.</li>
+<li><code>source_path</code>: A string specifying the path of the source file.</li>
+<li><code>dest_commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit for the destination file.</li>
+<li><code>dest_path</code>: A string specifying the path of the destination file.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def copy_file(
+    self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None
+):
+    &#34;&#34;&#34;
+    Efficiently copies files already in PFS. Note that the destination
+    repo cannot be an output repo, or the copy operation will (as of
+    1.9.0) silently fail.
+
+    Params:
+
+    * `source_commit`: A tuple, string, or `Commit` object representing the
+    commit for the source file.
+    * `source_path`: A string specifying the path of the source file.
+    * `dest_commit`: A tuple, string, or `Commit` object representing the
+    commit for the destination file.
+    * `dest_path`: A string specifying the path of the destination file.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    &#34;&#34;&#34;
+    with self.modify_file_client(dest_commit) as pfc:
+        pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.create_branch"><code class="name flex">
+<span>def <span class="ident">create_branch</span></span>(<span>self, repo_name, branch_name, commit=None, provenance=None, trigger=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new branch.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the name of the repo.</li>
+<li><code>branch_name</code>: A string specifying the new branch name.</li>
+<li><code>commit</code>: An optional tuple, string, or <code>Commit</code> object representing
+the head commit of the branch.</li>
+<li><code>provenance</code>: An optional iterable of <code>Branch</code> objects representing
+the branch provenance.</li>
+<li><code>trigger</code>: An optional <code>Trigger</code> object controlling when the head of
+<code>branch_name</code> is moved.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_branch(
+    self, repo_name, branch_name, commit=None, provenance=None, trigger=None
+):
+    &#34;&#34;&#34;
+    Creates a new branch.
+
+    Params:
+
+    * `repo_name`: A string specifying the name of the repo.
+    * `branch_name`: A string specifying the new branch name.
+    * `commit`: An optional tuple, string, or `Commit` object representing
+      the head commit of the branch.
+    * `provenance`: An optional iterable of `Branch` objects representing
+      the branch provenance.
+    * `trigger`: An optional `Trigger` object controlling when the head of
+      `branch_name` is moved.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;CreateBranch&#34;,
+        branch=pfs_proto.Branch(
+            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+        ),
+        head=commit_from(commit) if commit is not None else None,
+        provenance=provenance,
+        trigger=trigger,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.create_repo"><code class="name flex">
+<span>def <span class="ident">create_repo</span></span>(<span>self, repo_name, description=None, update=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new <code>Repo</code> object in PFS with the given name. Repos are the
+top level data object in PFS and should be used to store data of a
+similar type. For example rather than having a single <code>Repo</code> for an
+entire project you might have separate <code>Repo</code>s for logs, metrics,
+database dumps etc.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: Name of the repo.</li>
+<li><code>description</code>: An optional string describing the repo.</li>
+<li><code>update</code>: Whether to update if the repo already exists.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_repo(self, repo_name, description=None, update=None):
+    &#34;&#34;&#34;
+    Creates a new `Repo` object in PFS with the given name. Repos are the
+    top level data object in PFS and should be used to store data of a
+    similar type. For example rather than having a single `Repo` for an
+    entire project you might have separate `Repo`s for logs, metrics,
+    database dumps etc.
+
+    Params:
+
+    * `repo_name`: Name of the repo.
+    * `description`: An optional string describing the repo.
+    * `update`: Whether to update if the repo already exists.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;CreateRepo&#34;,
+        repo=pfs_proto.Repo(name=repo_name),
+        description=description,
+        update=update,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.create_tmp_file_set"><code class="name flex">
+<span>def <span class="ident">create_tmp_file_set</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a temporary fileset (used internally). Currently,
+temp-fileset-related APIs are only used for Pachyderm internals (job
+merging), so we're avoiding support for these functions until we find a
+use for them (feel free to file an issue in
+github.com/pachyderm/pachyderm)</p>
+<p>Params:</p>
+<ul>
+<li><code>fileset_id</code>: A string identifying the fileset.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_tmp_file_set(self):
+    &#34;&#34;&#34;
+    Creates a temporary fileset (used internally). Currently,
+    temp-fileset-related APIs are only used for Pachyderm internals (job
+    merging), so we&#39;re avoiding support for these functions until we find a
+    use for them (feel free to file an issue in
+    github.com/pachyderm/pachyderm)
+
+    Params:
+
+    * `fileset_id`: A string identifying the fileset.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos"><code class="name flex">
+<span>def <span class="ident">delete_all_repos</span></span>(<span>self, force=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes all repos.</p>
+<p>Params:</p>
+<ul>
+<li><code>force</code>: If set to true, the repo will be removed regardless of
+errors. This argument should be used with care.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_all_repos(self, force=None):
+    &#34;&#34;&#34;
+    Deletes all repos.
+
+    Params:
+
+    * `force`: If set to true, the repo will be removed regardless of
+    errors. This argument should be used with care.
+    &#34;&#34;&#34;
+    return self._req(Service.PFS, &#34;DeleteRepo&#34;, force=force, all=True)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.delete_branch"><code class="name flex">
+<span>def <span class="ident">delete_branch</span></span>(<span>self, repo_name, branch_name, force=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes a branch, but leaves the commits themselves intact. In other
+words, those commits can still be accessed via commit IDs and other
+branches they happen to be on.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the repo name.</li>
+<li><code>branch_name</code>: A string specifying the name of the branch to delete.</li>
+<li><code>force</code>: A bool specifying whether to force the branch deletion.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_branch(self, repo_name, branch_name, force=None):
+    &#34;&#34;&#34;
+    Deletes a branch, but leaves the commits themselves intact. In other
+    words, those commits can still be accessed via commit IDs and other
+    branches they happen to be on.
+
+    Params:
+
+    * `repo_name`: A string specifying the repo name.
+    * `branch_name`: A string specifying the name of the branch to delete.
+    * `force`: A bool specifying whether to force the branch deletion.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;DeleteBranch&#34;,
+        branch=pfs_proto.Branch(
+            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+        ),
+        force=force,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.delete_file"><code class="name flex">
+<span>def <span class="ident">delete_file</span></span>(<span>self, commit, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes a file from a Commit. DeleteFile leaves a tombstone in the
+Commit, assuming the file isn't written to later attempting to get the
+file from the finished commit will result in not found error. The file
+will of course remain intact in the Commit's parent.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: The path to the file.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_file(self, commit, path):
+    &#34;&#34;&#34;
+    Deletes a file from a Commit. DeleteFile leaves a tombstone in the
+    Commit, assuming the file isn&#39;t written to later attempting to get the
+    file from the finished commit will result in not found error. The file
+    will of course remain intact in the Commit&#39;s parent.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: The path to the file.
+    &#34;&#34;&#34;
+    with self.modify_file_client(commit) as pfc:
+        return pfc.delete_file(path)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.delete_repo"><code class="name flex">
+<span>def <span class="ident">delete_repo</span></span>(<span>self, repo_name, force=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes a repo and reclaims the storage space it was using.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: The name of the repo.</li>
+<li><code>force</code>: If set to true, the repo will be removed regardless of
+errors. This argument should be used with care.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_repo(self, repo_name, force=None):
+    &#34;&#34;&#34;
+    Deletes a repo and reclaims the storage space it was using.
+
+    Params:
+
+    * `repo_name`: The name of the repo.
+    * `force`: If set to true, the repo will be removed regardless of
+      errors. This argument should be used with care.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;DeleteRepo&#34;,
+        repo=pfs_proto.Repo(name=repo_name),
+        force=force,
+        all=False,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.diff_file"><code class="name flex">
+<span>def <span class="ident">diff_file</span></span>(<span>self, new_commit, new_path, old_commit=None, old_path=None, shallow=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Diffs two files. If <code>old_commit</code> or <code>old_path</code> are not specified, the
+same path in the parent of the file specified by <code>new_commit</code> and
+<code>new_path</code> will be used.</p>
+<p>Params:</p>
+<ul>
+<li><code>new_commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit for the new file.</li>
+<li><code>new_path</code>: A string specifying the path of the new file.</li>
+<li><code>old_commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit for the old file.</li>
+<li><code>old_path</code>: A string specifying the path of the old file.</li>
+<li><code>shallow</code>: An optional bool specifying whether to do a shallow diff.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def diff_file(
+    self, new_commit, new_path, old_commit=None, old_path=None, shallow=None
+):
+    &#34;&#34;&#34;
+    Diffs two files. If `old_commit` or `old_path` are not specified, the
+    same path in the parent of the file specified by `new_commit` and
+    `new_path` will be used.
+
+    Params:
+
+    * `new_commit`: A tuple, string, or `Commit` object representing the
+    commit for the new file.
+    * `new_path`: A string specifying the path of the new file.
+    * `old_commit`: A tuple, string, or `Commit` object representing the
+    commit for the old file.
+    * `old_path`: A string specifying the path of the old file.
+    * `shallow`: An optional bool specifying whether to do a shallow diff.
+    &#34;&#34;&#34;
+
+    if old_commit is not None and old_path is not None:
+        old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+    else:
+        old_file = None
+
+    return self._req(
+        Service.PFS,
+        &#34;DiffFile&#34;,
+        new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+        old_file=old_file,
+        shallow=shallow,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.finish_commit"><code class="name flex">
+<span>def <span class="ident">finish_commit</span></span>(<span>self, commit, description=None, size_bytes=None, empty=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ends the process of committing data to a Repo and persists the
+Commit. Once a Commit is finished the data becomes immutable and
+future attempts to write to it with ModifyFile will error.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>description</code>: An optional string describing this commit.</li>
+<li><code>size_bytes</code>: An optional int.</li>
+<li><code>empty</code>: An optional bool. If set, the commit will be closed (its
+<code>finished</code> field will be set to the current time) but its <code>tree</code> will
+be left nil.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
+    &#34;&#34;&#34;
+    Ends the process of committing data to a Repo and persists the
+    Commit. Once a Commit is finished the data becomes immutable and
+    future attempts to write to it with ModifyFile will error.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `description`: An optional string describing this commit.
+    * `size_bytes`: An optional int.
+    * `empty`: An optional bool. If set, the commit will be closed (its
+    `finished` field will be set to the current time) but its `tree` will
+    be left nil.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;FinishCommit&#34;,
+        commit=commit_from(commit),
+        description=description,
+        size_bytes=size_bytes,
+        empty=empty,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.flush_commit"><code class="name flex">
+<span>def <span class="ident">flush_commit</span></span>(<span>self, commits, repos=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Blocks until all of the commits which have a set of commits as
+provenance have finished. For commits to be considered they must have
+all of the specified commits as provenance. This in effect waits for
+all of the jobs that are triggered by a set of commits to complete.
+It returns an error if any of the commits it's waiting on are
+cancelled due to one of the jobs encountering an error during runtime.
+Note that it's never necessary to call FlushCommit to run jobs,
+they'll run no matter what, FlushCommit just allows you to wait for
+them to complete and see their output once they do. This returns an
+iterator of CommitInfo objects.</p>
+<p>Yields <code>CommitInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>commits</code>: A list of tuples, strings, or <code>Commit</code> objects
+representing the commits to flush.</li>
+<li><code>repos</code>: An optional list of strings specifying repo names. If
+specified, only commits within these repos will be flushed.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def flush_commit(self, commits, repos=None):
+    &#34;&#34;&#34;
+    Blocks until all of the commits which have a set of commits as
+    provenance have finished. For commits to be considered they must have
+    all of the specified commits as provenance. This in effect waits for
+    all of the jobs that are triggered by a set of commits to complete.
+    It returns an error if any of the commits it&#39;s waiting on are
+    cancelled due to one of the jobs encountering an error during runtime.
+    Note that it&#39;s never necessary to call FlushCommit to run jobs,
+    they&#39;ll run no matter what, FlushCommit just allows you to wait for
+    them to complete and see their output once they do. This returns an
+    iterator of CommitInfo objects.
+
+    Yields `CommitInfo` objects.
+
+    Params:
+
+    * `commits`: A list of tuples, strings, or `Commit` objects
+    representing the commits to flush.
+    * `repos`: An optional list of strings specifying repo names. If
+    specified, only commits within these repos will be flushed.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;FlushCommit&#34;,
+        commits=[commit_from(c) for c in commits],
+        to_repos=[pfs_proto.Repo(name=r) for r in repos]
+        if repos is not None
+        else None,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.fsck"><code class="name flex">
+<span>def <span class="ident">fsck</span></span>(<span>self, fix=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Performs a file system consistency check for PFS.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fsck(self, fix=None):
+    &#34;&#34;&#34;
+    Performs a file system consistency check for PFS.
+    &#34;&#34;&#34;
+    return self._req(Service.PFS, &#34;Fsck&#34;, fix=fix)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.get_file"><code class="name flex">
+<span>def <span class="ident">get_file</span></span>(<span>self, commit, path, URL=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a <code><a title="python_pachyderm.mixin.pfs.PFSFile" href="#python_pachyderm.mixin.pfs.PFSFile">PFSFile</a></code> object, containing the contents of a file stored
+in PFS.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path of the file.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_file(self, commit, path, URL=None):
+    &#34;&#34;&#34;
+    Returns a `PFSFile` object, containing the contents of a file stored
+    in PFS.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: A string specifying the path of the file.
+    &#34;&#34;&#34;
+    res = self._req(
+        Service.PFS,
+        &#34;GetFile&#34;,
+        file=pfs_proto.File(commit=commit_from(commit), path=path),
+        URL=URL,
+    )
+    return PFSFile(FileTarstream(res))</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.glob_file"><code class="name flex">
+<span>def <span class="ident">glob_file</span></span>(<span>self, commit, pattern)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists files that match a glob pattern. Yields <code>FileInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>pattern</code>: A string representing a glob pattern.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def glob_file(self, commit, pattern):
+    &#34;&#34;&#34;
+    Lists files that match a glob pattern. Yields `FileInfo` objects.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `pattern`: A string representing a glob pattern.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS, &#34;GlobFile&#34;, commit=commit_from(commit), pattern=pattern
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.inspect_branch"><code class="name flex">
+<span>def <span class="ident">inspect_branch</span></span>(<span>self, repo_name, branch_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inspects a branch. Returns a <code>BranchInfo</code> object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inspect_branch(self, repo_name, branch_name):
+    &#34;&#34;&#34;
+    Inspects a branch. Returns a `BranchInfo` object.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;InspectBranch&#34;,
+        branch=pfs_proto.Branch(
+            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+        ),
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.inspect_commit"><code class="name flex">
+<span>def <span class="ident">inspect_commit</span></span>(<span>self, commit, block_state=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inspects a commit. Returns a <code>CommitInfo</code> object.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li>An optional int that causes this method to block until the commit is
+in the desired commit state. See the <code>CommitState</code> enum.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inspect_commit(self, commit, block_state=None):
+    &#34;&#34;&#34;
+    Inspects a commit. Returns a `CommitInfo` object.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * An optional int that causes this method to block until the commit is
+    in the desired commit state. See the `CommitState` enum.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;InspectCommit&#34;,
+        commit=commit_from(commit),
+        block_state=block_state,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.inspect_file"><code class="name flex">
+<span>def <span class="ident">inspect_file</span></span>(<span>self, commit, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inspects a file. Returns a <code>FileInfo</code> object.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path to the file.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inspect_file(self, commit, path):
+    &#34;&#34;&#34;
+    Inspects a file. Returns a `FileInfo` object.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: A string specifying the path to the file.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;InspectFile&#34;,
+        file=pfs_proto.File(commit=commit_from(commit), path=path),
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.inspect_repo"><code class="name flex">
+<span>def <span class="ident">inspect_repo</span></span>(<span>self, repo_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns info about a specific repo. Returns a <code>RepoInfo</code> object.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: Name of the repo.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inspect_repo(self, repo_name):
+    &#34;&#34;&#34;
+    Returns info about a specific repo. Returns a `RepoInfo` object.
+
+    Params:
+
+    * `repo_name`: Name of the repo.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.list_branch"><code class="name flex">
+<span>def <span class="ident">list_branch</span></span>(<span>self, repo_name, reverse=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists the active branch objects on a repo. Returns a list of
+<code>BranchInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the repo name.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_branch(self, repo_name, reverse=None):
+    &#34;&#34;&#34;
+    Lists the active branch objects on a repo. Returns a list of
+    `BranchInfo` objects.
+
+    Params:
+
+    * `repo_name`: A string specifying the repo name.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;ListBranch&#34;,
+        repo=pfs_proto.Repo(name=repo_name),
+        reverse=reverse,
+    ).branch_info</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.list_commit"><code class="name flex">
+<span>def <span class="ident">list_commit</span></span>(<span>self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists commits. Yields <code>CommitInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: If only <code>repo_name</code> is given, all commits in the repo
+are returned.</li>
+<li><code>to_commit</code>: Optional. Only the ancestors of <code>to</code>, including <code>to</code>
+itself, are considered.</li>
+<li><code>from_commit</code>: Optional. Only the descendants of <code>from</code>, including
+<code>from</code> itself, are considered.</li>
+<li><code>number</code>: Optional. Determines how many commits are returned.
+If
+<code>number</code> is 0, all commits that match the aforementioned criteria are
+returned.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_commit(
+    self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
+):
+    &#34;&#34;&#34;
+    Lists commits. Yields `CommitInfo` objects.
+
+    Params:
+
+    * `repo_name`: If only `repo_name` is given, all commits in the repo
+    are returned.
+    * `to_commit`: Optional. Only the ancestors of `to`, including `to`
+    itself, are considered.
+    * `from_commit`: Optional. Only the descendants of `from`, including
+    `from` itself, are considered.
+    * `number`: Optional. Determines how many commits are returned.  If
+    `number` is 0, all commits that match the aforementioned criteria are
+    returned.
+    &#34;&#34;&#34;
+    req = pfs_proto.ListCommitRequest(
+        repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+    )
+    if to_commit is not None:
+        req.to.CopyFrom(commit_from(to_commit))
+    if from_commit is not None:
+        getattr(req, &#34;from&#34;).CopyFrom(commit_from(from_commit))
+    return self._req(Service.PFS, &#34;ListCommit&#34;, req=req)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.list_file"><code class="name flex">
+<span>def <span class="ident">list_file</span></span>(<span>self, commit, path, include_contents=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists the files in a directory.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: The path to the directory.</li>
+<li><code>include_contents</code>: An optional bool. If <code>True</code>, file contents are
+included.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_file(self, commit, path, include_contents=None):
+    &#34;&#34;&#34;
+    Lists the files in a directory.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: The path to the directory.
+    * `include_contents`: An optional bool. If `True`, file contents are
+    included.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;ListFile&#34;,
+        file=pfs_proto.File(commit=commit_from(commit), path=path),
+        full=include_contents,
+        # history=history,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.list_repo"><code class="name flex">
+<span>def <span class="ident">list_repo</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns info about all repos, as a list of <code>RepoInfo</code> objects.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_repo(self):
+    &#34;&#34;&#34;
+    Returns info about all repos, as a list of `RepoInfo` objects.
+    &#34;&#34;&#34;
+    return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.modify_file_client"><code class="name flex">
+<span>def <span class="ident">modify_file_client</span></span>(<span>self, commit)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A context manager that gives a <code><a title="python_pachyderm.mixin.pfs.ModifyFileClient" href="#python_pachyderm.mixin.pfs.ModifyFileClient">ModifyFileClient</a></code>. When the context
+manager exits, any operations enqueued from the <code><a title="python_pachyderm.mixin.pfs.ModifyFileClient" href="#python_pachyderm.mixin.pfs.ModifyFileClient">ModifyFileClient</a></code> are
+executed in a single, atomic <code>ModifyFile</code> call.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def modify_file_client(self, commit):
+    &#34;&#34;&#34;
+    A context manager that gives a `ModifyFileClient`. When the context
+    manager exits, any operations enqueued from the `ModifyFileClient` are
+    executed in a single, atomic `ModifyFile` call.
+    &#34;&#34;&#34;
+    pfc = ModifyFileClient(commit)
+    yield pfc
+    self._req(Service.PFS, &#34;ModifyFile&#34;, req=pfc._reqs())</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes"><code class="name flex">
+<span>def <span class="ident">put_file_bytes</span></span>(<span>self, commit, path, value, delimiter=None, target_file_datums=None, target_file_bytes=None, append=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uploads a PFS file from a file-like object, bytestring, or iterator
+of bytestrings.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path in the repo the file(s) will be
+written to.</li>
+<li><code>value</code>: The file contents as bytes, represented as a file-like
+object, bytestring, or iterator of bytestrings.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_bytes(
+    self,
+    commit,
+    path,
+    value,
+    delimiter=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    append=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Uploads a PFS file from a file-like object, bytestring, or iterator
+    of bytestrings.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: A string specifying the path in the repo the file(s) will be
+    written to.
+    * `value`: The file contents as bytes, represented as a file-like
+    object, bytestring, or iterator of bytestrings.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+    with self.modify_file_client(commit) as pfc:
+        if hasattr(value, &#34;read&#34;):
+            return pfc.put_file_from_fileobj(
+                path,
+                value,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )
+        else:
+            return pfc.put_file_from_bytes(
+                path,
+                value,
+                # delimiter=delimiter,
+                # target_file_datums=target_file_datums,
+                # target_file_bytes=target_file_bytes,
+                # header_records=header_records,
+            )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.put_file_url"><code class="name flex">
+<span>def <span class="ident">put_file_url</span></span>(<span>self, commit, path, url, delimiter=None, recursive=None, target_file_datums=None, target_file_bytes=None, append=None, header_records=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Puts a file using the content found at a URL. The URL is sent to the
+server which performs the request.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: A string specifying the path to the file.</li>
+<li><code>url</code>: A string specifying the url of the file to put.</li>
+<li><code>delimiter</code>: An optional int. causes data to be broken up into
+separate files by the delimiter. e.g. if you used
+<code>Delimiter.CSV.value</code>, a separate PFS file will be created for each
+row in the input CSV file, rather than one large CSV file.</li>
+<li><code>recursive</code>: allow for recursive scraping of some types URLs, for
+example on s3:// URLs.</li>
+<li><code>target_file_datums</code>: An optional int. Specifies the target number of
+datums in each written file. It may be lower if data does not split
+evenly, but will never be higher, unless the value is 0.</li>
+<li><code>target_file_bytes</code>: An optional int. Specifies the target number of
+bytes in each written file, files may have more or fewer bytes than
+the target.</li>
+<li><code>append</code>: An optional bool, if true the data is appended to the file,
+if it already exists.</li>
+<li><code>header_records: An optional int for splitting data when</code>delimiter`
+is not <code>NONE</code> (or <code>SQL</code>). It specifies the number of records that are
+converted to a header and applied to all file shards.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_file_url(
+    self,
+    commit,
+    path,
+    url,
+    delimiter=None,
+    recursive=None,
+    target_file_datums=None,
+    target_file_bytes=None,
+    append=None,
+    header_records=None,
+):
+    &#34;&#34;&#34;
+    Puts a file using the content found at a URL. The URL is sent to the
+    server which performs the request.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: A string specifying the path to the file.
+    * `url`: A string specifying the url of the file to put.
+    * `delimiter`: An optional int. causes data to be broken up into
+    separate files by the delimiter. e.g. if you used
+    `Delimiter.CSV.value`, a separate PFS file will be created for each
+    row in the input CSV file, rather than one large CSV file.
+    * `recursive`: allow for recursive scraping of some types URLs, for
+    example on s3:// URLs.
+    * `target_file_datums`: An optional int. Specifies the target number of
+    datums in each written file. It may be lower if data does not split
+    evenly, but will never be higher, unless the value is 0.
+    * `target_file_bytes`: An optional int. Specifies the target number of
+    bytes in each written file, files may have more or fewer bytes than
+    the target.
+    * `append`: An optional bool, if true the data is appended to the file,
+    if it already exists.
+    * `header_records: An optional int for splitting data when `delimiter`
+    is not `NONE` (or `SQL`). It specifies the number of records that are
+    converted to a header and applied to all file shards.
+    &#34;&#34;&#34;
+
+    with self.modify_file_client(commit) as pfc:
+        pfc.put_file_from_url(
+            path,
+            url,
+            recursive=recursive,
+            append=append,
+            # delimiter=delimiter,
+            # target_file_datums=target_file_datums,
+            # target_file_bytes=target_file_bytes,
+            # header_records=header_records,
+        )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set"><code class="name flex">
+<span>def <span class="ident">renew_tmp_file_set</span></span>(<span>self, fileset_id, ttl_seconds)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Renews a temporary fileset (used internally). Currently,
+temp-fileset-related APIs are only used for Pachyderm internals (job
+merging), so we're avoiding support for these functions until we find a
+use for them (feel free to file an issue in
+github.com/pachyderm/pachyderm)</p>
+<p>Params:</p>
+<ul>
+<li><code>fileset_id</code>: A string identifying the fileset.</li>
+<li><code>ttl_seconds</code>: A int determining the number of seconds to keep alive
+the temporary fileset</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def renew_tmp_file_set(self, fileset_id, ttl_seconds):
+    &#34;&#34;&#34;
+    Renews a temporary fileset (used internally). Currently,
+    temp-fileset-related APIs are only used for Pachyderm internals (job
+    merging), so we&#39;re avoiding support for these functions until we find a
+    use for them (feel free to file an issue in
+    github.com/pachyderm/pachyderm)
+
+    Params:
+
+    * `fileset_id`: A string identifying the fileset.
+    * `ttl_seconds`: A int determining the number of seconds to keep alive
+    the temporary fileset
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.start_commit"><code class="name flex">
+<span>def <span class="ident">start_commit</span></span>(<span>self, repo_name, branch=None, parent=None, description=None, provenance=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Begins the process of committing data to a Repo. Once started you can
+write to the Commit with ModifyFile and when all the data has been
+written you must finish the Commit with FinishCommit. NOTE, data is
+not persisted until FinishCommit is called. A Commit object is
+returned.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the name of the repo.</li>
+<li><code>branch</code>: A string specifying the branch name. This is a more
+convenient way to build linear chains of commits. When a commit is
+started with a non-empty branch the value of branch becomes an alias
+for the created Commit. This enables a more intuitive access pattern.
+When the commit is started on a branch the previous head of the branch
+is used as the parent of the commit.</li>
+<li><code>parent</code>: An optional <code>Commit</code> object specifying the parent commit.
+Upon creation the new commit will appear identical to the parent
+commit, data can safely be added to the new commit without affecting
+the contents of the parent commit.</li>
+<li><code>description</code>: An optional string describing the commit.</li>
+<li><code>provenance</code>: An optional iterable of <code>CommitProvenance</code> objects
+specifying the commit provenance.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_commit(
+    self, repo_name, branch=None, parent=None, description=None, provenance=None
+):
+    &#34;&#34;&#34;
+    Begins the process of committing data to a Repo. Once started you can
+    write to the Commit with ModifyFile and when all the data has been
+    written you must finish the Commit with FinishCommit. NOTE, data is
+    not persisted until FinishCommit is called. A Commit object is
+    returned.
+
+    Params:
+
+    * `repo_name`: A string specifying the name of the repo.
+    * `branch`: A string specifying the branch name. This is a more
+    convenient way to build linear chains of commits. When a commit is
+    started with a non-empty branch the value of branch becomes an alias
+    for the created Commit. This enables a more intuitive access pattern.
+    When the commit is started on a branch the previous head of the branch
+    is used as the parent of the commit.
+    * `parent`: An optional `Commit` object specifying the parent commit.
+    Upon creation the new commit will appear identical to the parent
+    commit, data can safely be added to the new commit without affecting
+    the contents of the parent commit.
+    * `description`: An optional string describing the commit.
+    * `provenance`: An optional iterable of `CommitProvenance` objects
+    specifying the commit provenance.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;StartCommit&#34;,
+        parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
+        branch=branch,
+        description=description,
+        provenance=provenance,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit"><code class="name flex">
+<span>def <span class="ident">subscribe_commit</span></span>(<span>self, repo_name, branch, from_commit_id=None, state=None, prov=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Yields <code>CommitInfo</code> objects as commits occur.</p>
+<p>Params:</p>
+<ul>
+<li><code>repo_name</code>: A string specifying the name of the repo.</li>
+<li><code>branch</code>: A string specifying branch to subscribe to.</li>
+<li><code>from_commit_id</code>: An optional string specifying the commit ID. Only
+commits created since this commit are returned.</li>
+<li><code>state</code>: The commit state to filter on.</li>
+<li><code>prov</code>: An optional <code>CommitProvenance</code> object.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def subscribe_commit(
+    self, repo_name, branch, from_commit_id=None, state=None, prov=None
+):
+    &#34;&#34;&#34;
+    Yields `CommitInfo` objects as commits occur.
+
+    Params:
+
+    * `repo_name`: A string specifying the name of the repo.
+    * `branch`: A string specifying branch to subscribe to.
+    * `from_commit_id`: An optional string specifying the commit ID. Only
+    commits created since this commit are returned.
+    * `state`: The commit state to filter on.
+    * `prov`: An optional `CommitProvenance` object.
+    &#34;&#34;&#34;
+    repo = pfs_proto.Repo(name=repo_name)
+    req = pfs_proto.SubscribeCommitRequest(
+        repo=repo, branch=branch, state=state, prov=prov
+    )
+    if from_commit_id is not None:
+        getattr(req, &#34;from&#34;).CopyFrom(
+            pfs_proto.Commit(repo=repo, id=from_commit_id)
+        )
+    return self._req(Service.PFS, &#34;SubscribeCommit&#34;, req=req)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.walk_file"><code class="name flex">
+<span>def <span class="ident">walk_file</span></span>(<span>self, commit, path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Walks over all descendant files in a directory. Returns a generator of
+<code>FileInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</li>
+<li><code>path</code>: The path to the directory.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def walk_file(self, commit, path):
+    &#34;&#34;&#34;
+    Walks over all descendant files in a directory. Returns a generator of
+    `FileInfo` objects.
+
+    Params:
+
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    * `path`: The path to the directory.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.PFS,
+        &#34;WalkFile&#34;,
+        file=pfs_proto.File(commit=commit_from(commit), path=path),
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm.mixin" href="index.html">python_pachyderm.mixin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.pfs.put_file_req" href="#python_pachyderm.mixin.pfs.put_file_req">put_file_req</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicCopyFileOp" href="#python_pachyderm.mixin.pfs.AtomicCopyFileOp">AtomicCopyFileOp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicDeleteFileOp" href="#python_pachyderm.mixin.pfs.AtomicDeleteFileOp">AtomicDeleteFileOp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicModifyFileURLOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFileURLOp">AtomicModifyFileURLOp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicModifyFileobjOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFileobjOp">AtomicModifyFileobjOp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicModifyFilepathOp" href="#python_pachyderm.mixin.pfs.AtomicModifyFilepathOp">AtomicModifyFilepathOp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.AtomicOp" href="#python_pachyderm.mixin.pfs.AtomicOp">AtomicOp</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.pfs.AtomicOp.reqs" href="#python_pachyderm.mixin.pfs.AtomicOp.reqs">reqs</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.FileTarstream" href="#python_pachyderm.mixin.pfs.FileTarstream">FileTarstream</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.pfs.FileTarstream.close" href="#python_pachyderm.mixin.pfs.FileTarstream.close">close</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.FileTarstream.read" href="#python_pachyderm.mixin.pfs.FileTarstream.read">read</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient" href="#python_pachyderm.mixin.pfs.ModifyFileClient">ModifyFileClient</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.copy_file" href="#python_pachyderm.mixin.pfs.ModifyFileClient.copy_file">copy_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.delete_file" href="#python_pachyderm.mixin.pfs.ModifyFileClient.delete_file">delete_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_bytes" href="#python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_bytes">put_file_from_bytes</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_fileobj" href="#python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_fileobj">put_file_from_fileobj</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_filepath" href="#python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_filepath">put_file_from_filepath</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_url" href="#python_pachyderm.mixin.pfs.ModifyFileClient.put_file_from_url">put_file_from_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.PFSFile" href="#python_pachyderm.mixin.pfs.PFSFile">PFSFile</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.pfs.PFSFile.close" href="#python_pachyderm.mixin.pfs.PFSFile.close">close</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSFile.read" href="#python_pachyderm.mixin.pfs.PFSFile.read">read</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="python_pachyderm.mixin.pfs.PFSMixin" href="#python_pachyderm.mixin.pfs.PFSMixin">PFSMixin</a></code></h4>
+<ul class="two-column">
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.commit" href="#python_pachyderm.mixin.pfs.PFSMixin.commit">commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.copy_file" href="#python_pachyderm.mixin.pfs.PFSMixin.copy_file">copy_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.create_branch" href="#python_pachyderm.mixin.pfs.PFSMixin.create_branch">create_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.create_repo" href="#python_pachyderm.mixin.pfs.PFSMixin.create_repo">create_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.create_tmp_file_set" href="#python_pachyderm.mixin.pfs.PFSMixin.create_tmp_file_set">create_tmp_file_set</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos" href="#python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos">delete_all_repos</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_branch" href="#python_pachyderm.mixin.pfs.PFSMixin.delete_branch">delete_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_file" href="#python_pachyderm.mixin.pfs.PFSMixin.delete_file">delete_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.delete_repo" href="#python_pachyderm.mixin.pfs.PFSMixin.delete_repo">delete_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.diff_file" href="#python_pachyderm.mixin.pfs.PFSMixin.diff_file">diff_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.finish_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">finish_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.flush_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.flush_commit">flush_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.fsck" href="#python_pachyderm.mixin.pfs.PFSMixin.fsck">fsck</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.get_file" href="#python_pachyderm.mixin.pfs.PFSMixin.get_file">get_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.glob_file" href="#python_pachyderm.mixin.pfs.PFSMixin.glob_file">glob_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_branch" href="#python_pachyderm.mixin.pfs.PFSMixin.inspect_branch">inspect_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.inspect_commit">inspect_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_file" href="#python_pachyderm.mixin.pfs.PFSMixin.inspect_file">inspect_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.inspect_repo" href="#python_pachyderm.mixin.pfs.PFSMixin.inspect_repo">inspect_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_branch" href="#python_pachyderm.mixin.pfs.PFSMixin.list_branch">list_branch</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.list_commit">list_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_file" href="#python_pachyderm.mixin.pfs.PFSMixin.list_file">list_file</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.list_repo" href="#python_pachyderm.mixin.pfs.PFSMixin.list_repo">list_repo</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.modify_file_client" href="#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">modify_file_client</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes" href="#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">put_file_bytes</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_url" href="#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">put_file_url</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set" href="#python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set">renew_tmp_file_set</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.start_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.start_commit">start_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">subscribe_commit</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.walk_file" href="#python_pachyderm.mixin.pfs.PFSMixin.walk_file">walk_file</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>python_pachyderm.mixin.auth API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>python_pachyderm.mixin.auth</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from python_pachyderm.service import Service
+
+
+class AuthMixin:
+    def activate_auth(self, root_token=None):
+        &#34;&#34;&#34;
+        Activates auth. Returns the root token for the cluster, an
+        irrevocable superuser credential that should be stored securely.
+
+        Params:
+
+        * `root_token`: An optional string. If specified, this string becomes
+          the Pachyderm cluster root user&#39;s token (otherwise, Pachyderm
+          generates a root token, which is generally safer). Currently this is
+          only used for testing and Pachyderm internals (migration).
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Activate&#34;, root_token=root_token).pach_token
+
+    def deactivate_auth(self):
+        &#34;&#34;&#34;
+        Deactivates auth, removing all ACLs, tokens, and admins from the
+        Pachyderm cluster and making all data publicly accessible.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Deactivate&#34;)
+
+    def get_auth_configuration(self):
+        &#34;&#34;&#34;
+        Gets the auth configuration. Returns an `AuthConfig` object.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetConfiguration&#34;).configuration
+
+    def set_auth_configuration(self, configuration):
+        &#34;&#34;&#34;
+        Set the auth configuration.
+
+        Params:
+
+        * `config`: An `AuthConfig` object.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
+
+    def get_role_binding(self, resource):
+        &#34;&#34;&#34;
+        Returns the current set of cluster role bindings.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRoleBinding&#34;, resource=resource)
+
+    def modify_role_binding(self, resource, principal, roles=None):
+        &#34;&#34;&#34;
+        Sets the roles for a given principal on a resource.
+
+        Params:
+
+        * `resource`: The resource to grant the roles on.
+        * `principal`: A string specifying the principal.
+        * `roles`: A list of roles to grant. If empty, all roles are revoked.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH,
+            &#34;ModifyRoleBinding&#34;,
+            resource=resource,
+            principal=principal,
+            roles=roles,
+        )
+
+    def get_oidc_login(self):
+        &#34;&#34;&#34;
+        Returns the OIDC login configuration.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetOIDCLogin&#34;)
+
+    def authenticate_oidc(self, oidc_state):
+        &#34;&#34;&#34;
+        Authenticates a user to the Pachyderm cluster via OIDC. Returns a
+        string that can be used for making authenticated requests.
+
+        Params:
+
+        * `oidc_state`: A string of the OIDC state token.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Authenticate&#34;, oidc_state=oidc_state).pach_token
+
+    def authenticate_id_token(self, id_token):
+        &#34;&#34;&#34;
+        Authenticates a user to the Pachyderm cluster using an ID token issued
+        by the OIDC provider. The token must include the Pachyderm client_id
+        in the set of audiences to be valid. Returns a string that can be used
+        for making authenticated requests.
+
+        Params:
+
+        * `id_token`: A string of the ID token.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Authenticate&#34;, id_token=id_token).pach_token
+
+    def authorize(self, resource, permissions=None):
+        &#34;&#34;&#34;
+        Authorizes the user to a given resource.
+
+        Params:
+
+        * `resource`: The resource the user wants access to
+        * `permissions`: A list of permissions the user wants to test.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH, &#34;Authorize&#34;, resource=resource, permissions=permissions
+        )
+
+    def who_am_i(self):
+        &#34;&#34;&#34;
+        Returns info about the user tied to this `Client`.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;WhoAmI&#34;)
+
+    def get_robot_token(self, robot, ttl=None):
+        &#34;&#34;&#34;
+        Gets a new auth token for a robot user.
+
+        Params:
+        * `robot`: The name of the robot user.
+        * `ttl`: Optional. The expiration for the token.
+        If empty, the token does not expire.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRobotToken&#34;, robot=robot, ttl=ttl).token
+
+    def revoke_auth_token(self, token):
+        &#34;&#34;&#34;
+        Revokes an auth token.
+
+        Params:
+
+        * `token`: A string that indicates the Pachyderm token that is being
+        revoked.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
+
+    def set_groups_for_user(self, username, groups):
+        &#34;&#34;&#34;
+        Sets the group membership for a user.
+
+        Params:
+
+        * `username`: A string.
+        * `groups`: A list of strings.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
+        )
+
+    def modify_members(self, group, add=None, remove=None):
+        &#34;&#34;&#34;
+        Adds and/or removes members of a group.
+
+        Params:
+
+        * `group`: A string.
+        * `add`: An optional list of strings specifying members to add.
+        * `remove`: An optional list of strings specifying members to remove.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH,
+            &#34;ModifyMembers&#34;,
+            group=group,
+            add=add or [],
+            remove=remove or [],
+        )
+
+    def get_groups(self, username=None):
+        &#34;&#34;&#34;
+        Gets which groups the given `username` belongs to. Returns a list of
+        strings.
+
+        Params:
+
+        `username`: A string.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups
+
+    def get_users(self, group):
+        &#34;&#34;&#34;
+        Gets which users below to the `given`. Returns a list of strings.
+
+        Params:
+
+        `group`: A string.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetUsers&#34;, group=group).usernames
+
+    def extract_auth_tokens(self):
+        &#34;&#34;&#34;
+        This maps to an internal function that is only used for migration.
+        Pachyderm&#39;s `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we&#39;re avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;extract/restore are for testing and internal use only&#34;
+        )
+
+    def restore_auth_token(self, token=None):
+        &#34;&#34;&#34;
+        This maps to an internal function that is only used for migration.
+        Pachyderm&#39;s `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we&#39;re avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;extract/restore are for testing and internal use only&#34;
+        )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="python_pachyderm.mixin.auth.AuthMixin"><code class="flex name class">
+<span>class <span class="ident">AuthMixin</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthMixin:
+    def activate_auth(self, root_token=None):
+        &#34;&#34;&#34;
+        Activates auth. Returns the root token for the cluster, an
+        irrevocable superuser credential that should be stored securely.
+
+        Params:
+
+        * `root_token`: An optional string. If specified, this string becomes
+          the Pachyderm cluster root user&#39;s token (otherwise, Pachyderm
+          generates a root token, which is generally safer). Currently this is
+          only used for testing and Pachyderm internals (migration).
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Activate&#34;, root_token=root_token).pach_token
+
+    def deactivate_auth(self):
+        &#34;&#34;&#34;
+        Deactivates auth, removing all ACLs, tokens, and admins from the
+        Pachyderm cluster and making all data publicly accessible.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Deactivate&#34;)
+
+    def get_auth_configuration(self):
+        &#34;&#34;&#34;
+        Gets the auth configuration. Returns an `AuthConfig` object.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetConfiguration&#34;).configuration
+
+    def set_auth_configuration(self, configuration):
+        &#34;&#34;&#34;
+        Set the auth configuration.
+
+        Params:
+
+        * `config`: An `AuthConfig` object.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
+
+    def get_role_binding(self, resource):
+        &#34;&#34;&#34;
+        Returns the current set of cluster role bindings.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRoleBinding&#34;, resource=resource)
+
+    def modify_role_binding(self, resource, principal, roles=None):
+        &#34;&#34;&#34;
+        Sets the roles for a given principal on a resource.
+
+        Params:
+
+        * `resource`: The resource to grant the roles on.
+        * `principal`: A string specifying the principal.
+        * `roles`: A list of roles to grant. If empty, all roles are revoked.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH,
+            &#34;ModifyRoleBinding&#34;,
+            resource=resource,
+            principal=principal,
+            roles=roles,
+        )
+
+    def get_oidc_login(self):
+        &#34;&#34;&#34;
+        Returns the OIDC login configuration.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetOIDCLogin&#34;)
+
+    def authenticate_oidc(self, oidc_state):
+        &#34;&#34;&#34;
+        Authenticates a user to the Pachyderm cluster via OIDC. Returns a
+        string that can be used for making authenticated requests.
+
+        Params:
+
+        * `oidc_state`: A string of the OIDC state token.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Authenticate&#34;, oidc_state=oidc_state).pach_token
+
+    def authenticate_id_token(self, id_token):
+        &#34;&#34;&#34;
+        Authenticates a user to the Pachyderm cluster using an ID token issued
+        by the OIDC provider. The token must include the Pachyderm client_id
+        in the set of audiences to be valid. Returns a string that can be used
+        for making authenticated requests.
+
+        Params:
+
+        * `id_token`: A string of the ID token.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;Authenticate&#34;, id_token=id_token).pach_token
+
+    def authorize(self, resource, permissions=None):
+        &#34;&#34;&#34;
+        Authorizes the user to a given resource.
+
+        Params:
+
+        * `resource`: The resource the user wants access to
+        * `permissions`: A list of permissions the user wants to test.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH, &#34;Authorize&#34;, resource=resource, permissions=permissions
+        )
+
+    def who_am_i(self):
+        &#34;&#34;&#34;
+        Returns info about the user tied to this `Client`.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;WhoAmI&#34;)
+
+    def get_robot_token(self, robot, ttl=None):
+        &#34;&#34;&#34;
+        Gets a new auth token for a robot user.
+
+        Params:
+        * `robot`: The name of the robot user.
+        * `ttl`: Optional. The expiration for the token.
+        If empty, the token does not expire.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRobotToken&#34;, robot=robot, ttl=ttl).token
+
+    def revoke_auth_token(self, token):
+        &#34;&#34;&#34;
+        Revokes an auth token.
+
+        Params:
+
+        * `token`: A string that indicates the Pachyderm token that is being
+        revoked.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
+
+    def set_groups_for_user(self, username, groups):
+        &#34;&#34;&#34;
+        Sets the group membership for a user.
+
+        Params:
+
+        * `username`: A string.
+        * `groups`: A list of strings.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
+        )
+
+    def modify_members(self, group, add=None, remove=None):
+        &#34;&#34;&#34;
+        Adds and/or removes members of a group.
+
+        Params:
+
+        * `group`: A string.
+        * `add`: An optional list of strings specifying members to add.
+        * `remove`: An optional list of strings specifying members to remove.
+        &#34;&#34;&#34;
+        return self._req(
+            Service.AUTH,
+            &#34;ModifyMembers&#34;,
+            group=group,
+            add=add or [],
+            remove=remove or [],
+        )
+
+    def get_groups(self, username=None):
+        &#34;&#34;&#34;
+        Gets which groups the given `username` belongs to. Returns a list of
+        strings.
+
+        Params:
+
+        `username`: A string.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups
+
+    def get_users(self, group):
+        &#34;&#34;&#34;
+        Gets which users below to the `given`. Returns a list of strings.
+
+        Params:
+
+        `group`: A string.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetUsers&#34;, group=group).usernames
+
+    def extract_auth_tokens(self):
+        &#34;&#34;&#34;
+        This maps to an internal function that is only used for migration.
+        Pachyderm&#39;s `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we&#39;re avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;extract/restore are for testing and internal use only&#34;
+        )
+
+    def restore_auth_token(self, token=None):
+        &#34;&#34;&#34;
+        This maps to an internal function that is only used for migration.
+        Pachyderm&#39;s `extract` and `restore` functionality calls
+        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+        between clusters during migration. Currently this function is only used
+        for Pachyderm internals, so we&#39;re avoiding support for this function in
+        python-pachyderm client until we find a use for it (feel free to file an
+        issue in github.com/pachyderm/pachyderm).
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;extract/restore are for testing and internal use only&#34;
+        )</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="python_pachyderm.client.Client" href="../client.html#python_pachyderm.client.Client">Client</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.activate_auth"><code class="name flex">
+<span>def <span class="ident">activate_auth</span></span>(<span>self, root_token=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Activates auth. Returns the root token for the cluster, an
+irrevocable superuser credential that should be stored securely.</p>
+<p>Params:</p>
+<ul>
+<li><code>root_token</code>: An optional string. If specified, this string becomes
+the Pachyderm cluster root user's token (otherwise, Pachyderm
+generates a root token, which is generally safer). Currently this is
+only used for testing and Pachyderm internals (migration).</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_auth(self, root_token=None):
+    &#34;&#34;&#34;
+    Activates auth. Returns the root token for the cluster, an
+    irrevocable superuser credential that should be stored securely.
+
+    Params:
+
+    * `root_token`: An optional string. If specified, this string becomes
+      the Pachyderm cluster root user&#39;s token (otherwise, Pachyderm
+      generates a root token, which is generally safer). Currently this is
+      only used for testing and Pachyderm internals (migration).
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;Activate&#34;, root_token=root_token).pach_token</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.authenticate_id_token"><code class="name flex">
+<span>def <span class="ident">authenticate_id_token</span></span>(<span>self, id_token)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Authenticates a user to the Pachyderm cluster using an ID token issued
+by the OIDC provider. The token must include the Pachyderm client_id
+in the set of audiences to be valid. Returns a string that can be used
+for making authenticated requests.</p>
+<p>Params:</p>
+<ul>
+<li><code>id_token</code>: A string of the ID token.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def authenticate_id_token(self, id_token):
+    &#34;&#34;&#34;
+    Authenticates a user to the Pachyderm cluster using an ID token issued
+    by the OIDC provider. The token must include the Pachyderm client_id
+    in the set of audiences to be valid. Returns a string that can be used
+    for making authenticated requests.
+
+    Params:
+
+    * `id_token`: A string of the ID token.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;Authenticate&#34;, id_token=id_token).pach_token</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.authenticate_oidc"><code class="name flex">
+<span>def <span class="ident">authenticate_oidc</span></span>(<span>self, oidc_state)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Authenticates a user to the Pachyderm cluster via OIDC. Returns a
+string that can be used for making authenticated requests.</p>
+<p>Params:</p>
+<ul>
+<li><code>oidc_state</code>: A string of the OIDC state token.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def authenticate_oidc(self, oidc_state):
+    &#34;&#34;&#34;
+    Authenticates a user to the Pachyderm cluster via OIDC. Returns a
+    string that can be used for making authenticated requests.
+
+    Params:
+
+    * `oidc_state`: A string of the OIDC state token.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;Authenticate&#34;, oidc_state=oidc_state).pach_token</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.authorize"><code class="name flex">
+<span>def <span class="ident">authorize</span></span>(<span>self, resource, permissions=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Authorizes the user to a given resource.</p>
+<p>Params:</p>
+<ul>
+<li><code>resource</code>: The resource the user wants access to</li>
+<li><code>permissions</code>: A list of permissions the user wants to test.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def authorize(self, resource, permissions=None):
+    &#34;&#34;&#34;
+    Authorizes the user to a given resource.
+
+    Params:
+
+    * `resource`: The resource the user wants access to
+    * `permissions`: A list of permissions the user wants to test.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.AUTH, &#34;Authorize&#34;, resource=resource, permissions=permissions
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.deactivate_auth"><code class="name flex">
+<span>def <span class="ident">deactivate_auth</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deactivates auth, removing all ACLs, tokens, and admins from the
+Pachyderm cluster and making all data publicly accessible.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deactivate_auth(self):
+    &#34;&#34;&#34;
+    Deactivates auth, removing all ACLs, tokens, and admins from the
+    Pachyderm cluster and making all data publicly accessible.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;Deactivate&#34;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.extract_auth_tokens"><code class="name flex">
+<span>def <span class="ident">extract_auth_tokens</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This maps to an internal function that is only used for migration.
+Pachyderm's <code>extract</code> and <code>restore</code> functionality calls
+<code>extract_auth_tokens</code> and <code>restore_auth_tokens</code> to move Pachyderm tokens
+between clusters during migration. Currently this function is only used
+for Pachyderm internals, so we're avoiding support for this function in
+python-pachyderm client until we find a use for it (feel free to file an
+issue in github.com/pachyderm/pachyderm).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_auth_tokens(self):
+    &#34;&#34;&#34;
+    This maps to an internal function that is only used for migration.
+    Pachyderm&#39;s `extract` and `restore` functionality calls
+    `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+    between clusters during migration. Currently this function is only used
+    for Pachyderm internals, so we&#39;re avoiding support for this function in
+    python-pachyderm client until we find a use for it (feel free to file an
+    issue in github.com/pachyderm/pachyderm).
+    &#34;&#34;&#34;
+    raise NotImplementedError(
+        &#34;extract/restore are for testing and internal use only&#34;
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration"><code class="name flex">
+<span>def <span class="ident">get_auth_configuration</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the auth configuration. Returns an <code>AuthConfig</code> object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_auth_configuration(self):
+    &#34;&#34;&#34;
+    Gets the auth configuration. Returns an `AuthConfig` object.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetConfiguration&#34;).configuration</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_groups"><code class="name flex">
+<span>def <span class="ident">get_groups</span></span>(<span>self, username=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets which groups the given <code>username</code> belongs to. Returns a list of
+strings.</p>
+<p>Params:</p>
+<p><code>username</code>: A string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_groups(self, username=None):
+    &#34;&#34;&#34;
+    Gets which groups the given `username` belongs to. Returns a list of
+    strings.
+
+    Params:
+
+    `username`: A string.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_oidc_login"><code class="name flex">
+<span>def <span class="ident">get_oidc_login</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the OIDC login configuration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_oidc_login(self):
+    &#34;&#34;&#34;
+    Returns the OIDC login configuration.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetOIDCLogin&#34;)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_robot_token"><code class="name flex">
+<span>def <span class="ident">get_robot_token</span></span>(<span>self, robot, ttl=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets a new auth token for a robot user.</p>
+<p>Params:
+* <code>robot</code>: The name of the robot user.
+* <code>ttl</code>: Optional. The expiration for the token.
+If empty, the token does not expire.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_robot_token(self, robot, ttl=None):
+    &#34;&#34;&#34;
+    Gets a new auth token for a robot user.
+
+    Params:
+    * `robot`: The name of the robot user.
+    * `ttl`: Optional. The expiration for the token.
+    If empty, the token does not expire.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetRobotToken&#34;, robot=robot, ttl=ttl).token</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_role_binding"><code class="name flex">
+<span>def <span class="ident">get_role_binding</span></span>(<span>self, resource)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the current set of cluster role bindings.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_role_binding(self, resource):
+    &#34;&#34;&#34;
+    Returns the current set of cluster role bindings.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetRoleBinding&#34;, resource=resource)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_users"><code class="name flex">
+<span>def <span class="ident">get_users</span></span>(<span>self, group)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets which users below to the <code>given</code>. Returns a list of strings.</p>
+<p>Params:</p>
+<p><code>group</code>: A string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_users(self, group):
+    &#34;&#34;&#34;
+    Gets which users below to the `given`. Returns a list of strings.
+
+    Params:
+
+    `group`: A string.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetUsers&#34;, group=group).usernames</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.modify_members"><code class="name flex">
+<span>def <span class="ident">modify_members</span></span>(<span>self, group, add=None, remove=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds and/or removes members of a group.</p>
+<p>Params:</p>
+<ul>
+<li><code>group</code>: A string.</li>
+<li><code>add</code>: An optional list of strings specifying members to add.</li>
+<li><code>remove</code>: An optional list of strings specifying members to remove.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def modify_members(self, group, add=None, remove=None):
+    &#34;&#34;&#34;
+    Adds and/or removes members of a group.
+
+    Params:
+
+    * `group`: A string.
+    * `add`: An optional list of strings specifying members to add.
+    * `remove`: An optional list of strings specifying members to remove.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.AUTH,
+        &#34;ModifyMembers&#34;,
+        group=group,
+        add=add or [],
+        remove=remove or [],
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.modify_role_binding"><code class="name flex">
+<span>def <span class="ident">modify_role_binding</span></span>(<span>self, resource, principal, roles=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the roles for a given principal on a resource.</p>
+<p>Params:</p>
+<ul>
+<li><code>resource</code>: The resource to grant the roles on.</li>
+<li><code>principal</code>: A string specifying the principal.</li>
+<li><code>roles</code>: A list of roles to grant. If empty, all roles are revoked.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def modify_role_binding(self, resource, principal, roles=None):
+    &#34;&#34;&#34;
+    Sets the roles for a given principal on a resource.
+
+    Params:
+
+    * `resource`: The resource to grant the roles on.
+    * `principal`: A string specifying the principal.
+    * `roles`: A list of roles to grant. If empty, all roles are revoked.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.AUTH,
+        &#34;ModifyRoleBinding&#34;,
+        resource=resource,
+        principal=principal,
+        roles=roles,
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.restore_auth_token"><code class="name flex">
+<span>def <span class="ident">restore_auth_token</span></span>(<span>self, token=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This maps to an internal function that is only used for migration.
+Pachyderm's <code>extract</code> and <code>restore</code> functionality calls
+<code>extract_auth_tokens</code> and <code>restore_auth_tokens</code> to move Pachyderm tokens
+between clusters during migration. Currently this function is only used
+for Pachyderm internals, so we're avoiding support for this function in
+python-pachyderm client until we find a use for it (feel free to file an
+issue in github.com/pachyderm/pachyderm).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def restore_auth_token(self, token=None):
+    &#34;&#34;&#34;
+    This maps to an internal function that is only used for migration.
+    Pachyderm&#39;s `extract` and `restore` functionality calls
+    `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
+    between clusters during migration. Currently this function is only used
+    for Pachyderm internals, so we&#39;re avoiding support for this function in
+    python-pachyderm client until we find a use for it (feel free to file an
+    issue in github.com/pachyderm/pachyderm).
+    &#34;&#34;&#34;
+    raise NotImplementedError(
+        &#34;extract/restore are for testing and internal use only&#34;
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token"><code class="name flex">
+<span>def <span class="ident">revoke_auth_token</span></span>(<span>self, token)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Revokes an auth token.</p>
+<p>Params:</p>
+<ul>
+<li><code>token</code>: A string that indicates the Pachyderm token that is being
+revoked.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def revoke_auth_token(self, token):
+    &#34;&#34;&#34;
+    Revokes an auth token.
+
+    Params:
+
+    * `token`: A string that indicates the Pachyderm token that is being
+    revoked.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration"><code class="name flex">
+<span>def <span class="ident">set_auth_configuration</span></span>(<span>self, configuration)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the auth configuration.</p>
+<p>Params:</p>
+<ul>
+<li><code>config</code>: An <code>AuthConfig</code> object.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_auth_configuration(self, configuration):
+    &#34;&#34;&#34;
+    Set the auth configuration.
+
+    Params:
+
+    * `config`: An `AuthConfig` object.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user"><code class="name flex">
+<span>def <span class="ident">set_groups_for_user</span></span>(<span>self, username, groups)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the group membership for a user.</p>
+<p>Params:</p>
+<ul>
+<li><code>username</code>: A string.</li>
+<li><code>groups</code>: A list of strings.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_groups_for_user(self, username, groups):
+    &#34;&#34;&#34;
+    Sets the group membership for a user.
+
+    Params:
+
+    * `username`: A string.
+    * `groups`: A list of strings.
+    &#34;&#34;&#34;
+    return self._req(
+        Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
+    )</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.who_am_i"><code class="name flex">
+<span>def <span class="ident">who_am_i</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns info about the user tied to this <code>Client</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def who_am_i(self):
+    &#34;&#34;&#34;
+    Returns info about the user tied to this `Client`.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;WhoAmI&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="python_pachyderm.mixin" href="index.html">python_pachyderm.mixin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="python_pachyderm.mixin.auth.AuthMixin" href="#python_pachyderm.mixin.auth.AuthMixin">AuthMixin</a></code></h4>
+<ul class="">
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.activate_auth" href="#python_pachyderm.mixin.auth.AuthMixin.activate_auth">activate_auth</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authenticate_id_token" href="#python_pachyderm.mixin.auth.AuthMixin.authenticate_id_token">authenticate_id_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authenticate_oidc" href="#python_pachyderm.mixin.auth.AuthMixin.authenticate_oidc">authenticate_oidc</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.authorize" href="#python_pachyderm.mixin.auth.AuthMixin.authorize">authorize</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.deactivate_auth" href="#python_pachyderm.mixin.auth.AuthMixin.deactivate_auth">deactivate_auth</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.extract_auth_tokens" href="#python_pachyderm.mixin.auth.AuthMixin.extract_auth_tokens">extract_auth_tokens</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration" href="#python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration">get_auth_configuration</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_groups" href="#python_pachyderm.mixin.auth.AuthMixin.get_groups">get_groups</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_oidc_login" href="#python_pachyderm.mixin.auth.AuthMixin.get_oidc_login">get_oidc_login</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_robot_token" href="#python_pachyderm.mixin.auth.AuthMixin.get_robot_token">get_robot_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_role_binding" href="#python_pachyderm.mixin.auth.AuthMixin.get_role_binding">get_role_binding</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_users" href="#python_pachyderm.mixin.auth.AuthMixin.get_users">get_users</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_members" href="#python_pachyderm.mixin.auth.AuthMixin.modify_members">modify_members</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_role_binding" href="#python_pachyderm.mixin.auth.AuthMixin.modify_role_binding">modify_role_binding</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.restore_auth_token" href="#python_pachyderm.mixin.auth.AuthMixin.restore_auth_token">restore_auth_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token" href="#python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token">revoke_auth_token</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration" href="#python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration">set_auth_configuration</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user" href="#python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user">set_groups_for_user</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.who_am_i" href="#python_pachyderm.mixin.auth.AuthMixin.who_am_i">who_am_i</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
