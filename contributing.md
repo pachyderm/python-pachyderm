@@ -100,21 +100,12 @@ connections.
 
 ### Linting
 
-To run the linter locally, run `make lint`
+To run the linter locally, run `make lint`.
 
 ## Rebuilding API docs
 
-We use [pdoc](https://github.com/mitmproxy/pdoc) for API documentation. It
-sadly doesn't see much maintenance though, so [I made a fork with a branch
-that has some fixes.](https://github.com/ysimonson/pdoc/tree/sandbox) Install
-that version of pdoc locally.
-
-Once installed, to rebuild API documentation:
-
-* Remove the `docs` directory.
-* Run `make docs`. Note that this should be run outside of a virtualenv, and
-it will globally install `python_pachyderm`. This is needed because pdoc
-treats virtualenv vs globally installed packages differently.
+We use [pdoc3](https://github.com/pdoc3/pdoc) to generate our API docs site.
+To rebuild the docs, run `make docs`.
 
 ## Releasing
 

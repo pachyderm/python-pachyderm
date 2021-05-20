@@ -31,6 +31,8 @@ __all__ = [
     "BadClusterDeploymentID",
 ]
 
+__pdoc__ = {"proto": False}
+
 
 try:
     from .version import __version__
