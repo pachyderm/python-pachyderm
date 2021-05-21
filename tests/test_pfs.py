@@ -39,13 +39,16 @@ def test_delete_non_existent_repo():
     assert len(client.list_repo()) == orig_repo_count
 
 
+# This test currently fails on Pachyderm v2.0.0-alpha.12 (see
+# https://github.com/pachyderm/pachyderm/issues/6156), but should be re-enabled
+# once that issue is fixed.
 # def test_delete_all_repos():
 #    client = python_pachyderm.Client()
-
+#
 #    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
 #    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
 #    assert len(client.list_repo()) >= 2
-
+#
 #    client.delete_all_repos()
 #    assert len(client.list_repo()) == 0
 
@@ -370,6 +373,19 @@ def test_inspect_commit():
     # assert commit.size_bytes == 11
     assert len(commit.commit.id) == 32
     assert commit.commit.repo.name == repo_name
+
+
+def test_squash_commit():
+    client, repo_name = sandbox("squash_commit")
+
+    with client.commit(repo_name, "master"):
+        pass
+
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 1
+    client.squash_commit("{}/master".format(repo_name))
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 0
 
 
 def test_subscribe_commit():
