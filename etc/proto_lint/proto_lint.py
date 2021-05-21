@@ -86,8 +86,6 @@ BLACKLISTED_METHODS = {
         "create_job",
         "update_job_state",
     ],
-    Service.AUTH: [
-    ],
     Service.ENTERPRISE: [
         # internal RPC only
         "heartbeat",

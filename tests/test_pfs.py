@@ -38,6 +38,7 @@ def test_delete_non_existent_repo():
     client.delete_repo("BOGUS_NAME")
     assert len(client.list_repo()) == orig_repo_count
 
+
 # This test currently fails on Pachyderm v2.0.0-alpha.12 (see
 # https://github.com/pachyderm/pachyderm/issues/6156), but should be re-enabled
 # once that issue is fixed.
@@ -373,10 +374,11 @@ def test_inspect_commit():
     assert len(commit.commit.id) == 32
     assert commit.commit.repo.name == repo_name
 
+
 def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
 
-    with client.commit(repo_name, 'master'):
+    with client.commit(repo_name, "master"):
         pass
 
     commits = list(client.list_commit(repo_name))
@@ -384,6 +386,7 @@ def test_squash_commit():
     client.squash_commit("{}/master".format(repo_name))
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 0
+
 
 def test_subscribe_commit():
     client, repo_name = sandbox("subscribe_commit")
