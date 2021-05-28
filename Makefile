@@ -14,22 +14,20 @@ docs:
 	pdoc --html --html-dir docs python_pachyderm
 
 docker-build-proto:
-	cd proto && \
-		docker build -t pachyderm_python_proto .
+	docker build -t pachyderm_python_proto proto
 
-src/python_pachyderm/proto: docker-build-proto
+src/python_pachyderm/proto/v2: docker-build-proto
 	@echo "Building with pachyderm core v$(PACHYDERM_VERSION)"
-	rm -rf src/python_pachyderm/proto
+	rm -rf src/python_pachyderm/proto/v2
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)
-	find ./proto/pachyderm/ -regex ".*\.proto" \
+	find ./proto/pachyderm/src -regex ".*\.proto" \
 	| grep -v 'internal' \
+	| grep -v 'server' \
 	| xargs tar cf - \
-	| docker run -i pachyderm_python_proto \
-	| tar xf -
-	mv src/python_pachyderm/src src/python_pachyderm/proto
-	find src/python_pachyderm/proto -type d -exec touch {}/__init__.py \;
+	| docker run -e PACHYDERM_VERSION=${PACHYDERM_VERSION} -i pachyderm_python_proto \
+	| tar -C src -xf -
 
 init:
 	git submodule update --init
