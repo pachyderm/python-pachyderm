@@ -4,7 +4,7 @@ import base64
 import warnings
 from pathlib import Path
 
-from python_pachyderm.proto.pps import pps_pb2 as pps_proto
+from python_pachyderm.proto.v2.pps import pps_pb2 as pps_proto
 from python_pachyderm.service import Service
 from .util import commit_from
 
