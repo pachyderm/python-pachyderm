@@ -39,42 +39,45 @@ def test_delete_non_existent_repo():
     assert len(client.list_repo()) == orig_repo_count
 
 
-# This test currently fails on Pachyderm v2.0.0-alpha.12 (see
-# https://github.com/pachyderm/pachyderm/issues/6156), but should be re-enabled
-# once that issue is fixed.
-# def test_delete_all_repos():
-#    client = python_pachyderm.Client()
-#
-#    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
-#    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
-#    assert len(client.list_repo()) >= 2
-#
-#    client.delete_all_repos()
-#    assert len(client.list_repo()) == 0
+def test_delete_all_repos():
+    client = python_pachyderm.Client()
+
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
+    assert len(client.list_repo()) >= 2
+
+    client.delete_all_repos()
+    assert len(client.list_repo()) == 0
 
 
 def test_start_commit():
     client, repo_name = sandbox("start_commit")
 
-    commit = client.start_commit(repo_name, "master")
+    commit = client.start_commit(repo_name)
     assert commit.branch.repo.name == repo_name
 
-    commit = client.start_commit(repo_name, "master2")
-    assert commit.branch.repo.name == repo_name
+    # cannot start new commit before the previous one is finished
+    with pytest.raises(
+        python_pachyderm.RpcError, match=r"parent commit .* has not been finished"
+    ):
+        client.start_commit(repo_name)
 
-    with pytest.raises(python_pachyderm.RpcError):
+    client.finish_commit(commit)
+    commit2 = client.start_commit(repo_name)
+    assert commit2.branch.repo.name == repo_name
+
+    with pytest.raises(python_pachyderm.RpcError, match=r"repos .* not found"):
         client.start_commit("some-fake-repo", "master")
 
 
-# TODO branch is required now
-# def test_start_commit_with_parent_no_branch():
-#     client, repo_name = sandbox("start_commit_with_parent_no_branch")
+def test_start_commit_with_parent_no_branch():
+    client, repo_name = sandbox("start_commit_with_parent_no_branch")
 
-#     commit1 = client.start_commit(repo_name)
-#     client.finish_commit((repo_name, commit1.id))
+    commit1 = client.start_commit(repo_name)
+    client.finish_commit((repo_name, commit1.id))
 
-#     commit2 = client.start_commit(repo_name, parent=commit1.id)
-#     assert commit2.branch.repo.name == repo_name
+    commit2 = client.start_commit(repo_name, parent=commit1.id)
+    assert commit2.branch.repo.name == repo_name
 
 
 def test_start_commit_on_branch_with_parent():
