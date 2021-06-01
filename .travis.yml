@@ -15,19 +15,18 @@ env:
   global:
     - PATH=$HOME/cached-deps:$PATH
   jobs:
-    - PACHYDERM_VERSION=2.0.0-alpha.12
-
+    - PACHYDERM_VERSION=$(jq -r .pachyderm version.json)
 jobs:
   include:
     # other tests
     - python: 3.8
       env:
         - TOXENV=lint
-        - PACHYDERM_VERSION=2.0.0-alpha.12
+        - PACHYDERM_VERSION=$(jq -r .pachyderm version.json)
     - python: 3.8
       env:
         - TOXENV=examples
-        - PACHYDERM_VERSION=2.0.0-alpha.12
+        - PACHYDERM_VERSION=$(jq -r .pachyderm version.json)
 install:
 - make ci-install
 before_script:

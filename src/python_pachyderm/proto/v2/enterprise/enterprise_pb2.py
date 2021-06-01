@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z0github.com/pachyderm/pachyderm/v2/src/enterprise',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n5python_pachyderm/proto/v2/enterprise/enterprise.proto\x12\nenterprise\x1a\x1fgoogle/protobuf/timestamp.proto\"U\n\rLicenseRecord\x12\x17\n\x0f\x61\x63tivation_code\x18\x01 \x01(\t\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"F\n\x10\x45nterpriseConfig\x12\x16\n\x0elicense_server\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\"\x8c\x01\n\x10\x45nterpriseRecord\x12*\n\x07license\x18\x01 \x01(\x0b\x32\x19.enterprise.LicenseRecord\x12\x32\n\x0elast_heartbeat\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x18\n\x10heartbeat_failed\x18\x03 \x01(\x08\"8\n\tTokenInfo\x12+\n\x07\x65xpires\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"Q\n\x0f\x41\x63tivateRequest\x12\x16\n\x0elicense_server\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\t\x12\x0e\n\x06secret\x18\x05 \x01(\tJ\x04\x08\x01\x10\x02J\x04\x08\x02\x10\x03\"\x12\n\x10\x41\x63tivateResponse\"\x11\n\x0fGetStateRequest\"r\n\x10GetStateResponse\x12 \n\x05state\x18\x01 \x01(\x0e\x32\x11.enterprise.State\x12#\n\x04info\x18\x02 \x01(\x0b\x32\x15.enterprise.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x1a\n\x18GetActivationCodeRequest\"{\n\x19GetActivationCodeResponse\x12 \n\x05state\x18\x01 \x01(\x0e\x32\x11.enterprise.State\x12#\n\x04info\x18\x02 \x01(\x0b\x32\x15.enterprise.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x12\n\x10HeartbeatRequest\"\x13\n\x11HeartbeatResponse\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse*@\n\x05State\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x0b\n\x07\x45XPIRED\x10\x02\x12\x14\n\x10HEARTBEAT_FAILED\x10\x03\x32\x96\x03\n\x03\x41PI\x12G\n\x08\x41\x63tivate\x12\x1b.enterprise.ActivateRequest\x1a\x1c.enterprise.ActivateResponse\"\x00\x12G\n\x08GetState\x12\x1b.enterprise.GetStateRequest\x1a\x1c.enterprise.GetStateResponse\"\x00\x12\x62\n\x11GetActivationCode\x12$.enterprise.GetActivationCodeRequest\x1a%.enterprise.GetActivationCodeResponse\"\x00\x12J\n\tHeartbeat\x12\x1c.enterprise.HeartbeatRequest\x1a\x1d.enterprise.HeartbeatResponse\"\x00\x12M\n\nDeactivate\x12\x1d.enterprise.DeactivateRequest\x1a\x1e.enterprise.DeactivateResponse\"\x00\x42\x32Z0github.com/pachyderm/pachyderm/v2/src/enterpriseb\x06proto3'
+  serialized_pb=b'\n5python_pachyderm/proto/v2/enterprise/enterprise.proto\x12\nenterprise\x1a\x1fgoogle/protobuf/timestamp.proto\"U\n\rLicenseRecord\x12\x17\n\x0f\x61\x63tivation_code\x18\x01 \x01(\t\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"F\n\x10\x45nterpriseConfig\x12\x16\n\x0elicense_server\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\"\x8c\x01\n\x10\x45nterpriseRecord\x12*\n\x07license\x18\x01 \x01(\x0b\x32\x19.enterprise.LicenseRecord\x12\x32\n\x0elast_heartbeat\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x18\n\x10heartbeat_failed\x18\x03 \x01(\x08\"8\n\tTokenInfo\x12+\n\x07\x65xpires\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"E\n\x0f\x41\x63tivateRequest\x12\x16\n\x0elicense_server\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\"\x12\n\x10\x41\x63tivateResponse\"\x11\n\x0fGetStateRequest\"r\n\x10GetStateResponse\x12 \n\x05state\x18\x01 \x01(\x0e\x32\x11.enterprise.State\x12#\n\x04info\x18\x02 \x01(\x0b\x32\x15.enterprise.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x1a\n\x18GetActivationCodeRequest\"{\n\x19GetActivationCodeResponse\x12 \n\x05state\x18\x01 \x01(\x0e\x32\x11.enterprise.State\x12#\n\x04info\x18\x02 \x01(\x0b\x32\x15.enterprise.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x12\n\x10HeartbeatRequest\"\x13\n\x11HeartbeatResponse\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse*@\n\x05State\x12\x08\n\x04NONE\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x0b\n\x07\x45XPIRED\x10\x02\x12\x14\n\x10HEARTBEAT_FAILED\x10\x03\x32\x96\x03\n\x03\x41PI\x12G\n\x08\x41\x63tivate\x12\x1b.enterprise.ActivateRequest\x1a\x1c.enterprise.ActivateResponse\"\x00\x12G\n\x08GetState\x12\x1b.enterprise.GetStateRequest\x1a\x1c.enterprise.GetStateResponse\"\x00\x12\x62\n\x11GetActivationCode\x12$.enterprise.GetActivationCodeRequest\x1a%.enterprise.GetActivationCodeResponse\"\x00\x12J\n\tHeartbeat\x12\x1c.enterprise.HeartbeatRequest\x1a\x1d.enterprise.HeartbeatResponse\"\x00\x12M\n\nDeactivate\x12\x1d.enterprise.DeactivateRequest\x1a\x1e.enterprise.DeactivateResponse\"\x00\x42\x32Z0github.com/pachyderm/pachyderm/v2/src/enterpriseb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -55,8 +55,8 @@ _STATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=937,
-  serialized_end=1001,
+  serialized_start=925,
+  serialized_end=989,
 )
 _sym_db.RegisterEnumDescriptor(_STATE)
 
@@ -241,21 +241,21 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='license_server', full_name='enterprise.ActivateRequest.license_server', index=0,
-      number=3, type=9, cpp_type=9, label=1,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='id', full_name='enterprise.ActivateRequest.id', index=1,
-      number=4, type=9, cpp_type=9, label=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='secret', full_name='enterprise.ActivateRequest.secret', index=2,
-      number=5, type=9, cpp_type=9, label=1,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -273,7 +273,7 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=462,
-  serialized_end=543,
+  serialized_end=531,
 )
 
 
@@ -297,8 +297,8 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=545,
-  serialized_end=563,
+  serialized_start=533,
+  serialized_end=551,
 )
 
 
@@ -322,8 +322,8 @@ _GETSTATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=565,
-  serialized_end=582,
+  serialized_start=553,
+  serialized_end=570,
 )
 
 
@@ -368,8 +368,8 @@ _GETSTATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=584,
-  serialized_end=698,
+  serialized_start=572,
+  serialized_end=686,
 )
 
 
@@ -393,8 +393,8 @@ _GETACTIVATIONCODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=700,
-  serialized_end=726,
+  serialized_start=688,
+  serialized_end=714,
 )
 
 
@@ -439,8 +439,8 @@ _GETACTIVATIONCODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=728,
-  serialized_end=851,
+  serialized_start=716,
+  serialized_end=839,
 )
 
 
@@ -464,8 +464,8 @@ _HEARTBEATREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=853,
-  serialized_end=871,
+  serialized_start=841,
+  serialized_end=859,
 )
 
 
@@ -489,8 +489,8 @@ _HEARTBEATRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=873,
-  serialized_end=892,
+  serialized_start=861,
+  serialized_end=880,
 )
 
 
@@ -514,8 +514,8 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=894,
-  serialized_end=913,
+  serialized_start=882,
+  serialized_end=901,
 )
 
 
@@ -539,8 +539,8 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=915,
-  serialized_end=935,
+  serialized_start=903,
+  serialized_end=923,
 )
 
 _LICENSERECORD.fields_by_name['expires'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -676,8 +676,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1004,
-  serialized_end=1410,
+  serialized_start=992,
+  serialized_end=1398,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',

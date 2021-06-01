@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from python_pachyderm import Client
 from python_pachyderm.proto.v2.pps.pps_pb2 import (
     Transform,
     CreatePipelineRequest,
@@ -69,7 +70,7 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
 
 
 def create_python_pipeline(
-    client,
+    client: Client,
     path,
     input=None,
     pipeline_name=None,

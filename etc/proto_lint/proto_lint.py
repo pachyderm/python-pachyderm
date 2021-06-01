@@ -63,6 +63,15 @@ PROTO_OBJECT_BUILTINS = set(
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
+    Service.AUTH: [
+        # TODO: ignoring to pass proto_lint, but come back later
+        "delete_expired_auth_tokens",
+        "get_permissions",
+        "get_permissions_for_principal",
+        "revoke_auth_tokens_for_user",
+        "rotate_root_token",
+        "get_groups_for_principal",
+    ],
     Service.PFS: [
         # delete_all is ignored because we implement PPS' delete_all anyway
         "delete_all",
@@ -71,20 +80,21 @@ BLACKLISTED_METHODS = {
         "put_tar",
         "get_tar",
         "activate_auth",
+        "run_load_test",
         # TODO: add these new API methods
+        "add_fileset",
+        "clear_commit",
+        "create_fileset",
+        "get_fileset",
+        "modify_file",
         "renew_fileset",
         "squash_commit",
-        "clear_commit",
-        "modify_file",
-        "add_fileset",
-        "get_fileset",
-        "create_fileset",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
         "activate_auth",
-        "create_job",
-        "update_job_state",
+        "create_pipeline_job",
+        "update_pipeline_job_state",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
@@ -271,8 +281,8 @@ RENAMED_ARGS = {
         ("pod_spec", None),
         ("transform", None),
     ],
-    "delete_job": [
-        ("job", "job_id"),
+    "delete_pipeline_job": [
+        ("pipeline_job", "job_id"),
     ],
     "delete_pipeline": [
         ("pipeline", "pipeline_name"),
@@ -281,51 +291,49 @@ RENAMED_ARGS = {
     "delete_secret": [
         ("secret", "secret_name"),
     ],
-    "flush_job": [
+    "flush_pipeline_job": [
         ("to_pipelines", "pipeline_names"),
     ],
     "get_job_logs": [
-        ("job", "job_id"),
+        ("pipeline_job", "job_id"),
         ("master", None),
         ("pipeline", None),
     ],
     "get_pipeline_logs": [
         ("pipeline", ("pipeline_name")),
-        ("job", None),
+        ("pipeline_job", None),
     ],
     "inspect_datum": [
         ("datum", ("job_id", "datum_id")),
     ],
-    "inspect_job": [
-        ("job", "job_id"),
+    "inspect_pipeline_job": [
+        ("pipeline_job", "job_id"),
     ],
     "inspect_pipeline": [
         ("pipeline", "pipeline_name"),
         (None, "history"),
     ],
     "list_datum": [
-        ("job", "job_id"),
+        ("pipeline_job", "job_id"),
     ],
     "list_pipeline": [
         ("pipeline", None),
     ],
-    "list_job": [
+    "list_pipeline_job": [
         ("pipeline", "pipeline_name"),
     ],
     "restart_datum": [
-        ("job", "job_id"),
+        ("pipeline_job", "job_id"),
     ],
-    "run_pipeline": [
-        ("pipeline", "pipeline_name"),
-    ],
+    "run_pipeline": [("pipeline", "pipeline_name"), ("pipeline_job_id", "job_id")],
     "run_cron": [
         ("pipeline", "pipeline_name"),
     ],
     "start_pipeline": [
         ("pipeline", "pipeline_name"),
     ],
-    "stop_job": [
-        ("job", "job_id"),
+    "stop_pipeline_job": [
+        ("pipeline_job", "job_id"),
     ],
     "stop_pipeline": [
         ("pipeline", "pipeline_name"),

@@ -30,14 +30,16 @@ def test_list_job():
     sandbox = Sandbox("list_job")
     sandbox.wait_for_job()
 
-    jobs = list(sandbox.client.list_job())
-    assert len(jobs) >= 1
-
-    jobs = list(sandbox.client.list_job(pipeline_name=sandbox.pipeline_repo_name))
+    jobs = list(sandbox.client.list_pipeline_job())
     assert len(jobs) >= 1
 
     jobs = list(
-        sandbox.client.list_job(
+        sandbox.client.list_pipeline_job(pipeline_name=sandbox.pipeline_repo_name)
+    )
+    assert len(jobs) >= 1
+
+    jobs = list(
+        sandbox.client.list_pipeline_job(
             input_commit=(sandbox.input_repo_name, sandbox.commit.id)
         )
     )
@@ -46,7 +48,7 @@ def test_list_job():
 
 def test_flush_job():
     sandbox = Sandbox("flush_job")
-    jobs = list(sandbox.client.flush_job([sandbox.commit]))
+    jobs = list(sandbox.client.flush_pipeline_job([sandbox.commit]))
     assert len(jobs) >= 1
     print(jobs[0])
 
@@ -55,35 +57,35 @@ def test_inspect_job():
     sandbox = Sandbox("inspect_job")
     job_id = sandbox.wait_for_job()
 
-    job = sandbox.client.inspect_job(job_id)
-    assert job.job.id == job_id
+    job_info = sandbox.client.inspect_pipeline_job(job_id)
+    assert job_info.pipeline_job.id == job_id
 
 
 def test_stop_job():
     sandbox = Sandbox("stop_job")
     job_id = sandbox.wait_for_job()
 
-    sandbox.client.stop_job(job_id)
+    sandbox.client.stop_pipeline_job(job_id)
     # This is necessary because `StopJob` does not wait for the job to be
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
-    job = sandbox.client.inspect_job(job_id)
+    job_info = sandbox.client.inspect_pipeline_job(job_id)
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
-    assert (
-        job.state == python_pachyderm.JobState.JOB_KILLED.value
-        or job.state == python_pachyderm.JobState.JOB_SUCCESS.value
-    )
+    assert job_info.state in [
+        python_pachyderm.PipelineJobState.JOB_KILLED.value,
+        python_pachyderm.PipelineJobState.JOB_SUCCESS.value,
+    ]
 
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
     job_id = sandbox.wait_for_job()
-    orig_job_count = len(list(sandbox.client.list_job()))
-    sandbox.client.delete_job(job_id)
-    assert len(list(sandbox.client.list_job())) == orig_job_count - 1
+    orig_job_count = len(list(sandbox.client.list_pipeline_job()))
+    sandbox.client.delete_pipeline_job(job_id)
+    assert len(list(sandbox.client.list_pipeline_job())) == orig_job_count - 1
 
 
 def test_datums():
@@ -100,7 +102,9 @@ def test_datums():
 
     with pytest.raises(
         python_pachyderm.RpcError,
-        match=r"datum matching filter \[.*\] could not be found for jobID",
+        match=r"datum matching filter \[.*\] could not be found for pipeline job ID {}".format(
+            job_id
+        ),
     ):
         sandbox.client.restart_datum(job_id)
 
@@ -207,7 +211,7 @@ def test_get_pipeline_logs():
     sandbox.wait_for_job()
 
     # Wait for the job to complete
-    list(sandbox.client.flush_job([sandbox.commit]))
+    list(sandbox.client.flush_pipeline_job([sandbox.commit]))
 
     # Just make sure these spit out some logs
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
@@ -222,7 +226,7 @@ def test_get_job_logs():
     job_id = sandbox.wait_for_job()
 
     # Wait for the job to complete
-    list(sandbox.client.flush_job([sandbox.commit]))
+    list(sandbox.client.flush_pipeline_job([sandbox.commit]))
 
     # Just make sure these spit out some logs
     logs = sandbox.client.get_job_logs(job_id)

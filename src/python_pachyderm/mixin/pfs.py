@@ -110,7 +110,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             "CreateRepo",
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type="user"),
             description=description,
             update=update,
         )
@@ -124,14 +124,19 @@ class PFSMixin:
         * `repo_name`: Name of the repo.
         """
         return self._req(
-            Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name)
+            Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name, type="user")
         )
 
-    def list_repo(self):
+    def list_repo(self, type=None):
         """
         Returns info about all repos, as a list of `RepoInfo` objects.
+
+        Params:
+
+        * `type`: the type of (system) repos that should be returned,
+        an empty value None or empty string requests all repos.
         """
-        return self._req(Service.PFS, "ListRepo").repo_info
+        return self._req(Service.PFS, "ListRepo", type=type).repo_info
 
     def delete_repo(self, repo_name, force=None):
         """
@@ -146,7 +151,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             "DeleteRepo",
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type="user"),
             force=force,
             all=False,
         )
@@ -163,7 +168,7 @@ class PFSMixin:
         return self._req(Service.PFS, "DeleteRepo", force=force, all=True)
 
     def start_commit(
-        self, repo_name, branch=None, parent=None, description=None, provenance=None
+        self, repo_name, branch="master", parent=None, description=None, provenance=None
     ):
         """
         Begins the process of committing data to a Repo. Once started you can
@@ -189,11 +194,15 @@ class PFSMixin:
         * `provenance`: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         """
+        if parent and isinstance(parent, str):
+            parent = commit_from((repo_name, parent))
         return self._req(
             Service.PFS,
             "StartCommit",
-            parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
-            branch=branch,
+            parent=parent,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch
+            ),
             description=description,
             provenance=provenance,
         )
@@ -224,7 +233,7 @@ class PFSMixin:
         )
 
     @contextmanager
-    def commit(self, repo_name, branch=None, parent=None, description=None):
+    def commit(self, repo_name, branch="master", parent=None, description=None):
         """
         A context manager for running operations within a commit.
 
@@ -286,7 +295,9 @@ class PFSMixin:
         returned.
         """
         req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+            repo=pfs_proto.Repo(name=repo_name, type="user"),
+            number=number,
+            reverse=reverse,
         )
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
@@ -349,7 +360,7 @@ class PFSMixin:
         * `state`: The commit state to filter on.
         * `prov`: An optional `CommitProvenance` object.
         """
-        repo = pfs_proto.Repo(name=repo_name)
+        repo = pfs_proto.Repo(name=repo_name, type="user")
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo, branch=branch, state=state, prov=prov
         )
@@ -380,7 +391,7 @@ class PFSMixin:
             Service.PFS,
             "CreateBranch",
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
@@ -395,7 +406,7 @@ class PFSMixin:
             Service.PFS,
             "InspectBranch",
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
         )
 
@@ -411,7 +422,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             "ListBranch",
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type="user"),
             reverse=reverse,
         ).branch_info
 
@@ -431,7 +442,7 @@ class PFSMixin:
             Service.PFS,
             "DeleteBranch",
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
             force=force,
         )

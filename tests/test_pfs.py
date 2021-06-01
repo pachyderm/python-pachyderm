@@ -57,23 +57,24 @@ def test_start_commit():
     client, repo_name = sandbox("start_commit")
 
     commit = client.start_commit(repo_name, "master")
-    assert commit.repo.name == repo_name
+    assert commit.branch.repo.name == repo_name
 
-    commit = client.start_commit(repo_name, None)
-    assert commit.repo.name == repo_name
+    commit = client.start_commit(repo_name, "master2")
+    assert commit.branch.repo.name == repo_name
 
     with pytest.raises(python_pachyderm.RpcError):
         client.start_commit("some-fake-repo", "master")
 
 
-def test_start_commit_with_parent_no_branch():
-    client, repo_name = sandbox("start_commit_with_parent_no_branch")
+# TODO branch is required now
+# def test_start_commit_with_parent_no_branch():
+#     client, repo_name = sandbox("start_commit_with_parent_no_branch")
 
-    commit1 = client.start_commit(repo_name)
-    client.finish_commit((repo_name, commit1.id))
+#     commit1 = client.start_commit(repo_name)
+#     client.finish_commit((repo_name, commit1.id))
 
-    commit2 = client.start_commit(repo_name, parent=commit1.id)
-    assert commit2.repo.name == repo_name
+#     commit2 = client.start_commit(repo_name, parent=commit1.id)
+#     assert commit2.branch.repo.name == repo_name
 
 
 def test_start_commit_on_branch_with_parent():
@@ -83,7 +84,7 @@ def test_start_commit_on_branch_with_parent():
     client.finish_commit((repo_name, commit1.id))
 
     commit2 = client.start_commit(repo_name, branch="master", parent=commit1.id)
-    assert commit2.repo.name == repo_name
+    assert commit2.branch.repo.name == repo_name
 
 
 def test_start_commit_fork():
@@ -94,9 +95,11 @@ def test_start_commit_fork():
 
     commit2 = client.start_commit(repo_name, branch="patch", parent="master")
 
-    assert commit2.repo.name == repo_name
+    assert commit2.branch.repo.name == repo_name
 
-    branches = [branch_info.name for branch_info in client.list_branch(repo_name)]
+    branches = [
+        branch_info.branch.name for branch_info in client.list_branch(repo_name)
+    ]
     assert "master" in branches
     assert "patch" in branches
 
@@ -138,7 +141,7 @@ def test_commit_context_mgr():
 
     with client.commit(repo_name, "master") as c1:
         pass
-    with client.commit(repo_name, None) as c2:
+    with client.commit(repo_name, "master") as c2:
         pass
 
     with pytest.raises(python_pachyderm.RpcError):
@@ -367,12 +370,12 @@ def test_inspect_commit():
         client.put_file_bytes(c, "input.json", b"hello world")
 
     commit = client.inspect_commit("{}/master".format(repo_name))
-    assert commit.branch.name == "master"
+    assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
     # assert commit.size_bytes == 11
     assert len(commit.commit.id) == 32
-    assert commit.commit.repo.name == repo_name
+    assert commit.commit.branch.repo.name == repo_name
 
 
 def test_squash_commit():
@@ -396,8 +399,8 @@ def test_subscribe_commit():
         pass
 
     commit = next(commits)
-    assert commit.branch.repo.name == repo_name
-    assert commit.branch.name == "master"
+    assert commit.commit.branch.repo.name == repo_name
+    assert commit.commit.branch.name == "master"
 
 
 def test_list_branch():
@@ -410,8 +413,8 @@ def test_list_branch():
 
     branches = client.list_branch(repo_name)
     assert len(branches) == 2
-    assert branches[0].name == "develop"
-    assert branches[1].name == "master"
+    assert branches[0].branch.name == "develop"
+    assert branches[1].branch.name == "master"
 
 
 def test_delete_branch():
@@ -435,7 +438,7 @@ def test_inspect_file():
 
     fi = client.inspect_file(c, "file.dat")
     assert fi.file.commit.id == c.id
-    assert fi.file.commit.repo.name == repo_name
+    assert fi.file.commit.branch.repo.name == repo_name
     assert fi.file.path == "/file.dat"
     # assert fi.size_bytes == 4
 
@@ -515,7 +518,7 @@ def test_create_branch():
     client.create_branch(repo_name, "foobar")
     branches = client.list_branch(repo_name)
     assert len(branches) == 1
-    assert branches[0].name == "foobar"
+    assert branches[0].branch.name == "foobar"
 
 
 def test_inspect_branch():

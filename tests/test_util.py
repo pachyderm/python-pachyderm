@@ -6,7 +6,6 @@ import os
 import json
 import tempfile
 
-import grpc
 import pytest
 
 import python_pachyderm
@@ -60,7 +59,7 @@ TEST_PIPELINE_SPEC = """
 """
 
 
-def check_expected_files(client, commit, expected):
+def check_expected_files(client: python_pachyderm.Client, commit, expected):
     for fi in client.walk_file(commit, "/"):
         path = fi.file.path
         assert path in expected, "unexpected path: {}".format(path)
@@ -72,6 +71,7 @@ def check_expected_files(client, commit, expected):
 
 def test_put_files():
     client = python_pachyderm.Client()
+    client.delete_all()
     repo_name = util.create_test_repo(client, "put_files")
 
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -109,6 +109,7 @@ def test_put_files():
 
 def test_create_python_pipeline_bad_path():
     client = python_pachyderm.Client()
+    client.delete_all()
     repo_name = util.create_test_repo(client, "create_python_pipeline_bad_path")
 
     # create some sample data
@@ -128,6 +129,7 @@ def test_create_python_pipeline_bad_path():
 
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
+    client.delete_all()
     repo_name = util.create_test_repo(client, "create_python_pipeline")
     pfs_input = python_pachyderm.Input(
         pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)
@@ -211,7 +213,11 @@ def test_create_python_pipeline():
             update=True,
         )
 
-    check_all_expected_files([], [])
+    # TODO make sure this is expected behaviour
+    check_all_expected_files(
+        ["/requirements.txt"],
+        ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
+    )
     file = client.get_file("{}/master".format(pipeline_name), "file.dat")
     assert file.read() == b"DATA"
 

@@ -44,6 +44,16 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.AuthorizeRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.AuthorizeResponse.FromString,
                 )
+        self.GetPermissions = channel.unary_unary(
+                '/auth.API/GetPermissions',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.FromString,
+                )
+        self.GetPermissionsForPrincipal = channel.unary_unary(
+                '/auth.API/GetPermissionsForPrincipal',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsForPrincipalRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.FromString,
+                )
         self.WhoAmI = channel.unary_unary(
                 '/auth.API/WhoAmI',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIRequest.SerializeToString,
@@ -74,6 +84,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokenRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokenResponse.FromString,
                 )
+        self.RevokeAuthTokensForUser = channel.unary_unary(
+                '/auth.API/RevokeAuthTokensForUser',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserResponse.FromString,
+                )
         self.SetGroupsForUser = channel.unary_unary(
                 '/auth.API/SetGroupsForUser',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.SetGroupsForUserRequest.SerializeToString,
@@ -87,6 +102,11 @@ class APIStub(object):
         self.GetGroups = channel.unary_unary(
                 '/auth.API/GetGroups',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.FromString,
+                )
+        self.GetGroupsForPrincipal = channel.unary_unary(
+                '/auth.API/GetGroupsForPrincipal',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsForPrincipalRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.FromString,
                 )
         self.GetUsers = channel.unary_unary(
@@ -103,6 +123,16 @@ class APIStub(object):
                 '/auth.API/RestoreAuthToken',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenResponse.FromString,
+                )
+        self.DeleteExpiredAuthTokens = channel.unary_unary(
+                '/auth.API/DeleteExpiredAuthTokens',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensResponse.FromString,
+                )
+        self.RotateRootToken = channel.unary_unary(
+                '/auth.API/RotateRootToken',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenResponse.FromString,
                 )
 
 
@@ -148,6 +178,18 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetPermissions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetPermissionsForPrincipal(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def WhoAmI(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -184,6 +226,12 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def RevokeAuthTokensForUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def SetGroupsForUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -202,6 +250,12 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetGroupsForPrincipal(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetUsers(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -215,6 +269,18 @@ class APIServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def RestoreAuthToken(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteExpiredAuthTokens(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RotateRootToken(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -253,6 +319,16 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.AuthorizeRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.AuthorizeResponse.SerializeToString,
             ),
+            'GetPermissions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPermissions,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.SerializeToString,
+            ),
+            'GetPermissionsForPrincipal': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPermissionsForPrincipal,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsForPrincipalRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.SerializeToString,
+            ),
             'WhoAmI': grpc.unary_unary_rpc_method_handler(
                     servicer.WhoAmI,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIRequest.FromString,
@@ -283,6 +359,11 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokenRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokenResponse.SerializeToString,
             ),
+            'RevokeAuthTokensForUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.RevokeAuthTokensForUser,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserResponse.SerializeToString,
+            ),
             'SetGroupsForUser': grpc.unary_unary_rpc_method_handler(
                     servicer.SetGroupsForUser,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.SetGroupsForUserRequest.FromString,
@@ -296,6 +377,11 @@ def add_APIServicer_to_server(servicer, server):
             'GetGroups': grpc.unary_unary_rpc_method_handler(
                     servicer.GetGroups,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.SerializeToString,
+            ),
+            'GetGroupsForPrincipal': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetGroupsForPrincipal,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsForPrincipalRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.SerializeToString,
             ),
             'GetUsers': grpc.unary_unary_rpc_method_handler(
@@ -312,6 +398,16 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.RestoreAuthToken,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenResponse.SerializeToString,
+            ),
+            'DeleteExpiredAuthTokens': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteExpiredAuthTokens,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensResponse.SerializeToString,
+            ),
+            'RotateRootToken': grpc.unary_unary_rpc_method_handler(
+                    servicer.RotateRootToken,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -426,6 +522,40 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetPermissions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/GetPermissions',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetPermissionsForPrincipal(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/GetPermissionsForPrincipal',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsForPrincipalRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetPermissionsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def WhoAmI(request,
             target,
             options=(),
@@ -528,6 +658,23 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def RevokeAuthTokensForUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/RevokeAuthTokensForUser',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RevokeAuthTokensForUserResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def SetGroupsForUser(request,
             target,
             options=(),
@@ -574,6 +721,23 @@ class API(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/auth.API/GetGroups',
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetGroupsForPrincipal(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/GetGroupsForPrincipal',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsForPrincipalRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetGroupsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -626,5 +790,39 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/auth.API/RestoreAuthToken',
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RestoreAuthTokenResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteExpiredAuthTokens(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/DeleteExpiredAuthTokens',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DeleteExpiredAuthTokensResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RotateRootToken(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth.API/RotateRootToken',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.RotateRootTokenResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

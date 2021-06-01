@@ -82,7 +82,7 @@ def create_test_pipeline(client, test_name):
     return (commit, input_repo_name, pipeline_repo_name)
 
 
-def wait_for_job(client, commit):
+def wait_for_job(client: python_pachyderm.Client, commit):
     # block until the commit is ready
     client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY.value)
 
@@ -90,8 +90,8 @@ def wait_for_job(client, commit):
     # call, so repeatedly list jobs until it's available
     start_time = time.time()
     while True:
-        for job in client.list_job():
-            return job.job.id
+        for job_in in client.list_pipeline_job():
+            return job_in.pipeline_job.id
 
         assert time.time() - start_time < 60.0, "timed out waiting for job"
         time.sleep(1)
