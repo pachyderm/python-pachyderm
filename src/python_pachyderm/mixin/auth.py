@@ -165,7 +165,7 @@ class AuthMixin:
             remove=remove or [],
         )
 
-    def get_groups(self, username=None):
+    def get_groups(self):
         """
         Gets which groups the given `username` belongs to. Returns a list of
         strings.
@@ -174,7 +174,7 @@ class AuthMixin:
 
         `username`: A string.
         """
-        return self._req(Service.AUTH, "GetGroups", username=username).groups
+        return self._req(Service.AUTH, "GetGroups").groups
 
     def get_users(self, group):
         """

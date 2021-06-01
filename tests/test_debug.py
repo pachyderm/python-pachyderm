@@ -2,10 +2,7 @@
 
 """Tests debug-related functionality"""
 
-import pytest
-
 import python_pachyderm
-from tests import util
 
 
 def test_dump():

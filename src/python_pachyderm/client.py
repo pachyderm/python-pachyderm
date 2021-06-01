@@ -61,6 +61,7 @@ class Client(
         root_certs=None,
         transaction_id=None,
         tls=None,
+        max_message_length=(1024 ** 2) * 20,
     ):
         """
         Creates a Pachyderm client.
@@ -104,6 +105,9 @@ class Client(
             resp = self.authenticate_id_token(os.environ.get("PACH_PYTHON_OIDC_TOKEN"))
             self._auth_token = resp
             self._metadata = self._build_metadata()
+        self._grpc_options = [
+            ("grpc.max_receive_message_length", max_message_length),
+        ]
 
     @classmethod
     def new_in_cluster(cls, auth_token=None, transaction_id=None):
@@ -279,9 +283,16 @@ class Client(
             if self.root_certs:
                 ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
                 ssl = ssl_channel_credentials(root_certificates=self.root_certs)
-                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+                channel = grpc_module.grpc.secure_channel(
+                    self.address,
+                    ssl,
+                    options=self._grpc_options,
+                )
             else:
-                channel = grpc_module.grpc.insecure_channel(self.address)
+                channel = grpc_module.grpc.insecure_channel(
+                    self.address,
+                    options=self._grpc_options,
+                )
             stub = grpc_service.stub(channel)
             self._stubs[grpc_service] = stub
 

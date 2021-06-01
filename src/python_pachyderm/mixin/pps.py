@@ -10,7 +10,9 @@ from .util import commit_from
 
 
 class PPSMixin:
-    def inspect_job(self, job_id, block_state=None, output_commit=None, full=None):
+    def inspect_pipeline_job(
+        self, job_id, block_state=None, output_commit=None, full=None
+    ):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
 
@@ -24,8 +26,8 @@ class PPSMixin:
         """
         return self._req(
             Service.PPS,
-            "InspectJob",
-            job=pps_proto.Job(id=job_id),
+            "InspectPipelineJob",
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
             block_state=block_state,
             output_commit=commit_from(output_commit)
             if output_commit is not None
@@ -33,7 +35,7 @@ class PPSMixin:
             full=full,
         )
 
-    def list_job(
+    def list_pipeline_job(
         self,
         pipeline_name=None,
         input_commit=None,
@@ -76,7 +78,7 @@ class PPSMixin:
 
         return self._req(
             Service.PPS,
-            "ListJob",
+            "ListPipelineJob",
             pipeline=pps_proto.Pipeline(name=pipeline_name)
             if pipeline_name is not None
             else None,
@@ -89,7 +91,7 @@ class PPSMixin:
             jqFilter=jqFilter,
         )
 
-    def flush_job(self, commits, pipeline_names=None):
+    def flush_pipeline_job(self, commits, pipeline_names=None):
         """
         Blocks until all of the jobs which have a set of commits as
         provenance have finished. Yields `JobInfo` objects.
@@ -108,12 +110,12 @@ class PPSMixin:
 
         return self._req(
             Service.PPS,
-            "FlushJob",
+            "FlushPipelineJob",
             commits=[commit_from(c) for c in commits],
             to_pipelines=to_pipelines,
         )
 
-    def delete_job(self, job_id):
+    def delete_pipeline_job(self, job_id):
         """
         Deletes a job by its ID.
 
@@ -121,21 +123,28 @@ class PPSMixin:
 
         * `job_id`: The ID of the job to delete.
         """
-        return self._req(Service.PPS, "DeleteJob", job=pps_proto.Job(id=job_id))
+        return self._req(
+            Service.PPS,
+            "DeletePipelineJob",
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
+        )
 
-    def stop_job(self, job_id, output_commit=None):
+    def stop_pipeline_job(self, job_id, output_commit=None, reason=None):
         """
         Stops a job by its ID.
 
         Params:
 
         * `job_id`: The ID of the job to stop.
+        * `output_commit`: TODO
+        * `reason`: TODO
         """
         return self._req(
             Service.PPS,
-            "StopJob",
-            job=pps_proto.Job(id=job_id),
+            "StopPipelineJob",
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
             output_commit=commit_from(output_commit),
+            reason=reason,
         )
 
     def inspect_datum(self, job_id, datum_id):
@@ -150,10 +159,12 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "InspectDatum",
-            datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
+            datum=pps_proto.Datum(
+                id=datum_id, pipeline_job=pps_proto.PipelineJob(id=job_id)
+            ),
         )
 
-    def list_datum(self, job_id=None):
+    def list_datum(self, job_id=None, input=None):
         """
         Lists datums. Yields `DatumInfo` objects.
 
@@ -161,11 +172,12 @@ class PPSMixin:
 
         * `job_id`: An optional int specifying the ID of a job. Exactly one of
           `job_id` (real) or `input` (hypothetical) must be set.
+        * `input`: TODO an `Input` object
         """
         return self._req(
             Service.PPS,
             "ListDatum",
-            job=pps_proto.Job(id=job_id),
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
         )
 
     def restart_datum(self, job_id, data_filters=None):
@@ -180,7 +192,7 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "RestartDatum",
-            job=pps_proto.Job(id=job_id),
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
             data_filters=data_filters,
         )
 
@@ -525,7 +537,7 @@ class PPSMixin:
             "RunPipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             provenance=provenance,
-            job_id=job_id,
+            pipeline_job_id=job_id,
         )
 
     def run_cron(self, pipeline_name):
@@ -707,7 +719,7 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "GetLogs",
-            job=pps_proto.Job(id=job_id),
+            pipeline_job=pps_proto.PipelineJob(id=job_id),
             data_filters=data_filters,
             datum=datum,
             follow=follow,
