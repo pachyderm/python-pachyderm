@@ -5,7 +5,6 @@ set -e
 tar xf /dev/stdin
 
 # VERSION matches the MajorVersion of pachyderm
-VERSION=${PACHYDERM_VERSION:0:1}
 OUTDIR="python_pachyderm/proto/v${VERSION}"
 
 mkdir -p ${OUTDIR}

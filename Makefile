@@ -26,7 +26,7 @@ src/python_pachyderm/proto/v2: docker-build-proto
 	| grep -v 'internal' \
 	| grep -v 'server' \
 	| xargs tar cf - \
-	| docker run -e PACHYDERM_VERSION=${PACHYDERM_VERSION} -i pachyderm_python_proto \
+	| docker run -e VERSION=2 -i pachyderm_python_proto \
 	| tar -C src -xf -
 
 init:
