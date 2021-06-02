@@ -1,7 +1,11 @@
 import os
 from pathlib import Path
 
-from .proto.pps.pps_pb2 import Transform, CreatePipelineRequest, BuildSpec
+from python_pachyderm.proto.v2.pps.pps_pb2 import (
+    Transform,
+    CreatePipelineRequest,
+    BuildSpec,
+)
 
 from google.protobuf import json_format
 

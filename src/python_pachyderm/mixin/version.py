@@ -1,5 +1,5 @@
 from python_pachyderm.service import Service
-from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
+from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as version_grpc
 
 
 class VersionMixin:

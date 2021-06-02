@@ -10,8 +10,8 @@ import pytest
 
 import python_pachyderm
 from tests import util
-from python_pachyderm.proto.auth import auth_pb2
-from python_pachyderm.proto.identity import identity_pb2
+from python_pachyderm.proto.v2.auth import auth_pb2
+from python_pachyderm.proto.v2.identity import identity_pb2
 
 
 @pytest.fixture

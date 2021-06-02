@@ -1,5 +1,5 @@
 from python_pachyderm.service import Service
-from python_pachyderm.proto.health import health_pb2_grpc as health_grpc
+from python_pachyderm.proto.v2.health import health_pb2_grpc as health_grpc
 
 
 class HealthMixin:

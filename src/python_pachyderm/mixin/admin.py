@@ -1,4 +1,4 @@
-from python_pachyderm.proto.admin import admin_pb2_grpc as admin_grpc
+from python_pachyderm.proto.v2.admin import admin_pb2_grpc as admin_grpc
 from python_pachyderm.service import Service
 
 

@@ -1,5 +1,5 @@
 from python_pachyderm.service import Service
-from python_pachyderm.proto.debug import debug_pb2 as debug_proto
+from python_pachyderm.proto.v2.debug import debug_pb2 as debug_proto
 
 
 class DebugMixin:

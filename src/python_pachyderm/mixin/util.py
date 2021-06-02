@@ -1,4 +1,4 @@
-from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 
 
 def commit_from(src, allow_just_repo=False):
