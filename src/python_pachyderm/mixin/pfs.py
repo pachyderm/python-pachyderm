@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.service import Service
-from .util import commit_from
+from .util import commit_from, Commit
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -169,7 +169,7 @@ class PFSMixin:
 
     def start_commit(
         self, repo_name, branch, parent=None, description=None, provenance=None
-    ):
+    ) -> Commit:
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been
@@ -201,7 +201,7 @@ class PFSMixin:
                     repo=pfs_proto.Repo(name=repo_name, type="user"), name=None
                 ),
             )
-        return self._req(
+        res = self._req(
             Service.PFS,
             "StartCommit",
             parent=parent,
@@ -211,6 +211,7 @@ class PFSMixin:
             description=description,
             provenance=provenance,
         )
+        return Commit.from_pb(res)
 
     def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
         """
@@ -282,7 +283,13 @@ class PFSMixin:
         )
 
     def list_commit(
-        self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
+        self,
+        repo_name,
+        repo_type="user",
+        to_commit=None,
+        from_commit=None,
+        number=None,
+        reverse=None,
     ):
         """
         Lists commits. Yields `CommitInfo` objects.
@@ -300,7 +307,7 @@ class PFSMixin:
         returned.
         """
         req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
+            repo=pfs_proto.Repo(name=repo_name, type=repo_type),
             number=number,
             reverse=reverse,
         )
@@ -604,7 +611,7 @@ class PFSMixin:
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
+        * `commit`: A tuple, dict, or `Commit` object representing the
         commit.
         * `path`: A string specifying the path of the file.
         """

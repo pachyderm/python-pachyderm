@@ -246,7 +246,7 @@ RENAMED_ARGS = {
     "list_commit": [
         ("from", "from_commit"),
         ("to", "to_commit"),
-        ("repo", "repo_name"),
+        ("repo", ("repo_name", "repo_type")),
     ],
     "list_file": [
         ("full", "include_contents"),
