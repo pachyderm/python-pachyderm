@@ -90,7 +90,7 @@ def test_put_files():
         # add the files under both `/` and `/sub` (the latter redundantly to
         # test both for correct path handling and the ability to put files
         # that already exist)
-        commit = "{}/master".format(repo_name)
+        commit = (repo_name, "master")
         python_pachyderm.put_files(client, d, commit, "/")
         python_pachyderm.put_files(client, d, commit, "/sub")
         python_pachyderm.put_files(client, d, commit, "/sub/")
@@ -107,6 +107,7 @@ def test_put_files():
     check_expected_files(client, commit, expected)
 
 
+@pytest.mark.skip(reason="build pipelines deprecated")
 def test_create_python_pipeline_bad_path():
     client = python_pachyderm.Client()
     client.delete_all()
@@ -127,6 +128,7 @@ def test_create_python_pipeline_bad_path():
         )
 
 
+@pytest.mark.skip("build pipelines deprecated")
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     client.delete_all()

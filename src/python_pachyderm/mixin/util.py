@@ -56,5 +56,7 @@ def commit_from(
         return Commit(repo=repo, branch=branch, id=commit_id).to_pb()
     if isinstance(commit, dict):
         return Commit(**commit).to_pb()
+    if commit is None:
+        return None
 
     raise TypeError("Please provide a tuple, dict, or Commit object")
