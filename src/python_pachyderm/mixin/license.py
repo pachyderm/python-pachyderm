@@ -22,7 +22,15 @@ class LicenseMixin:
             expires=expires,
         )
 
-    def add_cluster(self, id, address, secret=None):
+    def add_cluster(
+        self,
+        id,
+        address,
+        secret=None,
+        user_address=None,
+        cluster_deployment_id=None,
+        enterprise_server=None,
+    ):
         """
         Register a cluster with the license service.
 
@@ -35,10 +43,19 @@ class LicenseMixin:
         If not specified, a random secret will be generated and returned.
         """
         return self._req(
-            Service.LICENSE, "AddCluster", id=id, address=address, secret=secret
+            Service.LICENSE,
+            "AddCluster",
+            id=id,
+            address=address,
+            secret=secret,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+            enterprise_server=enterprise_server,
         )
 
-    def update_cluster(self, id, address):
+    def update_cluster(
+        self, id, address, user_address=None, cluster_deployment_id=None
+    ):
         """
         Update a cluster registered with the license service.
 
@@ -47,7 +64,14 @@ class LicenseMixin:
         * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         """
-        return self._req(Service.LICENSE, "UpdateCluster", id=id, address=address)
+        return self._req(
+            Service.LICENSE,
+            "UpdateCluster",
+            id=id,
+            address=address,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+        )
 
     def delete_cluster(self, id):
         """
@@ -76,3 +100,9 @@ class LicenseMixin:
         Remove all clusters and deactivate the license service.
         """
         return self._req(Service.LICENSE, "DeleteAll")
+
+    def list_user_clusters(self):
+        """
+        Lists all clusters available to user.
+        """
+        return self._req(Service.LICENSE, "ListUserClusters")

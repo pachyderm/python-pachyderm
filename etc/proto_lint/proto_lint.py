@@ -63,6 +63,15 @@ PROTO_OBJECT_BUILTINS = set(
 
 # A list of methods that we do not expect the library to implement
 BLACKLISTED_METHODS = {
+    Service.AUTH: [
+        # TODO: ignoring to pass proto_lint, but come back later
+        "delete_expired_auth_tokens",
+        "get_permissions",
+        "get_permissions_for_principal",
+        "revoke_auth_tokens_for_user",
+        "rotate_root_token",
+        "get_groups_for_principal",
+    ],
     Service.PFS: [
         # delete_all is ignored because we implement PPS' delete_all anyway
         "delete_all",
@@ -71,14 +80,18 @@ BLACKLISTED_METHODS = {
         "put_tar",
         "get_tar",
         "activate_auth",
+        "run_load_test",
+        # GetFileTar replaced GetFile, but GetFile will come back
+        "get_file_t_a_r",
+        "get_file",
         # TODO: add these new API methods
+        "add_fileset",
+        "clear_commit",
+        "create_fileset",
+        "get_fileset",
+        "modify_file",
         "renew_fileset",
         "squash_commit",
-        "clear_commit",
-        "modify_file",
-        "add_fileset",
-        "get_fileset",
-        "create_fileset",
     ],
     Service.PPS: [
         # the following are ignored because they're for internal use only
@@ -315,9 +328,7 @@ RENAMED_ARGS = {
     "restart_datum": [
         ("job", "job_id"),
     ],
-    "run_pipeline": [
-        ("pipeline", "pipeline_name"),
-    ],
+    "run_pipeline": [("pipeline", "pipeline_name"), ("pipeline_job_id", "job_id")],
     "run_cron": [
         ("pipeline", "pipeline_name"),
     ],

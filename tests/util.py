@@ -82,7 +82,7 @@ def create_test_pipeline(client, test_name):
     return (commit, input_repo_name, pipeline_repo_name)
 
 
-def wait_for_job(client, commit):
+def wait_for_job(client: python_pachyderm.Client, commit):
     # block until the commit is ready
     client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY.value)
 

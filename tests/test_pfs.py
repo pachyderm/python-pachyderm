@@ -39,51 +39,45 @@ def test_delete_non_existent_repo():
     assert len(client.list_repo()) == orig_repo_count
 
 
-# This test currently fails on Pachyderm v2.0.0-alpha.12 (see
-# https://github.com/pachyderm/pachyderm/issues/6156), but should be re-enabled
-# once that issue is fixed.
-# def test_delete_all_repos():
-#    client = python_pachyderm.Client()
-#
-#    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
-#    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
-#    assert len(client.list_repo()) >= 2
-#
-#    client.delete_all_repos()
-#    assert len(client.list_repo()) == 0
+def test_delete_all_repos():
+    client = python_pachyderm.Client()
+
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
+    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
+    assert len(client.list_repo()) >= 2
+
+    client.delete_all_repos()
+    assert len(client.list_repo()) == 0
 
 
 def test_start_commit():
     client, repo_name = sandbox("start_commit")
 
     commit = client.start_commit(repo_name, "master")
-    assert commit.repo.name == repo_name
+    assert commit.branch.repo.name == repo_name
 
-    commit = client.start_commit(repo_name, None)
-    assert commit.repo.name == repo_name
+    # cannot start new commit before the previous one is finished
+    with pytest.raises(
+        python_pachyderm.RpcError, match=r"parent commit .* has not been finished"
+    ):
+        client.start_commit(repo_name, "master")
 
-    with pytest.raises(python_pachyderm.RpcError):
+    client.finish_commit(commit)
+    commit2 = client.start_commit(repo_name, "master")
+    assert commit2.branch.repo.name == repo_name
+
+    with pytest.raises(python_pachyderm.RpcError, match=r"repos .* not found"):
         client.start_commit("some-fake-repo", "master")
-
-
-def test_start_commit_with_parent_no_branch():
-    client, repo_name = sandbox("start_commit_with_parent_no_branch")
-
-    commit1 = client.start_commit(repo_name)
-    client.finish_commit((repo_name, commit1.id))
-
-    commit2 = client.start_commit(repo_name, parent=commit1.id)
-    assert commit2.repo.name == repo_name
 
 
 def test_start_commit_on_branch_with_parent():
     client, repo_name = sandbox("start_commit_on_branch_with_parent")
 
     commit1 = client.start_commit(repo_name, branch="master")
-    client.finish_commit((repo_name, commit1.id))
+    client.finish_commit(commit1)
 
     commit2 = client.start_commit(repo_name, branch="master", parent=commit1.id)
-    assert commit2.repo.name == repo_name
+    assert commit2.branch.repo.name == repo_name
 
 
 def test_start_commit_fork():
@@ -94,9 +88,11 @@ def test_start_commit_fork():
 
     commit2 = client.start_commit(repo_name, branch="patch", parent="master")
 
-    assert commit2.repo.name == repo_name
+    assert commit2.branch.repo.name == repo_name
 
-    branches = [branch_info.name for branch_info in client.list_branch(repo_name)]
+    branches = [
+        branch_info.branch.name for branch_info in client.list_branch(repo_name)
+    ]
     assert "master" in branches
     assert "patch" in branches
 
@@ -106,7 +102,7 @@ def test_start_commit_fork():
 )
 def test_finish_commit(commit_arg):
     client, repo_name = sandbox("finish_commit")
-    commit = client.start_commit(repo_name)
+    commit = client.start_commit(repo_name, "master")
 
     if commit_arg == "commit_obj":
         client.finish_commit(commit)
@@ -138,7 +134,7 @@ def test_commit_context_mgr():
 
     with client.commit(repo_name, "master") as c1:
         pass
-    with client.commit(repo_name, None) as c2:
+    with client.commit(repo_name, "master") as c2:
         pass
 
     with pytest.raises(python_pachyderm.RpcError):
@@ -158,7 +154,7 @@ def test_put_file_bytes_bytestring():
 
     client, repo_name = sandbox("put_file_bytes_bytestring")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file.dat", b"DATA")
 
     commit_infos = list(client.list_commit(repo_name))
@@ -176,10 +172,10 @@ def test_put_file_bytes_filelike():
 
     client, repo_name = sandbox("put_file_bytes_filelike")
 
-    with client.commit(repo_name) as c:
-        client.put_file_bytes(c, "file.dat", BytesIO(b"DATA"))
+    with client.commit(repo_name, "master") as commit:
+        client.put_file_bytes(commit, "file.dat", BytesIO(b"DATA"))
 
-    files = list(client.list_file("{}/{}".format(repo_name, c.id), ""))
+    files = list(client.list_file(commit, ""))
     assert len(files) == 1
 
 
@@ -206,7 +202,7 @@ def test_put_file_bytes_zero_bytes_direct():
 
     client, repo_name = sandbox("put_file_bytes_zero_bytes")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "empty_bytestring.dat", b"")
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
@@ -222,7 +218,7 @@ def test_put_file_bytes_large():
 
     client, repo_name = sandbox("put_file_bytes_large")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file.dat", b"#" * (21 * 1024 * 1024))
 
     commit_infos = list(client.list_commit(repo_name))
@@ -235,7 +231,7 @@ def test_put_file_bytes_large():
 def test_put_file_url():
     client, repo_name = sandbox("put_file_url")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_url(
             c,
             "index.html",
@@ -367,12 +363,12 @@ def test_inspect_commit():
         client.put_file_bytes(c, "input.json", b"hello world")
 
     commit = client.inspect_commit("{}/master".format(repo_name))
-    assert commit.branch.name == "master"
+    assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
     # assert commit.size_bytes == 11
     assert len(commit.commit.id) == 32
-    assert commit.commit.repo.name == repo_name
+    assert commit.commit.branch.repo.name == repo_name
 
 
 def test_squash_commit():
@@ -396,8 +392,8 @@ def test_subscribe_commit():
         pass
 
     commit = next(commits)
-    assert commit.branch.repo.name == repo_name
-    assert commit.branch.name == "master"
+    assert commit.commit.branch.repo.name == repo_name
+    assert commit.commit.branch.name == "master"
 
 
 def test_list_branch():
@@ -410,8 +406,8 @@ def test_list_branch():
 
     branches = client.list_branch(repo_name)
     assert len(branches) == 2
-    assert branches[0].name == "develop"
-    assert branches[1].name == "master"
+    assert branches[0].branch.name == "develop"
+    assert branches[1].branch.name == "master"
 
 
 def test_delete_branch():
@@ -430,12 +426,12 @@ def test_delete_branch():
 def test_inspect_file():
     client, repo_name = sandbox("inspect_file")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file.dat", b"DATA")
 
     fi = client.inspect_file(c, "file.dat")
     assert fi.file.commit.id == c.id
-    assert fi.file.commit.repo.name == repo_name
+    assert fi.file.commit.branch.repo.name == repo_name
     assert fi.file.path == "/file.dat"
     # assert fi.size_bytes == 4
 
@@ -443,7 +439,7 @@ def test_inspect_file():
 def test_list_file():
     client, repo_name = sandbox("list_file")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file1.dat", b"DATA")
         client.put_file_bytes(c, "file2.dat", b"DATA")
 
@@ -460,7 +456,7 @@ def test_list_file():
 def test_walk_file():
     client, repo_name = sandbox("walk_file")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "/file1.dat", b"DATA")
         client.put_file_bytes(c, "/a/file2.dat", b"DATA")
         client.put_file_bytes(c, "/a/b/file3.dat", b"DATA")
@@ -476,7 +472,7 @@ def test_walk_file():
 def test_glob_file():
     client, repo_name = sandbox("glob_file")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file1.dat", b"DATA")
         client.put_file_bytes(c, "file2.dat", b"DATA")
 
@@ -499,12 +495,12 @@ def test_glob_file():
 def test_delete_file():
     client, repo_name = sandbox("delete_file")
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "file1.dat", b"DATA")
 
     assert len(list(client.list_file(c, "/"))) == 1
 
-    with client.commit(repo_name) as c:
+    with client.commit(repo_name, "master") as c:
         client.delete_file(c, "file1.dat")
 
     assert len(list(client.list_file(c, "/"))) == 0
@@ -515,7 +511,7 @@ def test_create_branch():
     client.create_branch(repo_name, "foobar")
     branches = client.list_branch(repo_name)
     assert len(branches) == 1
-    assert branches[0].name == "foobar"
+    assert branches[0].branch.name == "foobar"
 
 
 def test_inspect_branch():
