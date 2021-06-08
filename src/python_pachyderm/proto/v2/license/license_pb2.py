@@ -17,11 +17,11 @@ from python_pachyderm.proto.v2.enterprise import enterprise_pb2 as python__pachy
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='python_pachyderm/proto/v2/license/license.proto',
-  package='license',
+  package='license_v2',
   syntax='proto3',
   serialized_options=b'Z-github.com/pachyderm/pachyderm/v2/src/license',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n/python_pachyderm/proto/v2/license/license.proto\x12\x07license\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x35python_pachyderm/proto/v2/enterprise/enterprise.proto\"W\n\x0f\x41\x63tivateRequest\x12\x17\n\x0f\x61\x63tivation_code\x18\x01 \x01(\t\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"7\n\x10\x41\x63tivateResponse\x12#\n\x04info\x18\x01 \x01(\x0b\x32\x15.enterprise.TokenInfo\"\x1a\n\x18GetActivationCodeRequest\"{\n\x19GetActivationCodeResponse\x12 \n\x05state\x18\x01 \x01(\x0e\x32\x11.enterprise.State\x12#\n\x04info\x18\x02 \x01(\x0b\x32\x15.enterprise.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"@\n\x11\x41\x64\x64\x43lusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\"$\n\x12\x41\x64\x64\x43lusterResponse\x12\x0e\n\x06secret\x18\x01 \x01(\t\"\"\n\x14\x44\x65leteClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x44\x65leteClusterResponse\"\xb7\x01\n\rClusterStatus\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x32\n\x0elast_heartbeat\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"3\n\x14UpdateClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\"\x17\n\x15UpdateClusterResponse\"\x15\n\x13ListClustersRequest\"@\n\x14ListClustersResponse\x12(\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x16.license.ClusterStatus\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse\"U\n\x10HeartbeatRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06secret\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\"?\n\x11HeartbeatResponse\x12*\n\x07license\x18\x01 \x01(\x0b\x32\x19.enterprise.LicenseRecord2\xee\x04\n\x03\x41PI\x12\x41\n\x08\x41\x63tivate\x12\x18.license.ActivateRequest\x1a\x19.license.ActivateResponse\"\x00\x12\\\n\x11GetActivationCode\x12!.license.GetActivationCodeRequest\x1a\".license.GetActivationCodeResponse\"\x00\x12\x44\n\tDeleteAll\x12\x19.license.DeleteAllRequest\x1a\x1a.license.DeleteAllResponse\"\x00\x12G\n\nAddCluster\x12\x1a.license.AddClusterRequest\x1a\x1b.license.AddClusterResponse\"\x00\x12P\n\rDeleteCluster\x12\x1d.license.DeleteClusterRequest\x1a\x1e.license.DeleteClusterResponse\"\x00\x12M\n\x0cListClusters\x12\x1c.license.ListClustersRequest\x1a\x1d.license.ListClustersResponse\"\x00\x12P\n\rUpdateCluster\x12\x1d.license.UpdateClusterRequest\x1a\x1e.license.UpdateClusterResponse\"\x00\x12\x44\n\tHeartbeat\x12\x19.license.HeartbeatRequest\x1a\x1a.license.HeartbeatResponse\"\x00\x42/Z-github.com/pachyderm/pachyderm/v2/src/licenseb\x06proto3'
+  serialized_pb=b'\n/python_pachyderm/proto/v2/license/license.proto\x12\nlicense_v2\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x35python_pachyderm/proto/v2/enterprise/enterprise.proto\"W\n\x0f\x41\x63tivateRequest\x12\x17\n\x0f\x61\x63tivation_code\x18\x01 \x01(\t\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\":\n\x10\x41\x63tivateResponse\x12&\n\x04info\x18\x01 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\"\x1a\n\x18GetActivationCodeRequest\"\x81\x01\n\x19GetActivationCodeResponse\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.enterprise_v2.State\x12&\n\x04info\x18\x02 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x90\x01\n\x11\x41\x64\x64\x43lusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\x12\x14\n\x0cuser_address\x18\x04 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x05 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x06 \x01(\x08\"$\n\x12\x41\x64\x64\x43lusterResponse\x12\x0e\n\x06secret\x18\x01 \x01(\t\"\"\n\x14\x44\x65leteClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x44\x65leteClusterResponse\"\xca\x01\n\rClusterStatus\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x07 \x01(\t\x12\x32\n\x0elast_heartbeat\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"h\n\x14UpdateClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x14\n\x0cuser_address\x18\x03 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x04 \x01(\t\"\x17\n\x15UpdateClusterResponse\"\x15\n\x13ListClustersRequest\"C\n\x14ListClustersResponse\x12+\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x19.license_v2.ClusterStatus\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse\"h\n\x10HeartbeatRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06secret\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x05 \x01(\t\"B\n\x11HeartbeatResponse\x12-\n\x07license\x18\x01 \x01(\x0b\x32\x1c.enterprise_v2.LicenseRecord\"h\n\x0fUserClusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x04 \x01(\x08\"\x19\n\x17ListUserClustersRequest\"I\n\x18ListUserClustersResponse\x12-\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x1b.license_v2.UserClusterInfo2\xff\x05\n\x03\x41PI\x12G\n\x08\x41\x63tivate\x12\x1b.license_v2.ActivateRequest\x1a\x1c.license_v2.ActivateResponse\"\x00\x12\x62\n\x11GetActivationCode\x12$.license_v2.GetActivationCodeRequest\x1a%.license_v2.GetActivationCodeResponse\"\x00\x12J\n\tDeleteAll\x12\x1c.license_v2.DeleteAllRequest\x1a\x1d.license_v2.DeleteAllResponse\"\x00\x12M\n\nAddCluster\x12\x1d.license_v2.AddClusterRequest\x1a\x1e.license_v2.AddClusterResponse\"\x00\x12V\n\rDeleteCluster\x12 .license_v2.DeleteClusterRequest\x1a!.license_v2.DeleteClusterResponse\"\x00\x12S\n\x0cListClusters\x12\x1f.license_v2.ListClustersRequest\x1a .license_v2.ListClustersResponse\"\x00\x12V\n\rUpdateCluster\x12 .license_v2.UpdateClusterRequest\x1a!.license_v2.UpdateClusterResponse\"\x00\x12J\n\tHeartbeat\x12\x1c.license_v2.HeartbeatRequest\x1a\x1d.license_v2.HeartbeatResponse\"\x00\x12_\n\x10ListUserClusters\x12#.license_v2.ListUserClustersRequest\x1a$.license_v2.ListUserClustersResponse\"\x00\x42/Z-github.com/pachyderm/pachyderm/v2/src/licenseb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DESCRIPTOR,])
 
@@ -30,21 +30,21 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _ACTIVATEREQUEST = _descriptor.Descriptor(
   name='ActivateRequest',
-  full_name='license.ActivateRequest',
+  full_name='license_v2.ActivateRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='activation_code', full_name='license.ActivateRequest.activation_code', index=0,
+      name='activation_code', full_name='license_v2.ActivateRequest.activation_code', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='expires', full_name='license.ActivateRequest.expires', index=1,
+      name='expires', full_name='license_v2.ActivateRequest.expires', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -62,21 +62,21 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=148,
-  serialized_end=235,
+  serialized_start=151,
+  serialized_end=238,
 )
 
 
 _ACTIVATERESPONSE = _descriptor.Descriptor(
   name='ActivateResponse',
-  full_name='license.ActivateResponse',
+  full_name='license_v2.ActivateResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='info', full_name='license.ActivateResponse.info', index=0,
+      name='info', full_name='license_v2.ActivateResponse.info', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -94,14 +94,14 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=237,
-  serialized_end=292,
+  serialized_start=240,
+  serialized_end=298,
 )
 
 
 _GETACTIVATIONCODEREQUEST = _descriptor.Descriptor(
   name='GetActivationCodeRequest',
-  full_name='license.GetActivationCodeRequest',
+  full_name='license_v2.GetActivationCodeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -119,35 +119,35 @@ _GETACTIVATIONCODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=294,
-  serialized_end=320,
+  serialized_start=300,
+  serialized_end=326,
 )
 
 
 _GETACTIVATIONCODERESPONSE = _descriptor.Descriptor(
   name='GetActivationCodeResponse',
-  full_name='license.GetActivationCodeResponse',
+  full_name='license_v2.GetActivationCodeResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='state', full_name='license.GetActivationCodeResponse.state', index=0,
+      name='state', full_name='license_v2.GetActivationCodeResponse.state', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='info', full_name='license.GetActivationCodeResponse.info', index=1,
+      name='info', full_name='license_v2.GetActivationCodeResponse.info', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='activation_code', full_name='license.GetActivationCodeResponse.activation_code', index=2,
+      name='activation_code', full_name='license_v2.GetActivationCodeResponse.activation_code', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -165,14 +165,14 @@ _GETACTIVATIONCODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=322,
-  serialized_end=445,
+  serialized_start=329,
+  serialized_end=458,
 )
 
 
 _DEACTIVATEREQUEST = _descriptor.Descriptor(
   name='DeactivateRequest',
-  full_name='license.DeactivateRequest',
+  full_name='license_v2.DeactivateRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -190,14 +190,14 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=447,
-  serialized_end=466,
+  serialized_start=460,
+  serialized_end=479,
 )
 
 
 _DEACTIVATERESPONSE = _descriptor.Descriptor(
   name='DeactivateResponse',
-  full_name='license.DeactivateResponse',
+  full_name='license_v2.DeactivateResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -215,37 +215,58 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=468,
-  serialized_end=488,
+  serialized_start=481,
+  serialized_end=501,
 )
 
 
 _ADDCLUSTERREQUEST = _descriptor.Descriptor(
   name='AddClusterRequest',
-  full_name='license.AddClusterRequest',
+  full_name='license_v2.AddClusterRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='license.AddClusterRequest.id', index=0,
+      name='id', full_name='license_v2.AddClusterRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='address', full_name='license.AddClusterRequest.address', index=1,
+      name='address', full_name='license_v2.AddClusterRequest.address', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='secret', full_name='license.AddClusterRequest.secret', index=2,
+      name='secret', full_name='license_v2.AddClusterRequest.secret', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_address', full_name='license_v2.AddClusterRequest.user_address', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cluster_deployment_id', full_name='license_v2.AddClusterRequest.cluster_deployment_id', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='enterprise_server', full_name='license_v2.AddClusterRequest.enterprise_server', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -261,21 +282,21 @@ _ADDCLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=490,
-  serialized_end=554,
+  serialized_start=504,
+  serialized_end=648,
 )
 
 
 _ADDCLUSTERRESPONSE = _descriptor.Descriptor(
   name='AddClusterResponse',
-  full_name='license.AddClusterResponse',
+  full_name='license_v2.AddClusterResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='secret', full_name='license.AddClusterResponse.secret', index=0,
+      name='secret', full_name='license_v2.AddClusterResponse.secret', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -293,21 +314,21 @@ _ADDCLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=556,
-  serialized_end=592,
+  serialized_start=650,
+  serialized_end=686,
 )
 
 
 _DELETECLUSTERREQUEST = _descriptor.Descriptor(
   name='DeleteClusterRequest',
-  full_name='license.DeleteClusterRequest',
+  full_name='license_v2.DeleteClusterRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='license.DeleteClusterRequest.id', index=0,
+      name='id', full_name='license_v2.DeleteClusterRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -325,14 +346,14 @@ _DELETECLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=594,
-  serialized_end=628,
+  serialized_start=688,
+  serialized_end=722,
 )
 
 
 _DELETECLUSTERRESPONSE = _descriptor.Descriptor(
   name='DeleteClusterResponse',
-  full_name='license.DeleteClusterResponse',
+  full_name='license_v2.DeleteClusterResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -350,56 +371,63 @@ _DELETECLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=630,
-  serialized_end=653,
+  serialized_start=724,
+  serialized_end=747,
 )
 
 
 _CLUSTERSTATUS = _descriptor.Descriptor(
   name='ClusterStatus',
-  full_name='license.ClusterStatus',
+  full_name='license_v2.ClusterStatus',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='license.ClusterStatus.id', index=0,
+      name='id', full_name='license_v2.ClusterStatus.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='address', full_name='license.ClusterStatus.address', index=1,
+      name='address', full_name='license_v2.ClusterStatus.address', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='version', full_name='license.ClusterStatus.version', index=2,
+      name='version', full_name='license_v2.ClusterStatus.version', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='auth_enabled', full_name='license.ClusterStatus.auth_enabled', index=3,
+      name='auth_enabled', full_name='license_v2.ClusterStatus.auth_enabled', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='last_heartbeat', full_name='license.ClusterStatus.last_heartbeat', index=4,
+      name='client_id', full_name='license_v2.ClusterStatus.client_id', index=4,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='last_heartbeat', full_name='license_v2.ClusterStatus.last_heartbeat', index=5,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='created_at', full_name='license.ClusterStatus.created_at', index=5,
+      name='created_at', full_name='license_v2.ClusterStatus.created_at', index=6,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -417,29 +445,43 @@ _CLUSTERSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=656,
-  serialized_end=839,
+  serialized_start=750,
+  serialized_end=952,
 )
 
 
 _UPDATECLUSTERREQUEST = _descriptor.Descriptor(
   name='UpdateClusterRequest',
-  full_name='license.UpdateClusterRequest',
+  full_name='license_v2.UpdateClusterRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='license.UpdateClusterRequest.id', index=0,
+      name='id', full_name='license_v2.UpdateClusterRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='address', full_name='license.UpdateClusterRequest.address', index=1,
+      name='address', full_name='license_v2.UpdateClusterRequest.address', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_address', full_name='license_v2.UpdateClusterRequest.user_address', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cluster_deployment_id', full_name='license_v2.UpdateClusterRequest.cluster_deployment_id', index=3,
+      number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -456,14 +498,14 @@ _UPDATECLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=841,
-  serialized_end=892,
+  serialized_start=954,
+  serialized_end=1058,
 )
 
 
 _UPDATECLUSTERRESPONSE = _descriptor.Descriptor(
   name='UpdateClusterResponse',
-  full_name='license.UpdateClusterResponse',
+  full_name='license_v2.UpdateClusterResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -481,14 +523,14 @@ _UPDATECLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=894,
-  serialized_end=917,
+  serialized_start=1060,
+  serialized_end=1083,
 )
 
 
 _LISTCLUSTERSREQUEST = _descriptor.Descriptor(
   name='ListClustersRequest',
-  full_name='license.ListClustersRequest',
+  full_name='license_v2.ListClustersRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -506,21 +548,21 @@ _LISTCLUSTERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=919,
-  serialized_end=940,
+  serialized_start=1085,
+  serialized_end=1106,
 )
 
 
 _LISTCLUSTERSRESPONSE = _descriptor.Descriptor(
   name='ListClustersResponse',
-  full_name='license.ListClustersResponse',
+  full_name='license_v2.ListClustersResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='clusters', full_name='license.ListClustersResponse.clusters', index=0,
+      name='clusters', full_name='license_v2.ListClustersResponse.clusters', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -538,14 +580,14 @@ _LISTCLUSTERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=942,
-  serialized_end=1006,
+  serialized_start=1108,
+  serialized_end=1175,
 )
 
 
 _DELETEALLREQUEST = _descriptor.Descriptor(
   name='DeleteAllRequest',
-  full_name='license.DeleteAllRequest',
+  full_name='license_v2.DeleteAllRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -563,14 +605,14 @@ _DELETEALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1008,
-  serialized_end=1026,
+  serialized_start=1177,
+  serialized_end=1195,
 )
 
 
 _DELETEALLRESPONSE = _descriptor.Descriptor(
   name='DeleteAllResponse',
-  full_name='license.DeleteAllResponse',
+  full_name='license_v2.DeleteAllResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -588,44 +630,51 @@ _DELETEALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1028,
-  serialized_end=1047,
+  serialized_start=1197,
+  serialized_end=1216,
 )
 
 
 _HEARTBEATREQUEST = _descriptor.Descriptor(
   name='HeartbeatRequest',
-  full_name='license.HeartbeatRequest',
+  full_name='license_v2.HeartbeatRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='license.HeartbeatRequest.id', index=0,
+      name='id', full_name='license_v2.HeartbeatRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='secret', full_name='license.HeartbeatRequest.secret', index=1,
+      name='secret', full_name='license_v2.HeartbeatRequest.secret', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='version', full_name='license.HeartbeatRequest.version', index=2,
+      name='version', full_name='license_v2.HeartbeatRequest.version', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='auth_enabled', full_name='license.HeartbeatRequest.auth_enabled', index=3,
+      name='auth_enabled', full_name='license_v2.HeartbeatRequest.auth_enabled', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='client_id', full_name='license_v2.HeartbeatRequest.client_id', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -641,21 +690,21 @@ _HEARTBEATREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1049,
-  serialized_end=1134,
+  serialized_start=1218,
+  serialized_end=1322,
 )
 
 
 _HEARTBEATRESPONSE = _descriptor.Descriptor(
   name='HeartbeatResponse',
-  full_name='license.HeartbeatResponse',
+  full_name='license_v2.HeartbeatResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='license', full_name='license.HeartbeatResponse.license', index=0,
+      name='license', full_name='license_v2.HeartbeatResponse.license', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -673,8 +722,118 @@ _HEARTBEATRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1136,
-  serialized_end=1199,
+  serialized_start=1324,
+  serialized_end=1390,
+)
+
+
+_USERCLUSTERINFO = _descriptor.Descriptor(
+  name='UserClusterInfo',
+  full_name='license_v2.UserClusterInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='license_v2.UserClusterInfo.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cluster_deployment_id', full_name='license_v2.UserClusterInfo.cluster_deployment_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='address', full_name='license_v2.UserClusterInfo.address', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='enterprise_server', full_name='license_v2.UserClusterInfo.enterprise_server', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1392,
+  serialized_end=1496,
+)
+
+
+_LISTUSERCLUSTERSREQUEST = _descriptor.Descriptor(
+  name='ListUserClustersRequest',
+  full_name='license_v2.ListUserClustersRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1498,
+  serialized_end=1523,
+)
+
+
+_LISTUSERCLUSTERSRESPONSE = _descriptor.Descriptor(
+  name='ListUserClustersResponse',
+  full_name='license_v2.ListUserClustersResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='clusters', full_name='license_v2.ListUserClustersResponse.clusters', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1525,
+  serialized_end=1598,
 )
 
 _ACTIVATEREQUEST.fields_by_name['expires'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -685,6 +844,7 @@ _CLUSTERSTATUS.fields_by_name['last_heartbeat'].message_type = google_dot_protob
 _CLUSTERSTATUS.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _LISTCLUSTERSRESPONSE.fields_by_name['clusters'].message_type = _CLUSTERSTATUS
 _HEARTBEATRESPONSE.fields_by_name['license'].message_type = python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2._LICENSERECORD
+_LISTUSERCLUSTERSRESPONSE.fields_by_name['clusters'].message_type = _USERCLUSTERINFO
 DESCRIPTOR.message_types_by_name['ActivateRequest'] = _ACTIVATEREQUEST
 DESCRIPTOR.message_types_by_name['ActivateResponse'] = _ACTIVATERESPONSE
 DESCRIPTOR.message_types_by_name['GetActivationCodeRequest'] = _GETACTIVATIONCODEREQUEST
@@ -704,157 +864,181 @@ DESCRIPTOR.message_types_by_name['DeleteAllRequest'] = _DELETEALLREQUEST
 DESCRIPTOR.message_types_by_name['DeleteAllResponse'] = _DELETEALLRESPONSE
 DESCRIPTOR.message_types_by_name['HeartbeatRequest'] = _HEARTBEATREQUEST
 DESCRIPTOR.message_types_by_name['HeartbeatResponse'] = _HEARTBEATRESPONSE
+DESCRIPTOR.message_types_by_name['UserClusterInfo'] = _USERCLUSTERINFO
+DESCRIPTOR.message_types_by_name['ListUserClustersRequest'] = _LISTUSERCLUSTERSREQUEST
+DESCRIPTOR.message_types_by_name['ListUserClustersResponse'] = _LISTUSERCLUSTERSRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ActivateRequest = _reflection.GeneratedProtocolMessageType('ActivateRequest', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.ActivateRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.ActivateRequest)
   })
 _sym_db.RegisterMessage(ActivateRequest)
 
 ActivateResponse = _reflection.GeneratedProtocolMessageType('ActivateResponse', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.ActivateResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.ActivateResponse)
   })
 _sym_db.RegisterMessage(ActivateResponse)
 
 GetActivationCodeRequest = _reflection.GeneratedProtocolMessageType('GetActivationCodeRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETACTIVATIONCODEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.GetActivationCodeRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.GetActivationCodeRequest)
   })
 _sym_db.RegisterMessage(GetActivationCodeRequest)
 
 GetActivationCodeResponse = _reflection.GeneratedProtocolMessageType('GetActivationCodeResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETACTIVATIONCODERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.GetActivationCodeResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.GetActivationCodeResponse)
   })
 _sym_db.RegisterMessage(GetActivationCodeResponse)
 
 DeactivateRequest = _reflection.GeneratedProtocolMessageType('DeactivateRequest', (_message.Message,), {
   'DESCRIPTOR' : _DEACTIVATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeactivateRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.DeactivateRequest)
   })
 _sym_db.RegisterMessage(DeactivateRequest)
 
 DeactivateResponse = _reflection.GeneratedProtocolMessageType('DeactivateResponse', (_message.Message,), {
   'DESCRIPTOR' : _DEACTIVATERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeactivateResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.DeactivateResponse)
   })
 _sym_db.RegisterMessage(DeactivateResponse)
 
 AddClusterRequest = _reflection.GeneratedProtocolMessageType('AddClusterRequest', (_message.Message,), {
   'DESCRIPTOR' : _ADDCLUSTERREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.AddClusterRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.AddClusterRequest)
   })
 _sym_db.RegisterMessage(AddClusterRequest)
 
 AddClusterResponse = _reflection.GeneratedProtocolMessageType('AddClusterResponse', (_message.Message,), {
   'DESCRIPTOR' : _ADDCLUSTERRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.AddClusterResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.AddClusterResponse)
   })
 _sym_db.RegisterMessage(AddClusterResponse)
 
 DeleteClusterRequest = _reflection.GeneratedProtocolMessageType('DeleteClusterRequest', (_message.Message,), {
   'DESCRIPTOR' : _DELETECLUSTERREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeleteClusterRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.DeleteClusterRequest)
   })
 _sym_db.RegisterMessage(DeleteClusterRequest)
 
 DeleteClusterResponse = _reflection.GeneratedProtocolMessageType('DeleteClusterResponse', (_message.Message,), {
   'DESCRIPTOR' : _DELETECLUSTERRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeleteClusterResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.DeleteClusterResponse)
   })
 _sym_db.RegisterMessage(DeleteClusterResponse)
 
 ClusterStatus = _reflection.GeneratedProtocolMessageType('ClusterStatus', (_message.Message,), {
   'DESCRIPTOR' : _CLUSTERSTATUS,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.ClusterStatus)
+  # @@protoc_insertion_point(class_scope:license_v2.ClusterStatus)
   })
 _sym_db.RegisterMessage(ClusterStatus)
 
 UpdateClusterRequest = _reflection.GeneratedProtocolMessageType('UpdateClusterRequest', (_message.Message,), {
   'DESCRIPTOR' : _UPDATECLUSTERREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.UpdateClusterRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.UpdateClusterRequest)
   })
 _sym_db.RegisterMessage(UpdateClusterRequest)
 
 UpdateClusterResponse = _reflection.GeneratedProtocolMessageType('UpdateClusterResponse', (_message.Message,), {
   'DESCRIPTOR' : _UPDATECLUSTERRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.UpdateClusterResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.UpdateClusterResponse)
   })
 _sym_db.RegisterMessage(UpdateClusterResponse)
 
 ListClustersRequest = _reflection.GeneratedProtocolMessageType('ListClustersRequest', (_message.Message,), {
   'DESCRIPTOR' : _LISTCLUSTERSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.ListClustersRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.ListClustersRequest)
   })
 _sym_db.RegisterMessage(ListClustersRequest)
 
 ListClustersResponse = _reflection.GeneratedProtocolMessageType('ListClustersResponse', (_message.Message,), {
   'DESCRIPTOR' : _LISTCLUSTERSRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.ListClustersResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.ListClustersResponse)
   })
 _sym_db.RegisterMessage(ListClustersResponse)
 
 DeleteAllRequest = _reflection.GeneratedProtocolMessageType('DeleteAllRequest', (_message.Message,), {
   'DESCRIPTOR' : _DELETEALLREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeleteAllRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.DeleteAllRequest)
   })
 _sym_db.RegisterMessage(DeleteAllRequest)
 
 DeleteAllResponse = _reflection.GeneratedProtocolMessageType('DeleteAllResponse', (_message.Message,), {
   'DESCRIPTOR' : _DELETEALLRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.DeleteAllResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.DeleteAllResponse)
   })
 _sym_db.RegisterMessage(DeleteAllResponse)
 
 HeartbeatRequest = _reflection.GeneratedProtocolMessageType('HeartbeatRequest', (_message.Message,), {
   'DESCRIPTOR' : _HEARTBEATREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.HeartbeatRequest)
+  # @@protoc_insertion_point(class_scope:license_v2.HeartbeatRequest)
   })
 _sym_db.RegisterMessage(HeartbeatRequest)
 
 HeartbeatResponse = _reflection.GeneratedProtocolMessageType('HeartbeatResponse', (_message.Message,), {
   'DESCRIPTOR' : _HEARTBEATRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
-  # @@protoc_insertion_point(class_scope:license.HeartbeatResponse)
+  # @@protoc_insertion_point(class_scope:license_v2.HeartbeatResponse)
   })
 _sym_db.RegisterMessage(HeartbeatResponse)
+
+UserClusterInfo = _reflection.GeneratedProtocolMessageType('UserClusterInfo', (_message.Message,), {
+  'DESCRIPTOR' : _USERCLUSTERINFO,
+  '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
+  # @@protoc_insertion_point(class_scope:license_v2.UserClusterInfo)
+  })
+_sym_db.RegisterMessage(UserClusterInfo)
+
+ListUserClustersRequest = _reflection.GeneratedProtocolMessageType('ListUserClustersRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LISTUSERCLUSTERSREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
+  # @@protoc_insertion_point(class_scope:license_v2.ListUserClustersRequest)
+  })
+_sym_db.RegisterMessage(ListUserClustersRequest)
+
+ListUserClustersResponse = _reflection.GeneratedProtocolMessageType('ListUserClustersResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LISTUSERCLUSTERSRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.license.license_pb2'
+  # @@protoc_insertion_point(class_scope:license_v2.ListUserClustersResponse)
+  })
+_sym_db.RegisterMessage(ListUserClustersResponse)
 
 
 DESCRIPTOR._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
-  full_name='license.API',
+  full_name='license_v2.API',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1202,
-  serialized_end=1824,
+  serialized_start=1601,
+  serialized_end=2368,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',
-    full_name='license.API.Activate',
+    full_name='license_v2.API.Activate',
     index=0,
     containing_service=None,
     input_type=_ACTIVATEREQUEST,
@@ -864,7 +1048,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetActivationCode',
-    full_name='license.API.GetActivationCode',
+    full_name='license_v2.API.GetActivationCode',
     index=1,
     containing_service=None,
     input_type=_GETACTIVATIONCODEREQUEST,
@@ -874,7 +1058,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteAll',
-    full_name='license.API.DeleteAll',
+    full_name='license_v2.API.DeleteAll',
     index=2,
     containing_service=None,
     input_type=_DELETEALLREQUEST,
@@ -884,7 +1068,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='AddCluster',
-    full_name='license.API.AddCluster',
+    full_name='license_v2.API.AddCluster',
     index=3,
     containing_service=None,
     input_type=_ADDCLUSTERREQUEST,
@@ -894,7 +1078,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteCluster',
-    full_name='license.API.DeleteCluster',
+    full_name='license_v2.API.DeleteCluster',
     index=4,
     containing_service=None,
     input_type=_DELETECLUSTERREQUEST,
@@ -904,7 +1088,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ListClusters',
-    full_name='license.API.ListClusters',
+    full_name='license_v2.API.ListClusters',
     index=5,
     containing_service=None,
     input_type=_LISTCLUSTERSREQUEST,
@@ -914,7 +1098,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='UpdateCluster',
-    full_name='license.API.UpdateCluster',
+    full_name='license_v2.API.UpdateCluster',
     index=6,
     containing_service=None,
     input_type=_UPDATECLUSTERREQUEST,
@@ -924,11 +1108,21 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Heartbeat',
-    full_name='license.API.Heartbeat',
+    full_name='license_v2.API.Heartbeat',
     index=7,
     containing_service=None,
     input_type=_HEARTBEATREQUEST,
     output_type=_HEARTBEATRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListUserClusters',
+    full_name='license_v2.API.ListUserClusters',
+    index=8,
+    containing_service=None,
+    input_type=_LISTUSERCLUSTERSREQUEST,
+    output_type=_LISTUSERCLUSTERSRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

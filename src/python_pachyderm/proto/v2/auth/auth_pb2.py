@@ -17,17 +17,17 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='python_pachyderm/proto/v2/auth/auth.proto',
-  package='auth',
+  package='auth_v2',
   syntax='proto3',
   serialized_options=b'Z*github.com/pachyderm/pachyderm/v2/src/auth',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n)python_pachyderm/proto/v2/auth/auth.proto\x12\x04\x61uth\x1a\x1fgoogle/protobuf/timestamp.proto\"1\n\x0f\x41\x63tivateRequest\x12\x12\n\nroot_token\x18\x03 \x01(\tJ\x04\x08\x01\x10\x02J\x04\x08\x02\x10\x03\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\xa6\x01\n\nOIDCConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x11\n\tclient_id\x18\x02 \x01(\t\x12\x15\n\rclient_secret\x18\x03 \x01(\t\x12\x14\n\x0credirect_uri\x18\x04 \x01(\t\x12\x0e\n\x06scopes\x18\x05 \x03(\t\x12\x1e\n\x16require_email_verified\x18\x06 \x01(\x08\x12\x18\n\x10localhost_issuer\x18\x07 \x01(\x08\"\x19\n\x17GetConfigurationRequest\"C\n\x18GetConfigurationResponse\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.OIDCConfig\"B\n\x17SetConfigurationRequest\x12\'\n\rconfiguration\x18\x01 \x01(\x0b\x32\x10.auth.OIDCConfig\"\x1a\n\x18SetConfigurationResponse\"\x1c\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\"G\n\x13\x41uthenticateRequest\x12\x12\n\noidc_state\x18\x03 \x01(\t\x12\x10\n\x08id_token\x18\x04 \x01(\tJ\x04\x08\x01\x10\x02J\x04\x08\x02\x10\x03\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\";\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x03 \x01(\x03J\x04\x08\x02\x10\x03J\x04\x08\x04\x10\x05\"\\\n\x05Roles\x12%\n\x05roles\x18\x01 \x03(\x0b\x32\x16.auth.Roles.RolesEntry\x1a,\n\nRolesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"{\n\x0bRoleBinding\x12/\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1e.auth.RoleBinding.EntriesEntry\x1a;\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.auth.Roles:\x02\x38\x01\":\n\x08Resource\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.auth.ResourceType\x12\x0c\n\x04name\x18\x02 \x01(\t\"h\n\x05Users\x12-\n\tusernames\x18\x01 \x03(\x0b\x32\x1a.auth.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"a\n\x06Groups\x12(\n\x06groups\x18\x01 \x03(\x0b\x32\x18.auth.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"a\n\x10\x41uthorizeRequest\x12 \n\x08resource\x18\x01 \x01(\x0b\x32\x0e.auth.Resource\x12%\n\x0bpermissions\x18\x03 \x03(\x0e\x32\x10.auth.PermissionJ\x04\x08\x02\x10\x03\"\x82\x01\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\x12#\n\tsatisfied\x18\x02 \x03(\x0e\x32\x10.auth.Permission\x12!\n\x07missing\x18\x03 \x03(\x0e\x32\x10.auth.Permission\x12\x11\n\tprincipal\x18\x04 \x01(\t\"^\n\x18ModifyRoleBindingRequest\x12 \n\x08resource\x18\x01 \x01(\x0b\x32\x0e.auth.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\x12\r\n\x05roles\x18\x03 \x03(\t\"\x1b\n\x19ModifyRoleBindingResponse\"9\n\x15GetRoleBindingRequest\x12 \n\x08resource\x18\x01 \x01(\x0b\x32\x0e.auth.Resource\"<\n\x16GetRoleBindingResponse\x12\"\n\x07\x62inding\x18\x01 \x01(\x0b\x32\x11.auth.RoleBinding\"C\n\x0bSessionInfo\x12\r\n\x05nonce\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x16\n\x0e\x63onversion_err\x18\x03 \x01(\x08\"\x15\n\x13GetOIDCLoginRequest\"8\n\x14GetOIDCLoginResponse\x12\x11\n\tlogin_url\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"2\n\x14GetRobotTokenRequest\x12\r\n\x05robot\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"&\n\x15GetRobotTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"$\n\x10GetGroupsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\"|\n\x0fHashedAuthToken\x12\x14\n\x0chashed_token\x18\x01 \x01(\t\x12#\n\ntoken_info\x18\x02 \x01(\x0b\x32\x0f.auth.TokenInfo\x12.\n\nexpiration\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x1a\n\x18\x45xtractAuthTokensRequest\"B\n\x19\x45xtractAuthTokensResponse\x12%\n\x06tokens\x18\x01 \x03(\x0b\x32\x15.auth.HashedAuthToken\"?\n\x17RestoreAuthTokenRequest\x12$\n\x05token\x18\x01 \x01(\x0b\x32\x15.auth.HashedAuthToken\"\x1a\n\x18RestoreAuthTokenResponse*\xc7\x0c\n\nPermission\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x1b\n\x17\x43LUSTER_MODIFY_BINDINGS\x10\x64\x12\x18\n\x14\x43LUSTER_GET_BINDINGS\x10\x65\x12\x19\n\x15\x43LUSTER_AUTH_ACTIVATE\x10\x66\x12\x1b\n\x17\x43LUSTER_AUTH_DEACTIVATE\x10g\x12\x1b\n\x17\x43LUSTER_AUTH_GET_CONFIG\x10h\x12\x1b\n\x17\x43LUSTER_AUTH_SET_CONFIG\x10i\x12!\n\x1c\x43LUSTER_AUTH_GET_ROBOT_TOKEN\x10\x8b\x01\x12%\n!CLUSTER_AUTH_MODIFY_GROUP_MEMBERS\x10m\x12\x1b\n\x17\x43LUSTER_AUTH_GET_GROUPS\x10n\x12 \n\x1c\x43LUSTER_AUTH_GET_GROUP_USERS\x10o\x12\x1f\n\x1b\x43LUSTER_AUTH_EXTRACT_TOKENS\x10p\x12\x1e\n\x1a\x43LUSTER_AUTH_RESTORE_TOKEN\x10q\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_ACTIVATE\x10r\x12 \n\x1c\x43LUSTER_ENTERPRISE_HEARTBEAT\x10s\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_GET_CODE\x10t\x12!\n\x1d\x43LUSTER_ENTERPRISE_DEACTIVATE\x10u\x12\x1f\n\x1b\x43LUSTER_IDENTITY_SET_CONFIG\x10v\x12\x1f\n\x1b\x43LUSTER_IDENTITY_GET_CONFIG\x10w\x12\x1f\n\x1b\x43LUSTER_IDENTITY_CREATE_IDP\x10x\x12\x1f\n\x1b\x43LUSTER_IDENTITY_UPDATE_IDP\x10y\x12\x1e\n\x1a\x43LUSTER_IDENTITY_LIST_IDPS\x10z\x12\x1c\n\x18\x43LUSTER_IDENTITY_GET_IDP\x10{\x12\x1f\n\x1b\x43LUSTER_IDENTITY_DELETE_IDP\x10|\x12\'\n#CLUSTER_IDENTITY_CREATE_OIDC_CLIENT\x10}\x12\'\n#CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT\x10~\x12&\n\"CLUSTER_IDENTITY_LIST_OIDC_CLIENTS\x10\x7f\x12%\n CLUSTER_IDENTITY_GET_OIDC_CLIENT\x10\x80\x01\x12(\n#CLUSTER_IDENTITY_DELETE_OIDC_CLIENT\x10\x81\x01\x12\x17\n\x12\x43LUSTER_DEBUG_DUMP\x10\x83\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_ACTIVATE\x10\x84\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_GET_CODE\x10\x85\x01\x12 \n\x1b\x43LUSTER_LICENSE_ADD_CLUSTER\x10\x86\x01\x12#\n\x1e\x43LUSTER_LICENSE_UPDATE_CLUSTER\x10\x87\x01\x12#\n\x1e\x43LUSTER_LICENSE_DELETE_CLUSTER\x10\x88\x01\x12\"\n\x1d\x43LUSTER_LICENSE_LIST_CLUSTERS\x10\x89\x01\x12\x17\n\x12\x43LUSTER_DELETE_ALL\x10\x8a\x01\x12\x0e\n\tREPO_READ\x10\xc8\x01\x12\x0f\n\nREPO_WRITE\x10\xc9\x01\x12\x19\n\x14REPO_MODIFY_BINDINGS\x10\xca\x01\x12\x10\n\x0bREPO_DELETE\x10\xcb\x01\x12\x18\n\x13REPO_INSPECT_COMMIT\x10\xcc\x01\x12\x15\n\x10REPO_LIST_COMMIT\x10\xcd\x01\x12\x17\n\x12REPO_DELETE_COMMIT\x10\xce\x01\x12\x17\n\x12REPO_CREATE_BRANCH\x10\xcf\x01\x12\x15\n\x10REPO_LIST_BRANCH\x10\xd0\x01\x12\x17\n\x12REPO_DELETE_BRANCH\x10\xd1\x01\x12\x16\n\x11REPO_INSPECT_FILE\x10\xd2\x01\x12\x13\n\x0eREPO_LIST_FILE\x10\xd3\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_READER\x10\xd4\x01\x12 \n\x1bREPO_REMOVE_PIPELINE_READER\x10\xd5\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_WRITER\x10\xd6\x01\x12\x16\n\x11PIPELINE_LIST_JOB\x10\xad\x02*@\n\x0cResourceType\x12\x19\n\x15RESOURCE_TYPE_UNKNOWN\x10\x00\x12\x0b\n\x07\x43LUSTER\x10\x01\x12\x08\n\x04REPO\x10\x02\x32\xc8\n\n\x03\x41PI\x12;\n\x08\x41\x63tivate\x12\x15.auth.ActivateRequest\x1a\x16.auth.ActivateResponse\"\x00\x12\x41\n\nDeactivate\x12\x17.auth.DeactivateRequest\x1a\x18.auth.DeactivateResponse\"\x00\x12S\n\x10GetConfiguration\x12\x1d.auth.GetConfigurationRequest\x1a\x1e.auth.GetConfigurationResponse\"\x00\x12S\n\x10SetConfiguration\x12\x1d.auth.SetConfigurationRequest\x1a\x1e.auth.SetConfigurationResponse\"\x00\x12G\n\x0c\x41uthenticate\x12\x19.auth.AuthenticateRequest\x1a\x1a.auth.AuthenticateResponse\"\x00\x12>\n\tAuthorize\x12\x16.auth.AuthorizeRequest\x1a\x17.auth.AuthorizeResponse\"\x00\x12\x35\n\x06WhoAmI\x12\x13.auth.WhoAmIRequest\x1a\x14.auth.WhoAmIResponse\"\x00\x12V\n\x11ModifyRoleBinding\x12\x1e.auth.ModifyRoleBindingRequest\x1a\x1f.auth.ModifyRoleBindingResponse\"\x00\x12M\n\x0eGetRoleBinding\x12\x1b.auth.GetRoleBindingRequest\x1a\x1c.auth.GetRoleBindingResponse\"\x00\x12G\n\x0cGetOIDCLogin\x12\x19.auth.GetOIDCLoginRequest\x1a\x1a.auth.GetOIDCLoginResponse\"\x00\x12J\n\rGetRobotToken\x12\x1a.auth.GetRobotTokenRequest\x1a\x1b.auth.GetRobotTokenResponse\"\x00\x12P\n\x0fRevokeAuthToken\x12\x1c.auth.RevokeAuthTokenRequest\x1a\x1d.auth.RevokeAuthTokenResponse\"\x00\x12S\n\x10SetGroupsForUser\x12\x1d.auth.SetGroupsForUserRequest\x1a\x1e.auth.SetGroupsForUserResponse\"\x00\x12J\n\rModifyMembers\x12\x1a.auth.ModifyMembersRequest\x1a\x1b.auth.ModifyMembersResponse\"\x00\x12>\n\tGetGroups\x12\x16.auth.GetGroupsRequest\x1a\x17.auth.GetGroupsResponse\"\x00\x12;\n\x08GetUsers\x12\x15.auth.GetUsersRequest\x1a\x16.auth.GetUsersResponse\"\x00\x12V\n\x11\x45xtractAuthTokens\x12\x1e.auth.ExtractAuthTokensRequest\x1a\x1f.auth.ExtractAuthTokensResponse\"\x00\x12S\n\x10RestoreAuthToken\x12\x1d.auth.RestoreAuthTokenRequest\x1a\x1e.auth.RestoreAuthTokenResponse\"\x00\x42,Z*github.com/pachyderm/pachyderm/v2/src/authb\x06proto3'
+  serialized_pb=b'\n)python_pachyderm/proto/v2/auth/auth.proto\x12\x07\x61uth_v2\x1a\x1fgoogle/protobuf/timestamp.proto\"%\n\x0f\x41\x63tivateRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\",\n\x16RotateRootTokenRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"-\n\x17RotateRootTokenResponse\x12\x12\n\nroot_token\x18\x01 \x01(\t\"\xa6\x01\n\nOIDCConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x11\n\tclient_id\x18\x02 \x01(\t\x12\x15\n\rclient_secret\x18\x03 \x01(\t\x12\x14\n\x0credirect_uri\x18\x04 \x01(\t\x12\x0e\n\x06scopes\x18\x05 \x03(\t\x12\x1e\n\x16require_email_verified\x18\x06 \x01(\x08\x12\x18\n\x10localhost_issuer\x18\x07 \x01(\x08\"\x19\n\x17GetConfigurationRequest\"F\n\x18GetConfigurationResponse\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"E\n\x17SetConfigurationRequest\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"\x1a\n\x18SetConfigurationResponse\"b\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0chashed_token\x18\x03 \x01(\t\";\n\x13\x41uthenticateRequest\x12\x12\n\noidc_state\x18\x01 \x01(\t\x12\x10\n\x08id_token\x18\x02 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"R\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"_\n\x05Roles\x12(\n\x05roles\x18\x01 \x03(\x0b\x32\x19.auth_v2.Roles.RolesEntry\x1a,\n\nRolesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"\x81\x01\n\x0bRoleBinding\x12\x32\n\x07\x65ntries\x18\x01 \x03(\x0b\x32!.auth_v2.RoleBinding.EntriesEntry\x1a>\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1d\n\x05value\x18\x02 \x01(\x0b\x32\x0e.auth_v2.Roles:\x02\x38\x01\"=\n\x08Resource\x12#\n\x04type\x18\x01 \x01(\x0e\x32\x15.auth_v2.ResourceType\x12\x0c\n\x04name\x18\x02 \x01(\t\"k\n\x05Users\x12\x30\n\tusernames\x18\x01 \x03(\x0b\x32\x1d.auth_v2.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"d\n\x06Groups\x12+\n\x06groups\x18\x01 \x03(\x0b\x32\x1b.auth_v2.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"a\n\x10\x41uthorizeRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12(\n\x0bpermissions\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\"\x88\x01\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\x12&\n\tsatisfied\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\x12$\n\x07missing\x18\x03 \x03(\x0e\x32\x13.auth_v2.Permission\x12\x11\n\tprincipal\x18\x04 \x01(\t\"<\n\x15GetPermissionsRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"[\n!GetPermissionsForPrincipalRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\"Q\n\x16GetPermissionsResponse\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"a\n\x18ModifyRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\x12\r\n\x05roles\x18\x03 \x03(\t\"\x1b\n\x19ModifyRoleBindingResponse\"<\n\x15GetRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"?\n\x16GetRoleBindingResponse\x12%\n\x07\x62inding\x18\x01 \x01(\x0b\x32\x14.auth_v2.RoleBinding\"C\n\x0bSessionInfo\x12\r\n\x05nonce\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x16\n\x0e\x63onversion_err\x18\x03 \x01(\x08\"\x15\n\x13GetOIDCLoginRequest\"8\n\x14GetOIDCLoginResponse\x12\x11\n\tlogin_url\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"2\n\x14GetRobotTokenRequest\x12\r\n\x05robot\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"&\n\x15GetRobotTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x19\n\x17RevokeAuthTokenResponse\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"\x12\n\x10GetGroupsRequest\"1\n\x1cGetGroupsForPrincipalRequest\x12\x11\n\tprincipal\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\"\x1a\n\x18\x45xtractAuthTokensRequest\"?\n\x19\x45xtractAuthTokensResponse\x12\"\n\x06tokens\x18\x01 \x03(\x0b\x32\x12.auth_v2.TokenInfo\"<\n\x17RestoreAuthTokenRequest\x12!\n\x05token\x18\x01 \x01(\x0b\x32\x12.auth_v2.TokenInfo\"\x1a\n\x18RestoreAuthTokenResponse\"2\n\x1eRevokeAuthTokensForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"!\n\x1fRevokeAuthTokensForUserResponse\" \n\x1e\x44\x65leteExpiredAuthTokensRequest\"!\n\x1f\x44\x65leteExpiredAuthTokensResponse*\xcc\x0e\n\nPermission\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x1b\n\x17\x43LUSTER_MODIFY_BINDINGS\x10\x64\x12\x18\n\x14\x43LUSTER_GET_BINDINGS\x10\x65\x12\x19\n\x15\x43LUSTER_AUTH_ACTIVATE\x10\x66\x12\x1b\n\x17\x43LUSTER_AUTH_DEACTIVATE\x10g\x12\x1b\n\x17\x43LUSTER_AUTH_GET_CONFIG\x10h\x12\x1b\n\x17\x43LUSTER_AUTH_SET_CONFIG\x10i\x12!\n\x1c\x43LUSTER_AUTH_GET_ROBOT_TOKEN\x10\x8b\x01\x12%\n!CLUSTER_AUTH_MODIFY_GROUP_MEMBERS\x10m\x12\x1b\n\x17\x43LUSTER_AUTH_GET_GROUPS\x10n\x12 \n\x1c\x43LUSTER_AUTH_GET_GROUP_USERS\x10o\x12\x1f\n\x1b\x43LUSTER_AUTH_EXTRACT_TOKENS\x10p\x12\x1e\n\x1a\x43LUSTER_AUTH_RESTORE_TOKEN\x10q\x12/\n*CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL\x10\x8d\x01\x12\'\n\"CLUSTER_AUTH_DELETE_EXPIRED_TOKENS\x10\x8c\x01\x12$\n\x1f\x43LUSTER_AUTH_REVOKE_USER_TOKENS\x10\x8e\x01\x12#\n\x1e\x43LUSTER_AUTH_ROTATE_ROOT_TOKEN\x10\x93\x01\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_ACTIVATE\x10r\x12 \n\x1c\x43LUSTER_ENTERPRISE_HEARTBEAT\x10s\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_GET_CODE\x10t\x12!\n\x1d\x43LUSTER_ENTERPRISE_DEACTIVATE\x10u\x12\x1f\n\x1b\x43LUSTER_IDENTITY_SET_CONFIG\x10v\x12\x1f\n\x1b\x43LUSTER_IDENTITY_GET_CONFIG\x10w\x12\x1f\n\x1b\x43LUSTER_IDENTITY_CREATE_IDP\x10x\x12\x1f\n\x1b\x43LUSTER_IDENTITY_UPDATE_IDP\x10y\x12\x1e\n\x1a\x43LUSTER_IDENTITY_LIST_IDPS\x10z\x12\x1c\n\x18\x43LUSTER_IDENTITY_GET_IDP\x10{\x12\x1f\n\x1b\x43LUSTER_IDENTITY_DELETE_IDP\x10|\x12\'\n#CLUSTER_IDENTITY_CREATE_OIDC_CLIENT\x10}\x12\'\n#CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT\x10~\x12&\n\"CLUSTER_IDENTITY_LIST_OIDC_CLIENTS\x10\x7f\x12%\n CLUSTER_IDENTITY_GET_OIDC_CLIENT\x10\x80\x01\x12(\n#CLUSTER_IDENTITY_DELETE_OIDC_CLIENT\x10\x81\x01\x12\x17\n\x12\x43LUSTER_DEBUG_DUMP\x10\x83\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_ACTIVATE\x10\x84\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_GET_CODE\x10\x85\x01\x12 \n\x1b\x43LUSTER_LICENSE_ADD_CLUSTER\x10\x86\x01\x12#\n\x1e\x43LUSTER_LICENSE_UPDATE_CLUSTER\x10\x87\x01\x12#\n\x1e\x43LUSTER_LICENSE_DELETE_CLUSTER\x10\x88\x01\x12\"\n\x1d\x43LUSTER_LICENSE_LIST_CLUSTERS\x10\x89\x01\x12\x1a\n\x15\x43LUSTER_CREATE_SECRET\x10\x8f\x01\x12\x19\n\x14\x43LUSTER_LIST_SECRETS\x10\x90\x01\x12\x12\n\rSECRET_DELETE\x10\x91\x01\x12\x13\n\x0eSECRET_INSPECT\x10\x92\x01\x12\x17\n\x12\x43LUSTER_DELETE_ALL\x10\x8a\x01\x12\x0e\n\tREPO_READ\x10\xc8\x01\x12\x0f\n\nREPO_WRITE\x10\xc9\x01\x12\x19\n\x14REPO_MODIFY_BINDINGS\x10\xca\x01\x12\x10\n\x0bREPO_DELETE\x10\xcb\x01\x12\x18\n\x13REPO_INSPECT_COMMIT\x10\xcc\x01\x12\x15\n\x10REPO_LIST_COMMIT\x10\xcd\x01\x12\x17\n\x12REPO_DELETE_COMMIT\x10\xce\x01\x12\x17\n\x12REPO_CREATE_BRANCH\x10\xcf\x01\x12\x15\n\x10REPO_LIST_BRANCH\x10\xd0\x01\x12\x17\n\x12REPO_DELETE_BRANCH\x10\xd1\x01\x12\x16\n\x11REPO_INSPECT_FILE\x10\xd2\x01\x12\x13\n\x0eREPO_LIST_FILE\x10\xd3\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_READER\x10\xd4\x01\x12 \n\x1bREPO_REMOVE_PIPELINE_READER\x10\xd5\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_WRITER\x10\xd6\x01\x12\x16\n\x11PIPELINE_LIST_JOB\x10\xad\x02*@\n\x0cResourceType\x12\x19\n\x15RESOURCE_TYPE_UNKNOWN\x10\x00\x12\x0b\n\x07\x43LUSTER\x10\x01\x12\x08\n\x04REPO\x10\x02\x32\x8c\x10\n\x03\x41PI\x12\x41\n\x08\x41\x63tivate\x12\x18.auth_v2.ActivateRequest\x1a\x19.auth_v2.ActivateResponse\"\x00\x12G\n\nDeactivate\x12\x1a.auth_v2.DeactivateRequest\x1a\x1b.auth_v2.DeactivateResponse\"\x00\x12Y\n\x10GetConfiguration\x12 .auth_v2.GetConfigurationRequest\x1a!.auth_v2.GetConfigurationResponse\"\x00\x12Y\n\x10SetConfiguration\x12 .auth_v2.SetConfigurationRequest\x1a!.auth_v2.SetConfigurationResponse\"\x00\x12M\n\x0c\x41uthenticate\x12\x1c.auth_v2.AuthenticateRequest\x1a\x1d.auth_v2.AuthenticateResponse\"\x00\x12\x44\n\tAuthorize\x12\x19.auth_v2.AuthorizeRequest\x1a\x1a.auth_v2.AuthorizeResponse\"\x00\x12S\n\x0eGetPermissions\x12\x1e.auth_v2.GetPermissionsRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12k\n\x1aGetPermissionsForPrincipal\x12*.auth_v2.GetPermissionsForPrincipalRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12;\n\x06WhoAmI\x12\x16.auth_v2.WhoAmIRequest\x1a\x17.auth_v2.WhoAmIResponse\"\x00\x12\\\n\x11ModifyRoleBinding\x12!.auth_v2.ModifyRoleBindingRequest\x1a\".auth_v2.ModifyRoleBindingResponse\"\x00\x12S\n\x0eGetRoleBinding\x12\x1e.auth_v2.GetRoleBindingRequest\x1a\x1f.auth_v2.GetRoleBindingResponse\"\x00\x12M\n\x0cGetOIDCLogin\x12\x1c.auth_v2.GetOIDCLoginRequest\x1a\x1d.auth_v2.GetOIDCLoginResponse\"\x00\x12P\n\rGetRobotToken\x12\x1d.auth_v2.GetRobotTokenRequest\x1a\x1e.auth_v2.GetRobotTokenResponse\"\x00\x12V\n\x0fRevokeAuthToken\x12\x1f.auth_v2.RevokeAuthTokenRequest\x1a .auth_v2.RevokeAuthTokenResponse\"\x00\x12n\n\x17RevokeAuthTokensForUser\x12\'.auth_v2.RevokeAuthTokensForUserRequest\x1a(.auth_v2.RevokeAuthTokensForUserResponse\"\x00\x12Y\n\x10SetGroupsForUser\x12 .auth_v2.SetGroupsForUserRequest\x1a!.auth_v2.SetGroupsForUserResponse\"\x00\x12P\n\rModifyMembers\x12\x1d.auth_v2.ModifyMembersRequest\x1a\x1e.auth_v2.ModifyMembersResponse\"\x00\x12\x44\n\tGetGroups\x12\x19.auth_v2.GetGroupsRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\\\n\x15GetGroupsForPrincipal\x12%.auth_v2.GetGroupsForPrincipalRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\x41\n\x08GetUsers\x12\x18.auth_v2.GetUsersRequest\x1a\x19.auth_v2.GetUsersResponse\"\x00\x12\\\n\x11\x45xtractAuthTokens\x12!.auth_v2.ExtractAuthTokensRequest\x1a\".auth_v2.ExtractAuthTokensResponse\"\x00\x12Y\n\x10RestoreAuthToken\x12 .auth_v2.RestoreAuthTokenRequest\x1a!.auth_v2.RestoreAuthTokenResponse\"\x00\x12n\n\x17\x44\x65leteExpiredAuthTokens\x12\'.auth_v2.DeleteExpiredAuthTokensRequest\x1a(.auth_v2.DeleteExpiredAuthTokensResponse\"\x00\x12V\n\x0fRotateRootToken\x12\x1f.auth_v2.RotateRootTokenRequest\x1a .auth_v2.RotateRootTokenResponse\"\x00\x42,Z*github.com/pachyderm/pachyderm/v2/src/authb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 _PERMISSION = _descriptor.EnumDescriptor(
   name='Permission',
-  full_name='auth.Permission',
+  full_name='auth_v2.Permission',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -98,217 +98,257 @@ _PERMISSION = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_ACTIVATE', index=13, number=114,
+      name='CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL', index=13, number=141,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_HEARTBEAT', index=14, number=115,
+      name='CLUSTER_AUTH_DELETE_EXPIRED_TOKENS', index=14, number=140,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_GET_CODE', index=15, number=116,
+      name='CLUSTER_AUTH_REVOKE_USER_TOKENS', index=15, number=142,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_DEACTIVATE', index=16, number=117,
+      name='CLUSTER_AUTH_ROTATE_ROOT_TOKEN', index=16, number=147,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_SET_CONFIG', index=17, number=118,
+      name='CLUSTER_ENTERPRISE_ACTIVATE', index=17, number=114,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_CONFIG', index=18, number=119,
+      name='CLUSTER_ENTERPRISE_HEARTBEAT', index=18, number=115,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_CREATE_IDP', index=19, number=120,
+      name='CLUSTER_ENTERPRISE_GET_CODE', index=19, number=116,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_UPDATE_IDP', index=20, number=121,
+      name='CLUSTER_ENTERPRISE_DEACTIVATE', index=20, number=117,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_LIST_IDPS', index=21, number=122,
+      name='CLUSTER_IDENTITY_SET_CONFIG', index=21, number=118,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_IDP', index=22, number=123,
+      name='CLUSTER_IDENTITY_GET_CONFIG', index=22, number=119,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_DELETE_IDP', index=23, number=124,
+      name='CLUSTER_IDENTITY_CREATE_IDP', index=23, number=120,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_CREATE_OIDC_CLIENT', index=24, number=125,
+      name='CLUSTER_IDENTITY_UPDATE_IDP', index=24, number=121,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT', index=25, number=126,
+      name='CLUSTER_IDENTITY_LIST_IDPS', index=25, number=122,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_LIST_OIDC_CLIENTS', index=26, number=127,
+      name='CLUSTER_IDENTITY_GET_IDP', index=26, number=123,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_OIDC_CLIENT', index=27, number=128,
+      name='CLUSTER_IDENTITY_DELETE_IDP', index=27, number=124,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_DELETE_OIDC_CLIENT', index=28, number=129,
+      name='CLUSTER_IDENTITY_CREATE_OIDC_CLIENT', index=28, number=125,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_DEBUG_DUMP', index=29, number=131,
+      name='CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT', index=29, number=126,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_ACTIVATE', index=30, number=132,
+      name='CLUSTER_IDENTITY_LIST_OIDC_CLIENTS', index=30, number=127,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_GET_CODE', index=31, number=133,
+      name='CLUSTER_IDENTITY_GET_OIDC_CLIENT', index=31, number=128,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_ADD_CLUSTER', index=32, number=134,
+      name='CLUSTER_IDENTITY_DELETE_OIDC_CLIENT', index=32, number=129,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_UPDATE_CLUSTER', index=33, number=135,
+      name='CLUSTER_DEBUG_DUMP', index=33, number=131,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_DELETE_CLUSTER', index=34, number=136,
+      name='CLUSTER_LICENSE_ACTIVATE', index=34, number=132,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_LIST_CLUSTERS', index=35, number=137,
+      name='CLUSTER_LICENSE_GET_CODE', index=35, number=133,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_DELETE_ALL', index=36, number=138,
+      name='CLUSTER_LICENSE_ADD_CLUSTER', index=36, number=134,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_READ', index=37, number=200,
+      name='CLUSTER_LICENSE_UPDATE_CLUSTER', index=37, number=135,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_WRITE', index=38, number=201,
+      name='CLUSTER_LICENSE_DELETE_CLUSTER', index=38, number=136,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_MODIFY_BINDINGS', index=39, number=202,
+      name='CLUSTER_LICENSE_LIST_CLUSTERS', index=39, number=137,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE', index=40, number=203,
+      name='CLUSTER_CREATE_SECRET', index=40, number=143,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_INSPECT_COMMIT', index=41, number=204,
+      name='CLUSTER_LIST_SECRETS', index=41, number=144,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_COMMIT', index=42, number=205,
+      name='SECRET_DELETE', index=42, number=145,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE_COMMIT', index=43, number=206,
+      name='SECRET_INSPECT', index=43, number=146,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_CREATE_BRANCH', index=44, number=207,
+      name='CLUSTER_DELETE_ALL', index=44, number=138,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_BRANCH', index=45, number=208,
+      name='REPO_READ', index=45, number=200,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE_BRANCH', index=46, number=209,
+      name='REPO_WRITE', index=46, number=201,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_INSPECT_FILE', index=47, number=210,
+      name='REPO_MODIFY_BINDINGS', index=47, number=202,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_FILE', index=48, number=211,
+      name='REPO_DELETE', index=48, number=203,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_ADD_PIPELINE_READER', index=49, number=212,
+      name='REPO_INSPECT_COMMIT', index=49, number=204,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_REMOVE_PIPELINE_READER', index=50, number=213,
+      name='REPO_LIST_COMMIT', index=50, number=205,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_ADD_PIPELINE_WRITER', index=51, number=214,
+      name='REPO_DELETE_COMMIT', index=51, number=206,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PIPELINE_LIST_JOB', index=52, number=301,
+      name='REPO_CREATE_BRANCH', index=52, number=207,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_LIST_BRANCH', index=53, number=208,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_DELETE_BRANCH', index=54, number=209,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_INSPECT_FILE', index=55, number=210,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_LIST_FILE', index=56, number=211,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_ADD_PIPELINE_READER', index=57, number=212,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_REMOVE_PIPELINE_READER', index=58, number=213,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='REPO_ADD_PIPELINE_WRITER', index=59, number=214,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PIPELINE_LIST_JOB', index=60, number=301,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2722,
-  serialized_end=4329,
+  serialized_start=3222,
+  serialized_end=5090,
 )
 _sym_db.RegisterEnumDescriptor(_PERMISSION)
 
 Permission = enum_type_wrapper.EnumTypeWrapper(_PERMISSION)
 _RESOURCETYPE = _descriptor.EnumDescriptor(
   name='ResourceType',
-  full_name='auth.ResourceType',
+  full_name='auth_v2.ResourceType',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -331,8 +371,8 @@ _RESOURCETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4331,
-  serialized_end=4395,
+  serialized_start=5092,
+  serialized_end=5156,
 )
 _sym_db.RegisterEnumDescriptor(_RESOURCETYPE)
 
@@ -350,6 +390,10 @@ CLUSTER_AUTH_GET_GROUPS = 110
 CLUSTER_AUTH_GET_GROUP_USERS = 111
 CLUSTER_AUTH_EXTRACT_TOKENS = 112
 CLUSTER_AUTH_RESTORE_TOKEN = 113
+CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL = 141
+CLUSTER_AUTH_DELETE_EXPIRED_TOKENS = 140
+CLUSTER_AUTH_REVOKE_USER_TOKENS = 142
+CLUSTER_AUTH_ROTATE_ROOT_TOKEN = 147
 CLUSTER_ENTERPRISE_ACTIVATE = 114
 CLUSTER_ENTERPRISE_HEARTBEAT = 115
 CLUSTER_ENTERPRISE_GET_CODE = 116
@@ -373,6 +417,10 @@ CLUSTER_LICENSE_ADD_CLUSTER = 134
 CLUSTER_LICENSE_UPDATE_CLUSTER = 135
 CLUSTER_LICENSE_DELETE_CLUSTER = 136
 CLUSTER_LICENSE_LIST_CLUSTERS = 137
+CLUSTER_CREATE_SECRET = 143
+CLUSTER_LIST_SECRETS = 144
+SECRET_DELETE = 145
+SECRET_INSPECT = 146
 CLUSTER_DELETE_ALL = 138
 REPO_READ = 200
 REPO_WRITE = 201
@@ -398,15 +446,15 @@ REPO = 2
 
 _ACTIVATEREQUEST = _descriptor.Descriptor(
   name='ActivateRequest',
-  full_name='auth.ActivateRequest',
+  full_name='auth_v2.ActivateRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='root_token', full_name='auth.ActivateRequest.root_token', index=0,
-      number=3, type=9, cpp_type=9, label=1,
+      name='root_token', full_name='auth_v2.ActivateRequest.root_token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -423,21 +471,21 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=84,
-  serialized_end=133,
+  serialized_start=87,
+  serialized_end=124,
 )
 
 
 _ACTIVATERESPONSE = _descriptor.Descriptor(
   name='ActivateResponse',
-  full_name='auth.ActivateResponse',
+  full_name='auth_v2.ActivateResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pach_token', full_name='auth.ActivateResponse.pach_token', index=0,
+      name='pach_token', full_name='auth_v2.ActivateResponse.pach_token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -455,14 +503,14 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=135,
-  serialized_end=173,
+  serialized_start=126,
+  serialized_end=164,
 )
 
 
 _DEACTIVATEREQUEST = _descriptor.Descriptor(
   name='DeactivateRequest',
-  full_name='auth.DeactivateRequest',
+  full_name='auth_v2.DeactivateRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -480,14 +528,14 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=175,
-  serialized_end=194,
+  serialized_start=166,
+  serialized_end=185,
 )
 
 
 _DEACTIVATERESPONSE = _descriptor.Descriptor(
   name='DeactivateResponse',
-  full_name='auth.DeactivateResponse',
+  full_name='auth_v2.DeactivateResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -505,63 +553,127 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=196,
-  serialized_end=216,
+  serialized_start=187,
+  serialized_end=207,
 )
 
 
-_OIDCCONFIG = _descriptor.Descriptor(
-  name='OIDCConfig',
-  full_name='auth.OIDCConfig',
+_ROTATEROOTTOKENREQUEST = _descriptor.Descriptor(
+  name='RotateRootTokenRequest',
+  full_name='auth_v2.RotateRootTokenRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='issuer', full_name='auth.OIDCConfig.issuer', index=0,
+      name='root_token', full_name='auth_v2.RotateRootTokenRequest.root_token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=209,
+  serialized_end=253,
+)
+
+
+_ROTATEROOTTOKENRESPONSE = _descriptor.Descriptor(
+  name='RotateRootTokenResponse',
+  full_name='auth_v2.RotateRootTokenResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='root_token', full_name='auth_v2.RotateRootTokenResponse.root_token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=255,
+  serialized_end=300,
+)
+
+
+_OIDCCONFIG = _descriptor.Descriptor(
+  name='OIDCConfig',
+  full_name='auth_v2.OIDCConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='issuer', full_name='auth_v2.OIDCConfig.issuer', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='client_id', full_name='auth.OIDCConfig.client_id', index=1,
+      name='client_id', full_name='auth_v2.OIDCConfig.client_id', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='client_secret', full_name='auth.OIDCConfig.client_secret', index=2,
+      name='client_secret', full_name='auth_v2.OIDCConfig.client_secret', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='redirect_uri', full_name='auth.OIDCConfig.redirect_uri', index=3,
+      name='redirect_uri', full_name='auth_v2.OIDCConfig.redirect_uri', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='scopes', full_name='auth.OIDCConfig.scopes', index=4,
+      name='scopes', full_name='auth_v2.OIDCConfig.scopes', index=4,
       number=5, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='require_email_verified', full_name='auth.OIDCConfig.require_email_verified', index=5,
+      name='require_email_verified', full_name='auth_v2.OIDCConfig.require_email_verified', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='localhost_issuer', full_name='auth.OIDCConfig.localhost_issuer', index=6,
+      name='localhost_issuer', full_name='auth_v2.OIDCConfig.localhost_issuer', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -579,14 +691,14 @@ _OIDCCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=219,
-  serialized_end=385,
+  serialized_start=303,
+  serialized_end=469,
 )
 
 
 _GETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   name='GetConfigurationRequest',
-  full_name='auth.GetConfigurationRequest',
+  full_name='auth_v2.GetConfigurationRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -604,21 +716,21 @@ _GETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=387,
-  serialized_end=412,
+  serialized_start=471,
+  serialized_end=496,
 )
 
 
 _GETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   name='GetConfigurationResponse',
-  full_name='auth.GetConfigurationResponse',
+  full_name='auth_v2.GetConfigurationResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='configuration', full_name='auth.GetConfigurationResponse.configuration', index=0,
+      name='configuration', full_name='auth_v2.GetConfigurationResponse.configuration', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -636,21 +748,21 @@ _GETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=414,
-  serialized_end=481,
+  serialized_start=498,
+  serialized_end=568,
 )
 
 
 _SETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   name='SetConfigurationRequest',
-  full_name='auth.SetConfigurationRequest',
+  full_name='auth_v2.SetConfigurationRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='configuration', full_name='auth.SetConfigurationRequest.configuration', index=0,
+      name='configuration', full_name='auth_v2.SetConfigurationRequest.configuration', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -668,14 +780,14 @@ _SETCONFIGURATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=483,
-  serialized_end=549,
+  serialized_start=570,
+  serialized_end=639,
 )
 
 
 _SETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   name='SetConfigurationResponse',
-  full_name='auth.SetConfigurationResponse',
+  full_name='auth_v2.SetConfigurationResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -693,61 +805,75 @@ _SETCONFIGURATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=551,
-  serialized_end=577,
+  serialized_start=641,
+  serialized_end=667,
 )
 
 
 _TOKENINFO = _descriptor.Descriptor(
   name='TokenInfo',
-  full_name='auth.TokenInfo',
+  full_name='auth_v2.TokenInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='subject', full_name='auth.TokenInfo.subject', index=0,
+      name='subject', full_name='auth_v2.TokenInfo.subject', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=579,
-  serialized_end=607,
-)
-
-
-_AUTHENTICATEREQUEST = _descriptor.Descriptor(
-  name='AuthenticateRequest',
-  full_name='auth.AuthenticateRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
     _descriptor.FieldDescriptor(
-      name='oidc_state', full_name='auth.AuthenticateRequest.oidc_state', index=0,
+      name='expiration', full_name='auth_v2.TokenInfo.expiration', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='hashed_token', full_name='auth_v2.TokenInfo.hashed_token', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=669,
+  serialized_end=767,
+)
+
+
+_AUTHENTICATEREQUEST = _descriptor.Descriptor(
+  name='AuthenticateRequest',
+  full_name='auth_v2.AuthenticateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='id_token', full_name='auth.AuthenticateRequest.id_token', index=1,
-      number=4, type=9, cpp_type=9, label=1,
+      name='oidc_state', full_name='auth_v2.AuthenticateRequest.oidc_state', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='id_token', full_name='auth_v2.AuthenticateRequest.id_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -764,21 +890,21 @@ _AUTHENTICATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=609,
-  serialized_end=680,
+  serialized_start=769,
+  serialized_end=828,
 )
 
 
 _AUTHENTICATERESPONSE = _descriptor.Descriptor(
   name='AuthenticateResponse',
-  full_name='auth.AuthenticateResponse',
+  full_name='auth_v2.AuthenticateResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pach_token', full_name='auth.AuthenticateResponse.pach_token', index=0,
+      name='pach_token', full_name='auth_v2.AuthenticateResponse.pach_token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -796,14 +922,14 @@ _AUTHENTICATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=682,
-  serialized_end=724,
+  serialized_start=830,
+  serialized_end=872,
 )
 
 
 _WHOAMIREQUEST = _descriptor.Descriptor(
   name='WhoAmIRequest',
-  full_name='auth.WhoAmIRequest',
+  full_name='auth_v2.WhoAmIRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -821,30 +947,30 @@ _WHOAMIREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=726,
-  serialized_end=741,
+  serialized_start=874,
+  serialized_end=889,
 )
 
 
 _WHOAMIRESPONSE = _descriptor.Descriptor(
   name='WhoAmIResponse',
-  full_name='auth.WhoAmIResponse',
+  full_name='auth_v2.WhoAmIResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='username', full_name='auth.WhoAmIResponse.username', index=0,
+      name='username', full_name='auth_v2.WhoAmIResponse.username', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ttl', full_name='auth.WhoAmIResponse.ttl', index=1,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='expiration', full_name='auth_v2.WhoAmIResponse.expiration', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -860,28 +986,28 @@ _WHOAMIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=743,
-  serialized_end=802,
+  serialized_start=891,
+  serialized_end=973,
 )
 
 
 _ROLES_ROLESENTRY = _descriptor.Descriptor(
   name='RolesEntry',
-  full_name='auth.Roles.RolesEntry',
+  full_name='auth_v2.Roles.RolesEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='auth.Roles.RolesEntry.key', index=0,
+      name='key', full_name='auth_v2.Roles.RolesEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='auth.Roles.RolesEntry.value', index=1,
+      name='value', full_name='auth_v2.Roles.RolesEntry.value', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -899,20 +1025,20 @@ _ROLES_ROLESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=852,
-  serialized_end=896,
+  serialized_start=1026,
+  serialized_end=1070,
 )
 
 _ROLES = _descriptor.Descriptor(
   name='Roles',
-  full_name='auth.Roles',
+  full_name='auth_v2.Roles',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='roles', full_name='auth.Roles.roles', index=0,
+      name='roles', full_name='auth_v2.Roles.roles', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -930,28 +1056,28 @@ _ROLES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=804,
-  serialized_end=896,
+  serialized_start=975,
+  serialized_end=1070,
 )
 
 
 _ROLEBINDING_ENTRIESENTRY = _descriptor.Descriptor(
   name='EntriesEntry',
-  full_name='auth.RoleBinding.EntriesEntry',
+  full_name='auth_v2.RoleBinding.EntriesEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='auth.RoleBinding.EntriesEntry.key', index=0,
+      name='key', full_name='auth_v2.RoleBinding.EntriesEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='auth.RoleBinding.EntriesEntry.value', index=1,
+      name='value', full_name='auth_v2.RoleBinding.EntriesEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -969,20 +1095,20 @@ _ROLEBINDING_ENTRIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=962,
-  serialized_end=1021,
+  serialized_start=1140,
+  serialized_end=1202,
 )
 
 _ROLEBINDING = _descriptor.Descriptor(
   name='RoleBinding',
-  full_name='auth.RoleBinding',
+  full_name='auth_v2.RoleBinding',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='entries', full_name='auth.RoleBinding.entries', index=0,
+      name='entries', full_name='auth_v2.RoleBinding.entries', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1000,28 +1126,28 @@ _ROLEBINDING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=898,
-  serialized_end=1021,
+  serialized_start=1073,
+  serialized_end=1202,
 )
 
 
 _RESOURCE = _descriptor.Descriptor(
   name='Resource',
-  full_name='auth.Resource',
+  full_name='auth_v2.Resource',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='auth.Resource.type', index=0,
+      name='type', full_name='auth_v2.Resource.type', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='name', full_name='auth.Resource.name', index=1,
+      name='name', full_name='auth_v2.Resource.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1039,28 +1165,28 @@ _RESOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1023,
-  serialized_end=1081,
+  serialized_start=1204,
+  serialized_end=1265,
 )
 
 
 _USERS_USERNAMESENTRY = _descriptor.Descriptor(
   name='UsernamesEntry',
-  full_name='auth.Users.UsernamesEntry',
+  full_name='auth_v2.Users.UsernamesEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='auth.Users.UsernamesEntry.key', index=0,
+      name='key', full_name='auth_v2.Users.UsernamesEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='auth.Users.UsernamesEntry.value', index=1,
+      name='value', full_name='auth_v2.Users.UsernamesEntry.value', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -1078,20 +1204,20 @@ _USERS_USERNAMESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1139,
-  serialized_end=1187,
+  serialized_start=1326,
+  serialized_end=1374,
 )
 
 _USERS = _descriptor.Descriptor(
   name='Users',
-  full_name='auth.Users',
+  full_name='auth_v2.Users',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='usernames', full_name='auth.Users.usernames', index=0,
+      name='usernames', full_name='auth_v2.Users.usernames', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1109,28 +1235,28 @@ _USERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1083,
-  serialized_end=1187,
+  serialized_start=1267,
+  serialized_end=1374,
 )
 
 
 _GROUPS_GROUPSENTRY = _descriptor.Descriptor(
   name='GroupsEntry',
-  full_name='auth.Groups.GroupsEntry',
+  full_name='auth_v2.Groups.GroupsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='auth.Groups.GroupsEntry.key', index=0,
+      name='key', full_name='auth_v2.Groups.GroupsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='auth.Groups.GroupsEntry.value', index=1,
+      name='value', full_name='auth_v2.Groups.GroupsEntry.value', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -1148,20 +1274,20 @@ _GROUPS_GROUPSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1241,
-  serialized_end=1286,
+  serialized_start=1431,
+  serialized_end=1476,
 )
 
 _GROUPS = _descriptor.Descriptor(
   name='Groups',
-  full_name='auth.Groups',
+  full_name='auth_v2.Groups',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='groups', full_name='auth.Groups.groups', index=0,
+      name='groups', full_name='auth_v2.Groups.groups', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1179,29 +1305,29 @@ _GROUPS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1189,
-  serialized_end=1286,
+  serialized_start=1376,
+  serialized_end=1476,
 )
 
 
 _AUTHORIZEREQUEST = _descriptor.Descriptor(
   name='AuthorizeRequest',
-  full_name='auth.AuthorizeRequest',
+  full_name='auth_v2.AuthorizeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='resource', full_name='auth.AuthorizeRequest.resource', index=0,
+      name='resource', full_name='auth_v2.AuthorizeRequest.resource', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='permissions', full_name='auth.AuthorizeRequest.permissions', index=1,
-      number=3, type=14, cpp_type=8, label=3,
+      name='permissions', full_name='auth_v2.AuthorizeRequest.permissions', index=1,
+      number=2, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1218,42 +1344,42 @@ _AUTHORIZEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1288,
-  serialized_end=1385,
+  serialized_start=1478,
+  serialized_end=1575,
 )
 
 
 _AUTHORIZERESPONSE = _descriptor.Descriptor(
   name='AuthorizeResponse',
-  full_name='auth.AuthorizeResponse',
+  full_name='auth_v2.AuthorizeResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='authorized', full_name='auth.AuthorizeResponse.authorized', index=0,
+      name='authorized', full_name='auth_v2.AuthorizeResponse.authorized', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='satisfied', full_name='auth.AuthorizeResponse.satisfied', index=1,
+      name='satisfied', full_name='auth_v2.AuthorizeResponse.satisfied', index=1,
       number=2, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='missing', full_name='auth.AuthorizeResponse.missing', index=2,
+      name='missing', full_name='auth_v2.AuthorizeResponse.missing', index=2,
       number=3, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='principal', full_name='auth.AuthorizeResponse.principal', index=3,
+      name='principal', full_name='auth_v2.AuthorizeResponse.principal', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1271,35 +1397,145 @@ _AUTHORIZERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1388,
-  serialized_end=1518,
+  serialized_start=1578,
+  serialized_end=1714,
 )
 
 
-_MODIFYROLEBINDINGREQUEST = _descriptor.Descriptor(
-  name='ModifyRoleBindingRequest',
-  full_name='auth.ModifyRoleBindingRequest',
+_GETPERMISSIONSREQUEST = _descriptor.Descriptor(
+  name='GetPermissionsRequest',
+  full_name='auth_v2.GetPermissionsRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='resource', full_name='auth.ModifyRoleBindingRequest.resource', index=0,
+      name='resource', full_name='auth_v2.GetPermissionsRequest.resource', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1716,
+  serialized_end=1776,
+)
+
+
+_GETPERMISSIONSFORPRINCIPALREQUEST = _descriptor.Descriptor(
+  name='GetPermissionsForPrincipalRequest',
+  full_name='auth_v2.GetPermissionsForPrincipalRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='resource', full_name='auth_v2.GetPermissionsForPrincipalRequest.resource', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='principal', full_name='auth.ModifyRoleBindingRequest.principal', index=1,
+      name='principal', full_name='auth_v2.GetPermissionsForPrincipalRequest.principal', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1778,
+  serialized_end=1869,
+)
+
+
+_GETPERMISSIONSRESPONSE = _descriptor.Descriptor(
+  name='GetPermissionsResponse',
+  full_name='auth_v2.GetPermissionsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='permissions', full_name='auth_v2.GetPermissionsResponse.permissions', index=0,
+      number=1, type=14, cpp_type=8, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='roles', full_name='auth_v2.GetPermissionsResponse.roles', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1871,
+  serialized_end=1952,
+)
+
+
+_MODIFYROLEBINDINGREQUEST = _descriptor.Descriptor(
+  name='ModifyRoleBindingRequest',
+  full_name='auth_v2.ModifyRoleBindingRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='resource', full_name='auth_v2.ModifyRoleBindingRequest.resource', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='principal', full_name='auth_v2.ModifyRoleBindingRequest.principal', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='roles', full_name='auth.ModifyRoleBindingRequest.roles', index=2,
+      name='roles', full_name='auth_v2.ModifyRoleBindingRequest.roles', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1317,14 +1553,14 @@ _MODIFYROLEBINDINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1520,
-  serialized_end=1614,
+  serialized_start=1954,
+  serialized_end=2051,
 )
 
 
 _MODIFYROLEBINDINGRESPONSE = _descriptor.Descriptor(
   name='ModifyRoleBindingResponse',
-  full_name='auth.ModifyRoleBindingResponse',
+  full_name='auth_v2.ModifyRoleBindingResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1342,21 +1578,21 @@ _MODIFYROLEBINDINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1616,
-  serialized_end=1643,
+  serialized_start=2053,
+  serialized_end=2080,
 )
 
 
 _GETROLEBINDINGREQUEST = _descriptor.Descriptor(
   name='GetRoleBindingRequest',
-  full_name='auth.GetRoleBindingRequest',
+  full_name='auth_v2.GetRoleBindingRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='resource', full_name='auth.GetRoleBindingRequest.resource', index=0,
+      name='resource', full_name='auth_v2.GetRoleBindingRequest.resource', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1374,21 +1610,21 @@ _GETROLEBINDINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1645,
-  serialized_end=1702,
+  serialized_start=2082,
+  serialized_end=2142,
 )
 
 
 _GETROLEBINDINGRESPONSE = _descriptor.Descriptor(
   name='GetRoleBindingResponse',
-  full_name='auth.GetRoleBindingResponse',
+  full_name='auth_v2.GetRoleBindingResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='binding', full_name='auth.GetRoleBindingResponse.binding', index=0,
+      name='binding', full_name='auth_v2.GetRoleBindingResponse.binding', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1406,35 +1642,35 @@ _GETROLEBINDINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1704,
-  serialized_end=1764,
+  serialized_start=2144,
+  serialized_end=2207,
 )
 
 
 _SESSIONINFO = _descriptor.Descriptor(
   name='SessionInfo',
-  full_name='auth.SessionInfo',
+  full_name='auth_v2.SessionInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='nonce', full_name='auth.SessionInfo.nonce', index=0,
+      name='nonce', full_name='auth_v2.SessionInfo.nonce', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='email', full_name='auth.SessionInfo.email', index=1,
+      name='email', full_name='auth_v2.SessionInfo.email', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='conversion_err', full_name='auth.SessionInfo.conversion_err', index=2,
+      name='conversion_err', full_name='auth_v2.SessionInfo.conversion_err', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -1452,14 +1688,14 @@ _SESSIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1766,
-  serialized_end=1833,
+  serialized_start=2209,
+  serialized_end=2276,
 )
 
 
 _GETOIDCLOGINREQUEST = _descriptor.Descriptor(
   name='GetOIDCLoginRequest',
-  full_name='auth.GetOIDCLoginRequest',
+  full_name='auth_v2.GetOIDCLoginRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1477,28 +1713,28 @@ _GETOIDCLOGINREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1835,
-  serialized_end=1856,
+  serialized_start=2278,
+  serialized_end=2299,
 )
 
 
 _GETOIDCLOGINRESPONSE = _descriptor.Descriptor(
   name='GetOIDCLoginResponse',
-  full_name='auth.GetOIDCLoginResponse',
+  full_name='auth_v2.GetOIDCLoginResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='login_url', full_name='auth.GetOIDCLoginResponse.login_url', index=0,
+      name='login_url', full_name='auth_v2.GetOIDCLoginResponse.login_url', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='state', full_name='auth.GetOIDCLoginResponse.state', index=1,
+      name='state', full_name='auth_v2.GetOIDCLoginResponse.state', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1516,28 +1752,28 @@ _GETOIDCLOGINRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1858,
-  serialized_end=1914,
+  serialized_start=2301,
+  serialized_end=2357,
 )
 
 
 _GETROBOTTOKENREQUEST = _descriptor.Descriptor(
   name='GetRobotTokenRequest',
-  full_name='auth.GetRobotTokenRequest',
+  full_name='auth_v2.GetRobotTokenRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='robot', full_name='auth.GetRobotTokenRequest.robot', index=0,
+      name='robot', full_name='auth_v2.GetRobotTokenRequest.robot', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ttl', full_name='auth.GetRobotTokenRequest.ttl', index=1,
+      name='ttl', full_name='auth_v2.GetRobotTokenRequest.ttl', index=1,
       number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1555,21 +1791,21 @@ _GETROBOTTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1916,
-  serialized_end=1966,
+  serialized_start=2359,
+  serialized_end=2409,
 )
 
 
 _GETROBOTTOKENRESPONSE = _descriptor.Descriptor(
   name='GetRobotTokenResponse',
-  full_name='auth.GetRobotTokenResponse',
+  full_name='auth_v2.GetRobotTokenResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='token', full_name='auth.GetRobotTokenResponse.token', index=0,
+      name='token', full_name='auth_v2.GetRobotTokenResponse.token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1587,21 +1823,21 @@ _GETROBOTTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1968,
-  serialized_end=2006,
+  serialized_start=2411,
+  serialized_end=2449,
 )
 
 
 _REVOKEAUTHTOKENREQUEST = _descriptor.Descriptor(
   name='RevokeAuthTokenRequest',
-  full_name='auth.RevokeAuthTokenRequest',
+  full_name='auth_v2.RevokeAuthTokenRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='token', full_name='auth.RevokeAuthTokenRequest.token', index=0,
+      name='token', full_name='auth_v2.RevokeAuthTokenRequest.token', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1619,14 +1855,14 @@ _REVOKEAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2008,
-  serialized_end=2047,
+  serialized_start=2451,
+  serialized_end=2490,
 )
 
 
 _REVOKEAUTHTOKENRESPONSE = _descriptor.Descriptor(
   name='RevokeAuthTokenResponse',
-  full_name='auth.RevokeAuthTokenResponse',
+  full_name='auth_v2.RevokeAuthTokenResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1644,28 +1880,28 @@ _REVOKEAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2049,
-  serialized_end=2074,
+  serialized_start=2492,
+  serialized_end=2517,
 )
 
 
 _SETGROUPSFORUSERREQUEST = _descriptor.Descriptor(
   name='SetGroupsForUserRequest',
-  full_name='auth.SetGroupsForUserRequest',
+  full_name='auth_v2.SetGroupsForUserRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='username', full_name='auth.SetGroupsForUserRequest.username', index=0,
+      name='username', full_name='auth_v2.SetGroupsForUserRequest.username', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='groups', full_name='auth.SetGroupsForUserRequest.groups', index=1,
+      name='groups', full_name='auth_v2.SetGroupsForUserRequest.groups', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1683,14 +1919,14 @@ _SETGROUPSFORUSERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2076,
-  serialized_end=2135,
+  serialized_start=2519,
+  serialized_end=2578,
 )
 
 
 _SETGROUPSFORUSERRESPONSE = _descriptor.Descriptor(
   name='SetGroupsForUserResponse',
-  full_name='auth.SetGroupsForUserResponse',
+  full_name='auth_v2.SetGroupsForUserResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1708,35 +1944,35 @@ _SETGROUPSFORUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2137,
-  serialized_end=2163,
+  serialized_start=2580,
+  serialized_end=2606,
 )
 
 
 _MODIFYMEMBERSREQUEST = _descriptor.Descriptor(
   name='ModifyMembersRequest',
-  full_name='auth.ModifyMembersRequest',
+  full_name='auth_v2.ModifyMembersRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='group', full_name='auth.ModifyMembersRequest.group', index=0,
+      name='group', full_name='auth_v2.ModifyMembersRequest.group', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='add', full_name='auth.ModifyMembersRequest.add', index=1,
+      name='add', full_name='auth_v2.ModifyMembersRequest.add', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='remove', full_name='auth.ModifyMembersRequest.remove', index=2,
+      name='remove', full_name='auth_v2.ModifyMembersRequest.remove', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1754,14 +1990,14 @@ _MODIFYMEMBERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2165,
-  serialized_end=2231,
+  serialized_start=2608,
+  serialized_end=2674,
 )
 
 
 _MODIFYMEMBERSRESPONSE = _descriptor.Descriptor(
   name='ModifyMembersResponse',
-  full_name='auth.ModifyMembersResponse',
+  full_name='auth_v2.ModifyMembersResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1779,21 +2015,46 @@ _MODIFYMEMBERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2233,
-  serialized_end=2256,
+  serialized_start=2676,
+  serialized_end=2699,
 )
 
 
 _GETGROUPSREQUEST = _descriptor.Descriptor(
   name='GetGroupsRequest',
-  full_name='auth.GetGroupsRequest',
+  full_name='auth_v2.GetGroupsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2701,
+  serialized_end=2719,
+)
+
+
+_GETGROUPSFORPRINCIPALREQUEST = _descriptor.Descriptor(
+  name='GetGroupsForPrincipalRequest',
+  full_name='auth_v2.GetGroupsForPrincipalRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='username', full_name='auth.GetGroupsRequest.username', index=0,
+      name='principal', full_name='auth_v2.GetGroupsForPrincipalRequest.principal', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1811,21 +2072,21 @@ _GETGROUPSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2258,
-  serialized_end=2294,
+  serialized_start=2721,
+  serialized_end=2770,
 )
 
 
 _GETGROUPSRESPONSE = _descriptor.Descriptor(
   name='GetGroupsResponse',
-  full_name='auth.GetGroupsResponse',
+  full_name='auth_v2.GetGroupsResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='groups', full_name='auth.GetGroupsResponse.groups', index=0,
+      name='groups', full_name='auth_v2.GetGroupsResponse.groups', index=0,
       number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1843,21 +2104,21 @@ _GETGROUPSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2296,
-  serialized_end=2331,
+  serialized_start=2772,
+  serialized_end=2807,
 )
 
 
 _GETUSERSREQUEST = _descriptor.Descriptor(
   name='GetUsersRequest',
-  full_name='auth.GetUsersRequest',
+  full_name='auth_v2.GetUsersRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='group', full_name='auth.GetUsersRequest.group', index=0,
+      name='group', full_name='auth_v2.GetUsersRequest.group', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1875,21 +2136,21 @@ _GETUSERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2333,
-  serialized_end=2365,
+  serialized_start=2809,
+  serialized_end=2841,
 )
 
 
 _GETUSERSRESPONSE = _descriptor.Descriptor(
   name='GetUsersResponse',
-  full_name='auth.GetUsersResponse',
+  full_name='auth_v2.GetUsersResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='usernames', full_name='auth.GetUsersResponse.usernames', index=0,
+      name='usernames', full_name='auth_v2.GetUsersResponse.usernames', index=0,
       number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1907,60 +2168,14 @@ _GETUSERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2367,
-  serialized_end=2404,
-)
-
-
-_HASHEDAUTHTOKEN = _descriptor.Descriptor(
-  name='HashedAuthToken',
-  full_name='auth.HashedAuthToken',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='hashed_token', full_name='auth.HashedAuthToken.hashed_token', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='token_info', full_name='auth.HashedAuthToken.token_info', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='expiration', full_name='auth.HashedAuthToken.expiration', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2406,
-  serialized_end=2530,
+  serialized_start=2843,
+  serialized_end=2880,
 )
 
 
 _EXTRACTAUTHTOKENSREQUEST = _descriptor.Descriptor(
   name='ExtractAuthTokensRequest',
-  full_name='auth.ExtractAuthTokensRequest',
+  full_name='auth_v2.ExtractAuthTokensRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1978,21 +2193,21 @@ _EXTRACTAUTHTOKENSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2532,
-  serialized_end=2558,
+  serialized_start=2882,
+  serialized_end=2908,
 )
 
 
 _EXTRACTAUTHTOKENSRESPONSE = _descriptor.Descriptor(
   name='ExtractAuthTokensResponse',
-  full_name='auth.ExtractAuthTokensResponse',
+  full_name='auth_v2.ExtractAuthTokensResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tokens', full_name='auth.ExtractAuthTokensResponse.tokens', index=0,
+      name='tokens', full_name='auth_v2.ExtractAuthTokensResponse.tokens', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -2010,21 +2225,21 @@ _EXTRACTAUTHTOKENSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2560,
-  serialized_end=2626,
+  serialized_start=2910,
+  serialized_end=2973,
 )
 
 
 _RESTOREAUTHTOKENREQUEST = _descriptor.Descriptor(
   name='RestoreAuthTokenRequest',
-  full_name='auth.RestoreAuthTokenRequest',
+  full_name='auth_v2.RestoreAuthTokenRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='token', full_name='auth.RestoreAuthTokenRequest.token', index=0,
+      name='token', full_name='auth_v2.RestoreAuthTokenRequest.token', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2042,14 +2257,14 @@ _RESTOREAUTHTOKENREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2628,
-  serialized_end=2691,
+  serialized_start=2975,
+  serialized_end=3035,
 )
 
 
 _RESTOREAUTHTOKENRESPONSE = _descriptor.Descriptor(
   name='RestoreAuthTokenResponse',
-  full_name='auth.RestoreAuthTokenResponse',
+  full_name='auth_v2.RestoreAuthTokenResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -2067,12 +2282,121 @@ _RESTOREAUTHTOKENRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2693,
-  serialized_end=2719,
+  serialized_start=3037,
+  serialized_end=3063,
+)
+
+
+_REVOKEAUTHTOKENSFORUSERREQUEST = _descriptor.Descriptor(
+  name='RevokeAuthTokensForUserRequest',
+  full_name='auth_v2.RevokeAuthTokensForUserRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='username', full_name='auth_v2.RevokeAuthTokensForUserRequest.username', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3065,
+  serialized_end=3115,
+)
+
+
+_REVOKEAUTHTOKENSFORUSERRESPONSE = _descriptor.Descriptor(
+  name='RevokeAuthTokensForUserResponse',
+  full_name='auth_v2.RevokeAuthTokensForUserResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3117,
+  serialized_end=3150,
+)
+
+
+_DELETEEXPIREDAUTHTOKENSREQUEST = _descriptor.Descriptor(
+  name='DeleteExpiredAuthTokensRequest',
+  full_name='auth_v2.DeleteExpiredAuthTokensRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3152,
+  serialized_end=3184,
+)
+
+
+_DELETEEXPIREDAUTHTOKENSRESPONSE = _descriptor.Descriptor(
+  name='DeleteExpiredAuthTokensResponse',
+  full_name='auth_v2.DeleteExpiredAuthTokensResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3186,
+  serialized_end=3219,
 )
 
 _GETCONFIGURATIONRESPONSE.fields_by_name['configuration'].message_type = _OIDCCONFIG
 _SETCONFIGURATIONREQUEST.fields_by_name['configuration'].message_type = _OIDCCONFIG
+_TOKENINFO.fields_by_name['expiration'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_WHOAMIRESPONSE.fields_by_name['expiration'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ROLES_ROLESENTRY.containing_type = _ROLES
 _ROLES.fields_by_name['roles'].message_type = _ROLES_ROLESENTRY
 _ROLEBINDING_ENTRIESENTRY.fields_by_name['value'].message_type = _ROLES
@@ -2087,17 +2411,20 @@ _AUTHORIZEREQUEST.fields_by_name['resource'].message_type = _RESOURCE
 _AUTHORIZEREQUEST.fields_by_name['permissions'].enum_type = _PERMISSION
 _AUTHORIZERESPONSE.fields_by_name['satisfied'].enum_type = _PERMISSION
 _AUTHORIZERESPONSE.fields_by_name['missing'].enum_type = _PERMISSION
+_GETPERMISSIONSREQUEST.fields_by_name['resource'].message_type = _RESOURCE
+_GETPERMISSIONSFORPRINCIPALREQUEST.fields_by_name['resource'].message_type = _RESOURCE
+_GETPERMISSIONSRESPONSE.fields_by_name['permissions'].enum_type = _PERMISSION
 _MODIFYROLEBINDINGREQUEST.fields_by_name['resource'].message_type = _RESOURCE
 _GETROLEBINDINGREQUEST.fields_by_name['resource'].message_type = _RESOURCE
 _GETROLEBINDINGRESPONSE.fields_by_name['binding'].message_type = _ROLEBINDING
-_HASHEDAUTHTOKEN.fields_by_name['token_info'].message_type = _TOKENINFO
-_HASHEDAUTHTOKEN.fields_by_name['expiration'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_EXTRACTAUTHTOKENSRESPONSE.fields_by_name['tokens'].message_type = _HASHEDAUTHTOKEN
-_RESTOREAUTHTOKENREQUEST.fields_by_name['token'].message_type = _HASHEDAUTHTOKEN
+_EXTRACTAUTHTOKENSRESPONSE.fields_by_name['tokens'].message_type = _TOKENINFO
+_RESTOREAUTHTOKENREQUEST.fields_by_name['token'].message_type = _TOKENINFO
 DESCRIPTOR.message_types_by_name['ActivateRequest'] = _ACTIVATEREQUEST
 DESCRIPTOR.message_types_by_name['ActivateResponse'] = _ACTIVATERESPONSE
 DESCRIPTOR.message_types_by_name['DeactivateRequest'] = _DEACTIVATEREQUEST
 DESCRIPTOR.message_types_by_name['DeactivateResponse'] = _DEACTIVATERESPONSE
+DESCRIPTOR.message_types_by_name['RotateRootTokenRequest'] = _ROTATEROOTTOKENREQUEST
+DESCRIPTOR.message_types_by_name['RotateRootTokenResponse'] = _ROTATEROOTTOKENRESPONSE
 DESCRIPTOR.message_types_by_name['OIDCConfig'] = _OIDCCONFIG
 DESCRIPTOR.message_types_by_name['GetConfigurationRequest'] = _GETCONFIGURATIONREQUEST
 DESCRIPTOR.message_types_by_name['GetConfigurationResponse'] = _GETCONFIGURATIONRESPONSE
@@ -2115,6 +2442,9 @@ DESCRIPTOR.message_types_by_name['Users'] = _USERS
 DESCRIPTOR.message_types_by_name['Groups'] = _GROUPS
 DESCRIPTOR.message_types_by_name['AuthorizeRequest'] = _AUTHORIZEREQUEST
 DESCRIPTOR.message_types_by_name['AuthorizeResponse'] = _AUTHORIZERESPONSE
+DESCRIPTOR.message_types_by_name['GetPermissionsRequest'] = _GETPERMISSIONSREQUEST
+DESCRIPTOR.message_types_by_name['GetPermissionsForPrincipalRequest'] = _GETPERMISSIONSFORPRINCIPALREQUEST
+DESCRIPTOR.message_types_by_name['GetPermissionsResponse'] = _GETPERMISSIONSRESPONSE
 DESCRIPTOR.message_types_by_name['ModifyRoleBindingRequest'] = _MODIFYROLEBINDINGREQUEST
 DESCRIPTOR.message_types_by_name['ModifyRoleBindingResponse'] = _MODIFYROLEBINDINGRESPONSE
 DESCRIPTOR.message_types_by_name['GetRoleBindingRequest'] = _GETROLEBINDINGREQUEST
@@ -2131,14 +2461,18 @@ DESCRIPTOR.message_types_by_name['SetGroupsForUserResponse'] = _SETGROUPSFORUSER
 DESCRIPTOR.message_types_by_name['ModifyMembersRequest'] = _MODIFYMEMBERSREQUEST
 DESCRIPTOR.message_types_by_name['ModifyMembersResponse'] = _MODIFYMEMBERSRESPONSE
 DESCRIPTOR.message_types_by_name['GetGroupsRequest'] = _GETGROUPSREQUEST
+DESCRIPTOR.message_types_by_name['GetGroupsForPrincipalRequest'] = _GETGROUPSFORPRINCIPALREQUEST
 DESCRIPTOR.message_types_by_name['GetGroupsResponse'] = _GETGROUPSRESPONSE
 DESCRIPTOR.message_types_by_name['GetUsersRequest'] = _GETUSERSREQUEST
 DESCRIPTOR.message_types_by_name['GetUsersResponse'] = _GETUSERSRESPONSE
-DESCRIPTOR.message_types_by_name['HashedAuthToken'] = _HASHEDAUTHTOKEN
 DESCRIPTOR.message_types_by_name['ExtractAuthTokensRequest'] = _EXTRACTAUTHTOKENSREQUEST
 DESCRIPTOR.message_types_by_name['ExtractAuthTokensResponse'] = _EXTRACTAUTHTOKENSRESPONSE
 DESCRIPTOR.message_types_by_name['RestoreAuthTokenRequest'] = _RESTOREAUTHTOKENREQUEST
 DESCRIPTOR.message_types_by_name['RestoreAuthTokenResponse'] = _RESTOREAUTHTOKENRESPONSE
+DESCRIPTOR.message_types_by_name['RevokeAuthTokensForUserRequest'] = _REVOKEAUTHTOKENSFORUSERREQUEST
+DESCRIPTOR.message_types_by_name['RevokeAuthTokensForUserResponse'] = _REVOKEAUTHTOKENSFORUSERRESPONSE
+DESCRIPTOR.message_types_by_name['DeleteExpiredAuthTokensRequest'] = _DELETEEXPIREDAUTHTOKENSREQUEST
+DESCRIPTOR.message_types_by_name['DeleteExpiredAuthTokensResponse'] = _DELETEEXPIREDAUTHTOKENSRESPONSE
 DESCRIPTOR.enum_types_by_name['Permission'] = _PERMISSION
 DESCRIPTOR.enum_types_by_name['ResourceType'] = _RESOURCETYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -2146,98 +2480,112 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 ActivateRequest = _reflection.GeneratedProtocolMessageType('ActivateRequest', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ActivateRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.ActivateRequest)
   })
 _sym_db.RegisterMessage(ActivateRequest)
 
 ActivateResponse = _reflection.GeneratedProtocolMessageType('ActivateResponse', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ActivateResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.ActivateResponse)
   })
 _sym_db.RegisterMessage(ActivateResponse)
 
 DeactivateRequest = _reflection.GeneratedProtocolMessageType('DeactivateRequest', (_message.Message,), {
   'DESCRIPTOR' : _DEACTIVATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.DeactivateRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.DeactivateRequest)
   })
 _sym_db.RegisterMessage(DeactivateRequest)
 
 DeactivateResponse = _reflection.GeneratedProtocolMessageType('DeactivateResponse', (_message.Message,), {
   'DESCRIPTOR' : _DEACTIVATERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.DeactivateResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.DeactivateResponse)
   })
 _sym_db.RegisterMessage(DeactivateResponse)
+
+RotateRootTokenRequest = _reflection.GeneratedProtocolMessageType('RotateRootTokenRequest', (_message.Message,), {
+  'DESCRIPTOR' : _ROTATEROOTTOKENREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.RotateRootTokenRequest)
+  })
+_sym_db.RegisterMessage(RotateRootTokenRequest)
+
+RotateRootTokenResponse = _reflection.GeneratedProtocolMessageType('RotateRootTokenResponse', (_message.Message,), {
+  'DESCRIPTOR' : _ROTATEROOTTOKENRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.RotateRootTokenResponse)
+  })
+_sym_db.RegisterMessage(RotateRootTokenResponse)
 
 OIDCConfig = _reflection.GeneratedProtocolMessageType('OIDCConfig', (_message.Message,), {
   'DESCRIPTOR' : _OIDCCONFIG,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.OIDCConfig)
+  # @@protoc_insertion_point(class_scope:auth_v2.OIDCConfig)
   })
 _sym_db.RegisterMessage(OIDCConfig)
 
 GetConfigurationRequest = _reflection.GeneratedProtocolMessageType('GetConfigurationRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETCONFIGURATIONREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetConfigurationRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetConfigurationRequest)
   })
 _sym_db.RegisterMessage(GetConfigurationRequest)
 
 GetConfigurationResponse = _reflection.GeneratedProtocolMessageType('GetConfigurationResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETCONFIGURATIONRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetConfigurationResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetConfigurationResponse)
   })
 _sym_db.RegisterMessage(GetConfigurationResponse)
 
 SetConfigurationRequest = _reflection.GeneratedProtocolMessageType('SetConfigurationRequest', (_message.Message,), {
   'DESCRIPTOR' : _SETCONFIGURATIONREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.SetConfigurationRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.SetConfigurationRequest)
   })
 _sym_db.RegisterMessage(SetConfigurationRequest)
 
 SetConfigurationResponse = _reflection.GeneratedProtocolMessageType('SetConfigurationResponse', (_message.Message,), {
   'DESCRIPTOR' : _SETCONFIGURATIONRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.SetConfigurationResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.SetConfigurationResponse)
   })
 _sym_db.RegisterMessage(SetConfigurationResponse)
 
 TokenInfo = _reflection.GeneratedProtocolMessageType('TokenInfo', (_message.Message,), {
   'DESCRIPTOR' : _TOKENINFO,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.TokenInfo)
+  # @@protoc_insertion_point(class_scope:auth_v2.TokenInfo)
   })
 _sym_db.RegisterMessage(TokenInfo)
 
 AuthenticateRequest = _reflection.GeneratedProtocolMessageType('AuthenticateRequest', (_message.Message,), {
   'DESCRIPTOR' : _AUTHENTICATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.AuthenticateRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.AuthenticateRequest)
   })
 _sym_db.RegisterMessage(AuthenticateRequest)
 
 AuthenticateResponse = _reflection.GeneratedProtocolMessageType('AuthenticateResponse', (_message.Message,), {
   'DESCRIPTOR' : _AUTHENTICATERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.AuthenticateResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.AuthenticateResponse)
   })
 _sym_db.RegisterMessage(AuthenticateResponse)
 
 WhoAmIRequest = _reflection.GeneratedProtocolMessageType('WhoAmIRequest', (_message.Message,), {
   'DESCRIPTOR' : _WHOAMIREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.WhoAmIRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.WhoAmIRequest)
   })
 _sym_db.RegisterMessage(WhoAmIRequest)
 
 WhoAmIResponse = _reflection.GeneratedProtocolMessageType('WhoAmIResponse', (_message.Message,), {
   'DESCRIPTOR' : _WHOAMIRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.WhoAmIResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.WhoAmIResponse)
   })
 _sym_db.RegisterMessage(WhoAmIResponse)
 
@@ -2246,12 +2594,12 @@ Roles = _reflection.GeneratedProtocolMessageType('Roles', (_message.Message,), {
   'RolesEntry' : _reflection.GeneratedProtocolMessageType('RolesEntry', (_message.Message,), {
     'DESCRIPTOR' : _ROLES_ROLESENTRY,
     '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-    # @@protoc_insertion_point(class_scope:auth.Roles.RolesEntry)
+    # @@protoc_insertion_point(class_scope:auth_v2.Roles.RolesEntry)
     })
   ,
   'DESCRIPTOR' : _ROLES,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.Roles)
+  # @@protoc_insertion_point(class_scope:auth_v2.Roles)
   })
 _sym_db.RegisterMessage(Roles)
 _sym_db.RegisterMessage(Roles.RolesEntry)
@@ -2261,12 +2609,12 @@ RoleBinding = _reflection.GeneratedProtocolMessageType('RoleBinding', (_message.
   'EntriesEntry' : _reflection.GeneratedProtocolMessageType('EntriesEntry', (_message.Message,), {
     'DESCRIPTOR' : _ROLEBINDING_ENTRIESENTRY,
     '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-    # @@protoc_insertion_point(class_scope:auth.RoleBinding.EntriesEntry)
+    # @@protoc_insertion_point(class_scope:auth_v2.RoleBinding.EntriesEntry)
     })
   ,
   'DESCRIPTOR' : _ROLEBINDING,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RoleBinding)
+  # @@protoc_insertion_point(class_scope:auth_v2.RoleBinding)
   })
 _sym_db.RegisterMessage(RoleBinding)
 _sym_db.RegisterMessage(RoleBinding.EntriesEntry)
@@ -2274,7 +2622,7 @@ _sym_db.RegisterMessage(RoleBinding.EntriesEntry)
 Resource = _reflection.GeneratedProtocolMessageType('Resource', (_message.Message,), {
   'DESCRIPTOR' : _RESOURCE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.Resource)
+  # @@protoc_insertion_point(class_scope:auth_v2.Resource)
   })
 _sym_db.RegisterMessage(Resource)
 
@@ -2283,12 +2631,12 @@ Users = _reflection.GeneratedProtocolMessageType('Users', (_message.Message,), {
   'UsernamesEntry' : _reflection.GeneratedProtocolMessageType('UsernamesEntry', (_message.Message,), {
     'DESCRIPTOR' : _USERS_USERNAMESENTRY,
     '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-    # @@protoc_insertion_point(class_scope:auth.Users.UsernamesEntry)
+    # @@protoc_insertion_point(class_scope:auth_v2.Users.UsernamesEntry)
     })
   ,
   'DESCRIPTOR' : _USERS,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.Users)
+  # @@protoc_insertion_point(class_scope:auth_v2.Users)
   })
 _sym_db.RegisterMessage(Users)
 _sym_db.RegisterMessage(Users.UsernamesEntry)
@@ -2298,12 +2646,12 @@ Groups = _reflection.GeneratedProtocolMessageType('Groups', (_message.Message,),
   'GroupsEntry' : _reflection.GeneratedProtocolMessageType('GroupsEntry', (_message.Message,), {
     'DESCRIPTOR' : _GROUPS_GROUPSENTRY,
     '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-    # @@protoc_insertion_point(class_scope:auth.Groups.GroupsEntry)
+    # @@protoc_insertion_point(class_scope:auth_v2.Groups.GroupsEntry)
     })
   ,
   'DESCRIPTOR' : _GROUPS,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.Groups)
+  # @@protoc_insertion_point(class_scope:auth_v2.Groups)
   })
 _sym_db.RegisterMessage(Groups)
 _sym_db.RegisterMessage(Groups.GroupsEntry)
@@ -2311,184 +2659,233 @@ _sym_db.RegisterMessage(Groups.GroupsEntry)
 AuthorizeRequest = _reflection.GeneratedProtocolMessageType('AuthorizeRequest', (_message.Message,), {
   'DESCRIPTOR' : _AUTHORIZEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.AuthorizeRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.AuthorizeRequest)
   })
 _sym_db.RegisterMessage(AuthorizeRequest)
 
 AuthorizeResponse = _reflection.GeneratedProtocolMessageType('AuthorizeResponse', (_message.Message,), {
   'DESCRIPTOR' : _AUTHORIZERESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.AuthorizeResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.AuthorizeResponse)
   })
 _sym_db.RegisterMessage(AuthorizeResponse)
+
+GetPermissionsRequest = _reflection.GeneratedProtocolMessageType('GetPermissionsRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETPERMISSIONSREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.GetPermissionsRequest)
+  })
+_sym_db.RegisterMessage(GetPermissionsRequest)
+
+GetPermissionsForPrincipalRequest = _reflection.GeneratedProtocolMessageType('GetPermissionsForPrincipalRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETPERMISSIONSFORPRINCIPALREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.GetPermissionsForPrincipalRequest)
+  })
+_sym_db.RegisterMessage(GetPermissionsForPrincipalRequest)
+
+GetPermissionsResponse = _reflection.GeneratedProtocolMessageType('GetPermissionsResponse', (_message.Message,), {
+  'DESCRIPTOR' : _GETPERMISSIONSRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.GetPermissionsResponse)
+  })
+_sym_db.RegisterMessage(GetPermissionsResponse)
 
 ModifyRoleBindingRequest = _reflection.GeneratedProtocolMessageType('ModifyRoleBindingRequest', (_message.Message,), {
   'DESCRIPTOR' : _MODIFYROLEBINDINGREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ModifyRoleBindingRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.ModifyRoleBindingRequest)
   })
 _sym_db.RegisterMessage(ModifyRoleBindingRequest)
 
 ModifyRoleBindingResponse = _reflection.GeneratedProtocolMessageType('ModifyRoleBindingResponse', (_message.Message,), {
   'DESCRIPTOR' : _MODIFYROLEBINDINGRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ModifyRoleBindingResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.ModifyRoleBindingResponse)
   })
 _sym_db.RegisterMessage(ModifyRoleBindingResponse)
 
 GetRoleBindingRequest = _reflection.GeneratedProtocolMessageType('GetRoleBindingRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETROLEBINDINGREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetRoleBindingRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetRoleBindingRequest)
   })
 _sym_db.RegisterMessage(GetRoleBindingRequest)
 
 GetRoleBindingResponse = _reflection.GeneratedProtocolMessageType('GetRoleBindingResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETROLEBINDINGRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetRoleBindingResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetRoleBindingResponse)
   })
 _sym_db.RegisterMessage(GetRoleBindingResponse)
 
 SessionInfo = _reflection.GeneratedProtocolMessageType('SessionInfo', (_message.Message,), {
   'DESCRIPTOR' : _SESSIONINFO,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.SessionInfo)
+  # @@protoc_insertion_point(class_scope:auth_v2.SessionInfo)
   })
 _sym_db.RegisterMessage(SessionInfo)
 
 GetOIDCLoginRequest = _reflection.GeneratedProtocolMessageType('GetOIDCLoginRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETOIDCLOGINREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetOIDCLoginRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetOIDCLoginRequest)
   })
 _sym_db.RegisterMessage(GetOIDCLoginRequest)
 
 GetOIDCLoginResponse = _reflection.GeneratedProtocolMessageType('GetOIDCLoginResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETOIDCLOGINRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetOIDCLoginResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetOIDCLoginResponse)
   })
 _sym_db.RegisterMessage(GetOIDCLoginResponse)
 
 GetRobotTokenRequest = _reflection.GeneratedProtocolMessageType('GetRobotTokenRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETROBOTTOKENREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetRobotTokenRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetRobotTokenRequest)
   })
 _sym_db.RegisterMessage(GetRobotTokenRequest)
 
 GetRobotTokenResponse = _reflection.GeneratedProtocolMessageType('GetRobotTokenResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETROBOTTOKENRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetRobotTokenResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetRobotTokenResponse)
   })
 _sym_db.RegisterMessage(GetRobotTokenResponse)
 
 RevokeAuthTokenRequest = _reflection.GeneratedProtocolMessageType('RevokeAuthTokenRequest', (_message.Message,), {
   'DESCRIPTOR' : _REVOKEAUTHTOKENREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RevokeAuthTokenRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.RevokeAuthTokenRequest)
   })
 _sym_db.RegisterMessage(RevokeAuthTokenRequest)
 
 RevokeAuthTokenResponse = _reflection.GeneratedProtocolMessageType('RevokeAuthTokenResponse', (_message.Message,), {
   'DESCRIPTOR' : _REVOKEAUTHTOKENRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RevokeAuthTokenResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.RevokeAuthTokenResponse)
   })
 _sym_db.RegisterMessage(RevokeAuthTokenResponse)
 
 SetGroupsForUserRequest = _reflection.GeneratedProtocolMessageType('SetGroupsForUserRequest', (_message.Message,), {
   'DESCRIPTOR' : _SETGROUPSFORUSERREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.SetGroupsForUserRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.SetGroupsForUserRequest)
   })
 _sym_db.RegisterMessage(SetGroupsForUserRequest)
 
 SetGroupsForUserResponse = _reflection.GeneratedProtocolMessageType('SetGroupsForUserResponse', (_message.Message,), {
   'DESCRIPTOR' : _SETGROUPSFORUSERRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.SetGroupsForUserResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.SetGroupsForUserResponse)
   })
 _sym_db.RegisterMessage(SetGroupsForUserResponse)
 
 ModifyMembersRequest = _reflection.GeneratedProtocolMessageType('ModifyMembersRequest', (_message.Message,), {
   'DESCRIPTOR' : _MODIFYMEMBERSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ModifyMembersRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.ModifyMembersRequest)
   })
 _sym_db.RegisterMessage(ModifyMembersRequest)
 
 ModifyMembersResponse = _reflection.GeneratedProtocolMessageType('ModifyMembersResponse', (_message.Message,), {
   'DESCRIPTOR' : _MODIFYMEMBERSRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ModifyMembersResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.ModifyMembersResponse)
   })
 _sym_db.RegisterMessage(ModifyMembersResponse)
 
 GetGroupsRequest = _reflection.GeneratedProtocolMessageType('GetGroupsRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETGROUPSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetGroupsRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetGroupsRequest)
   })
 _sym_db.RegisterMessage(GetGroupsRequest)
+
+GetGroupsForPrincipalRequest = _reflection.GeneratedProtocolMessageType('GetGroupsForPrincipalRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETGROUPSFORPRINCIPALREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.GetGroupsForPrincipalRequest)
+  })
+_sym_db.RegisterMessage(GetGroupsForPrincipalRequest)
 
 GetGroupsResponse = _reflection.GeneratedProtocolMessageType('GetGroupsResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETGROUPSRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetGroupsResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetGroupsResponse)
   })
 _sym_db.RegisterMessage(GetGroupsResponse)
 
 GetUsersRequest = _reflection.GeneratedProtocolMessageType('GetUsersRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETUSERSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetUsersRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetUsersRequest)
   })
 _sym_db.RegisterMessage(GetUsersRequest)
 
 GetUsersResponse = _reflection.GeneratedProtocolMessageType('GetUsersResponse', (_message.Message,), {
   'DESCRIPTOR' : _GETUSERSRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.GetUsersResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.GetUsersResponse)
   })
 _sym_db.RegisterMessage(GetUsersResponse)
-
-HashedAuthToken = _reflection.GeneratedProtocolMessageType('HashedAuthToken', (_message.Message,), {
-  'DESCRIPTOR' : _HASHEDAUTHTOKEN,
-  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.HashedAuthToken)
-  })
-_sym_db.RegisterMessage(HashedAuthToken)
 
 ExtractAuthTokensRequest = _reflection.GeneratedProtocolMessageType('ExtractAuthTokensRequest', (_message.Message,), {
   'DESCRIPTOR' : _EXTRACTAUTHTOKENSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ExtractAuthTokensRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.ExtractAuthTokensRequest)
   })
 _sym_db.RegisterMessage(ExtractAuthTokensRequest)
 
 ExtractAuthTokensResponse = _reflection.GeneratedProtocolMessageType('ExtractAuthTokensResponse', (_message.Message,), {
   'DESCRIPTOR' : _EXTRACTAUTHTOKENSRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.ExtractAuthTokensResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.ExtractAuthTokensResponse)
   })
 _sym_db.RegisterMessage(ExtractAuthTokensResponse)
 
 RestoreAuthTokenRequest = _reflection.GeneratedProtocolMessageType('RestoreAuthTokenRequest', (_message.Message,), {
   'DESCRIPTOR' : _RESTOREAUTHTOKENREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RestoreAuthTokenRequest)
+  # @@protoc_insertion_point(class_scope:auth_v2.RestoreAuthTokenRequest)
   })
 _sym_db.RegisterMessage(RestoreAuthTokenRequest)
 
 RestoreAuthTokenResponse = _reflection.GeneratedProtocolMessageType('RestoreAuthTokenResponse', (_message.Message,), {
   'DESCRIPTOR' : _RESTOREAUTHTOKENRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
-  # @@protoc_insertion_point(class_scope:auth.RestoreAuthTokenResponse)
+  # @@protoc_insertion_point(class_scope:auth_v2.RestoreAuthTokenResponse)
   })
 _sym_db.RegisterMessage(RestoreAuthTokenResponse)
+
+RevokeAuthTokensForUserRequest = _reflection.GeneratedProtocolMessageType('RevokeAuthTokensForUserRequest', (_message.Message,), {
+  'DESCRIPTOR' : _REVOKEAUTHTOKENSFORUSERREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.RevokeAuthTokensForUserRequest)
+  })
+_sym_db.RegisterMessage(RevokeAuthTokensForUserRequest)
+
+RevokeAuthTokensForUserResponse = _reflection.GeneratedProtocolMessageType('RevokeAuthTokensForUserResponse', (_message.Message,), {
+  'DESCRIPTOR' : _REVOKEAUTHTOKENSFORUSERRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.RevokeAuthTokensForUserResponse)
+  })
+_sym_db.RegisterMessage(RevokeAuthTokensForUserResponse)
+
+DeleteExpiredAuthTokensRequest = _reflection.GeneratedProtocolMessageType('DeleteExpiredAuthTokensRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DELETEEXPIREDAUTHTOKENSREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.DeleteExpiredAuthTokensRequest)
+  })
+_sym_db.RegisterMessage(DeleteExpiredAuthTokensRequest)
+
+DeleteExpiredAuthTokensResponse = _reflection.GeneratedProtocolMessageType('DeleteExpiredAuthTokensResponse', (_message.Message,), {
+  'DESCRIPTOR' : _DELETEEXPIREDAUTHTOKENSRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.auth.auth_pb2'
+  # @@protoc_insertion_point(class_scope:auth_v2.DeleteExpiredAuthTokensResponse)
+  })
+_sym_db.RegisterMessage(DeleteExpiredAuthTokensResponse)
 
 
 DESCRIPTOR._options = None
@@ -2499,17 +2896,17 @@ _GROUPS_GROUPSENTRY._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
-  full_name='auth.API',
+  full_name='auth_v2.API',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=4398,
-  serialized_end=5750,
+  serialized_start=5159,
+  serialized_end=7219,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',
-    full_name='auth.API.Activate',
+    full_name='auth_v2.API.Activate',
     index=0,
     containing_service=None,
     input_type=_ACTIVATEREQUEST,
@@ -2519,7 +2916,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Deactivate',
-    full_name='auth.API.Deactivate',
+    full_name='auth_v2.API.Deactivate',
     index=1,
     containing_service=None,
     input_type=_DEACTIVATEREQUEST,
@@ -2529,7 +2926,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetConfiguration',
-    full_name='auth.API.GetConfiguration',
+    full_name='auth_v2.API.GetConfiguration',
     index=2,
     containing_service=None,
     input_type=_GETCONFIGURATIONREQUEST,
@@ -2539,7 +2936,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='SetConfiguration',
-    full_name='auth.API.SetConfiguration',
+    full_name='auth_v2.API.SetConfiguration',
     index=3,
     containing_service=None,
     input_type=_SETCONFIGURATIONREQUEST,
@@ -2549,7 +2946,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Authenticate',
-    full_name='auth.API.Authenticate',
+    full_name='auth_v2.API.Authenticate',
     index=4,
     containing_service=None,
     input_type=_AUTHENTICATEREQUEST,
@@ -2559,7 +2956,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Authorize',
-    full_name='auth.API.Authorize',
+    full_name='auth_v2.API.Authorize',
     index=5,
     containing_service=None,
     input_type=_AUTHORIZEREQUEST,
@@ -2568,9 +2965,29 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='WhoAmI',
-    full_name='auth.API.WhoAmI',
+    name='GetPermissions',
+    full_name='auth_v2.API.GetPermissions',
     index=6,
+    containing_service=None,
+    input_type=_GETPERMISSIONSREQUEST,
+    output_type=_GETPERMISSIONSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetPermissionsForPrincipal',
+    full_name='auth_v2.API.GetPermissionsForPrincipal',
+    index=7,
+    containing_service=None,
+    input_type=_GETPERMISSIONSFORPRINCIPALREQUEST,
+    output_type=_GETPERMISSIONSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='WhoAmI',
+    full_name='auth_v2.API.WhoAmI',
+    index=8,
     containing_service=None,
     input_type=_WHOAMIREQUEST,
     output_type=_WHOAMIRESPONSE,
@@ -2579,8 +2996,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ModifyRoleBinding',
-    full_name='auth.API.ModifyRoleBinding',
-    index=7,
+    full_name='auth_v2.API.ModifyRoleBinding',
+    index=9,
     containing_service=None,
     input_type=_MODIFYROLEBINDINGREQUEST,
     output_type=_MODIFYROLEBINDINGRESPONSE,
@@ -2589,8 +3006,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetRoleBinding',
-    full_name='auth.API.GetRoleBinding',
-    index=8,
+    full_name='auth_v2.API.GetRoleBinding',
+    index=10,
     containing_service=None,
     input_type=_GETROLEBINDINGREQUEST,
     output_type=_GETROLEBINDINGRESPONSE,
@@ -2599,8 +3016,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetOIDCLogin',
-    full_name='auth.API.GetOIDCLogin',
-    index=9,
+    full_name='auth_v2.API.GetOIDCLogin',
+    index=11,
     containing_service=None,
     input_type=_GETOIDCLOGINREQUEST,
     output_type=_GETOIDCLOGINRESPONSE,
@@ -2609,8 +3026,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetRobotToken',
-    full_name='auth.API.GetRobotToken',
-    index=10,
+    full_name='auth_v2.API.GetRobotToken',
+    index=12,
     containing_service=None,
     input_type=_GETROBOTTOKENREQUEST,
     output_type=_GETROBOTTOKENRESPONSE,
@@ -2619,8 +3036,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='RevokeAuthToken',
-    full_name='auth.API.RevokeAuthToken',
-    index=11,
+    full_name='auth_v2.API.RevokeAuthToken',
+    index=13,
     containing_service=None,
     input_type=_REVOKEAUTHTOKENREQUEST,
     output_type=_REVOKEAUTHTOKENRESPONSE,
@@ -2628,9 +3045,19 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='RevokeAuthTokensForUser',
+    full_name='auth_v2.API.RevokeAuthTokensForUser',
+    index=14,
+    containing_service=None,
+    input_type=_REVOKEAUTHTOKENSFORUSERREQUEST,
+    output_type=_REVOKEAUTHTOKENSFORUSERRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='SetGroupsForUser',
-    full_name='auth.API.SetGroupsForUser',
-    index=12,
+    full_name='auth_v2.API.SetGroupsForUser',
+    index=15,
     containing_service=None,
     input_type=_SETGROUPSFORUSERREQUEST,
     output_type=_SETGROUPSFORUSERRESPONSE,
@@ -2639,8 +3066,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ModifyMembers',
-    full_name='auth.API.ModifyMembers',
-    index=13,
+    full_name='auth_v2.API.ModifyMembers',
+    index=16,
     containing_service=None,
     input_type=_MODIFYMEMBERSREQUEST,
     output_type=_MODIFYMEMBERSRESPONSE,
@@ -2649,8 +3076,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetGroups',
-    full_name='auth.API.GetGroups',
-    index=14,
+    full_name='auth_v2.API.GetGroups',
+    index=17,
     containing_service=None,
     input_type=_GETGROUPSREQUEST,
     output_type=_GETGROUPSRESPONSE,
@@ -2658,9 +3085,19 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='GetGroupsForPrincipal',
+    full_name='auth_v2.API.GetGroupsForPrincipal',
+    index=18,
+    containing_service=None,
+    input_type=_GETGROUPSFORPRINCIPALREQUEST,
+    output_type=_GETGROUPSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='GetUsers',
-    full_name='auth.API.GetUsers',
-    index=15,
+    full_name='auth_v2.API.GetUsers',
+    index=19,
     containing_service=None,
     input_type=_GETUSERSREQUEST,
     output_type=_GETUSERSRESPONSE,
@@ -2669,8 +3106,8 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ExtractAuthTokens',
-    full_name='auth.API.ExtractAuthTokens',
-    index=16,
+    full_name='auth_v2.API.ExtractAuthTokens',
+    index=20,
     containing_service=None,
     input_type=_EXTRACTAUTHTOKENSREQUEST,
     output_type=_EXTRACTAUTHTOKENSRESPONSE,
@@ -2679,11 +3116,31 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='RestoreAuthToken',
-    full_name='auth.API.RestoreAuthToken',
-    index=17,
+    full_name='auth_v2.API.RestoreAuthToken',
+    index=21,
     containing_service=None,
     input_type=_RESTOREAUTHTOKENREQUEST,
     output_type=_RESTOREAUTHTOKENRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteExpiredAuthTokens',
+    full_name='auth_v2.API.DeleteExpiredAuthTokens',
+    index=22,
+    containing_service=None,
+    input_type=_DELETEEXPIREDAUTHTOKENSREQUEST,
+    output_type=_DELETEEXPIREDAUTHTOKENSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='RotateRootToken',
+    full_name='auth_v2.API.RotateRootToken',
+    index=23,
+    containing_service=None,
+    input_type=_ROTATEROOTTOKENREQUEST,
+    output_type=_ROTATEROOTTOKENRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

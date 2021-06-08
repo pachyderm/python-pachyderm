@@ -20,17 +20,17 @@ from python_pachyderm.proto.v2.pfs import pfs_pb2 as python__pachyderm_dot_proto
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='python_pachyderm/proto/v2/pps/pps.proto',
-  package='pps',
+  package='pps_v2',
   syntax='proto3',
   serialized_options=b'Z)github.com/pachyderm/pachyderm/v2/src/pps',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\'python_pachyderm/proto/v2/pps/pps.proto\x12\x03pps\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pfs/pfs.proto\"M\n\x0bSecretMount\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\t\x12\x12\n\nmount_path\x18\x02 \x01(\t\x12\x0f\n\x07\x65nv_var\x18\x03 \x01(\t\"\xec\x02\n\tTransform\x12\r\n\x05image\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x03(\t\x12\x0f\n\x07\x65rr_cmd\x18\r \x03(\t\x12$\n\x03\x65nv\x18\x03 \x03(\x0b\x32\x17.pps.Transform.EnvEntry\x12!\n\x07secrets\x18\x04 \x03(\x0b\x32\x10.pps.SecretMount\x12\x1a\n\x12image_pull_secrets\x18\t \x03(\t\x12\r\n\x05stdin\x18\x05 \x03(\t\x12\x11\n\terr_stdin\x18\x0e \x03(\t\x12\x1a\n\x12\x61\x63\x63\x65pt_return_code\x18\x06 \x03(\x03\x12\r\n\x05\x64\x65\x62ug\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\n \x01(\t\x12\x13\n\x0bworking_dir\x18\x0b \x01(\t\x12\x12\n\ndockerfile\x18\x0c \x01(\t\x12\x1d\n\x05\x62uild\x18\x0f \x01(\x0b\x32\x0e.pps.BuildSpec\x1a*\n\x08\x45nvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\tBuildSpec\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x10\n\x08language\x18\x02 \x01(\t\x12\r\n\x05image\x18\x03 \x01(\t\"\x17\n\x05TFJob\x12\x0e\n\x06tf_job\x18\x01 \x01(\t\"\x15\n\x06\x45gress\x12\x0b\n\x03URL\x18\x01 \x01(\t\"\x11\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\"\xcd\x01\n\x08Metadata\x12\x33\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32\x1e.pps.Metadata.AnnotationsEntry\x12)\n\x06labels\x18\x02 \x03(\x0b\x32\x19.pps.Metadata.LabelsEntry\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"Q\n\x07Service\x12\x15\n\rinternal_port\x18\x01 \x01(\x05\x12\x15\n\rexternal_port\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\"&\n\x05Spout\x12\x1d\n\x07service\x18\x01 \x01(\x0b\x32\x0c.pps.Service\"\xd9\x01\n\x08PFSInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\x12\x0c\n\x04glob\x18\x05 \x01(\t\x12\x0f\n\x07join_on\x18\x08 \x01(\t\x12\x12\n\nouter_join\x18\x0c \x01(\x08\x12\x10\n\x08group_by\x18\x0b \x01(\t\x12\x0c\n\x04lazy\x18\x06 \x01(\x08\x12\x13\n\x0b\x65mpty_files\x18\x07 \x01(\x08\x12\n\n\x02s3\x18\t \x01(\x08\x12\x1d\n\x07trigger\x18\n \x01(\x0b\x32\x0c.pfs.Trigger\"\x83\x01\n\tCronInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x03 \x01(\t\x12\x0c\n\x04spec\x18\x04 \x01(\t\x12\x11\n\toverwrite\x18\x06 \x01(\x08\x12)\n\x05start\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"E\n\x08GitInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\"\xc8\x01\n\x05Input\x12\x1a\n\x03pfs\x18\x06 \x01(\x0b\x32\r.pps.PFSInput\x12\x18\n\x04join\x18\x07 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05group\x18\x08 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05\x63ross\x18\x02 \x03(\x0b\x32\n.pps.Input\x12\x19\n\x05union\x18\x03 \x03(\x0b\x32\n.pps.Input\x12\x1c\n\x04\x63ron\x18\x04 \x01(\x0b\x32\x0e.pps.CronInput\x12\x1a\n\x03git\x18\x05 \x01(\x0b\x32\r.pps.GitInput\"Q\n\x08JobInput\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x1b\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0c\n\x04glob\x18\x02 \x01(\t\x12\x0c\n\x04lazy\x18\x03 \x01(\x08\">\n\x0fParallelismSpec\x12\x10\n\x08\x63onstant\x18\x02 \x01(\x04\x12\x13\n\x0b\x63oefficient\x18\x03 \x01(\x01J\x04\x08\x01\x10\x02\"\'\n\tInputFile\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"*\n\x05\x44\x61tum\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\x03job\x18\x02 \x01(\x0b\x32\x08.pps.Job\"\xa3\x01\n\tDatumInfo\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\x12\x1e\n\x05state\x18\x02 \x01(\x0e\x32\x0f.pps.DatumState\x12 \n\x05stats\x18\x03 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x1c\n\tpfs_state\x18\x04 \x01(\x0b\x32\t.pfs.File\x12\x1b\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32\r.pfs.FileInfo\"s\n\tAggregate\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x0c\n\x04mean\x18\x02 \x01(\x01\x12\x0e\n\x06stddev\x18\x03 \x01(\x01\x12\x18\n\x10\x66ifth_percentile\x18\x04 \x01(\x01\x12\x1f\n\x17ninety_fifth_percentile\x18\x05 \x01(\x01\"\xcf\x01\n\x0cProcessStats\x12\x30\n\rdownload_time\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x64ownload_bytes\x18\x04 \x01(\x04\x12\x14\n\x0cupload_bytes\x18\x05 \x01(\x04\"\xd7\x01\n\x15\x41ggregateProcessStats\x12%\n\rdownload_time\x18\x01 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x0e.pps.Aggregate\x12#\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x0e.pps.Aggregate\x12&\n\x0e\x64ownload_bytes\x18\x04 \x01(\x0b\x32\x0e.pps.Aggregate\x12$\n\x0cupload_bytes\x18\x05 \x01(\x0b\x32\x0e.pps.Aggregate\"\xe2\x01\n\x0cWorkerStatus\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x02 \x01(\t\x12\x1c\n\x04\x64\x61ta\x18\x03 \x03(\x0b\x32\x0e.pps.InputFile\x12+\n\x07started\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12 \n\x05stats\x18\x05 \x01(\x0b\x32\x11.pps.ProcessStats\x12\x12\n\nqueue_size\x18\x06 \x01(\x03\x12\x16\n\x0e\x64\x61ta_processed\x18\x07 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x08 \x01(\x03\"Z\n\x0cResourceSpec\x12\x0b\n\x03\x63pu\x18\x01 \x01(\x02\x12\x0e\n\x06memory\x18\x02 \x01(\t\x12\x19\n\x03gpu\x18\x05 \x01(\x0b\x32\x0c.pps.GPUSpec\x12\x0c\n\x04\x64isk\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"\'\n\x07GPUSpec\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x03\"\xb7\x03\n\x0b\x45tcdJobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x12\n\ndata_total\x18\x07 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x08 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x0f \x01(\x03\x12 \n\x05stats\x18\t \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18\n \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\x0b \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x0c \x01(\t\x12+\n\x07started\x18\r \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x0e \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x90\n\n\x07JobInfo\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1f\n\x08pipeline\x18\x03 \x01(\x0b\x32\r.pps.Pipeline\x12\x18\n\x10pipeline_version\x18\r \x01(\x04\x12 \n\x0bspec_commit\x18/ \x01(\x0b\x32\x0b.pfs.Commit\x12.\n\x10parallelism_spec\x18\x0c \x01(\x0b\x32\x14.pps.ParallelismSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12\x1c\n\nparent_job\x18\x06 \x01(\x0b\x32\x08.pps.Job\x12+\n\x07started\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\"\n\routput_commit\x18\t \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\n \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12\x1d\n\x07service\x18\x0e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\x1e\n\x0boutput_repo\x18\x12 \x01(\x0b\x32\t.pfs.Repo\x12\x15\n\routput_branch\x18\x11 \x01(\t\x12\x0f\n\x07restart\x18\x14 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x16 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1e \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18( \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18. \x01(\x03\x12\x12\n\ndata_total\x18\x17 \x01(\x03\x12 \n\x05stats\x18\x1f \x01(\x0b\x32\x11.pps.ProcessStats\x12(\n\rworker_status\x18\x18 \x03(\x0b\x32\x11.pps.WorkerStatus\x12,\n\x11resource_requests\x18\x19 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18$ \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x32\n\x17sidecar_resource_limits\x18\x30 \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x1a \x01(\x0b\x32\n.pps.Input\x12#\n\nnew_branch\x18\x1b \x01(\x0b\x32\x0f.pfs.BranchInfo\x12!\n\x0cstats_commit\x18\x1d \x01(\x0b\x32\x0b.pfs.Commit\x12\x14\n\x0c\x65nable_stats\x18  \x01(\x08\x12\x0c\n\x04salt\x18! \x01(\t\x12\"\n\nchunk_spec\x18% \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18& \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\' \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0b\x64\x61tum_tries\x18) \x01(\x03\x12,\n\x0fscheduling_spec\x18* \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18+ \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\tJ\x04\x08\x04\x10\x05J\x04\x08\x05\x10\x06J\x04\x08\x1c\x10\x1dJ\x04\x08\"\x10#\"7\n\x06Worker\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1f\n\x05state\x18\x02 \x01(\x0e\x32\x10.pps.WorkerState\"\x18\n\x08Pipeline\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xa3\x02\n\x10\x45tcdPipelineInfo\x12!\n\x05state\x18\x01 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0e\n\x06reason\x18\x04 \x01(\t\x12 \n\x0bspec_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\x12\x38\n\njob_counts\x18\x03 \x03(\x0b\x32$.pps.EtcdPipelineInfo.JobCountsEntry\x12\x12\n\nauth_token\x18\x05 \x01(\t\x12%\n\x0elast_job_state\x18\x06 \x01(\x0e\x32\r.pps.JobState\x12\x13\n\x0bparallelism\x18\x07 \x01(\x04\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\xaf\n\n\x0cPipelineInfo\x12\n\n\x02id\x18\x11 \x01(\t\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07version\x18\x0b \x01(\x04\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12\x1a\n\x06tf_job\x18. \x01(\x0b\x32\n.pps.TFJob\x12.\n\x10parallelism_spec\x18\n \x01(\x0b\x32\x14.pps.ParallelismSpec\x12\x1b\n\x06\x65gress\x18\x0f \x01(\x0b\x32\x0b.pps.Egress\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\x05state\x18\x07 \x01(\x0e\x32\x12.pps.PipelineState\x12\x0f\n\x07stopped\x18& \x01(\x08\x12\x14\n\x0crecent_error\x18\x08 \x01(\t\x12\x19\n\x11workers_requested\x18\x31 \x01(\x03\x12\x19\n\x11workers_available\x18\x32 \x01(\x03\x12\x34\n\njob_counts\x18\t \x03(\x0b\x32 .pps.PipelineInfo.JobCountsEntry\x12%\n\x0elast_job_state\x18+ \x01(\x0e\x32\r.pps.JobState\x12\x15\n\routput_branch\x18\x10 \x01(\t\x12,\n\x11resource_requests\x18\x13 \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x1f \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x32\n\x17sidecar_resource_limits\x18\x33 \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\x14 \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x15 \x01(\t\x12\x12\n\ncache_size\x18\x17 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x18 \x01(\x08\x12\x0c\n\x04salt\x18\x19 \x01(\t\x12\x0e\n\x06reason\x18\x1c \x01(\t\x12\x16\n\x0emax_queue_size\x18\x1d \x01(\x03\x12\x1d\n\x07service\x18\x1e \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18- \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18  \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18! \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\" \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0bgithook_url\x18# \x01(\t\x12 \n\x0bspec_commit\x18$ \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07standby\x18% \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\' \x01(\x03\x12,\n\x0fscheduling_spec\x18( \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18) \x01(\t\x12\x11\n\tpod_patch\x18, \x01(\t\x12\x0e\n\x06s3_out\x18/ \x01(\x08\x12\x1f\n\x08metadata\x18\x30 \x01(\x0b\x32\r.pps.Metadata\x12\x16\n\x0ereprocess_spec\x18\x35 \x01(\t\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01J\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x16\x10\x17J\x04\x08\x1a\x10\x1bJ\x04\x08\x1b\x10\x1cJ\x04\x08\x12\x10\x13J\x04\x08\x34\x10\x35\"9\n\rPipelineInfos\x12(\n\rpipeline_info\x18\x01 \x03(\x0b\x32\x11.pps.PipelineInfo\"\xa3\x04\n\x10\x43reateJobRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\"\n\routput_commit\x18\x19 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07restart\x18\x1a \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x1b \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x1c \x01(\x03\x12\x12\n\ndata_total\x18\x1d \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x1e \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x1f \x01(\x03\x12 \n\x05stats\x18  \x01(\x0b\x32\x11.pps.ProcessStats\x12!\n\x0cstats_commit\x18! \x01(\x0b\x32\x0b.pfs.Commit\x12\x1c\n\x05state\x18\" \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18# \x01(\t\x12+\n\x07started\x18$ \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18% \x01(\x0b\x32\x1a.google.protobuf.TimestampJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x01\x10\x02J\x04\x08\n\x10\x0bJ\x04\x08\x07\x10\x08J\x04\x08\t\x10\nJ\x04\x08\x08\x10\tJ\x04\x08\x0c\x10\rJ\x04\x08\x0b\x10\x0cJ\x04\x08\r\x10\x0eJ\x04\x08\x0e\x10\x0fJ\x04\x08\x15\x10\x16J\x04\x08\x0f\x10\x10J\x04\x08\x10\x10\x11J\x04\x08\x11\x10\x12J\x04\x08\x12\x10\x13J\x04\x08\x13\x10\x14J\x04\x08\x14\x10\x15J\x04\x08\x16\x10\x17J\x04\x08\x17\x10\x18J\x04\x08\x18\x10\x19\"q\n\x11InspectJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x13\n\x0b\x62lock_state\x18\x02 \x01(\x08\x12\x0c\n\x04\x66ull\x18\x04 \x01(\x08\"\xa9\x01\n\x0eListJobRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12!\n\x0cinput_commit\x18\x02 \x03(\x0b\x32\x0b.pfs.Commit\x12\"\n\routput_commit\x18\x03 \x01(\x0b\x32\x0b.pfs.Commit\x12\x0f\n\x07history\x18\x04 \x01(\x03\x12\x0c\n\x04\x66ull\x18\x05 \x01(\x08\x12\x10\n\x08jqFilter\x18\x06 \x01(\t\"T\n\x0f\x46lushJobRequest\x12\x1c\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0b.pfs.Commit\x12#\n\x0cto_pipelines\x18\x02 \x03(\x0b\x32\r.pps.Pipeline\")\n\x10\x44\x65leteJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"K\n\x0eStopJobRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\"\n\routput_commit\x18\x02 \x01(\x0b\x32\x0b.pfs.Commit\"\xfe\x01\n\x15UpdateJobStateRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x1c\n\x05state\x18\x02 \x01(\x0e\x32\r.pps.JobState\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x07 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x08 \x01(\x03\x12\x12\n\ndata_total\x18\t \x01(\x03\x12 \n\x05stats\x18\n \x01(\x0b\x32\x11.pps.ProcessStats\"\xf1\x01\n\x0eGetLogsRequest\x12\x1f\n\x08pipeline\x18\x02 \x01(\x0b\x32\r.pps.Pipeline\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x03 \x03(\t\x12\x19\n\x05\x64\x61tum\x18\x06 \x01(\x0b\x32\n.pps.Datum\x12\x0e\n\x06master\x18\x05 \x01(\x08\x12\x0e\n\x06\x66ollow\x18\x07 \x01(\x08\x12\x0c\n\x04tail\x18\x08 \x01(\x03\x12\x18\n\x10use_loki_backend\x18\t \x01(\x08\x12(\n\x05since\x18\n \x01(\x0b\x32\x19.google.protobuf.DurationJ\x04\x08\x04\x10\x05\"\xcd\x01\n\nLogMessage\x12\x15\n\rpipeline_name\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x03 \x01(\t\x12\x11\n\tworker_id\x18\x07 \x01(\t\x12\x10\n\x08\x64\x61tum_id\x18\t \x01(\t\x12\x0e\n\x06master\x18\n \x01(\x08\x12\x1c\n\x04\x64\x61ta\x18\x04 \x03(\x0b\x32\x0e.pps.InputFile\x12\x0c\n\x04user\x18\x08 \x01(\x08\x12&\n\x02ts\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07message\x18\x06 \x01(\t\"B\n\x13RestartDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x02 \x03(\t\"0\n\x13InspectDatumRequest\x12\x19\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\n.pps.Datum\")\n\x10ListDatumRequest\x12\x15\n\x03job\x18\x01 \x01(\x0b\x32\x08.pps.Job\"/\n\tChunkSpec\x12\x0e\n\x06number\x18\x01 \x01(\x03\x12\x12\n\nsize_bytes\x18\x02 \x01(\x03\"\xa0\x01\n\x0eSchedulingSpec\x12<\n\rnode_selector\x18\x01 \x03(\x0b\x32%.pps.SchedulingSpec.NodeSelectorEntry\x12\x1b\n\x13priority_class_name\x18\x02 \x01(\t\x1a\x33\n\x11NodeSelectorEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xd4\x07\n\x15\x43reatePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x1a\n\x06tf_job\x18# \x01(\x0b\x32\n.pps.TFJob\x12!\n\ttransform\x18\x02 \x01(\x0b\x32\x0e.pps.Transform\x12.\n\x10parallelism_spec\x18\x07 \x01(\x0b\x32\x14.pps.ParallelismSpec\x12\x1b\n\x06\x65gress\x18\t \x01(\x0b\x32\x0b.pps.Egress\x12\x0e\n\x06update\x18\x05 \x01(\x08\x12\x15\n\routput_branch\x18\n \x01(\t\x12\x0e\n\x06s3_out\x18$ \x01(\x08\x12,\n\x11resource_requests\x18\x0c \x01(\x0b\x32\x11.pps.ResourceSpec\x12*\n\x0fresource_limits\x18\x16 \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x32\n\x17sidecar_resource_limits\x18/ \x01(\x0b\x32\x11.pps.ResourceSpec\x12\x19\n\x05input\x18\r \x01(\x0b\x32\n.pps.Input\x12\x13\n\x0b\x64\x65scription\x18\x0e \x01(\t\x12\x12\n\ncache_size\x18\x10 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x11 \x01(\x08\x12\x11\n\treprocess\x18\x12 \x01(\x08\x12\x16\n\x0emax_queue_size\x18\x14 \x01(\x03\x12\x1d\n\x07service\x18\x15 \x01(\x0b\x32\x0c.pps.Service\x12\x19\n\x05spout\x18! \x01(\x0b\x32\n.pps.Spout\x12\"\n\nchunk_spec\x18\x17 \x01(\x0b\x32\x0e.pps.ChunkSpec\x12\x30\n\rdatum_timeout\x18\x18 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\x19 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0c\n\x04salt\x18\x1a \x01(\t\x12\x0f\n\x07standby\x18\x1b \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\x1c \x01(\x03\x12,\n\x0fscheduling_spec\x18\x1d \x01(\x0b\x32\x13.pps.SchedulingSpec\x12\x10\n\x08pod_spec\x18\x1e \x01(\t\x12\x11\n\tpod_patch\x18  \x01(\t\x12 \n\x0bspec_commit\x18\" \x01(\x0b\x32\x0b.pfs.Commit\x12\x1f\n\x08metadata\x18. \x01(\x0b\x32\r.pps.Metadata\x12\x16\n\x0ereprocess_spec\x18\x31 \x01(\tJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05J\x04\x08\x0b\x10\x0cJ\x04\x08\x0f\x10\x10J\x04\x08\x13\x10\x14J\x04\x08\x30\x10\x31\"9\n\x16InspectPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"s\n\x13ListPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0f\n\x07history\x18\x02 \x01(\x03\x12\x18\n\x10\x61llow_incomplete\x18\x03 \x01(\x08\x12\x10\n\x08jqFilter\x18\x04 \x01(\t\"s\n\x15\x44\x65letePipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12\x0b\n\x03\x61ll\x18\x04 \x01(\x08\x12\r\n\x05\x66orce\x18\x05 \x01(\x08\x12\x11\n\tkeep_repo\x18\x06 \x01(\x08J\x04\x08\x02\x10\x03J\x04\x08\x03\x10\x04\"7\n\x14StartPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"6\n\x13StopPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"v\n\x12RunPipelineRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\x12)\n\nprovenance\x18\x02 \x03(\x0b\x32\x15.pfs.CommitProvenance\x12\x0e\n\x06job_id\x18\x04 \x01(\tJ\x04\x08\x03\x10\x04\"1\n\x0eRunCronRequest\x12\x1f\n\x08pipeline\x18\x01 \x01(\x0b\x32\r.pps.Pipeline\"#\n\x13\x43reateSecretRequest\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\"2\n\x13\x44\x65leteSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"3\n\x14InspectSecretRequest\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\"\x16\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\"o\n\nSecretInfo\x12\x1b\n\x06secret\x18\x01 \x01(\x0b\x32\x0b.pps.Secret\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x36\n\x12\x63reation_timestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"3\n\x0bSecretInfos\x12$\n\x0bsecret_info\x18\x01 \x03(\x0b\x32\x0f.pps.SecretInfo\"-\n\x15GarbageCollectRequest\x12\x14\n\x0cmemory_bytes\x18\x01 \x01(\x03\"\x18\n\x16GarbageCollectResponse\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse*r\n\x08JobState\x12\x10\n\x0cJOB_STARTING\x10\x00\x12\x0f\n\x0bJOB_RUNNING\x10\x01\x12\x0f\n\x0bJOB_FAILURE\x10\x02\x12\x0f\n\x0bJOB_SUCCESS\x10\x03\x12\x0e\n\nJOB_KILLED\x10\x04\x12\x11\n\rJOB_EGRESSING\x10\x06*O\n\nDatumState\x12\n\n\x06\x46\x41ILED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07SKIPPED\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\r\n\tRECOVERED\x10\x04*?\n\x0bWorkerState\x12\x0f\n\x0bPOD_RUNNING\x10\x00\x12\x0f\n\x0bPOD_SUCCESS\x10\x01\x12\x0e\n\nPOD_FAILED\x10\x02*\xad\x01\n\rPipelineState\x12\x15\n\x11PIPELINE_STARTING\x10\x00\x12\x14\n\x10PIPELINE_RUNNING\x10\x01\x12\x17\n\x13PIPELINE_RESTARTING\x10\x02\x12\x14\n\x10PIPELINE_FAILURE\x10\x03\x12\x13\n\x0fPIPELINE_PAUSED\x10\x04\x12\x14\n\x10PIPELINE_STANDBY\x10\x05\x12\x15\n\x11PIPELINE_CRASHING\x10\x06\x32\xa0\x0c\n\x03\x41PI\x12.\n\tCreateJob\x12\x15.pps.CreateJobRequest\x1a\x08.pps.Job\"\x00\x12\x34\n\nInspectJob\x12\x16.pps.InspectJobRequest\x1a\x0c.pps.JobInfo\"\x00\x12\x30\n\x07ListJob\x12\x13.pps.ListJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12\x32\n\x08\x46lushJob\x12\x14.pps.FlushJobRequest\x1a\x0c.pps.JobInfo\"\x00\x30\x01\x12<\n\tDeleteJob\x12\x15.pps.DeleteJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07StopJob\x12\x13.pps.StopJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12:\n\x0cInspectDatum\x12\x18.pps.InspectDatumRequest\x1a\x0e.pps.DatumInfo\"\x00\x12\x36\n\tListDatum\x12\x15.pps.ListDatumRequest\x1a\x0e.pps.DatumInfo\"\x00\x30\x01\x12\x42\n\x0cRestartDatum\x12\x18.pps.RestartDatumRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x46\n\x0e\x43reatePipeline\x12\x1a.pps.CreatePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0fInspectPipeline\x12\x1b.pps.InspectPipelineRequest\x1a\x11.pps.PipelineInfo\"\x00\x12>\n\x0cListPipeline\x12\x18.pps.ListPipelineRequest\x1a\x12.pps.PipelineInfos\"\x00\x12\x46\n\x0e\x44\x65letePipeline\x12\x1a.pps.DeletePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x44\n\rStartPipeline\x12\x19.pps.StartPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0cStopPipeline\x12\x18.pps.StopPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12@\n\x0bRunPipeline\x12\x17.pps.RunPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\x07RunCron\x12\x13.pps.RunCronRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x43reateSecret\x12\x18.pps.CreateSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x42\n\x0c\x44\x65leteSecret\x12\x18.pps.DeleteSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x38\n\nListSecret\x12\x16.google.protobuf.Empty\x1a\x10.pps.SecretInfos\"\x00\x12=\n\rInspectSecret\x12\x19.pps.InspectSecretRequest\x1a\x0f.pps.SecretInfo\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x33\n\x07GetLogs\x12\x13.pps.GetLogsRequest\x1a\x0f.pps.LogMessage\"\x00\x30\x01\x12\x45\n\x0c\x41\x63tivateAuth\x12\x18.pps.ActivateAuthRequest\x1a\x19.pps.ActivateAuthResponse\"\x00\x12\x46\n\x0eUpdateJobState\x12\x1a.pps.UpdateJobStateRequest\x1a\x16.google.protobuf.Empty\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/ppsb\x06proto3'
+  serialized_pb=b'\n\'python_pachyderm/proto/v2/pps/pps.proto\x12\x06pps_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pfs/pfs.proto\"M\n\x0bSecretMount\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\x12\n\nmount_path\x18\x03 \x01(\t\x12\x0f\n\x07\x65nv_var\x18\x04 \x01(\t\"\xf5\x02\n\tTransform\x12\r\n\x05image\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x03(\t\x12\x0f\n\x07\x65rr_cmd\x18\x03 \x03(\t\x12\'\n\x03\x65nv\x18\x04 \x03(\x0b\x32\x1a.pps_v2.Transform.EnvEntry\x12$\n\x07secrets\x18\x05 \x03(\x0b\x32\x13.pps_v2.SecretMount\x12\x1a\n\x12image_pull_secrets\x18\x06 \x03(\t\x12\r\n\x05stdin\x18\x07 \x03(\t\x12\x11\n\terr_stdin\x18\x08 \x03(\t\x12\x1a\n\x12\x61\x63\x63\x65pt_return_code\x18\t \x03(\x03\x12\r\n\x05\x64\x65\x62ug\x18\n \x01(\x08\x12\x0c\n\x04user\x18\x0b \x01(\t\x12\x13\n\x0bworking_dir\x18\x0c \x01(\t\x12\x12\n\ndockerfile\x18\r \x01(\t\x12 \n\x05\x62uild\x18\x0e \x01(\x0b\x32\x11.pps_v2.BuildSpec\x1a*\n\x08\x45nvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\tBuildSpec\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x10\n\x08language\x18\x02 \x01(\t\x12\r\n\x05image\x18\x03 \x01(\t\"\x17\n\x05TFJob\x12\x0e\n\x06tf_job\x18\x01 \x01(\t\"\x15\n\x06\x45gress\x12\x0b\n\x03URL\x18\x01 \x01(\t\"\x11\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\"\xd3\x01\n\x08Metadata\x12\x36\n\x0b\x61nnotations\x18\x01 \x03(\x0b\x32!.pps_v2.Metadata.AnnotationsEntry\x12,\n\x06labels\x18\x02 \x03(\x0b\x32\x1c.pps_v2.Metadata.LabelsEntry\x1a\x32\n\x10\x41nnotationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"Q\n\x07Service\x12\x15\n\rinternal_port\x18\x01 \x01(\x05\x12\x15\n\rexternal_port\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\")\n\x05Spout\x12 \n\x07service\x18\x01 \x01(\x0b\x32\x0f.pps_v2.Service\"\xef\x01\n\x08PFSInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x11\n\trepo_type\x18\r \x01(\t\x12\x0e\n\x06\x62ranch\x18\x03 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x04 \x01(\t\x12\x0c\n\x04glob\x18\x05 \x01(\t\x12\x0f\n\x07join_on\x18\x06 \x01(\t\x12\x12\n\nouter_join\x18\x07 \x01(\x08\x12\x10\n\x08group_by\x18\x08 \x01(\t\x12\x0c\n\x04lazy\x18\t \x01(\x08\x12\x13\n\x0b\x65mpty_files\x18\n \x01(\x08\x12\n\n\x02s3\x18\x0b \x01(\x08\x12 \n\x07trigger\x18\x0c \x01(\x0b\x32\x0f.pfs_v2.Trigger\"\x96\x01\n\tCronInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04repo\x18\x02 \x01(\t\x12\x11\n\trepo_type\x18\r \x01(\t\x12\x0e\n\x06\x63ommit\x18\x03 \x01(\t\x12\x0c\n\x04spec\x18\x04 \x01(\t\x12\x11\n\toverwrite\x18\x05 \x01(\x08\x12)\n\x05start\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xbe\x01\n\x05Input\x12\x1d\n\x03pfs\x18\x01 \x01(\x0b\x32\x10.pps_v2.PFSInput\x12\x1b\n\x04join\x18\x02 \x03(\x0b\x32\r.pps_v2.Input\x12\x1c\n\x05group\x18\x03 \x03(\x0b\x32\r.pps_v2.Input\x12\x1c\n\x05\x63ross\x18\x04 \x03(\x0b\x32\r.pps_v2.Input\x12\x1c\n\x05union\x18\x05 \x03(\x0b\x32\r.pps_v2.Input\x12\x1f\n\x04\x63ron\x18\x06 \x01(\x0b\x32\x11.pps_v2.CronInput\"T\n\x08JobInput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1e\n\x06\x63ommit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0c\n\x04glob\x18\x03 \x01(\t\x12\x0c\n\x04lazy\x18\x04 \x01(\x08\"8\n\x0fParallelismSpec\x12\x10\n\x08\x63onstant\x18\x01 \x01(\x04\x12\x13\n\x0b\x63oefficient\x18\x02 \x01(\x01\"\'\n\tInputFile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04hash\x18\x02 \x01(\x0c\"-\n\x05\x44\x61tum\x12\n\n\x02id\x18\x01 \x01(\t\x12\x18\n\x03job\x18\x02 \x01(\x0b\x32\x0b.pps_v2.Job\"\xb2\x01\n\tDatumInfo\x12\x1c\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\r.pps_v2.Datum\x12!\n\x05state\x18\x02 \x01(\x0e\x32\x12.pps_v2.DatumState\x12#\n\x05stats\x18\x03 \x01(\x0b\x32\x14.pps_v2.ProcessStats\x12\x1f\n\tpfs_state\x18\x04 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x1e\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32\x10.pfs_v2.FileInfo\"s\n\tAggregate\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x0c\n\x04mean\x18\x02 \x01(\x01\x12\x0e\n\x06stddev\x18\x03 \x01(\x01\x12\x18\n\x10\x66ifth_percentile\x18\x04 \x01(\x01\x12\x1f\n\x17ninety_fifth_percentile\x18\x05 \x01(\x01\"\xcf\x01\n\x0cProcessStats\x12\x30\n\rdownload_time\x18\x01 \x01(\x0b\x32\x19.google.protobuf.Duration\x12/\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x16\n\x0e\x64ownload_bytes\x18\x04 \x01(\x04\x12\x14\n\x0cupload_bytes\x18\x05 \x01(\x04\"\xe6\x01\n\x15\x41ggregateProcessStats\x12(\n\rdownload_time\x18\x01 \x01(\x0b\x32\x11.pps_v2.Aggregate\x12\'\n\x0cprocess_time\x18\x02 \x01(\x0b\x32\x11.pps_v2.Aggregate\x12&\n\x0bupload_time\x18\x03 \x01(\x0b\x32\x11.pps_v2.Aggregate\x12)\n\x0e\x64ownload_bytes\x18\x04 \x01(\x0b\x32\x11.pps_v2.Aggregate\x12\'\n\x0cupload_bytes\x18\x05 \x01(\x0b\x32\x11.pps_v2.Aggregate\"\\\n\x0cWorkerStatus\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x02 \x01(\t\x12)\n\x0c\x64\x61tum_status\x18\x03 \x01(\x0b\x32\x13.pps_v2.DatumStatus\"[\n\x0b\x44\x61tumStatus\x12+\n\x07started\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1f\n\x04\x64\x61ta\x18\x02 \x03(\x0b\x32\x11.pps_v2.InputFile\"W\n\x0cResourceSpec\x12\x0b\n\x03\x63pu\x18\x01 \x01(\x02\x12\x0e\n\x06memory\x18\x02 \x01(\t\x12\x1c\n\x03gpu\x18\x03 \x01(\x0b\x32\x0f.pps_v2.GPUSpec\x12\x0c\n\x04\x64isk\x18\x04 \x01(\t\"\'\n\x07GPUSpec\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x03\"\xcb\x03\n\rStoredJobInfo\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12\"\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12%\n\routput_commit\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x12\n\ndata_total\x18\x07 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x08 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\t \x01(\x03\x12#\n\x05stats\x18\n \x01(\x0b\x32\x14.pps_v2.ProcessStats\x12$\n\x0cstats_commit\x18\x0b \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1f\n\x05state\x18\x0c \x01(\x0e\x32\x10.pps_v2.JobState\x12\x0e\n\x06reason\x18\r \x01(\t\x12+\n\x07started\x18\x0e \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x0f \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xba\n\n\x07JobInfo\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12$\n\ttransform\x18\x02 \x01(\x0b\x32\x11.pps_v2.Transform\x12\"\n\x08pipeline\x18\x03 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x18\n\x10pipeline_version\x18\x04 \x01(\x04\x12#\n\x0bspec_commit\x18\x05 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x31\n\x10parallelism_spec\x18\x06 \x01(\x0b\x32\x17.pps_v2.ParallelismSpec\x12\x1e\n\x06\x65gress\x18\x07 \x01(\x0b\x32\x0e.pps_v2.Egress\x12\x1f\n\nparent_job\x18\x08 \x01(\x0b\x32\x0b.pps_v2.Job\x12+\n\x07started\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12%\n\routput_commit\x18\x0b \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1f\n\x05state\x18\x0c \x01(\x0e\x32\x10.pps_v2.JobState\x12\x0e\n\x06reason\x18\r \x01(\t\x12 \n\x07service\x18\x0e \x01(\x0b\x32\x0f.pps_v2.Service\x12\x1c\n\x05spout\x18\x0f \x01(\x0b\x32\r.pps_v2.Spout\x12!\n\x0boutput_repo\x18\x10 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x15\n\routput_branch\x18\x11 \x01(\t\x12\x0f\n\x07restart\x18\x12 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x13 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x14 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x15 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x16 \x01(\x03\x12\x12\n\ndata_total\x18\x17 \x01(\x03\x12#\n\x05stats\x18\x18 \x01(\x0b\x32\x14.pps_v2.ProcessStats\x12+\n\rworker_status\x18\x19 \x03(\x0b\x32\x14.pps_v2.WorkerStatus\x12/\n\x11resource_requests\x18\x1a \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12-\n\x0fresource_limits\x18\x1b \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x35\n\x17sidecar_resource_limits\x18\x1c \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x1c\n\x05input\x18\x1d \x01(\x0b\x32\r.pps_v2.Input\x12&\n\nnew_branch\x18\x1e \x01(\x0b\x32\x12.pfs_v2.BranchInfo\x12$\n\x0cstats_commit\x18\x1f \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x14\n\x0c\x65nable_stats\x18  \x01(\x08\x12\x0c\n\x04salt\x18! \x01(\t\x12%\n\nchunk_spec\x18\" \x01(\x0b\x32\x11.pps_v2.ChunkSpec\x12\x30\n\rdatum_timeout\x18# \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18$ \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x0b\x64\x61tum_tries\x18% \x01(\x03\x12/\n\x0fscheduling_spec\x18& \x01(\x0b\x32\x16.pps_v2.SchedulingSpec\x12\x10\n\x08pod_spec\x18\' \x01(\t\x12\x11\n\tpod_patch\x18( \x01(\t\":\n\x06Worker\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\"\n\x05state\x18\x02 \x01(\x0e\x32\x13.pps_v2.WorkerState\"\x18\n\x08Pipeline\x12\x0c\n\x04name\x18\x01 \x01(\t\"\xd7\x02\n\x12StoredPipelineInfo\x12$\n\x05state\x18\x01 \x01(\x0e\x32\x15.pps_v2.PipelineState\x12\x0e\n\x06reason\x18\x02 \x01(\t\x12#\n\x0bspec_commit\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12=\n\njob_counts\x18\x04 \x03(\x0b\x32).pps_v2.StoredPipelineInfo.JobCountsEntry\x12\x12\n\nauth_token\x18\x05 \x01(\t\x12(\n\x0elast_job_state\x18\x06 \x01(\x0e\x32\x10.pps_v2.JobState\x12\x13\n\x0bparallelism\x18\x07 \x01(\x04\x12\"\n\x08pipeline\x18\x08 \x01(\x0b\x32\x10.pps_v2.Pipeline\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"\x9a\n\n\x0cPipelineInfo\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x0f\n\x07version\x18\x02 \x01(\x04\x12$\n\ttransform\x18\x03 \x01(\x0b\x32\x11.pps_v2.Transform\x12\x1d\n\x06tf_job\x18\x04 \x01(\x0b\x32\r.pps_v2.TFJob\x12\x31\n\x10parallelism_spec\x18\x05 \x01(\x0b\x32\x17.pps_v2.ParallelismSpec\x12\x1e\n\x06\x65gress\x18\x06 \x01(\x0b\x32\x0e.pps_v2.Egress\x12.\n\ncreated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12$\n\x05state\x18\x08 \x01(\x0e\x32\x15.pps_v2.PipelineState\x12\x0f\n\x07stopped\x18\t \x01(\x08\x12\x14\n\x0crecent_error\x18\n \x01(\t\x12\x19\n\x11workers_requested\x18\x0b \x01(\x03\x12\x19\n\x11workers_available\x18\x0c \x01(\x03\x12\x37\n\njob_counts\x18\r \x03(\x0b\x32#.pps_v2.PipelineInfo.JobCountsEntry\x12(\n\x0elast_job_state\x18\x0e \x01(\x0e\x32\x10.pps_v2.JobState\x12\x15\n\routput_branch\x18\x0f \x01(\t\x12/\n\x11resource_requests\x18\x10 \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12-\n\x0fresource_limits\x18\x11 \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x35\n\x17sidecar_resource_limits\x18\x12 \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x1c\n\x05input\x18\x13 \x01(\x0b\x32\r.pps_v2.Input\x12\x13\n\x0b\x64\x65scription\x18\x14 \x01(\t\x12\x12\n\ncache_size\x18\x15 \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x16 \x01(\x08\x12\x0c\n\x04salt\x18\x17 \x01(\t\x12\x0e\n\x06reason\x18\x18 \x01(\t\x12\x16\n\x0emax_queue_size\x18\x19 \x01(\x03\x12 \n\x07service\x18\x1a \x01(\x0b\x32\x0f.pps_v2.Service\x12\x1c\n\x05spout\x18\x1b \x01(\x0b\x32\r.pps_v2.Spout\x12%\n\nchunk_spec\x18\x1c \x01(\x0b\x32\x11.pps_v2.ChunkSpec\x12\x30\n\rdatum_timeout\x18\x1d \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\x1e \x01(\x0b\x32\x19.google.protobuf.Duration\x12#\n\x0bspec_commit\x18  \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07standby\x18! \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\" \x01(\x03\x12/\n\x0fscheduling_spec\x18# \x01(\x0b\x32\x16.pps_v2.SchedulingSpec\x12\x10\n\x08pod_spec\x18$ \x01(\t\x12\x11\n\tpod_patch\x18% \x01(\t\x12\x0e\n\x06s3_out\x18& \x01(\x08\x12\"\n\x08metadata\x18\' \x01(\x0b\x32\x10.pps_v2.Metadata\x12\x16\n\x0ereprocess_spec\x18( \x01(\t\x1a\x30\n\x0eJobCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"<\n\rPipelineInfos\x12+\n\rpipeline_info\x18\x01 \x03(\x0b\x32\x14.pps_v2.PipelineInfo\"\xb4\x03\n\x10\x43reateJobRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12%\n\routput_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07restart\x18\x03 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x04 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x05 \x01(\x03\x12\x12\n\ndata_total\x18\x06 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x07 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x08 \x01(\x03\x12#\n\x05stats\x18\t \x01(\x0b\x32\x14.pps_v2.ProcessStats\x12$\n\x0cstats_commit\x18\n \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1f\n\x05state\x18\x0b \x01(\x0e\x32\x10.pps_v2.JobState\x12\x0e\n\x06reason\x18\x0c \x01(\t\x12+\n\x07started\x18\r \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x0e \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"w\n\x11InspectJobRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12%\n\routput_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x62lock_state\x18\x03 \x01(\x08\x12\x0c\n\x04\x66ull\x18\x04 \x01(\x08\"\xb2\x01\n\x0eListJobRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12$\n\x0cinput_commit\x18\x02 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12%\n\routput_commit\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07history\x18\x04 \x01(\x03\x12\x0c\n\x04\x66ull\x18\x05 \x01(\x08\x12\x10\n\x08jqFilter\x18\x06 \x01(\t\"Z\n\x0f\x46lushJobRequest\x12\x1f\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12&\n\x0cto_pipelines\x18\x02 \x03(\x0b\x32\x10.pps_v2.Pipeline\",\n\x10\x44\x65leteJobRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\"a\n\x0eStopJobRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12%\n\routput_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0e\n\x06reason\x18\x03 \x01(\t\"\x87\x02\n\x15UpdateJobStateRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12\x1f\n\x05state\x18\x02 \x01(\x0e\x32\x10.pps_v2.JobState\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07restart\x18\x04 \x01(\x04\x12\x16\n\x0e\x64\x61ta_processed\x18\x05 \x01(\x03\x12\x14\n\x0c\x64\x61ta_skipped\x18\x06 \x01(\x03\x12\x13\n\x0b\x64\x61ta_failed\x18\x07 \x01(\x03\x12\x16\n\x0e\x64\x61ta_recovered\x18\x08 \x01(\x03\x12\x12\n\ndata_total\x18\t \x01(\x03\x12#\n\x05stats\x18\n \x01(\x0b\x32\x14.pps_v2.ProcessStats\"\xf4\x01\n\x0eGetLogsRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x18\n\x03job\x18\x02 \x01(\x0b\x32\x0b.pps_v2.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x03 \x03(\t\x12\x1c\n\x05\x64\x61tum\x18\x04 \x01(\x0b\x32\r.pps_v2.Datum\x12\x0e\n\x06master\x18\x05 \x01(\x08\x12\x0e\n\x06\x66ollow\x18\x06 \x01(\x08\x12\x0c\n\x04tail\x18\x07 \x01(\x03\x12\x18\n\x10use_loki_backend\x18\x08 \x01(\x08\x12(\n\x05since\x18\t \x01(\x0b\x32\x19.google.protobuf.Duration\"\xd0\x01\n\nLogMessage\x12\x15\n\rpipeline_name\x18\x01 \x01(\t\x12\x0e\n\x06job_id\x18\x02 \x01(\t\x12\x11\n\tworker_id\x18\x03 \x01(\t\x12\x10\n\x08\x64\x61tum_id\x18\x04 \x01(\t\x12\x0e\n\x06master\x18\x05 \x01(\x08\x12\x1f\n\x04\x64\x61ta\x18\x06 \x03(\x0b\x32\x11.pps_v2.InputFile\x12\x0c\n\x04user\x18\x07 \x01(\x08\x12&\n\x02ts\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07message\x18\t \x01(\t\"E\n\x13RestartDatumRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12\x14\n\x0c\x64\x61ta_filters\x18\x02 \x03(\t\"3\n\x13InspectDatumRequest\x12\x1c\n\x05\x64\x61tum\x18\x01 \x01(\x0b\x32\r.pps_v2.Datum\"J\n\x10ListDatumRequest\x12\x18\n\x03job\x18\x01 \x01(\x0b\x32\x0b.pps_v2.Job\x12\x1c\n\x05input\x18\x02 \x01(\x0b\x32\r.pps_v2.Input\"/\n\tChunkSpec\x12\x0e\n\x06number\x18\x01 \x01(\x03\x12\x12\n\nsize_bytes\x18\x02 \x01(\x03\"\xa3\x01\n\x0eSchedulingSpec\x12?\n\rnode_selector\x18\x01 \x03(\x0b\x32(.pps_v2.SchedulingSpec.NodeSelectorEntry\x12\x1b\n\x13priority_class_name\x18\x02 \x01(\t\x1a\x33\n\x11NodeSelectorEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xdd\x07\n\x15\x43reatePipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x1d\n\x06tf_job\x18\x02 \x01(\x0b\x32\r.pps_v2.TFJob\x12$\n\ttransform\x18\x03 \x01(\x0b\x32\x11.pps_v2.Transform\x12\x31\n\x10parallelism_spec\x18\x04 \x01(\x0b\x32\x17.pps_v2.ParallelismSpec\x12\x1e\n\x06\x65gress\x18\x05 \x01(\x0b\x32\x0e.pps_v2.Egress\x12\x0e\n\x06update\x18\x06 \x01(\x08\x12\x15\n\routput_branch\x18\x07 \x01(\t\x12\x0e\n\x06s3_out\x18\x08 \x01(\x08\x12/\n\x11resource_requests\x18\t \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12-\n\x0fresource_limits\x18\n \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x35\n\x17sidecar_resource_limits\x18\x0b \x01(\x0b\x32\x14.pps_v2.ResourceSpec\x12\x1c\n\x05input\x18\x0c \x01(\x0b\x32\r.pps_v2.Input\x12\x13\n\x0b\x64\x65scription\x18\r \x01(\t\x12\x12\n\ncache_size\x18\x0e \x01(\t\x12\x14\n\x0c\x65nable_stats\x18\x0f \x01(\x08\x12\x11\n\treprocess\x18\x10 \x01(\x08\x12\x16\n\x0emax_queue_size\x18\x11 \x01(\x03\x12 \n\x07service\x18\x12 \x01(\x0b\x32\x0f.pps_v2.Service\x12\x1c\n\x05spout\x18\x13 \x01(\x0b\x32\r.pps_v2.Spout\x12%\n\nchunk_spec\x18\x14 \x01(\x0b\x32\x11.pps_v2.ChunkSpec\x12\x30\n\rdatum_timeout\x18\x15 \x01(\x0b\x32\x19.google.protobuf.Duration\x12.\n\x0bjob_timeout\x18\x16 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0c\n\x04salt\x18\x17 \x01(\t\x12\x0f\n\x07standby\x18\x18 \x01(\x08\x12\x13\n\x0b\x64\x61tum_tries\x18\x19 \x01(\x03\x12/\n\x0fscheduling_spec\x18\x1a \x01(\x0b\x32\x16.pps_v2.SchedulingSpec\x12\x10\n\x08pod_spec\x18\x1b \x01(\t\x12\x11\n\tpod_patch\x18\x1c \x01(\t\x12#\n\x0bspec_commit\x18\x1d \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\x08metadata\x18\x1e \x01(\x0b\x32\x10.pps_v2.Metadata\x12\x16\n\x0ereprocess_spec\x18\x1f \x01(\t\"<\n\x16InspectPipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\"v\n\x13ListPipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x0f\n\x07history\x18\x02 \x01(\x03\x12\x18\n\x10\x61llow_incomplete\x18\x03 \x01(\x08\x12\x10\n\x08jqFilter\x18\x04 \x01(\t\"j\n\x15\x44\x65letePipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12\x0b\n\x03\x61ll\x18\x02 \x01(\x08\x12\r\n\x05\x66orce\x18\x03 \x01(\x08\x12\x11\n\tkeep_repo\x18\x04 \x01(\x08\":\n\x14StartPipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\"9\n\x13StopPipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\"v\n\x12RunPipelineRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\x12,\n\nprovenance\x18\x02 \x03(\x0b\x32\x18.pfs_v2.CommitProvenance\x12\x0e\n\x06job_id\x18\x03 \x01(\t\"4\n\x0eRunCronRequest\x12\"\n\x08pipeline\x18\x01 \x01(\x0b\x32\x10.pps_v2.Pipeline\"#\n\x13\x43reateSecretRequest\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\"5\n\x13\x44\x65leteSecretRequest\x12\x1e\n\x06secret\x18\x01 \x01(\x0b\x32\x0e.pps_v2.Secret\"6\n\x14InspectSecretRequest\x12\x1e\n\x06secret\x18\x01 \x01(\x0b\x32\x0e.pps_v2.Secret\"\x16\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\"r\n\nSecretInfo\x12\x1e\n\x06secret\x18\x01 \x01(\x0b\x32\x0e.pps_v2.Secret\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x36\n\x12\x63reation_timestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"6\n\x0bSecretInfos\x12\'\n\x0bsecret_info\x18\x01 \x03(\x0b\x32\x12.pps_v2.SecretInfo\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse*r\n\x08JobState\x12\x10\n\x0cJOB_STARTING\x10\x00\x12\x0f\n\x0bJOB_RUNNING\x10\x01\x12\x0f\n\x0bJOB_FAILURE\x10\x02\x12\x0f\n\x0bJOB_SUCCESS\x10\x03\x12\x0e\n\nJOB_KILLED\x10\x04\x12\x11\n\rJOB_EGRESSING\x10\x05*O\n\nDatumState\x12\n\n\x06\x46\x41ILED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07SKIPPED\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\r\n\tRECOVERED\x10\x04*?\n\x0bWorkerState\x12\x0f\n\x0bPOD_RUNNING\x10\x00\x12\x0f\n\x0bPOD_SUCCESS\x10\x01\x12\x0e\n\nPOD_FAILED\x10\x02*\xad\x01\n\rPipelineState\x12\x15\n\x11PIPELINE_STARTING\x10\x00\x12\x14\n\x10PIPELINE_RUNNING\x10\x01\x12\x17\n\x13PIPELINE_RESTARTING\x10\x02\x12\x14\n\x10PIPELINE_FAILURE\x10\x03\x12\x13\n\x0fPIPELINE_PAUSED\x10\x04\x12\x14\n\x10PIPELINE_STANDBY\x10\x05\x12\x15\n\x11PIPELINE_CRASHING\x10\x06\x32\x89\r\n\x03\x41PI\x12\x34\n\tCreateJob\x12\x18.pps_v2.CreateJobRequest\x1a\x0b.pps_v2.Job\"\x00\x12:\n\nInspectJob\x12\x19.pps_v2.InspectJobRequest\x1a\x0f.pps_v2.JobInfo\"\x00\x12\x36\n\x07ListJob\x12\x16.pps_v2.ListJobRequest\x1a\x0f.pps_v2.JobInfo\"\x00\x30\x01\x12\x38\n\x08\x46lushJob\x12\x17.pps_v2.FlushJobRequest\x1a\x0f.pps_v2.JobInfo\"\x00\x30\x01\x12?\n\tDeleteJob\x12\x18.pps_v2.DeleteJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x07StopJob\x12\x16.pps_v2.StopJobRequest\x1a\x16.google.protobuf.Empty\"\x00\x12@\n\x0cInspectDatum\x12\x1b.pps_v2.InspectDatumRequest\x1a\x11.pps_v2.DatumInfo\"\x00\x12<\n\tListDatum\x12\x18.pps_v2.ListDatumRequest\x1a\x11.pps_v2.DatumInfo\"\x00\x30\x01\x12\x45\n\x0cRestartDatum\x12\x1b.pps_v2.RestartDatumRequest\x1a\x16.google.protobuf.Empty\"\x00\x12I\n\x0e\x43reatePipeline\x12\x1d.pps_v2.CreatePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12I\n\x0fInspectPipeline\x12\x1e.pps_v2.InspectPipelineRequest\x1a\x14.pps_v2.PipelineInfo\"\x00\x12\x44\n\x0cListPipeline\x12\x1b.pps_v2.ListPipelineRequest\x1a\x15.pps_v2.PipelineInfos\"\x00\x12I\n\x0e\x44\x65letePipeline\x12\x1d.pps_v2.DeletePipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12G\n\rStartPipeline\x12\x1c.pps_v2.StartPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0cStopPipeline\x12\x1b.pps_v2.StopPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0bRunPipeline\x12\x1a.pps_v2.RunPipelineRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x07RunCron\x12\x16.pps_v2.RunCronRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0c\x43reateSecret\x12\x1b.pps_v2.CreateSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0c\x44\x65leteSecret\x12\x1b.pps_v2.DeleteSecretRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\nListSecret\x12\x16.google.protobuf.Empty\x1a\x13.pps_v2.SecretInfos\"\x00\x12\x43\n\rInspectSecret\x12\x1c.pps_v2.InspectSecretRequest\x1a\x12.pps_v2.SecretInfo\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x39\n\x07GetLogs\x12\x16.pps_v2.GetLogsRequest\x1a\x12.pps_v2.LogMessage\"\x00\x30\x01\x12K\n\x0c\x41\x63tivateAuth\x12\x1b.pps_v2.ActivateAuthRequest\x1a\x1c.pps_v2.ActivateAuthResponse\"\x00\x12I\n\x0eUpdateJobState\x12\x1d.pps_v2.UpdateJobStateRequest\x1a\x16.google.protobuf.Empty\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/ppsb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DESCRIPTOR,])
 
 _JOBSTATE = _descriptor.EnumDescriptor(
   name='JobState',
-  full_name='pps.JobState',
+  full_name='pps_v2.JobState',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -61,22 +61,22 @@ _JOBSTATE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='JOB_EGRESSING', index=5, number=6,
+      name='JOB_EGRESSING', index=5, number=5,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10664,
-  serialized_end=10778,
+  serialized_start=10675,
+  serialized_end=10789,
 )
 _sym_db.RegisterEnumDescriptor(_JOBSTATE)
 
 JobState = enum_type_wrapper.EnumTypeWrapper(_JOBSTATE)
 _DATUMSTATE = _descriptor.EnumDescriptor(
   name='DatumState',
-  full_name='pps.DatumState',
+  full_name='pps_v2.DatumState',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -109,15 +109,15 @@ _DATUMSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10780,
-  serialized_end=10859,
+  serialized_start=10791,
+  serialized_end=10870,
 )
 _sym_db.RegisterEnumDescriptor(_DATUMSTATE)
 
 DatumState = enum_type_wrapper.EnumTypeWrapper(_DATUMSTATE)
 _WORKERSTATE = _descriptor.EnumDescriptor(
   name='WorkerState',
-  full_name='pps.WorkerState',
+  full_name='pps_v2.WorkerState',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -140,15 +140,15 @@ _WORKERSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10861,
-  serialized_end=10924,
+  serialized_start=10872,
+  serialized_end=10935,
 )
 _sym_db.RegisterEnumDescriptor(_WORKERSTATE)
 
 WorkerState = enum_type_wrapper.EnumTypeWrapper(_WORKERSTATE)
 _PIPELINESTATE = _descriptor.EnumDescriptor(
   name='PipelineState',
-  full_name='pps.PipelineState',
+  full_name='pps_v2.PipelineState',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
@@ -191,8 +191,8 @@ _PIPELINESTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=10927,
-  serialized_end=11100,
+  serialized_start=10938,
+  serialized_end=11111,
 )
 _sym_db.RegisterEnumDescriptor(_PIPELINESTATE)
 
@@ -202,7 +202,7 @@ JOB_RUNNING = 1
 JOB_FAILURE = 2
 JOB_SUCCESS = 3
 JOB_KILLED = 4
-JOB_EGRESSING = 6
+JOB_EGRESSING = 5
 FAILED = 0
 SUCCESS = 1
 SKIPPED = 2
@@ -223,36 +223,36 @@ PIPELINE_CRASHING = 6
 
 _SECRETMOUNT = _descriptor.Descriptor(
   name='SecretMount',
-  full_name='pps.SecretMount',
+  full_name='pps_v2.SecretMount',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='pps.SecretMount.name', index=0,
+      name='name', full_name='pps_v2.SecretMount.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.SecretMount.key', index=1,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='mount_path', full_name='pps.SecretMount.mount_path', index=2,
+      name='key', full_name='pps_v2.SecretMount.key', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='env_var', full_name='pps.SecretMount.env_var', index=3,
+      name='mount_path', full_name='pps_v2.SecretMount.mount_path', index=2,
       number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='env_var', full_name='pps_v2.SecretMount.env_var', index=3,
+      number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -269,28 +269,28 @@ _SECRETMOUNT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=183,
-  serialized_end=260,
+  serialized_start=186,
+  serialized_end=263,
 )
 
 
 _TRANSFORM_ENVENTRY = _descriptor.Descriptor(
   name='EnvEntry',
-  full_name='pps.Transform.EnvEntry',
+  full_name='pps_v2.Transform.EnvEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.Transform.EnvEntry.key', index=0,
+      name='key', full_name='pps_v2.Transform.EnvEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='pps.Transform.EnvEntry.value', index=1,
+      name='value', full_name='pps_v2.Transform.EnvEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -308,112 +308,112 @@ _TRANSFORM_ENVENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=585,
-  serialized_end=627,
+  serialized_start=597,
+  serialized_end=639,
 )
 
 _TRANSFORM = _descriptor.Descriptor(
   name='Transform',
-  full_name='pps.Transform',
+  full_name='pps_v2.Transform',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='image', full_name='pps.Transform.image', index=0,
+      name='image', full_name='pps_v2.Transform.image', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='cmd', full_name='pps.Transform.cmd', index=1,
+      name='cmd', full_name='pps_v2.Transform.cmd', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='err_cmd', full_name='pps.Transform.err_cmd', index=2,
-      number=13, type=9, cpp_type=9, label=3,
+      name='err_cmd', full_name='pps_v2.Transform.err_cmd', index=2,
+      number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='env', full_name='pps.Transform.env', index=3,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='secrets', full_name='pps.Transform.secrets', index=4,
+      name='env', full_name='pps_v2.Transform.env', index=3,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='image_pull_secrets', full_name='pps.Transform.image_pull_secrets', index=5,
-      number=9, type=9, cpp_type=9, label=3,
+      name='secrets', full_name='pps_v2.Transform.secrets', index=4,
+      number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stdin', full_name='pps.Transform.stdin', index=6,
-      number=5, type=9, cpp_type=9, label=3,
+      name='image_pull_secrets', full_name='pps_v2.Transform.image_pull_secrets', index=5,
+      number=6, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='err_stdin', full_name='pps.Transform.err_stdin', index=7,
-      number=14, type=9, cpp_type=9, label=3,
+      name='stdin', full_name='pps_v2.Transform.stdin', index=6,
+      number=7, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='accept_return_code', full_name='pps.Transform.accept_return_code', index=8,
-      number=6, type=3, cpp_type=2, label=3,
+      name='err_stdin', full_name='pps_v2.Transform.err_stdin', index=7,
+      number=8, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='debug', full_name='pps.Transform.debug', index=9,
-      number=7, type=8, cpp_type=7, label=1,
+      name='accept_return_code', full_name='pps_v2.Transform.accept_return_code', index=8,
+      number=9, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='debug', full_name='pps_v2.Transform.debug', index=9,
+      number=10, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='user', full_name='pps.Transform.user', index=10,
-      number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='working_dir', full_name='pps.Transform.working_dir', index=11,
+      name='user', full_name='pps_v2.Transform.user', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dockerfile', full_name='pps.Transform.dockerfile', index=12,
+      name='working_dir', full_name='pps_v2.Transform.working_dir', index=11,
       number=12, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='build', full_name='pps.Transform.build', index=13,
-      number=15, type=11, cpp_type=10, label=1,
+      name='dockerfile', full_name='pps_v2.Transform.dockerfile', index=12,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='build', full_name='pps_v2.Transform.build', index=13,
+      number=14, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -430,35 +430,35 @@ _TRANSFORM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=263,
-  serialized_end=627,
+  serialized_start=266,
+  serialized_end=639,
 )
 
 
 _BUILDSPEC = _descriptor.Descriptor(
   name='BuildSpec',
-  full_name='pps.BuildSpec',
+  full_name='pps_v2.BuildSpec',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='path', full_name='pps.BuildSpec.path', index=0,
+      name='path', full_name='pps_v2.BuildSpec.path', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='language', full_name='pps.BuildSpec.language', index=1,
+      name='language', full_name='pps_v2.BuildSpec.language', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='image', full_name='pps.BuildSpec.image', index=2,
+      name='image', full_name='pps_v2.BuildSpec.image', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -476,21 +476,21 @@ _BUILDSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=629,
-  serialized_end=687,
+  serialized_start=641,
+  serialized_end=699,
 )
 
 
 _TFJOB = _descriptor.Descriptor(
   name='TFJob',
-  full_name='pps.TFJob',
+  full_name='pps_v2.TFJob',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tf_job', full_name='pps.TFJob.tf_job', index=0,
+      name='tf_job', full_name='pps_v2.TFJob.tf_job', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -508,21 +508,21 @@ _TFJOB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=689,
-  serialized_end=712,
+  serialized_start=701,
+  serialized_end=724,
 )
 
 
 _EGRESS = _descriptor.Descriptor(
   name='Egress',
-  full_name='pps.Egress',
+  full_name='pps_v2.Egress',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='URL', full_name='pps.Egress.URL', index=0,
+      name='URL', full_name='pps_v2.Egress.URL', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -540,21 +540,21 @@ _EGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=714,
-  serialized_end=735,
+  serialized_start=726,
+  serialized_end=747,
 )
 
 
 _JOB = _descriptor.Descriptor(
   name='Job',
-  full_name='pps.Job',
+  full_name='pps_v2.Job',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='pps.Job.id', index=0,
+      name='id', full_name='pps_v2.Job.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -572,28 +572,28 @@ _JOB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=737,
-  serialized_end=754,
+  serialized_start=749,
+  serialized_end=766,
 )
 
 
 _METADATA_ANNOTATIONSENTRY = _descriptor.Descriptor(
   name='AnnotationsEntry',
-  full_name='pps.Metadata.AnnotationsEntry',
+  full_name='pps_v2.Metadata.AnnotationsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.Metadata.AnnotationsEntry.key', index=0,
+      name='key', full_name='pps_v2.Metadata.AnnotationsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='pps.Metadata.AnnotationsEntry.value', index=1,
+      name='value', full_name='pps_v2.Metadata.AnnotationsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -611,27 +611,27 @@ _METADATA_ANNOTATIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=865,
-  serialized_end=915,
+  serialized_start=883,
+  serialized_end=933,
 )
 
 _METADATA_LABELSENTRY = _descriptor.Descriptor(
   name='LabelsEntry',
-  full_name='pps.Metadata.LabelsEntry',
+  full_name='pps_v2.Metadata.LabelsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.Metadata.LabelsEntry.key', index=0,
+      name='key', full_name='pps_v2.Metadata.LabelsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='pps.Metadata.LabelsEntry.value', index=1,
+      name='value', full_name='pps_v2.Metadata.LabelsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -649,27 +649,27 @@ _METADATA_LABELSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=917,
-  serialized_end=962,
+  serialized_start=935,
+  serialized_end=980,
 )
 
 _METADATA = _descriptor.Descriptor(
   name='Metadata',
-  full_name='pps.Metadata',
+  full_name='pps_v2.Metadata',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='annotations', full_name='pps.Metadata.annotations', index=0,
+      name='annotations', full_name='pps_v2.Metadata.annotations', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='labels', full_name='pps.Metadata.labels', index=1,
+      name='labels', full_name='pps_v2.Metadata.labels', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -687,42 +687,42 @@ _METADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=757,
-  serialized_end=962,
+  serialized_start=769,
+  serialized_end=980,
 )
 
 
 _SERVICE = _descriptor.Descriptor(
   name='Service',
-  full_name='pps.Service',
+  full_name='pps_v2.Service',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='internal_port', full_name='pps.Service.internal_port', index=0,
+      name='internal_port', full_name='pps_v2.Service.internal_port', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='external_port', full_name='pps.Service.external_port', index=1,
+      name='external_port', full_name='pps_v2.Service.external_port', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ip', full_name='pps.Service.ip', index=2,
+      name='ip', full_name='pps_v2.Service.ip', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='type', full_name='pps.Service.type', index=3,
+      name='type', full_name='pps_v2.Service.type', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -740,21 +740,21 @@ _SERVICE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=964,
-  serialized_end=1045,
+  serialized_start=982,
+  serialized_end=1063,
 )
 
 
 _SPOUT = _descriptor.Descriptor(
   name='Spout',
-  full_name='pps.Spout',
+  full_name='pps_v2.Spout',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='service', full_name='pps.Spout.service', index=0,
+      name='service', full_name='pps_v2.Spout.service', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -772,1999 +772,106 @@ _SPOUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1047,
-  serialized_end=1085,
+  serialized_start=1065,
+  serialized_end=1106,
 )
 
 
 _PFSINPUT = _descriptor.Descriptor(
   name='PFSInput',
-  full_name='pps.PFSInput',
+  full_name='pps_v2.PFSInput',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='pps.PFSInput.name', index=0,
+      name='name', full_name='pps_v2.PFSInput.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='repo', full_name='pps.PFSInput.repo', index=1,
+      name='repo', full_name='pps_v2.PFSInput.repo', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='branch', full_name='pps.PFSInput.branch', index=2,
+      name='repo_type', full_name='pps_v2.PFSInput.repo_type', index=2,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='branch', full_name='pps_v2.PFSInput.branch', index=3,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='commit', full_name='pps.PFSInput.commit', index=3,
+      name='commit', full_name='pps_v2.PFSInput.commit', index=4,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='glob', full_name='pps.PFSInput.glob', index=4,
+      name='glob', full_name='pps_v2.PFSInput.glob', index=5,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='join_on', full_name='pps.PFSInput.join_on', index=5,
-      number=8, type=9, cpp_type=9, label=1,
+      name='join_on', full_name='pps_v2.PFSInput.join_on', index=6,
+      number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='outer_join', full_name='pps.PFSInput.outer_join', index=6,
-      number=12, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='group_by', full_name='pps.PFSInput.group_by', index=7,
-      number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='lazy', full_name='pps.PFSInput.lazy', index=8,
-      number=6, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='empty_files', full_name='pps.PFSInput.empty_files', index=9,
+      name='outer_join', full_name='pps_v2.PFSInput.outer_join', index=7,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='s3', full_name='pps.PFSInput.s3', index=10,
-      number=9, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='trigger', full_name='pps.PFSInput.trigger', index=11,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1088,
-  serialized_end=1305,
-)
-
-
-_CRONINPUT = _descriptor.Descriptor(
-  name='CronInput',
-  full_name='pps.CronInput',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='pps.CronInput.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='repo', full_name='pps.CronInput.repo', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='commit', full_name='pps.CronInput.commit', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spec', full_name='pps.CronInput.spec', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='overwrite', full_name='pps.CronInput.overwrite', index=4,
-      number=6, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='start', full_name='pps.CronInput.start', index=5,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1308,
-  serialized_end=1439,
-)
-
-
-_GITINPUT = _descriptor.Descriptor(
-  name='GitInput',
-  full_name='pps.GitInput',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='pps.GitInput.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='url', full_name='pps.GitInput.url', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='branch', full_name='pps.GitInput.branch', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='commit', full_name='pps.GitInput.commit', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1441,
-  serialized_end=1510,
-)
-
-
-_INPUT = _descriptor.Descriptor(
-  name='Input',
-  full_name='pps.Input',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pfs', full_name='pps.Input.pfs', index=0,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='join', full_name='pps.Input.join', index=1,
-      number=7, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='group', full_name='pps.Input.group', index=2,
-      number=8, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='cross', full_name='pps.Input.cross', index=3,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='union', full_name='pps.Input.union', index=4,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='cron', full_name='pps.Input.cron', index=5,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='git', full_name='pps.Input.git', index=6,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1513,
-  serialized_end=1713,
-)
-
-
-_JOBINPUT = _descriptor.Descriptor(
-  name='JobInput',
-  full_name='pps.JobInput',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='pps.JobInput.name', index=0,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='commit', full_name='pps.JobInput.commit', index=1,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='glob', full_name='pps.JobInput.glob', index=2,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='lazy', full_name='pps.JobInput.lazy', index=3,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1715,
-  serialized_end=1796,
-)
-
-
-_PARALLELISMSPEC = _descriptor.Descriptor(
-  name='ParallelismSpec',
-  full_name='pps.ParallelismSpec',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='constant', full_name='pps.ParallelismSpec.constant', index=0,
-      number=2, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='coefficient', full_name='pps.ParallelismSpec.coefficient', index=1,
-      number=3, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1798,
-  serialized_end=1860,
-)
-
-
-_INPUTFILE = _descriptor.Descriptor(
-  name='InputFile',
-  full_name='pps.InputFile',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='path', full_name='pps.InputFile.path', index=0,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='hash', full_name='pps.InputFile.hash', index=1,
-      number=5, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1862,
-  serialized_end=1901,
-)
-
-
-_DATUM = _descriptor.Descriptor(
-  name='Datum',
-  full_name='pps.Datum',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='pps.Datum.id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job', full_name='pps.Datum.job', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1903,
-  serialized_end=1945,
-)
-
-
-_DATUMINFO = _descriptor.Descriptor(
-  name='DatumInfo',
-  full_name='pps.DatumInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='datum', full_name='pps.DatumInfo.datum', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.DatumInfo.state', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.DatumInfo.stats', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pfs_state', full_name='pps.DatumInfo.pfs_state', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data', full_name='pps.DatumInfo.data', index=4,
-      number=5, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1948,
-  serialized_end=2111,
-)
-
-
-_AGGREGATE = _descriptor.Descriptor(
-  name='Aggregate',
-  full_name='pps.Aggregate',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='count', full_name='pps.Aggregate.count', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='mean', full_name='pps.Aggregate.mean', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stddev', full_name='pps.Aggregate.stddev', index=2,
-      number=3, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='fifth_percentile', full_name='pps.Aggregate.fifth_percentile', index=3,
-      number=4, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ninety_fifth_percentile', full_name='pps.Aggregate.ninety_fifth_percentile', index=4,
-      number=5, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2113,
-  serialized_end=2228,
-)
-
-
-_PROCESSSTATS = _descriptor.Descriptor(
-  name='ProcessStats',
-  full_name='pps.ProcessStats',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='download_time', full_name='pps.ProcessStats.download_time', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='process_time', full_name='pps.ProcessStats.process_time', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upload_time', full_name='pps.ProcessStats.upload_time', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='download_bytes', full_name='pps.ProcessStats.download_bytes', index=3,
-      number=4, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upload_bytes', full_name='pps.ProcessStats.upload_bytes', index=4,
-      number=5, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2231,
-  serialized_end=2438,
-)
-
-
-_AGGREGATEPROCESSSTATS = _descriptor.Descriptor(
-  name='AggregateProcessStats',
-  full_name='pps.AggregateProcessStats',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='download_time', full_name='pps.AggregateProcessStats.download_time', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='process_time', full_name='pps.AggregateProcessStats.process_time', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upload_time', full_name='pps.AggregateProcessStats.upload_time', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='download_bytes', full_name='pps.AggregateProcessStats.download_bytes', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upload_bytes', full_name='pps.AggregateProcessStats.upload_bytes', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2441,
-  serialized_end=2656,
-)
-
-
-_WORKERSTATUS = _descriptor.Descriptor(
-  name='WorkerStatus',
-  full_name='pps.WorkerStatus',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='worker_id', full_name='pps.WorkerStatus.worker_id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_id', full_name='pps.WorkerStatus.job_id', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data', full_name='pps.WorkerStatus.data', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='started', full_name='pps.WorkerStatus.started', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.WorkerStatus.stats', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='queue_size', full_name='pps.WorkerStatus.queue_size', index=5,
-      number=6, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_processed', full_name='pps.WorkerStatus.data_processed', index=6,
-      number=7, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_recovered', full_name='pps.WorkerStatus.data_recovered', index=7,
-      number=8, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2659,
-  serialized_end=2885,
-)
-
-
-_RESOURCESPEC = _descriptor.Descriptor(
-  name='ResourceSpec',
-  full_name='pps.ResourceSpec',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='cpu', full_name='pps.ResourceSpec.cpu', index=0,
-      number=1, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='memory', full_name='pps.ResourceSpec.memory', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='gpu', full_name='pps.ResourceSpec.gpu', index=2,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='disk', full_name='pps.ResourceSpec.disk', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2887,
-  serialized_end=2977,
-)
-
-
-_GPUSPEC = _descriptor.Descriptor(
-  name='GPUSpec',
-  full_name='pps.GPUSpec',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='type', full_name='pps.GPUSpec.type', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='number', full_name='pps.GPUSpec.number', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2979,
-  serialized_end=3018,
-)
-
-
-_ETCDJOBINFO = _descriptor.Descriptor(
-  name='EtcdJobInfo',
-  full_name='pps.EtcdJobInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='job', full_name='pps.EtcdJobInfo.job', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.EtcdJobInfo.pipeline', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.EtcdJobInfo.output_commit', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='restart', full_name='pps.EtcdJobInfo.restart', index=3,
-      number=4, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_processed', full_name='pps.EtcdJobInfo.data_processed', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_skipped', full_name='pps.EtcdJobInfo.data_skipped', index=5,
-      number=6, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_total', full_name='pps.EtcdJobInfo.data_total', index=6,
-      number=7, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_failed', full_name='pps.EtcdJobInfo.data_failed', index=7,
-      number=8, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_recovered', full_name='pps.EtcdJobInfo.data_recovered', index=8,
-      number=15, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.EtcdJobInfo.stats', index=9,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats_commit', full_name='pps.EtcdJobInfo.stats_commit', index=10,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.EtcdJobInfo.state', index=11,
-      number=11, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.EtcdJobInfo.reason', index=12,
-      number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='started', full_name='pps.EtcdJobInfo.started', index=13,
-      number=13, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='finished', full_name='pps.EtcdJobInfo.finished', index=14,
-      number=14, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3021,
-  serialized_end=3460,
-)
-
-
-_JOBINFO = _descriptor.Descriptor(
-  name='JobInfo',
-  full_name='pps.JobInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='job', full_name='pps.JobInfo.job', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='transform', full_name='pps.JobInfo.transform', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.JobInfo.pipeline', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pipeline_version', full_name='pps.JobInfo.pipeline_version', index=3,
-      number=13, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spec_commit', full_name='pps.JobInfo.spec_commit', index=4,
-      number=47, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='parallelism_spec', full_name='pps.JobInfo.parallelism_spec', index=5,
-      number=12, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='egress', full_name='pps.JobInfo.egress', index=6,
-      number=15, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='parent_job', full_name='pps.JobInfo.parent_job', index=7,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='started', full_name='pps.JobInfo.started', index=8,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='finished', full_name='pps.JobInfo.finished', index=9,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.JobInfo.output_commit', index=10,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.JobInfo.state', index=11,
-      number=10, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.JobInfo.reason', index=12,
-      number=35, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='service', full_name='pps.JobInfo.service', index=13,
-      number=14, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spout', full_name='pps.JobInfo.spout', index=14,
-      number=45, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_repo', full_name='pps.JobInfo.output_repo', index=15,
-      number=18, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_branch', full_name='pps.JobInfo.output_branch', index=16,
-      number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='restart', full_name='pps.JobInfo.restart', index=17,
-      number=20, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_processed', full_name='pps.JobInfo.data_processed', index=18,
-      number=22, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_skipped', full_name='pps.JobInfo.data_skipped', index=19,
-      number=30, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_failed', full_name='pps.JobInfo.data_failed', index=20,
-      number=40, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_recovered', full_name='pps.JobInfo.data_recovered', index=21,
-      number=46, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_total', full_name='pps.JobInfo.data_total', index=22,
-      number=23, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.JobInfo.stats', index=23,
-      number=31, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='worker_status', full_name='pps.JobInfo.worker_status', index=24,
-      number=24, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource_requests', full_name='pps.JobInfo.resource_requests', index=25,
-      number=25, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource_limits', full_name='pps.JobInfo.resource_limits', index=26,
-      number=36, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='sidecar_resource_limits', full_name='pps.JobInfo.sidecar_resource_limits', index=27,
-      number=48, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='input', full_name='pps.JobInfo.input', index=28,
-      number=26, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='new_branch', full_name='pps.JobInfo.new_branch', index=29,
-      number=27, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats_commit', full_name='pps.JobInfo.stats_commit', index=30,
-      number=29, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='enable_stats', full_name='pps.JobInfo.enable_stats', index=31,
-      number=32, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='salt', full_name='pps.JobInfo.salt', index=32,
-      number=33, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='chunk_spec', full_name='pps.JobInfo.chunk_spec', index=33,
-      number=37, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='datum_timeout', full_name='pps.JobInfo.datum_timeout', index=34,
-      number=38, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_timeout', full_name='pps.JobInfo.job_timeout', index=35,
-      number=39, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='datum_tries', full_name='pps.JobInfo.datum_tries', index=36,
-      number=41, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='scheduling_spec', full_name='pps.JobInfo.scheduling_spec', index=37,
-      number=42, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pod_spec', full_name='pps.JobInfo.pod_spec', index=38,
-      number=43, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pod_patch', full_name='pps.JobInfo.pod_patch', index=39,
-      number=44, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3463,
-  serialized_end=4759,
-)
-
-
-_WORKER = _descriptor.Descriptor(
-  name='Worker',
-  full_name='pps.Worker',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='pps.Worker.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.Worker.state', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4761,
-  serialized_end=4816,
-)
-
-
-_PIPELINE = _descriptor.Descriptor(
-  name='Pipeline',
-  full_name='pps.Pipeline',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='pps.Pipeline.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4818,
-  serialized_end=4842,
-)
-
-
-_ETCDPIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
-  name='JobCountsEntry',
-  full_name='pps.EtcdPipelineInfo.JobCountsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='pps.EtcdPipelineInfo.JobCountsEntry.key', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='pps.EtcdPipelineInfo.JobCountsEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5088,
-  serialized_end=5136,
-)
-
-_ETCDPIPELINEINFO = _descriptor.Descriptor(
-  name='EtcdPipelineInfo',
-  full_name='pps.EtcdPipelineInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.EtcdPipelineInfo.state', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.EtcdPipelineInfo.reason', index=1,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spec_commit', full_name='pps.EtcdPipelineInfo.spec_commit', index=2,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_counts', full_name='pps.EtcdPipelineInfo.job_counts', index=3,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='auth_token', full_name='pps.EtcdPipelineInfo.auth_token', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='last_job_state', full_name='pps.EtcdPipelineInfo.last_job_state', index=5,
-      number=6, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='parallelism', full_name='pps.EtcdPipelineInfo.parallelism', index=6,
-      number=7, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_ETCDPIPELINEINFO_JOBCOUNTSENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4845,
-  serialized_end=5136,
-)
-
-
-_PIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
-  name='JobCountsEntry',
-  full_name='pps.PipelineInfo.JobCountsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='pps.PipelineInfo.JobCountsEntry.key', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='pps.PipelineInfo.JobCountsEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5088,
-  serialized_end=5136,
-)
-
-_PIPELINEINFO = _descriptor.Descriptor(
-  name='PipelineInfo',
-  full_name='pps.PipelineInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='pps.PipelineInfo.id', index=0,
-      number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.PipelineInfo.pipeline', index=1,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='version', full_name='pps.PipelineInfo.version', index=2,
-      number=11, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='transform', full_name='pps.PipelineInfo.transform', index=3,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='tf_job', full_name='pps.PipelineInfo.tf_job', index=4,
-      number=46, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='parallelism_spec', full_name='pps.PipelineInfo.parallelism_spec', index=5,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='egress', full_name='pps.PipelineInfo.egress', index=6,
-      number=15, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='created_at', full_name='pps.PipelineInfo.created_at', index=7,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.PipelineInfo.state', index=8,
-      number=7, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stopped', full_name='pps.PipelineInfo.stopped', index=9,
-      number=38, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='recent_error', full_name='pps.PipelineInfo.recent_error', index=10,
+      name='group_by', full_name='pps_v2.PFSInput.group_by', index=8,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='workers_requested', full_name='pps.PipelineInfo.workers_requested', index=11,
-      number=49, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='workers_available', full_name='pps.PipelineInfo.workers_available', index=12,
-      number=50, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_counts', full_name='pps.PipelineInfo.job_counts', index=13,
-      number=9, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='last_job_state', full_name='pps.PipelineInfo.last_job_state', index=14,
-      number=43, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_branch', full_name='pps.PipelineInfo.output_branch', index=15,
-      number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource_requests', full_name='pps.PipelineInfo.resource_requests', index=16,
-      number=19, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource_limits', full_name='pps.PipelineInfo.resource_limits', index=17,
-      number=31, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='sidecar_resource_limits', full_name='pps.PipelineInfo.sidecar_resource_limits', index=18,
-      number=51, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='input', full_name='pps.PipelineInfo.input', index=19,
-      number=20, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='description', full_name='pps.PipelineInfo.description', index=20,
-      number=21, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='cache_size', full_name='pps.PipelineInfo.cache_size', index=21,
-      number=23, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='enable_stats', full_name='pps.PipelineInfo.enable_stats', index=22,
-      number=24, type=8, cpp_type=7, label=1,
+      name='lazy', full_name='pps_v2.PFSInput.lazy', index=9,
+      number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='salt', full_name='pps.PipelineInfo.salt', index=23,
-      number=25, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.PipelineInfo.reason', index=24,
-      number=28, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='max_queue_size', full_name='pps.PipelineInfo.max_queue_size', index=25,
-      number=29, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='service', full_name='pps.PipelineInfo.service', index=26,
-      number=30, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spout', full_name='pps.PipelineInfo.spout', index=27,
-      number=45, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='chunk_spec', full_name='pps.PipelineInfo.chunk_spec', index=28,
-      number=32, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='datum_timeout', full_name='pps.PipelineInfo.datum_timeout', index=29,
-      number=33, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_timeout', full_name='pps.PipelineInfo.job_timeout', index=30,
-      number=34, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='githook_url', full_name='pps.PipelineInfo.githook_url', index=31,
-      number=35, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spec_commit', full_name='pps.PipelineInfo.spec_commit', index=32,
-      number=36, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='standby', full_name='pps.PipelineInfo.standby', index=33,
-      number=37, type=8, cpp_type=7, label=1,
+      name='empty_files', full_name='pps_v2.PFSInput.empty_files', index=10,
+      number=10, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='datum_tries', full_name='pps.PipelineInfo.datum_tries', index=34,
-      number=39, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='scheduling_spec', full_name='pps.PipelineInfo.scheduling_spec', index=35,
-      number=40, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pod_spec', full_name='pps.PipelineInfo.pod_spec', index=36,
-      number=41, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pod_patch', full_name='pps.PipelineInfo.pod_patch', index=37,
-      number=44, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='s3_out', full_name='pps.PipelineInfo.s3_out', index=38,
-      number=47, type=8, cpp_type=7, label=1,
+      name='s3', full_name='pps_v2.PFSInput.s3', index=11,
+      number=11, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='pps.PipelineInfo.metadata', index=39,
-      number=48, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reprocess_spec', full_name='pps.PipelineInfo.reprocess_spec', index=40,
-      number=53, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_PIPELINEINFO_JOBCOUNTSENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5139,
-  serialized_end=6466,
-)
-
-
-_PIPELINEINFOS = _descriptor.Descriptor(
-  name='PipelineInfos',
-  full_name='pps.PipelineInfos',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pipeline_info', full_name='pps.PipelineInfos.pipeline_info', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6468,
-  serialized_end=6525,
-)
-
-
-_CREATEJOBREQUEST = _descriptor.Descriptor(
-  name='CreateJobRequest',
-  full_name='pps.CreateJobRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.CreateJobRequest.pipeline', index=0,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.CreateJobRequest.output_commit', index=1,
-      number=25, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='restart', full_name='pps.CreateJobRequest.restart', index=2,
-      number=26, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_processed', full_name='pps.CreateJobRequest.data_processed', index=3,
-      number=27, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_skipped', full_name='pps.CreateJobRequest.data_skipped', index=4,
-      number=28, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_total', full_name='pps.CreateJobRequest.data_total', index=5,
-      number=29, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_failed', full_name='pps.CreateJobRequest.data_failed', index=6,
-      number=30, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_recovered', full_name='pps.CreateJobRequest.data_recovered', index=7,
-      number=31, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.CreateJobRequest.stats', index=8,
-      number=32, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='stats_commit', full_name='pps.CreateJobRequest.stats_commit', index=9,
-      number=33, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pps.CreateJobRequest.state', index=10,
-      number=34, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.CreateJobRequest.reason', index=11,
-      number=35, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='started', full_name='pps.CreateJobRequest.started', index=12,
-      number=36, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='finished', full_name='pps.CreateJobRequest.finished', index=13,
-      number=37, type=11, cpp_type=10, label=1,
+      name='trigger', full_name='pps_v2.PFSInput.trigger', index=12,
+      number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -2781,42 +888,183 @@ _CREATEJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6528,
-  serialized_end=7075,
+  serialized_start=1109,
+  serialized_end=1348,
 )
 
 
-_INSPECTJOBREQUEST = _descriptor.Descriptor(
-  name='InspectJobRequest',
-  full_name='pps.InspectJobRequest',
+_CRONINPUT = _descriptor.Descriptor(
+  name='CronInput',
+  full_name='pps_v2.CronInput',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.InspectJobRequest.job', index=0,
+      name='name', full_name='pps_v2.CronInput.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='repo', full_name='pps_v2.CronInput.repo', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='repo_type', full_name='pps_v2.CronInput.repo_type', index=2,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='commit', full_name='pps_v2.CronInput.commit', index=3,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spec', full_name='pps_v2.CronInput.spec', index=4,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='overwrite', full_name='pps_v2.CronInput.overwrite', index=5,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='start', full_name='pps_v2.CronInput.start', index=6,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1351,
+  serialized_end=1501,
+)
+
+
+_INPUT = _descriptor.Descriptor(
+  name='Input',
+  full_name='pps_v2.Input',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pfs', full_name='pps_v2.Input.pfs', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.InspectJobRequest.output_commit', index=1,
-      number=3, type=11, cpp_type=10, label=1,
+      name='join', full_name='pps_v2.Input.join', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='group', full_name='pps_v2.Input.group', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cross', full_name='pps_v2.Input.cross', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='union', full_name='pps_v2.Input.union', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cron', full_name='pps_v2.Input.cron', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1504,
+  serialized_end=1694,
+)
+
+
+_JOBINPUT = _descriptor.Descriptor(
+  name='JobInput',
+  full_name='pps_v2.JobInput',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='pps_v2.JobInput.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='commit', full_name='pps_v2.JobInput.commit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='block_state', full_name='pps.InspectJobRequest.block_state', index=2,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='glob', full_name='pps_v2.JobInput.glob', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='full', full_name='pps.InspectJobRequest.full', index=3,
+      name='lazy', full_name='pps_v2.JobInput.lazy', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -2834,97 +1082,69 @@ _INSPECTJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7077,
-  serialized_end=7190,
+  serialized_start=1696,
+  serialized_end=1780,
 )
 
 
-_LISTJOBREQUEST = _descriptor.Descriptor(
-  name='ListJobRequest',
-  full_name='pps.ListJobRequest',
+_PARALLELISMSPEC = _descriptor.Descriptor(
+  name='ParallelismSpec',
+  full_name='pps_v2.ParallelismSpec',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.ListJobRequest.pipeline', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='input_commit', full_name='pps.ListJobRequest.input_commit', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.ListJobRequest.output_commit', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='history', full_name='pps.ListJobRequest.history', index=3,
-      number=4, type=3, cpp_type=2, label=1,
+      name='constant', full_name='pps_v2.ParallelismSpec.constant', index=0,
+      number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='full', full_name='pps.ListJobRequest.full', index=4,
-      number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='coefficient', full_name='pps_v2.ParallelismSpec.coefficient', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1782,
+  serialized_end=1838,
+)
+
+
+_INPUTFILE = _descriptor.Descriptor(
+  name='InputFile',
+  full_name='pps_v2.InputFile',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='jqFilter', full_name='pps.ListJobRequest.jqFilter', index=5,
-      number=6, type=9, cpp_type=9, label=1,
+      name='path', full_name='pps_v2.InputFile.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7193,
-  serialized_end=7362,
-)
-
-
-_FLUSHJOBREQUEST = _descriptor.Descriptor(
-  name='FlushJobRequest',
-  full_name='pps.FlushJobRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
     _descriptor.FieldDescriptor(
-      name='commits', full_name='pps.FlushJobRequest.commits', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='to_pipelines', full_name='pps.FlushJobRequest.to_pipelines', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='hash', full_name='pps_v2.InputFile.hash', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -2940,60 +1160,28 @@ _FLUSHJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7364,
-  serialized_end=7448,
+  serialized_start=1840,
+  serialized_end=1879,
 )
 
 
-_DELETEJOBREQUEST = _descriptor.Descriptor(
-  name='DeleteJobRequest',
-  full_name='pps.DeleteJobRequest',
+_DATUM = _descriptor.Descriptor(
+  name='Datum',
+  full_name='pps_v2.Datum',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.DeleteJobRequest.job', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7450,
-  serialized_end=7491,
-)
-
-
-_STOPJOBREQUEST = _descriptor.Descriptor(
-  name='StopJobRequest',
-  full_name='pps.StopJobRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='job', full_name='pps.StopJobRequest.job', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='id', full_name='pps_v2.Datum.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='output_commit', full_name='pps.StopJobRequest.output_commit', index=1,
+      name='job', full_name='pps_v2.Datum.job', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3011,84 +1199,1854 @@ _STOPJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7493,
-  serialized_end=7568,
+  serialized_start=1881,
+  serialized_end=1926,
 )
 
 
-_UPDATEJOBSTATEREQUEST = _descriptor.Descriptor(
-  name='UpdateJobStateRequest',
-  full_name='pps.UpdateJobStateRequest',
+_DATUMINFO = _descriptor.Descriptor(
+  name='DatumInfo',
+  full_name='pps_v2.DatumInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.UpdateJobStateRequest.job', index=0,
+      name='datum', full_name='pps_v2.DatumInfo.datum', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='state', full_name='pps.UpdateJobStateRequest.state', index=1,
+      name='state', full_name='pps_v2.DatumInfo.state', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='reason', full_name='pps.UpdateJobStateRequest.reason', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='stats', full_name='pps_v2.DatumInfo.stats', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='restart', full_name='pps.UpdateJobStateRequest.restart', index=3,
+      name='pfs_state', full_name='pps_v2.DatumInfo.pfs_state', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='pps_v2.DatumInfo.data', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1929,
+  serialized_end=2107,
+)
+
+
+_AGGREGATE = _descriptor.Descriptor(
+  name='Aggregate',
+  full_name='pps_v2.Aggregate',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='count', full_name='pps_v2.Aggregate.count', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='mean', full_name='pps_v2.Aggregate.mean', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stddev', full_name='pps_v2.Aggregate.stddev', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='fifth_percentile', full_name='pps_v2.Aggregate.fifth_percentile', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ninety_fifth_percentile', full_name='pps_v2.Aggregate.ninety_fifth_percentile', index=4,
+      number=5, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2109,
+  serialized_end=2224,
+)
+
+
+_PROCESSSTATS = _descriptor.Descriptor(
+  name='ProcessStats',
+  full_name='pps_v2.ProcessStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='download_time', full_name='pps_v2.ProcessStats.download_time', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='process_time', full_name='pps_v2.ProcessStats.process_time', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='upload_time', full_name='pps_v2.ProcessStats.upload_time', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='download_bytes', full_name='pps_v2.ProcessStats.download_bytes', index=3,
       number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_processed', full_name='pps.UpdateJobStateRequest.data_processed', index=4,
+      name='upload_bytes', full_name='pps_v2.ProcessStats.upload_bytes', index=4,
+      number=5, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2227,
+  serialized_end=2434,
+)
+
+
+_AGGREGATEPROCESSSTATS = _descriptor.Descriptor(
+  name='AggregateProcessStats',
+  full_name='pps_v2.AggregateProcessStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='download_time', full_name='pps_v2.AggregateProcessStats.download_time', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='process_time', full_name='pps_v2.AggregateProcessStats.process_time', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='upload_time', full_name='pps_v2.AggregateProcessStats.upload_time', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='download_bytes', full_name='pps_v2.AggregateProcessStats.download_bytes', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='upload_bytes', full_name='pps_v2.AggregateProcessStats.upload_bytes', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2437,
+  serialized_end=2667,
+)
+
+
+_WORKERSTATUS = _descriptor.Descriptor(
+  name='WorkerStatus',
+  full_name='pps_v2.WorkerStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='worker_id', full_name='pps_v2.WorkerStatus.worker_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_id', full_name='pps_v2.WorkerStatus.job_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_status', full_name='pps_v2.WorkerStatus.datum_status', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2669,
+  serialized_end=2761,
+)
+
+
+_DATUMSTATUS = _descriptor.Descriptor(
+  name='DatumStatus',
+  full_name='pps_v2.DatumStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='started', full_name='pps_v2.DatumStatus.started', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='pps_v2.DatumStatus.data', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2763,
+  serialized_end=2854,
+)
+
+
+_RESOURCESPEC = _descriptor.Descriptor(
+  name='ResourceSpec',
+  full_name='pps_v2.ResourceSpec',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cpu', full_name='pps_v2.ResourceSpec.cpu', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='memory', full_name='pps_v2.ResourceSpec.memory', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='gpu', full_name='pps_v2.ResourceSpec.gpu', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='disk', full_name='pps_v2.ResourceSpec.disk', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2856,
+  serialized_end=2943,
+)
+
+
+_GPUSPEC = _descriptor.Descriptor(
+  name='GPUSpec',
+  full_name='pps_v2.GPUSpec',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='type', full_name='pps_v2.GPUSpec.type', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='number', full_name='pps_v2.GPUSpec.number', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2945,
+  serialized_end=2984,
+)
+
+
+_STOREDJOBINFO = _descriptor.Descriptor(
+  name='StoredJobInfo',
+  full_name='pps_v2.StoredJobInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.StoredJobInfo.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.StoredJobInfo.pipeline', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.StoredJobInfo.output_commit', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='restart', full_name='pps_v2.StoredJobInfo.restart', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_processed', full_name='pps_v2.StoredJobInfo.data_processed', index=4,
       number=5, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_skipped', full_name='pps.UpdateJobStateRequest.data_skipped', index=5,
+      name='data_skipped', full_name='pps_v2.StoredJobInfo.data_skipped', index=5,
       number=6, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_failed', full_name='pps.UpdateJobStateRequest.data_failed', index=6,
+      name='data_total', full_name='pps_v2.StoredJobInfo.data_total', index=6,
       number=7, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_recovered', full_name='pps.UpdateJobStateRequest.data_recovered', index=7,
+      name='data_failed', full_name='pps_v2.StoredJobInfo.data_failed', index=7,
       number=8, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_total', full_name='pps.UpdateJobStateRequest.data_total', index=8,
+      name='data_recovered', full_name='pps_v2.StoredJobInfo.data_recovered', index=8,
       number=9, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stats', full_name='pps.UpdateJobStateRequest.stats', index=9,
+      name='stats', full_name='pps_v2.StoredJobInfo.stats', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats_commit', full_name='pps_v2.StoredJobInfo.stats_commit', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.StoredJobInfo.state', index=11,
+      number=12, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.StoredJobInfo.reason', index=12,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='started', full_name='pps_v2.StoredJobInfo.started', index=13,
+      number=14, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='finished', full_name='pps_v2.StoredJobInfo.finished', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2987,
+  serialized_end=3446,
+)
+
+
+_JOBINFO = _descriptor.Descriptor(
+  name='JobInfo',
+  full_name='pps_v2.JobInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.JobInfo.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='transform', full_name='pps_v2.JobInfo.transform', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.JobInfo.pipeline', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipeline_version', full_name='pps_v2.JobInfo.pipeline_version', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spec_commit', full_name='pps_v2.JobInfo.spec_commit', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='parallelism_spec', full_name='pps_v2.JobInfo.parallelism_spec', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='egress', full_name='pps_v2.JobInfo.egress', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='parent_job', full_name='pps_v2.JobInfo.parent_job', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='started', full_name='pps_v2.JobInfo.started', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='finished', full_name='pps_v2.JobInfo.finished', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.JobInfo.output_commit', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.JobInfo.state', index=11,
+      number=12, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.JobInfo.reason', index=12,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='service', full_name='pps_v2.JobInfo.service', index=13,
+      number=14, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spout', full_name='pps_v2.JobInfo.spout', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_repo', full_name='pps_v2.JobInfo.output_repo', index=15,
+      number=16, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_branch', full_name='pps_v2.JobInfo.output_branch', index=16,
+      number=17, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='restart', full_name='pps_v2.JobInfo.restart', index=17,
+      number=18, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_processed', full_name='pps_v2.JobInfo.data_processed', index=18,
+      number=19, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_skipped', full_name='pps_v2.JobInfo.data_skipped', index=19,
+      number=20, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_failed', full_name='pps_v2.JobInfo.data_failed', index=20,
+      number=21, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_recovered', full_name='pps_v2.JobInfo.data_recovered', index=21,
+      number=22, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_total', full_name='pps_v2.JobInfo.data_total', index=22,
+      number=23, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats', full_name='pps_v2.JobInfo.stats', index=23,
+      number=24, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='worker_status', full_name='pps_v2.JobInfo.worker_status', index=24,
+      number=25, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resource_requests', full_name='pps_v2.JobInfo.resource_requests', index=25,
+      number=26, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resource_limits', full_name='pps_v2.JobInfo.resource_limits', index=26,
+      number=27, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sidecar_resource_limits', full_name='pps_v2.JobInfo.sidecar_resource_limits', index=27,
+      number=28, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input', full_name='pps_v2.JobInfo.input', index=28,
+      number=29, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='new_branch', full_name='pps_v2.JobInfo.new_branch', index=29,
+      number=30, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats_commit', full_name='pps_v2.JobInfo.stats_commit', index=30,
+      number=31, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='enable_stats', full_name='pps_v2.JobInfo.enable_stats', index=31,
+      number=32, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='salt', full_name='pps_v2.JobInfo.salt', index=32,
+      number=33, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='chunk_spec', full_name='pps_v2.JobInfo.chunk_spec', index=33,
+      number=34, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_timeout', full_name='pps_v2.JobInfo.datum_timeout', index=34,
+      number=35, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_timeout', full_name='pps_v2.JobInfo.job_timeout', index=35,
+      number=36, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_tries', full_name='pps_v2.JobInfo.datum_tries', index=36,
+      number=37, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='scheduling_spec', full_name='pps_v2.JobInfo.scheduling_spec', index=37,
+      number=38, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_spec', full_name='pps_v2.JobInfo.pod_spec', index=38,
+      number=39, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_patch', full_name='pps_v2.JobInfo.pod_patch', index=39,
+      number=40, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3449,
+  serialized_end=4787,
+)
+
+
+_WORKER = _descriptor.Descriptor(
+  name='Worker',
+  full_name='pps_v2.Worker',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='pps_v2.Worker.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.Worker.state', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4789,
+  serialized_end=4847,
+)
+
+
+_PIPELINE = _descriptor.Descriptor(
+  name='Pipeline',
+  full_name='pps_v2.Pipeline',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='pps_v2.Pipeline.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4849,
+  serialized_end=4873,
+)
+
+
+_STOREDPIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
+  name='JobCountsEntry',
+  full_name='pps_v2.StoredPipelineInfo.JobCountsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='pps_v2.StoredPipelineInfo.JobCountsEntry.key', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='pps_v2.StoredPipelineInfo.JobCountsEntry.value', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5171,
+  serialized_end=5219,
+)
+
+_STOREDPIPELINEINFO = _descriptor.Descriptor(
+  name='StoredPipelineInfo',
+  full_name='pps_v2.StoredPipelineInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.StoredPipelineInfo.state', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.StoredPipelineInfo.reason', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spec_commit', full_name='pps_v2.StoredPipelineInfo.spec_commit', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_counts', full_name='pps_v2.StoredPipelineInfo.job_counts', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='auth_token', full_name='pps_v2.StoredPipelineInfo.auth_token', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='last_job_state', full_name='pps_v2.StoredPipelineInfo.last_job_state', index=5,
+      number=6, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='parallelism', full_name='pps_v2.StoredPipelineInfo.parallelism', index=6,
+      number=7, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.StoredPipelineInfo.pipeline', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_STOREDPIPELINEINFO_JOBCOUNTSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4876,
+  serialized_end=5219,
+)
+
+
+_PIPELINEINFO_JOBCOUNTSENTRY = _descriptor.Descriptor(
+  name='JobCountsEntry',
+  full_name='pps_v2.PipelineInfo.JobCountsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='pps_v2.PipelineInfo.JobCountsEntry.key', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='pps_v2.PipelineInfo.JobCountsEntry.value', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5171,
+  serialized_end=5219,
+)
+
+_PIPELINEINFO = _descriptor.Descriptor(
+  name='PipelineInfo',
+  full_name='pps_v2.PipelineInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.PipelineInfo.pipeline', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='pps_v2.PipelineInfo.version', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='transform', full_name='pps_v2.PipelineInfo.transform', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tf_job', full_name='pps_v2.PipelineInfo.tf_job', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='parallelism_spec', full_name='pps_v2.PipelineInfo.parallelism_spec', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='egress', full_name='pps_v2.PipelineInfo.egress', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='pps_v2.PipelineInfo.created_at', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.PipelineInfo.state', index=7,
+      number=8, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stopped', full_name='pps_v2.PipelineInfo.stopped', index=8,
+      number=9, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='recent_error', full_name='pps_v2.PipelineInfo.recent_error', index=9,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='workers_requested', full_name='pps_v2.PipelineInfo.workers_requested', index=10,
+      number=11, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='workers_available', full_name='pps_v2.PipelineInfo.workers_available', index=11,
+      number=12, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_counts', full_name='pps_v2.PipelineInfo.job_counts', index=12,
+      number=13, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='last_job_state', full_name='pps_v2.PipelineInfo.last_job_state', index=13,
+      number=14, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_branch', full_name='pps_v2.PipelineInfo.output_branch', index=14,
+      number=15, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resource_requests', full_name='pps_v2.PipelineInfo.resource_requests', index=15,
+      number=16, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resource_limits', full_name='pps_v2.PipelineInfo.resource_limits', index=16,
+      number=17, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sidecar_resource_limits', full_name='pps_v2.PipelineInfo.sidecar_resource_limits', index=17,
+      number=18, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input', full_name='pps_v2.PipelineInfo.input', index=18,
+      number=19, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='description', full_name='pps_v2.PipelineInfo.description', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cache_size', full_name='pps_v2.PipelineInfo.cache_size', index=20,
+      number=21, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='enable_stats', full_name='pps_v2.PipelineInfo.enable_stats', index=21,
+      number=22, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='salt', full_name='pps_v2.PipelineInfo.salt', index=22,
+      number=23, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.PipelineInfo.reason', index=23,
+      number=24, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='max_queue_size', full_name='pps_v2.PipelineInfo.max_queue_size', index=24,
+      number=25, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='service', full_name='pps_v2.PipelineInfo.service', index=25,
+      number=26, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spout', full_name='pps_v2.PipelineInfo.spout', index=26,
+      number=27, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='chunk_spec', full_name='pps_v2.PipelineInfo.chunk_spec', index=27,
+      number=28, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_timeout', full_name='pps_v2.PipelineInfo.datum_timeout', index=28,
+      number=29, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_timeout', full_name='pps_v2.PipelineInfo.job_timeout', index=29,
+      number=30, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spec_commit', full_name='pps_v2.PipelineInfo.spec_commit', index=30,
+      number=32, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='standby', full_name='pps_v2.PipelineInfo.standby', index=31,
+      number=33, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_tries', full_name='pps_v2.PipelineInfo.datum_tries', index=32,
+      number=34, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='scheduling_spec', full_name='pps_v2.PipelineInfo.scheduling_spec', index=33,
+      number=35, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_spec', full_name='pps_v2.PipelineInfo.pod_spec', index=34,
+      number=36, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_patch', full_name='pps_v2.PipelineInfo.pod_patch', index=35,
+      number=37, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='s3_out', full_name='pps_v2.PipelineInfo.s3_out', index=36,
+      number=38, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='pps_v2.PipelineInfo.metadata', index=37,
+      number=39, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reprocess_spec', full_name='pps_v2.PipelineInfo.reprocess_spec', index=38,
+      number=40, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_PIPELINEINFO_JOBCOUNTSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5222,
+  serialized_end=6528,
+)
+
+
+_PIPELINEINFOS = _descriptor.Descriptor(
+  name='PipelineInfos',
+  full_name='pps_v2.PipelineInfos',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pipeline_info', full_name='pps_v2.PipelineInfos.pipeline_info', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=6530,
+  serialized_end=6590,
+)
+
+
+_CREATEJOBREQUEST = _descriptor.Descriptor(
+  name='CreateJobRequest',
+  full_name='pps_v2.CreateJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.CreateJobRequest.pipeline', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.CreateJobRequest.output_commit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='restart', full_name='pps_v2.CreateJobRequest.restart', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_processed', full_name='pps_v2.CreateJobRequest.data_processed', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_skipped', full_name='pps_v2.CreateJobRequest.data_skipped', index=4,
+      number=5, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_total', full_name='pps_v2.CreateJobRequest.data_total', index=5,
+      number=6, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_failed', full_name='pps_v2.CreateJobRequest.data_failed', index=6,
+      number=7, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_recovered', full_name='pps_v2.CreateJobRequest.data_recovered', index=7,
+      number=8, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats', full_name='pps_v2.CreateJobRequest.stats', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats_commit', full_name='pps_v2.CreateJobRequest.stats_commit', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.CreateJobRequest.state', index=10,
+      number=11, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.CreateJobRequest.reason', index=11,
+      number=12, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='started', full_name='pps_v2.CreateJobRequest.started', index=12,
+      number=13, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='finished', full_name='pps_v2.CreateJobRequest.finished', index=13,
+      number=14, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=6593,
+  serialized_end=7029,
+)
+
+
+_INSPECTJOBREQUEST = _descriptor.Descriptor(
+  name='InspectJobRequest',
+  full_name='pps_v2.InspectJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.InspectJobRequest.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.InspectJobRequest.output_commit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='block_state', full_name='pps_v2.InspectJobRequest.block_state', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='full', full_name='pps_v2.InspectJobRequest.full', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7031,
+  serialized_end=7150,
+)
+
+
+_LISTJOBREQUEST = _descriptor.Descriptor(
+  name='ListJobRequest',
+  full_name='pps_v2.ListJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='pps_v2.ListJobRequest.pipeline', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input_commit', full_name='pps_v2.ListJobRequest.input_commit', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.ListJobRequest.output_commit', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='history', full_name='pps_v2.ListJobRequest.history', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='full', full_name='pps_v2.ListJobRequest.full', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='jqFilter', full_name='pps_v2.ListJobRequest.jqFilter', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7153,
+  serialized_end=7331,
+)
+
+
+_FLUSHJOBREQUEST = _descriptor.Descriptor(
+  name='FlushJobRequest',
+  full_name='pps_v2.FlushJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='commits', full_name='pps_v2.FlushJobRequest.commits', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='to_pipelines', full_name='pps_v2.FlushJobRequest.to_pipelines', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7333,
+  serialized_end=7423,
+)
+
+
+_DELETEJOBREQUEST = _descriptor.Descriptor(
+  name='DeleteJobRequest',
+  full_name='pps_v2.DeleteJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.DeleteJobRequest.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7425,
+  serialized_end=7469,
+)
+
+
+_STOPJOBREQUEST = _descriptor.Descriptor(
+  name='StopJobRequest',
+  full_name='pps_v2.StopJobRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.StopJobRequest.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_commit', full_name='pps_v2.StopJobRequest.output_commit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.StopJobRequest.reason', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7471,
+  serialized_end=7568,
+)
+
+
+_UPDATEJOBSTATEREQUEST = _descriptor.Descriptor(
+  name='UpdateJobStateRequest',
+  full_name='pps_v2.UpdateJobStateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.UpdateJobStateRequest.job', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='pps_v2.UpdateJobStateRequest.state', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reason', full_name='pps_v2.UpdateJobStateRequest.reason', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='restart', full_name='pps_v2.UpdateJobStateRequest.restart', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_processed', full_name='pps_v2.UpdateJobStateRequest.data_processed', index=4,
+      number=5, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_skipped', full_name='pps_v2.UpdateJobStateRequest.data_skipped', index=5,
+      number=6, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_failed', full_name='pps_v2.UpdateJobStateRequest.data_failed', index=6,
+      number=7, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_recovered', full_name='pps_v2.UpdateJobStateRequest.data_recovered', index=7,
+      number=8, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data_total', full_name='pps_v2.UpdateJobStateRequest.data_total', index=8,
+      number=9, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stats', full_name='pps_v2.UpdateJobStateRequest.stats', index=9,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3107,165 +3065,165 @@ _UPDATEJOBSTATEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=7571,
-  serialized_end=7825,
+  serialized_end=7834,
 )
 
 
 _GETLOGSREQUEST = _descriptor.Descriptor(
   name='GetLogsRequest',
-  full_name='pps.GetLogsRequest',
+  full_name='pps_v2.GetLogsRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.GetLogsRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.GetLogsRequest.pipeline', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job', full_name='pps_v2.GetLogsRequest.job', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.GetLogsRequest.job', index=1,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data_filters', full_name='pps.GetLogsRequest.data_filters', index=2,
+      name='data_filters', full_name='pps_v2.GetLogsRequest.data_filters', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='datum', full_name='pps.GetLogsRequest.datum', index=3,
-      number=6, type=11, cpp_type=10, label=1,
+      name='datum', full_name='pps_v2.GetLogsRequest.datum', index=3,
+      number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='master', full_name='pps.GetLogsRequest.master', index=4,
+      name='master', full_name='pps_v2.GetLogsRequest.master', index=4,
       number=5, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='follow', full_name='pps.GetLogsRequest.follow', index=5,
-      number=7, type=8, cpp_type=7, label=1,
+      name='follow', full_name='pps_v2.GetLogsRequest.follow', index=5,
+      number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tail', full_name='pps.GetLogsRequest.tail', index=6,
-      number=8, type=3, cpp_type=2, label=1,
+      name='tail', full_name='pps_v2.GetLogsRequest.tail', index=6,
+      number=7, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='use_loki_backend', full_name='pps.GetLogsRequest.use_loki_backend', index=7,
-      number=9, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='since', full_name='pps.GetLogsRequest.since', index=8,
-      number=10, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7828,
-  serialized_end=8069,
-)
-
-
-_LOGMESSAGE = _descriptor.Descriptor(
-  name='LogMessage',
-  full_name='pps.LogMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pipeline_name', full_name='pps.LogMessage.pipeline_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_id', full_name='pps.LogMessage.job_id', index=1,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='worker_id', full_name='pps.LogMessage.worker_id', index=2,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='datum_id', full_name='pps.LogMessage.datum_id', index=3,
-      number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='master', full_name='pps.LogMessage.master', index=4,
-      number=10, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data', full_name='pps.LogMessage.data', index=5,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='user', full_name='pps.LogMessage.user', index=6,
+      name='use_loki_backend', full_name='pps_v2.GetLogsRequest.use_loki_backend', index=7,
       number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ts', full_name='pps.LogMessage.ts', index=7,
-      number=5, type=11, cpp_type=10, label=1,
+      name='since', full_name='pps_v2.GetLogsRequest.since', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=7837,
+  serialized_end=8081,
+)
+
+
+_LOGMESSAGE = _descriptor.Descriptor(
+  name='LogMessage',
+  full_name='pps_v2.LogMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pipeline_name', full_name='pps_v2.LogMessage.pipeline_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_id', full_name='pps_v2.LogMessage.job_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='worker_id', full_name='pps_v2.LogMessage.worker_id', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_id', full_name='pps_v2.LogMessage.datum_id', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='master', full_name='pps_v2.LogMessage.master', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='pps_v2.LogMessage.data', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user', full_name='pps_v2.LogMessage.user', index=6,
+      number=7, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ts', full_name='pps_v2.LogMessage.ts', index=7,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='message', full_name='pps.LogMessage.message', index=8,
-      number=6, type=9, cpp_type=9, label=1,
+      name='message', full_name='pps_v2.LogMessage.message', index=8,
+      number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3282,28 +3240,28 @@ _LOGMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8072,
-  serialized_end=8277,
+  serialized_start=8084,
+  serialized_end=8292,
 )
 
 
 _RESTARTDATUMREQUEST = _descriptor.Descriptor(
   name='RestartDatumRequest',
-  full_name='pps.RestartDatumRequest',
+  full_name='pps_v2.RestartDatumRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.RestartDatumRequest.job', index=0,
+      name='job', full_name='pps_v2.RestartDatumRequest.job', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='data_filters', full_name='pps.RestartDatumRequest.data_filters', index=1,
+      name='data_filters', full_name='pps_v2.RestartDatumRequest.data_filters', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -3321,21 +3279,21 @@ _RESTARTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8279,
-  serialized_end=8345,
+  serialized_start=8294,
+  serialized_end=8363,
 )
 
 
 _INSPECTDATUMREQUEST = _descriptor.Descriptor(
   name='InspectDatumRequest',
-  full_name='pps.InspectDatumRequest',
+  full_name='pps_v2.InspectDatumRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='datum', full_name='pps.InspectDatumRequest.datum', index=0,
+      name='datum', full_name='pps_v2.InspectDatumRequest.datum', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3353,22 +3311,29 @@ _INSPECTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8347,
-  serialized_end=8395,
+  serialized_start=8365,
+  serialized_end=8416,
 )
 
 
 _LISTDATUMREQUEST = _descriptor.Descriptor(
   name='ListDatumRequest',
-  full_name='pps.ListDatumRequest',
+  full_name='pps_v2.ListDatumRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='job', full_name='pps.ListDatumRequest.job', index=0,
+      name='job', full_name='pps_v2.ListDatumRequest.job', index=0,
       number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input', full_name='pps_v2.ListDatumRequest.input', index=1,
+      number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3385,28 +3350,28 @@ _LISTDATUMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8397,
-  serialized_end=8438,
+  serialized_start=8418,
+  serialized_end=8492,
 )
 
 
 _CHUNKSPEC = _descriptor.Descriptor(
   name='ChunkSpec',
-  full_name='pps.ChunkSpec',
+  full_name='pps_v2.ChunkSpec',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='number', full_name='pps.ChunkSpec.number', index=0,
+      name='number', full_name='pps_v2.ChunkSpec.number', index=0,
       number=1, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='size_bytes', full_name='pps.ChunkSpec.size_bytes', index=1,
+      name='size_bytes', full_name='pps_v2.ChunkSpec.size_bytes', index=1,
       number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -3424,28 +3389,28 @@ _CHUNKSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8440,
-  serialized_end=8487,
+  serialized_start=8494,
+  serialized_end=8541,
 )
 
 
 _SCHEDULINGSPEC_NODESELECTORENTRY = _descriptor.Descriptor(
   name='NodeSelectorEntry',
-  full_name='pps.SchedulingSpec.NodeSelectorEntry',
+  full_name='pps_v2.SchedulingSpec.NodeSelectorEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='pps.SchedulingSpec.NodeSelectorEntry.key', index=0,
+      name='key', full_name='pps_v2.SchedulingSpec.NodeSelectorEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='pps.SchedulingSpec.NodeSelectorEntry.value', index=1,
+      name='value', full_name='pps_v2.SchedulingSpec.NodeSelectorEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -3463,27 +3428,27 @@ _SCHEDULINGSPEC_NODESELECTORENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8599,
-  serialized_end=8650,
+  serialized_start=8656,
+  serialized_end=8707,
 )
 
 _SCHEDULINGSPEC = _descriptor.Descriptor(
   name='SchedulingSpec',
-  full_name='pps.SchedulingSpec',
+  full_name='pps_v2.SchedulingSpec',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='node_selector', full_name='pps.SchedulingSpec.node_selector', index=0,
+      name='node_selector', full_name='pps_v2.SchedulingSpec.node_selector', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='priority_class_name', full_name='pps.SchedulingSpec.priority_class_name', index=1,
+      name='priority_class_name', full_name='pps_v2.SchedulingSpec.priority_class_name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -3501,232 +3466,232 @@ _SCHEDULINGSPEC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8490,
-  serialized_end=8650,
+  serialized_start=8544,
+  serialized_end=8707,
 )
 
 
 _CREATEPIPELINEREQUEST = _descriptor.Descriptor(
   name='CreatePipelineRequest',
-  full_name='pps.CreatePipelineRequest',
+  full_name='pps_v2.CreatePipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.CreatePipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.CreatePipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tf_job', full_name='pps.CreatePipelineRequest.tf_job', index=1,
-      number=35, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='transform', full_name='pps.CreatePipelineRequest.transform', index=2,
+      name='tf_job', full_name='pps_v2.CreatePipelineRequest.tf_job', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='parallelism_spec', full_name='pps.CreatePipelineRequest.parallelism_spec', index=3,
-      number=7, type=11, cpp_type=10, label=1,
+      name='transform', full_name='pps_v2.CreatePipelineRequest.transform', index=2,
+      number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='egress', full_name='pps.CreatePipelineRequest.egress', index=4,
+      name='parallelism_spec', full_name='pps_v2.CreatePipelineRequest.parallelism_spec', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='egress', full_name='pps_v2.CreatePipelineRequest.egress', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='update', full_name='pps_v2.CreatePipelineRequest.update', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_branch', full_name='pps_v2.CreatePipelineRequest.output_branch', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='s3_out', full_name='pps_v2.CreatePipelineRequest.s3_out', index=7,
+      number=8, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resource_requests', full_name='pps_v2.CreatePipelineRequest.resource_requests', index=8,
       number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='update', full_name='pps.CreatePipelineRequest.update', index=5,
-      number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='resource_limits', full_name='pps_v2.CreatePipelineRequest.resource_limits', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='output_branch', full_name='pps.CreatePipelineRequest.output_branch', index=6,
-      number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='sidecar_resource_limits', full_name='pps_v2.CreatePipelineRequest.sidecar_resource_limits', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='s3_out', full_name='pps.CreatePipelineRequest.s3_out', index=7,
-      number=36, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='resource_requests', full_name='pps.CreatePipelineRequest.resource_requests', index=8,
+      name='input', full_name='pps_v2.CreatePipelineRequest.input', index=11,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='resource_limits', full_name='pps.CreatePipelineRequest.resource_limits', index=9,
-      number=22, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='description', full_name='pps_v2.CreatePipelineRequest.description', index=12,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sidecar_resource_limits', full_name='pps.CreatePipelineRequest.sidecar_resource_limits', index=10,
-      number=47, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='input', full_name='pps.CreatePipelineRequest.input', index=11,
-      number=13, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='description', full_name='pps.CreatePipelineRequest.description', index=12,
+      name='cache_size', full_name='pps_v2.CreatePipelineRequest.cache_size', index=13,
       number=14, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='cache_size', full_name='pps.CreatePipelineRequest.cache_size', index=13,
-      number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='enable_stats', full_name='pps.CreatePipelineRequest.enable_stats', index=14,
-      number=17, type=8, cpp_type=7, label=1,
+      name='enable_stats', full_name='pps_v2.CreatePipelineRequest.enable_stats', index=14,
+      number=15, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='reprocess', full_name='pps.CreatePipelineRequest.reprocess', index=15,
-      number=18, type=8, cpp_type=7, label=1,
+      name='reprocess', full_name='pps_v2.CreatePipelineRequest.reprocess', index=15,
+      number=16, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='max_queue_size', full_name='pps.CreatePipelineRequest.max_queue_size', index=16,
-      number=20, type=3, cpp_type=2, label=1,
+      name='max_queue_size', full_name='pps_v2.CreatePipelineRequest.max_queue_size', index=16,
+      number=17, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='service', full_name='pps.CreatePipelineRequest.service', index=17,
+      name='service', full_name='pps_v2.CreatePipelineRequest.service', index=17,
+      number=18, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spout', full_name='pps_v2.CreatePipelineRequest.spout', index=18,
+      number=19, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='chunk_spec', full_name='pps_v2.CreatePipelineRequest.chunk_spec', index=19,
+      number=20, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='datum_timeout', full_name='pps_v2.CreatePipelineRequest.datum_timeout', index=20,
       number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='spout', full_name='pps.CreatePipelineRequest.spout', index=18,
-      number=33, type=11, cpp_type=10, label=1,
+      name='job_timeout', full_name='pps_v2.CreatePipelineRequest.job_timeout', index=21,
+      number=22, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='chunk_spec', full_name='pps.CreatePipelineRequest.chunk_spec', index=19,
-      number=23, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='datum_timeout', full_name='pps.CreatePipelineRequest.datum_timeout', index=20,
-      number=24, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='job_timeout', full_name='pps.CreatePipelineRequest.job_timeout', index=21,
-      number=25, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='salt', full_name='pps.CreatePipelineRequest.salt', index=22,
-      number=26, type=9, cpp_type=9, label=1,
+      name='salt', full_name='pps_v2.CreatePipelineRequest.salt', index=22,
+      number=23, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='standby', full_name='pps.CreatePipelineRequest.standby', index=23,
-      number=27, type=8, cpp_type=7, label=1,
+      name='standby', full_name='pps_v2.CreatePipelineRequest.standby', index=23,
+      number=24, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='datum_tries', full_name='pps.CreatePipelineRequest.datum_tries', index=24,
-      number=28, type=3, cpp_type=2, label=1,
+      name='datum_tries', full_name='pps_v2.CreatePipelineRequest.datum_tries', index=24,
+      number=25, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='scheduling_spec', full_name='pps.CreatePipelineRequest.scheduling_spec', index=25,
+      name='scheduling_spec', full_name='pps_v2.CreatePipelineRequest.scheduling_spec', index=25,
+      number=26, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_spec', full_name='pps_v2.CreatePipelineRequest.pod_spec', index=26,
+      number=27, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pod_patch', full_name='pps_v2.CreatePipelineRequest.pod_patch', index=27,
+      number=28, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='spec_commit', full_name='pps_v2.CreatePipelineRequest.spec_commit', index=28,
       number=29, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='pod_spec', full_name='pps.CreatePipelineRequest.pod_spec', index=26,
-      number=30, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pod_patch', full_name='pps.CreatePipelineRequest.pod_patch', index=27,
-      number=32, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='spec_commit', full_name='pps.CreatePipelineRequest.spec_commit', index=28,
-      number=34, type=11, cpp_type=10, label=1,
+      name='metadata', full_name='pps_v2.CreatePipelineRequest.metadata', index=29,
+      number=30, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='pps.CreatePipelineRequest.metadata', index=29,
-      number=46, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='reprocess_spec', full_name='pps.CreatePipelineRequest.reprocess_spec', index=30,
-      number=49, type=9, cpp_type=9, label=1,
+      name='reprocess_spec', full_name='pps_v2.CreatePipelineRequest.reprocess_spec', index=30,
+      number=31, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3743,21 +3708,21 @@ _CREATEPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8653,
-  serialized_end=9633,
+  serialized_start=8710,
+  serialized_end=9699,
 )
 
 
 _INSPECTPIPELINEREQUEST = _descriptor.Descriptor(
   name='InspectPipelineRequest',
-  full_name='pps.InspectPipelineRequest',
+  full_name='pps_v2.InspectPipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.InspectPipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.InspectPipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3775,42 +3740,42 @@ _INSPECTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9635,
-  serialized_end=9692,
+  serialized_start=9701,
+  serialized_end=9761,
 )
 
 
 _LISTPIPELINEREQUEST = _descriptor.Descriptor(
   name='ListPipelineRequest',
-  full_name='pps.ListPipelineRequest',
+  full_name='pps_v2.ListPipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.ListPipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.ListPipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='history', full_name='pps.ListPipelineRequest.history', index=1,
+      name='history', full_name='pps_v2.ListPipelineRequest.history', index=1,
       number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='allow_incomplete', full_name='pps.ListPipelineRequest.allow_incomplete', index=2,
+      name='allow_incomplete', full_name='pps_v2.ListPipelineRequest.allow_incomplete', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='jqFilter', full_name='pps.ListPipelineRequest.jqFilter', index=3,
+      name='jqFilter', full_name='pps_v2.ListPipelineRequest.jqFilter', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -3828,47 +3793,47 @@ _LISTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9694,
-  serialized_end=9809,
+  serialized_start=9763,
+  serialized_end=9881,
 )
 
 
 _DELETEPIPELINEREQUEST = _descriptor.Descriptor(
   name='DeletePipelineRequest',
-  full_name='pps.DeletePipelineRequest',
+  full_name='pps_v2.DeletePipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.DeletePipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.DeletePipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='all', full_name='pps.DeletePipelineRequest.all', index=1,
+      name='all', full_name='pps_v2.DeletePipelineRequest.all', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='force', full_name='pps_v2.DeletePipelineRequest.force', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='keep_repo', full_name='pps_v2.DeletePipelineRequest.keep_repo', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='force', full_name='pps.DeletePipelineRequest.force', index=2,
-      number=5, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='keep_repo', full_name='pps.DeletePipelineRequest.keep_repo', index=3,
-      number=6, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -3881,21 +3846,21 @@ _DELETEPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9811,
-  serialized_end=9926,
+  serialized_start=9883,
+  serialized_end=9989,
 )
 
 
 _STARTPIPELINEREQUEST = _descriptor.Descriptor(
   name='StartPipelineRequest',
-  full_name='pps.StartPipelineRequest',
+  full_name='pps_v2.StartPipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.StartPipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.StartPipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3913,21 +3878,21 @@ _STARTPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9928,
-  serialized_end=9983,
+  serialized_start=9991,
+  serialized_end=10049,
 )
 
 
 _STOPPIPELINEREQUEST = _descriptor.Descriptor(
   name='StopPipelineRequest',
-  full_name='pps.StopPipelineRequest',
+  full_name='pps_v2.StopPipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.StopPipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.StopPipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -3945,36 +3910,36 @@ _STOPPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9985,
-  serialized_end=10039,
+  serialized_start=10051,
+  serialized_end=10108,
 )
 
 
 _RUNPIPELINEREQUEST = _descriptor.Descriptor(
   name='RunPipelineRequest',
-  full_name='pps.RunPipelineRequest',
+  full_name='pps_v2.RunPipelineRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.RunPipelineRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.RunPipelineRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='provenance', full_name='pps.RunPipelineRequest.provenance', index=1,
+      name='provenance', full_name='pps_v2.RunPipelineRequest.provenance', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='job_id', full_name='pps.RunPipelineRequest.job_id', index=2,
-      number=4, type=9, cpp_type=9, label=1,
+      name='job_id', full_name='pps_v2.RunPipelineRequest.job_id', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3991,21 +3956,21 @@ _RUNPIPELINEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10041,
-  serialized_end=10159,
+  serialized_start=10110,
+  serialized_end=10228,
 )
 
 
 _RUNCRONREQUEST = _descriptor.Descriptor(
   name='RunCronRequest',
-  full_name='pps.RunCronRequest',
+  full_name='pps_v2.RunCronRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='pps.RunCronRequest.pipeline', index=0,
+      name='pipeline', full_name='pps_v2.RunCronRequest.pipeline', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -4023,21 +3988,21 @@ _RUNCRONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10161,
-  serialized_end=10210,
+  serialized_start=10230,
+  serialized_end=10282,
 )
 
 
 _CREATESECRETREQUEST = _descriptor.Descriptor(
   name='CreateSecretRequest',
-  full_name='pps.CreateSecretRequest',
+  full_name='pps_v2.CreateSecretRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='file', full_name='pps.CreateSecretRequest.file', index=0,
+      name='file', full_name='pps_v2.CreateSecretRequest.file', index=0,
       number=1, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
@@ -4055,21 +4020,21 @@ _CREATESECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10212,
-  serialized_end=10247,
+  serialized_start=10284,
+  serialized_end=10319,
 )
 
 
 _DELETESECRETREQUEST = _descriptor.Descriptor(
   name='DeleteSecretRequest',
-  full_name='pps.DeleteSecretRequest',
+  full_name='pps_v2.DeleteSecretRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='secret', full_name='pps.DeleteSecretRequest.secret', index=0,
+      name='secret', full_name='pps_v2.DeleteSecretRequest.secret', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -4087,21 +4052,21 @@ _DELETESECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10249,
-  serialized_end=10299,
+  serialized_start=10321,
+  serialized_end=10374,
 )
 
 
 _INSPECTSECRETREQUEST = _descriptor.Descriptor(
   name='InspectSecretRequest',
-  full_name='pps.InspectSecretRequest',
+  full_name='pps_v2.InspectSecretRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='secret', full_name='pps.InspectSecretRequest.secret', index=0,
+      name='secret', full_name='pps_v2.InspectSecretRequest.secret', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -4119,21 +4084,21 @@ _INSPECTSECRETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10301,
-  serialized_end=10352,
+  serialized_start=10376,
+  serialized_end=10430,
 )
 
 
 _SECRET = _descriptor.Descriptor(
   name='Secret',
-  full_name='pps.Secret',
+  full_name='pps_v2.Secret',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='pps.Secret.name', index=0,
+      name='name', full_name='pps_v2.Secret.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -4151,35 +4116,35 @@ _SECRET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10354,
-  serialized_end=10376,
+  serialized_start=10432,
+  serialized_end=10454,
 )
 
 
 _SECRETINFO = _descriptor.Descriptor(
   name='SecretInfo',
-  full_name='pps.SecretInfo',
+  full_name='pps_v2.SecretInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='secret', full_name='pps.SecretInfo.secret', index=0,
+      name='secret', full_name='pps_v2.SecretInfo.secret', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='type', full_name='pps.SecretInfo.type', index=1,
+      name='type', full_name='pps_v2.SecretInfo.type', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='creation_timestamp', full_name='pps.SecretInfo.creation_timestamp', index=2,
+      name='creation_timestamp', full_name='pps_v2.SecretInfo.creation_timestamp', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -4197,21 +4162,21 @@ _SECRETINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10378,
-  serialized_end=10489,
+  serialized_start=10456,
+  serialized_end=10570,
 )
 
 
 _SECRETINFOS = _descriptor.Descriptor(
   name='SecretInfos',
-  full_name='pps.SecretInfos',
+  full_name='pps_v2.SecretInfos',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='secret_info', full_name='pps.SecretInfos.secret_info', index=0,
+      name='secret_info', full_name='pps_v2.SecretInfos.secret_info', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -4229,71 +4194,14 @@ _SECRETINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10491,
-  serialized_end=10542,
-)
-
-
-_GARBAGECOLLECTREQUEST = _descriptor.Descriptor(
-  name='GarbageCollectRequest',
-  full_name='pps.GarbageCollectRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='memory_bytes', full_name='pps.GarbageCollectRequest.memory_bytes', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=10544,
-  serialized_end=10589,
-)
-
-
-_GARBAGECOLLECTRESPONSE = _descriptor.Descriptor(
-  name='GarbageCollectResponse',
-  full_name='pps.GarbageCollectResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=10591,
-  serialized_end=10615,
+  serialized_start=10572,
+  serialized_end=10626,
 )
 
 
 _ACTIVATEAUTHREQUEST = _descriptor.Descriptor(
   name='ActivateAuthRequest',
-  full_name='pps.ActivateAuthRequest',
+  full_name='pps_v2.ActivateAuthRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -4311,14 +4219,14 @@ _ACTIVATEAUTHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10617,
-  serialized_end=10638,
+  serialized_start=10628,
+  serialized_end=10649,
 )
 
 
 _ACTIVATEAUTHRESPONSE = _descriptor.Descriptor(
   name='ActivateAuthResponse',
-  full_name='pps.ActivateAuthResponse',
+  full_name='pps_v2.ActivateAuthResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -4336,8 +4244,8 @@ _ACTIVATEAUTHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10640,
-  serialized_end=10662,
+  serialized_start=10651,
+  serialized_end=10673,
 )
 
 _TRANSFORM_ENVENTRY.containing_type = _TRANSFORM
@@ -4357,7 +4265,6 @@ _INPUT.fields_by_name['group'].message_type = _INPUT
 _INPUT.fields_by_name['cross'].message_type = _INPUT
 _INPUT.fields_by_name['union'].message_type = _INPUT
 _INPUT.fields_by_name['cron'].message_type = _CRONINPUT
-_INPUT.fields_by_name['git'].message_type = _GITINPUT
 _JOBINPUT.fields_by_name['commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
 _DATUM.fields_by_name['job'].message_type = _JOB
 _DATUMINFO.fields_by_name['datum'].message_type = _DATUM
@@ -4373,18 +4280,18 @@ _AGGREGATEPROCESSSTATS.fields_by_name['process_time'].message_type = _AGGREGATE
 _AGGREGATEPROCESSSTATS.fields_by_name['upload_time'].message_type = _AGGREGATE
 _AGGREGATEPROCESSSTATS.fields_by_name['download_bytes'].message_type = _AGGREGATE
 _AGGREGATEPROCESSSTATS.fields_by_name['upload_bytes'].message_type = _AGGREGATE
-_WORKERSTATUS.fields_by_name['data'].message_type = _INPUTFILE
-_WORKERSTATUS.fields_by_name['started'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_WORKERSTATUS.fields_by_name['stats'].message_type = _PROCESSSTATS
+_WORKERSTATUS.fields_by_name['datum_status'].message_type = _DATUMSTATUS
+_DATUMSTATUS.fields_by_name['started'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_DATUMSTATUS.fields_by_name['data'].message_type = _INPUTFILE
 _RESOURCESPEC.fields_by_name['gpu'].message_type = _GPUSPEC
-_ETCDJOBINFO.fields_by_name['job'].message_type = _JOB
-_ETCDJOBINFO.fields_by_name['pipeline'].message_type = _PIPELINE
-_ETCDJOBINFO.fields_by_name['output_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
-_ETCDJOBINFO.fields_by_name['stats'].message_type = _PROCESSSTATS
-_ETCDJOBINFO.fields_by_name['stats_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
-_ETCDJOBINFO.fields_by_name['state'].enum_type = _JOBSTATE
-_ETCDJOBINFO.fields_by_name['started'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_ETCDJOBINFO.fields_by_name['finished'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_STOREDJOBINFO.fields_by_name['job'].message_type = _JOB
+_STOREDJOBINFO.fields_by_name['pipeline'].message_type = _PIPELINE
+_STOREDJOBINFO.fields_by_name['output_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
+_STOREDJOBINFO.fields_by_name['stats'].message_type = _PROCESSSTATS
+_STOREDJOBINFO.fields_by_name['stats_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
+_STOREDJOBINFO.fields_by_name['state'].enum_type = _JOBSTATE
+_STOREDJOBINFO.fields_by_name['started'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_STOREDJOBINFO.fields_by_name['finished'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _JOBINFO.fields_by_name['job'].message_type = _JOB
 _JOBINFO.fields_by_name['transform'].message_type = _TRANSFORM
 _JOBINFO.fields_by_name['pipeline'].message_type = _PIPELINE
@@ -4412,11 +4319,12 @@ _JOBINFO.fields_by_name['datum_timeout'].message_type = google_dot_protobuf_dot_
 _JOBINFO.fields_by_name['job_timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _JOBINFO.fields_by_name['scheduling_spec'].message_type = _SCHEDULINGSPEC
 _WORKER.fields_by_name['state'].enum_type = _WORKERSTATE
-_ETCDPIPELINEINFO_JOBCOUNTSENTRY.containing_type = _ETCDPIPELINEINFO
-_ETCDPIPELINEINFO.fields_by_name['state'].enum_type = _PIPELINESTATE
-_ETCDPIPELINEINFO.fields_by_name['spec_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
-_ETCDPIPELINEINFO.fields_by_name['job_counts'].message_type = _ETCDPIPELINEINFO_JOBCOUNTSENTRY
-_ETCDPIPELINEINFO.fields_by_name['last_job_state'].enum_type = _JOBSTATE
+_STOREDPIPELINEINFO_JOBCOUNTSENTRY.containing_type = _STOREDPIPELINEINFO
+_STOREDPIPELINEINFO.fields_by_name['state'].enum_type = _PIPELINESTATE
+_STOREDPIPELINEINFO.fields_by_name['spec_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
+_STOREDPIPELINEINFO.fields_by_name['job_counts'].message_type = _STOREDPIPELINEINFO_JOBCOUNTSENTRY
+_STOREDPIPELINEINFO.fields_by_name['last_job_state'].enum_type = _JOBSTATE
+_STOREDPIPELINEINFO.fields_by_name['pipeline'].message_type = _PIPELINE
 _PIPELINEINFO_JOBCOUNTSENTRY.containing_type = _PIPELINEINFO
 _PIPELINEINFO.fields_by_name['pipeline'].message_type = _PIPELINE
 _PIPELINEINFO.fields_by_name['transform'].message_type = _TRANSFORM
@@ -4469,6 +4377,7 @@ _LOGMESSAGE.fields_by_name['ts'].message_type = google_dot_protobuf_dot_timestam
 _RESTARTDATUMREQUEST.fields_by_name['job'].message_type = _JOB
 _INSPECTDATUMREQUEST.fields_by_name['datum'].message_type = _DATUM
 _LISTDATUMREQUEST.fields_by_name['job'].message_type = _JOB
+_LISTDATUMREQUEST.fields_by_name['input'].message_type = _INPUT
 _SCHEDULINGSPEC_NODESELECTORENTRY.containing_type = _SCHEDULINGSPEC
 _SCHEDULINGSPEC.fields_by_name['node_selector'].message_type = _SCHEDULINGSPEC_NODESELECTORENTRY
 _CREATEPIPELINEREQUEST.fields_by_name['pipeline'].message_type = _PIPELINE
@@ -4512,7 +4421,6 @@ DESCRIPTOR.message_types_by_name['Service'] = _SERVICE
 DESCRIPTOR.message_types_by_name['Spout'] = _SPOUT
 DESCRIPTOR.message_types_by_name['PFSInput'] = _PFSINPUT
 DESCRIPTOR.message_types_by_name['CronInput'] = _CRONINPUT
-DESCRIPTOR.message_types_by_name['GitInput'] = _GITINPUT
 DESCRIPTOR.message_types_by_name['Input'] = _INPUT
 DESCRIPTOR.message_types_by_name['JobInput'] = _JOBINPUT
 DESCRIPTOR.message_types_by_name['ParallelismSpec'] = _PARALLELISMSPEC
@@ -4523,13 +4431,14 @@ DESCRIPTOR.message_types_by_name['Aggregate'] = _AGGREGATE
 DESCRIPTOR.message_types_by_name['ProcessStats'] = _PROCESSSTATS
 DESCRIPTOR.message_types_by_name['AggregateProcessStats'] = _AGGREGATEPROCESSSTATS
 DESCRIPTOR.message_types_by_name['WorkerStatus'] = _WORKERSTATUS
+DESCRIPTOR.message_types_by_name['DatumStatus'] = _DATUMSTATUS
 DESCRIPTOR.message_types_by_name['ResourceSpec'] = _RESOURCESPEC
 DESCRIPTOR.message_types_by_name['GPUSpec'] = _GPUSPEC
-DESCRIPTOR.message_types_by_name['EtcdJobInfo'] = _ETCDJOBINFO
+DESCRIPTOR.message_types_by_name['StoredJobInfo'] = _STOREDJOBINFO
 DESCRIPTOR.message_types_by_name['JobInfo'] = _JOBINFO
 DESCRIPTOR.message_types_by_name['Worker'] = _WORKER
 DESCRIPTOR.message_types_by_name['Pipeline'] = _PIPELINE
-DESCRIPTOR.message_types_by_name['EtcdPipelineInfo'] = _ETCDPIPELINEINFO
+DESCRIPTOR.message_types_by_name['StoredPipelineInfo'] = _STOREDPIPELINEINFO
 DESCRIPTOR.message_types_by_name['PipelineInfo'] = _PIPELINEINFO
 DESCRIPTOR.message_types_by_name['PipelineInfos'] = _PIPELINEINFOS
 DESCRIPTOR.message_types_by_name['CreateJobRequest'] = _CREATEJOBREQUEST
@@ -4560,8 +4469,6 @@ DESCRIPTOR.message_types_by_name['InspectSecretRequest'] = _INSPECTSECRETREQUEST
 DESCRIPTOR.message_types_by_name['Secret'] = _SECRET
 DESCRIPTOR.message_types_by_name['SecretInfo'] = _SECRETINFO
 DESCRIPTOR.message_types_by_name['SecretInfos'] = _SECRETINFOS
-DESCRIPTOR.message_types_by_name['GarbageCollectRequest'] = _GARBAGECOLLECTREQUEST
-DESCRIPTOR.message_types_by_name['GarbageCollectResponse'] = _GARBAGECOLLECTRESPONSE
 DESCRIPTOR.message_types_by_name['ActivateAuthRequest'] = _ACTIVATEAUTHREQUEST
 DESCRIPTOR.message_types_by_name['ActivateAuthResponse'] = _ACTIVATEAUTHRESPONSE
 DESCRIPTOR.enum_types_by_name['JobState'] = _JOBSTATE
@@ -4573,7 +4480,7 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 SecretMount = _reflection.GeneratedProtocolMessageType('SecretMount', (_message.Message,), {
   'DESCRIPTOR' : _SECRETMOUNT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.SecretMount)
+  # @@protoc_insertion_point(class_scope:pps_v2.SecretMount)
   })
 _sym_db.RegisterMessage(SecretMount)
 
@@ -4582,12 +4489,12 @@ Transform = _reflection.GeneratedProtocolMessageType('Transform', (_message.Mess
   'EnvEntry' : _reflection.GeneratedProtocolMessageType('EnvEntry', (_message.Message,), {
     'DESCRIPTOR' : _TRANSFORM_ENVENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.Transform.EnvEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.Transform.EnvEntry)
     })
   ,
   'DESCRIPTOR' : _TRANSFORM,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Transform)
+  # @@protoc_insertion_point(class_scope:pps_v2.Transform)
   })
 _sym_db.RegisterMessage(Transform)
 _sym_db.RegisterMessage(Transform.EnvEntry)
@@ -4595,28 +4502,28 @@ _sym_db.RegisterMessage(Transform.EnvEntry)
 BuildSpec = _reflection.GeneratedProtocolMessageType('BuildSpec', (_message.Message,), {
   'DESCRIPTOR' : _BUILDSPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.BuildSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.BuildSpec)
   })
 _sym_db.RegisterMessage(BuildSpec)
 
 TFJob = _reflection.GeneratedProtocolMessageType('TFJob', (_message.Message,), {
   'DESCRIPTOR' : _TFJOB,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.TFJob)
+  # @@protoc_insertion_point(class_scope:pps_v2.TFJob)
   })
 _sym_db.RegisterMessage(TFJob)
 
 Egress = _reflection.GeneratedProtocolMessageType('Egress', (_message.Message,), {
   'DESCRIPTOR' : _EGRESS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Egress)
+  # @@protoc_insertion_point(class_scope:pps_v2.Egress)
   })
 _sym_db.RegisterMessage(Egress)
 
 Job = _reflection.GeneratedProtocolMessageType('Job', (_message.Message,), {
   'DESCRIPTOR' : _JOB,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Job)
+  # @@protoc_insertion_point(class_scope:pps_v2.Job)
   })
 _sym_db.RegisterMessage(Job)
 
@@ -4625,19 +4532,19 @@ Metadata = _reflection.GeneratedProtocolMessageType('Metadata', (_message.Messag
   'AnnotationsEntry' : _reflection.GeneratedProtocolMessageType('AnnotationsEntry', (_message.Message,), {
     'DESCRIPTOR' : _METADATA_ANNOTATIONSENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.Metadata.AnnotationsEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.Metadata.AnnotationsEntry)
     })
   ,
 
   'LabelsEntry' : _reflection.GeneratedProtocolMessageType('LabelsEntry', (_message.Message,), {
     'DESCRIPTOR' : _METADATA_LABELSENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.Metadata.LabelsEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.Metadata.LabelsEntry)
     })
   ,
   'DESCRIPTOR' : _METADATA,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Metadata)
+  # @@protoc_insertion_point(class_scope:pps_v2.Metadata)
   })
 _sym_db.RegisterMessage(Metadata)
 _sym_db.RegisterMessage(Metadata.AnnotationsEntry)
@@ -4646,176 +4553,176 @@ _sym_db.RegisterMessage(Metadata.LabelsEntry)
 Service = _reflection.GeneratedProtocolMessageType('Service', (_message.Message,), {
   'DESCRIPTOR' : _SERVICE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Service)
+  # @@protoc_insertion_point(class_scope:pps_v2.Service)
   })
 _sym_db.RegisterMessage(Service)
 
 Spout = _reflection.GeneratedProtocolMessageType('Spout', (_message.Message,), {
   'DESCRIPTOR' : _SPOUT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Spout)
+  # @@protoc_insertion_point(class_scope:pps_v2.Spout)
   })
 _sym_db.RegisterMessage(Spout)
 
 PFSInput = _reflection.GeneratedProtocolMessageType('PFSInput', (_message.Message,), {
   'DESCRIPTOR' : _PFSINPUT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.PFSInput)
+  # @@protoc_insertion_point(class_scope:pps_v2.PFSInput)
   })
 _sym_db.RegisterMessage(PFSInput)
 
 CronInput = _reflection.GeneratedProtocolMessageType('CronInput', (_message.Message,), {
   'DESCRIPTOR' : _CRONINPUT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.CronInput)
+  # @@protoc_insertion_point(class_scope:pps_v2.CronInput)
   })
 _sym_db.RegisterMessage(CronInput)
-
-GitInput = _reflection.GeneratedProtocolMessageType('GitInput', (_message.Message,), {
-  'DESCRIPTOR' : _GITINPUT,
-  '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.GitInput)
-  })
-_sym_db.RegisterMessage(GitInput)
 
 Input = _reflection.GeneratedProtocolMessageType('Input', (_message.Message,), {
   'DESCRIPTOR' : _INPUT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Input)
+  # @@protoc_insertion_point(class_scope:pps_v2.Input)
   })
 _sym_db.RegisterMessage(Input)
 
 JobInput = _reflection.GeneratedProtocolMessageType('JobInput', (_message.Message,), {
   'DESCRIPTOR' : _JOBINPUT,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.JobInput)
+  # @@protoc_insertion_point(class_scope:pps_v2.JobInput)
   })
 _sym_db.RegisterMessage(JobInput)
 
 ParallelismSpec = _reflection.GeneratedProtocolMessageType('ParallelismSpec', (_message.Message,), {
   'DESCRIPTOR' : _PARALLELISMSPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ParallelismSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.ParallelismSpec)
   })
 _sym_db.RegisterMessage(ParallelismSpec)
 
 InputFile = _reflection.GeneratedProtocolMessageType('InputFile', (_message.Message,), {
   'DESCRIPTOR' : _INPUTFILE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.InputFile)
+  # @@protoc_insertion_point(class_scope:pps_v2.InputFile)
   })
 _sym_db.RegisterMessage(InputFile)
 
 Datum = _reflection.GeneratedProtocolMessageType('Datum', (_message.Message,), {
   'DESCRIPTOR' : _DATUM,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Datum)
+  # @@protoc_insertion_point(class_scope:pps_v2.Datum)
   })
 _sym_db.RegisterMessage(Datum)
 
 DatumInfo = _reflection.GeneratedProtocolMessageType('DatumInfo', (_message.Message,), {
   'DESCRIPTOR' : _DATUMINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.DatumInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.DatumInfo)
   })
 _sym_db.RegisterMessage(DatumInfo)
 
 Aggregate = _reflection.GeneratedProtocolMessageType('Aggregate', (_message.Message,), {
   'DESCRIPTOR' : _AGGREGATE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Aggregate)
+  # @@protoc_insertion_point(class_scope:pps_v2.Aggregate)
   })
 _sym_db.RegisterMessage(Aggregate)
 
 ProcessStats = _reflection.GeneratedProtocolMessageType('ProcessStats', (_message.Message,), {
   'DESCRIPTOR' : _PROCESSSTATS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ProcessStats)
+  # @@protoc_insertion_point(class_scope:pps_v2.ProcessStats)
   })
 _sym_db.RegisterMessage(ProcessStats)
 
 AggregateProcessStats = _reflection.GeneratedProtocolMessageType('AggregateProcessStats', (_message.Message,), {
   'DESCRIPTOR' : _AGGREGATEPROCESSSTATS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.AggregateProcessStats)
+  # @@protoc_insertion_point(class_scope:pps_v2.AggregateProcessStats)
   })
 _sym_db.RegisterMessage(AggregateProcessStats)
 
 WorkerStatus = _reflection.GeneratedProtocolMessageType('WorkerStatus', (_message.Message,), {
   'DESCRIPTOR' : _WORKERSTATUS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.WorkerStatus)
+  # @@protoc_insertion_point(class_scope:pps_v2.WorkerStatus)
   })
 _sym_db.RegisterMessage(WorkerStatus)
+
+DatumStatus = _reflection.GeneratedProtocolMessageType('DatumStatus', (_message.Message,), {
+  'DESCRIPTOR' : _DATUMSTATUS,
+  '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
+  # @@protoc_insertion_point(class_scope:pps_v2.DatumStatus)
+  })
+_sym_db.RegisterMessage(DatumStatus)
 
 ResourceSpec = _reflection.GeneratedProtocolMessageType('ResourceSpec', (_message.Message,), {
   'DESCRIPTOR' : _RESOURCESPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ResourceSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.ResourceSpec)
   })
 _sym_db.RegisterMessage(ResourceSpec)
 
 GPUSpec = _reflection.GeneratedProtocolMessageType('GPUSpec', (_message.Message,), {
   'DESCRIPTOR' : _GPUSPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.GPUSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.GPUSpec)
   })
 _sym_db.RegisterMessage(GPUSpec)
 
-EtcdJobInfo = _reflection.GeneratedProtocolMessageType('EtcdJobInfo', (_message.Message,), {
-  'DESCRIPTOR' : _ETCDJOBINFO,
+StoredJobInfo = _reflection.GeneratedProtocolMessageType('StoredJobInfo', (_message.Message,), {
+  'DESCRIPTOR' : _STOREDJOBINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.EtcdJobInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.StoredJobInfo)
   })
-_sym_db.RegisterMessage(EtcdJobInfo)
+_sym_db.RegisterMessage(StoredJobInfo)
 
 JobInfo = _reflection.GeneratedProtocolMessageType('JobInfo', (_message.Message,), {
   'DESCRIPTOR' : _JOBINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.JobInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.JobInfo)
   })
 _sym_db.RegisterMessage(JobInfo)
 
 Worker = _reflection.GeneratedProtocolMessageType('Worker', (_message.Message,), {
   'DESCRIPTOR' : _WORKER,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Worker)
+  # @@protoc_insertion_point(class_scope:pps_v2.Worker)
   })
 _sym_db.RegisterMessage(Worker)
 
 Pipeline = _reflection.GeneratedProtocolMessageType('Pipeline', (_message.Message,), {
   'DESCRIPTOR' : _PIPELINE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Pipeline)
+  # @@protoc_insertion_point(class_scope:pps_v2.Pipeline)
   })
 _sym_db.RegisterMessage(Pipeline)
 
-EtcdPipelineInfo = _reflection.GeneratedProtocolMessageType('EtcdPipelineInfo', (_message.Message,), {
+StoredPipelineInfo = _reflection.GeneratedProtocolMessageType('StoredPipelineInfo', (_message.Message,), {
 
   'JobCountsEntry' : _reflection.GeneratedProtocolMessageType('JobCountsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _ETCDPIPELINEINFO_JOBCOUNTSENTRY,
+    'DESCRIPTOR' : _STOREDPIPELINEINFO_JOBCOUNTSENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.EtcdPipelineInfo.JobCountsEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.StoredPipelineInfo.JobCountsEntry)
     })
   ,
-  'DESCRIPTOR' : _ETCDPIPELINEINFO,
+  'DESCRIPTOR' : _STOREDPIPELINEINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.EtcdPipelineInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.StoredPipelineInfo)
   })
-_sym_db.RegisterMessage(EtcdPipelineInfo)
-_sym_db.RegisterMessage(EtcdPipelineInfo.JobCountsEntry)
+_sym_db.RegisterMessage(StoredPipelineInfo)
+_sym_db.RegisterMessage(StoredPipelineInfo.JobCountsEntry)
 
 PipelineInfo = _reflection.GeneratedProtocolMessageType('PipelineInfo', (_message.Message,), {
 
   'JobCountsEntry' : _reflection.GeneratedProtocolMessageType('JobCountsEntry', (_message.Message,), {
     'DESCRIPTOR' : _PIPELINEINFO_JOBCOUNTSENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.PipelineInfo.JobCountsEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.PipelineInfo.JobCountsEntry)
     })
   ,
   'DESCRIPTOR' : _PIPELINEINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.PipelineInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.PipelineInfo)
   })
 _sym_db.RegisterMessage(PipelineInfo)
 _sym_db.RegisterMessage(PipelineInfo.JobCountsEntry)
@@ -4823,98 +4730,98 @@ _sym_db.RegisterMessage(PipelineInfo.JobCountsEntry)
 PipelineInfos = _reflection.GeneratedProtocolMessageType('PipelineInfos', (_message.Message,), {
   'DESCRIPTOR' : _PIPELINEINFOS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.PipelineInfos)
+  # @@protoc_insertion_point(class_scope:pps_v2.PipelineInfos)
   })
 _sym_db.RegisterMessage(PipelineInfos)
 
 CreateJobRequest = _reflection.GeneratedProtocolMessageType('CreateJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _CREATEJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.CreateJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.CreateJobRequest)
   })
 _sym_db.RegisterMessage(CreateJobRequest)
 
 InspectJobRequest = _reflection.GeneratedProtocolMessageType('InspectJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _INSPECTJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.InspectJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.InspectJobRequest)
   })
 _sym_db.RegisterMessage(InspectJobRequest)
 
 ListJobRequest = _reflection.GeneratedProtocolMessageType('ListJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _LISTJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ListJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.ListJobRequest)
   })
 _sym_db.RegisterMessage(ListJobRequest)
 
 FlushJobRequest = _reflection.GeneratedProtocolMessageType('FlushJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _FLUSHJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.FlushJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.FlushJobRequest)
   })
 _sym_db.RegisterMessage(FlushJobRequest)
 
 DeleteJobRequest = _reflection.GeneratedProtocolMessageType('DeleteJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _DELETEJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.DeleteJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.DeleteJobRequest)
   })
 _sym_db.RegisterMessage(DeleteJobRequest)
 
 StopJobRequest = _reflection.GeneratedProtocolMessageType('StopJobRequest', (_message.Message,), {
   'DESCRIPTOR' : _STOPJOBREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.StopJobRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.StopJobRequest)
   })
 _sym_db.RegisterMessage(StopJobRequest)
 
 UpdateJobStateRequest = _reflection.GeneratedProtocolMessageType('UpdateJobStateRequest', (_message.Message,), {
   'DESCRIPTOR' : _UPDATEJOBSTATEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.UpdateJobStateRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.UpdateJobStateRequest)
   })
 _sym_db.RegisterMessage(UpdateJobStateRequest)
 
 GetLogsRequest = _reflection.GeneratedProtocolMessageType('GetLogsRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETLOGSREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.GetLogsRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.GetLogsRequest)
   })
 _sym_db.RegisterMessage(GetLogsRequest)
 
 LogMessage = _reflection.GeneratedProtocolMessageType('LogMessage', (_message.Message,), {
   'DESCRIPTOR' : _LOGMESSAGE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.LogMessage)
+  # @@protoc_insertion_point(class_scope:pps_v2.LogMessage)
   })
 _sym_db.RegisterMessage(LogMessage)
 
 RestartDatumRequest = _reflection.GeneratedProtocolMessageType('RestartDatumRequest', (_message.Message,), {
   'DESCRIPTOR' : _RESTARTDATUMREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.RestartDatumRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.RestartDatumRequest)
   })
 _sym_db.RegisterMessage(RestartDatumRequest)
 
 InspectDatumRequest = _reflection.GeneratedProtocolMessageType('InspectDatumRequest', (_message.Message,), {
   'DESCRIPTOR' : _INSPECTDATUMREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.InspectDatumRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.InspectDatumRequest)
   })
 _sym_db.RegisterMessage(InspectDatumRequest)
 
 ListDatumRequest = _reflection.GeneratedProtocolMessageType('ListDatumRequest', (_message.Message,), {
   'DESCRIPTOR' : _LISTDATUMREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ListDatumRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.ListDatumRequest)
   })
 _sym_db.RegisterMessage(ListDatumRequest)
 
 ChunkSpec = _reflection.GeneratedProtocolMessageType('ChunkSpec', (_message.Message,), {
   'DESCRIPTOR' : _CHUNKSPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ChunkSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.ChunkSpec)
   })
 _sym_db.RegisterMessage(ChunkSpec)
 
@@ -4923,12 +4830,12 @@ SchedulingSpec = _reflection.GeneratedProtocolMessageType('SchedulingSpec', (_me
   'NodeSelectorEntry' : _reflection.GeneratedProtocolMessageType('NodeSelectorEntry', (_message.Message,), {
     'DESCRIPTOR' : _SCHEDULINGSPEC_NODESELECTORENTRY,
     '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-    # @@protoc_insertion_point(class_scope:pps.SchedulingSpec.NodeSelectorEntry)
+    # @@protoc_insertion_point(class_scope:pps_v2.SchedulingSpec.NodeSelectorEntry)
     })
   ,
   'DESCRIPTOR' : _SCHEDULINGSPEC,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.SchedulingSpec)
+  # @@protoc_insertion_point(class_scope:pps_v2.SchedulingSpec)
   })
 _sym_db.RegisterMessage(SchedulingSpec)
 _sym_db.RegisterMessage(SchedulingSpec.NodeSelectorEntry)
@@ -4936,126 +4843,112 @@ _sym_db.RegisterMessage(SchedulingSpec.NodeSelectorEntry)
 CreatePipelineRequest = _reflection.GeneratedProtocolMessageType('CreatePipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _CREATEPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.CreatePipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.CreatePipelineRequest)
   })
 _sym_db.RegisterMessage(CreatePipelineRequest)
 
 InspectPipelineRequest = _reflection.GeneratedProtocolMessageType('InspectPipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _INSPECTPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.InspectPipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.InspectPipelineRequest)
   })
 _sym_db.RegisterMessage(InspectPipelineRequest)
 
 ListPipelineRequest = _reflection.GeneratedProtocolMessageType('ListPipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _LISTPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ListPipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.ListPipelineRequest)
   })
 _sym_db.RegisterMessage(ListPipelineRequest)
 
 DeletePipelineRequest = _reflection.GeneratedProtocolMessageType('DeletePipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _DELETEPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.DeletePipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.DeletePipelineRequest)
   })
 _sym_db.RegisterMessage(DeletePipelineRequest)
 
 StartPipelineRequest = _reflection.GeneratedProtocolMessageType('StartPipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _STARTPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.StartPipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.StartPipelineRequest)
   })
 _sym_db.RegisterMessage(StartPipelineRequest)
 
 StopPipelineRequest = _reflection.GeneratedProtocolMessageType('StopPipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _STOPPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.StopPipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.StopPipelineRequest)
   })
 _sym_db.RegisterMessage(StopPipelineRequest)
 
 RunPipelineRequest = _reflection.GeneratedProtocolMessageType('RunPipelineRequest', (_message.Message,), {
   'DESCRIPTOR' : _RUNPIPELINEREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.RunPipelineRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.RunPipelineRequest)
   })
 _sym_db.RegisterMessage(RunPipelineRequest)
 
 RunCronRequest = _reflection.GeneratedProtocolMessageType('RunCronRequest', (_message.Message,), {
   'DESCRIPTOR' : _RUNCRONREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.RunCronRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.RunCronRequest)
   })
 _sym_db.RegisterMessage(RunCronRequest)
 
 CreateSecretRequest = _reflection.GeneratedProtocolMessageType('CreateSecretRequest', (_message.Message,), {
   'DESCRIPTOR' : _CREATESECRETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.CreateSecretRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.CreateSecretRequest)
   })
 _sym_db.RegisterMessage(CreateSecretRequest)
 
 DeleteSecretRequest = _reflection.GeneratedProtocolMessageType('DeleteSecretRequest', (_message.Message,), {
   'DESCRIPTOR' : _DELETESECRETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.DeleteSecretRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.DeleteSecretRequest)
   })
 _sym_db.RegisterMessage(DeleteSecretRequest)
 
 InspectSecretRequest = _reflection.GeneratedProtocolMessageType('InspectSecretRequest', (_message.Message,), {
   'DESCRIPTOR' : _INSPECTSECRETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.InspectSecretRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.InspectSecretRequest)
   })
 _sym_db.RegisterMessage(InspectSecretRequest)
 
 Secret = _reflection.GeneratedProtocolMessageType('Secret', (_message.Message,), {
   'DESCRIPTOR' : _SECRET,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.Secret)
+  # @@protoc_insertion_point(class_scope:pps_v2.Secret)
   })
 _sym_db.RegisterMessage(Secret)
 
 SecretInfo = _reflection.GeneratedProtocolMessageType('SecretInfo', (_message.Message,), {
   'DESCRIPTOR' : _SECRETINFO,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.SecretInfo)
+  # @@protoc_insertion_point(class_scope:pps_v2.SecretInfo)
   })
 _sym_db.RegisterMessage(SecretInfo)
 
 SecretInfos = _reflection.GeneratedProtocolMessageType('SecretInfos', (_message.Message,), {
   'DESCRIPTOR' : _SECRETINFOS,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.SecretInfos)
+  # @@protoc_insertion_point(class_scope:pps_v2.SecretInfos)
   })
 _sym_db.RegisterMessage(SecretInfos)
-
-GarbageCollectRequest = _reflection.GeneratedProtocolMessageType('GarbageCollectRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GARBAGECOLLECTREQUEST,
-  '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.GarbageCollectRequest)
-  })
-_sym_db.RegisterMessage(GarbageCollectRequest)
-
-GarbageCollectResponse = _reflection.GeneratedProtocolMessageType('GarbageCollectResponse', (_message.Message,), {
-  'DESCRIPTOR' : _GARBAGECOLLECTRESPONSE,
-  '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.GarbageCollectResponse)
-  })
-_sym_db.RegisterMessage(GarbageCollectResponse)
 
 ActivateAuthRequest = _reflection.GeneratedProtocolMessageType('ActivateAuthRequest', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATEAUTHREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ActivateAuthRequest)
+  # @@protoc_insertion_point(class_scope:pps_v2.ActivateAuthRequest)
   })
 _sym_db.RegisterMessage(ActivateAuthRequest)
 
 ActivateAuthResponse = _reflection.GeneratedProtocolMessageType('ActivateAuthResponse', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATEAUTHRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.pps.pps_pb2'
-  # @@protoc_insertion_point(class_scope:pps.ActivateAuthResponse)
+  # @@protoc_insertion_point(class_scope:pps_v2.ActivateAuthResponse)
   })
 _sym_db.RegisterMessage(ActivateAuthResponse)
 
@@ -5064,23 +4957,23 @@ DESCRIPTOR._options = None
 _TRANSFORM_ENVENTRY._options = None
 _METADATA_ANNOTATIONSENTRY._options = None
 _METADATA_LABELSENTRY._options = None
-_ETCDPIPELINEINFO_JOBCOUNTSENTRY._options = None
+_STOREDPIPELINEINFO_JOBCOUNTSENTRY._options = None
 _PIPELINEINFO_JOBCOUNTSENTRY._options = None
 _SCHEDULINGSPEC_NODESELECTORENTRY._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
-  full_name='pps.API',
+  full_name='pps_v2.API',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=11103,
-  serialized_end=12671,
+  serialized_start=11114,
+  serialized_end=12787,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateJob',
-    full_name='pps.API.CreateJob',
+    full_name='pps_v2.API.CreateJob',
     index=0,
     containing_service=None,
     input_type=_CREATEJOBREQUEST,
@@ -5090,7 +4983,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='InspectJob',
-    full_name='pps.API.InspectJob',
+    full_name='pps_v2.API.InspectJob',
     index=1,
     containing_service=None,
     input_type=_INSPECTJOBREQUEST,
@@ -5100,7 +4993,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ListJob',
-    full_name='pps.API.ListJob',
+    full_name='pps_v2.API.ListJob',
     index=2,
     containing_service=None,
     input_type=_LISTJOBREQUEST,
@@ -5110,7 +5003,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='FlushJob',
-    full_name='pps.API.FlushJob',
+    full_name='pps_v2.API.FlushJob',
     index=3,
     containing_service=None,
     input_type=_FLUSHJOBREQUEST,
@@ -5120,7 +5013,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteJob',
-    full_name='pps.API.DeleteJob',
+    full_name='pps_v2.API.DeleteJob',
     index=4,
     containing_service=None,
     input_type=_DELETEJOBREQUEST,
@@ -5130,7 +5023,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='StopJob',
-    full_name='pps.API.StopJob',
+    full_name='pps_v2.API.StopJob',
     index=5,
     containing_service=None,
     input_type=_STOPJOBREQUEST,
@@ -5140,7 +5033,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='InspectDatum',
-    full_name='pps.API.InspectDatum',
+    full_name='pps_v2.API.InspectDatum',
     index=6,
     containing_service=None,
     input_type=_INSPECTDATUMREQUEST,
@@ -5150,7 +5043,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ListDatum',
-    full_name='pps.API.ListDatum',
+    full_name='pps_v2.API.ListDatum',
     index=7,
     containing_service=None,
     input_type=_LISTDATUMREQUEST,
@@ -5160,7 +5053,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='RestartDatum',
-    full_name='pps.API.RestartDatum',
+    full_name='pps_v2.API.RestartDatum',
     index=8,
     containing_service=None,
     input_type=_RESTARTDATUMREQUEST,
@@ -5170,7 +5063,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='CreatePipeline',
-    full_name='pps.API.CreatePipeline',
+    full_name='pps_v2.API.CreatePipeline',
     index=9,
     containing_service=None,
     input_type=_CREATEPIPELINEREQUEST,
@@ -5180,7 +5073,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='InspectPipeline',
-    full_name='pps.API.InspectPipeline',
+    full_name='pps_v2.API.InspectPipeline',
     index=10,
     containing_service=None,
     input_type=_INSPECTPIPELINEREQUEST,
@@ -5190,7 +5083,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ListPipeline',
-    full_name='pps.API.ListPipeline',
+    full_name='pps_v2.API.ListPipeline',
     index=11,
     containing_service=None,
     input_type=_LISTPIPELINEREQUEST,
@@ -5200,7 +5093,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeletePipeline',
-    full_name='pps.API.DeletePipeline',
+    full_name='pps_v2.API.DeletePipeline',
     index=12,
     containing_service=None,
     input_type=_DELETEPIPELINEREQUEST,
@@ -5210,7 +5103,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='StartPipeline',
-    full_name='pps.API.StartPipeline',
+    full_name='pps_v2.API.StartPipeline',
     index=13,
     containing_service=None,
     input_type=_STARTPIPELINEREQUEST,
@@ -5220,7 +5113,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='StopPipeline',
-    full_name='pps.API.StopPipeline',
+    full_name='pps_v2.API.StopPipeline',
     index=14,
     containing_service=None,
     input_type=_STOPPIPELINEREQUEST,
@@ -5230,7 +5123,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='RunPipeline',
-    full_name='pps.API.RunPipeline',
+    full_name='pps_v2.API.RunPipeline',
     index=15,
     containing_service=None,
     input_type=_RUNPIPELINEREQUEST,
@@ -5240,7 +5133,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='RunCron',
-    full_name='pps.API.RunCron',
+    full_name='pps_v2.API.RunCron',
     index=16,
     containing_service=None,
     input_type=_RUNCRONREQUEST,
@@ -5250,7 +5143,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='CreateSecret',
-    full_name='pps.API.CreateSecret',
+    full_name='pps_v2.API.CreateSecret',
     index=17,
     containing_service=None,
     input_type=_CREATESECRETREQUEST,
@@ -5260,7 +5153,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteSecret',
-    full_name='pps.API.DeleteSecret',
+    full_name='pps_v2.API.DeleteSecret',
     index=18,
     containing_service=None,
     input_type=_DELETESECRETREQUEST,
@@ -5270,7 +5163,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ListSecret',
-    full_name='pps.API.ListSecret',
+    full_name='pps_v2.API.ListSecret',
     index=19,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -5280,7 +5173,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='InspectSecret',
-    full_name='pps.API.InspectSecret',
+    full_name='pps_v2.API.InspectSecret',
     index=20,
     containing_service=None,
     input_type=_INSPECTSECRETREQUEST,
@@ -5290,7 +5183,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteAll',
-    full_name='pps.API.DeleteAll',
+    full_name='pps_v2.API.DeleteAll',
     index=21,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -5300,7 +5193,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetLogs',
-    full_name='pps.API.GetLogs',
+    full_name='pps_v2.API.GetLogs',
     index=22,
     containing_service=None,
     input_type=_GETLOGSREQUEST,
@@ -5310,7 +5203,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='ActivateAuth',
-    full_name='pps.API.ActivateAuth',
+    full_name='pps_v2.API.ActivateAuth',
     index=23,
     containing_service=None,
     input_type=_ACTIVATEAUTHREQUEST,
@@ -5320,7 +5213,7 @@ _API = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='UpdateJobState',
-    full_name='pps.API.UpdateJobState',
+    full_name='pps_v2.API.UpdateJobState',
     index=24,
     containing_service=None,
     input_type=_UPDATEJOBSTATEREQUEST,

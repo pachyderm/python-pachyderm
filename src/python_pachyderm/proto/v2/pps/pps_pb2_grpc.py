@@ -16,127 +16,127 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.CreateJob = channel.unary_unary(
-                '/pps.API/CreateJob',
+                '/pps_v2.API/CreateJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.Job.FromString,
                 )
         self.InspectJob = channel.unary_unary(
-                '/pps.API/InspectJob',
+                '/pps_v2.API/InspectJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.ListJob = channel.unary_stream(
-                '/pps.API/ListJob',
+                '/pps_v2.API/ListJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.FlushJob = channel.unary_stream(
-                '/pps.API/FlushJob',
+                '/pps_v2.API/FlushJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.DeleteJob = channel.unary_unary(
-                '/pps.API/DeleteJob',
+                '/pps_v2.API/DeleteJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.StopJob = channel.unary_unary(
-                '/pps.API/StopJob',
+                '/pps_v2.API/StopJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.InspectDatum = channel.unary_unary(
-                '/pps.API/InspectDatum',
+                '/pps_v2.API/InspectDatum',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DatumInfo.FromString,
                 )
         self.ListDatum = channel.unary_stream(
-                '/pps.API/ListDatum',
+                '/pps_v2.API/ListDatum',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DatumInfo.FromString,
                 )
         self.RestartDatum = channel.unary_unary(
-                '/pps.API/RestartDatum',
+                '/pps_v2.API/RestartDatum',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.CreatePipeline = channel.unary_unary(
-                '/pps.API/CreatePipeline',
+                '/pps_v2.API/CreatePipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.InspectPipeline = channel.unary_unary(
-                '/pps.API/InspectPipeline',
+                '/pps_v2.API/InspectPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
                 )
         self.ListPipeline = channel.unary_unary(
-                '/pps.API/ListPipeline',
+                '/pps_v2.API/ListPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
                 )
         self.DeletePipeline = channel.unary_unary(
-                '/pps.API/DeletePipeline',
+                '/pps_v2.API/DeletePipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.StartPipeline = channel.unary_unary(
-                '/pps.API/StartPipeline',
+                '/pps_v2.API/StartPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.StopPipeline = channel.unary_unary(
-                '/pps.API/StopPipeline',
+                '/pps_v2.API/StopPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.RunPipeline = channel.unary_unary(
-                '/pps.API/RunPipeline',
+                '/pps_v2.API/RunPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.RunCron = channel.unary_unary(
-                '/pps.API/RunCron',
+                '/pps_v2.API/RunCron',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunCronRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.CreateSecret = channel.unary_unary(
-                '/pps.API/CreateSecret',
+                '/pps_v2.API/CreateSecret',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateSecretRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.DeleteSecret = channel.unary_unary(
-                '/pps.API/DeleteSecret',
+                '/pps_v2.API/DeleteSecret',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeleteSecretRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.ListSecret = channel.unary_unary(
-                '/pps.API/ListSecret',
+                '/pps_v2.API/ListSecret',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SecretInfos.FromString,
                 )
         self.InspectSecret = channel.unary_unary(
-                '/pps.API/InspectSecret',
+                '/pps_v2.API/InspectSecret',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectSecretRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SecretInfo.FromString,
                 )
         self.DeleteAll = channel.unary_unary(
-                '/pps.API/DeleteAll',
+                '/pps_v2.API/DeleteAll',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.GetLogs = channel.unary_stream(
-                '/pps.API/GetLogs',
+                '/pps_v2.API/GetLogs',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LogMessage.FromString,
                 )
         self.ActivateAuth = channel.unary_unary(
-                '/pps.API/ActivateAuth',
+                '/pps_v2.API/ActivateAuth',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
                 )
         self.UpdateJobState = channel.unary_unary(
-                '/pps.API/UpdateJobState',
+                '/pps_v2.API/UpdateJobState',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -431,7 +431,7 @@ def add_APIServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'pps.API', rpc_method_handlers)
+            'pps_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -450,7 +450,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/CreateJob',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/CreateJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.Job.FromString,
             options, channel_credentials,
@@ -467,7 +467,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/InspectJob',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/InspectJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
@@ -484,7 +484,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps.API/ListJob',
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
@@ -501,7 +501,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps.API/FlushJob',
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/FlushJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
@@ -518,7 +518,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/DeleteJob',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeleteJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeleteJobRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -535,7 +535,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/StopJob',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/StopJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StopJobRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -552,7 +552,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/InspectDatum',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/InspectDatum',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectDatumRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DatumInfo.FromString,
             options, channel_credentials,
@@ -569,7 +569,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps.API/ListDatum',
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListDatum',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListDatumRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DatumInfo.FromString,
             options, channel_credentials,
@@ -586,7 +586,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/RestartDatum',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RestartDatum',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RestartDatumRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -603,7 +603,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/CreatePipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/CreatePipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreatePipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -620,7 +620,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/InspectPipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/InspectPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
             options, channel_credentials,
@@ -637,7 +637,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/ListPipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/ListPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
             options, channel_credentials,
@@ -654,7 +654,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/DeletePipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeletePipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -671,7 +671,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/StartPipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/StartPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -688,7 +688,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/StopPipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/StopPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StopPipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -705,7 +705,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/RunPipeline',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunPipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -722,7 +722,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/RunCron',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunCron',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunCronRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -739,7 +739,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/CreateSecret',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/CreateSecret',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateSecretRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -756,7 +756,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/DeleteSecret',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeleteSecret',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeleteSecretRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -773,7 +773,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/ListSecret',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/ListSecret',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SecretInfos.FromString,
             options, channel_credentials,
@@ -790,7 +790,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/InspectSecret',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/InspectSecret',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectSecretRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SecretInfo.FromString,
             options, channel_credentials,
@@ -807,7 +807,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/DeleteAll',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeleteAll',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -824,7 +824,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps.API/GetLogs',
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/GetLogs',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.GetLogsRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LogMessage.FromString,
             options, channel_credentials,
@@ -841,7 +841,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/ActivateAuth',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/ActivateAuth',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ActivateAuthRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ActivateAuthResponse.FromString,
             options, channel_credentials,
@@ -858,7 +858,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps.API/UpdateJobState',
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/UpdateJobState',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,

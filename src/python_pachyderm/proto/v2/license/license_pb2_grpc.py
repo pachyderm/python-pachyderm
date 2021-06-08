@@ -15,44 +15,49 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.Activate = channel.unary_unary(
-                '/license.API/Activate',
+                '/license_v2.API/Activate',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ActivateRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ActivateResponse.FromString,
                 )
         self.GetActivationCode = channel.unary_unary(
-                '/license.API/GetActivationCode',
+                '/license_v2.API/GetActivationCode',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.GetActivationCodeRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.GetActivationCodeResponse.FromString,
                 )
         self.DeleteAll = channel.unary_unary(
-                '/license.API/DeleteAll',
+                '/license_v2.API/DeleteAll',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteAllRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteAllResponse.FromString,
                 )
         self.AddCluster = channel.unary_unary(
-                '/license.API/AddCluster',
+                '/license_v2.API/AddCluster',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.AddClusterRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.AddClusterResponse.FromString,
                 )
         self.DeleteCluster = channel.unary_unary(
-                '/license.API/DeleteCluster',
+                '/license_v2.API/DeleteCluster',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteClusterRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteClusterResponse.FromString,
                 )
         self.ListClusters = channel.unary_unary(
-                '/license.API/ListClusters',
+                '/license_v2.API/ListClusters',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListClustersRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListClustersResponse.FromString,
                 )
         self.UpdateCluster = channel.unary_unary(
-                '/license.API/UpdateCluster',
+                '/license_v2.API/UpdateCluster',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.UpdateClusterRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.UpdateClusterResponse.FromString,
                 )
         self.Heartbeat = channel.unary_unary(
-                '/license.API/Heartbeat',
+                '/license_v2.API/Heartbeat',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatResponse.FromString,
+                )
+        self.ListUserClusters = channel.unary_unary(
+                '/license_v2.API/ListUserClusters',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersResponse.FromString,
                 )
 
 
@@ -113,6 +118,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListUserClusters(self, request, context):
+        """Lists all clusters available to user
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -156,9 +168,14 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatResponse.SerializeToString,
             ),
+            'ListUserClusters': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListUserClusters,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'license.API', rpc_method_handlers)
+            'license_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -177,7 +194,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/Activate',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/Activate',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ActivateRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ActivateResponse.FromString,
             options, channel_credentials,
@@ -194,7 +211,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/GetActivationCode',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/GetActivationCode',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.GetActivationCodeRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.GetActivationCodeResponse.FromString,
             options, channel_credentials,
@@ -211,7 +228,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/DeleteAll',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/DeleteAll',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteAllRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteAllResponse.FromString,
             options, channel_credentials,
@@ -228,7 +245,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/AddCluster',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/AddCluster',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.AddClusterRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.AddClusterResponse.FromString,
             options, channel_credentials,
@@ -245,7 +262,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/DeleteCluster',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/DeleteCluster',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteClusterRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.DeleteClusterResponse.FromString,
             options, channel_credentials,
@@ -262,7 +279,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/ListClusters',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/ListClusters',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListClustersRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListClustersResponse.FromString,
             options, channel_credentials,
@@ -279,7 +296,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/UpdateCluster',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/UpdateCluster',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.UpdateClusterRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.UpdateClusterResponse.FromString,
             options, channel_credentials,
@@ -296,8 +313,25 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/license.API/Heartbeat',
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/Heartbeat',
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.HeartbeatResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListUserClusters(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/license_v2.API/ListUserClusters',
+            python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_license_dot_license__pb2.ListUserClustersResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

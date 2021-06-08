@@ -16,17 +16,17 @@ class DebugStub(object):
             channel: A grpc.Channel.
         """
         self.Profile = channel.unary_stream(
-                '/debug.Debug/Profile',
+                '/debug_v2.Debug/Profile',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.ProfileRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
                 )
         self.Binary = channel.unary_stream(
-                '/debug.Debug/Binary',
+                '/debug_v2.Debug/Binary',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.BinaryRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
                 )
         self.Dump = channel.unary_stream(
-                '/debug.Debug/Dump',
+                '/debug_v2.Debug/Dump',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
                 )
@@ -73,7 +73,7 @@ def add_DebugServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'debug.Debug', rpc_method_handlers)
+            'debug_v2.Debug', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -92,7 +92,7 @@ class Debug(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/debug.Debug/Profile',
+        return grpc.experimental.unary_stream(request, target, '/debug_v2.Debug/Profile',
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.ProfileRequest.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
             options, channel_credentials,
@@ -109,7 +109,7 @@ class Debug(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/debug.Debug/Binary',
+        return grpc.experimental.unary_stream(request, target, '/debug_v2.Debug/Binary',
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.BinaryRequest.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
             options, channel_credentials,
@@ -126,7 +126,7 @@ class Debug(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/debug.Debug/Dump',
+        return grpc.experimental.unary_stream(request, target, '/debug_v2.Debug/Dump',
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpRequest.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
             options, channel_credentials,

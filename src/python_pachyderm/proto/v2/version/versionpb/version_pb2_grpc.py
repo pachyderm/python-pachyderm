@@ -16,7 +16,7 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.GetVersion = channel.unary_unary(
-                '/versionpb.API/GetVersion',
+                '/versionpb_v2.API/GetVersion',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2.Version.FromString,
                 )
@@ -41,7 +41,7 @@ def add_APIServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'versionpb.API', rpc_method_handlers)
+            'versionpb_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -60,7 +60,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/versionpb.API/GetVersion',
+        return grpc.experimental.unary_unary(request, target, '/versionpb_v2.API/GetVersion',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2.Version.FromString,
             options, channel_credentials,
