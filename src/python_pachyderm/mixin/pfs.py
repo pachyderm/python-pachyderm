@@ -169,7 +169,7 @@ class PFSMixin:
 
     def start_commit(
         self, repo_name, branch, parent=None, description=None, provenance=None
-    ):
+    ) -> pfs_proto.Commit:
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been

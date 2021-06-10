@@ -40,10 +40,10 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     keywords=[
@@ -65,5 +65,5 @@ setup(
     },
     test_suite="tests",
     setup_requires=["pytest-runner"],
-    python_requires=">=3.5",
+    python_requires=">=3.6",
 )

@@ -49,7 +49,8 @@ ci-setup:
 	which pachctl
 	etc/kube/start-minikube.sh
 	echo 'y' | pachctl deploy local
-	until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done
+	sleep 20
+	kubectl wait --for=condition=ready pod -l app=pachd --timeout=5m
 	pachctl version
 
 release:

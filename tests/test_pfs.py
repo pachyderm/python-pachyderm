@@ -97,17 +97,13 @@ def test_start_commit_fork():
     assert "patch" in branches
 
 
-@pytest.mark.parametrize(
-    "commit_arg", ["commit_obj", "repo/commit_id", "(repo, commit_id)"]
-)
+@pytest.mark.parametrize("commit_arg", ["commit_obj", "(repo, commit_id)"])
 def test_finish_commit(commit_arg):
     client, repo_name = sandbox("finish_commit")
     commit = client.start_commit(repo_name, "master")
 
     if commit_arg == "commit_obj":
         client.finish_commit(commit)
-    elif commit_arg == "repo/commit_id":
-        client.finish_commit("{}/{}".format(repo_name, commit.id))
     elif commit_arg == "(repo, commit_id)":
         client.finish_commit((repo_name, commit.id))
 
@@ -160,7 +156,7 @@ def test_put_file_bytes_bytestring():
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
-    files = list(client.list_file("{}/{}".format(repo_name, c.id), ""))
+    files = list(client.list_file((repo_name, c.id), ""))
     assert len(files) == 1
 
 
@@ -186,7 +182,7 @@ def test_put_file_zero_bytes_pfc():
 
     client, repo_name = sandbox("put_file_bytes_file_zero_byte")
 
-    commit = "{}/master".format(repo_name)
+    commit = (repo_name, "master")
     with client.modify_file_client(commit) as c:
         c.put_file_from_bytes("file.dat", b"")
     files = list(client.list_file(commit, "/"))
@@ -224,7 +220,7 @@ def test_put_file_bytes_large():
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == c.id
-    files = list(client.list_file("{}/{}".format(repo_name, c.id), ""))
+    files = list(client.list_file(c, ""))
     assert len(files) == 1
 
 
@@ -238,7 +234,7 @@ def test_put_file_url():
             "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
         )
 
-    files = list(client.list_file("{}/{}".format(repo_name, c.id), ""))
+    files = list(client.list_file(c, ""))
     assert len(files) == 1
     assert files[0].file.path == "/index.html"
 
@@ -332,7 +328,7 @@ def test_copy_file():
     with client.commit(repo_name, "master") as dest_commit:
         client.copy_file(src_commit, "file1.dat", dest_commit, "copy.dat")
 
-    files = list(client.list_file("{}/{}".format(repo_name, dest_commit.id), ""))
+    files = list(client.list_file(dest_commit, ""))
     assert len(files) == 3
     assert files[0].file.path == "/copy.dat"
     assert files[1].file.path == "/file1.dat"
@@ -350,9 +346,9 @@ def test_flush_commit():
         client.put_file_bytes(c, "input.json", b"hello world")
 
     # Just block until all of the commits are yielded
-    list(client.flush_commit(["{}/{}".format(repo_name, c.id)]))
+    list(client.flush_commit([c]))
 
-    files = list(client.list_file("{}/master".format(repo_name), "/"))
+    files = list(client.list_file(c, "/"))
     assert len(files) == 1
 
 
@@ -362,7 +358,7 @@ def test_inspect_commit():
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
 
-    commit = client.inspect_commit("{}/master".format(repo_name))
+    commit = client.inspect_commit(c)
     assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
@@ -374,12 +370,12 @@ def test_inspect_commit():
 def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
 
-    with client.commit(repo_name, "master"):
+    with client.commit(repo_name, "master") as c:
         pass
 
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 1
-    client.squash_commit("{}/master".format(repo_name))
+    client.squash_commit(c)
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 0
 
@@ -443,7 +439,7 @@ def test_list_file():
         client.put_file_bytes(c, "file1.dat", b"DATA")
         client.put_file_bytes(c, "file2.dat", b"DATA")
 
-    files = list(client.list_file(c, "/"))
+    files = list(client.list_file((repo_name, c.id), "/"))
     assert len(files) == 2
     # assert files[0].size_bytes == 4
     assert files[0].file_type == python_pachyderm.FileType.FILE.value

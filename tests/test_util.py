@@ -90,7 +90,7 @@ def test_put_files():
         # add the files under both `/` and `/sub` (the latter redundantly to
         # test both for correct path handling and the ability to put files
         # that already exist)
-        commit = "{}/master".format(repo_name)
+        commit = (repo_name, "master")
         python_pachyderm.put_files(client, d, commit, "/")
         python_pachyderm.put_files(client, d, commit, "/sub")
         python_pachyderm.put_files(client, d, commit, "/sub/")
@@ -127,6 +127,7 @@ def test_create_python_pipeline_bad_path():
         )
 
 
+@pytest.mark.skip(reason="create_python_pipeline is deprecated")
 def test_create_python_pipeline():
     client = python_pachyderm.Client()
     client.delete_all()
@@ -146,7 +147,7 @@ def test_create_python_pipeline():
 
         check_expected_files(
             client,
-            "{}_build/source".format(pipeline_name),
+            (f"{pipeline_name}_build", "source"),
             set(
                 [
                     "/",
@@ -158,7 +159,7 @@ def test_create_python_pipeline():
 
         check_expected_files(
             client,
-            "{}_build/build".format(pipeline_name),
+            (f"{pipeline_name}_build", "source"),
             set(
                 [
                     "/",
@@ -170,7 +171,7 @@ def test_create_python_pipeline():
 
         check_expected_files(
             client,
-            "{}/master".format(pipeline_name),
+            (pipeline_name, "master"),
             set(
                 [
                     "/",
@@ -197,7 +198,7 @@ def test_create_python_pipeline():
         ["/requirements.txt"],
         ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
     )
-    file = client.get_file("{}/master".format(pipeline_name), "file.dat")
+    file = client.get_file(commit, "file.dat")
     assert file.read() == b" DATA"
 
     # 2) update pipeline from a directory without a requirements.txt
@@ -218,7 +219,7 @@ def test_create_python_pipeline():
         ["/requirements.txt"],
         ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
     )
-    file = client.get_file("{}/master".format(pipeline_name), "file.dat")
+    file = client.get_file(commit, "file.dat")
     assert file.read() == b"DATA"
 
 

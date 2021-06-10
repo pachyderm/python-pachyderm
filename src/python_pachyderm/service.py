@@ -25,6 +25,9 @@ from python_pachyderm.proto.v2.license import license_pb2_grpc as license_grpc
 from python_pachyderm.proto.v2.identity import identity_pb2 as identity_proto
 from python_pachyderm.proto.v2.identity import identity_pb2_grpc as identity_grpc
 
+MB = 1048576
+MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
+
 
 class Service(Enum):
     ADMIN = 0
@@ -62,6 +65,12 @@ class Service(Enum):
     @property
     def proto_module(self):
         return PROTO_MODULES[self]
+
+    @property
+    def options(self):
+        return [
+            ("grpc.max_receive_message_length", MAX_RECEIVE_MESSAGE_SIZE),
+        ]
 
 
 GRPC_MODULES = {
