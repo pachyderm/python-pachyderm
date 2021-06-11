@@ -34,13 +34,14 @@ def main():
     # Create a repo called images
     client.create_repo("images")
 
-    # Create a pipeline specifically designed for executing python code. This
-    # is equivalent to the edges pipeline in the standard opencv example.
-    python_pachyderm.create_python_pipeline(
-        client,
-        relpath("edges"),
+    client.create_pipeline(
+        "edges",
+        transform=python_pachyderm.Transform(
+            cmd=["python3", "/edges.py"],
+            image="pachyderm/opencv",
+        ),
         input=python_pachyderm.Input(
-            pfs=python_pachyderm.PFSInput(glob="/*", repo="images")
+            pfs=python_pachyderm.PFSInput(repo="images", glob="/*")
         ),
     )
 
@@ -77,7 +78,7 @@ def main():
         pass
 
     # Get the montage
-    source_file = client.get_file("montage/master", "/montage.png")
+    source_file = client.get_file(("montage", "master"), "/montage.png")
     with tempfile.NamedTemporaryFile(suffix="montage.png", delete=False) as dest_file:
         shutil.copyfileobj(source_file, dest_file)
         print("montage written to {}".format(dest_file.name))
