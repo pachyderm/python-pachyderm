@@ -14,6 +14,7 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
+from .service import Service
 
 
 class ConfigError(Exception):
@@ -272,16 +273,23 @@ class Client(
             metadata.append(("pach-transaction", self._transaction_id))
         return metadata
 
-    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+    def _req(self, grpc_service: Service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
         if stub is None:
             grpc_module = grpc_service.grpc_module
             if self.root_certs:
                 ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
                 ssl = ssl_channel_credentials(root_certificates=self.root_certs)
-                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+                channel = grpc_module.grpc.secure_channel(
+                    self.address,
+                    ssl,
+                    options=grpc_service.options,
+                )
             else:
-                channel = grpc_module.grpc.insecure_channel(self.address)
+                channel = grpc_module.grpc.insecure_channel(
+                    self.address,
+                    options=grpc_service.options,
+                )
             stub = grpc_service.stub(channel)
             self._stubs[grpc_service] = stub
 

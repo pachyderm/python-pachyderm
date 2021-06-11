@@ -15,67 +15,67 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.SetIdentityServerConfig = channel.unary_unary(
-                '/identity.API/SetIdentityServerConfig',
+                '/identity_v2.API/SetIdentityServerConfig',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.SetIdentityServerConfigRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.SetIdentityServerConfigResponse.FromString,
                 )
         self.GetIdentityServerConfig = channel.unary_unary(
-                '/identity.API/GetIdentityServerConfig',
+                '/identity_v2.API/GetIdentityServerConfig',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIdentityServerConfigRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIdentityServerConfigResponse.FromString,
                 )
         self.CreateIDPConnector = channel.unary_unary(
-                '/identity.API/CreateIDPConnector',
+                '/identity_v2.API/CreateIDPConnector',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateIDPConnectorRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateIDPConnectorResponse.FromString,
                 )
         self.UpdateIDPConnector = channel.unary_unary(
-                '/identity.API/UpdateIDPConnector',
+                '/identity_v2.API/UpdateIDPConnector',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateIDPConnectorRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateIDPConnectorResponse.FromString,
                 )
         self.ListIDPConnectors = channel.unary_unary(
-                '/identity.API/ListIDPConnectors',
+                '/identity_v2.API/ListIDPConnectors',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListIDPConnectorsRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListIDPConnectorsResponse.FromString,
                 )
         self.GetIDPConnector = channel.unary_unary(
-                '/identity.API/GetIDPConnector',
+                '/identity_v2.API/GetIDPConnector',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIDPConnectorRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIDPConnectorResponse.FromString,
                 )
         self.DeleteIDPConnector = channel.unary_unary(
-                '/identity.API/DeleteIDPConnector',
+                '/identity_v2.API/DeleteIDPConnector',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteIDPConnectorRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteIDPConnectorResponse.FromString,
                 )
         self.CreateOIDCClient = channel.unary_unary(
-                '/identity.API/CreateOIDCClient',
+                '/identity_v2.API/CreateOIDCClient',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateOIDCClientRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateOIDCClientResponse.FromString,
                 )
         self.UpdateOIDCClient = channel.unary_unary(
-                '/identity.API/UpdateOIDCClient',
+                '/identity_v2.API/UpdateOIDCClient',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateOIDCClientRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateOIDCClientResponse.FromString,
                 )
         self.GetOIDCClient = channel.unary_unary(
-                '/identity.API/GetOIDCClient',
+                '/identity_v2.API/GetOIDCClient',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetOIDCClientRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetOIDCClientResponse.FromString,
                 )
         self.ListOIDCClients = channel.unary_unary(
-                '/identity.API/ListOIDCClients',
+                '/identity_v2.API/ListOIDCClients',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListOIDCClientsRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListOIDCClientsResponse.FromString,
                 )
         self.DeleteOIDCClient = channel.unary_unary(
-                '/identity.API/DeleteOIDCClient',
+                '/identity_v2.API/DeleteOIDCClient',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteOIDCClientRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteOIDCClientResponse.FromString,
                 )
         self.DeleteAll = channel.unary_unary(
-                '/identity.API/DeleteAll',
+                '/identity_v2.API/DeleteAll',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteAllRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteAllResponse.FromString,
                 )
@@ -232,7 +232,7 @@ def add_APIServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'identity.API', rpc_method_handlers)
+            'identity_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -251,7 +251,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/SetIdentityServerConfig',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/SetIdentityServerConfig',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.SetIdentityServerConfigRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.SetIdentityServerConfigResponse.FromString,
             options, channel_credentials,
@@ -268,7 +268,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/GetIdentityServerConfig',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/GetIdentityServerConfig',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIdentityServerConfigRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIdentityServerConfigResponse.FromString,
             options, channel_credentials,
@@ -285,7 +285,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/CreateIDPConnector',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/CreateIDPConnector',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateIDPConnectorRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateIDPConnectorResponse.FromString,
             options, channel_credentials,
@@ -302,7 +302,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/UpdateIDPConnector',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/UpdateIDPConnector',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateIDPConnectorRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateIDPConnectorResponse.FromString,
             options, channel_credentials,
@@ -319,7 +319,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/ListIDPConnectors',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/ListIDPConnectors',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListIDPConnectorsRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListIDPConnectorsResponse.FromString,
             options, channel_credentials,
@@ -336,7 +336,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/GetIDPConnector',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/GetIDPConnector',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIDPConnectorRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetIDPConnectorResponse.FromString,
             options, channel_credentials,
@@ -353,7 +353,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/DeleteIDPConnector',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/DeleteIDPConnector',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteIDPConnectorRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteIDPConnectorResponse.FromString,
             options, channel_credentials,
@@ -370,7 +370,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/CreateOIDCClient',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/CreateOIDCClient',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateOIDCClientRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.CreateOIDCClientResponse.FromString,
             options, channel_credentials,
@@ -387,7 +387,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/UpdateOIDCClient',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/UpdateOIDCClient',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateOIDCClientRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.UpdateOIDCClientResponse.FromString,
             options, channel_credentials,
@@ -404,7 +404,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/GetOIDCClient',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/GetOIDCClient',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetOIDCClientRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.GetOIDCClientResponse.FromString,
             options, channel_credentials,
@@ -421,7 +421,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/ListOIDCClients',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/ListOIDCClients',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListOIDCClientsRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.ListOIDCClientsResponse.FromString,
             options, channel_credentials,
@@ -438,7 +438,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/DeleteOIDCClient',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/DeleteOIDCClient',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteOIDCClientRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteOIDCClientResponse.FromString,
             options, channel_credentials,
@@ -455,7 +455,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/identity.API/DeleteAll',
+        return grpc.experimental.unary_unary(request, target, '/identity_v2.API/DeleteAll',
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteAllRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_identity_dot_identity__pb2.DeleteAllResponse.FromString,
             options, channel_credentials,

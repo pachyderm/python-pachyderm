@@ -16,37 +16,37 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.BatchTransaction = channel.unary_unary(
-                '/transaction.API/BatchTransaction',
+                '/transaction_v2.API/BatchTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.BatchTransactionRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
                 )
         self.StartTransaction = channel.unary_unary(
-                '/transaction.API/StartTransaction',
+                '/transaction_v2.API/StartTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.StartTransactionRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.Transaction.FromString,
                 )
         self.InspectTransaction = channel.unary_unary(
-                '/transaction.API/InspectTransaction',
+                '/transaction_v2.API/InspectTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.InspectTransactionRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
                 )
         self.DeleteTransaction = channel.unary_unary(
-                '/transaction.API/DeleteTransaction',
+                '/transaction_v2.API/DeleteTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.DeleteTransactionRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.ListTransaction = channel.unary_unary(
-                '/transaction.API/ListTransaction',
+                '/transaction_v2.API/ListTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.ListTransactionRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfos.FromString,
                 )
         self.FinishTransaction = channel.unary_unary(
-                '/transaction.API/FinishTransaction',
+                '/transaction_v2.API/FinishTransaction',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.FinishTransactionRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
                 )
         self.DeleteAll = channel.unary_unary(
-                '/transaction.API/DeleteAll',
+                '/transaction_v2.API/DeleteAll',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.DeleteAllRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -138,7 +138,7 @@ def add_APIServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'transaction.API', rpc_method_handlers)
+            'transaction_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -157,7 +157,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/BatchTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/BatchTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.BatchTransactionRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
             options, channel_credentials,
@@ -174,7 +174,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/StartTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/StartTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.StartTransactionRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.Transaction.FromString,
             options, channel_credentials,
@@ -191,7 +191,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/InspectTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/InspectTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.InspectTransactionRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
             options, channel_credentials,
@@ -208,7 +208,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/DeleteTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/DeleteTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.DeleteTransactionRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
@@ -225,7 +225,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/ListTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/ListTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.ListTransactionRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfos.FromString,
             options, channel_credentials,
@@ -242,7 +242,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/FinishTransaction',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/FinishTransaction',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.FinishTransactionRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.TransactionInfo.FromString,
             options, channel_credentials,
@@ -259,7 +259,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/transaction.API/DeleteAll',
+        return grpc.experimental.unary_unary(request, target, '/transaction_v2.API/DeleteAll',
             python__pachyderm_dot_proto_dot_v2_dot_transaction_dot_transaction__pb2.DeleteAllRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,

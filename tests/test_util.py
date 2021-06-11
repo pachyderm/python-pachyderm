@@ -6,7 +6,6 @@ import os
 import json
 import tempfile
 
-import grpc
 import pytest
 
 import python_pachyderm
@@ -60,7 +59,7 @@ TEST_PIPELINE_SPEC = """
 """
 
 
-def check_expected_files(client, commit, expected):
+def check_expected_files(client: python_pachyderm.Client, commit, expected):
     for fi in client.walk_file(commit, "/"):
         path = fi.file.path
         assert path in expected, "unexpected path: {}".format(path)
@@ -72,6 +71,7 @@ def check_expected_files(client, commit, expected):
 
 def test_put_files():
     client = python_pachyderm.Client()
+    client.delete_all()
     repo_name = util.create_test_repo(client, "put_files")
 
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
@@ -90,7 +90,7 @@ def test_put_files():
         # add the files under both `/` and `/sub` (the latter redundantly to
         # test both for correct path handling and the ability to put files
         # that already exist)
-        commit = "{}/master".format(repo_name)
+        commit = (repo_name, "master")
         python_pachyderm.put_files(client, d, commit, "/")
         python_pachyderm.put_files(client, d, commit, "/sub")
         python_pachyderm.put_files(client, d, commit, "/sub/")
@@ -105,115 +105,6 @@ def test_put_files():
         expected.add("/sub/{}/{}.txt".format(i, i))
 
     check_expected_files(client, commit, expected)
-
-
-def test_create_python_pipeline_bad_path():
-    client = python_pachyderm.Client()
-    repo_name = util.create_test_repo(client, "create_python_pipeline_bad_path")
-
-    # create some sample data
-    with client.commit(repo_name, "master") as commit:
-        client.put_file_bytes(commit, "file.dat", b"DATA")
-
-    # create a pipeline from a file that does not exist - should fail
-    with pytest.raises(Exception):
-        python_pachyderm.create_python_pipeline(
-            client,
-            "./foobar2000",
-            input=python_pachyderm.Input(
-                pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)
-            ),
-        )
-
-
-def test_create_python_pipeline():
-    client = python_pachyderm.Client()
-    repo_name = util.create_test_repo(client, "create_python_pipeline")
-    pfs_input = python_pachyderm.Input(
-        pfs=python_pachyderm.PFSInput(glob="/", repo=repo_name)
-    )
-    pipeline_name = util.test_repo_name("create_python_pipeline", prefix="pipeline")
-
-    # create some sample data
-    with client.commit(repo_name, "master") as commit:
-        client.put_file_bytes(commit, "file.dat", b"DATA")
-
-    # convenience function for verifying expected files exist
-    def check_all_expected_files(extra_source_files, extra_build_files):
-        list(client.flush_commit([c.commit for c in client.list_commit(pipeline_name)]))
-
-        check_expected_files(
-            client,
-            "{}_build/source".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/main.py",
-                    *extra_source_files,
-                ]
-            ),
-        )
-
-        check_expected_files(
-            client,
-            "{}_build/build".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/run.sh",
-                    *extra_build_files,
-                ]
-            ),
-        )
-
-        check_expected_files(
-            client,
-            "{}/master".format(pipeline_name),
-            set(
-                [
-                    "/",
-                    "/file.dat",
-                ]
-            ),
-        )
-
-    # 1) create a pipeline from a directory with a main.py and requirements.txt
-    with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
-        with open(os.path.join(d, "main.py"), "w") as f:
-            f.write(TEST_LIB_SOURCE.format(repo_name))
-        with open(os.path.join(d, "requirements.txt"), "w") as f:
-            f.write(TEST_REQUIREMENTS_SOURCE)
-
-        python_pachyderm.create_python_pipeline(
-            client,
-            d,
-            input=pfs_input,
-            pipeline_name=pipeline_name,
-        )
-
-    check_all_expected_files(
-        ["/requirements.txt"],
-        ["/leftpad-0.1.2-py3-none-any.whl", "/termcolor-1.1.0-py3-none-any.whl"],
-    )
-    file = client.get_file("{}/master".format(pipeline_name), "file.dat")
-    assert file.read() == b" DATA"
-
-    # 2) update pipeline from a directory without a requirements.txt
-    with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
-        with open(os.path.join(d, "main.py"), "w") as f:
-            f.write(TEST_STDLIB_SOURCE.format(repo_name))
-
-        python_pachyderm.create_python_pipeline(
-            client,
-            d,
-            input=pfs_input,
-            pipeline_name=pipeline_name,
-            update=True,
-        )
-
-    check_all_expected_files([], [])
-    file = client.get_file("{}/master".format(pipeline_name), "file.dat")
-    assert file.read() == b"DATA"
 
 
 def test_parse_json_pipeline_spec():

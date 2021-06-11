@@ -7,6 +7,7 @@ import time
 import pytest
 
 import python_pachyderm
+from python_pachyderm.proto.v2.pps import pps_pb2
 from tests import util
 
 
@@ -55,8 +56,8 @@ def test_inspect_job():
     sandbox = Sandbox("inspect_job")
     job_id = sandbox.wait_for_job()
 
-    job = sandbox.client.inspect_job(job_id)
-    assert job.job.id == job_id
+    job_info = sandbox.client.inspect_job(job_id)
+    assert job_info.job.id == job_id
 
 
 def test_stop_job():
@@ -69,13 +70,13 @@ def test_stop_job():
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
-    job = sandbox.client.inspect_job(job_id)
+    job_info = sandbox.client.inspect_job(job_id)
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
-    assert (
-        job.state == python_pachyderm.JobState.JOB_KILLED.value
-        or job.state == python_pachyderm.JobState.JOB_SUCCESS.value
-    )
+    assert job_info.state in [
+        pps_pb2.JobState.JOB_KILLED,
+        pps_pb2.JobState.JOB_SUCCESS,
+    ]
 
 
 def test_delete_job():
@@ -100,7 +101,9 @@ def test_datums():
 
     with pytest.raises(
         python_pachyderm.RpcError,
-        match=r"datum matching filter \[.*\] could not be found for jobID",
+        match=r"datum matching filter \[.*\] could not be found for job ID {}".format(
+            job_id
+        ),
     ):
         sandbox.client.restart_datum(job_id)
 

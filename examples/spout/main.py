@@ -23,6 +23,7 @@ def main():
         ),
     )
 
+    # TODO create_python_pipeline is deprecated
     python_pachyderm.create_python_pipeline(
         client,
         relpath("consumer"),

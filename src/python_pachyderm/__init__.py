@@ -10,7 +10,6 @@ from .client import Client, ConfigError, BadClusterDeploymentID
 from .spout import SpoutManager, SpoutCommit
 from .util import (
     put_files,
-    create_python_pipeline,
     parse_json_pipeline_spec,
     parse_dict_pipeline_spec,
 )

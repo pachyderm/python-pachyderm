@@ -15,27 +15,27 @@ class APIStub(object):
             channel: A grpc.Channel.
         """
         self.Activate = channel.unary_unary(
-                '/enterprise.API/Activate',
+                '/enterprise_v2.API/Activate',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.ActivateRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.ActivateResponse.FromString,
                 )
         self.GetState = channel.unary_unary(
-                '/enterprise.API/GetState',
+                '/enterprise_v2.API/GetState',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetStateRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetStateResponse.FromString,
                 )
         self.GetActivationCode = channel.unary_unary(
-                '/enterprise.API/GetActivationCode',
+                '/enterprise_v2.API/GetActivationCode',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetActivationCodeRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetActivationCodeResponse.FromString,
                 )
         self.Heartbeat = channel.unary_unary(
-                '/enterprise.API/Heartbeat',
+                '/enterprise_v2.API/Heartbeat',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.HeartbeatRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.HeartbeatResponse.FromString,
                 )
         self.Deactivate = channel.unary_unary(
-                '/enterprise.API/Deactivate',
+                '/enterprise_v2.API/Deactivate',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.FromString,
                 )
@@ -110,7 +110,7 @@ def add_APIServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'enterprise.API', rpc_method_handlers)
+            'enterprise_v2.API', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -129,7 +129,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/enterprise.API/Activate',
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Activate',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.ActivateRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.ActivateResponse.FromString,
             options, channel_credentials,
@@ -146,7 +146,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/enterprise.API/GetState',
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/GetState',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetStateRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetStateResponse.FromString,
             options, channel_credentials,
@@ -163,7 +163,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/enterprise.API/GetActivationCode',
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/GetActivationCode',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetActivationCodeRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.GetActivationCodeResponse.FromString,
             options, channel_credentials,
@@ -180,7 +180,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/enterprise.API/Heartbeat',
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Heartbeat',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.HeartbeatRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.HeartbeatResponse.FromString,
             options, channel_credentials,
@@ -197,7 +197,7 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/enterprise.API/Deactivate',
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Deactivate',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.FromString,
             options, channel_credentials,

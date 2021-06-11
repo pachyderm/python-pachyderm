@@ -15,7 +15,7 @@ class HealthStub(object):
             channel: A grpc.Channel.
         """
         self.Health = channel.unary_unary(
-                '/health.Health/Health',
+                '/health_v2.Health/Health',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -40,7 +40,7 @@ def add_HealthServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'health.Health', rpc_method_handlers)
+            'health_v2.Health', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -59,7 +59,7 @@ class Health(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/health.Health/Health',
+        return grpc.experimental.unary_unary(request, target, '/health_v2.Health/Health',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,

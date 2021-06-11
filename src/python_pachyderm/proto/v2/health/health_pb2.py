@@ -16,11 +16,11 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='python_pachyderm/proto/v2/health/health.proto',
-  package='health',
+  package='health_v2',
   syntax='proto3',
   serialized_options=b'Z,github.com/pachyderm/pachyderm/v2/src/health',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n-python_pachyderm/proto/v2/health/health.proto\x12\x06health\x1a\x1bgoogle/protobuf/empty.proto2D\n\x06Health\x12:\n\x06Health\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x42.Z,github.com/pachyderm/pachyderm/v2/src/healthb\x06proto3'
+  serialized_pb=b'\n-python_pachyderm/proto/v2/health/health.proto\x12\thealth_v2\x1a\x1bgoogle/protobuf/empty.proto2D\n\x06Health\x12:\n\x06Health\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x42.Z,github.com/pachyderm/pachyderm/v2/src/healthb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -33,17 +33,17 @@ DESCRIPTOR._options = None
 
 _HEALTH = _descriptor.ServiceDescriptor(
   name='Health',
-  full_name='health.Health',
+  full_name='health_v2.Health',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=86,
-  serialized_end=154,
+  serialized_start=89,
+  serialized_end=157,
   methods=[
   _descriptor.MethodDescriptor(
     name='Health',
-    full_name='health.Health.Health',
+    full_name='health_v2.Health.Health',
     index=0,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,

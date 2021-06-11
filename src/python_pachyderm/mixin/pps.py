@@ -121,21 +121,28 @@ class PPSMixin:
 
         * `job_id`: The ID of the job to delete.
         """
-        return self._req(Service.PPS, "DeleteJob", job=pps_proto.Job(id=job_id))
+        return self._req(
+            Service.PPS,
+            "DeleteJob",
+            job=pps_proto.Job(id=job_id),
+        )
 
-    def stop_job(self, job_id, output_commit=None):
+    def stop_job(self, job_id, output_commit=None, reason=None):
         """
         Stops a job by its ID.
 
         Params:
 
         * `job_id`: The ID of the job to stop.
+        * `output_commit`: TODO
+        * `reason`: TODO
         """
         return self._req(
             Service.PPS,
             "StopJob",
             job=pps_proto.Job(id=job_id),
             output_commit=commit_from(output_commit),
+            reason=reason,
         )
 
     def inspect_datum(self, job_id, datum_id):
@@ -153,7 +160,7 @@ class PPSMixin:
             datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
         )
 
-    def list_datum(self, job_id=None):
+    def list_datum(self, job_id=None, input=None):
         """
         Lists datums. Yields `DatumInfo` objects.
 
@@ -161,6 +168,7 @@ class PPSMixin:
 
         * `job_id`: An optional int specifying the ID of a job. Exactly one of
           `job_id` (real) or `input` (hypothetical) must be set.
+        * `input`: TODO an `Input` object
         """
         return self._req(
             Service.PPS,
