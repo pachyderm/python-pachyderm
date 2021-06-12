@@ -74,7 +74,7 @@ def test_cluster_role_bindings(client):
 def test_authorize(client):
     client.authorize(
         auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
-        [python_pachyderm.Permission.REPO_READ.value],
+        [auth_pb2.Permission.REPO_READ],
     )
 
 

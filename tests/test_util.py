@@ -6,9 +6,8 @@ import os
 import json
 import tempfile
 
-import pytest
-
 import python_pachyderm
+from python_pachyderm.proto.v2.pps import pps_pb2
 from tests import util
 
 # script that copies a file using just stdlibs
@@ -118,13 +117,13 @@ def test_parse_dict_pipeline_spec():
 
 
 def check_pipeline_spec(req):
-    assert req == python_pachyderm.CreatePipelineRequest(
-        pipeline=python_pachyderm.Pipeline(name="foobar"),
+    assert req == pps_pb2.CreatePipelineRequest(
+        pipeline=pps_pb2.Pipeline(name="foobar"),
         description="A pipeline that performs image edge detection by using the OpenCV library.",
-        input=python_pachyderm.Input(
-            pfs=python_pachyderm.PFSInput(glob="/*", repo="images"),
+        input=pps_pb2.Input(
+            pfs=pps_pb2.PFSInput(glob="/*", repo="images"),
         ),
-        transform=python_pachyderm.Transform(
+        transform=pps_pb2.Transform(
             cmd=["python3", "/edges.py"],
             image="pachyderm/opencv",
         ),

@@ -5,7 +5,8 @@
 import pytest
 
 import python_pachyderm
-
+from python_pachyderm.proto.v2.pfs import pfs_pb2
+from python_pachyderm.proto.v2.transaction import transaction_pb2
 from tests import util
 
 
@@ -14,11 +15,9 @@ def test_batch_transaction():
     expected_repo_count = len(client.list_repo()) + 3
 
     def create_repo_request():
-        return python_pachyderm.TransactionRequest(
-            create_repo=python_pachyderm.CreateRepoRequest(
-                repo=python_pachyderm.Repo(
-                    name=util.test_repo_name("test_batch_transaction")
-                )
+        return transaction_pb2.TransactionRequest(
+            create_repo=pfs_pb2.CreateRepoRequest(
+                repo=pfs_pb2.Repo(name=util.test_repo_name("test_batch_transaction"))
             )
         )
 
