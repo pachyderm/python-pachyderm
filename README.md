@@ -26,15 +26,16 @@ import python_pachyderm
 # For other options, see the API docs.
 client = python_pachyderm.Client()
 
-# Create a repo called `test`
-client.create_repo('test')
+# Create a pachyderm repo called `test`
+client.create_repo("test")
 
 # Upload a file to test/master where test is the repo and master is the branch
 # /dir_a/data.txt is the path of the file at test/master
-client.put_file_bytes("test/master", '/dir_a/data.txt', b'DATA')
+with client.commit("test", "master") as commit:
+    client.put_file_bytes(commit, "/dir_a/data.txt", b"DATA")
 
 # Get back the file
-f = client.get_file("test/master", "/dir_a/data.txt")
+f = client.get_file(("test", "master"), "/dir_a/data.txt")
 print(f.read())  # >>> b"DATA"
 ```
 

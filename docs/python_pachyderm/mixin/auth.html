@@ -193,20 +193,15 @@ class AuthMixin:
             remove=remove or [],
         )
 
-    def get_groups(self, username=None):
+    def get_groups(self):
         &#34;&#34;&#34;
-        Gets which groups the given `username` belongs to. Returns a list of
-        strings.
-
-        Params:
-
-        `username`: A string.
+        Gets a list of groups this user belongs to.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups
+        return self._req(Service.AUTH, &#34;GetGroups&#34;).groups
 
     def get_users(self, group):
         &#34;&#34;&#34;
-        Gets which users below to the `given`. Returns a list of strings.
+        Gets which users below to the given `group`. Returns a list of strings.
 
         Params:
 
@@ -425,20 +420,15 @@ class AuthMixin:
             remove=remove or [],
         )
 
-    def get_groups(self, username=None):
+    def get_groups(self):
         &#34;&#34;&#34;
-        Gets which groups the given `username` belongs to. Returns a list of
-        strings.
-
-        Params:
-
-        `username`: A string.
+        Gets a list of groups this user belongs to.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups
+        return self._req(Service.AUTH, &#34;GetGroups&#34;).groups
 
     def get_users(self, group):
         &#34;&#34;&#34;
-        Gets which users below to the `given`. Returns a list of strings.
+        Gets which users below to the given `group`. Returns a list of strings.
 
         Params:
 
@@ -661,27 +651,19 @@ issue in github.com/pachyderm/pachyderm).</p></div>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.get_groups"><code class="name flex">
-<span>def <span class="ident">get_groups</span></span>(<span>self, username=None)</span>
+<span>def <span class="ident">get_groups</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Gets which groups the given <code>username</code> belongs to. Returns a list of
-strings.</p>
-<p>Params:</p>
-<p><code>username</code>: A string.</p></div>
+<div class="desc"><p>Gets a list of groups this user belongs to.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_groups(self, username=None):
+<pre><code class="python">def get_groups(self):
     &#34;&#34;&#34;
-    Gets which groups the given `username` belongs to. Returns a list of
-    strings.
-
-    Params:
-
-    `username`: A string.
+    Gets a list of groups this user belongs to.
     &#34;&#34;&#34;
-    return self._req(Service.AUTH, &#34;GetGroups&#34;, username=username).groups</code></pre>
+    return self._req(Service.AUTH, &#34;GetGroups&#34;).groups</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.get_oidc_login"><code class="name flex">
@@ -745,7 +727,7 @@ If empty, the token does not expire.</p></div>
 <span>def <span class="ident">get_users</span></span>(<span>self, group)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Gets which users below to the <code>given</code>. Returns a list of strings.</p>
+<div class="desc"><p>Gets which users below to the given <code>group</code>. Returns a list of strings.</p>
 <p>Params:</p>
 <p><code>group</code>: A string.</p></div>
 <details class="source">
@@ -754,7 +736,7 @@ If empty, the token does not expire.</p></div>
 </summary>
 <pre><code class="python">def get_users(self, group):
     &#34;&#34;&#34;
-    Gets which users below to the `given`. Returns a list of strings.
+    Gets which users below to the given `group`. Returns a list of strings.
 
     Params:
 

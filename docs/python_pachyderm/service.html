@@ -28,28 +28,33 @@
 </summary>
 <pre><code class="python">from enum import Enum
 
-from python_pachyderm.proto.admin import admin_pb2 as admin_proto
-from python_pachyderm.proto.admin import admin_pb2_grpc as admin_grpc
-from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
-from python_pachyderm.proto.pfs import pfs_pb2_grpc as pfs_grpc
-from python_pachyderm.proto.pps import pps_pb2 as pps_proto
-from python_pachyderm.proto.pps import pps_pb2_grpc as pps_grpc
-from python_pachyderm.proto.transaction import transaction_pb2 as transaction_proto
-from python_pachyderm.proto.transaction import transaction_pb2_grpc as transaction_grpc
-from python_pachyderm.proto.version.versionpb import version_pb2 as version_proto
-from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version_grpc
-from python_pachyderm.proto.debug import debug_pb2 as debug_proto
-from python_pachyderm.proto.debug import debug_pb2_grpc as debug_grpc
-from python_pachyderm.proto.auth import auth_pb2 as auth_proto
-from python_pachyderm.proto.auth import auth_pb2_grpc as auth_grpc
-from python_pachyderm.proto.enterprise import enterprise_pb2 as enterprise_proto
-from python_pachyderm.proto.enterprise import enterprise_pb2_grpc as enterprise_grpc
-from python_pachyderm.proto.health import health_pb2 as health_proto
-from python_pachyderm.proto.health import health_pb2_grpc as health_grpc
-from python_pachyderm.proto.license import license_pb2 as license_proto
-from python_pachyderm.proto.license import license_pb2_grpc as license_grpc
-from python_pachyderm.proto.identity import identity_pb2 as identity_proto
-from python_pachyderm.proto.identity import identity_pb2_grpc as identity_grpc
+from python_pachyderm.proto.v2.admin import admin_pb2 as admin_proto
+from python_pachyderm.proto.v2.admin import admin_pb2_grpc as admin_grpc
+from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm.proto.v2.pfs import pfs_pb2_grpc as pfs_grpc
+from python_pachyderm.proto.v2.pps import pps_pb2 as pps_proto
+from python_pachyderm.proto.v2.pps import pps_pb2_grpc as pps_grpc
+from python_pachyderm.proto.v2.transaction import transaction_pb2 as transaction_proto
+from python_pachyderm.proto.v2.transaction import (
+    transaction_pb2_grpc as transaction_grpc,
+)
+from python_pachyderm.proto.v2.version.versionpb import version_pb2 as version_proto
+from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as version_grpc
+from python_pachyderm.proto.v2.debug import debug_pb2 as debug_proto
+from python_pachyderm.proto.v2.debug import debug_pb2_grpc as debug_grpc
+from python_pachyderm.proto.v2.auth import auth_pb2 as auth_proto
+from python_pachyderm.proto.v2.auth import auth_pb2_grpc as auth_grpc
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2 as enterprise_proto
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2_grpc as enterprise_grpc
+from python_pachyderm.proto.v2.health import health_pb2 as health_proto
+from python_pachyderm.proto.v2.health import health_pb2_grpc as health_grpc
+from python_pachyderm.proto.v2.license import license_pb2 as license_proto
+from python_pachyderm.proto.v2.license import license_pb2_grpc as license_grpc
+from python_pachyderm.proto.v2.identity import identity_pb2 as identity_proto
+from python_pachyderm.proto.v2.identity import identity_pb2_grpc as identity_grpc
+
+MB = 1048576
+MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
 
 
 class Service(Enum):
@@ -88,6 +93,12 @@ class Service(Enum):
     @property
     def proto_module(self):
         return PROTO_MODULES[self]
+
+    @property
+    def options(self):
+        return [
+            (&#34;grpc.max_receive_message_length&#34;, MAX_RECEIVE_MESSAGE_SIZE),
+        ]
 
 
 GRPC_MODULES = {
@@ -173,7 +184,13 @@ PROTO_MODULES = {
 
     @property
     def proto_module(self):
-        return PROTO_MODULES[self]</code></pre>
+        return PROTO_MODULES[self]
+
+    @property
+    def options(self):
+        return [
+            (&#34;grpc.max_receive_message_length&#34;, MAX_RECEIVE_MESSAGE_SIZE),
+        ]</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -238,6 +255,20 @@ PROTO_MODULES = {
 <pre><code class="python">@property
 def grpc_module(self):
     return GRPC_MODULES[self]</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.service.Service.options"><code class="name">var <span class="ident">options</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def options(self):
+    return [
+        (&#34;grpc.max_receive_message_length&#34;, MAX_RECEIVE_MESSAGE_SIZE),
+    ]</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.service.Service.proto_module"><code class="name">var <span class="ident">proto_module</span></code></dt>
@@ -317,6 +348,7 @@ def stub(self):
 <li><code><a title="python_pachyderm.service.Service.TRANSACTION" href="#python_pachyderm.service.Service.TRANSACTION">TRANSACTION</a></code></li>
 <li><code><a title="python_pachyderm.service.Service.VERSION" href="#python_pachyderm.service.Service.VERSION">VERSION</a></code></li>
 <li><code><a title="python_pachyderm.service.Service.grpc_module" href="#python_pachyderm.service.Service.grpc_module">grpc_module</a></code></li>
+<li><code><a title="python_pachyderm.service.Service.options" href="#python_pachyderm.service.Service.options">options</a></code></li>
 <li><code><a title="python_pachyderm.service.Service.proto_module" href="#python_pachyderm.service.Service.proto_module">proto_module</a></code></li>
 <li><code><a title="python_pachyderm.service.Service.servicer" href="#python_pachyderm.service.Service.servicer">servicer</a></code></li>
 <li><code><a title="python_pachyderm.service.Service.stub" href="#python_pachyderm.service.Service.stub">stub</a></code></li>

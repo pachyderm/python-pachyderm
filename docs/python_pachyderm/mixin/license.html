@@ -50,7 +50,15 @@ class LicenseMixin:
             expires=expires,
         )
 
-    def add_cluster(self, id, address, secret=None):
+    def add_cluster(
+        self,
+        id,
+        address,
+        secret=None,
+        user_address=None,
+        cluster_deployment_id=None,
+        enterprise_server=None,
+    ):
         &#34;&#34;&#34;
         Register a cluster with the license service.
 
@@ -63,10 +71,19 @@ class LicenseMixin:
         If not specified, a random secret will be generated and returned.
         &#34;&#34;&#34;
         return self._req(
-            Service.LICENSE, &#34;AddCluster&#34;, id=id, address=address, secret=secret
+            Service.LICENSE,
+            &#34;AddCluster&#34;,
+            id=id,
+            address=address,
+            secret=secret,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+            enterprise_server=enterprise_server,
         )
 
-    def update_cluster(self, id, address):
+    def update_cluster(
+        self, id, address, user_address=None, cluster_deployment_id=None
+    ):
         &#34;&#34;&#34;
         Update a cluster registered with the license service.
 
@@ -75,7 +92,14 @@ class LicenseMixin:
         * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         &#34;&#34;&#34;
-        return self._req(Service.LICENSE, &#34;UpdateCluster&#34;, id=id, address=address)
+        return self._req(
+            Service.LICENSE,
+            &#34;UpdateCluster&#34;,
+            id=id,
+            address=address,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+        )
 
     def delete_cluster(self, id):
         &#34;&#34;&#34;
@@ -103,7 +127,13 @@ class LicenseMixin:
         &#34;&#34;&#34;
         Remove all clusters and deactivate the license service.
         &#34;&#34;&#34;
-        return self._req(Service.LICENSE, &#34;DeleteAll&#34;)</code></pre>
+        return self._req(Service.LICENSE, &#34;DeleteAll&#34;)
+
+    def list_user_clusters(self):
+        &#34;&#34;&#34;
+        Lists all clusters available to user.
+        &#34;&#34;&#34;
+        return self._req(Service.LICENSE, &#34;ListUserClusters&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -145,7 +175,15 @@ class LicenseMixin:
             expires=expires,
         )
 
-    def add_cluster(self, id, address, secret=None):
+    def add_cluster(
+        self,
+        id,
+        address,
+        secret=None,
+        user_address=None,
+        cluster_deployment_id=None,
+        enterprise_server=None,
+    ):
         &#34;&#34;&#34;
         Register a cluster with the license service.
 
@@ -158,10 +196,19 @@ class LicenseMixin:
         If not specified, a random secret will be generated and returned.
         &#34;&#34;&#34;
         return self._req(
-            Service.LICENSE, &#34;AddCluster&#34;, id=id, address=address, secret=secret
+            Service.LICENSE,
+            &#34;AddCluster&#34;,
+            id=id,
+            address=address,
+            secret=secret,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+            enterprise_server=enterprise_server,
         )
 
-    def update_cluster(self, id, address):
+    def update_cluster(
+        self, id, address, user_address=None, cluster_deployment_id=None
+    ):
         &#34;&#34;&#34;
         Update a cluster registered with the license service.
 
@@ -170,7 +217,14 @@ class LicenseMixin:
         * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         &#34;&#34;&#34;
-        return self._req(Service.LICENSE, &#34;UpdateCluster&#34;, id=id, address=address)
+        return self._req(
+            Service.LICENSE,
+            &#34;UpdateCluster&#34;,
+            id=id,
+            address=address,
+            user_address=user_address,
+            cluster_deployment_id=cluster_deployment_id,
+        )
 
     def delete_cluster(self, id):
         &#34;&#34;&#34;
@@ -198,7 +252,13 @@ class LicenseMixin:
         &#34;&#34;&#34;
         Remove all clusters and deactivate the license service.
         &#34;&#34;&#34;
-        return self._req(Service.LICENSE, &#34;DeleteAll&#34;)</code></pre>
+        return self._req(Service.LICENSE, &#34;DeleteAll&#34;)
+
+    def list_user_clusters(self):
+        &#34;&#34;&#34;
+        Lists all clusters available to user.
+        &#34;&#34;&#34;
+        return self._req(Service.LICENSE, &#34;ListUserClusters&#34;)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -246,7 +306,7 @@ the signed expiration time in <code>activation_code</code>.</li>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.license.LicenseMixin.add_cluster"><code class="name flex">
-<span>def <span class="ident">add_cluster</span></span>(<span>self, id, address, secret=None)</span>
+<span>def <span class="ident">add_cluster</span></span>(<span>self, id, address, secret=None, user_address=None, cluster_deployment_id=None, enterprise_server=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Register a cluster with the license service.</p>
@@ -262,7 +322,15 @@ If not specified, a random secret will be generated and returned.</li>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_cluster(self, id, address, secret=None):
+<pre><code class="python">def add_cluster(
+    self,
+    id,
+    address,
+    secret=None,
+    user_address=None,
+    cluster_deployment_id=None,
+    enterprise_server=None,
+):
     &#34;&#34;&#34;
     Register a cluster with the license service.
 
@@ -275,7 +343,14 @@ If not specified, a random secret will be generated and returned.</li>
     If not specified, a random secret will be generated and returned.
     &#34;&#34;&#34;
     return self._req(
-        Service.LICENSE, &#34;AddCluster&#34;, id=id, address=address, secret=secret
+        Service.LICENSE,
+        &#34;AddCluster&#34;,
+        id=id,
+        address=address,
+        secret=secret,
+        user_address=user_address,
+        cluster_deployment_id=cluster_deployment_id,
+        enterprise_server=enterprise_server,
     )</code></pre>
 </details>
 </dd>
@@ -351,8 +426,24 @@ If not specified, a random secret will be generated and returned.</li>
     return self._req(Service.LICENSE, &#34;ListClusters&#34;)</code></pre>
 </details>
 </dd>
+<dt id="python_pachyderm.mixin.license.LicenseMixin.list_user_clusters"><code class="name flex">
+<span>def <span class="ident">list_user_clusters</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists all clusters available to user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_user_clusters(self):
+    &#34;&#34;&#34;
+    Lists all clusters available to user.
+    &#34;&#34;&#34;
+    return self._req(Service.LICENSE, &#34;ListUserClusters&#34;)</code></pre>
+</details>
+</dd>
 <dt id="python_pachyderm.mixin.license.LicenseMixin.update_cluster"><code class="name flex">
-<span>def <span class="ident">update_cluster</span></span>(<span>self, id, address)</span>
+<span>def <span class="ident">update_cluster</span></span>(<span>self, id, address, user_address=None, cluster_deployment_id=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Update a cluster registered with the license service.</p>
@@ -365,7 +456,9 @@ If not specified, a random secret will be generated and returned.</li>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update_cluster(self, id, address):
+<pre><code class="python">def update_cluster(
+    self, id, address, user_address=None, cluster_deployment_id=None
+):
     &#34;&#34;&#34;
     Update a cluster registered with the license service.
 
@@ -374,7 +467,14 @@ If not specified, a random secret will be generated and returned.</li>
     * `id`: The unique ID to identify the cluster.
     * `address`: A GRPC address for the license server to reach the cluster.
     &#34;&#34;&#34;
-    return self._req(Service.LICENSE, &#34;UpdateCluster&#34;, id=id, address=address)</code></pre>
+    return self._req(
+        Service.LICENSE,
+        &#34;UpdateCluster&#34;,
+        id=id,
+        address=address,
+        user_address=user_address,
+        cluster_deployment_id=cluster_deployment_id,
+    )</code></pre>
 </details>
 </dd>
 </dl>
@@ -404,6 +504,7 @@ If not specified, a random secret will be generated and returned.</li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.delete_cluster" href="#python_pachyderm.mixin.license.LicenseMixin.delete_cluster">delete_cluster</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.get_activation_code" href="#python_pachyderm.mixin.license.LicenseMixin.get_activation_code">get_activation_code</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.list_clusters" href="#python_pachyderm.mixin.license.LicenseMixin.list_clusters">list_clusters</a></code></li>
+<li><code><a title="python_pachyderm.mixin.license.LicenseMixin.list_user_clusters" href="#python_pachyderm.mixin.license.LicenseMixin.list_user_clusters">list_user_clusters</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.update_cluster" href="#python_pachyderm.mixin.license.LicenseMixin.update_cluster">update_cluster</a></code></li>
 </ul>
 </li>

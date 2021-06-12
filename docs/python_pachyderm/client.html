@@ -42,6 +42,7 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
+from .service import Service
 
 
 class ConfigError(Exception):
@@ -300,16 +301,23 @@ class Client(
             metadata.append((&#34;pach-transaction&#34;, self._transaction_id))
         return metadata
 
-    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+    def _req(self, grpc_service: Service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
         if stub is None:
             grpc_module = grpc_service.grpc_module
             if self.root_certs:
                 ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
                 ssl = ssl_channel_credentials(root_certificates=self.root_certs)
-                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+                channel = grpc_module.grpc.secure_channel(
+                    self.address,
+                    ssl,
+                    options=grpc_service.options,
+                )
             else:
-                channel = grpc_module.grpc.insecure_channel(self.address)
+                channel = grpc_module.grpc.insecure_channel(
+                    self.address,
+                    options=grpc_service.options,
+                )
             stub = grpc_service.stub(channel)
             self._stubs[grpc_service] = stub
 
@@ -628,16 +636,23 @@ certifi.</li>
             metadata.append((&#34;pach-transaction&#34;, self._transaction_id))
         return metadata
 
-    def _req(self, grpc_service, grpc_method_name, req=None, **kwargs):
+    def _req(self, grpc_service: Service, grpc_method_name, req=None, **kwargs):
         stub = self._stubs.get(grpc_service)
         if stub is None:
             grpc_module = grpc_service.grpc_module
             if self.root_certs:
                 ssl_channel_credentials = grpc_module.grpc.ssl_channel_credentials
                 ssl = ssl_channel_credentials(root_certificates=self.root_certs)
-                channel = grpc_module.grpc.secure_channel(self.address, ssl)
+                channel = grpc_module.grpc.secure_channel(
+                    self.address,
+                    ssl,
+                    options=grpc_service.options,
+                )
             else:
-                channel = grpc_module.grpc.insecure_channel(self.address)
+                channel = grpc_module.grpc.insecure_channel(
+                    self.address,
+                    options=grpc_service.options,
+                )
             stub = grpc_service.stub(channel)
             self._stubs[grpc_service] = stub
 
@@ -963,6 +978,7 @@ def transaction_id(self):
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.delete_all_license" href="mixin/license.html#python_pachyderm.mixin.license.LicenseMixin.delete_all_license">delete_all_license</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.delete_cluster" href="mixin/license.html#python_pachyderm.mixin.license.LicenseMixin.delete_cluster">delete_cluster</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.list_clusters" href="mixin/license.html#python_pachyderm.mixin.license.LicenseMixin.list_clusters">list_clusters</a></code></li>
+<li><code><a title="python_pachyderm.mixin.license.LicenseMixin.list_user_clusters" href="mixin/license.html#python_pachyderm.mixin.license.LicenseMixin.list_user_clusters">list_user_clusters</a></code></li>
 <li><code><a title="python_pachyderm.mixin.license.LicenseMixin.update_cluster" href="mixin/license.html#python_pachyderm.mixin.license.LicenseMixin.update_cluster">update_cluster</a></code></li>
 </ul>
 </li>
@@ -995,6 +1011,7 @@ def transaction_id(self):
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">put_file_bytes</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_url" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">put_file_url</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set">renew_tmp_file_set</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.squash_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.squash_commit">squash_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.start_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.start_commit">start_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">subscribe_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.walk_file" href="mixin/pfs.html#python_pachyderm.mixin.pfs.PFSMixin.walk_file">walk_file</a></code></li>
@@ -1005,7 +1022,6 @@ def transaction_id(self):
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline">create_pipeline</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_pipeline_from_request" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline_from_request">create_pipeline_from_request</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_secret" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_secret">create_secret</a></code></li>
-<li><code><a title="python_pachyderm.mixin.pps.PPSMixin.create_tf_job_pipeline" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.create_tf_job_pipeline">create_tf_job_pipeline</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_all" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_all">delete_all</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_all_pipelines" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_all_pipelines">delete_all_pipelines</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pps.PPSMixin.delete_job" href="mixin/pps.html#python_pachyderm.mixin.pps.PPSMixin.delete_job">delete_job</a></code></li>

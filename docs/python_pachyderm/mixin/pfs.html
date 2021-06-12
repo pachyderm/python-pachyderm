@@ -31,7 +31,7 @@ import itertools
 import tarfile
 from contextlib import contextmanager
 
-from python_pachyderm.proto.pfs import pfs_pb2 as pfs_proto
+from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.service import Service
 from .util import commit_from
 
@@ -138,7 +138,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             &#34;CreateRepo&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             description=description,
             update=update,
         )
@@ -152,14 +152,19 @@ class PFSMixin:
         * `repo_name`: Name of the repo.
         &#34;&#34;&#34;
         return self._req(
-            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
         )
 
-    def list_repo(self):
+    def list_repo(self, type=None):
         &#34;&#34;&#34;
         Returns info about all repos, as a list of `RepoInfo` objects.
+
+        Params:
+
+        * `type`: the type of (system) repos that should be returned,
+        an empty value None or empty string requests all repos.
         &#34;&#34;&#34;
-        return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info
+        return self._req(Service.PFS, &#34;ListRepo&#34;, type=type).repo_info
 
     def delete_repo(self, repo_name, force=None):
         &#34;&#34;&#34;
@@ -174,7 +179,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             &#34;DeleteRepo&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             force=force,
             all=False,
         )
@@ -191,8 +196,8 @@ class PFSMixin:
         return self._req(Service.PFS, &#34;DeleteRepo&#34;, force=force, all=True)
 
     def start_commit(
-        self, repo_name, branch=None, parent=None, description=None, provenance=None
-    ):
+        self, repo_name, branch, parent=None, description=None, provenance=None
+    ) -&gt; pfs_proto.Commit:
         &#34;&#34;&#34;
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been
@@ -217,11 +222,20 @@ class PFSMixin:
         * `provenance`: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         &#34;&#34;&#34;
+        if parent and isinstance(parent, str):
+            parent = pfs_proto.Commit(
+                id=parent,
+                branch=pfs_proto.Branch(
+                    repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=None
+                ),
+            )
         return self._req(
             Service.PFS,
             &#34;StartCommit&#34;,
-            parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
-            branch=branch,
+            parent=parent,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch
+            ),
             description=description,
             provenance=provenance,
         )
@@ -252,7 +266,7 @@ class PFSMixin:
         )
 
     @contextmanager
-    def commit(self, repo_name, branch=None, parent=None, description=None):
+    def commit(self, repo_name, branch, parent=None, description=None):
         &#34;&#34;&#34;
         A context manager for running operations within a commit.
 
@@ -314,13 +328,24 @@ class PFSMixin:
         returned.
         &#34;&#34;&#34;
         req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
+            number=number,
+            reverse=reverse,
         )
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, &#34;from&#34;).CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, &#34;ListCommit&#34;, req=req)
+
+    def squash_commit(self, commit):
+        &#34;&#34;&#34;
+        Squashes a commit.
+        Params:
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;SquashCommit&#34;, commit=commit_from(commit))
 
     def flush_commit(self, commits, repos=None):
         &#34;&#34;&#34;
@@ -368,7 +393,7 @@ class PFSMixin:
         * `state`: The commit state to filter on.
         * `prov`: An optional `CommitProvenance` object.
         &#34;&#34;&#34;
-        repo = pfs_proto.Repo(name=repo_name)
+        repo = pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo, branch=branch, state=state, prov=prov
         )
@@ -399,7 +424,7 @@ class PFSMixin:
             Service.PFS,
             &#34;CreateBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
@@ -414,7 +439,7 @@ class PFSMixin:
             Service.PFS,
             &#34;InspectBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
         )
 
@@ -430,7 +455,7 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             &#34;ListBranch&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             reverse=reverse,
         ).branch_info
 
@@ -450,7 +475,7 @@ class PFSMixin:
             Service.PFS,
             &#34;DeleteBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
             force=force,
         )
@@ -613,9 +638,10 @@ class PFSMixin:
         &#34;&#34;&#34;
         res = self._req(
             Service.PFS,
-            &#34;GetFile&#34;,
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-            URL=URL,
+            &#34;GetFileTAR&#34;,
+            req=pfs_proto.GetFileRequest(
+                file=pfs_proto.File(commit=commit_from(commit), path=path), URL=URL
+            ),
         )
         return PFSFile(FileTarstream(res))
 
@@ -2281,7 +2307,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         return self._req(
             Service.PFS,
             &#34;CreateRepo&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             description=description,
             update=update,
         )
@@ -2295,14 +2321,19 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         * `repo_name`: Name of the repo.
         &#34;&#34;&#34;
         return self._req(
-            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+            Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
         )
 
-    def list_repo(self):
+    def list_repo(self, type=None):
         &#34;&#34;&#34;
         Returns info about all repos, as a list of `RepoInfo` objects.
+
+        Params:
+
+        * `type`: the type of (system) repos that should be returned,
+        an empty value None or empty string requests all repos.
         &#34;&#34;&#34;
-        return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info
+        return self._req(Service.PFS, &#34;ListRepo&#34;, type=type).repo_info
 
     def delete_repo(self, repo_name, force=None):
         &#34;&#34;&#34;
@@ -2317,7 +2348,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         return self._req(
             Service.PFS,
             &#34;DeleteRepo&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             force=force,
             all=False,
         )
@@ -2334,8 +2365,8 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         return self._req(Service.PFS, &#34;DeleteRepo&#34;, force=force, all=True)
 
     def start_commit(
-        self, repo_name, branch=None, parent=None, description=None, provenance=None
-    ):
+        self, repo_name, branch, parent=None, description=None, provenance=None
+    ) -&gt; pfs_proto.Commit:
         &#34;&#34;&#34;
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been
@@ -2360,11 +2391,20 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         * `provenance`: An optional iterable of `CommitProvenance` objects
         specifying the commit provenance.
         &#34;&#34;&#34;
+        if parent and isinstance(parent, str):
+            parent = pfs_proto.Commit(
+                id=parent,
+                branch=pfs_proto.Branch(
+                    repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=None
+                ),
+            )
         return self._req(
             Service.PFS,
             &#34;StartCommit&#34;,
-            parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
-            branch=branch,
+            parent=parent,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch
+            ),
             description=description,
             provenance=provenance,
         )
@@ -2395,7 +2435,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         )
 
     @contextmanager
-    def commit(self, repo_name, branch=None, parent=None, description=None):
+    def commit(self, repo_name, branch, parent=None, description=None):
         &#34;&#34;&#34;
         A context manager for running operations within a commit.
 
@@ -2457,13 +2497,24 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         returned.
         &#34;&#34;&#34;
         req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
+            number=number,
+            reverse=reverse,
         )
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, &#34;from&#34;).CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, &#34;ListCommit&#34;, req=req)
+
+    def squash_commit(self, commit):
+        &#34;&#34;&#34;
+        Squashes a commit.
+        Params:
+        * `commit`: A tuple, string, or `Commit` object representing the
+        commit.
+        &#34;&#34;&#34;
+        return self._req(Service.PFS, &#34;SquashCommit&#34;, commit=commit_from(commit))
 
     def flush_commit(self, commits, repos=None):
         &#34;&#34;&#34;
@@ -2511,7 +2562,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         * `state`: The commit state to filter on.
         * `prov`: An optional `CommitProvenance` object.
         &#34;&#34;&#34;
-        repo = pfs_proto.Repo(name=repo_name)
+        repo = pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo, branch=branch, state=state, prov=prov
         )
@@ -2542,7 +2593,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
             Service.PFS,
             &#34;CreateBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
             head=commit_from(commit) if commit is not None else None,
             provenance=provenance,
@@ -2557,7 +2608,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
             Service.PFS,
             &#34;InspectBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
         )
 
@@ -2573,7 +2624,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         return self._req(
             Service.PFS,
             &#34;ListBranch&#34;,
-            repo=pfs_proto.Repo(name=repo_name),
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
             reverse=reverse,
         ).branch_info
 
@@ -2593,7 +2644,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
             Service.PFS,
             &#34;DeleteBranch&#34;,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
             ),
             force=force,
         )
@@ -2756,9 +2807,10 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
         &#34;&#34;&#34;
         res = self._req(
             Service.PFS,
-            &#34;GetFile&#34;,
-            file=pfs_proto.File(commit=commit_from(commit), path=path),
-            URL=URL,
+            &#34;GetFileTAR&#34;,
+            req=pfs_proto.GetFileRequest(
+                file=pfs_proto.File(commit=commit_from(commit), path=path), URL=URL
+            ),
         )
         return PFSFile(FileTarstream(res))
 
@@ -2920,7 +2972,7 @@ with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:
 <h3>Methods</h3>
 <dl>
 <dt id="python_pachyderm.mixin.pfs.PFSMixin.commit"><code class="name flex">
-<span>def <span class="ident">commit</span></span>(<span>self, repo_name, branch=None, parent=None, description=None)</span>
+<span>def <span class="ident">commit</span></span>(<span>self, repo_name, branch, parent=None, description=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A context manager for running operations within a commit.</p>
@@ -2944,7 +2996,7 @@ the contents of the parent commit.</li>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@contextmanager
-def commit(self, repo_name, branch=None, parent=None, description=None):
+def commit(self, repo_name, branch, parent=None, description=None):
     &#34;&#34;&#34;
     A context manager for running operations within a commit.
 
@@ -3056,7 +3108,7 @@ the branch provenance.</li>
         Service.PFS,
         &#34;CreateBranch&#34;,
         branch=pfs_proto.Branch(
-            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
         ),
         head=commit_from(commit) if commit is not None else None,
         provenance=provenance,
@@ -3100,7 +3152,7 @@ database dumps etc.</p>
     return self._req(
         Service.PFS,
         &#34;CreateRepo&#34;,
-        repo=pfs_proto.Repo(name=repo_name),
+        repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
         description=description,
         update=update,
     )</code></pre>
@@ -3197,7 +3249,7 @@ branches they happen to be on.</p>
         Service.PFS,
         &#34;DeleteBranch&#34;,
         branch=pfs_proto.Branch(
-            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
         ),
         force=force,
     )</code></pre>
@@ -3266,7 +3318,7 @@ errors. This argument should be used with care.</li>
     return self._req(
         Service.PFS,
         &#34;DeleteRepo&#34;,
-        repo=pfs_proto.Repo(name=repo_name),
+        repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
         force=force,
         all=False,
     )</code></pre>
@@ -3476,9 +3528,10 @@ commit.</li>
     &#34;&#34;&#34;
     res = self._req(
         Service.PFS,
-        &#34;GetFile&#34;,
-        file=pfs_proto.File(commit=commit_from(commit), path=path),
-        URL=URL,
+        &#34;GetFileTAR&#34;,
+        req=pfs_proto.GetFileRequest(
+            file=pfs_proto.File(commit=commit_from(commit), path=path), URL=URL
+        ),
     )
     return PFSFile(FileTarstream(res))</code></pre>
 </details>
@@ -3530,7 +3583,7 @@ commit.</li>
         Service.PFS,
         &#34;InspectBranch&#34;,
         branch=pfs_proto.Branch(
-            repo=pfs_proto.Repo(name=repo_name), name=branch_name
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch_name
         ),
     )</code></pre>
 </details>
@@ -3624,7 +3677,7 @@ commit.</li>
     * `repo_name`: Name of the repo.
     &#34;&#34;&#34;
     return self._req(
-        Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name)
+        Service.PFS, &#34;InspectRepo&#34;, repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
     )</code></pre>
 </details>
 </dd>
@@ -3654,7 +3707,7 @@ commit.</li>
     return self._req(
         Service.PFS,
         &#34;ListBranch&#34;,
-        repo=pfs_proto.Repo(name=repo_name),
+        repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
         reverse=reverse,
     ).branch_info</code></pre>
 </details>
@@ -3700,7 +3753,9 @@ returned.</li>
     returned.
     &#34;&#34;&#34;
     req = pfs_proto.ListCommitRequest(
-        repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
+        repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;),
+        number=number,
+        reverse=reverse,
     )
     if to_commit is not None:
         req.to.CopyFrom(commit_from(to_commit))
@@ -3748,19 +3803,29 @@ included.</li>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.pfs.PFSMixin.list_repo"><code class="name flex">
-<span>def <span class="ident">list_repo</span></span>(<span>self)</span>
+<span>def <span class="ident">list_repo</span></span>(<span>self, type=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns info about all repos, as a list of <code>RepoInfo</code> objects.</p></div>
+<div class="desc"><p>Returns info about all repos, as a list of <code>RepoInfo</code> objects.</p>
+<p>Params:</p>
+<ul>
+<li><code>type</code>: the type of (system) repos that should be returned,
+an empty value None or empty string requests all repos.</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def list_repo(self):
+<pre><code class="python">def list_repo(self, type=None):
     &#34;&#34;&#34;
     Returns info about all repos, as a list of `RepoInfo` objects.
+
+    Params:
+
+    * `type`: the type of (system) repos that should be returned,
+    an empty value None or empty string requests all repos.
     &#34;&#34;&#34;
-    return self._req(Service.PFS, &#34;ListRepo&#34;).repo_info</code></pre>
+    return self._req(Service.PFS, &#34;ListRepo&#34;, type=type).repo_info</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.pfs.PFSMixin.modify_file_client"><code class="name flex">
@@ -4004,8 +4069,30 @@ the temporary fileset</li>
     raise NotImplementedError(&#34;temporary filesets are internal-use-only&#34;)</code></pre>
 </details>
 </dd>
+<dt id="python_pachyderm.mixin.pfs.PFSMixin.squash_commit"><code class="name flex">
+<span>def <span class="ident">squash_commit</span></span>(<span>self, commit)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Squashes a commit.
+Params:
+* <code>commit</code>: A tuple, string, or <code>Commit</code> object representing the
+commit.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def squash_commit(self, commit):
+    &#34;&#34;&#34;
+    Squashes a commit.
+    Params:
+    * `commit`: A tuple, string, or `Commit` object representing the
+    commit.
+    &#34;&#34;&#34;
+    return self._req(Service.PFS, &#34;SquashCommit&#34;, commit=commit_from(commit))</code></pre>
+</details>
+</dd>
 <dt id="python_pachyderm.mixin.pfs.PFSMixin.start_commit"><code class="name flex">
-<span>def <span class="ident">start_commit</span></span>(<span>self, repo_name, branch=None, parent=None, description=None, provenance=None)</span>
+<span>def <span class="ident">start_commit</span></span>(<span>self, repo_name, branch, parent=None, description=None, provenance=None) ‑> python_pachyderm.proto.v2.pfs.pfs_pb2.Commit</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Begins the process of committing data to a Repo. Once started you can
@@ -4035,8 +4122,8 @@ specifying the commit provenance.</li>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def start_commit(
-    self, repo_name, branch=None, parent=None, description=None, provenance=None
-):
+    self, repo_name, branch, parent=None, description=None, provenance=None
+) -&gt; pfs_proto.Commit:
     &#34;&#34;&#34;
     Begins the process of committing data to a Repo. Once started you can
     write to the Commit with ModifyFile and when all the data has been
@@ -4061,11 +4148,20 @@ specifying the commit provenance.</li>
     * `provenance`: An optional iterable of `CommitProvenance` objects
     specifying the commit provenance.
     &#34;&#34;&#34;
+    if parent and isinstance(parent, str):
+        parent = pfs_proto.Commit(
+            id=parent,
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=None
+            ),
+        )
     return self._req(
         Service.PFS,
         &#34;StartCommit&#34;,
-        parent=pfs_proto.Commit(repo=pfs_proto.Repo(name=repo_name), id=parent),
-        branch=branch,
+        parent=parent,
+        branch=pfs_proto.Branch(
+            repo=pfs_proto.Repo(name=repo_name, type=&#34;user&#34;), name=branch
+        ),
         description=description,
         provenance=provenance,
     )</code></pre>
@@ -4104,7 +4200,7 @@ commits created since this commit are returned.</li>
     * `state`: The commit state to filter on.
     * `prov`: An optional `CommitProvenance` object.
     &#34;&#34;&#34;
-    repo = pfs_proto.Repo(name=repo_name)
+    repo = pfs_proto.Repo(name=repo_name, type=&#34;user&#34;)
     req = pfs_proto.SubscribeCommitRequest(
         repo=repo, branch=branch, state=state, prov=prov
     )
@@ -4248,6 +4344,7 @@ commit.</li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes" href="#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">put_file_bytes</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.put_file_url" href="#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">put_file_url</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set" href="#python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set">renew_tmp_file_set</a></code></li>
+<li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.squash_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.squash_commit">squash_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.start_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.start_commit">start_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit" href="#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">subscribe_commit</a></code></li>
 <li><code><a title="python_pachyderm.mixin.pfs.PFSMixin.walk_file" href="#python_pachyderm.mixin.pfs.PFSMixin.walk_file">walk_file</a></code></li>

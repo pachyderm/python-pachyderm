@@ -22,7 +22,6 @@ __all__ = [
     "SpoutManager",
     "SpoutCommit",
     "put_files",
-    "create_python_pipeline",
     "PFSFile",
     "ModifyFileClient",
     "parse_json_pipeline_spec",

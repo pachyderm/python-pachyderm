@@ -1,17 +1,12 @@
 import os
-from pathlib import Path
-
-from python_pachyderm import Client
-from python_pachyderm.proto.v2.pps.pps_pb2 import (
-    Transform,
-    CreatePipelineRequest,
-    BuildSpec,
-)
 
 from google.protobuf import json_format
 
+from python_pachyderm import Client
+from python_pachyderm.proto.v2.pps.pps_pb2 import CreatePipelineRequest
 
-def put_files(client, source_path, commit, dest_path, **kwargs):
+
+def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     """
     Utility function for recursively inserting files from the local
     `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
