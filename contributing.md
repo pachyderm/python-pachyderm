@@ -62,9 +62,11 @@ The linter will also run in CI and fail if there are any stylistic discrepancies
 
 To rebuild protobuf code:
 
-* Remove the existing auto-generated code (`src/python_pachyderm/proto`)
 * Update `version.json` to reference the version of Pachyderm you want to pull
-* Run `make src/python_pachyderm/proto`
+
+```bash
+make src/python_pachyderm/proto/v2
+```
 
 ## Testing
 
@@ -100,21 +102,20 @@ connections.
 
 ### Linting
 
-To run the linter locally, run `make lint`
+To run the linter locally, run
+
+```bash
+make lint
+```
 
 ## Rebuilding API docs
 
-We use [pdoc](https://github.com/mitmproxy/pdoc) for API documentation. It
-sadly doesn't see much maintenance though, so [I made a fork with a branch
-that has some fixes.](https://github.com/ysimonson/pdoc/tree/sandbox) Install
-that version of pdoc locally.
+We use [pdoc3](https://github.com/pdoc3/pdoc) to generate our API docs site.
+To rebuild the docs, run
 
-Once installed, to rebuild API documentation:
-
-* Remove the `docs` directory.
-* Run `make docs`. Note that this should be run outside of a virtualenv, and
-it will globally install `python_pachyderm`. This is needed because pdoc
-treats virtualenv vs globally installed packages differently.
+```bash
+make docs
+```
 
 ## Releasing
 
@@ -122,4 +123,7 @@ To make a new release, from the master branch:
 
 * Rebuild docs to make sure they're in sync
 * Update `CHANGELOG.md` and `version.json`
-* Run `make release`
+
+```bash
+make release
+```

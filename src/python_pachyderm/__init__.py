@@ -16,13 +16,15 @@ from .util import (
 from grpc import RpcError
 
 
+__pdoc__ = {"proto": False}
+
+
 __all__ = [
     "Client",
     "RpcError",
     "SpoutManager",
     "SpoutCommit",
     "put_files",
-    "create_python_pipeline",
     "PFSFile",
     "ModifyFileClient",
     "parse_json_pipeline_spec",
@@ -90,12 +92,12 @@ def _import_protos(path):
                     import_item(g, sub_module, key)
 
 
-_import_protos("python_pachyderm.proto.v2.pfs.pfs_pb2")
-_import_protos("python_pachyderm.proto.v2.pps.pps_pb2")
-_import_protos("python_pachyderm.proto.v2.version.versionpb.version_pb2")
-_import_protos("python_pachyderm.proto.v2.transaction.transaction_pb2")
-_import_protos("python_pachyderm.proto.v2.admin.admin_pb2")
-_import_protos("python_pachyderm.proto.v2.auth.auth_pb2")
-_import_protos("python_pachyderm.proto.v2.enterprise.enterprise_pb2")
-_import_protos("python_pachyderm.proto.v2.license.license_pb2")
-_import_protos("python_pachyderm.proto.v2.identity.identity_pb2")
+# _import_protos("python_pachyderm.proto.v2.pfs.pfs_pb2")
+# _import_protos("python_pachyderm.proto.v2.pps.pps_pb2")
+# _import_protos("python_pachyderm.proto.v2.version.versionpb.version_pb2")
+# _import_protos("python_pachyderm.proto.v2.transaction.transaction_pb2")
+# _import_protos("python_pachyderm.proto.v2.admin.admin_pb2")
+# _import_protos("python_pachyderm.proto.v2.auth.auth_pb2")
+# _import_protos("python_pachyderm.proto.v2.enterprise.enterprise_pb2")
+# _import_protos("python_pachyderm.proto.v2.license.license_pb2")
+# _import_protos("python_pachyderm.proto.v2.identity.identity_pb2")

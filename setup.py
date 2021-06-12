@@ -61,6 +61,7 @@ setup(
             "pre-commit>=2.12.1",
             "pytest>=5.3.4",
             "tox>=3.23.1",
+            "pdoc3>=0.9.2",
         ],
     },
     test_suite="tests",
