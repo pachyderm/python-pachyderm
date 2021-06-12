@@ -62,9 +62,11 @@ The linter will also run in CI and fail if there are any stylistic discrepancies
 
 To rebuild protobuf code:
 
-* Remove the existing auto-generated code (`src/python_pachyderm/proto`)
 * Update `version.json` to reference the version of Pachyderm you want to pull
-* Run `make src/python_pachyderm/proto`
+
+```bash
+make src/python_pachyderm/proto/v2
+```
 
 ## Testing
 
@@ -100,12 +102,20 @@ connections.
 
 ### Linting
 
-To run the linter locally, run `make lint`.
+To run the linter locally, run
+
+```bash
+make lint
+```
 
 ## Rebuilding API docs
 
 We use [pdoc3](https://github.com/pdoc3/pdoc) to generate our API docs site.
-To rebuild the docs, run `make docs`.
+To rebuild the docs, run
+
+```bash
+make docs
+```
 
 ## Releasing
 
@@ -113,4 +123,7 @@ To make a new release, from the master branch:
 
 * Rebuild docs to make sure they're in sync
 * Update `CHANGELOG.md` and `version.json`
-* Run `make release`
+
+```bash
+make release
+```

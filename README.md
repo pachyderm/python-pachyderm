@@ -29,8 +29,8 @@ client = python_pachyderm.Client()
 # Create a pachyderm repo called `test`
 client.create_repo("test")
 
-# Upload a file to test/master where test is the repo and master is the branch
-# /dir_a/data.txt is the path of the file at test/master
+# Create a file in `(repo="test", branch="master")` at `/dir_a/data.txt`
+# Similar to `pachctl put file test@master:/dir_a/data.txt`
 with client.commit("test", "master") as commit:
     client.put_file_bytes(commit, "/dir_a/data.txt", b"DATA")
 

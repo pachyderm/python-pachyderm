@@ -3,7 +3,7 @@ PACHYDERM_VERSION ?= $(shell jq -r .pachyderm version.json)
 
 docs:
 	rm -rf docs
-	pdoc --html -o docs src/python_pachyderm
+	pdoc --html -o docs python_pachyderm
 
 docker-build-proto:
 	docker build -t pachyderm_python_proto proto
