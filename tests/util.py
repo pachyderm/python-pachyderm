@@ -4,7 +4,10 @@ import string
 import random
 
 import pytest
+
 import python_pachyderm
+from python_pachyderm.proto.v2.pfs import pfs_pb2
+from python_pachyderm.proto.v2.pps import pps_pb2
 
 _test_pachyderm_version = None
 
@@ -65,14 +68,12 @@ def create_test_pipeline(client, test_name):
 
     client.create_pipeline(
         pipeline_repo_name,
-        transform=python_pachyderm.Transform(
+        transform=pps_pb2.Transform(
             cmd=["sh"],
             image="alpine",
             stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
         ),
-        input=python_pachyderm.Input(
-            pfs=python_pachyderm.PFSInput(glob="/*", repo=input_repo_name)
-        ),
+        input=pps_pb2.Input(pfs=pps_pb2.PFSInput(glob="/*", repo=input_repo_name)),
         enable_stats=True,
     )
 
@@ -84,7 +85,7 @@ def create_test_pipeline(client, test_name):
 
 def wait_for_job(client: python_pachyderm.Client, commit):
     # block until the commit is ready
-    client.inspect_commit(commit, block_state=python_pachyderm.CommitState.READY.value)
+    client.inspect_commit(commit, block_state=pfs_pb2.CommitState.READY)
 
     # while the commit is ready, the job might not be listed on the first
     # call, so repeatedly list jobs until it's available

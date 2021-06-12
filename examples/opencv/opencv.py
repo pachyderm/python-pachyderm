@@ -12,6 +12,7 @@ import os
 import shutil
 import tempfile
 import python_pachyderm
+from python_pachyderm.service import pps_proto
 
 
 def relpath(path):
@@ -36,33 +37,27 @@ def main():
 
     client.create_pipeline(
         "edges",
-        transform=python_pachyderm.Transform(
+        transform=pps_proto.Transform(
             cmd=["python3", "/edges.py"],
             image="pachyderm/opencv",
         ),
-        input=python_pachyderm.Input(
-            pfs=python_pachyderm.PFSInput(repo="images", glob="/*")
-        ),
+        input=pps_proto.Input(pfs=pps_proto.PFSInput(repo="images", glob="/*")),
     )
 
     # Create the montage pipeline
     client.create_pipeline(
         "montage",
-        transform=python_pachyderm.Transform(
+        transform=pps_proto.Transform(
             cmd=["sh"],
             image="v4tech/imagemagick",
             stdin=[
                 "montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"
             ],
         ),
-        input=python_pachyderm.Input(
+        input=pps_proto.Input(
             cross=[
-                python_pachyderm.Input(
-                    pfs=python_pachyderm.PFSInput(glob="/", repo="images")
-                ),
-                python_pachyderm.Input(
-                    pfs=python_pachyderm.PFSInput(glob="/", repo="edges")
-                ),
+                pps_proto.Input(pfs=pps_proto.PFSInput(glob="/", repo="images")),
+                pps_proto.Input(pfs=pps_proto.PFSInput(glob="/", repo="edges")),
             ]
         ),
     )

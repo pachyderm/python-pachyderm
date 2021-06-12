@@ -4,9 +4,8 @@
 
 import os
 
-import pytest
-
 import python_pachyderm
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2
 from tests import util
 
 
@@ -17,6 +16,6 @@ def test_enterprise():
     client.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
     client.add_cluster("localhost", "localhost:650", secret="secret")
     client.activate_enterprise("localhost:650", "localhost", "secret")
-    assert client.get_enterprise_state().state == python_pachyderm.State.ACTIVE.value
+    assert client.get_enterprise_state().state == enterprise_pb2.State.ACTIVE
     client.deactivate_enterprise()
     client.delete_all_license()

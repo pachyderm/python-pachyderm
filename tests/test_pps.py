@@ -97,7 +97,7 @@ def test_datums():
     datums = list(sandbox.client.list_datum(job_id))
     assert len(datums) == 1
     datum = sandbox.client.inspect_datum(job_id, datums[0].datum.id)
-    assert datum.state == python_pachyderm.DatumState.SUCCESS.value
+    assert datum.state == pps_pb2.DatumState.SUCCESS
 
     with pytest.raises(
         python_pachyderm.RpcError,
@@ -173,9 +173,10 @@ def test_run_cron():
     # this should trigger an error because the sandbox pipeline doesn't have a
     # cron input
     # NOTE: `e` is used after the context
-    with pytest.raises(python_pachyderm.RpcError) as e:
+    with pytest.raises(
+        python_pachyderm.RpcError, match=r"pipeline must have a cron input"
+    ):
         sandbox.client.run_cron(sandbox.pipeline_repo_name)
-    assert "pipeline must have a cron input" in str(e.value)
 
 
 def test_secrets():
@@ -240,16 +241,16 @@ def test_create_pipeline_from_request():
 
     # more or less a copy of the opencv demo's edges pipeline spec
     client.create_pipeline_from_request(
-        python_pachyderm.CreatePipelineRequest(
-            pipeline=python_pachyderm.Pipeline(name=pipeline_name),
+        pps_pb2.CreatePipelineRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
             description="A pipeline that performs image edge detection by using the OpenCV library.",
-            input=python_pachyderm.Input(
-                pfs=python_pachyderm.PFSInput(
+            input=pps_pb2.Input(
+                pfs=pps_pb2.PFSInput(
                     glob="/*",
                     repo=repo_name,
                 ),
             ),
-            transform=python_pachyderm.Transform(
+            transform=pps_pb2.Transform(
                 cmd=["echo", "hi"],
                 image="pachyderm/opencv",
             ),
