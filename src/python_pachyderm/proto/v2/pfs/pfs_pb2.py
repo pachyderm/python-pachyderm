@@ -24,7 +24,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z)github.com/pachyderm/pachyderm/v2/src/pfs',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\'python_pachyderm/proto/v2/pfs/pfs.proto\x12\x06pfs_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)python_pachyderm/proto/v2/auth/auth.proto\"\"\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\"2\n\x06\x42ranch\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"A\n\x04\x46ile\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\x12\x0b\n\x03tag\x18\x03 \x01(\t\"\xc7\x01\n\x08RepoInfo\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12 \n\x08\x62ranches\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\'\n\tauth_info\x18\x06 \x01(\x0b\x32\x14.pfs_v2.RepoAuthInfo\"G\n\x0cRepoAuthInfo\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"\xdf\x01\n\nBranchInfo\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x1c\n\x04head\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nsubvenance\x18\x04 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12)\n\x11\x64irect_provenance\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x06 \x01(\x0b\x32\x0f.pfs_v2.Trigger\"6\n\x0b\x42ranchInfos\x12\'\n\x0b\x62ranch_info\x18\x01 \x03(\x0b\x32\x12.pfs_v2.BranchInfo\"X\n\x07Trigger\x12\x0e\n\x06\x62ranch\x18\x01 \x01(\t\x12\x0b\n\x03\x61ll\x18\x02 \x01(\x08\x12\x11\n\tcron_spec\x18\x03 \x01(\t\x12\x0c\n\x04size\x18\x04 \x01(\t\x12\x0f\n\x07\x63ommits\x18\x05 \x01(\x03\"0\n\x0c\x43ommitOrigin\x12 \n\x04kind\x18\x01 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"4\n\x06\x43ommit\x12\n\n\x02id\x18\x01 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\"K\n\x0b\x43ommitRange\x12\x1d\n\x05lower\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1d\n\x05upper\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\"2\n\x10\x43ommitProvenance\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\xfc\x03\n\nCommitInfo\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12%\n\rparent_commit\x18\x04 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12%\n\rchild_commits\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12+\n\x07started\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x08 \x01(\x04\x12,\n\nprovenance\x18\t \x03(\x0b\x32\x18.pfs_v2.CommitProvenance\x12\x18\n\x10ready_provenance\x18\n \x01(\x03\x12\'\n\nsubvenance\x18\x0b \x03(\x0b\x32\x13.pfs_v2.CommitRange\x12!\n\x19subvenant_commits_success\x18\x0c \x01(\x03\x12!\n\x19subvenant_commits_failure\x18\r \x01(\x03\x12\x1f\n\x17subvenant_commits_total\x18\x0e \x01(\x03\"d\n\x0fStoredCommitset\x12\n\n\x02id\x18\x01 \x01(\t\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12\x1f\n\x07\x63ommits\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Commit\"b\n\tCommitset\x12\n\n\x02id\x18\x01 \x01(\t\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12#\n\x07\x63ommits\x18\x03 \x03(\x0b\x32\x12.pfs_v2.CommitInfo\"\x9c\x01\n\x08\x46ileInfo\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12#\n\tfile_type\x18\x02 \x01(\x0e\x32\x10.pfs_v2.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12-\n\tcommitted\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"T\n\x11\x43reateRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"0\n\x12InspectRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\"\x1f\n\x0fListRepoRequest\x12\x0c\n\x04type\x18\x01 \x01(\t\"7\n\x10ListRepoResponse\x12#\n\trepo_info\x18\x01 \x03(\x0b\x32\x10.pfs_v2.RepoInfo\"K\n\x11\x44\x65leteRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"\x97\x01\n\x12StartCommitRequest\x12\x1e\n\x06parent\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12,\n\nprovenance\x18\x04 \x03(\x0b\x32\x18.pfs_v2.CommitProvenance\"m\n\x13\x46inishCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\r\n\x05\x65mpty\x18\x04 \x01(\x08\"`\n\x14InspectCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12(\n\x0b\x62lock_state\x18\x02 \x01(\x0e\x32\x13.pfs_v2.CommitState\"\x8a\x01\n\x11ListCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x1c\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1a\n\x02to\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\"6\n\x0b\x43ommitInfos\x12\'\n\x0b\x63ommit_info\x18\x01 \x03(\x0b\x32\x12.pfs_v2.CommitInfo\"5\n\x13SquashCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"U\n\x12\x46lushCommitRequest\x12\x1f\n\x07\x63ommits\x18\x01 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12\x1e\n\x08to_repos\x18\x02 \x03(\x0b\x32\x0c.pfs_v2.Repo\"\xae\x01\n\x16SubscribeCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12&\n\x04prov\x18\x03 \x01(\x0b\x32\x18.pfs_v2.CommitProvenance\x12\x1c\n\x04\x66rom\x18\x04 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\x05state\x18\x05 \x01(\x0e\x32\x13.pfs_v2.CommitState\"4\n\x12\x43learCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\x99\x01\n\x13\x43reateBranchRequest\x12\x1c\n\x04head\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x04 \x01(\x0b\x32\x0f.pfs_v2.Trigger\"6\n\x14InspectBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"@\n\x11ListBranchRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"D\n\x13\x44\x65leteBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"\xc6\x01\n\x07PutFile\x12\x0e\n\x06\x61ppend\x18\x01 \x01(\x08\x12\x0b\n\x03tag\x18\x02 \x01(\t\x12\x30\n\x0fraw_file_source\x18\x03 \x01(\x0b\x32\x15.pfs_v2.RawFileSourceH\x00\x12\x30\n\x0ftar_file_source\x18\x04 \x01(\x0b\x32\x15.pfs_v2.TarFileSourceH\x00\x12\x30\n\x0furl_file_source\x18\x05 \x01(\x0b\x32\x15.pfs_v2.URLFileSourceH\x00\x42\x08\n\x06source\"8\n\rRawFileSource\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x0b\n\x03\x45OF\x18\x03 \x01(\x08\"\x1d\n\rTarFileSource\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"=\n\rURLFileSource\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0b\n\x03URL\x18\x02 \x01(\t\x12\x11\n\trecursive\x18\x03 \x01(\x08\"\'\n\nDeleteFile\x12\x0c\n\x04\x66ile\x18\x01 \x01(\t\x12\x0b\n\x03tag\x18\x02 \x01(\t\"O\n\x08\x43opyFile\x12\x0e\n\x06\x61ppend\x18\x01 \x01(\x08\x12\x0b\n\x03tag\x18\x02 \x01(\t\x12\x0b\n\x03\x64st\x18\x03 \x01(\t\x12\x19\n\x03src\x18\x04 \x01(\x0b\x32\x0c.pfs_v2.File\"\xba\x01\n\x11ModifyFileRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12#\n\x08put_file\x18\x02 \x01(\x0b\x32\x0f.pfs_v2.PutFileH\x00\x12)\n\x0b\x64\x65lete_file\x18\x03 \x01(\x0b\x32\x12.pfs_v2.DeleteFileH\x00\x12%\n\tcopy_file\x18\x04 \x01(\x0b\x32\x10.pfs_v2.CopyFileH\x00\x42\x0e\n\x0cmodification\"9\n\x0eGetFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0b\n\x03URL\x18\x02 \x01(\t\"0\n\x12InspectFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\";\n\x0fListFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0c\n\x04\x66ull\x18\x02 \x01(\x08\"-\n\x0fWalkFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\"B\n\x0fGlobFileRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\"b\n\x0f\x44iffFileRequest\x12\x1e\n\x08new_file\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x1e\n\x08old_file\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"Z\n\x10\x44iffFileResponse\x12\"\n\x08new_file\x18\x01 \x01(\x0b\x32\x10.pfs_v2.FileInfo\x12\"\n\x08old_file\x18\x02 \x01(\x0b\x32\x10.pfs_v2.FileInfo\"\x1a\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"+\n\x15\x43reateFilesetResponse\x12\x12\n\nfileset_id\x18\x01 \x01(\t\"3\n\x11GetFilesetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"G\n\x11\x41\x64\x64\x46ilesetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x12\n\nfileset_id\x18\x02 \x01(\t\">\n\x13RenewFilesetRequest\x12\x12\n\nfileset_id\x18\x01 \x01(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse\"0\n\x12RunLoadTestRequest\x12\x0c\n\x04spec\x18\x01 \x01(\x0c\x12\x0c\n\x04seed\x18\x02 \x01(\x03\"R\n\x13RunLoadTestResponse\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x02 \x01(\x03\x12\r\n\x05\x65rror\x18\x03 \x01(\t**\n\nOriginKind\x12\x08\n\x04USER\x10\x00\x12\x08\n\x04\x41UTO\x10\x01\x12\x08\n\x04\x46SCK\x10\x02*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*3\n\x0b\x43ommitState\x12\x0b\n\x07STARTED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x46INISHED\x10\x02*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\xb1\x10\n\x03\x41PI\x12\x41\n\nCreateRepo\x12\x19.pfs_v2.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\x0bInspectRepo\x12\x1a.pfs_v2.InspectRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x12?\n\x08ListRepo\x12\x17.pfs_v2.ListRepoRequest\x1a\x18.pfs_v2.ListRepoResponse\"\x00\x12\x41\n\nDeleteRepo\x12\x19.pfs_v2.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0bStartCommit\x12\x1a.pfs_v2.StartCommitRequest\x1a\x0e.pfs_v2.Commit\"\x00\x12\x45\n\x0c\x46inishCommit\x12\x1b.pfs_v2.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectCommit\x12\x1c.pfs_v2.InspectCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x12?\n\nListCommit\x12\x19.pfs_v2.ListCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12\x45\n\x0cSquashCommit\x12\x1b.pfs_v2.SquashCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x41\n\x0b\x46lushCommit\x12\x1a.pfs_v2.FlushCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12I\n\x0fSubscribeCommit\x12\x1e.pfs_v2.SubscribeCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12\x43\n\x0b\x43learCommit\x12\x1a.pfs_v2.ClearCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0c\x43reateBranch\x12\x1b.pfs_v2.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectBranch\x12\x1c.pfs_v2.InspectBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x12>\n\nListBranch\x12\x19.pfs_v2.ListBranchRequest\x1a\x13.pfs_v2.BranchInfos\"\x00\x12\x45\n\x0c\x44\x65leteBranch\x12\x1b.pfs_v2.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\nModifyFile\x12\x19.pfs_v2.ModifyFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x45\n\nGetFileTAR\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12=\n\x0bInspectFile\x12\x1a.pfs_v2.InspectFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x12\x39\n\x08ListFile\x12\x17.pfs_v2.ListFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08WalkFile\x12\x17.pfs_v2.WalkFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08GlobFile\x12\x17.pfs_v2.GlobFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x41\n\x08\x44iffFile\x12\x17.pfs_v2.DiffFileRequest\x1a\x18.pfs_v2.DiffFileResponse\"\x00\x30\x01\x12K\n\x0c\x41\x63tivateAuth\x12\x1b.pfs_v2.ActivateAuthRequest\x1a\x1c.pfs_v2.ActivateAuthResponse\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x04\x46sck\x12\x13.pfs_v2.FsckRequest\x1a\x14.pfs_v2.FsckResponse\"\x00\x30\x01\x12M\n\rCreateFileset\x12\x19.pfs_v2.ModifyFileRequest\x1a\x1d.pfs_v2.CreateFilesetResponse\"\x00(\x01\x12H\n\nGetFileset\x12\x19.pfs_v2.GetFilesetRequest\x1a\x1d.pfs_v2.CreateFilesetResponse\"\x00\x12\x41\n\nAddFileset\x12\x19.pfs_v2.AddFilesetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0cRenewFileset\x12\x1b.pfs_v2.RenewFilesetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0bRunLoadTest\x12\x1a.pfs_v2.RunLoadTestRequest\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/pfsb\x06proto3'
+  serialized_pb=b'\n\'python_pachyderm/proto/v2/pfs/pfs.proto\x12\x06pfs_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)python_pachyderm/proto/v2/auth/auth.proto\"\"\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\"2\n\x06\x42ranch\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"A\n\x04\x46ile\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\x12\x0b\n\x03tag\x18\x03 \x01(\t\"\xc7\x01\n\x08RepoInfo\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12 \n\x08\x62ranches\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\'\n\tauth_info\x18\x06 \x01(\x0b\x32\x14.pfs_v2.RepoAuthInfo\"G\n\x0cRepoAuthInfo\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"\xdf\x01\n\nBranchInfo\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x1c\n\x04head\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nsubvenance\x18\x04 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12)\n\x11\x64irect_provenance\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x06 \x01(\x0b\x32\x0f.pfs_v2.Trigger\"6\n\x0b\x42ranchInfos\x12\'\n\x0b\x62ranch_info\x18\x01 \x03(\x0b\x32\x12.pfs_v2.BranchInfo\"X\n\x07Trigger\x12\x0e\n\x06\x62ranch\x18\x01 \x01(\t\x12\x0b\n\x03\x61ll\x18\x02 \x01(\x08\x12\x11\n\tcron_spec\x18\x03 \x01(\t\x12\x0c\n\x04size\x18\x04 \x01(\t\x12\x0f\n\x07\x63ommits\x18\x05 \x01(\x03\"0\n\x0c\x43ommitOrigin\x12 \n\x04kind\x18\x01 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"4\n\x06\x43ommit\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\n\n\x02id\x18\x02 \x01(\t\"\xcf\x02\n\nCommitInfo\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12%\n\rparent_commit\x18\x04 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12%\n\rchild_commits\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12+\n\x07started\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x08 \x01(\x04\x12)\n\x11\x64irect_provenance\x18\t \x03(\x0b\x32\x0e.pfs_v2.Branch\"\x17\n\tCommitSet\x12\n\n\x02id\x18\x01 \x01(\t\"\x9c\x01\n\x08\x46ileInfo\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12#\n\tfile_type\x18\x02 \x01(\x0e\x32\x10.pfs_v2.FileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12-\n\tcommitted\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"T\n\x11\x43reateRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"0\n\x12InspectRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\"\x1f\n\x0fListRepoRequest\x12\x0c\n\x04type\x18\x01 \x01(\t\"7\n\x10ListRepoResponse\x12#\n\trepo_info\x18\x01 \x03(\x0b\x32\x10.pfs_v2.RepoInfo\">\n\x11\x44\x65leteRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"i\n\x12StartCommitRequest\x12\x1e\n\x06parent\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Branch\"m\n\x13\x46inishCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\r\n\x05\x65mpty\x18\x04 \x01(\x08\"Y\n\x14InspectCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12!\n\x04wait\x18\x02 \x01(\x0e\x32\x13.pfs_v2.CommitState\"\x8a\x01\n\x11ListCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x1c\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1a\n\x02to\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x04\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\"N\n\x17InspectCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\x12\x0c\n\x04wait\x18\x02 \x01(\x08\"?\n\x16SquashCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\"\x86\x01\n\x16SubscribeCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12\x1c\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\x05state\x18\x04 \x01(\x0e\x32\x13.pfs_v2.CommitState\"4\n\x12\x43learCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\xb1\x01\n\x13\x43reateBranchRequest\x12\x1c\n\x04head\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x04 \x01(\x0b\x32\x0f.pfs_v2.Trigger\x12\x16\n\x0enew_commit_set\x18\x05 \x01(\x08\"6\n\x14InspectBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"@\n\x11ListBranchRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"D\n\x13\x44\x65leteBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"\xb1\x01\n\x07\x41\x64\x64\x46ile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0b\n\x03tag\x18\x02 \x01(\t\x12*\n\x03raw\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.BytesValueH\x00\x12(\n\x03url\x18\x04 \x01(\x0b\x32\x19.pfs_v2.AddFile.URLSourceH\x00\x1a+\n\tURLSource\x12\x0b\n\x03URL\x18\x01 \x01(\t\x12\x11\n\trecursive\x18\x02 \x01(\x08\x42\x08\n\x06source\"\'\n\nDeleteFile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0b\n\x03tag\x18\x02 \x01(\t\"O\n\x08\x43opyFile\x12\x0b\n\x03\x64st\x18\x01 \x01(\t\x12\x0b\n\x03tag\x18\x02 \x01(\t\x12\x19\n\x03src\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06\x61ppend\x18\x04 \x01(\x08\"\xb8\x01\n\x11ModifyFileRequest\x12$\n\nset_commit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12#\n\x08\x61\x64\x64_file\x18\x02 \x01(\x0b\x32\x0f.pfs_v2.AddFileH\x00\x12)\n\x0b\x64\x65lete_file\x18\x03 \x01(\x0b\x32\x12.pfs_v2.DeleteFileH\x00\x12%\n\tcopy_file\x18\x04 \x01(\x0b\x32\x10.pfs_v2.CopyFileH\x00\x42\x06\n\x04\x62ody\"9\n\x0eGetFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0b\n\x03URL\x18\x02 \x01(\t\"0\n\x12InspectFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\";\n\x0fListFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0c\n\x04\x66ull\x18\x02 \x01(\x08\"-\n\x0fWalkFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\"B\n\x0fGlobFileRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\"b\n\x0f\x44iffFileRequest\x12\x1e\n\x08new_file\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x1e\n\x08old_file\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"Z\n\x10\x44iffFileResponse\x12\"\n\x08new_file\x18\x01 \x01(\x0b\x32\x10.pfs_v2.FileInfo\x12\"\n\x08old_file\x18\x02 \x01(\x0b\x32\x10.pfs_v2.FileInfo\"\x1a\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\",\n\x15\x43reateFileSetResponse\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\"3\n\x11GetFileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"H\n\x11\x41\x64\x64\x46ileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x66ile_set_id\x18\x02 \x01(\t\"?\n\x13RenewFileSetRequest\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse\"0\n\x12RunLoadTestRequest\x12\x0c\n\x04spec\x18\x01 \x01(\x0c\x12\x0c\n\x04seed\x18\x02 \x01(\x03\"R\n\x13RunLoadTestResponse\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x02 \x01(\x03\x12\r\n\x05\x65rror\x18\x03 \x01(\t*5\n\nOriginKind\x12\x08\n\x04USER\x10\x00\x12\x08\n\x04\x41UTO\x10\x01\x12\x08\n\x04\x46SCK\x10\x02\x12\t\n\x05\x41LIAS\x10\x03*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*3\n\x0b\x43ommitState\x12\x0b\n\x07STARTED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x46INISHED\x10\x02*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\xc1\x10\n\x03\x41PI\x12\x41\n\nCreateRepo\x12\x19.pfs_v2.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\x0bInspectRepo\x12\x1a.pfs_v2.InspectRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x12?\n\x08ListRepo\x12\x17.pfs_v2.ListRepoRequest\x1a\x18.pfs_v2.ListRepoResponse\"\x00\x12\x41\n\nDeleteRepo\x12\x19.pfs_v2.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12;\n\x0bStartCommit\x12\x1a.pfs_v2.StartCommitRequest\x1a\x0e.pfs_v2.Commit\"\x00\x12\x45\n\x0c\x46inishCommit\x12\x1b.pfs_v2.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0b\x43learCommit\x12\x1a.pfs_v2.ClearCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectCommit\x12\x1c.pfs_v2.InspectCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x12?\n\nListCommit\x12\x19.pfs_v2.ListCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12I\n\x0fSubscribeCommit\x12\x1e.pfs_v2.SubscribeCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12K\n\x10InspectCommitSet\x12\x1f.pfs_v2.InspectCommitSetRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12K\n\x0fSquashCommitSet\x12\x1e.pfs_v2.SquashCommitSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0c\x43reateBranch\x12\x1b.pfs_v2.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectBranch\x12\x1c.pfs_v2.InspectBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x12>\n\nListBranch\x12\x19.pfs_v2.ListBranchRequest\x1a\x13.pfs_v2.BranchInfos\"\x00\x12\x45\n\x0c\x44\x65leteBranch\x12\x1b.pfs_v2.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\nModifyFile\x12\x19.pfs_v2.ModifyFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x45\n\nGetFileTAR\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12=\n\x0bInspectFile\x12\x1a.pfs_v2.InspectFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x12\x39\n\x08ListFile\x12\x17.pfs_v2.ListFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08WalkFile\x12\x17.pfs_v2.WalkFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08GlobFile\x12\x17.pfs_v2.GlobFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x41\n\x08\x44iffFile\x12\x17.pfs_v2.DiffFileRequest\x1a\x18.pfs_v2.DiffFileResponse\"\x00\x30\x01\x12K\n\x0c\x41\x63tivateAuth\x12\x1b.pfs_v2.ActivateAuthRequest\x1a\x1c.pfs_v2.ActivateAuthResponse\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x04\x46sck\x12\x13.pfs_v2.FsckRequest\x1a\x14.pfs_v2.FsckResponse\"\x00\x30\x01\x12M\n\rCreateFileSet\x12\x19.pfs_v2.ModifyFileRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00(\x01\x12H\n\nGetFileSet\x12\x19.pfs_v2.GetFileSetRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00\x12\x41\n\nAddFileSet\x12\x19.pfs_v2.AddFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0cRenewFileSet\x12\x1b.pfs_v2.RenewFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0bRunLoadTest\x12\x1a.pfs_v2.RunLoadTestRequest\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/pfsb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DESCRIPTOR,])
 
@@ -50,11 +50,16 @@ _ORIGINKIND = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='ALIAS', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=5308,
-  serialized_end=5350,
+  serialized_start=4521,
+  serialized_end=4574,
 )
 _sym_db.RegisterEnumDescriptor(_ORIGINKIND)
 
@@ -84,8 +89,8 @@ _FILETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=5352,
-  serialized_end=5395,
+  serialized_start=4576,
+  serialized_end=4619,
 )
 _sym_db.RegisterEnumDescriptor(_FILETYPE)
 
@@ -115,8 +120,8 @@ _COMMITSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=5397,
-  serialized_end=5448,
+  serialized_start=4621,
+  serialized_end=4672,
 )
 _sym_db.RegisterEnumDescriptor(_COMMITSTATE)
 
@@ -156,8 +161,8 @@ _DELIMITER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=5450,
-  serialized_end=5509,
+  serialized_start=4674,
+  serialized_end=4733,
 )
 _sym_db.RegisterEnumDescriptor(_DELIMITER)
 
@@ -165,6 +170,7 @@ Delimiter = enum_type_wrapper.EnumTypeWrapper(_DELIMITER)
 USER = 0
 AUTO = 1
 FSCK = 2
+ALIAS = 3
 RESERVED = 0
 FILE = 1
 DIR = 2
@@ -609,16 +615,16 @@ _COMMIT = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='pfs_v2.Commit.id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='branch', full_name='pfs_v2.Commit.branch', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='branch', full_name='pfs_v2.Commit.branch', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='id', full_name='pfs_v2.Commit.id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -636,77 +642,6 @@ _COMMIT = _descriptor.Descriptor(
   ],
   serialized_start=1040,
   serialized_end=1092,
-)
-
-
-_COMMITRANGE = _descriptor.Descriptor(
-  name='CommitRange',
-  full_name='pfs_v2.CommitRange',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='lower', full_name='pfs_v2.CommitRange.lower', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='upper', full_name='pfs_v2.CommitRange.upper', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1094,
-  serialized_end=1169,
-)
-
-
-_COMMITPROVENANCE = _descriptor.Descriptor(
-  name='CommitProvenance',
-  full_name='pfs_v2.CommitProvenance',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='commit', full_name='pfs_v2.CommitProvenance.commit', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1171,
-  serialized_end=1221,
 )
 
 
@@ -775,47 +710,12 @@ _COMMITINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='provenance', full_name='pfs_v2.CommitInfo.provenance', index=8,
+      name='direct_provenance', full_name='pfs_v2.CommitInfo.direct_provenance', index=8,
       number=9, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ready_provenance', full_name='pfs_v2.CommitInfo.ready_provenance', index=9,
-      number=10, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='subvenance', full_name='pfs_v2.CommitInfo.subvenance', index=10,
-      number=11, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='subvenant_commits_success', full_name='pfs_v2.CommitInfo.subvenant_commits_success', index=11,
-      number=12, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='subvenant_commits_failure', full_name='pfs_v2.CommitInfo.subvenant_commits_failure', index=12,
-      number=13, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='subvenant_commits_total', full_name='pfs_v2.CommitInfo.subvenant_commits_total', index=13,
-      number=14, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -828,83 +728,23 @@ _COMMITINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1224,
-  serialized_end=1732,
-)
-
-
-_STOREDCOMMITSET = _descriptor.Descriptor(
-  name='StoredCommitset',
-  full_name='pfs_v2.StoredCommitset',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='pfs_v2.StoredCommitset.id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='origin', full_name='pfs_v2.StoredCommitset.origin', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='commits', full_name='pfs_v2.StoredCommitset.commits', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1734,
-  serialized_end=1834,
+  serialized_start=1095,
+  serialized_end=1430,
 )
 
 
 _COMMITSET = _descriptor.Descriptor(
-  name='Commitset',
-  full_name='pfs_v2.Commitset',
+  name='CommitSet',
+  full_name='pfs_v2.CommitSet',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='pfs_v2.Commitset.id', index=0,
+      name='id', full_name='pfs_v2.CommitSet.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='origin', full_name='pfs_v2.Commitset.origin', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='commits', full_name='pfs_v2.Commitset.commits', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -920,8 +760,8 @@ _COMMITSET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1836,
-  serialized_end=1934,
+  serialized_start=1432,
+  serialized_end=1455,
 )
 
 
@@ -980,8 +820,8 @@ _FILEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1937,
-  serialized_end=2093,
+  serialized_start=1458,
+  serialized_end=1614,
 )
 
 
@@ -1026,8 +866,8 @@ _CREATEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2095,
-  serialized_end=2179,
+  serialized_start=1616,
+  serialized_end=1700,
 )
 
 
@@ -1058,8 +898,8 @@ _INSPECTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2181,
-  serialized_end=2229,
+  serialized_start=1702,
+  serialized_end=1750,
 )
 
 
@@ -1090,8 +930,8 @@ _LISTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2231,
-  serialized_end=2262,
+  serialized_start=1752,
+  serialized_end=1783,
 )
 
 
@@ -1122,8 +962,8 @@ _LISTREPORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2264,
-  serialized_end=2319,
+  serialized_start=1785,
+  serialized_end=1840,
 )
 
 
@@ -1149,13 +989,6 @@ _DELETEREPOREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='all', full_name='pfs_v2.DeleteRepoRequest.all', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1168,8 +1001,8 @@ _DELETEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2321,
-  serialized_end=2396,
+  serialized_start=1842,
+  serialized_end=1904,
 )
 
 
@@ -1202,13 +1035,6 @@ _STARTCOMMITREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='provenance', full_name='pfs_v2.StartCommitRequest.provenance', index=3,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1221,8 +1047,8 @@ _STARTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2399,
-  serialized_end=2550,
+  serialized_start=1906,
+  serialized_end=2011,
 )
 
 
@@ -1274,8 +1100,8 @@ _FINISHCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2552,
-  serialized_end=2661,
+  serialized_start=2013,
+  serialized_end=2122,
 )
 
 
@@ -1295,7 +1121,7 @@ _INSPECTCOMMITREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='block_state', full_name='pfs_v2.InspectCommitRequest.block_state', index=1,
+      name='wait', full_name='pfs_v2.InspectCommitRequest.wait', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1313,8 +1139,8 @@ _INSPECTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2663,
-  serialized_end=2759,
+  serialized_start=2124,
+  serialized_end=2213,
 )
 
 
@@ -1373,23 +1199,30 @@ _LISTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2762,
-  serialized_end=2900,
+  serialized_start=2216,
+  serialized_end=2354,
 )
 
 
-_COMMITINFOS = _descriptor.Descriptor(
-  name='CommitInfos',
-  full_name='pfs_v2.CommitInfos',
+_INSPECTCOMMITSETREQUEST = _descriptor.Descriptor(
+  name='InspectCommitSetRequest',
+  full_name='pfs_v2.InspectCommitSetRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='commit_info', full_name='pfs_v2.CommitInfos.commit_info', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='commit_set', full_name='pfs_v2.InspectCommitSetRequest.commit_set', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='wait', full_name='pfs_v2.InspectCommitSetRequest.wait', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1405,21 +1238,21 @@ _COMMITINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2902,
-  serialized_end=2956,
+  serialized_start=2356,
+  serialized_end=2434,
 )
 
 
-_SQUASHCOMMITREQUEST = _descriptor.Descriptor(
-  name='SquashCommitRequest',
-  full_name='pfs_v2.SquashCommitRequest',
+_SQUASHCOMMITSETREQUEST = _descriptor.Descriptor(
+  name='SquashCommitSetRequest',
+  full_name='pfs_v2.SquashCommitSetRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='commit', full_name='pfs_v2.SquashCommitRequest.commit', index=0,
+      name='commit_set', full_name='pfs_v2.SquashCommitSetRequest.commit_set', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1437,47 +1270,8 @@ _SQUASHCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2958,
-  serialized_end=3011,
-)
-
-
-_FLUSHCOMMITREQUEST = _descriptor.Descriptor(
-  name='FlushCommitRequest',
-  full_name='pfs_v2.FlushCommitRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='commits', full_name='pfs_v2.FlushCommitRequest.commits', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='to_repos', full_name='pfs_v2.FlushCommitRequest.to_repos', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3013,
-  serialized_end=3098,
+  serialized_start=2436,
+  serialized_end=2499,
 )
 
 
@@ -1504,22 +1298,15 @@ _SUBSCRIBECOMMITREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='prov', full_name='pfs_v2.SubscribeCommitRequest.prov', index=2,
+      name='from', full_name='pfs_v2.SubscribeCommitRequest.from', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='from', full_name='pfs_v2.SubscribeCommitRequest.from', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='state', full_name='pfs_v2.SubscribeCommitRequest.state', index=4,
-      number=5, type=14, cpp_type=8, label=1,
+      name='state', full_name='pfs_v2.SubscribeCommitRequest.state', index=3,
+      number=4, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1536,8 +1323,8 @@ _SUBSCRIBECOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3101,
-  serialized_end=3275,
+  serialized_start=2502,
+  serialized_end=2636,
 )
 
 
@@ -1568,8 +1355,8 @@ _CLEARCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3277,
-  serialized_end=3329,
+  serialized_start=2638,
+  serialized_end=2690,
 )
 
 
@@ -1609,6 +1396,13 @@ _CREATEBRANCHREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='new_commit_set', full_name='pfs_v2.CreateBranchRequest.new_commit_set', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1621,8 +1415,8 @@ _CREATEBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3332,
-  serialized_end=3485,
+  serialized_start=2693,
+  serialized_end=2870,
 )
 
 
@@ -1653,8 +1447,8 @@ _INSPECTBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3487,
-  serialized_end=3541,
+  serialized_start=2872,
+  serialized_end=2926,
 )
 
 
@@ -1692,8 +1486,8 @@ _LISTBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3543,
-  serialized_end=3607,
+  serialized_start=2928,
+  serialized_end=2992,
 )
 
 
@@ -1731,51 +1525,30 @@ _DELETEBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3609,
-  serialized_end=3677,
+  serialized_start=2994,
+  serialized_end=3062,
 )
 
 
-_PUTFILE = _descriptor.Descriptor(
-  name='PutFile',
-  full_name='pfs_v2.PutFile',
+_ADDFILE_URLSOURCE = _descriptor.Descriptor(
+  name='URLSource',
+  full_name='pfs_v2.AddFile.URLSource',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='append', full_name='pfs_v2.PutFile.append', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='tag', full_name='pfs_v2.PutFile.tag', index=1,
-      number=2, type=9, cpp_type=9, label=1,
+      name='URL', full_name='pfs_v2.AddFile.URLSource.URL', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='raw_file_source', full_name='pfs_v2.PutFile.raw_file_source', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='tar_file_source', full_name='pfs_v2.PutFile.tar_file_source', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='url_file_source', full_name='pfs_v2.PutFile.url_file_source', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='recursive', full_name='pfs_v2.AddFile.URLSource.recursive', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1783,6 +1556,58 @@ _PUTFILE = _descriptor.Descriptor(
   extensions=[
   ],
   nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3189,
+  serialized_end=3232,
+)
+
+_ADDFILE = _descriptor.Descriptor(
+  name='AddFile',
+  full_name='pfs_v2.AddFile',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='pfs_v2.AddFile.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tag', full_name='pfs_v2.AddFile.tag', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='raw', full_name='pfs_v2.AddFile.raw', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='url', full_name='pfs_v2.AddFile.url', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ADDFILE_URLSOURCE, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -1791,137 +1616,13 @@ _PUTFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='source', full_name='pfs_v2.PutFile.source',
+      name='source', full_name='pfs_v2.AddFile.source',
       index=0, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=3680,
-  serialized_end=3878,
-)
-
-
-_RAWFILESOURCE = _descriptor.Descriptor(
-  name='RawFileSource',
-  full_name='pfs_v2.RawFileSource',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='path', full_name='pfs_v2.RawFileSource.path', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='data', full_name='pfs_v2.RawFileSource.data', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='EOF', full_name='pfs_v2.RawFileSource.EOF', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3880,
-  serialized_end=3936,
-)
-
-
-_TARFILESOURCE = _descriptor.Descriptor(
-  name='TarFileSource',
-  full_name='pfs_v2.TarFileSource',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='data', full_name='pfs_v2.TarFileSource.data', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3938,
-  serialized_end=3967,
-)
-
-
-_URLFILESOURCE = _descriptor.Descriptor(
-  name='URLFileSource',
-  full_name='pfs_v2.URLFileSource',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='path', full_name='pfs_v2.URLFileSource.path', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='URL', full_name='pfs_v2.URLFileSource.URL', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='recursive', full_name='pfs_v2.URLFileSource.recursive', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3969,
-  serialized_end=4030,
+  serialized_start=3065,
+  serialized_end=3242,
 )
 
 
@@ -1934,7 +1635,7 @@ _DELETEFILE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='file', full_name='pfs_v2.DeleteFile.file', index=0,
+      name='path', full_name='pfs_v2.DeleteFile.path', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1959,8 +1660,8 @@ _DELETEFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4032,
-  serialized_end=4071,
+  serialized_start=3244,
+  serialized_end=3283,
 )
 
 
@@ -1973,9 +1674,9 @@ _COPYFILE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='append', full_name='pfs_v2.CopyFile.append', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='dst', full_name='pfs_v2.CopyFile.dst', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -1987,16 +1688,16 @@ _COPYFILE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dst', full_name='pfs_v2.CopyFile.dst', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='src', full_name='pfs_v2.CopyFile.src', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='src', full_name='pfs_v2.CopyFile.src', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='append', full_name='pfs_v2.CopyFile.append', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -2012,8 +1713,8 @@ _COPYFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4073,
-  serialized_end=4152,
+  serialized_start=3285,
+  serialized_end=3364,
 )
 
 
@@ -2026,14 +1727,14 @@ _MODIFYFILEREQUEST = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='commit', full_name='pfs_v2.ModifyFileRequest.commit', index=0,
+      name='set_commit', full_name='pfs_v2.ModifyFileRequest.set_commit', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='put_file', full_name='pfs_v2.ModifyFileRequest.put_file', index=1,
+      name='add_file', full_name='pfs_v2.ModifyFileRequest.add_file', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2065,13 +1766,13 @@ _MODIFYFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='modification', full_name='pfs_v2.ModifyFileRequest.modification',
+      name='body', full_name='pfs_v2.ModifyFileRequest.body',
       index=0, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=4155,
-  serialized_end=4341,
+  serialized_start=3367,
+  serialized_end=3551,
 )
 
 
@@ -2109,8 +1810,8 @@ _GETFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4343,
-  serialized_end=4400,
+  serialized_start=3553,
+  serialized_end=3610,
 )
 
 
@@ -2141,8 +1842,8 @@ _INSPECTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4402,
-  serialized_end=4450,
+  serialized_start=3612,
+  serialized_end=3660,
 )
 
 
@@ -2180,8 +1881,8 @@ _LISTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4452,
-  serialized_end=4511,
+  serialized_start=3662,
+  serialized_end=3721,
 )
 
 
@@ -2212,8 +1913,8 @@ _WALKFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4513,
-  serialized_end=4558,
+  serialized_start=3723,
+  serialized_end=3768,
 )
 
 
@@ -2251,8 +1952,8 @@ _GLOBFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4560,
-  serialized_end=4626,
+  serialized_start=3770,
+  serialized_end=3836,
 )
 
 
@@ -2297,8 +1998,8 @@ _DIFFFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4628,
-  serialized_end=4726,
+  serialized_start=3838,
+  serialized_end=3936,
 )
 
 
@@ -2336,8 +2037,8 @@ _DIFFFILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4728,
-  serialized_end=4818,
+  serialized_start=3938,
+  serialized_end=4028,
 )
 
 
@@ -2368,8 +2069,8 @@ _FSCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4820,
-  serialized_end=4846,
+  serialized_start=4030,
+  serialized_end=4056,
 )
 
 
@@ -2407,21 +2108,21 @@ _FSCKRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4848,
-  serialized_end=4890,
+  serialized_start=4058,
+  serialized_end=4100,
 )
 
 
 _CREATEFILESETRESPONSE = _descriptor.Descriptor(
-  name='CreateFilesetResponse',
-  full_name='pfs_v2.CreateFilesetResponse',
+  name='CreateFileSetResponse',
+  full_name='pfs_v2.CreateFileSetResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fileset_id', full_name='pfs_v2.CreateFilesetResponse.fileset_id', index=0,
+      name='file_set_id', full_name='pfs_v2.CreateFileSetResponse.file_set_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2439,21 +2140,21 @@ _CREATEFILESETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4892,
-  serialized_end=4935,
+  serialized_start=4102,
+  serialized_end=4146,
 )
 
 
 _GETFILESETREQUEST = _descriptor.Descriptor(
-  name='GetFilesetRequest',
-  full_name='pfs_v2.GetFilesetRequest',
+  name='GetFileSetRequest',
+  full_name='pfs_v2.GetFileSetRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='commit', full_name='pfs_v2.GetFilesetRequest.commit', index=0,
+      name='commit', full_name='pfs_v2.GetFileSetRequest.commit', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -2471,28 +2172,28 @@ _GETFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4937,
-  serialized_end=4988,
+  serialized_start=4148,
+  serialized_end=4199,
 )
 
 
 _ADDFILESETREQUEST = _descriptor.Descriptor(
-  name='AddFilesetRequest',
-  full_name='pfs_v2.AddFilesetRequest',
+  name='AddFileSetRequest',
+  full_name='pfs_v2.AddFileSetRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='commit', full_name='pfs_v2.AddFilesetRequest.commit', index=0,
+      name='commit', full_name='pfs_v2.AddFileSetRequest.commit', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='fileset_id', full_name='pfs_v2.AddFilesetRequest.fileset_id', index=1,
+      name='file_set_id', full_name='pfs_v2.AddFileSetRequest.file_set_id', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -2510,28 +2211,28 @@ _ADDFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4990,
-  serialized_end=5061,
+  serialized_start=4201,
+  serialized_end=4273,
 )
 
 
 _RENEWFILESETREQUEST = _descriptor.Descriptor(
-  name='RenewFilesetRequest',
-  full_name='pfs_v2.RenewFilesetRequest',
+  name='RenewFileSetRequest',
+  full_name='pfs_v2.RenewFileSetRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fileset_id', full_name='pfs_v2.RenewFilesetRequest.fileset_id', index=0,
+      name='file_set_id', full_name='pfs_v2.RenewFileSetRequest.file_set_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ttl_seconds', full_name='pfs_v2.RenewFilesetRequest.ttl_seconds', index=1,
+      name='ttl_seconds', full_name='pfs_v2.RenewFileSetRequest.ttl_seconds', index=1,
       number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -2549,8 +2250,8 @@ _RENEWFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5063,
-  serialized_end=5125,
+  serialized_start=4275,
+  serialized_end=4338,
 )
 
 
@@ -2574,8 +2275,8 @@ _ACTIVATEAUTHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5127,
-  serialized_end=5148,
+  serialized_start=4340,
+  serialized_end=4361,
 )
 
 
@@ -2599,8 +2300,8 @@ _ACTIVATEAUTHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5150,
-  serialized_end=5172,
+  serialized_start=4363,
+  serialized_end=4385,
 )
 
 
@@ -2638,8 +2339,8 @@ _RUNLOADTESTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5174,
-  serialized_end=5222,
+  serialized_start=4387,
+  serialized_end=4435,
 )
 
 
@@ -2684,8 +2385,8 @@ _RUNLOADTESTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5224,
-  serialized_end=5306,
+  serialized_start=4437,
+  serialized_end=4519,
 )
 
 _BRANCH.fields_by_name['repo'].message_type = _REPO
@@ -2704,21 +2405,13 @@ _BRANCHINFO.fields_by_name['trigger'].message_type = _TRIGGER
 _BRANCHINFOS.fields_by_name['branch_info'].message_type = _BRANCHINFO
 _COMMITORIGIN.fields_by_name['kind'].enum_type = _ORIGINKIND
 _COMMIT.fields_by_name['branch'].message_type = _BRANCH
-_COMMITRANGE.fields_by_name['lower'].message_type = _COMMIT
-_COMMITRANGE.fields_by_name['upper'].message_type = _COMMIT
-_COMMITPROVENANCE.fields_by_name['commit'].message_type = _COMMIT
 _COMMITINFO.fields_by_name['commit'].message_type = _COMMIT
 _COMMITINFO.fields_by_name['origin'].message_type = _COMMITORIGIN
 _COMMITINFO.fields_by_name['parent_commit'].message_type = _COMMIT
 _COMMITINFO.fields_by_name['child_commits'].message_type = _COMMIT
 _COMMITINFO.fields_by_name['started'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _COMMITINFO.fields_by_name['finished'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_COMMITINFO.fields_by_name['provenance'].message_type = _COMMITPROVENANCE
-_COMMITINFO.fields_by_name['subvenance'].message_type = _COMMITRANGE
-_STOREDCOMMITSET.fields_by_name['origin'].message_type = _COMMITORIGIN
-_STOREDCOMMITSET.fields_by_name['commits'].message_type = _COMMIT
-_COMMITSET.fields_by_name['origin'].message_type = _COMMITORIGIN
-_COMMITSET.fields_by_name['commits'].message_type = _COMMITINFO
+_COMMITINFO.fields_by_name['direct_provenance'].message_type = _BRANCH
 _FILEINFO.fields_by_name['file'].message_type = _FILE
 _FILEINFO.fields_by_name['file_type'].enum_type = _FILETYPE
 _FILEINFO.fields_by_name['committed'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -2728,19 +2421,15 @@ _LISTREPORESPONSE.fields_by_name['repo_info'].message_type = _REPOINFO
 _DELETEREPOREQUEST.fields_by_name['repo'].message_type = _REPO
 _STARTCOMMITREQUEST.fields_by_name['parent'].message_type = _COMMIT
 _STARTCOMMITREQUEST.fields_by_name['branch'].message_type = _BRANCH
-_STARTCOMMITREQUEST.fields_by_name['provenance'].message_type = _COMMITPROVENANCE
 _FINISHCOMMITREQUEST.fields_by_name['commit'].message_type = _COMMIT
 _INSPECTCOMMITREQUEST.fields_by_name['commit'].message_type = _COMMIT
-_INSPECTCOMMITREQUEST.fields_by_name['block_state'].enum_type = _COMMITSTATE
+_INSPECTCOMMITREQUEST.fields_by_name['wait'].enum_type = _COMMITSTATE
 _LISTCOMMITREQUEST.fields_by_name['repo'].message_type = _REPO
 _LISTCOMMITREQUEST.fields_by_name['from'].message_type = _COMMIT
 _LISTCOMMITREQUEST.fields_by_name['to'].message_type = _COMMIT
-_COMMITINFOS.fields_by_name['commit_info'].message_type = _COMMITINFO
-_SQUASHCOMMITREQUEST.fields_by_name['commit'].message_type = _COMMIT
-_FLUSHCOMMITREQUEST.fields_by_name['commits'].message_type = _COMMIT
-_FLUSHCOMMITREQUEST.fields_by_name['to_repos'].message_type = _REPO
+_INSPECTCOMMITSETREQUEST.fields_by_name['commit_set'].message_type = _COMMITSET
+_SQUASHCOMMITSETREQUEST.fields_by_name['commit_set'].message_type = _COMMITSET
 _SUBSCRIBECOMMITREQUEST.fields_by_name['repo'].message_type = _REPO
-_SUBSCRIBECOMMITREQUEST.fields_by_name['prov'].message_type = _COMMITPROVENANCE
 _SUBSCRIBECOMMITREQUEST.fields_by_name['from'].message_type = _COMMIT
 _SUBSCRIBECOMMITREQUEST.fields_by_name['state'].enum_type = _COMMITSTATE
 _CLEARCOMMITREQUEST.fields_by_name['commit'].message_type = _COMMIT
@@ -2751,32 +2440,32 @@ _CREATEBRANCHREQUEST.fields_by_name['trigger'].message_type = _TRIGGER
 _INSPECTBRANCHREQUEST.fields_by_name['branch'].message_type = _BRANCH
 _LISTBRANCHREQUEST.fields_by_name['repo'].message_type = _REPO
 _DELETEBRANCHREQUEST.fields_by_name['branch'].message_type = _BRANCH
-_PUTFILE.fields_by_name['raw_file_source'].message_type = _RAWFILESOURCE
-_PUTFILE.fields_by_name['tar_file_source'].message_type = _TARFILESOURCE
-_PUTFILE.fields_by_name['url_file_source'].message_type = _URLFILESOURCE
-_PUTFILE.oneofs_by_name['source'].fields.append(
-  _PUTFILE.fields_by_name['raw_file_source'])
-_PUTFILE.fields_by_name['raw_file_source'].containing_oneof = _PUTFILE.oneofs_by_name['source']
-_PUTFILE.oneofs_by_name['source'].fields.append(
-  _PUTFILE.fields_by_name['tar_file_source'])
-_PUTFILE.fields_by_name['tar_file_source'].containing_oneof = _PUTFILE.oneofs_by_name['source']
-_PUTFILE.oneofs_by_name['source'].fields.append(
-  _PUTFILE.fields_by_name['url_file_source'])
-_PUTFILE.fields_by_name['url_file_source'].containing_oneof = _PUTFILE.oneofs_by_name['source']
+_ADDFILE_URLSOURCE.containing_type = _ADDFILE
+_ADDFILE.fields_by_name['raw'].message_type = google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE
+_ADDFILE.fields_by_name['url'].message_type = _ADDFILE_URLSOURCE
+_ADDFILE.oneofs_by_name['source'].fields.append(
+  _ADDFILE.fields_by_name['raw'])
+_ADDFILE.fields_by_name['raw'].containing_oneof = _ADDFILE.oneofs_by_name['source']
+_ADDFILE.oneofs_by_name['source'].fields.append(
+  _ADDFILE.fields_by_name['url'])
+_ADDFILE.fields_by_name['url'].containing_oneof = _ADDFILE.oneofs_by_name['source']
 _COPYFILE.fields_by_name['src'].message_type = _FILE
-_MODIFYFILEREQUEST.fields_by_name['commit'].message_type = _COMMIT
-_MODIFYFILEREQUEST.fields_by_name['put_file'].message_type = _PUTFILE
+_MODIFYFILEREQUEST.fields_by_name['set_commit'].message_type = _COMMIT
+_MODIFYFILEREQUEST.fields_by_name['add_file'].message_type = _ADDFILE
 _MODIFYFILEREQUEST.fields_by_name['delete_file'].message_type = _DELETEFILE
 _MODIFYFILEREQUEST.fields_by_name['copy_file'].message_type = _COPYFILE
-_MODIFYFILEREQUEST.oneofs_by_name['modification'].fields.append(
-  _MODIFYFILEREQUEST.fields_by_name['put_file'])
-_MODIFYFILEREQUEST.fields_by_name['put_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['modification']
-_MODIFYFILEREQUEST.oneofs_by_name['modification'].fields.append(
+_MODIFYFILEREQUEST.oneofs_by_name['body'].fields.append(
+  _MODIFYFILEREQUEST.fields_by_name['set_commit'])
+_MODIFYFILEREQUEST.fields_by_name['set_commit'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['body']
+_MODIFYFILEREQUEST.oneofs_by_name['body'].fields.append(
+  _MODIFYFILEREQUEST.fields_by_name['add_file'])
+_MODIFYFILEREQUEST.fields_by_name['add_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['body']
+_MODIFYFILEREQUEST.oneofs_by_name['body'].fields.append(
   _MODIFYFILEREQUEST.fields_by_name['delete_file'])
-_MODIFYFILEREQUEST.fields_by_name['delete_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['modification']
-_MODIFYFILEREQUEST.oneofs_by_name['modification'].fields.append(
+_MODIFYFILEREQUEST.fields_by_name['delete_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['body']
+_MODIFYFILEREQUEST.oneofs_by_name['body'].fields.append(
   _MODIFYFILEREQUEST.fields_by_name['copy_file'])
-_MODIFYFILEREQUEST.fields_by_name['copy_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['modification']
+_MODIFYFILEREQUEST.fields_by_name['copy_file'].containing_oneof = _MODIFYFILEREQUEST.oneofs_by_name['body']
 _GETFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _INSPECTFILEREQUEST.fields_by_name['file'].message_type = _FILE
 _LISTFILEREQUEST.fields_by_name['file'].message_type = _FILE
@@ -2799,11 +2488,8 @@ DESCRIPTOR.message_types_by_name['BranchInfos'] = _BRANCHINFOS
 DESCRIPTOR.message_types_by_name['Trigger'] = _TRIGGER
 DESCRIPTOR.message_types_by_name['CommitOrigin'] = _COMMITORIGIN
 DESCRIPTOR.message_types_by_name['Commit'] = _COMMIT
-DESCRIPTOR.message_types_by_name['CommitRange'] = _COMMITRANGE
-DESCRIPTOR.message_types_by_name['CommitProvenance'] = _COMMITPROVENANCE
 DESCRIPTOR.message_types_by_name['CommitInfo'] = _COMMITINFO
-DESCRIPTOR.message_types_by_name['StoredCommitset'] = _STOREDCOMMITSET
-DESCRIPTOR.message_types_by_name['Commitset'] = _COMMITSET
+DESCRIPTOR.message_types_by_name['CommitSet'] = _COMMITSET
 DESCRIPTOR.message_types_by_name['FileInfo'] = _FILEINFO
 DESCRIPTOR.message_types_by_name['CreateRepoRequest'] = _CREATEREPOREQUEST
 DESCRIPTOR.message_types_by_name['InspectRepoRequest'] = _INSPECTREPOREQUEST
@@ -2814,19 +2500,15 @@ DESCRIPTOR.message_types_by_name['StartCommitRequest'] = _STARTCOMMITREQUEST
 DESCRIPTOR.message_types_by_name['FinishCommitRequest'] = _FINISHCOMMITREQUEST
 DESCRIPTOR.message_types_by_name['InspectCommitRequest'] = _INSPECTCOMMITREQUEST
 DESCRIPTOR.message_types_by_name['ListCommitRequest'] = _LISTCOMMITREQUEST
-DESCRIPTOR.message_types_by_name['CommitInfos'] = _COMMITINFOS
-DESCRIPTOR.message_types_by_name['SquashCommitRequest'] = _SQUASHCOMMITREQUEST
-DESCRIPTOR.message_types_by_name['FlushCommitRequest'] = _FLUSHCOMMITREQUEST
+DESCRIPTOR.message_types_by_name['InspectCommitSetRequest'] = _INSPECTCOMMITSETREQUEST
+DESCRIPTOR.message_types_by_name['SquashCommitSetRequest'] = _SQUASHCOMMITSETREQUEST
 DESCRIPTOR.message_types_by_name['SubscribeCommitRequest'] = _SUBSCRIBECOMMITREQUEST
 DESCRIPTOR.message_types_by_name['ClearCommitRequest'] = _CLEARCOMMITREQUEST
 DESCRIPTOR.message_types_by_name['CreateBranchRequest'] = _CREATEBRANCHREQUEST
 DESCRIPTOR.message_types_by_name['InspectBranchRequest'] = _INSPECTBRANCHREQUEST
 DESCRIPTOR.message_types_by_name['ListBranchRequest'] = _LISTBRANCHREQUEST
 DESCRIPTOR.message_types_by_name['DeleteBranchRequest'] = _DELETEBRANCHREQUEST
-DESCRIPTOR.message_types_by_name['PutFile'] = _PUTFILE
-DESCRIPTOR.message_types_by_name['RawFileSource'] = _RAWFILESOURCE
-DESCRIPTOR.message_types_by_name['TarFileSource'] = _TARFILESOURCE
-DESCRIPTOR.message_types_by_name['URLFileSource'] = _URLFILESOURCE
+DESCRIPTOR.message_types_by_name['AddFile'] = _ADDFILE
 DESCRIPTOR.message_types_by_name['DeleteFile'] = _DELETEFILE
 DESCRIPTOR.message_types_by_name['CopyFile'] = _COPYFILE
 DESCRIPTOR.message_types_by_name['ModifyFileRequest'] = _MODIFYFILEREQUEST
@@ -2839,10 +2521,10 @@ DESCRIPTOR.message_types_by_name['DiffFileRequest'] = _DIFFFILEREQUEST
 DESCRIPTOR.message_types_by_name['DiffFileResponse'] = _DIFFFILERESPONSE
 DESCRIPTOR.message_types_by_name['FsckRequest'] = _FSCKREQUEST
 DESCRIPTOR.message_types_by_name['FsckResponse'] = _FSCKRESPONSE
-DESCRIPTOR.message_types_by_name['CreateFilesetResponse'] = _CREATEFILESETRESPONSE
-DESCRIPTOR.message_types_by_name['GetFilesetRequest'] = _GETFILESETREQUEST
-DESCRIPTOR.message_types_by_name['AddFilesetRequest'] = _ADDFILESETREQUEST
-DESCRIPTOR.message_types_by_name['RenewFilesetRequest'] = _RENEWFILESETREQUEST
+DESCRIPTOR.message_types_by_name['CreateFileSetResponse'] = _CREATEFILESETRESPONSE
+DESCRIPTOR.message_types_by_name['GetFileSetRequest'] = _GETFILESETREQUEST
+DESCRIPTOR.message_types_by_name['AddFileSetRequest'] = _ADDFILESETREQUEST
+DESCRIPTOR.message_types_by_name['RenewFileSetRequest'] = _RENEWFILESETREQUEST
 DESCRIPTOR.message_types_by_name['ActivateAuthRequest'] = _ACTIVATEAUTHREQUEST
 DESCRIPTOR.message_types_by_name['ActivateAuthResponse'] = _ACTIVATEAUTHRESPONSE
 DESCRIPTOR.message_types_by_name['RunLoadTestRequest'] = _RUNLOADTESTREQUEST
@@ -2923,20 +2605,6 @@ Commit = _reflection.GeneratedProtocolMessageType('Commit', (_message.Message,),
   })
 _sym_db.RegisterMessage(Commit)
 
-CommitRange = _reflection.GeneratedProtocolMessageType('CommitRange', (_message.Message,), {
-  'DESCRIPTOR' : _COMMITRANGE,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.CommitRange)
-  })
-_sym_db.RegisterMessage(CommitRange)
-
-CommitProvenance = _reflection.GeneratedProtocolMessageType('CommitProvenance', (_message.Message,), {
-  'DESCRIPTOR' : _COMMITPROVENANCE,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.CommitProvenance)
-  })
-_sym_db.RegisterMessage(CommitProvenance)
-
 CommitInfo = _reflection.GeneratedProtocolMessageType('CommitInfo', (_message.Message,), {
   'DESCRIPTOR' : _COMMITINFO,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
@@ -2944,19 +2612,12 @@ CommitInfo = _reflection.GeneratedProtocolMessageType('CommitInfo', (_message.Me
   })
 _sym_db.RegisterMessage(CommitInfo)
 
-StoredCommitset = _reflection.GeneratedProtocolMessageType('StoredCommitset', (_message.Message,), {
-  'DESCRIPTOR' : _STOREDCOMMITSET,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.StoredCommitset)
-  })
-_sym_db.RegisterMessage(StoredCommitset)
-
-Commitset = _reflection.GeneratedProtocolMessageType('Commitset', (_message.Message,), {
+CommitSet = _reflection.GeneratedProtocolMessageType('CommitSet', (_message.Message,), {
   'DESCRIPTOR' : _COMMITSET,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.Commitset)
+  # @@protoc_insertion_point(class_scope:pfs_v2.CommitSet)
   })
-_sym_db.RegisterMessage(Commitset)
+_sym_db.RegisterMessage(CommitSet)
 
 FileInfo = _reflection.GeneratedProtocolMessageType('FileInfo', (_message.Message,), {
   'DESCRIPTOR' : _FILEINFO,
@@ -3028,26 +2689,19 @@ ListCommitRequest = _reflection.GeneratedProtocolMessageType('ListCommitRequest'
   })
 _sym_db.RegisterMessage(ListCommitRequest)
 
-CommitInfos = _reflection.GeneratedProtocolMessageType('CommitInfos', (_message.Message,), {
-  'DESCRIPTOR' : _COMMITINFOS,
+InspectCommitSetRequest = _reflection.GeneratedProtocolMessageType('InspectCommitSetRequest', (_message.Message,), {
+  'DESCRIPTOR' : _INSPECTCOMMITSETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.CommitInfos)
+  # @@protoc_insertion_point(class_scope:pfs_v2.InspectCommitSetRequest)
   })
-_sym_db.RegisterMessage(CommitInfos)
+_sym_db.RegisterMessage(InspectCommitSetRequest)
 
-SquashCommitRequest = _reflection.GeneratedProtocolMessageType('SquashCommitRequest', (_message.Message,), {
-  'DESCRIPTOR' : _SQUASHCOMMITREQUEST,
+SquashCommitSetRequest = _reflection.GeneratedProtocolMessageType('SquashCommitSetRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SQUASHCOMMITSETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.SquashCommitRequest)
+  # @@protoc_insertion_point(class_scope:pfs_v2.SquashCommitSetRequest)
   })
-_sym_db.RegisterMessage(SquashCommitRequest)
-
-FlushCommitRequest = _reflection.GeneratedProtocolMessageType('FlushCommitRequest', (_message.Message,), {
-  'DESCRIPTOR' : _FLUSHCOMMITREQUEST,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.FlushCommitRequest)
-  })
-_sym_db.RegisterMessage(FlushCommitRequest)
+_sym_db.RegisterMessage(SquashCommitSetRequest)
 
 SubscribeCommitRequest = _reflection.GeneratedProtocolMessageType('SubscribeCommitRequest', (_message.Message,), {
   'DESCRIPTOR' : _SUBSCRIBECOMMITREQUEST,
@@ -3091,33 +2745,20 @@ DeleteBranchRequest = _reflection.GeneratedProtocolMessageType('DeleteBranchRequ
   })
 _sym_db.RegisterMessage(DeleteBranchRequest)
 
-PutFile = _reflection.GeneratedProtocolMessageType('PutFile', (_message.Message,), {
-  'DESCRIPTOR' : _PUTFILE,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.PutFile)
-  })
-_sym_db.RegisterMessage(PutFile)
+AddFile = _reflection.GeneratedProtocolMessageType('AddFile', (_message.Message,), {
 
-RawFileSource = _reflection.GeneratedProtocolMessageType('RawFileSource', (_message.Message,), {
-  'DESCRIPTOR' : _RAWFILESOURCE,
+  'URLSource' : _reflection.GeneratedProtocolMessageType('URLSource', (_message.Message,), {
+    'DESCRIPTOR' : _ADDFILE_URLSOURCE,
+    '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
+    # @@protoc_insertion_point(class_scope:pfs_v2.AddFile.URLSource)
+    })
+  ,
+  'DESCRIPTOR' : _ADDFILE,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.RawFileSource)
+  # @@protoc_insertion_point(class_scope:pfs_v2.AddFile)
   })
-_sym_db.RegisterMessage(RawFileSource)
-
-TarFileSource = _reflection.GeneratedProtocolMessageType('TarFileSource', (_message.Message,), {
-  'DESCRIPTOR' : _TARFILESOURCE,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.TarFileSource)
-  })
-_sym_db.RegisterMessage(TarFileSource)
-
-URLFileSource = _reflection.GeneratedProtocolMessageType('URLFileSource', (_message.Message,), {
-  'DESCRIPTOR' : _URLFILESOURCE,
-  '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.URLFileSource)
-  })
-_sym_db.RegisterMessage(URLFileSource)
+_sym_db.RegisterMessage(AddFile)
+_sym_db.RegisterMessage(AddFile.URLSource)
 
 DeleteFile = _reflection.GeneratedProtocolMessageType('DeleteFile', (_message.Message,), {
   'DESCRIPTOR' : _DELETEFILE,
@@ -3203,33 +2844,33 @@ FsckResponse = _reflection.GeneratedProtocolMessageType('FsckResponse', (_messag
   })
 _sym_db.RegisterMessage(FsckResponse)
 
-CreateFilesetResponse = _reflection.GeneratedProtocolMessageType('CreateFilesetResponse', (_message.Message,), {
+CreateFileSetResponse = _reflection.GeneratedProtocolMessageType('CreateFileSetResponse', (_message.Message,), {
   'DESCRIPTOR' : _CREATEFILESETRESPONSE,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.CreateFilesetResponse)
+  # @@protoc_insertion_point(class_scope:pfs_v2.CreateFileSetResponse)
   })
-_sym_db.RegisterMessage(CreateFilesetResponse)
+_sym_db.RegisterMessage(CreateFileSetResponse)
 
-GetFilesetRequest = _reflection.GeneratedProtocolMessageType('GetFilesetRequest', (_message.Message,), {
+GetFileSetRequest = _reflection.GeneratedProtocolMessageType('GetFileSetRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETFILESETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.GetFilesetRequest)
+  # @@protoc_insertion_point(class_scope:pfs_v2.GetFileSetRequest)
   })
-_sym_db.RegisterMessage(GetFilesetRequest)
+_sym_db.RegisterMessage(GetFileSetRequest)
 
-AddFilesetRequest = _reflection.GeneratedProtocolMessageType('AddFilesetRequest', (_message.Message,), {
+AddFileSetRequest = _reflection.GeneratedProtocolMessageType('AddFileSetRequest', (_message.Message,), {
   'DESCRIPTOR' : _ADDFILESETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.AddFilesetRequest)
+  # @@protoc_insertion_point(class_scope:pfs_v2.AddFileSetRequest)
   })
-_sym_db.RegisterMessage(AddFilesetRequest)
+_sym_db.RegisterMessage(AddFileSetRequest)
 
-RenewFilesetRequest = _reflection.GeneratedProtocolMessageType('RenewFilesetRequest', (_message.Message,), {
+RenewFileSetRequest = _reflection.GeneratedProtocolMessageType('RenewFileSetRequest', (_message.Message,), {
   'DESCRIPTOR' : _RENEWFILESETREQUEST,
   '__module__' : 'python_pachyderm.proto.v2.pfs.pfs_pb2'
-  # @@protoc_insertion_point(class_scope:pfs_v2.RenewFilesetRequest)
+  # @@protoc_insertion_point(class_scope:pfs_v2.RenewFileSetRequest)
   })
-_sym_db.RegisterMessage(RenewFilesetRequest)
+_sym_db.RegisterMessage(RenewFileSetRequest)
 
 ActivateAuthRequest = _reflection.GeneratedProtocolMessageType('ActivateAuthRequest', (_message.Message,), {
   'DESCRIPTOR' : _ACTIVATEAUTHREQUEST,
@@ -3269,8 +2910,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=5512,
-  serialized_end=7609,
+  serialized_start=4736,
+  serialized_end=6849,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateRepo',
@@ -3333,9 +2974,19 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='ClearCommit',
+    full_name='pfs_v2.API.ClearCommit',
+    index=6,
+    containing_service=None,
+    input_type=_CLEARCOMMITREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='InspectCommit',
     full_name='pfs_v2.API.InspectCommit',
-    index=6,
+    index=7,
     containing_service=None,
     input_type=_INSPECTCOMMITREQUEST,
     output_type=_COMMITINFO,
@@ -3345,7 +2996,7 @@ _API = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ListCommit',
     full_name='pfs_v2.API.ListCommit',
-    index=7,
+    index=8,
     containing_service=None,
     input_type=_LISTCOMMITREQUEST,
     output_type=_COMMITINFO,
@@ -3353,29 +3004,9 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='SquashCommit',
-    full_name='pfs_v2.API.SquashCommit',
-    index=8,
-    containing_service=None,
-    input_type=_SQUASHCOMMITREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='FlushCommit',
-    full_name='pfs_v2.API.FlushCommit',
-    index=9,
-    containing_service=None,
-    input_type=_FLUSHCOMMITREQUEST,
-    output_type=_COMMITINFO,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
     name='SubscribeCommit',
     full_name='pfs_v2.API.SubscribeCommit',
-    index=10,
+    index=9,
     containing_service=None,
     input_type=_SUBSCRIBECOMMITREQUEST,
     output_type=_COMMITINFO,
@@ -3383,11 +3014,21 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='ClearCommit',
-    full_name='pfs_v2.API.ClearCommit',
+    name='InspectCommitSet',
+    full_name='pfs_v2.API.InspectCommitSet',
+    index=10,
+    containing_service=None,
+    input_type=_INSPECTCOMMITSETREQUEST,
+    output_type=_COMMITINFO,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SquashCommitSet',
+    full_name='pfs_v2.API.SquashCommitSet',
     index=11,
     containing_service=None,
-    input_type=_CLEARCOMMITREQUEST,
+    input_type=_SQUASHCOMMITSETREQUEST,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -3533,8 +3174,8 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='CreateFileset',
-    full_name='pfs_v2.API.CreateFileset',
+    name='CreateFileSet',
+    full_name='pfs_v2.API.CreateFileSet',
     index=26,
     containing_service=None,
     input_type=_MODIFYFILEREQUEST,
@@ -3543,8 +3184,8 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='GetFileset',
-    full_name='pfs_v2.API.GetFileset',
+    name='GetFileSet',
+    full_name='pfs_v2.API.GetFileSet',
     index=27,
     containing_service=None,
     input_type=_GETFILESETREQUEST,
@@ -3553,8 +3194,8 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='AddFileset',
-    full_name='pfs_v2.API.AddFileset',
+    name='AddFileSet',
+    full_name='pfs_v2.API.AddFileSet',
     index=28,
     containing_service=None,
     input_type=_ADDFILESETREQUEST,
@@ -3563,8 +3204,8 @@ _API = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='RenewFileset',
-    full_name='pfs_v2.API.RenewFileset',
+    name='RenewFileSet',
+    full_name='pfs_v2.API.RenewFileSet',
     index=29,
     containing_service=None,
     input_type=_RENEWFILESETREQUEST,

@@ -15,14 +15,14 @@ class APIStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CreateJob = channel.unary_unary(
-                '/pps_v2.API/CreateJob',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.Job.FromString,
-                )
         self.InspectJob = channel.unary_unary(
                 '/pps_v2.API/InspectJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
+                )
+        self.InspectJobset = channel.unary_stream(
+                '/pps_v2.API/InspectJobset',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.ListJob = channel.unary_stream(
@@ -30,9 +30,9 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
-        self.FlushJob = channel.unary_stream(
-                '/pps_v2.API/FlushJob',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
+        self.SubscribeJob = channel.unary_stream(
+                '/pps_v2.API/SubscribeJob',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SubscribeJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.DeleteJob = channel.unary_unary(
@@ -145,13 +145,13 @@ class APIStub(object):
 class APIServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def CreateJob(self, request, context):
+    def InspectJob(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def InspectJob(self, request, context):
+    def InspectJobset(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -164,7 +164,7 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def FlushJob(self, request, context):
+    def SubscribeJob(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -304,14 +304,14 @@ class APIServicer(object):
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateJob': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateJob,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateJobRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.Job.SerializeToString,
-            ),
             'InspectJob': grpc.unary_unary_rpc_method_handler(
                     servicer.InspectJob,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
+            ),
+            'InspectJobset': grpc.unary_stream_rpc_method_handler(
+                    servicer.InspectJobset,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
             ),
             'ListJob': grpc.unary_stream_rpc_method_handler(
@@ -319,9 +319,9 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
             ),
-            'FlushJob': grpc.unary_stream_rpc_method_handler(
-                    servicer.FlushJob,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.FlushJobRequest.FromString,
+            'SubscribeJob': grpc.unary_stream_rpc_method_handler(
+                    servicer.SubscribeJob,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SubscribeJobRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
             ),
             'DeleteJob': grpc.unary_unary_rpc_method_handler(
@@ -440,23 +440,6 @@ class API(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateJob(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/CreateJob',
-            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.CreateJobRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.Job.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def InspectJob(request,
             target,
             options=(),
@@ -469,6 +452,23 @@ class API(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/InspectJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def InspectJobset(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/InspectJobset',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -491,7 +491,7 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def FlushJob(request,
+    def SubscribeJob(request,
             target,
             options=(),
             channel_credentials=None,
@@ -501,8 +501,8 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/FlushJob',
-            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.FlushJobRequest.SerializeToString,
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/SubscribeJob',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.SubscribeJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
