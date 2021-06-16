@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.service import Service
-from python_pachyderm.pfs import commit_from
+from python_pachyderm.pfs import commit_from, Commit
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -169,7 +169,7 @@ class PFSMixin:
 
     def start_commit(
         self, repo_name, branch, parent=None, description=None, provenance=None
-    ) -> pfs_proto.Commit:
+    ) -> Commit:
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been

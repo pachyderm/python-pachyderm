@@ -49,7 +49,7 @@ def commit_from(
     if isinstance(commit, Commit):
         return commit.to_pb()
     if isinstance(commit, tuple):
-        repo, branch, commit_id = None, None, None
+        repo, branch, commit_id, repo_type = None, None, None, "user"
         if len(commit) == 2:
             repo, branch_or_commit = commit
             if uuid_re.match(branch_or_commit) or not valid_branch_re.match(
@@ -58,7 +58,13 @@ def commit_from(
                 commit_id = branch_or_commit
             else:
                 branch = branch_or_commit
-        return Commit(repo=repo, branch=branch, id=commit_id).to_pb()
+        elif len(commit) == 3:
+            repo, branch, commit_id = commit
+        else:
+            repo, branch, commit_id, repo_type = commit
+        return Commit(
+            repo=repo, branch=branch, id=commit_id, repo_type=repo_type
+        ).to_pb()
     if isinstance(commit, dict):
         return Commit(**commit).to_pb()
     if commit is None:
