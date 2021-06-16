@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.service import Service
-from .util import commit_from
+from python_pachyderm.pfs import commit_from
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
