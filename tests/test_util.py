@@ -216,6 +216,22 @@ def test_create_python_pipeline():
     file = list(client.get_file("{}/master".format(pipeline_name), "file.dat"))
     assert file == [b"DATA"]
 
+    
+def test_put_files_single_file():
+    client = python_pachyderm.Client()
+    client.delete_all()
+    repo_name = util.create_test_repo(client, "put_files_single_file")
+
+    with tempfile.NamedTemporaryFile() as f:
+        f.write(b"abcd")
+        f.flush()
+        commit = (repo_name, "master")
+        python_pachyderm.put_files(client, f.name, commit, "/f1.txt")
+        python_pachyderm.put_files(client, f.name, commit, "/f/f1")
+
+    expected = set(["/", "/f1.txt", "/f/", "/f/f1"])
+    check_expected_files(client, commit, expected)
+
 
 def test_parse_json_pipeline_spec():
     req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
