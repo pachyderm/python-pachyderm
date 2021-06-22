@@ -8,13 +8,13 @@ from python_pachyderm.proto.v2.pps.pps_pb2 import CreatePipelineRequest
 
 def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     """
-    Utility function for recursively inserting files from the local
-    `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
+    Utility function for inserting files from the local `source_path`
+    to pachyderm. Roughly equivalent to `pachctl put file [-r]`.
 
     Params:
 
     * `client`: The `Client` instance to use.
-    * `source_path`: The directory to recursively insert content from.
+    * `source_path`: The file/directory to recursively insert content from.
     * `commit`: The `Commit` object to use for inserting files.
     * `dest_path`: The destination path in PFS.
     * `kwargs`: Keyword arguments to forward. See
@@ -22,13 +22,18 @@ def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     """
 
     with client.modify_file_client(commit) as pfc:
-        for root, _, filenames in os.walk(source_path):
-            for filename in filenames:
-                source_filepath = os.path.join(root, filename)
-                dest_filepath = os.path.join(
-                    dest_path, os.path.relpath(source_filepath, start=source_path)
-                )
-                pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+        if os.path.isfile(source_path):
+            pfc.put_file_from_filepath(dest_path, source_path, **kwargs)
+        elif os.path.isdir(source_path):
+            for root, _, filenames in os.walk(source_path):
+                for filename in filenames:
+                    source_filepath = os.path.join(root, filename)
+                    dest_filepath = os.path.join(
+                        dest_path, os.path.relpath(source_filepath, start=source_path)
+                    )
+                    pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+        else:
+            raise Exception("Please provide an existing directory or file")
 
 
 def parse_json_pipeline_spec(j):
