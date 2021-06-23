@@ -105,6 +105,7 @@ def test_start_commit_fork():
         "(repo, commit_id)",
         "(repo, branch)",
         "(repo, branch, commit_id)",
+        "(repo, branch, commit_id, type)",
         "dictionary",
     ],
 )
@@ -120,6 +121,8 @@ def test_finish_commit(commit_arg):
         client.finish_commit((repo_name, "master"))
     elif commit_arg == "(repo, branch, commit_id)":
         client.finish_commit((repo_name, "master", commit.id))
+    elif commit_arg == "(repo, branch, commit_id, type)":
+        client.finish_commit((repo_name, "master", commit.id, "user"))
     elif commit_arg == "dictionary":
         client.finish_commit({"repo": repo_name, "id": commit.id, "branch": "master"})
 
