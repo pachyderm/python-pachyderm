@@ -98,7 +98,17 @@ def test_start_commit_fork():
     assert "patch" in branches
 
 
-@pytest.mark.parametrize("commit_arg", ["commit_obj", "(repo, commit_id)"])
+@pytest.mark.parametrize(
+    "commit_arg",
+    [
+        "commit_obj",
+        "(repo, commit_id)",
+        "(repo, branch)",
+        "(repo, branch, commit_id)",
+        "(repo, branch, commit_id, type)",
+        "dictionary",
+    ],
+)
 def test_finish_commit(commit_arg):
     client, repo_name = sandbox("finish_commit")
     commit = client.start_commit(repo_name, "master")
@@ -107,6 +117,14 @@ def test_finish_commit(commit_arg):
         client.finish_commit(commit)
     elif commit_arg == "(repo, commit_id)":
         client.finish_commit((repo_name, commit.id))
+    elif commit_arg == "(repo, branch)":
+        client.finish_commit((repo_name, "master"))
+    elif commit_arg == "(repo, branch, commit_id)":
+        client.finish_commit((repo_name, "master", commit.id))
+    elif commit_arg == "(repo, branch, commit_id, type)":
+        client.finish_commit((repo_name, "master", commit.id, "user"))
+    elif commit_arg == "dictionary":
+        client.finish_commit({"repo": repo_name, "id": commit.id, "branch": "master"})
 
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
