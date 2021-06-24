@@ -6,8 +6,7 @@ import random
 import pytest
 
 import python_pachyderm
-from python_pachyderm.proto.v2.pfs import pfs_pb2
-from python_pachyderm.proto.v2.pps import pps_pb2
+from python_pachyderm.service import pps_proto
 
 _test_pachyderm_version = None
 
@@ -57,7 +56,7 @@ def create_test_repo(client, test_name, prefix=None, suffix=None):
     return repo_name
 
 
-def create_test_pipeline(client, test_name):
+def create_test_pipeline(client: python_pachyderm.Client, test_name):
     repo_name_suffix = random_string(6)
     input_repo_name = create_test_repo(
         client, test_name, prefix="input", suffix=repo_name_suffix
@@ -68,34 +67,19 @@ def create_test_pipeline(client, test_name):
 
     client.create_pipeline(
         pipeline_repo_name,
-        transform=pps_pb2.Transform(
+        transform=pps_proto.Transform(
             cmd=["sh"],
             image="alpine",
             stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
         ),
-        input=pps_pb2.Input(pfs=pps_pb2.PFSInput(glob="/*", repo=input_repo_name)),
-        enable_stats=True,
+        input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
     )
 
+    # TODO figre out what is actually happening here
     with client.commit(input_repo_name, "master") as commit:
         client.put_file_bytes(commit, "file.dat", b"DATA")
 
     return (commit, input_repo_name, pipeline_repo_name)
-
-
-def wait_for_job(client: python_pachyderm.Client, commit):
-    # block until the commit is ready
-    client.inspect_commit(commit, block_state=pfs_pb2.CommitState.READY)
-
-    # while the commit is ready, the job might not be listed on the first
-    # call, so repeatedly list jobs until it's available
-    start_time = time.time()
-    while True:
-        for job in client.list_job():
-            return job.job.id
-
-        assert time.time() - start_time < 60.0, "timed out waiting for job"
-        time.sleep(1)
 
 
 def get_cluster_deployment_id():

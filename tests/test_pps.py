@@ -7,7 +7,7 @@ import time
 import pytest
 
 import python_pachyderm
-from python_pachyderm.proto.v2.pps import pps_pb2
+from python_pachyderm.service import pps_proto
 from tests import util
 
 
@@ -23,13 +23,13 @@ class Sandbox:
         self.input_repo_name = input_repo_name
         self.pipeline_repo_name = pipeline_repo_name
 
-    def wait_for_job(self):
-        return util.wait_for_job(self.client, self.commit)
+    def wait(self):
+        return self.client.wait_commit(self.commit.id)[0].commit.id
 
 
 def test_list_job():
     sandbox = Sandbox("list_job")
-    sandbox.wait_for_job()
+    sandbox.wait()
 
     jobs = list(sandbox.client.list_job())
     assert len(jobs) >= 1
@@ -45,59 +45,55 @@ def test_list_job():
     assert len(jobs) >= 1
 
 
-def test_flush_job():
-    sandbox = Sandbox("flush_job")
-    jobs = list(sandbox.client.flush_job([sandbox.commit]))
-    assert len(jobs) >= 1
-    print(jobs[0])
-
-
 def test_inspect_job():
     sandbox = Sandbox("inspect_job")
-    job_id = sandbox.wait_for_job()
+    job_id = sandbox.wait()
 
-    job_info = sandbox.client.inspect_job(job_id)
+    job_info = sandbox.client.inspect_job(sandbox.pipeline_repo_name, job_id)
     assert job_info.job.id == job_id
 
 
 def test_stop_job():
     sandbox = Sandbox("stop_job")
-    job_id = sandbox.wait_for_job()
+    pipeline_name = sandbox.pipeline_repo_name
+    job_id = sandbox.wait()
 
-    sandbox.client.stop_job(job_id)
+    sandbox.client.stop_job(pipeline_name, job_id)
     # This is necessary because `StopJob` does not wait for the job to be
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
-    job_info = sandbox.client.inspect_job(job_id)
+    job_info = sandbox.client.inspect_job(pipeline_name, job_id)
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
     assert job_info.state in [
-        pps_pb2.JobState.JOB_KILLED,
-        pps_pb2.JobState.JOB_SUCCESS,
+        pps_proto.JobState.JOB_KILLED,
+        pps_proto.JobState.JOB_SUCCESS,
     ]
 
 
 def test_delete_job():
     sandbox = Sandbox("delete_job")
-    job_id = sandbox.wait_for_job()
+    job_id = sandbox.wait()
     orig_job_count = len(list(sandbox.client.list_job()))
-    sandbox.client.delete_job(job_id)
-    assert len(list(sandbox.client.list_job())) == orig_job_count - 1
+    sandbox.client.delete_job(sandbox.pipeline_repo_name, job_id)
+    jobs = len(list(sandbox.client.list_job()))
+    assert jobs == orig_job_count - 1
 
 
 def test_datums():
     sandbox = Sandbox("datums")
-    job_id = sandbox.wait_for_job()
+    pipeline_name = sandbox.pipeline_repo_name
+    job_id = sandbox.wait()
 
     # flush the job so it fully finishes
-    list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
+    list(sandbox.client.wait_commit(sandbox.commit.id))
 
-    datums = list(sandbox.client.list_datum(job_id))
+    datums = list(sandbox.client.list_datum(pipeline_name, job_id))
     assert len(datums) == 1
-    datum = sandbox.client.inspect_datum(job_id, datums[0].datum.id)
-    assert datum.state == pps_pb2.DatumState.SUCCESS
+    datum = sandbox.client.inspect_datum(pipeline_name, job_id, datums[0].datum.id)
+    assert datum.state == pps_proto.DatumState.SUCCESS
 
     with pytest.raises(
         python_pachyderm.RpcError,
@@ -105,7 +101,7 @@ def test_datums():
             job_id
         ),
     ):
-        sandbox.client.restart_datum(job_id)
+        sandbox.client.restart_datum(pipeline_name, job_id)
 
 
 def test_inspect_pipeline():
@@ -154,21 +150,11 @@ def test_restart_pipeline():
     assert not pipeline.stopped
 
 
-def test_run_pipeline():
-    sandbox = Sandbox("run_pipeline")
-
-    # flush the job so it fully finishes
-    list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
-
-    # just make sure it worked
-    sandbox.client.run_pipeline(sandbox.pipeline_repo_name)
-
-
 def test_run_cron():
     sandbox = Sandbox("run_cron")
 
     # flush the job so it fully finishes
-    list(sandbox.client.flush_commit([(sandbox.input_repo_name, sandbox.commit.id)]))
+    list(sandbox.client.wait_commit(sandbox.commit.id))
 
     # this should trigger an error because the sandbox pipeline doesn't have a
     # cron input
@@ -208,10 +194,10 @@ def test_secrets():
 
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
-    sandbox.wait_for_job()
-
-    # Wait for the job to complete
-    list(sandbox.client.flush_job([sandbox.commit]))
+    sandbox.wait()
+    # sleep 10 secs to wait for the k8s pod to be ready
+    # TODO remove this sleep once we figure out why this test is broken
+    # time.sleep(10)
 
     # Just make sure these spit out some logs
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
@@ -223,14 +209,34 @@ def test_get_pipeline_logs():
 
 def test_get_job_logs():
     sandbox = Sandbox("get_logs_logs")
-    job_id = sandbox.wait_for_job()
+    job_id = sandbox.wait()
+    pipeline_name = sandbox.pipeline_repo_name
 
     # Wait for the job to complete
-    list(sandbox.client.flush_job([sandbox.commit]))
+    commit = (pipeline_name, job_id)
+    sandbox.client.wait_commit(commit)
 
     # Just make sure these spit out some logs
-    logs = sandbox.client.get_job_logs(job_id)
+    logs = sandbox.client.get_job_logs(pipeline_name, job_id)
     assert next(logs) is not None
+
+
+def test_create_pipeline():
+    client = python_pachyderm.Client()
+    client.delete_all()
+
+    input_repo_name = util.create_test_repo(client, "input_repo_test_create_pipeline")
+
+    client.create_pipeline(
+        "pipeline_test_create_pipeline",
+        transform=pps_proto.Transform(
+            cmd=["sh"],
+            image="alpine",
+            stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
+        ),
+        input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
+    )
+    assert len(client.list_pipeline().pipeline_info) == 1
 
 
 def test_create_pipeline_from_request():
@@ -241,16 +247,16 @@ def test_create_pipeline_from_request():
 
     # more or less a copy of the opencv demo's edges pipeline spec
     client.create_pipeline_from_request(
-        pps_pb2.CreatePipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+        pps_proto.CreatePipelineRequest(
+            pipeline=pps_proto.Pipeline(name=pipeline_name),
             description="A pipeline that performs image edge detection by using the OpenCV library.",
-            input=pps_pb2.Input(
-                pfs=pps_pb2.PFSInput(
+            input=pps_proto.Input(
+                pfs=pps_proto.PFSInput(
                     glob="/*",
                     repo=repo_name,
                 ),
             ),
-            transform=pps_pb2.Transform(
+            transform=pps_proto.Transform(
                 cmd=["echo", "hi"],
                 image="pachyderm/opencv",
             ),

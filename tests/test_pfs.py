@@ -67,7 +67,7 @@ def test_start_commit():
     commit2 = client.start_commit(repo_name, "master")
     assert commit2.branch.repo.name == repo_name
 
-    with pytest.raises(python_pachyderm.RpcError, match=r"repos .* not found"):
+    with pytest.raises(python_pachyderm.RpcError, match=r"repo .* not found"):
         client.start_commit("some-fake-repo", "master")
 
 
@@ -354,18 +354,19 @@ def test_copy_file():
     assert files[2].file.path == "/file2.dat"
 
 
-def test_flush_commit():
+def test_wait_commit():
     """
-    Ensure flush commit works
+    Ensure wait_commit works
     """
 
-    client, repo_name = sandbox("flush_commit")
+    client, repo_name = sandbox("wait_commit")
 
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
 
     # Just block until all of the commits are yielded
-    list(client.flush_commit([c]))
+    assert len(list(client.wait_commit(c.id))) == 1
+    assert len(list(client.wait_commit(c))) == 1
 
     files = list(client.list_file(c, "/"))
     assert len(files) == 1
@@ -386,17 +387,20 @@ def test_inspect_commit():
     assert commit.commit.branch.repo.name == repo_name
 
 
-def test_squash_commit():
-    client, repo_name = sandbox("squash_commit")
+def test_squash_commit_set():
+    client, repo_name = sandbox("squash_commit_set")
 
-    with client.commit(repo_name, "master") as c:
+    with client.commit(repo_name, "master") as commit1:
+        pass
+
+    with client.commit(repo_name, "master"):
         pass
 
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 1
-    client.squash_commit(c)
+    assert len(commits) == 2
+    client.squash_commit_set(commit1.id)
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 0
+    assert len(commits) == 1
 
 
 def test_subscribe_commit():
