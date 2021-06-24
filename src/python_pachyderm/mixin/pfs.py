@@ -2,7 +2,7 @@ import io
 import itertools
 import tarfile
 from contextlib import contextmanager
-from typing import Iterable, Union
+from typing import Iterable, Union, List
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.service import pfs_proto, Service
@@ -337,11 +337,11 @@ class PFSMixin:
             commit_set=pfs_proto.CommitSet(id=commit_set_id),
         )
 
-    def wait_commit(self, commit: Union[str, tuple, pfs_proto.Commit]):
+    def wait_commit(
+        self, commit: Union[str, tuple, pfs_proto.Commit]
+    ) -> list[pfs_proto.CommitInfo]:
         """
         Waits for the specified commit or commit_set to finish and return them.
-
-        Yields `CommitInfo` objects.
 
         Params:
         * `commit`: A `Commit` object, tuple, or str. If passed a commit_set_id,
