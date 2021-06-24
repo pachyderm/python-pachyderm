@@ -69,7 +69,7 @@ def main():
         python_pachyderm.put_files(client, relpath("images"), commit, "/")
 
     # Wait for the commit (and its downstream commits) to finish
-    for _ in client.flush_commit([commit]):
+    for _ in client.wait_commit(commit.id):
         pass
 
     # Get the montage

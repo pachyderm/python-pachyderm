@@ -307,3 +307,8 @@ class Client(
 
         grpc_method = getattr(stub, grpc_method_name)
         return grpc_method(req, metadata=self._metadata)
+
+    def delete_all(self):
+        self.delete_all_pipelines()
+        self.delete_all_repos()
+        self.delete_all_transactions()

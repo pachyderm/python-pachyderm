@@ -1,7 +1,19 @@
 from enum import Enum
 
+from grpc_health.v1 import health_pb2 as health_proto
+from grpc_health.v1 import health_pb2_grpc as health_grpc
 from python_pachyderm.proto.v2.admin import admin_pb2 as admin_proto
 from python_pachyderm.proto.v2.admin import admin_pb2_grpc as admin_grpc
+from python_pachyderm.proto.v2.auth import auth_pb2 as auth_proto
+from python_pachyderm.proto.v2.auth import auth_pb2_grpc as auth_grpc
+from python_pachyderm.proto.v2.debug import debug_pb2 as debug_proto
+from python_pachyderm.proto.v2.debug import debug_pb2_grpc as debug_grpc
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2 as enterprise_proto
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2_grpc as enterprise_grpc
+from python_pachyderm.proto.v2.identity import identity_pb2 as identity_proto
+from python_pachyderm.proto.v2.identity import identity_pb2_grpc as identity_grpc
+from python_pachyderm.proto.v2.license import license_pb2 as license_proto
+from python_pachyderm.proto.v2.license import license_pb2_grpc as license_grpc
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
 from python_pachyderm.proto.v2.pfs import pfs_pb2_grpc as pfs_grpc
 from python_pachyderm.proto.v2.pps import pps_pb2 as pps_proto
@@ -12,20 +24,8 @@ from python_pachyderm.proto.v2.transaction import (
 )
 from python_pachyderm.proto.v2.version.versionpb import version_pb2 as version_proto
 from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as version_grpc
-from python_pachyderm.proto.v2.debug import debug_pb2 as debug_proto
-from python_pachyderm.proto.v2.debug import debug_pb2_grpc as debug_grpc
-from python_pachyderm.proto.v2.auth import auth_pb2 as auth_proto
-from python_pachyderm.proto.v2.auth import auth_pb2_grpc as auth_grpc
-from python_pachyderm.proto.v2.enterprise import enterprise_pb2 as enterprise_proto
-from python_pachyderm.proto.v2.enterprise import enterprise_pb2_grpc as enterprise_grpc
-from python_pachyderm.proto.v2.health import health_pb2 as health_proto
-from python_pachyderm.proto.v2.health import health_pb2_grpc as health_grpc
-from python_pachyderm.proto.v2.license import license_pb2 as license_proto
-from python_pachyderm.proto.v2.license import license_pb2_grpc as license_grpc
-from python_pachyderm.proto.v2.identity import identity_pb2 as identity_proto
-from python_pachyderm.proto.v2.identity import identity_pb2_grpc as identity_grpc
 
-MB = 1048576
+MB = 1024 ** 2
 MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
 
 

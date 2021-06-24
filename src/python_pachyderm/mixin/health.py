@@ -1,11 +1,10 @@
-from python_pachyderm.service import Service
-from python_pachyderm.proto.v2.health import health_pb2_grpc as health_grpc
+from python_pachyderm.service import health_proto, Service
 
 
 class HealthMixin:
-    def health(self):
+    def health_check(self):
         return self._req(
             Service.HEALTH,
-            "Health",
-            req=health_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+            "Check",
+            req=health_proto.HealthCheckRequest(),
         )
