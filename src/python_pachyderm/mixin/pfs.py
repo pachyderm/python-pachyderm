@@ -2,10 +2,11 @@ import io
 import itertools
 import tarfile
 from contextlib import contextmanager
+from typing import Iterable, Union, List
 
-from python_pachyderm.proto.v2.pfs import pfs_pb2 as pfs_proto
-from python_pachyderm.service import Service
-from python_pachyderm.pfs import commit_from, Commit
+from python_pachyderm.pfs import commit_from, Commit, uuid_re
+from python_pachyderm.service import pfs_proto, Service
+from google.protobuf import empty_pb2, wrappers_pb2
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -127,7 +128,7 @@ class PFSMixin:
             Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name, type="user")
         )
 
-    def list_repo(self, type=None):
+    def list_repo(self, type=""):
         """
         Returns info about all repos, as a list of `RepoInfo` objects.
 
@@ -138,7 +139,7 @@ class PFSMixin:
         """
         return self._req(Service.PFS, "ListRepo", type=type).repo_info
 
-    def delete_repo(self, repo_name, force=None):
+    def delete_repo(self, repo_name, force=False):
         """
         Deletes a repo and reclaims the storage space it was using.
 
@@ -153,10 +154,9 @@ class PFSMixin:
             "DeleteRepo",
             repo=pfs_proto.Repo(name=repo_name, type="user"),
             force=force,
-            all=False,
         )
 
-    def delete_all_repos(self, force=None):
+    def delete_all_repos(self):
         """
         Deletes all repos.
 
@@ -165,11 +165,9 @@ class PFSMixin:
         * `force`: If set to true, the repo will be removed regardless of
         errors. This argument should be used with care.
         """
-        return self._req(Service.PFS, "DeleteRepo", force=force, all=True)
+        return self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
 
-    def start_commit(
-        self, repo_name, branch, parent=None, description=None, provenance=None
-    ) -> Commit:
+    def start_commit(self, repo_name, branch, parent=None, description=None) -> Commit:
         """
         Begins the process of committing data to a Repo. Once started you can
         write to the Commit with ModifyFile and when all the data has been
@@ -191,8 +189,6 @@ class PFSMixin:
         commit, data can safely be added to the new commit without affecting
         the contents of the parent commit.
         * `description`: An optional string describing the commit.
-        * `provenance`: An optional iterable of `CommitProvenance` objects
-        specifying the commit provenance.
         """
         if parent and isinstance(parent, str):
             parent = pfs_proto.Commit(
@@ -209,7 +205,6 @@ class PFSMixin:
                 repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch
             ),
             description=description,
-            provenance=provenance,
         )
 
     def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
@@ -263,7 +258,7 @@ class PFSMixin:
         finally:
             self.finish_commit(commit)
 
-    def inspect_commit(self, commit, block_state=None):
+    def inspect_commit(self, commit, commit_state: pfs_proto.CommitState = None):
         """
         Inspects a commit. Returns a `CommitInfo` object.
 
@@ -271,14 +266,33 @@ class PFSMixin:
 
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
-        * An optional int that causes this method to block until the commit is
-        in the desired commit state. See the `CommitState` enum.
+        * `commit_state`: An optional int that causes this method to block
+        until the commit is in the desired state.
+            0: STARTED
+            1: READY
+            2: FINISHED
         """
         return self._req(
             Service.PFS,
             "InspectCommit",
             commit=commit_from(commit),
-            block_state=block_state,
+            wait=commit_state,
+        )
+
+    def inspect_commit_set(
+        self, commit_set_id: str, wait: bool = False
+    ) -> Iterable[pfs_proto.CommitInfo]:
+        """
+        Inspects a commit set and returns an iterator of `CommitInfo` objects.
+
+        * `commit_set_id`: the ID that represents this commit_set
+        * `wait`: if true then wait until all commits in the set are finished.
+        """
+        return self._req(
+            Service.PFS,
+            "InspectCommitSet",
+            commit_set=pfs_proto.CommitSet(id=commit_set_id),
+            wait=wait,
         )
 
     def list_commit(
@@ -310,48 +324,35 @@ class PFSMixin:
             getattr(req, "from").CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommit", req=req)
 
-    def squash_commit(self, commit):
+    def squash_commit_set(self, commit_set_id: str):
         """
-        Squashes a commit.
+        Squashes the commits of a `CommitSet` into their children.
         Params:
-        * `commit`: A tuple, string, or `Commit` object representing the
+        * `commit_set_id`: the id shared by all commits that form a transaction.
         commit.
-        """
-        return self._req(Service.PFS, "SquashCommit", commit=commit_from(commit))
-
-    def flush_commit(self, commits, repos=None):
-        """
-        Blocks until all of the commits which have a set of commits as
-        provenance have finished. For commits to be considered they must have
-        all of the specified commits as provenance. This in effect waits for
-        all of the jobs that are triggered by a set of commits to complete.
-        It returns an error if any of the commits it's waiting on are
-        cancelled due to one of the jobs encountering an error during runtime.
-        Note that it's never necessary to call FlushCommit to run jobs,
-        they'll run no matter what, FlushCommit just allows you to wait for
-        them to complete and see their output once they do. This returns an
-        iterator of CommitInfo objects.
-
-        Yields `CommitInfo` objects.
-
-        Params:
-
-        * `commits`: A list of tuples, strings, or `Commit` objects
-        representing the commits to flush.
-        * `repos`: An optional list of strings specifying repo names. If
-        specified, only commits within these repos will be flushed.
         """
         return self._req(
             Service.PFS,
-            "FlushCommit",
-            commits=[commit_from(c) for c in commits],
-            to_repos=[pfs_proto.Repo(name=r) for r in repos]
-            if repos is not None
-            else None,
+            "SquashCommitSet",
+            commit_set=pfs_proto.CommitSet(id=commit_set_id),
         )
 
+    def wait_commit(
+        self, commit: Union[str, tuple, pfs_proto.Commit]
+    ) -> list[pfs_proto.CommitInfo]:
+        """
+        Waits for the specified commit or commit_set to finish and return them.
+
+        Params:
+        * `commit`: A `Commit` object, tuple, or str. If passed a commit_set_id,
+           then wait for the entire commit_set.
+        """
+        if isinstance(commit, str) and uuid_re.match(commit):
+            return list(self.inspect_commit_set(commit, True))
+        return [self.inspect_commit(commit, pfs_proto.CommitState.FINISHED)]
+
     def subscribe_commit(
-        self, repo_name, branch, from_commit_id=None, state=None, prov=None
+        self, repo_name, branch, from_commit_id=None, state: pfs_proto.CommitState = 0
     ):
         """
         Yields `CommitInfo` objects as commits occur.
@@ -366,9 +367,7 @@ class PFSMixin:
         * `prov`: An optional `CommitProvenance` object.
         """
         repo = pfs_proto.Repo(name=repo_name, type="user")
-        req = pfs_proto.SubscribeCommitRequest(
-            repo=repo, branch=branch, state=state, prov=prov
-        )
+        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
         if from_commit_id is not None:
             getattr(req, "from").CopyFrom(
                 pfs_proto.Commit(repo=repo, id=from_commit_id)
@@ -376,7 +375,13 @@ class PFSMixin:
         return self._req(Service.PFS, "SubscribeCommit", req=req)
 
     def create_branch(
-        self, repo_name, branch_name, commit=None, provenance=None, trigger=None
+        self,
+        repo_name,
+        branch_name,
+        commit=None,
+        provenance=None,
+        trigger=None,
+        new_commit_set=False,
     ):
         """
         Creates a new branch.
@@ -386,11 +391,13 @@ class PFSMixin:
         * `repo_name`: A string specifying the name of the repo.
         * `branch_name`: A string specifying the new branch name.
         * `commit`: An optional tuple, string, or `Commit` object representing
-          the head commit of the branch.
+           the head commit of the branch.
         * `provenance`: An optional iterable of `Branch` objects representing
           the branch provenance.
         * `trigger`: An optional `Trigger` object controlling when the head of
           `branch_name` is moved.
+        * `new_commitset`: A bool, overrides the default behavior of using the
+           same Commitset as 'head'
         """
         return self._req(
             Service.PFS,
@@ -398,9 +405,10 @@ class PFSMixin:
             branch=pfs_proto.Branch(
                 repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
-            head=commit_from(commit) if commit is not None else None,
+            head=commit_from(commit),
             provenance=provenance,
             trigger=trigger,
+            new_commit_set=new_commit_set,
         )
 
     def inspect_branch(self, repo_name, branch_name):
@@ -468,11 +476,8 @@ class PFSMixin:
         commit,
         path,
         value,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
+        tag=None,
         append=None,
-        header_records=None,
     ):
         """
         Uploads a PFS file from a file-like object, bytestring, or iterator
@@ -486,40 +491,24 @@ class PFSMixin:
         written to.
         * `value`: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
         """
         with self.modify_file_client(commit) as pfc:
             if hasattr(value, "read"):
                 return pfc.put_file_from_fileobj(
                     path,
                     value,
-                    # delimiter=delimiter,
-                    # target_file_datums=target_file_datums,
-                    # target_file_bytes=target_file_bytes,
-                    # header_records=header_records,
+                    tag=tag,
+                    append=append,
                 )
             else:
                 return pfc.put_file_from_bytes(
                     path,
                     value,
-                    # delimiter=delimiter,
-                    # target_file_datums=target_file_datums,
-                    # target_file_bytes=target_file_bytes,
-                    # header_records=header_records,
+                    tag=tag,
+                    append=append,
                 )
 
     def put_file_url(
@@ -527,12 +516,9 @@ class PFSMixin:
         commit,
         path,
         url,
-        delimiter=None,
         recursive=None,
-        target_file_datums=None,
-        target_file_bytes=None,
+        tag=None,
         append=None,
-        header_records=None,
     ):
         """
         Puts a file using the content found at a URL. The URL is sent to the
@@ -544,23 +530,11 @@ class PFSMixin:
         commit.
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
         """
 
         with self.modify_file_client(commit) as pfc:
@@ -568,15 +542,12 @@ class PFSMixin:
                 path,
                 url,
                 recursive=recursive,
+                tag=tag,
                 append=append,
-                # delimiter=delimiter,
-                # target_file_datums=target_file_datums,
-                # target_file_bytes=target_file_bytes,
-                # header_records=header_records,
             )
 
     def copy_file(
-        self, source_commit, source_path, dest_commit, dest_path, append=None, tag=None
+        self, source_commit, source_path, dest_commit, dest_path, tag=None, append=None
     ):
         """
         Efficiently copies files already in PFS. Note that the destination
@@ -591,11 +562,12 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
         with self.modify_file_client(dest_commit) as pfc:
-            pfc.copy_file(source_commit, source_path, dest_path, append=append, tag=tag)
+            pfc.copy_file(source_commit, source_path, dest_path, tag=tag, append=append)
 
     def get_file(self, commit, path, URL=None):
         """
@@ -738,36 +710,6 @@ class PFSMixin:
             shallow=shallow,
         )
 
-    def create_tmp_file_set(self):
-        """
-        Creates a temporary fileset (used internally). Currently,
-        temp-fileset-related APIs are only used for Pachyderm internals (job
-        merging), so we're avoiding support for these functions until we find a
-        use for them (feel free to file an issue in
-        github.com/pachyderm/pachyderm)
-
-        Params:
-
-        * `fileset_id`: A string identifying the fileset.
-        """
-        raise NotImplementedError("temporary filesets are internal-use-only")
-
-    def renew_tmp_file_set(self, fileset_id, ttl_seconds):
-        """
-        Renews a temporary fileset (used internally). Currently,
-        temp-fileset-related APIs are only used for Pachyderm internals (job
-        merging), so we're avoiding support for these functions until we find a
-        use for them (feel free to file an issue in
-        github.com/pachyderm/pachyderm)
-
-        Params:
-
-        * `fileset_id`: A string identifying the fileset.
-        * `ttl_seconds`: A int determining the number of seconds to keep alive
-        the temporary fileset
-        """
-        raise NotImplementedError("temporary filesets are internal-use-only")
-
 
 class ModifyFileClient:
     """
@@ -779,19 +721,16 @@ class ModifyFileClient:
         self.commit = commit_from(commit)
 
     def _reqs(self):
+        yield pfs_proto.ModifyFileRequest(set_commit=self.commit)
         for op in self._ops:
-            for r in op.reqs():
-                yield r
+            yield from op.reqs()
 
     def put_file_from_filepath(
         self,
         pfs_path,
         local_path,
+        tag=None,
         append=None,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        header_records=None,
     ):
         """
         Uploads a PFS file from a local path at a specified path. This will
@@ -806,30 +745,14 @@ class ModifyFileClient:
         * `local_path`: A string specifying the local file path.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        * `tag`: A string for the file tag.
         """
         self._ops.append(
             AtomicModifyFilepathOp(
-                self.commit,
                 pfs_path,
                 local_path,
+                tag,
                 append,
-                # delimiter=delimiter,
-                # target_file_datums=target_file_datums,
-                # target_file_bytes=target_file_bytes,
-                # header_records=header_records,
             )
         )
 
@@ -837,11 +760,8 @@ class ModifyFileClient:
         self,
         path,
         value,
+        tag=None,
         append=None,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        header_records=None,
     ):
         """
         Uploads a PFS file from a file-like object.
@@ -853,30 +773,13 @@ class ModifyFileClient:
         * `value`: The file-like object.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
         """
         self._ops.append(
             AtomicModifyFileobjOp(
-                self.commit,
                 path,
                 value,
+                tag,
                 append,
-                # delimiter=delimiter,
-                # target_file_datums=target_file_datums,
-                # target_file_bytes=target_file_bytes,
-                # header_records=header_records,
             )
         )
 
@@ -884,11 +787,8 @@ class ModifyFileClient:
         self,
         path,
         value,
+        tag=None,
         append=None,
-        delimiter=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        header_records=None,
     ):
         """
         Uploads a PFS file from a bytestring.
@@ -898,42 +798,24 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
         """
         self.put_file_from_fileobj(
             path,
             io.BytesIO(value),
-            append,
-            # delimiter=delimiter,
-            # target_file_datums=target_file_datums,
-            # target_file_bytes=target_file_bytes,
-            # header_records=header_records,
+            tag=tag,
+            append=append,
         )
 
     def put_file_from_url(
         self,
         path,
         url,
+        tag=None,
         append=None,
-        delimiter=None,
         recursive=None,
-        target_file_datums=None,
-        target_file_bytes=None,
-        header_records=None,
     ):
         """
         Puts a file using the content found at a URL. The URL is sent to the
@@ -943,49 +825,34 @@ class ModifyFileClient:
 
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
         """
         self._ops.append(
             AtomicModifyFileURLOp(
-                self.commit,
                 path,
                 url,
-                append,
+                tag=tag,
+                append=append,
                 recursive=recursive,
-                # delimiter=delimiter,
-                # target_file_datums=target_file_datums,
-                # target_file_bytes=target_file_bytes,
-                # header_records=header_records,
             )
         )
 
-    def delete_file(self, path):
+    def delete_file(self, path, tag=None):
         """
         Deletes a file.
 
         Params:
 
         * `path`: The path to the file.
+        * `tag`: A string for the file tag.
         """
-        self._ops.append(AtomicDeleteFileOp(self.commit, path))
+        self._ops.append(AtomicDeleteFileOp(path, tag=tag))
 
-    def copy_file(self, source_commit, source_path, dest_path, append=None, tag=None):
+    def copy_file(self, source_commit, source_path, dest_path, tag=None, append=False):
         """
         Copy a file.
 
@@ -994,17 +861,17 @@ class ModifyFileClient:
         * `source_commit`: The commit the source file is in.
         * `source_path`: The path to the source file.
         * `dest_path`: The path to the destination file.
+        * `tag`: A string for the file tag.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
         self._ops.append(
             AtomicCopyFileOp(
-                self.commit,
                 source_commit,
                 source_path,
                 dest_path,
-                append=append,
                 tag=tag,
+                append=append,
             )
         )
 
@@ -1014,9 +881,9 @@ class AtomicOp:
     Represents an operation in a `ModifyFile` call.
     """
 
-    def __init__(self, commit, path):
-        self.commit = commit
+    def __init__(self, path, tag):
         self.path = path
+        self.tag = tag
 
     def reqs(self):
         """
@@ -1033,52 +900,59 @@ class AtomicModifyFilepathOp(AtomicOp):
     files.
     """
 
-    def __init__(self, commit, pfs_path, local_path, append):
-        super().__init__(commit, pfs_path)
+    def __init__(self, pfs_path, local_path, tag=None, append=False):
+        super().__init__(pfs_path, tag)
         self.local_path = local_path
         self.append = append
 
     def reqs(self):
+        if not self.append:
+            yield delete_file_req(self.path, self.tag)
         with open(self.local_path, "rb") as f:
+            yield add_file_req(path=self.path, tag=self.tag)
             for i, chunk in enumerate(f):
-                yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
-        yield put_file_req(commit=self.commit, path=self.path, eof=True)
+                yield add_file_req(path=self.path, tag=self.tag, chunk=chunk)
 
 
 class AtomicModifyFileobjOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a file-like object."""
 
-    def __init__(self, commit, path, value, append, **kwargs):
-        super().__init__(commit, path, **kwargs)
-        self.value = value
+    def __init__(self, path, fobj, tag=None, append=False):
+        super().__init__(path, tag)
+        self.fobj = fobj
         self.append = append
 
     def reqs(self):
+        if not self.append:
+            yield delete_file_req(self.path, self.tag)
+        yield add_file_req(path=self.path, tag=self.tag)
         for i in itertools.count():
-            chunk = self.value.read(BUFFER_SIZE)
+            chunk = self.fobj.read(BUFFER_SIZE)
             if len(chunk) == 0:
-                yield put_file_req(commit=self.commit, path=self.path, eof=True)
                 return
-            yield put_file_req(commit=self.commit, path=self.path, chunk=chunk)
+            yield add_file_req(path=self.path, tag=self.tag, chunk=chunk)
 
 
 class AtomicModifyFileURLOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
 
-    def __init__(self, commit, path, url, append, recursive=False, **kwargs):
-        super().__init__(commit, path, **kwargs)
+    def __init__(self, path, url, tag=None, append=False, recursive=False):
+        super().__init__(path, tag)
         self.url = url
         self.recursive = recursive
         self.append = append
 
     def reqs(self):
+        if not self.append:
+            yield delete_file_req(self.path, self.tag)
         yield pfs_proto.ModifyFileRequest(
-            commit=self.commit,
-            put_file=pfs_proto.PutFile(
-                url_file_source=pfs_proto.URLFileSource(
-                    path=self.path, URL=self.url, recursive=self.recursive
+            add_file=pfs_proto.AddFile(
+                path=self.path,
+                tag=self.tag,
+                url=pfs_proto.AddFile.URLSource(
+                    URL=self.url,
+                    recursive=self.recursive,
                 ),
-                append=self.append,
             ),
         )
 
@@ -1086,19 +960,15 @@ class AtomicModifyFileURLOp(AtomicOp):
 class AtomicCopyFileOp(AtomicOp):
     """A `ModifyFile` operation to copy a file."""
 
-    def __init__(
-        self, target_commit, source_commit, source_path, dest_path, append, tag
-    ):
-        super().__init__(target_commit, dest_path)
+    def __init__(self, source_commit, source_path, dest_path, tag=None, append=False):
+        super().__init__(dest_path, tag)
         self.source_commit = commit_from(source_commit)
         self.source_path = source_path
         self.dest_path = dest_path
-        self.tag = tag
         self.append = append
 
     def reqs(self):
         yield pfs_proto.ModifyFileRequest(
-            commit=self.commit,
             copy_file=pfs_proto.CopyFile(
                 append=self.append,
                 tag=self.tag,
@@ -1111,20 +981,22 @@ class AtomicCopyFileOp(AtomicOp):
 class AtomicDeleteFileOp(AtomicOp):
     """A `ModifyFile` operation to delete a file."""
 
-    def __init__(self, commit, pfs_path):
-        super().__init__(commit, pfs_path)
+    def __init__(self, pfs_path, tag=None):
+        super().__init__(pfs_path, tag)
 
     def reqs(self):
-        yield pfs_proto.ModifyFileRequest(
-            commit=self.commit, delete_file=pfs_proto.DeleteFile(file=self.path)
-        )
+        yield delete_file_req(self.path, self.tag)
 
 
-def put_file_req(commit=None, path=None, chunk=None, append=False, eof=False):
+def add_file_req(path=None, tag=None, chunk=None):
     return pfs_proto.ModifyFileRequest(
-        commit=commit,
-        put_file=pfs_proto.PutFile(
-            append=append,
-            raw_file_source=pfs_proto.RawFileSource(path=path, data=chunk, EOF=eof),
+        add_file=pfs_proto.AddFile(
+            path=path, tag=tag, raw=wrappers_pb2.BytesValue(value=chunk)
         ),
+    )
+
+
+def delete_file_req(path=None, tag=None):
+    return pfs_proto.ModifyFileRequest(
+        delete_file=pfs_proto.DeleteFile(path=path, tag=tag)
     )

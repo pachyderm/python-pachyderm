@@ -10,21 +10,20 @@ import pytest
 
 import python_pachyderm
 from tests import util
-from python_pachyderm.proto.v2.auth import auth_pb2
-from python_pachyderm.proto.v2.identity import identity_pb2
+from python_pachyderm.service import auth_proto, identity_proto
 
 
 @pytest.fixture
 def client():
     pc = python_pachyderm.Client()
     pc.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
-    pc.add_cluster("localhost", "localhost:650", secret="secret")
-    pc.activate_enterprise("localhost:650", "localhost", "secret")
+    pc.add_cluster("localhost", "localhost:1650", secret="secret")
+    pc.activate_enterprise("localhost:1650", "localhost", "secret")
 
     pc.auth_token = "iamroot"
     pc.activate_auth(pc.auth_token)
     pc.set_identity_server_config(
-        config=identity_pb2.IdentityServerConfig(issuer="http://localhost:658")
+        config=identity_proto.IdentityServerConfig(issuer="http://localhost:1658")
     )
     yield pc
     # not redundant because auth_token could be overriden by tests
@@ -48,8 +47,8 @@ def client():
 def test_auth_configuration(client):
     client.get_auth_configuration()
     client.set_auth_configuration(
-        auth_pb2.OIDCConfig(
-            issuer="http://localhost:658",
+        auth_proto.OIDCConfig(
+            issuer="http://localhost:1658",
             client_id="client",
             client_secret="secret",
             redirect_uri="http://test.example.com",
@@ -59,7 +58,7 @@ def test_auth_configuration(client):
 
 @util.skip_if_no_enterprise()
 def test_cluster_role_bindings(client):
-    cluster_resource = auth_pb2.Resource(type=auth_pb2.CLUSTER)
+    cluster_resource = auth_proto.Resource(type=auth_proto.CLUSTER)
     binding = client.get_role_binding(cluster_resource)
     assert binding.binding.entries["pach:root"].roles["clusterAdmin"]
     client.modify_role_binding(
@@ -73,8 +72,8 @@ def test_cluster_role_bindings(client):
 @util.skip_if_no_enterprise()
 def test_authorize(client):
     client.authorize(
-        auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
-        [auth_pb2.Permission.REPO_READ],
+        auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        [auth_proto.Permission.REPO_READ],
     )
 
 

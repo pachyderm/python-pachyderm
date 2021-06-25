@@ -73,8 +73,6 @@ BLACKLISTED_METHODS = {
         "get_groups_for_principal",
     ],
     Service.PFS: [
-        # delete_all is ignored because we implement PPS' delete_all anyway
-        "delete_all",
         # the following are ignored because they're for internal use only
         "build_commit",
         "put_tar",
@@ -85,19 +83,23 @@ BLACKLISTED_METHODS = {
         "get_file_t_a_r",
         "get_file",
         # TODO: add these new API methods
-        "add_fileset",
+        "add_file_set",
         "clear_commit",
-        "create_fileset",
-        "get_fileset",
+        "create_file_set",
+        "get_file_set",
         "modify_file",
-        "renew_fileset",
-        "squash_commit",
+        "renew_file_set",
     ],
     Service.PPS: [
+        # ignore these
+        "run_pipeline",
         # the following are ignored because they're for internal use only
         "activate_auth",
         "create_job",
         "update_job_state",
+        "subscribe_job",
+        # TODO: add these new API methods
+        "inspect_jobset",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
@@ -107,6 +109,7 @@ BLACKLISTED_METHODS = {
         # internal RPC only
         "heartbeat",
     ],
+    Service.HEALTH: ["watch"],
 }
 
 # Mapping of what the linter would by default expect a proto name to be, to
@@ -149,15 +152,20 @@ RENAMED_METHODS = {
     },
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
+        "delete_all": ["delete_all_repos"],
     },
     Service.PPS: {
         "get_logs": ["get_job_logs", "get_pipeline_logs"],
+        "delete_all": ["delete_all_pipelines"],
     },
     Service.TRANSACTION: {
         "delete_all": ["delete_all_transactions"],
     },
     Service.VERSION: {
         "get_version": ["get_remote_version"],
+    },
+    Service.HEALTH: {
+        "check": ["health_check"],
     },
 }
 
@@ -230,6 +238,11 @@ RENAMED_ARGS = {
     ],
     "inspect_commit": [
         ("repo", "repo_name"),
+        ("wait", "commit_state"),
+    ],
+    "inspect_commit_set": [
+        ("commit_set", "commit_set_id"),
+        ("wait", "wait"),
     ],
     "inspect_file": [
         ("file", ("commit", "path")),
@@ -285,7 +298,7 @@ RENAMED_ARGS = {
         ("transform", None),
     ],
     "delete_job": [
-        ("job", "job_id"),
+        ("job", ("pipeline_name", "job_id")),
     ],
     "delete_pipeline": [
         ("pipeline", "pipeline_name"),
@@ -300,24 +313,24 @@ RENAMED_ARGS = {
     "get_job_logs": [
         ("job", "job_id"),
         ("master", None),
-        ("pipeline", None),
+        ("pipeline", "pipeline_name"),
     ],
     "get_pipeline_logs": [
         ("pipeline", ("pipeline_name")),
         ("job", None),
     ],
     "inspect_datum": [
-        ("datum", ("job_id", "datum_id")),
+        ("datum", ("pipeline_name", "job_id", "datum_id")),
     ],
     "inspect_job": [
-        ("job", "job_id"),
+        ("job", ("pipeline_name", "job_id")),
     ],
     "inspect_pipeline": [
         ("pipeline", "pipeline_name"),
         (None, "history"),
     ],
     "list_datum": [
-        ("job", "job_id"),
+        ("job", ("pipeline_name", "job_id")),
     ],
     "list_pipeline": [
         ("pipeline", None),
@@ -326,7 +339,7 @@ RENAMED_ARGS = {
         ("pipeline", "pipeline_name"),
     ],
     "restart_datum": [
-        ("job", "job_id"),
+        ("job", ("pipeline_name", "job_id")),
     ],
     "run_pipeline": [("pipeline", "pipeline_name"), ("pipeline_job_id", "job_id")],
     "run_cron": [
@@ -336,11 +349,12 @@ RENAMED_ARGS = {
         ("pipeline", "pipeline_name"),
     ],
     "stop_job": [
-        ("job", "job_id"),
+        ("job", ("pipeline_name", "job_id")),
     ],
     "stop_pipeline": [
         ("pipeline", "pipeline_name"),
     ],
+    "squash_commit_set": [("commit_set", "commit_set_id")],
 }
 
 

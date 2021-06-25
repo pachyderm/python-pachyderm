@@ -1,35 +1,31 @@
-import os
 import json
 import base64
-import warnings
-from pathlib import Path
 
-from python_pachyderm.proto.v2.pps import pps_pb2 as pps_proto
-from python_pachyderm.service import Service
+from google.protobuf import empty_pb2
+
 from python_pachyderm.pfs import commit_from
+from python_pachyderm.service import Service, pps_proto
 
 
 class PPSMixin:
-    def inspect_job(self, job_id, block_state=None, output_commit=None, full=None):
+    def inspect_job(self, pipeline_name, job_id, wait=False, full=False):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
 
         Params:
 
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to inspect.
-        * `block_state`: If true, block until the job completes.
-        * `output_commit`: An optional tuple, string, or `Commit` object
-        representing an output commit to filter on.
+        * `wait`: If true, block until the job completes.
         * `full`: If true, include worker status.
         """
         return self._req(
             Service.PPS,
             "InspectJob",
-            job=pps_proto.Job(id=job_id),
-            block_state=block_state,
-            output_commit=commit_from(output_commit)
-            if output_commit is not None
-            else None,
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
+            wait=wait,
             full=full,
         )
 
@@ -37,7 +33,6 @@ class PPSMixin:
         self,
         pipeline_name=None,
         input_commit=None,
-        output_commit=None,
         history=None,
         full=None,
         jqFilter=None,
@@ -81,114 +76,104 @@ class PPSMixin:
             if pipeline_name is not None
             else None,
             input_commit=input_commit,
-            output_commit=commit_from(output_commit)
-            if output_commit is not None
-            else None,
             history=history,
             full=full,
             jqFilter=jqFilter,
         )
 
-    def flush_job(self, commits, pipeline_names=None):
-        """
-        Blocks until all of the jobs which have a set of commits as
-        provenance have finished. Yields `JobInfo` objects.
-
-        Params:
-
-        * `commits`: A list of tuples, strings, or `Commit` objects
-        representing the commits to flush.
-        * `pipeline_names`: An optional list of strings specifying pipeline
-        names. If specified, only jobs within these pipelines will be flushed.
-        """
-        if pipeline_names is not None:
-            to_pipelines = [pps_proto.Pipeline(name=name) for name in pipeline_names]
-        else:
-            to_pipelines = None
-
-        return self._req(
-            Service.PPS,
-            "FlushJob",
-            commits=[commit_from(c) for c in commits],
-            to_pipelines=to_pipelines,
-        )
-
-    def delete_job(self, job_id):
+    def delete_job(self, pipeline_name, job_id):
         """
         Deletes a job by its ID.
 
         Params:
 
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to delete.
         """
         return self._req(
             Service.PPS,
             "DeleteJob",
-            job=pps_proto.Job(id=job_id),
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
         )
 
-    def stop_job(self, job_id, output_commit=None, reason=None):
+    def stop_job(self, pipeline_name, job_id, reason=""):
         """
-        Stops a job by its ID.
+        Stops a job given its pipeline_name and job_id.
 
         Params:
-
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to stop.
-        * `output_commit`: TODO
-        * `reason`: TODO
+        * `reason`: a str specifying the reason for stopping the job.
         """
         return self._req(
             Service.PPS,
             "StopJob",
-            job=pps_proto.Job(id=job_id),
-            output_commit=commit_from(output_commit),
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
             reason=reason,
         )
 
-    def inspect_datum(self, job_id, datum_id):
+    def inspect_datum(self, pipeline_name, job_id, datum_id):
         """
         Inspects a datum. Returns a `DatumInfo` object.
 
         Params:
 
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job.
         * `datum_id`: The ID of the datum.
         """
         return self._req(
             Service.PPS,
             "InspectDatum",
-            datum=pps_proto.Datum(id=datum_id, job=pps_proto.Job(id=job_id)),
+            datum=pps_proto.Datum(
+                id=datum_id,
+                job=pps_proto.Job(
+                    pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+                ),
+            ),
         )
 
-    def list_datum(self, job_id=None, input=None):
+    def list_datum(self, pipeline_name, job_id=None, input=None):
         """
         Lists datums. Yields `DatumInfo` objects.
 
         Params:
 
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: An optional int specifying the ID of a job. Exactly one of
           `job_id` (real) or `input` (hypothetical) must be set.
-        * `input`: TODO an `Input` object
+        * `input`: an `Input` object. The datums listed are the ones that would
+           be run if a pipeline was created with the provided input.
         """
         return self._req(
             Service.PPS,
             "ListDatum",
-            job=pps_proto.Job(id=job_id),
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
+            input=input,
         )
 
-    def restart_datum(self, job_id, data_filters=None):
+    def restart_datum(self, pipeline_name, job_id, data_filters=None):
         """
         Restarts a datum.
 
         Params:
 
+        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job.
         * `data_filters`: An optional iterable of strings.
         """
         return self._req(
             Service.PPS,
             "RestartDatum",
-            job=pps_proto.Job(id=job_id),
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
             data_filters=data_filters,
         )
 
@@ -201,16 +186,16 @@ class PPSMixin:
         reprocess_spec=None,
         update=None,
         output_branch=None,
+        s3_out=None,
         resource_requests=None,
         resource_limits=None,
         input=None,
         description=None,
         cache_size=None,
-        enable_stats=None,
         reprocess=None,
         max_queue_size=None,
         service=None,
-        chunk_spec=None,
+        datum_set_spec=None,
         datum_timeout=None,
         job_timeout=None,
         salt=None,
@@ -221,8 +206,8 @@ class PPSMixin:
         spout=None,
         spec_commit=None,
         metadata=None,
-        s3_out=None,
         sidecar_resource_limits=None,
+        autoscaling=None,
     ):
         """
         Creates a pipeline. For more info, please refer to the pipeline spec
@@ -268,96 +253,6 @@ class PPSMixin:
         resource limits for the pipeline sidecar.
         """
 
-        # Support for build step-enabled pipelines. This is a python port of
-        # the equivalent functionality in pachyderm core's
-        # 'src/server/pps/cmds/cmds.go', and any changes made here likely have
-        # to be reflected there as well.
-        if transform.build.image or transform.build.language or transform.build.path:
-            if spout:
-                raise Exception("build step-enabled pipelines do not work with spouts")
-            if not input:
-                raise Exception("no `input` specified")
-            if (not transform.build.language) and (not transform.build.image):
-                raise Exception("must specify either a build `language` or `image`")
-            if transform.build.language and transform.build.image:
-                raise Exception("cannot specify both a build `language` and `image`")
-            if any(
-                i.pfs is not None and i.pfs.name in ("build", "source")
-                for i in pipeline_inputs(input)
-            ):
-                raise Exception(
-                    "build step-enabled pipelines cannot have inputs with the name "
-                    + "'build' or 'source', as they are reserved for build assets"
-                )
-
-            build_path = Path(transform.build.path or ".")
-            if not build_path.exists():
-                raise Exception("build path {} does not exist".format(build_path))
-            if (build_path / ".pachignore").exists():
-                warnings.warn(
-                    "detected a '.pachignore' file, but it's unsupported by python_pachyderm -- use `pachctl` instead",
-                    RuntimeWarning,
-                )
-
-            build_pipeline_name = "{}_build".format(pipeline_name)
-
-            image = transform.build.image
-            if not image:
-                version = self.get_remote_version()
-                version_str = "{}.{}.{}{}".format(
-                    version.major, version.minor, version.micro, version.additional
-                )
-                image = "pachyderm/{}-build:{}".format(
-                    transform.build.language, version_str
-                )
-            if not transform.image:
-                transform.image = image
-
-            def create_build_pipeline_input(name):
-                return pps_proto.Input(
-                    pfs=pps_proto.PFSInput(
-                        name=name,
-                        glob="/",
-                        repo=build_pipeline_name,
-                        branch=name,
-                    )
-                )
-
-            self.create_repo(build_pipeline_name, update=True)
-
-            self._req(
-                Service.PPS,
-                "CreatePipeline",
-                pipeline=pps_proto.Pipeline(name=build_pipeline_name),
-                transform=pps_proto.Transform(image=image, cmd=["sh", "./build.sh"]),
-                parallelism_spec=pps_proto.ParallelismSpec(constant=1),
-                input=create_build_pipeline_input("source"),
-                output_branch="build",
-                update=update,
-            )
-
-            with self.modify_file_client((build_pipeline_name, "source")) as pfc:
-                if update:
-                    pfc.delete_file("/")
-                for root, _, filenames in os.walk(str(build_path)):
-                    for filename in filenames:
-                        source_filepath = os.path.join(root, filename)
-                        dest_filepath = os.path.join(
-                            "/", os.path.relpath(source_filepath, start=str(build_path))
-                        )
-                        pfc.put_file_from_filepath(dest_filepath, source_filepath)
-
-            input = pps_proto.Input(
-                cross=[
-                    create_build_pipeline_input("source"),
-                    create_build_pipeline_input("build"),
-                    input,
-                ]
-            )
-
-            if not transform.cmd:
-                transform.cmd[:] = ["sh", "/pfs/build/run.sh"]
-
         return self._req(
             Service.PPS,
             "CreatePipeline",
@@ -367,17 +262,17 @@ class PPSMixin:
             egress=egress,
             update=update,
             output_branch=output_branch,
+            s3_out=s3_out,
             resource_requests=resource_requests,
             resource_limits=resource_limits,
             input=input,
             description=description,
             cache_size=cache_size,
-            enable_stats=enable_stats,
             reprocess=reprocess,
             max_queue_size=max_queue_size,
             metadata=metadata,
             service=service,
-            chunk_spec=chunk_spec,
+            datum_set_spec=datum_set_spec,
             datum_timeout=datum_timeout,
             job_timeout=job_timeout,
             salt=salt,
@@ -389,6 +284,7 @@ class PPSMixin:
             spec_commit=spec_commit,
             sidecar_resource_limits=sidecar_resource_limits,
             reprocess_spec=reprocess_spec,
+            autoscaling=autoscaling,
         )
 
     def create_pipeline_from_request(self, req):
@@ -439,7 +335,6 @@ class PPSMixin:
 
         Params:
 
-        * `pipeline_name`: A string representing the pipeline name.
         * `history`: An optional int that indicates to return jobs from
           historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
@@ -481,15 +376,15 @@ class PPSMixin:
             keep_repo=keep_repo,
         )
 
-    def delete_all_pipelines(self, force=None):
+    def delete_all_pipelines(self):
         """
-        Deletes all pipelines.
-
-        Params:
-
-        * `force`: Whether to force delete.
+        Deletes all pipelines in pachyderm.
         """
-        return self._req(Service.PPS, "DeletePipeline", all=True, force=force)
+        return self._req(
+            Service.PPS,
+            "DeleteAll",
+            req=empty_pb2.Empty(),
+        )
 
     def start_pipeline(self, pipeline_name):
         """
@@ -515,25 +410,6 @@ class PPSMixin:
         """
         return self._req(
             Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name)
-        )
-
-    def run_pipeline(self, pipeline_name, provenance=None, job_id=None):
-        """
-        Runs a pipeline.
-
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
-        * `provenance`: An optional iterable of `CommitProvenance` objects
-        representing the pipeline execution provenance.
-        * `job_id`: An optional string specifying a specific job ID to run.
-        """
-        return self._req(
-            Service.PPS,
-            "RunPipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
-            provenance=provenance,
-            job_id=job_id,
         )
 
     def run_cron(self, pipeline_name):
@@ -608,7 +484,7 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "ListSecret",
-            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
+            req=empty_pb2.Empty(),
         ).secret_info
 
     def inspect_secret(self, secret_name):
@@ -621,16 +497,6 @@ class PPSMixin:
         """
         secret = pps_proto.Secret(name=secret_name)
         return self._req(Service.PPS, "InspectSecret", secret=secret)
-
-    def delete_all(self):
-        """
-        Deletes everything in pachyderm.
-        """
-        return self._req(
-            Service.PPS,
-            "DeleteAll",
-            req=pps_proto.google_dot_protobuf_dot_empty__pb2.Empty(),
-        )
 
     def get_pipeline_logs(
         self,
@@ -682,6 +548,7 @@ class PPSMixin:
 
     def get_job_logs(
         self,
+        pipeline_name,
         job_id,
         data_filters=None,
         datum=None,
@@ -695,6 +562,7 @@ class PPSMixin:
 
         Params:
 
+        * `pipeline_name`: A string representing a pipeline.
         * `job_id`: A string representing a job to get logs of.
         * `data_filters`: An optional iterable of strings specifying the names
           of input files from which we want processing logs. This may contain
@@ -715,7 +583,9 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "GetLogs",
-            job=pps_proto.Job(id=job_id),
+            job=pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+            ),
             data_filters=data_filters,
             datum=datum,
             follow=follow,

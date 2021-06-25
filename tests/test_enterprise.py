@@ -14,8 +14,8 @@ def test_enterprise():
     client = python_pachyderm.Client()
     client.delete_all_license()
     client.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
-    client.add_cluster("localhost", "localhost:650", secret="secret")
-    client.activate_enterprise("localhost:650", "localhost", "secret")
+    client.add_cluster("localhost", "localhost:1650", secret="secret")
+    client.activate_enterprise("localhost:1650", "localhost", "secret")
     assert client.get_enterprise_state().state == enterprise_pb2.State.ACTIVE
     client.deactivate_enterprise()
     client.delete_all_license()

@@ -46,6 +46,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FinishCommitRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.ClearCommit = channel.unary_unary(
+                '/pfs_v2.API/ClearCommit',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
         self.InspectCommit = channel.unary_unary(
                 '/pfs_v2.API/InspectCommit',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitRequest.SerializeToString,
@@ -56,24 +61,19 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListCommitRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
                 )
-        self.SquashCommit = channel.unary_unary(
-                '/pfs_v2.API/SquashCommit',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitRequest.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                )
-        self.FlushCommit = channel.unary_stream(
-                '/pfs_v2.API/FlushCommit',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-                )
         self.SubscribeCommit = channel.unary_stream(
                 '/pfs_v2.API/SubscribeCommit',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
                 )
-        self.ClearCommit = channel.unary_unary(
-                '/pfs_v2.API/ClearCommit',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.SerializeToString,
+        self.InspectCommitSet = channel.unary_stream(
+                '/pfs_v2.API/InspectCommitSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+                )
+        self.SquashCommitSet = channel.unary_unary(
+                '/pfs_v2.API/SquashCommitSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.CreateBranch = channel.unary_unary(
@@ -146,24 +146,24 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FsckRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FsckResponse.FromString,
                 )
-        self.CreateFileset = channel.stream_unary(
-                '/pfs_v2.API/CreateFileset',
+        self.CreateFileSet = channel.stream_unary(
+                '/pfs_v2.API/CreateFileSet',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
                 )
-        self.GetFileset = channel.unary_unary(
-                '/pfs_v2.API/GetFileset',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFilesetRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
+        self.GetFileSet = channel.unary_unary(
+                '/pfs_v2.API/GetFileSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
                 )
-        self.AddFileset = channel.unary_unary(
-                '/pfs_v2.API/AddFileset',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFilesetRequest.SerializeToString,
+        self.AddFileSet = channel.unary_unary(
+                '/pfs_v2.API/AddFileSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFileSetRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
-        self.RenewFileset = channel.unary_unary(
-                '/pfs_v2.API/RenewFileset',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFilesetRequest.SerializeToString,
+        self.RenewFileSet = channel.unary_unary(
+                '/pfs_v2.API/RenewFileSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
         self.RunLoadTest = channel.unary_unary(
@@ -218,6 +218,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ClearCommit(self, request, context):
+        """ClearCommit removes all data from the commit.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def InspectCommit(self, request, context):
         """InspectCommit returns the info about a commit.
         """
@@ -232,20 +239,6 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SquashCommit(self, request, context):
-        """SquashCommit squashes a commit into it's parent.
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def FlushCommit(self, request, context):
-        """FlushCommit waits for downstream commits to finish.
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def SubscribeCommit(self, request, context):
         """SubscribeCommit subscribes for new commits on a given branch.
         """
@@ -253,8 +246,15 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ClearCommit(self, request, context):
-        """ClearCommit removes all data from the commit.
+    def InspectCommitSet(self, request, context):
+        """InspectCommitSet returns the info about a CommitSet.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SquashCommitSet(self, request, context):
+        """SquashCommitSet squashes the commits of a CommitSet into their children.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -358,30 +358,30 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CreateFileset(self, request_iterator, context):
-        """Fileset API
-        CreateFileset creates a new fileset.
+    def CreateFileSet(self, request_iterator, context):
+        """FileSet API
+        CreateFileSet creates a new file set.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetFileset(self, request, context):
-        """GetFileset returns a fileset with the data from a commit
+    def GetFileSet(self, request, context):
+        """GetFileSet returns a file set with the data from a commit
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def AddFileset(self, request, context):
-        """AddFileset associates a fileset with a commit
+    def AddFileSet(self, request, context):
+        """AddFileSet associates a file set with a commit
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RenewFileset(self, request, context):
-        """RenewFileset prevents a fileset from being deleted for a set amount of time.
+    def RenewFileSet(self, request, context):
+        """RenewFileSet prevents a file set from being deleted for a set amount of time.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -427,6 +427,11 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FinishCommitRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
+            'ClearCommit': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClearCommit,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
             'InspectCommit': grpc.unary_unary_rpc_method_handler(
                     servicer.InspectCommit,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitRequest.FromString,
@@ -437,24 +442,19 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListCommitRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
             ),
-            'SquashCommit': grpc.unary_unary_rpc_method_handler(
-                    servicer.SquashCommit,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitRequest.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            ),
-            'FlushCommit': grpc.unary_stream_rpc_method_handler(
-                    servicer.FlushCommit,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FlushCommitRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
-            ),
             'SubscribeCommit': grpc.unary_stream_rpc_method_handler(
                     servicer.SubscribeCommit,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SubscribeCommitRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
             ),
-            'ClearCommit': grpc.unary_unary_rpc_method_handler(
-                    servicer.ClearCommit,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.FromString,
+            'InspectCommitSet': grpc.unary_stream_rpc_method_handler(
+                    servicer.InspectCommitSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
+            ),
+            'SquashCommitSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.SquashCommitSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'CreateBranch': grpc.unary_unary_rpc_method_handler(
@@ -527,24 +527,24 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FsckRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FsckResponse.SerializeToString,
             ),
-            'CreateFileset': grpc.stream_unary_rpc_method_handler(
-                    servicer.CreateFileset,
+            'CreateFileSet': grpc.stream_unary_rpc_method_handler(
+                    servicer.CreateFileSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.SerializeToString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.SerializeToString,
             ),
-            'GetFileset': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetFileset,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFilesetRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.SerializeToString,
+            'GetFileSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetFileSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.SerializeToString,
             ),
-            'AddFileset': grpc.unary_unary_rpc_method_handler(
-                    servicer.AddFileset,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFilesetRequest.FromString,
+            'AddFileSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddFileSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFileSetRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
-            'RenewFileset': grpc.unary_unary_rpc_method_handler(
-                    servicer.RenewFileset,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFilesetRequest.FromString,
+            'RenewFileSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.RenewFileSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
@@ -665,6 +665,23 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def ClearCommit(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ClearCommit',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def InspectCommit(request,
             target,
             options=(),
@@ -699,40 +716,6 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SquashCommit(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/SquashCommit',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitRequest.SerializeToString,
-            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def FlushCommit(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/FlushCommit',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.FlushCommitRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def SubscribeCommit(request,
             target,
             options=(),
@@ -750,7 +733,7 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def ClearCommit(request,
+    def InspectCommitSet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -760,8 +743,25 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ClearCommit',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCommitRequest.SerializeToString,
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/InspectCommitSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SquashCommitSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/SquashCommitSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -1005,7 +1005,7 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def CreateFileset(request_iterator,
+    def CreateFileSet(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -1015,14 +1015,14 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/pfs_v2.API/CreateFileset',
+        return grpc.experimental.stream_unary(request_iterator, target, '/pfs_v2.API/CreateFileSet',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetFileset(request,
+    def GetFileSet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -1032,14 +1032,14 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/GetFileset',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFilesetRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFilesetResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/GetFileSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def AddFileset(request,
+    def AddFileSet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -1049,14 +1049,14 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/AddFileset',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFilesetRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/AddFileSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.AddFileSetRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def RenewFileset(request,
+    def RenewFileSet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -1066,8 +1066,8 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RenewFileset',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFilesetRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RenewFileSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

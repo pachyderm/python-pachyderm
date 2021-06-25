@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z1github.com/pachyderm/pachyderm/v2/src/transaction',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n7python_pachyderm/proto/v2/transaction/transaction.proto\x12\x0etransaction_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\'python_pachyderm/proto/v2/pfs/pfs.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"\x12\n\x10\x44\x65leteAllRequest\"\xc7\x04\n\x12TransactionRequest\x12.\n\x0b\x63reate_repo\x18\x01 \x01(\x0b\x32\x19.pfs_v2.CreateRepoRequest\x12.\n\x0b\x64\x65lete_repo\x18\x02 \x01(\x0b\x32\x19.pfs_v2.DeleteRepoRequest\x12\x30\n\x0cstart_commit\x18\x03 \x01(\x0b\x32\x1a.pfs_v2.StartCommitRequest\x12\x32\n\rfinish_commit\x18\x04 \x01(\x0b\x32\x1b.pfs_v2.FinishCommitRequest\x12\x32\n\rsquash_commit\x18\x05 \x01(\x0b\x32\x1b.pfs_v2.SquashCommitRequest\x12\x32\n\rcreate_branch\x18\x06 \x01(\x0b\x32\x1b.pfs_v2.CreateBranchRequest\x12\x32\n\rdelete_branch\x18\x07 \x01(\x0b\x32\x1b.pfs_v2.DeleteBranchRequest\x12\x37\n\x10update_job_state\x18\x08 \x01(\x0b\x32\x1d.pps_v2.UpdateJobStateRequest\x12\x36\n\x0f\x63reate_pipeline\x18\t \x01(\x0b\x32\x1d.pps_v2.CreatePipelineRequest\x12(\n\x08stop_job\x18\n \x01(\x0b\x32\x16.pps_v2.StopJobRequest\x12\x34\n\ndelete_all\x18\x0b \x01(\x0b\x32 .transaction_v2.DeleteAllRequest\"\x8a\x01\n\x13TransactionResponse\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12S\n\x18\x63reate_pipeline_response\x18\x02 \x01(\x0b\x32\x31.transaction_v2.CreatePipelineTransactionResponse\"a\n!CreatePipelineTransactionResponse\x12\x12\n\nfileset_id\x18\x01 \x01(\t\x12(\n\x10prev_spec_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\x19\n\x0bTransaction\x12\n\n\x02id\x18\x01 \x01(\t\"\xde\x01\n\x0fTransactionInfo\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\x12\x34\n\x08requests\x18\x02 \x03(\x0b\x32\".transaction_v2.TransactionRequest\x12\x36\n\tresponses\x18\x03 \x03(\x0b\x32#.transaction_v2.TransactionResponse\x12+\n\x07started\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"M\n\x10TransactionInfos\x12\x39\n\x10transaction_info\x18\x01 \x03(\x0b\x32\x1f.transaction_v2.TransactionInfo\"O\n\x17\x42\x61tchTransactionRequest\x12\x34\n\x08requests\x18\x01 \x03(\x0b\x32\".transaction_v2.TransactionRequest\"\x19\n\x17StartTransactionRequest\"M\n\x19InspectTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\"L\n\x18\x44\x65leteTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\"\x18\n\x16ListTransactionRequest\"L\n\x18\x46inishTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction2\x88\x05\n\x03\x41PI\x12^\n\x10\x42\x61tchTransaction\x12\'.transaction_v2.BatchTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12Z\n\x10StartTransaction\x12\'.transaction_v2.StartTransactionRequest\x1a\x1b.transaction_v2.Transaction\"\x00\x12\x62\n\x12InspectTransaction\x12).transaction_v2.InspectTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12W\n\x11\x44\x65leteTransaction\x12(.transaction_v2.DeleteTransactionRequest\x1a\x16.google.protobuf.Empty\"\x00\x12]\n\x0fListTransaction\x12&.transaction_v2.ListTransactionRequest\x1a .transaction_v2.TransactionInfos\"\x00\x12`\n\x11\x46inishTransaction\x12(.transaction_v2.FinishTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12G\n\tDeleteAll\x12 .transaction_v2.DeleteAllRequest\x1a\x16.google.protobuf.Empty\"\x00\x42\x33Z1github.com/pachyderm/pachyderm/v2/src/transactionb\x06proto3'
+  serialized_pb=b'\n7python_pachyderm/proto/v2/transaction/transaction.proto\x12\x0etransaction_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\'python_pachyderm/proto/v2/pfs/pfs.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"\x12\n\x10\x44\x65leteAllRequest\"\xce\x04\n\x12TransactionRequest\x12.\n\x0b\x63reate_repo\x18\x01 \x01(\x0b\x32\x19.pfs_v2.CreateRepoRequest\x12.\n\x0b\x64\x65lete_repo\x18\x02 \x01(\x0b\x32\x19.pfs_v2.DeleteRepoRequest\x12\x30\n\x0cstart_commit\x18\x03 \x01(\x0b\x32\x1a.pfs_v2.StartCommitRequest\x12\x32\n\rfinish_commit\x18\x04 \x01(\x0b\x32\x1b.pfs_v2.FinishCommitRequest\x12\x39\n\x11squash_commit_set\x18\x05 \x01(\x0b\x32\x1e.pfs_v2.SquashCommitSetRequest\x12\x32\n\rcreate_branch\x18\x06 \x01(\x0b\x32\x1b.pfs_v2.CreateBranchRequest\x12\x32\n\rdelete_branch\x18\x07 \x01(\x0b\x32\x1b.pfs_v2.DeleteBranchRequest\x12\x37\n\x10update_job_state\x18\x08 \x01(\x0b\x32\x1d.pps_v2.UpdateJobStateRequest\x12\x36\n\x0f\x63reate_pipeline\x18\t \x01(\x0b\x32\x1d.pps_v2.CreatePipelineRequest\x12(\n\x08stop_job\x18\n \x01(\x0b\x32\x16.pps_v2.StopJobRequest\x12\x34\n\ndelete_all\x18\x0b \x01(\x0b\x32 .transaction_v2.DeleteAllRequest\"\x8a\x01\n\x13TransactionResponse\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12S\n\x18\x63reate_pipeline_response\x18\x02 \x01(\x0b\x32\x31.transaction_v2.CreatePipelineTransactionResponse\"W\n!CreatePipelineTransactionResponse\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\x12\x1d\n\x15prev_pipeline_version\x18\x02 \x01(\x04\"\x19\n\x0bTransaction\x12\n\n\x02id\x18\x01 \x01(\t\"\xef\x01\n\x0fTransactionInfo\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\x12\x34\n\x08requests\x18\x02 \x03(\x0b\x32\".transaction_v2.TransactionRequest\x12\x36\n\tresponses\x18\x03 \x03(\x0b\x32#.transaction_v2.TransactionResponse\x12+\n\x07started\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07version\x18\x05 \x01(\x04\"M\n\x10TransactionInfos\x12\x39\n\x10transaction_info\x18\x01 \x03(\x0b\x32\x1f.transaction_v2.TransactionInfo\"O\n\x17\x42\x61tchTransactionRequest\x12\x34\n\x08requests\x18\x01 \x03(\x0b\x32\".transaction_v2.TransactionRequest\"\x19\n\x17StartTransactionRequest\"M\n\x19InspectTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\"L\n\x18\x44\x65leteTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction\"\x18\n\x16ListTransactionRequest\"L\n\x18\x46inishTransactionRequest\x12\x30\n\x0btransaction\x18\x01 \x01(\x0b\x32\x1b.transaction_v2.Transaction2\x88\x05\n\x03\x41PI\x12^\n\x10\x42\x61tchTransaction\x12\'.transaction_v2.BatchTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12Z\n\x10StartTransaction\x12\'.transaction_v2.StartTransactionRequest\x1a\x1b.transaction_v2.Transaction\"\x00\x12\x62\n\x12InspectTransaction\x12).transaction_v2.InspectTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12W\n\x11\x44\x65leteTransaction\x12(.transaction_v2.DeleteTransactionRequest\x1a\x16.google.protobuf.Empty\"\x00\x12]\n\x0fListTransaction\x12&.transaction_v2.ListTransactionRequest\x1a .transaction_v2.TransactionInfos\"\x00\x12`\n\x11\x46inishTransaction\x12(.transaction_v2.FinishTransactionRequest\x1a\x1f.transaction_v2.TransactionInfo\"\x00\x12G\n\tDeleteAll\x12 .transaction_v2.DeleteAllRequest\x1a\x16.google.protobuf.Empty\"\x00\x42\x33Z1github.com/pachyderm/pachyderm/v2/src/transactionb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
@@ -92,7 +92,7 @@ _TRANSACTIONREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='squash_commit', full_name='transaction_v2.TransactionRequest.squash_commit', index=4,
+      name='squash_commit_set', full_name='transaction_v2.TransactionRequest.squash_commit_set', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -153,7 +153,7 @@ _TRANSACTIONREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=240,
-  serialized_end=823,
+  serialized_end=830,
 )
 
 
@@ -191,8 +191,8 @@ _TRANSACTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=826,
-  serialized_end=964,
+  serialized_start=833,
+  serialized_end=971,
 )
 
 
@@ -205,16 +205,16 @@ _CREATEPIPELINETRANSACTIONRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fileset_id', full_name='transaction_v2.CreatePipelineTransactionResponse.fileset_id', index=0,
+      name='file_set_id', full_name='transaction_v2.CreatePipelineTransactionResponse.file_set_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='prev_spec_commit', full_name='transaction_v2.CreatePipelineTransactionResponse.prev_spec_commit', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='prev_pipeline_version', full_name='transaction_v2.CreatePipelineTransactionResponse.prev_pipeline_version', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -230,8 +230,8 @@ _CREATEPIPELINETRANSACTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=966,
-  serialized_end=1063,
+  serialized_start=973,
+  serialized_end=1060,
 )
 
 
@@ -262,8 +262,8 @@ _TRANSACTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1065,
-  serialized_end=1090,
+  serialized_start=1062,
+  serialized_end=1087,
 )
 
 
@@ -303,6 +303,13 @@ _TRANSACTIONINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='transaction_v2.TransactionInfo.version', index=4,
+      number=5, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -315,8 +322,8 @@ _TRANSACTIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1093,
-  serialized_end=1315,
+  serialized_start=1090,
+  serialized_end=1329,
 )
 
 
@@ -347,8 +354,8 @@ _TRANSACTIONINFOS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1317,
-  serialized_end=1394,
+  serialized_start=1331,
+  serialized_end=1408,
 )
 
 
@@ -379,8 +386,8 @@ _BATCHTRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1396,
-  serialized_end=1475,
+  serialized_start=1410,
+  serialized_end=1489,
 )
 
 
@@ -404,8 +411,8 @@ _STARTTRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1477,
-  serialized_end=1502,
+  serialized_start=1491,
+  serialized_end=1516,
 )
 
 
@@ -436,8 +443,8 @@ _INSPECTTRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1504,
-  serialized_end=1581,
+  serialized_start=1518,
+  serialized_end=1595,
 )
 
 
@@ -468,8 +475,8 @@ _DELETETRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1583,
-  serialized_end=1659,
+  serialized_start=1597,
+  serialized_end=1673,
 )
 
 
@@ -493,8 +500,8 @@ _LISTTRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1661,
-  serialized_end=1685,
+  serialized_start=1675,
+  serialized_end=1699,
 )
 
 
@@ -525,15 +532,15 @@ _FINISHTRANSACTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1687,
-  serialized_end=1763,
+  serialized_start=1701,
+  serialized_end=1777,
 )
 
 _TRANSACTIONREQUEST.fields_by_name['create_repo'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._CREATEREPOREQUEST
 _TRANSACTIONREQUEST.fields_by_name['delete_repo'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._DELETEREPOREQUEST
 _TRANSACTIONREQUEST.fields_by_name['start_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._STARTCOMMITREQUEST
 _TRANSACTIONREQUEST.fields_by_name['finish_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._FINISHCOMMITREQUEST
-_TRANSACTIONREQUEST.fields_by_name['squash_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._SQUASHCOMMITREQUEST
+_TRANSACTIONREQUEST.fields_by_name['squash_commit_set'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._SQUASHCOMMITSETREQUEST
 _TRANSACTIONREQUEST.fields_by_name['create_branch'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._CREATEBRANCHREQUEST
 _TRANSACTIONREQUEST.fields_by_name['delete_branch'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._DELETEBRANCHREQUEST
 _TRANSACTIONREQUEST.fields_by_name['update_job_state'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2._UPDATEJOBSTATEREQUEST
@@ -542,7 +549,6 @@ _TRANSACTIONREQUEST.fields_by_name['stop_job'].message_type = python__pachyderm_
 _TRANSACTIONREQUEST.fields_by_name['delete_all'].message_type = _DELETEALLREQUEST
 _TRANSACTIONRESPONSE.fields_by_name['commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
 _TRANSACTIONRESPONSE.fields_by_name['create_pipeline_response'].message_type = _CREATEPIPELINETRANSACTIONRESPONSE
-_CREATEPIPELINETRANSACTIONRESPONSE.fields_by_name['prev_spec_commit'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._COMMIT
 _TRANSACTIONINFO.fields_by_name['transaction'].message_type = _TRANSACTION
 _TRANSACTIONINFO.fields_by_name['requests'].message_type = _TRANSACTIONREQUEST
 _TRANSACTIONINFO.fields_by_name['responses'].message_type = _TRANSACTIONRESPONSE
@@ -668,8 +674,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1766,
-  serialized_end=2414,
+  serialized_start=1780,
+  serialized_end=2428,
   methods=[
   _descriptor.MethodDescriptor(
     name='BatchTransaction',
