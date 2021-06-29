@@ -5,15 +5,15 @@ set -ex
 export PATH=$(pwd):$(pwd)/cached-deps:$GOPATH/bin:$PATH
 
 # Parse flags
-VERSION=v1.19.0
+KUBE_VERSION="$( jq -r .kubernetes <"$(git rev-parse --show-toplevel)/version.json" )"
 minikube_args=(
   "--vm-driver=docker"
-  "--kubernetes-version=${VERSION}"
+  "--kubernetes-version=${KUBE_VERSION}"
 )
 while getopts ":v" opt; do
   case "${opt}" in
     v)
-      VERSION="v${OPTARG}"
+      KUBE_VERSION="v${OPTARG}"
       ;;
     \?)
       echo "Invalid argument: ${opt}"
@@ -21,10 +21,6 @@ while getopts ":v" opt; do
       ;;
   esac
 done
-
-if [[ -n "${TRAVIS}" ]]; then
-  minikube_args+=("--bootstrapper=kubeadm")
-fi
 
 minikube start "${minikube_args[@]}"
 
