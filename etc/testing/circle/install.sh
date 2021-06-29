@@ -43,4 +43,4 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 sudo dpkg -i /tmp/pachctl.deb
 
 # Install tox
-pip install tox
+pip3 install tox
