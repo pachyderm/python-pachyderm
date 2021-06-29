@@ -339,7 +339,7 @@ class PFSMixin:
 
     def wait_commit(
         self, commit: Union[str, tuple, pfs_proto.Commit]
-    ) -> list[pfs_proto.CommitInfo]:
+    ) -> List[pfs_proto.CommitInfo]:
         """
         Waits for the specified commit or commit_set to finish and return them.
 
