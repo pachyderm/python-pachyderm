@@ -13,14 +13,19 @@ jobs:
       - run: 
           name: Install dependencies
           command: etc/testing/circle/install.sh
+      - when:
+          condition: 
+            not:
+              equal: [ lint, <<parameters.toxenv>> ] 
+          steps:
+            - run: 
+                name: Start minikube
+                command: etc/testing/circle/start-minikube.sh
+            - run:
+                name: Deploy pachyderm
+                command: etc/testing/circle/deploy-pachyderm.sh 
       - run: 
-          name: Start minikube
-          command: etc/testing/circle/start-minikube.sh
-      - run:
-          name: Deploy pachyderm
-          command: etc/testing/circle/deploy-pachyderm.sh 
-      - run: 
-          name: tests
+          name: TOXENV=<<parameters.toxenv>> tox
           command: |
             pachctl port-forward & 
             python3 -m tox
