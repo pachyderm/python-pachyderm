@@ -20,7 +20,10 @@ jobs:
           name: Deploy pachyderm
           command: etc/testing/circle/deploy-pachyderm.sh 
       - run: 
-          command: python3 -m tox
+          name: tests
+          command: |
+            pachctl port-forward & 
+            python3 -m tox
           environment:
             TOXENV: << parameters.toxenv >>
       - run:
