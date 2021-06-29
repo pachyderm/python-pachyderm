@@ -31,3 +31,4 @@ src/python_pachyderm/version.py
 
 # virtualenv
 venv
+.python-version
