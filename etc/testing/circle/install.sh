@@ -4,6 +4,8 @@ set -ex
 
 mkdir -p cached-deps
 
+sudo add-apt-repository ppa:deadsnakes/ppa
+
 # Install deps
 sudo apt update -y
 sudo apt-get install -y -qq \
@@ -14,7 +16,9 @@ sudo apt-get install -y -qq \
   conntrack \
   pv \
   jq \
-  socat
+  socat \
+  python3.6 \
+  python3.9
 
 # Install kubectl
 # To get the latest kubectl version:
