@@ -54,9 +54,9 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
     `PutFileClient.put_file_from_fileobj` for details.
     """
 
-    with client.modify_file_client(commit) as pfc:
+    with client.put_file_client() as pfc:
         if os.path.isfile(source_path):
-            pfc.put_file_from_filepath(dest_path, source_path, **kwargs)
+            pfc.put_file_from_filepath(commit, dest_path, source_path, **kwargs)
         elif os.path.isdir(source_path):
             for root, _, filenames in os.walk(source_path):
                 for filename in filenames:
@@ -64,7 +64,7 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
                     dest_filepath = os.path.join(
                         dest_path, os.path.relpath(source_filepath, start=source_path)
                     )
-                    pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+                    pfc.put_file_from_filepath(commit, dest_filepath, source_filepath, **kwargs)
         else:
             raise Exception("Please provide an existing directory or file")
 
