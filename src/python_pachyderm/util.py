@@ -64,7 +64,9 @@ def put_files(client, source_path, commit, dest_path, **kwargs):
                     dest_filepath = os.path.join(
                         dest_path, os.path.relpath(source_filepath, start=source_path)
                     )
-                    pfc.put_file_from_filepath(commit, dest_filepath, source_filepath, **kwargs)
+                    pfc.put_file_from_filepath(
+                        commit, dest_filepath, source_filepath, **kwargs
+                    )
         else:
             raise Exception("Please provide an existing directory or file")
 
