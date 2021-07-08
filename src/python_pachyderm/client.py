@@ -54,6 +54,11 @@ class Client(
     VersionMixin,
     object,
 ):
+    # Class variables for checking config
+    env_config = "PACH_CONFIG"
+    spout_config = "/pachctl/config.json"
+    local_config = f"{Path.home()}/.pachyderm/config.json"
+
     def __init__(
         self,
         host=None,
@@ -62,23 +67,45 @@ class Client(
         root_certs=None,
         transaction_id=None,
         tls=None,
+        use_default_host=True,
     ):
         """
-        Creates a Pachyderm client.
+        Creates a Pachyderm client. If host and port are unset, checks the
+        PACH_CONFIG env var for a path. If that's unset, it checks two
+        file paths for a config file. If both files don't exist, a client
+        with default settings is created.
 
         Params:
 
         * `host`: The pachd host. Default is 'localhost', which is used with
         `pachctl port-forward`.
         * `port`: The port to connect to. Default is 30650.
-        * `auth_token`: The authentication token; used if authentication is
+        * `auth_token`: The authentication token. Used if authentication is
         enabled on the cluster. Defaults to `None`.
         * `root_certs`:  The PEM-encoded root certificates as byte string.
         * `transaction_id`: The ID of the transaction to run operations on.
         * `tls`: Specifies whether TLS should be used. If `root_certs` are
         specified, they are used; otherwise, we use the certs provided by
         certifi.
+        * `use_default_host`: Boolean for replicating `pachctl` behavior
+        of searching for config. Default is True.
         """
+
+        # replicate pachctl behavior to searching for config
+        # if host and port are unset
+        if host is None and port is None and use_default_host:
+            config = Client.check_for_config()
+
+            if config is not None:
+                (
+                    host,
+                    port,
+                    _,
+                    auth_token,
+                    root_certs,
+                    transaction_id,
+                    tls,
+                ) = Client._parse_config(config)
 
         host = host or "localhost"
         port = port or 30650
@@ -134,7 +161,11 @@ class Client(
             port = int(os.environ["PACHD_SERVICE_PORT"])
 
         return cls(
-            host=host, port=port, auth_token=auth_token, transaction_id=transaction_id
+            host=host,
+            port=port,
+            auth_token=auth_token,
+            transaction_id=transaction_id,
+            use_default_host=False,
         )
 
     @classmethod
@@ -146,13 +177,123 @@ class Client(
 
         Params:
 
-        * `auth_token`: The authentication token; used if authentication is
+        * `pachd_address`: The address of pachd server.
+        * `auth_token`: The authentication token. Used if authentication is
         enabled on the cluster. Default to `None`.
         * `root_certs`: The PEM-encoded root certificates as byte string. If
         unspecified, this will load default certs from certifi.
         * `transaction_id`: The ID of the transaction to run operations on.
         """
 
+        u = Client._parse_address(pachd_address)
+
+        return cls(
+            host=u.hostname,
+            port=u.port,
+            auth_token=auth_token,
+            root_certs=root_certs,
+            transaction_id=transaction_id,
+            tls=u.scheme == "grpcs" or u.scheme == "https",
+            use_default_host=False,
+        )
+
+    @classmethod
+    def new_from_config(cls, config_file):
+        """
+        Creates a Pachyderm client from a config file-like object.
+
+        Params:
+
+        * `config_file`: A file-like object containing the config
+        json file.
+        """
+
+        if config_file is None:
+            raise ConfigError("no config object provided")
+
+        config = json.load(config_file)
+        (
+            _,
+            _,
+            pachd_address,
+            auth_token,
+            root_certs,
+            transaction_id,
+            _,
+        ) = cls._parse_config(config)
+
+        client = cls.new_from_pachd_address(
+            pachd_address,
+            auth_token=auth_token,
+            root_certs=root_certs,
+            transaction_id=transaction_id,
+        )
+
+        context = cls._get_active_context(config)
+        expected_deployment_id = context.get("cluster_deployment_id")
+        if expected_deployment_id:
+            cluster_info = client.inspect_cluster()
+            if cluster_info.deployment_id != expected_deployment_id:
+                raise BadClusterDeploymentID(
+                    expected_deployment_id, cluster_info.deployment_id
+                )
+
+        return client
+
+    @staticmethod
+    def check_for_config():
+        """
+        Checks for config.
+
+        Returns:
+        * `j`: The config as a json object.
+        """
+
+        j = Client.check_pach_config_env_var()
+        if j is not None:
+            return j
+
+        j = Client.check_pach_config_spout()
+        if j is not None:
+            return j
+
+        j = Client.check_pach_config_local()
+        if j is not None:
+            return j
+
+        print("no config found, proceeding with default behavior")
+
+        return j
+
+    @staticmethod
+    def check_pach_config_env_var():
+        j = None
+        if Client.env_config in os.environ:
+            with open(os.environ.get(Client.env_config), "r") as config_file:
+                j = json.load(config_file)
+
+        return j
+
+    @staticmethod
+    def check_pach_config_spout():
+        j = None
+        if os.path.isfile(Client.spout_config):
+            with open(Client.spout_config, "r") as config_file:
+                j = json.load(config_file)
+
+        return j
+
+    @staticmethod
+    def check_pach_config_local():
+        j = None
+        if os.path.isfile(Client.local_config):
+            with open(Client.local_config, "r") as config_file:
+                j = json.load(config_file)
+
+        return j
+
+    @staticmethod
+    def _parse_address(pachd_address):
         if "://" not in pachd_address:
             pachd_address = "grpc://{}".format(pachd_address)
 
@@ -165,87 +306,45 @@ class Client(
         if u.username is not None or u.password is not None:
             raise ValueError("invalid pachd address")
 
-        return cls(
-            host=u.hostname,
-            port=u.port,
-            auth_token=auth_token,
-            root_certs=root_certs,
-            transaction_id=transaction_id,
-            tls=u.scheme == "grpcs" or u.scheme == "https",
-        )
+        return u
 
-    @classmethod
-    def new_from_config(cls, config_file=None):
-        """
-        Creates a Pachyderm client from a config file, which can either be
-        passed in as a file-like object, or if unset, checks the PACH_CONFIG env
-        var for a path. If that's also unset, it defaults to loading from
-        '~/.pachyderm/config.json'.
-
-        Params:
-
-        * `config_file`: An optional file-like object containing the config
-        json file. If unspecified, we load the config from the default
-        location ('~/.pachyderm/config.json'.)
-        """
-
-        if config_file is not None:
-            j = json.load(config_file)
-        elif "PACH_CONFIG" in os.environ:
-            with open(os.environ.get("PACH_CONFIG"), "r") as config_file:
-                j = json.load(config_file)
-                print("config: {}".format(str(j)))
-        else:
-            try:
-                # Search for config file in default home location
-                with open(
-                    str(Path.home() / ".pachyderm/config.json"), "r"
-                ) as config_file:
-                    j = json.load(config_file)
-            except FileNotFoundError:
-                # If not found, search in "/pachctl" (default mount for spout)
-                with open("/pachctl/config.json", "r") as config_file:
-                    j = json.load(config_file)
-
+    @staticmethod
+    def _get_active_context(config):
         try:
-            active_context = j["v2"]["active_context"]
+            active_context = config["v2"]["active_context"]
         except KeyError:
             raise ConfigError("no active context")
 
         try:
-            context = j["v2"]["contexts"][active_context]
+            context = config["v2"]["contexts"][active_context]
         except KeyError:
             raise ConfigError("missing active context '{}'".format(active_context))
+
+        return context
+
+    @staticmethod
+    def _parse_config(config):
+        context = Client._get_active_context(config)
 
         auth_token = context.get("session_token")
         root_certs = context.get("server_cas")
         transaction_id = context.get("active_transaction")
 
         pachd_address = context.get("pachd_address")
-        if pachd_address:
-            client = cls.new_from_pachd_address(
-                pachd_address,
-                auth_token=auth_token,
-                root_certs=root_certs,
-                transaction_id=transaction_id,
-            )
-        else:
+        if not pachd_address:
             port_forwarders = context.get("port_forwarders", {})
             pachd_port = port_forwarders.get("pachd", 30650)
             pachd_address = "grpc://localhost:{}".format(pachd_port)
-            client = cls.new_from_pachd_address(
-                pachd_address, auth_token=auth_token, transaction_id=transaction_id
-            )
 
-        expected_deployment_id = context.get("cluster_deployment_id")
-        if expected_deployment_id:
-            cluster_info = client.inspect_cluster()
-            if cluster_info.deployment_id != expected_deployment_id:
-                raise BadClusterDeploymentID(
-                    expected_deployment_id, cluster_info.deployment_id
-                )
+            root_certs = None
 
-        return client
+        u = Client._parse_address(pachd_address)
+
+        host = u.hostname
+        port = u.port
+        tls = u.scheme == "grpcs" or u.scheme == "https"
+
+        return host, port, pachd_address, auth_token, root_certs, transaction_id, tls
 
     @property
     def auth_token(self):
