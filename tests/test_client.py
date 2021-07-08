@@ -1,4 +1,7 @@
 import io
+import os
+import json
+from pathlib import Path
 
 import pytest
 import python_pachyderm
@@ -8,6 +11,90 @@ from tests import util
 
 
 def test_client_init_with_default_host_port():
+    client = python_pachyderm.Client()
+    assert client.address == "localhost:30650"
+
+
+def test_check_config_order(mocker):
+    env_config = json.loads(
+        """
+      {
+        "v2": {
+          "active_context": "local",
+          "contexts": {
+            "local": {
+              "pachd_address": "grpcs://172.17.0.6:30650",
+              "server_cas": "foo",
+              "session_token": "bar",
+              "active_transaction": "baz"
+            }
+          }
+        }
+      }
+    """
+    )
+    spout_config = json.loads(
+        """
+      {
+        "v2": {
+          "active_context": "local",
+          "contexts": {
+            "local": {
+              "pachd_address": "[::1]:80",
+              "server_cas": "foo",
+              "session_token": "bar",
+              "active_transaction": "baz"
+            }
+          }
+        }
+      }
+    """
+    )
+    local_config = json.loads(
+        """
+      {
+        "v2": {
+          "active_context": "local",
+          "contexts": {
+            "local": {
+              "port_forwarders": {
+                "pachd": 10101
+              }
+            }
+          }
+        }
+      }
+    """
+    )
+
+    mocker.patch(
+        "python_pachyderm.Client.check_pach_config_env_var", return_value=env_config
+    )
+    mocker.patch(
+        "python_pachyderm.Client.check_pach_config_spout",
+        return_value=spout_config,
+    )
+    mocker.patch(
+        "python_pachyderm.Client.check_pach_config_local",
+        return_value=local_config,
+    )
+
+    # Retrieves from env var config file
+    client = python_pachyderm.Client()
+    assert client.address == "172.17.0.6:30650"
+
+    # Retrieves from spout config file
+    mocker.patch("python_pachyderm.Client.check_pach_config_env_var", return_value=None)
+    client = python_pachyderm.Client()
+    assert client.address == "::1:80"
+
+    # Retrieves from local config file
+    mocker.patch("python_pachyderm.Client.check_pach_config_spout", return_value=None)
+    client = python_pachyderm.Client()
+    assert client.address == "localhost:10101"
+
+    # Executes default constructor behavior
+    mocker.patch("python_pachyderm.Client.check_pach_config_local", return_value=None)
     client = python_pachyderm.Client()
     assert client.address == "localhost:30650"
 

@@ -61,6 +61,7 @@ setup(
             "flake8>=3.9.1",
             "pre-commit>=2.12.1",
             "pytest>=5.3.4",
+            "pytest-mock>=3.6.1",
             "tox>=3.23.1",
             "pdoc3>=0.9.2",
         ],
