@@ -10,11 +10,6 @@ from tests import util
 """Tests generic client functionality"""
 
 
-def test_client_init_with_default_host_port():
-    client = python_pachyderm.Client()
-    assert client.address == "localhost:30650"
-
-
 def test_check_config_order(mocker):
     env_config = json.loads(
         """
@@ -97,6 +92,79 @@ def test_check_config_order(mocker):
     mocker.patch("python_pachyderm.Client.check_pach_config_local", return_value=None)
     client = python_pachyderm.Client()
     assert client.address == "localhost:30650"
+
+
+def test_parse_config():
+    (
+        host,
+        port,
+        pachd_address,
+        auth_token,
+        root_certs,
+        transaction_id,
+        tls,
+    ) = python_pachyderm.Client._parse_config(
+        json.loads(
+            """
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": {
+                "pachd_address": "grpcs://172.17.0.6:30650",
+                "server_cas": "foo",
+                "session_token": "bar",
+                "active_transaction": "baz"
+              }
+            }
+          }
+        }
+        """
+        )
+    )
+    assert host == "172.17.0.6"
+    assert port == 30650
+    assert pachd_address == "grpcs://172.17.0.6:30650"
+    assert auth_token == "bar"
+    assert root_certs == "foo"
+    assert transaction_id == "baz"
+    assert tls is True
+
+    (
+        host,
+        port,
+        pachd_address,
+        auth_token,
+        root_certs,
+        transaction_id,
+        tls,
+    ) = python_pachyderm.Client._parse_config(
+        json.loads(
+            """
+        {
+          "v2": {
+            "active_context": "local",
+            "contexts": {
+              "local": {
+                "port_forwarders": {
+                  "pachd": 10101
+                },
+                "server_cas": "foo",
+                "session_token": "bar"
+              }
+            }
+          }
+        }
+    """
+        )
+    )
+    assert host == "localhost"
+    assert port == 10101
+    assert pachd_address == "grpc://localhost:10101"
+    assert auth_token == "bar"
+    assert root_certs is None
+    assert transaction_id is None
+    assert tls is False
 
 
 def test_client_init_with_args():
@@ -246,7 +314,7 @@ def test_client_new_from_config():
     )
     assert client.address == "localhost:10101"
 
-    # empty context should default ot localhost:30650
+    # empty context should default to localhost:30650
     client = python_pachyderm.Client.new_from_config(
         config_file=io.StringIO(
             """
