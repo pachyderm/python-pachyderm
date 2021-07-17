@@ -8,7 +8,7 @@ from python_pachyderm.service import Service, pps_proto
 
 
 class PPSMixin:
-    def inspect_job(self, pipeline_name, job_id, wait=False, full=False):
+    def inspect_job(self, pipeline_name, job_id, wait=False, details=False):
         """
         Inspects a job with a given ID. Returns a `JobInfo`.
 
@@ -17,7 +17,7 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to inspect.
         * `wait`: If true, block until the job completes.
-        * `full`: If true, include worker status.
+        * `details`: If true, include worker details.
         """
         return self._req(
             Service.PPS,
@@ -26,7 +26,25 @@ class PPSMixin:
                 pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
             ),
             wait=wait,
-            full=full,
+            details=details,
+        )
+
+    def inspect_job_set(self, job_set_id, wait=False, details=False):
+        """
+        Inspects a job set with a given ID. Yields `JobInfo` objects.
+
+        Params:
+
+        * `job_set_id`: The ID of the job set to inspect.
+        * `wait`: If true, block until the job set completes.
+        * `details`: If true, include worker details.
+        """
+        return self._req(
+            Service.PPS,
+            "InspectJobSet",
+            job_set=pps_proto.JobSet(id=job_set_id),
+            wait=wait,
+            details=details,
         )
 
     def list_job(
@@ -34,7 +52,7 @@ class PPSMixin:
         pipeline_name=None,
         input_commit=None,
         history=None,
-        full=None,
+        details=None,
         jqFilter=None,
     ):
         """
@@ -55,7 +73,7 @@ class PPSMixin:
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
-        * `full`: An optional bool indicating whether the result should
+        * `details`: An optional bool indicating whether the result should
           include all pipeline details in each `JobInfo`, or limited information
           including name and status, but excluding information in the pipeline
           spec. Leaving this `None` (or `False`) can make the call significantly
@@ -77,8 +95,26 @@ class PPSMixin:
             else None,
             input_commit=input_commit,
             history=history,
-            full=full,
+            details=details,
             jqFilter=jqFilter,
+        )
+
+    def list_job_set(self, details=False):
+        """
+        Lists all jobs. Yields `JobSetInfo` objects.
+
+        Params:
+
+        * `details`: An optional bool indicating whether the result should
+          include all pipeline details, or limited information including name
+          and status, but excluding information in the pipeline spec. Leaving
+          this `None` (or `False`) can make the call significantly faster in
+          clusters with a large number of pipelines and jobs.
+        """
+        return self._req(
+            Service.PPS,
+            "ListJobSet",
+            details=details,
         )
 
     def delete_job(self, pipeline_name, job_id):
@@ -191,15 +227,12 @@ class PPSMixin:
         resource_limits=None,
         input=None,
         description=None,
-        cache_size=None,
         reprocess=None,
-        max_queue_size=None,
         service=None,
         datum_set_spec=None,
         datum_timeout=None,
         job_timeout=None,
         salt=None,
-        standby=None,
         datum_tries=None,
         scheduling_spec=None,
         pod_patch=None,
@@ -228,17 +261,13 @@ class PPSMixin:
         * `resource_limits`: An optional `ResourceSpec` object.
         * `input`: An optional `Input` object.
         * `description`: An optional string describing the pipeline.
-        * `cache_size`: An optional string.
-        * `enable_stats`: An optional bool.
         * `reprocess`: An optional bool. If true, pachyderm forces the pipeline
         to reprocess all datums. It only has meaning if `update` is `True`.
-        * `max_queue_size`: An optional int.
         * `service`: An optional `Service` object.
         * `chunk_spec`: An optional `ChunkSpec` object.
         * `datum_timeout`: An optional `Duration` object.
         * `job_timeout`: An optional `Duration` object.
         * `salt`: An optional string.
-        * `standby`: An optional bool.
         * `datum_tries`: An optional int.
         * `scheduling_spec`: An optional `SchedulingSpec` object.
         * `pod_patch`: An optional string.
@@ -267,16 +296,13 @@ class PPSMixin:
             resource_limits=resource_limits,
             input=input,
             description=description,
-            cache_size=cache_size,
             reprocess=reprocess,
-            max_queue_size=max_queue_size,
             metadata=metadata,
             service=service,
             datum_set_spec=datum_set_spec,
             datum_timeout=datum_timeout,
             job_timeout=job_timeout,
             salt=salt,
-            standby=standby,
             datum_tries=datum_tries,
             scheduling_spec=scheduling_spec,
             pod_patch=pod_patch,
@@ -301,40 +327,32 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "CreatePipeline", req=req)
 
-    def inspect_pipeline(self, pipeline_name, history=None):
+    def inspect_pipeline(self, pipeline_name, details=None):
         """
         Inspects a pipeline. Returns a `PipelineInfo` object.
 
         Params:
 
         * `pipeline_name`: A string representing the pipeline name.
-        * `history`: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or
-              pipelines.
-            * 1: Return the above and jobs from the next most recent version
-            * 2: etc.
-            * -1: Return jobs from all historical versions.
+        * `details`: An optional bool that indicates to return details
+        on the pipeline.
         """
-        pipeline = pps_proto.Pipeline(name=pipeline_name)
+        return self._req(
+            Service.PPS,
+            "InspectPipeline",
+            pipeline=pps_proto.Pipeline(name=pipeline_name),
+            details=details,
+        )
 
-        if history is None:
-            return self._req(Service.PPS, "InspectPipeline", pipeline=pipeline)
-        else:
-            # `InspectPipeline` doesn't support history, but `ListPipeline`
-            # with a pipeline filter does, so we use that here
-            pipelines = self._req(
-                Service.PPS, "ListPipeline", pipeline=pipeline, history=history
-            ).pipeline_info
-            assert len(pipelines) <= 1
-            return pipelines[0] if len(pipelines) else None
-
-    def list_pipeline(self, history=None, allow_incomplete=None, jqFilter=None):
+    def list_pipeline(
+        self, pipeline_name=None, history=None, details=None, jqFilter=None
+    ):
         """
         Lists pipelines. Returns a `PipelineInfos` object.
 
         Params:
 
+        * `pipeline_name`: An optional string representing the pipeline name.
         * `history`: An optional int that indicates to return jobs from
           historical versions of pipelines. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
@@ -342,19 +360,19 @@ class PPSMixin:
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
-        * `allow_incomplete`: An optional boolean that, if set to `True`, causes
-          `list_pipeline` to return PipelineInfos with incomplete data where the
-          pipeline spec cannot beretrieved. Incomplete PipelineInfos will have a
-          nil Transform field, but will have the fields present in
-          EtcdPipelineInfo.
+        * `details`: An optional bool that indicates to return details
+        on the pipeline(s).
         * `jqFilter`: An optional string containing a `jq` filter that can
           restrict the list of jobs returned, for convenience
         """
         return self._req(
             Service.PPS,
             "ListPipeline",
+            pipeline=pps_proto.Pipeline(name=pipeline_name)
+            if pipeline_name is not None
+            else None,
             history=history,
-            allow_incomplete=allow_incomplete,
+            details=details,
             jqFilter=jqFilter,
         )
 

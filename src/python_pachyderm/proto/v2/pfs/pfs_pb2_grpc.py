@@ -26,10 +26,10 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectRepoRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
                 )
-        self.ListRepo = channel.unary_unary(
+        self.ListRepo = channel.unary_stream(
                 '/pfs_v2.API/ListRepo',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
                 )
         self.DeleteRepo = channel.unary_unary(
                 '/pfs_v2.API/DeleteRepo',
@@ -71,6 +71,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitSetRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.FromString,
                 )
+        self.ListCommitSet = channel.unary_stream(
+                '/pfs_v2.API/ListCommitSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListCommitSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitSetInfo.FromString,
+                )
         self.SquashCommitSet = channel.unary_unary(
                 '/pfs_v2.API/SquashCommitSet',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.SerializeToString,
@@ -86,10 +91,10 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectBranchRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
                 )
-        self.ListBranch = channel.unary_unary(
+        self.ListBranch = channel.unary_stream(
                 '/pfs_v2.API/ListBranch',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
                 )
         self.DeleteBranch = channel.unary_unary(
                 '/pfs_v2.API/DeleteBranch',
@@ -253,6 +258,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListCommitSet(self, request, context):
+        """ListCommitSet returns info about all CommitSets.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def SquashCommitSet(self, request, context):
         """SquashCommitSet squashes the commits of a CommitSet into their children.
         """
@@ -407,10 +419,10 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectRepoRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
             ),
-            'ListRepo': grpc.unary_unary_rpc_method_handler(
+            'ListRepo': grpc.unary_stream_rpc_method_handler(
                     servicer.ListRepo,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoResponse.SerializeToString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RepoInfo.SerializeToString,
             ),
             'DeleteRepo': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteRepo,
@@ -452,6 +464,11 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectCommitSetRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitInfo.SerializeToString,
             ),
+            'ListCommitSet': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListCommitSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListCommitSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitSetInfo.SerializeToString,
+            ),
             'SquashCommitSet': grpc.unary_unary_rpc_method_handler(
                     servicer.SquashCommitSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.FromString,
@@ -467,10 +484,10 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectBranchRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
             ),
-            'ListBranch': grpc.unary_unary_rpc_method_handler(
+            'ListBranch': grpc.unary_stream_rpc_method_handler(
                     servicer.ListBranch,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListBranchRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfos.SerializeToString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfo.SerializeToString,
             ),
             'DeleteBranch': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteBranch,
@@ -607,9 +624,9 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ListRepo',
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/ListRepo',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListRepoResponse.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RepoInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -750,6 +767,23 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def ListCommitSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/ListCommitSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListCommitSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CommitSetInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def SquashCommitSet(request,
             target,
             options=(),
@@ -811,9 +845,9 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ListBranch',
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/ListBranch',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListBranchRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfos.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.BranchInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

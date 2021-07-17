@@ -112,11 +112,22 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "WhoAmI")
 
+    def get_roles_for_permission(self, permission):
+        """
+        Returns roles that have the specified permission.
+
+        Params:
+
+        * `permission`: The Permission enum to check for.
+        """
+        return self._req(Service.AUTH, "GetRolesForPermission", permission=permission)
+
     def get_robot_token(self, robot, ttl=None):
         """
         Gets a new auth token for a robot user.
 
         Params:
+
         * `robot`: The name of the robot user.
         * `ttl`: Optional. The expiration for the token.
         If empty, the token does not expire.

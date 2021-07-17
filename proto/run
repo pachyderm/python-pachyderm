@@ -16,6 +16,7 @@ for i in $(find ${OUTDIR} -name "*.proto"); do
     sed -i 's/import.*gogo.proto.*\;//' ${i}
     # remove usages of gogoproto types
     sed -i 's/\[.*gogoproto.*\]//' ${i}
+    sed -i 's/.*gogoproto.*//' ${i}
 done
 
 # fix imports to be relative to OUTDIR

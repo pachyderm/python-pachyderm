@@ -20,15 +20,20 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
-        self.InspectJobset = channel.unary_stream(
-                '/pps_v2.API/InspectJobset',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.SerializeToString,
+        self.InspectJobSet = channel.unary_stream(
+                '/pps_v2.API/InspectJobSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobSetRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
                 )
         self.ListJob = channel.unary_stream(
                 '/pps_v2.API/ListJob',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
+                )
+        self.ListJobSet = channel.unary_stream(
+                '/pps_v2.API/ListJobSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobSetInfo.FromString,
                 )
         self.SubscribeJob = channel.unary_stream(
                 '/pps_v2.API/SubscribeJob',
@@ -70,10 +75,10 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectPipelineRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
                 )
-        self.ListPipeline = channel.unary_unary(
+        self.ListPipeline = channel.unary_stream(
                 '/pps_v2.API/ListPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
                 )
         self.DeletePipeline = channel.unary_unary(
                 '/pps_v2.API/DeletePipeline',
@@ -151,7 +156,7 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def InspectJobset(self, request, context):
+    def InspectJobSet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -160,6 +165,12 @@ class APIServicer(object):
     def ListJob(self, request, context):
         """ListJob returns information about current and past Pachyderm jobs.
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListJobSet(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -309,15 +320,20 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
             ),
-            'InspectJobset': grpc.unary_stream_rpc_method_handler(
-                    servicer.InspectJobset,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.FromString,
+            'InspectJobSet': grpc.unary_stream_rpc_method_handler(
+                    servicer.InspectJobSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobSetRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
             ),
             'ListJob': grpc.unary_stream_rpc_method_handler(
                     servicer.ListJob,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.SerializeToString,
+            ),
+            'ListJobSet': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListJobSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobSetInfo.SerializeToString,
             ),
             'SubscribeJob': grpc.unary_stream_rpc_method_handler(
                     servicer.SubscribeJob,
@@ -359,10 +375,10 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectPipelineRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.SerializeToString,
             ),
-            'ListPipeline': grpc.unary_unary_rpc_method_handler(
+            'ListPipeline': grpc.unary_stream_rpc_method_handler(
                     servicer.ListPipeline,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListPipelineRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfos.SerializeToString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.SerializeToString,
             ),
             'DeletePipeline': grpc.unary_unary_rpc_method_handler(
                     servicer.DeletePipeline,
@@ -457,7 +473,7 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def InspectJobset(request,
+    def InspectJobSet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -467,8 +483,8 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/InspectJobset',
-            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobsetRequest.SerializeToString,
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/InspectJobSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.InspectJobSetRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -487,6 +503,23 @@ class API(object):
         return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListJob',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListJobSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListJobSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListJobSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.JobSetInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -637,9 +670,9 @@ class API(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/ListPipeline',
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListPipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.ListPipelineRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfos.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.PipelineInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

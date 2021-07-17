@@ -59,6 +59,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIResponse.FromString,
                 )
+        self.GetRolesForPermission = channel.unary_unary(
+                '/auth_v2.API/GetRolesForPermission',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionResponse.FromString,
+                )
         self.ModifyRoleBinding = channel.unary_unary(
                 '/auth_v2.API/ModifyRoleBinding',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.ModifyRoleBindingRequest.SerializeToString,
@@ -191,6 +196,12 @@ class APIServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def WhoAmI(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRolesForPermission(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -333,6 +344,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.WhoAmI,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIResponse.SerializeToString,
+            ),
+            'GetRolesForPermission': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRolesForPermission,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionResponse.SerializeToString,
             ),
             'ModifyRoleBinding': grpc.unary_unary_rpc_method_handler(
                     servicer.ModifyRoleBinding,
@@ -569,6 +585,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/auth_v2.API/WhoAmI',
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.WhoAmIResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRolesForPermission(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/auth_v2.API/GetRolesForPermission',
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.GetRolesForPermissionResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
