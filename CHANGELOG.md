@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 6.3.0
+## 6.3.1
 
 - Update Python PFS API
   - `put_files()` supports uploading individual files
