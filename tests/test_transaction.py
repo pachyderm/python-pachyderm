@@ -12,7 +12,7 @@ from tests import util
 
 def test_batch_transaction():
     client = python_pachyderm.Client()
-    expected_repo_count = len(client.list_repo()) + 3
+    expected_repo_count = len(list(client.list_repo())) + 3
 
     def create_repo_request():
         return transaction_pb2.TransactionRequest(
@@ -30,12 +30,12 @@ def test_batch_transaction():
     )
 
     assert len(client.list_transaction()) == 0
-    assert len(client.list_repo()) == expected_repo_count
+    assert len(list(client.list_repo())) == expected_repo_count
 
 
 def test_transaction_context_mgr():
     client = python_pachyderm.Client()
-    expected_repo_count = len(client.list_repo()) + 2
+    expected_repo_count = len(list(client.list_repo())) + 2
 
     with client.transaction() as transaction:
         util.create_test_repo(client, "test_transaction_context_mgr")
@@ -50,7 +50,7 @@ def test_transaction_context_mgr():
         )
 
     assert len(client.list_transaction()) == 0
-    assert len(client.list_repo()) == expected_repo_count
+    assert len(list(client.list_repo())) == expected_repo_count
 
 
 def test_transaction_context_mgr_nested():
@@ -69,7 +69,7 @@ def test_transaction_context_mgr_nested():
 
 def test_transaction_context_mgr_exception():
     client = python_pachyderm.Client()
-    expected_repo_count = len(client.list_repo())
+    expected_repo_count = len(list(client.list_repo()))
 
     with pytest.raises(Exception):
         with client.transaction():
@@ -78,12 +78,12 @@ def test_transaction_context_mgr_exception():
             raise Exception("oops!")
 
     assert len(client.list_transaction()) == 0
-    assert len(client.list_repo()) == expected_repo_count
+    assert len(list(client.list_repo())) == expected_repo_count
 
 
 def test_delete_transaction():
     client = python_pachyderm.Client()
-    expected_repo_count = len(client.list_repo())
+    expected_repo_count = len(list(client.list_repo()))
 
     transaction = client.start_transaction()
     util.create_test_repo(client, "test_delete_transaction")
@@ -93,7 +93,7 @@ def test_delete_transaction():
     assert len(client.list_transaction()) == 0
     # even though the transaction was deleted, the repos were still created,
     # because the transaction wasn't tied to the client
-    assert len(client.list_repo()) == expected_repo_count + 2
+    assert len(list(client.list_repo())) == expected_repo_count + 2
 
     with pytest.raises(python_pachyderm.RpcError):
         # re-deleting should cause an error

@@ -45,12 +45,39 @@ def test_list_job():
     assert len(jobs) >= 1
 
 
+def test_list_job_set():
+    sandbox = Sandbox("list_job_set1")
+    sandbox.wait()
+    client = sandbox.client
+
+    commit, _, _ = util.create_test_pipeline(client, "list_job_set2")
+    client.wait_commit(commit.id)
+
+    jobs = list(client.list_job_set())
+    assert len(jobs) == 4
+
+
 def test_inspect_job():
     sandbox = Sandbox("inspect_job")
     job_id = sandbox.wait()
 
     job_info = sandbox.client.inspect_job(sandbox.pipeline_repo_name, job_id)
     assert job_info.job.id == job_id
+
+
+def test_inspect_job_set():
+    sandbox = Sandbox("list_job_set1")
+    sandbox.wait()
+    client = sandbox.client
+
+    commit, _, _ = util.create_test_pipeline(client, "list_job_set2")
+    client.wait_commit(commit.id)
+
+    jobs = list(client.list_job_set())
+    job_set1 = list(client.inspect_job_set(job_set_id=jobs[0].job_set.id))
+
+    assert job_set1[0].job.id == commit.id
+    assert len(jobs) == 4
 
 
 def test_stop_job():
@@ -108,34 +135,32 @@ def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
     pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
-    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
+    pipelines = list(
+        sandbox.client.list_pipeline(sandbox.pipeline_repo_name, history=-1)
+    )
+    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
 
 
 def test_list_pipeline():
     sandbox = Sandbox("list_pipeline")
-    pipelines = sandbox.client.list_pipeline()
-    assert sandbox.pipeline_repo_name in [
-        p.pipeline.name for p in pipelines.pipeline_info
-    ]
-    pipelines = sandbox.client.list_pipeline(history=-1)
-    assert sandbox.pipeline_repo_name in [
-        p.pipeline.name for p in pipelines.pipeline_info
-    ]
+    pipelines = list(sandbox.client.list_pipeline())
+    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
+    pipelines = list(sandbox.client.list_pipeline(history=-1))
+    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
 
 
 def test_delete_pipeline():
     sandbox = Sandbox("delete_pipeline")
-    orig_pipeline_count = len(sandbox.client.list_pipeline().pipeline_info)
+    orig_pipeline_count = len(list(sandbox.client.list_pipeline()))
     sandbox.client.delete_pipeline(sandbox.pipeline_repo_name)
-    assert len(sandbox.client.list_pipeline().pipeline_info) == orig_pipeline_count - 1
+    assert len(list(sandbox.client.list_pipeline())) == orig_pipeline_count - 1
 
 
 def test_delete_all_pipelines():
     sandbox = Sandbox("delete_all_pipelines")
     sandbox.client.delete_all_pipelines()
-    pipelines = sandbox.client.list_pipeline()
-    assert len(pipelines.pipeline_info) == 0
+    pipelines = list(sandbox.client.list_pipeline())
+    assert len(pipelines) == 0
 
 
 def test_restart_pipeline():
@@ -236,7 +261,7 @@ def test_create_pipeline():
         ),
         input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
     )
-    assert len(client.list_pipeline().pipeline_info) == 1
+    assert len(list(client.list_pipeline())) == 1
 
 
 def test_create_pipeline_from_request():
@@ -263,6 +288,4 @@ def test_create_pipeline_from_request():
         )
     )
 
-    assert any(
-        p.pipeline.name == pipeline_name for p in client.list_pipeline().pipeline_info
-    )
+    assert any(p.pipeline.name == pipeline_name for p in list(client.list_pipeline()))
