@@ -83,6 +83,20 @@ def test_who_am_i(client):
 
 
 @util.skip_if_no_enterprise()
+def test_get_roles_for_permission(client):
+    # Checks built-in roles
+    roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+    for r in roles.roles:
+        assert auth_proto.Permission.REPO_READ in r.permissions
+
+    roles = client.get_roles_for_permission(
+        auth_proto.Permission.CLUSTER_GET_PACHD_LOGS
+    )
+    for r in roles.roles:
+        assert auth_proto.Permission.CLUSTER_GET_PACHD_LOGS in r.permissions
+
+
+@util.skip_if_no_enterprise()
 def test_robot_token(client):
     auth_token = client.get_robot_token("robot:root", ttl=30)
     client.auth_token = auth_token

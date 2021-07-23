@@ -137,7 +137,7 @@ class PFSMixin:
         * `type`: the type of (system) repos that should be returned,
         an empty value None or empty string requests all repos.
         """
-        return self._req(Service.PFS, "ListRepo", type=type).repo_info
+        return self._req(Service.PFS, "ListRepo", type=type)
 
     def delete_repo(self, repo_name, force=False):
         """
@@ -159,11 +159,6 @@ class PFSMixin:
     def delete_all_repos(self):
         """
         Deletes all repos.
-
-        Params:
-
-        * `force`: If set to true, the repo will be removed regardless of
-        errors. This argument should be used with care.
         """
         return self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
 
@@ -207,7 +202,7 @@ class PFSMixin:
             description=description,
         )
 
-    def finish_commit(self, commit, description=None, size_bytes=None, empty=None):
+    def finish_commit(self, commit, description=None, error=None, force=None):
         """
         Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
@@ -218,18 +213,18 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `description`: An optional string describing this commit.
-        * `size_bytes`: An optional int.
-        * `empty`: An optional bool. If set, the commit will be closed (its
-        `finished` field will be set to the current time) but its `tree` will
-        be left nil.
+        * `error`: An optional bool. Used to mark that even though this
+        commit is finished, it was interrupted or didn't occur properly.
+        * `force`: An optional bool. If true, commit will be forcefully
+        finished, even if it breaks provenance.
         """
         return self._req(
             Service.PFS,
             "FinishCommit",
             commit=commit_from(commit),
             description=description,
-            size_bytes=size_bytes,
-            empty=empty,
+            error=error,
+            force=force,
         )
 
     @contextmanager
@@ -296,7 +291,14 @@ class PFSMixin:
         )
 
     def list_commit(
-        self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
+        self,
+        repo_name,
+        to_commit=None,
+        from_commit=None,
+        number=None,
+        reverse=None,
+        all=False,
+        origin_kind: pfs_proto.OriginKind = 0,
     ):
         """
         Lists commits. Yields `CommitInfo` objects.
@@ -312,17 +314,31 @@ class PFSMixin:
         * `number`: Optional. Determines how many commits are returned.  If
         `number` is 0, all commits that match the aforementioned criteria are
         returned.
+        * `reverse`: Optional. If true, commits are returned oldest to newest.
+        * `all`: Optional. If true, all types of commits are returned.
+        * `origin_kind`: Optional. Returns only commits of this enum type.
         """
         req = pfs_proto.ListCommitRequest(
             repo=pfs_proto.Repo(name=repo_name, type="user"),
             number=number,
             reverse=reverse,
+            all=all,
+            origin_kind=origin_kind,
         )
         if to_commit is not None:
             req.to.CopyFrom(commit_from(to_commit))
         if from_commit is not None:
             getattr(req, "from").CopyFrom(commit_from(from_commit))
         return self._req(Service.PFS, "ListCommit", req=req)
+
+    def list_commit_set(self):
+        """
+        Lists all commits. Yields `CommitSetInfo` objects.
+        """
+        return self._req(
+            Service.PFS,
+            "ListCommitSet",
+        )
 
     def squash_commit_set(self, commit_set_id: str):
         """
@@ -352,7 +368,13 @@ class PFSMixin:
         return [self.inspect_commit(commit, pfs_proto.CommitState.FINISHED)]
 
     def subscribe_commit(
-        self, repo_name, branch, from_commit_id=None, state: pfs_proto.CommitState = 0
+        self,
+        repo_name,
+        branch,
+        from_commit_id=None,
+        state: pfs_proto.CommitState = 1,
+        all=False,
+        origin_kind: pfs_proto.OriginKind = 0,
     ):
         """
         Yields `CommitInfo` objects as commits occur.
@@ -364,10 +386,13 @@ class PFSMixin:
         * `from_commit_id`: An optional string specifying the commit ID. Only
         commits created since this commit are returned.
         * `state`: The commit state to filter on.
-        * `prov`: An optional `CommitProvenance` object.
+        * `all`: Optional. If true, all types of commits are returned.
+        * `origin_kind`: Optional. Returns only commits of this enum type.
         """
         repo = pfs_proto.Repo(name=repo_name, type="user")
-        req = pfs_proto.SubscribeCommitRequest(repo=repo, branch=branch, state=state)
+        req = pfs_proto.SubscribeCommitRequest(
+            repo=repo, branch=branch, state=state, all=all, origin_kind=origin_kind
+        )
         if from_commit_id is not None:
             getattr(req, "from").CopyFrom(
                 pfs_proto.Commit(repo=repo, id=from_commit_id)
@@ -431,13 +456,14 @@ class PFSMixin:
         Params:
 
         * `repo_name`: A string specifying the repo name.
+        * `reverse`: Optional. If true, returns branches oldest to newest.
         """
         return self._req(
             Service.PFS,
             "ListBranch",
             repo=pfs_proto.Repo(name=repo_name, type="user"),
             reverse=reverse,
-        ).branch_info
+        )
 
     def delete_branch(self, repo_name, branch_name, force=None):
         """
@@ -605,7 +631,7 @@ class PFSMixin:
             file=pfs_proto.File(commit=commit_from(commit), path=path),
         )
 
-    def list_file(self, commit, path, include_contents=None):
+    def list_file(self, commit, path):
         """
         Lists the files in a directory.
 
@@ -614,14 +640,11 @@ class PFSMixin:
         * `commit`: A tuple, string, or `Commit` object representing the
         commit.
         * `path`: The path to the directory.
-        * `include_contents`: An optional bool. If `True`, file contents are
-        included.
         """
         return self._req(
             Service.PFS,
             "ListFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path),
-            full=include_contents,
             # history=history,
         )
 

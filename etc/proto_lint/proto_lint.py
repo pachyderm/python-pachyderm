@@ -98,8 +98,6 @@ BLACKLISTED_METHODS = {
         "create_job",
         "update_job_state",
         "subscribe_job",
-        # TODO: add these new API methods
-        "inspect_jobset",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
@@ -261,10 +259,7 @@ RENAMED_ARGS = {
         ("to", "to_commit"),
         ("repo", "repo_name"),
     ],
-    "list_file": [
-        ("full", "include_contents"),
-        ("file", ("commit", "path")),
-    ],
+    "list_file": [("file", ("commit", "path")), ("details", None)],
     "put_file_bytes": [
         ("file", ("commit", "path")),
         ("url", None),
@@ -325,6 +320,9 @@ RENAMED_ARGS = {
     "inspect_job": [
         ("job", ("pipeline_name", "job_id")),
     ],
+    "inspect_job_set": [
+        ("job_set", "job_set_id"),
+    ],
     "inspect_pipeline": [
         ("pipeline", "pipeline_name"),
         (None, "history"),
@@ -333,7 +331,7 @@ RENAMED_ARGS = {
         ("job", ("pipeline_name", "job_id")),
     ],
     "list_pipeline": [
-        ("pipeline", None),
+        ("pipeline", "pipeline_name"),
     ],
     "list_job": [
         ("pipeline", "pipeline_name"),

@@ -20,24 +20,24 @@ def sandbox(test_name):
 def test_inspect_repo():
     client, repo_name = sandbox("inspect_repo")
     client.inspect_repo(repo_name)
-    repos = client.list_repo()
+    repos = list(client.list_repo())
     assert len(repos) >= 1
     assert repo_name in [r.repo.name for r in repos]
 
 
 def test_delete_repo():
     client, repo_name = sandbox("delete_repo")
-    orig_repo_count = len(client.list_repo())
+    orig_repo_count = len(list(client.list_repo()))
     assert orig_repo_count >= 1
     client.delete_repo(repo_name)
-    assert len(client.list_repo()) == orig_repo_count - 1
+    assert len(list(client.list_repo())) == orig_repo_count - 1
 
 
 def test_delete_non_existent_repo():
     client = python_pachyderm.Client()
-    orig_repo_count = len(client.list_repo())
+    orig_repo_count = len(list(client.list_repo()))
     client.delete_repo("BOGUS_NAME")
-    assert len(client.list_repo()) == orig_repo_count
+    assert len(list(client.list_repo())) == orig_repo_count
 
 
 def test_delete_all_repos():
@@ -45,10 +45,10 @@ def test_delete_all_repos():
 
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
-    assert len(client.list_repo()) >= 2
+    assert len(list(client.list_repo())) >= 2
 
     client.delete_all_repos()
-    assert len(client.list_repo()) == 0
+    assert len(list(client.list_repo())) == 0
 
 
 def test_start_commit():
@@ -92,7 +92,7 @@ def test_start_commit_fork():
     assert commit2.branch.repo.name == repo_name
 
     branches = [
-        branch_info.branch.name for branch_info in client.list_branch(repo_name)
+        branch_info.branch.name for branch_info in list(client.list_branch(repo_name))
     ]
     assert "master" in branches
     assert "patch" in branches
@@ -415,6 +415,25 @@ def test_subscribe_commit():
     assert commit.commit.branch.name == "master"
 
 
+def test_list_commit_set():
+    python_pachyderm.Client().delete_all_repos()
+
+    client, repo_name1 = sandbox("list_commit_set_1")
+
+    with client.commit(repo_name1, "master"):
+        pass
+    with client.commit(repo_name1, "master"):
+        pass
+
+    repo_name2 = util.create_test_repo(client, "list_commit_set_2")
+
+    with client.commit(repo_name2, "master"):
+        pass
+
+    commits = list(client.list_commit_set())
+    assert len(commits) == 3
+
+
 def test_list_branch():
     client, repo_name = sandbox("list_branch")
 
@@ -423,7 +442,7 @@ def test_list_branch():
     with client.commit(repo_name, "develop"):
         pass
 
-    branches = client.list_branch(repo_name)
+    branches = list(client.list_branch(repo_name))
     assert len(branches) == 2
     assert branches[0].branch.name == "develop"
     assert branches[1].branch.name == "master"
@@ -435,10 +454,10 @@ def test_delete_branch():
     with client.commit(repo_name, "develop"):
         pass
 
-    branches = client.list_branch(repo_name)
+    branches = list(client.list_branch(repo_name))
     assert len(branches) == 1
     client.delete_branch(repo_name, "develop")
-    branches = client.list_branch(repo_name)
+    branches = list(client.list_branch(repo_name))
     assert len(branches) == 0
 
 
@@ -528,7 +547,7 @@ def test_delete_file():
 def test_create_branch():
     client, repo_name = sandbox("create_branch")
     client.create_branch(repo_name, "foobar")
-    branches = client.list_branch(repo_name)
+    branches = list(client.list_branch(repo_name))
     assert len(branches) == 1
     assert branches[0].branch.name == "foobar"
 
