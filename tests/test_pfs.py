@@ -418,19 +418,19 @@ def test_subscribe_commit():
 def test_list_commit_set():
     python_pachyderm.Client().delete_all_repos()
 
-    client1, repo_name1 = sandbox("list_commit_set_1")
+    client, repo_name1 = sandbox("list_commit_set_1")
 
-    with client1.commit(repo_name1, "master"):
+    with client.commit(repo_name1, "master"):
         pass
-    with client1.commit(repo_name1, "master"):
-        pass
-
-    client2, repo_name2 = sandbox("list_commit_set_2")
-
-    with client2.commit(repo_name2, "master"):
+    with client.commit(repo_name1, "master"):
         pass
 
-    commits = list(client1.list_commit_set())
+    repo_name2 = util.create_test_repo(client, "list_commit_set_2")
+
+    with client.commit(repo_name2, "master"):
+        pass
+
+    commits = list(client.list_commit_set())
     assert len(commits) == 3
 
 

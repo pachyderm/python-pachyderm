@@ -11,5 +11,3 @@ helm install pachd pachyderm/pachyderm --set deployTarget=LOCAL --version ${PACH
 
 kubectl wait --for=condition=available deployment -l app=pachd --timeout=5m
 pachctl version
-
-pachctl config update context "$(pachctl config get active-context)" --pachd-address="$(minikube ip):30650"

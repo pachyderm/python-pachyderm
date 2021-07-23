@@ -86,12 +86,14 @@ def test_who_am_i(client):
 def test_get_roles_for_permission(client):
     # Checks built-in roles
     roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
-    assert len(roles.roles) == 4
+    for r in roles.roles:
+        assert auth_proto.Permission.REPO_READ in r.permissions
 
     roles = client.get_roles_for_permission(
         auth_proto.Permission.CLUSTER_GET_PACHD_LOGS
     )
-    assert len(roles.roles) == 3
+    for r in roles.roles:
+        assert auth_proto.Permission.CLUSTER_GET_PACHD_LOGS in r.permissions
 
 
 @util.skip_if_no_enterprise()

@@ -348,7 +348,7 @@ class PPSMixin:
         self, pipeline_name=None, history=None, details=None, jqFilter=None
     ):
         """
-        Lists pipelines. Returns a `PipelineInfos` object.
+        Lists pipelines. Yields `PipelineInfo` objects.
 
         Params:
 
