@@ -126,6 +126,7 @@ def test_finish_commit(commit_arg):
     elif commit_arg == "dictionary":
         client.finish_commit({"repo": repo_name, "id": commit.id, "branch": "master"})
 
+    client.wait_commit(commit)
     commit_infos = list(client.list_commit(repo_name))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == commit.id
@@ -327,6 +328,16 @@ def test_get_file():
     assert client.get_file(commit, "file1.dat").read() == b"DATA1"
 
 
+def test_get_file_tar():
+    client, repo_name = sandbox("put_file_atomic")
+    commit = (repo_name, "master")
+
+    with client.modify_file_client(commit) as pfc:
+        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+
+    assert client.get_file_tar(commit, "file1.dat").read() == b"DATA1"
+
+
 def test_PFSFile_iter():
     client, repo_name = sandbox("put_file_atomic")
     commit = (repo_name, "master")
@@ -334,7 +345,7 @@ def test_PFSFile_iter():
     with client.modify_file_client(commit) as pfc:
         pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
-    assert list(client.get_file(commit, "file1.dat"))[0] == b"DATA1"
+    assert list(client.get_file_tar(commit, "file1.dat"))[0] == b"DATA1"
 
 
 def test_copy_file():

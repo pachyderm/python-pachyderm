@@ -106,6 +106,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.GetFile = channel.unary_stream(
+                '/pfs_v2.API/GetFile',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+                )
         self.GetFileTAR = channel.unary_stream(
                 '/pfs_v2.API/GetFileTAR',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
@@ -307,6 +312,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetFile(self, request, context):
+        """GetFile returns the contents of a single file
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetFileTAR(self, request, context):
         """GetFileTAR returns a TAR stream of the contents matched by the request
         """
@@ -498,6 +510,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.ModifyFile,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'GetFile': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetFile,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
             ),
             'GetFileTAR': grpc.unary_stream_rpc_method_handler(
                     servicer.GetFileTAR,
@@ -882,6 +899,23 @@ class API(object):
         return grpc.experimental.stream_unary(request_iterator, target, '/pfs_v2.API/ModifyFile',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ModifyFileRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetFile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/GetFile',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetFileRequest.SerializeToString,
+            google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
