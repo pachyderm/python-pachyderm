@@ -79,9 +79,7 @@ BLACKLISTED_METHODS = {
         "get_tar",
         "activate_auth",
         "run_load_test",
-        # GetFileTar replaced GetFile, but GetFile will come back
         "get_file_t_a_r",
-        "get_file",
         # TODO: add these new API methods
         "add_file_set",
         "clear_commit",
@@ -151,6 +149,7 @@ RENAMED_METHODS = {
     Service.PFS: {
         "put_file": ["put_file_bytes", "put_file_url"],
         "delete_all": ["delete_all_repos"],
+        "get_file_t_a_r": ["get_file_tar"],
     },
     Service.PPS: {
         "get_logs": ["get_job_logs", "get_pipeline_logs"],
@@ -229,7 +228,10 @@ RENAMED_ARGS = {
         ("to_repos", "repos"),
     ],
     "get_file": [
-        ("file", ("commit", "path")),
+        ("file", ("commit", "path", "tag")),
+    ],
+    "get_file_tar": [
+        ("file", ("commit", "path", "tag")),
     ],
     "inspect_branch": [
         ("branch", ("repo_name", "branch_name")),

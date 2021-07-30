@@ -44,7 +44,7 @@ How to load a CSV file into a Pandas dataframe
 ```Python
 import pandas as pd
 
-f = client.get_file("my_repo/my_branch", "/path_to/my_data.csv")
+f = client.get_file(("my_repo", "my_branch"), "/path_to/my_data.csv")
 df = pd.read_csv(f)
 ```
 

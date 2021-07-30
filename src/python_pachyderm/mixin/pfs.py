@@ -69,13 +69,17 @@ class PFSFile:
     ```
     """
 
-    def __init__(self, stream):
-        # Pachyderm's GetFile API returns its result (which may include several
-        # files, e.g. when getting a directory) as a tar stream--untar the
-        # response byte stream as we receive it from GetFile.
-        f = tarfile.open(fileobj=stream, mode="r|*")
-        # TODO how to handle multiple files in the tar stream?
-        self._file = f.extractfile(f.next())
+    def __init__(self, stream, is_tar=False):
+        if is_tar:
+            # Pachyderm's GetFileTar API returns its result (which may include
+            # several files, e.g. when getting a directory) as a tar
+            # stream--untar the response byte stream as we receive it from
+            # GetFileTar.
+            # TODO how to handle multiple files in the tar stream?
+            f = tarfile.open(fileobj=stream, mode="r|*")
+            self._file = f.extractfile(f.next())
+        else:
+            self._file = stream
 
     def __iter__(self):
         return self
@@ -595,25 +599,51 @@ class PFSMixin:
         with self.modify_file_client(dest_commit) as pfc:
             pfc.copy_file(source_commit, source_path, dest_path, tag=tag, append=append)
 
-    def get_file(self, commit, path, URL=None):
+    def get_file(self, commit, path, tag=None, URL=None):
         """
         Returns a `PFSFile` object, containing the contents of a file stored
         in PFS.
 
         Params:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
+        * `commit`: A tuple, dict, or `Commit` object representing the
         commit.
         * `path`: A string specifying the path of the file.
+        * `tag`: A string to distinguish files by.
+        * `URL`: A string that specifies an object storage URL that the file
+        will be uploaded to.
+        """
+        res = self._req(
+            Service.PFS,
+            "GetFile",
+            file=pfs_proto.File(commit=commit_from(commit), path=path, tag=tag),
+            URL=URL,
+        )
+        return PFSFile(io.BytesIO(next(res).value))
+
+    def get_file_tar(self, commit, path, tag=None, URL=None):
+        """
+        Returns a `PFSFile` object, containing the contents of a file stored
+        in PFS.
+
+        Params:
+
+        * `commit`: A tuple, dict, or `Commit` object representing the
+        commit.
+        * `path`: A string specifying the path of the file.
+        * `tag`: A string to distinguish files by.
+        * `URL`: A string that specifies an object storage URL that the file
+        will be uploaded to.
         """
         res = self._req(
             Service.PFS,
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
-                file=pfs_proto.File(commit=commit_from(commit), path=path), URL=URL
+                file=pfs_proto.File(commit=commit_from(commit), path=path, tag=tag),
+                URL=URL,
             ),
         )
-        return PFSFile(FileTarstream(res))
+        return PFSFile(io.BytesIO(next(res).value), is_tar=True)
 
     def inspect_file(self, commit, path):
         """
