@@ -345,7 +345,7 @@ def test_PFSFile_iter():
     with client.modify_file_client(commit) as pfc:
         pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
-    assert list(client.get_file_tar(commit, "file1.dat"))[0] == b"DATA1"
+    assert list(client.get_file(commit, "file1.dat"))[0] == b"DATA1"
 
 
 def test_copy_file():
