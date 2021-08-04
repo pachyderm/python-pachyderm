@@ -15,7 +15,7 @@ def main():
         pipeline_name="producer",
         transform=python_pachyderm.Transform(
             cmd=["python3", "/app/main.py"],
-            image="ysimonson/pachyderm_spout_producer",
+            image="pachyderm/example-python-spout-producer:6.x",
         ),
         spout=python_pachyderm.Spout(
             overwrite=False,
