@@ -7,7 +7,6 @@ from google.protobuf.internal.enum_type_wrapper import (
 
 from .mixin.pfs import PFSFile, ModifyFileClient
 from .client import Client, ConfigError, BadClusterDeploymentID
-from .spout import SpoutManager, SpoutCommit
 from .util import (
     put_files,
     parse_json_pipeline_spec,
@@ -22,8 +21,6 @@ __pdoc__ = {"proto": False}
 __all__ = [
     "Client",
     "RpcError",
-    "SpoutManager",
-    "SpoutCommit",
     "put_files",
     "PFSFile",
     "ModifyFileClient",
