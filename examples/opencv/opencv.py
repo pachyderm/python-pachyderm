@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
 
-# This is a reproduction of pachyderm's opencv example in python. A
-# walkthrough is available in the pachyderm docs:
-# https://docs.pachyderm.io/en/latest/getting_started/beginner_tutorial.html
-#
-# It makes heavy use of python_pachyderm's higher-level utility functionality
-# (`create_python_pipeline`, `put_files`), as well as more run-of-the-mill
-# functionality (`create_repo`, `create_pipeline`).
-
 import os
 import shutil
 import tempfile
