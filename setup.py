@@ -62,6 +62,7 @@ setup(
             "pre-commit>=2.12.1",
             "pytest>=5.3.4",
             "pytest-mock>=3.6.1",
+            "pytest-timeout>=1.4.2",
             "tox>=3.23.1",
             "pdoc3>=0.9.2",
             "certifi>=2019.11.28",
@@ -69,6 +70,7 @@ setup(
         "test": [
             "pytest==5.3.4",
             "pytest-mock>=3.6.1",
+            "pytest-timeout>=1.4.2",
             "pytest-runner==5.2",
             "protobuf>=3.11.2",
             "grpcio>=1.26.0",

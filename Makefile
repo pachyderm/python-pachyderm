@@ -24,7 +24,7 @@ src/python_pachyderm/proto/v2: docker-build-proto
 init:
 	git submodule update --init
 	python -m pip install -U pip wheel setuptools
-	python -m pip install -e .[DEV]
+	python -m pip install -e ".[DEV]"
 	pre-commit install
 
 ci-install:
@@ -51,9 +51,17 @@ release:
 	python3 setup.py sdist
 	twine upload dist/*
 
+test-release:
+	git checkout master
+	rm -rf build dist
+	sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
+	python3 setup.py sdist
+	-twine upload --repository testpypi dist/*
+	sed -i "" 's/name="python-pachyderm-test"/name="python-pachyderm"/g' setup.py
+
 lint:
 	black --check --diff .
 	flake8 .
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
-.PHONY: docs docker-build-proto init ci-install ci-setup release lint
+.PHONY: docs docker-build-proto init ci-install ci-setup release test-release lint
