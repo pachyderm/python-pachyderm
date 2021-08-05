@@ -16,7 +16,7 @@ def main():
         pipeline_name="spout",
         transform=pps_proto.Transform(
             cmd=["python3", "/app/poll_consumer.py"],
-            image="pachyderm/example-python-spout-consumer",
+            image="pachyderm/example-python-spout-consumer:7.0.0a6",
         ),
         spout=pps_proto.Spout(),
     )
@@ -25,7 +25,7 @@ def main():
         pipeline_name="processor",
         transform=pps_proto.Transform(
             cmd=["python3", "/app/log_messages.py"],
-            image="pachyderm/example-python-spout-processor",
+            image="pachyderm/example-python-spout-processor:7.0.0a6",
         ),
         input=pps_proto.Input(
             pfs=pps_proto.PFSInput(repo="spout", branch="master", glob="/*")
