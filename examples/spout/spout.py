@@ -15,26 +15,27 @@ def main():
     client.create_pipeline(
         pipeline_name="spout",
         transform=pps_proto.Transform(
-            cmd=["python3", "/app/poll_consumer.py"],
-            image="pachyderm/example-python-spout-consumer:7.0.0a6",
+            cmd=["python3", "consumer/main.py"],
+            image="pachyderm/example-spout101:2.0.0-beta.5",
         ),
         spout=pps_proto.Spout(),
+        description="A spout pipeline that emulates the reception of data from an external source",
     )
 
     client.create_pipeline(
         pipeline_name="processor",
         transform=pps_proto.Transform(
-            cmd=["python3", "/app/log_messages.py"],
-            image="pachyderm/example-python-spout-processor:7.0.0a6",
+            cmd=["python3", "processor/main.py"],
+            image="pachyderm/example-spout101:2.0.0-beta.5",
         ),
         input=pps_proto.Input(
             pfs=pps_proto.PFSInput(repo="spout", branch="master", glob="/*")
         ),
+        description="A pipeline that sorts 1KB vs 2KB files",
     )
 
-    # concats the files in the 1K and 2K directories in the consumer repo
     client.create_pipeline(
-        pipeline_name="reduce",
+        pipeline_name="reducer",
         transform=pps_proto.Transform(
             cmd=["bash"],
             stdin=[
@@ -51,6 +52,7 @@ def main():
         input=pps_proto.Input(
             pfs=pps_proto.PFSInput(repo="processor", branch="master", glob="/*")
         ),
+        description="A pipeline that reduces 1K/ and 2K/ directories",
     )
 
 
