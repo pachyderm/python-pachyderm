@@ -520,13 +520,13 @@ class PPSMixin:
         Params:
 
         * `pipeline_name`: A string representing the pipeline name.
-        * `history`: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or
-              pipelines.
-            * 1: Return the above and jobs from the next most recent version
+        * `history`: An optional int that indicates to return historical
+        versions of pipelines. Semantics are:
+            * 0: Return current version of pipelines.
+            * 1: Return the above and pipelines from the next most recent
+            version.
             * 2: etc.
-            * -1: Return jobs from all historical versions.
+            * -1: Return pipelines from all historical versions.
         """
         pipeline = pps_proto.Pipeline(name=pipeline_name)
 
@@ -547,21 +547,20 @@ class PPSMixin:
 
         Params:
 
-        * `pipeline_name`: A string representing the pipeline name.
-        * `history`: An optional int that indicates to return jobs from
-          historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or
-              pipelines.
-            * 1: Return the above and jobs from the next most recent version
+        * `history`: An optional int that indicates to return historical
+        versions of pipelines. Semantics are:
+            * 0: Return current version of pipelines.
+            * 1: Return the above and pipelines from the next most recent
+            version.
             * 2: etc.
-            * -1: Return jobs from all historical versions.
+            * -1: Return pipelines from all historical versions.
         * `allow_incomplete`: An optional boolean that, if set to `True`, causes
           `list_pipeline` to return PipelineInfos with incomplete data where the
           pipeline spec cannot beretrieved. Incomplete PipelineInfos will have a
           nil Transform field, but will have the fields present in
           EtcdPipelineInfo.
         * `jqFilter`: An optional string containing a `jq` filter that can
-          restrict the list of jobs returned, for convenience
+          restrict the list of pipelines returned, for convenience.
         """
         return self._req(
             Service.PPS,
