@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 6.3.2
+
+- Fix Python PPS Docstrings
+  - fix params and description for `list_pipeline()`
+  - fix description for `inspect_pipeline()`
+
 ## 6.3.1
 
 - Update Python PFS API
