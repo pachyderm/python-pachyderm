@@ -389,7 +389,7 @@ def test_inspect_commit():
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
 
-    commit = client.inspect_commit(c)
+    commit = client.inspect_commit(c, pfs_pb2.CommitState.FINISHED)
     assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""

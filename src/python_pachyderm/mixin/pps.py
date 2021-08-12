@@ -353,17 +353,17 @@ class PPSMixin:
         Params:
 
         * `pipeline_name`: An optional string representing the pipeline name.
-        * `history`: An optional int that indicates to return jobs from
-          historical versions of pipelines. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or
-              pipelines.
-            * 1: Return the above and jobs from the next most recent version
+        * `history`: An optional int that indicates to return historical
+        versions of pipelines. Semantics are:
+            * 0: Return current version of pipelines.
+            * 1: Return the above and pipelines from the next most recent
+            version.
             * 2: etc.
-            * -1: Return jobs from all historical versions.
+            * -1: Return pipelines from all historical versions.
         * `details`: An optional bool that indicates to return details
         on the pipeline(s).
         * `jqFilter`: An optional string containing a `jq` filter that can
-          restrict the list of jobs returned, for convenience
+          restrict the list of pipelines returned, for convenience.
         """
         return self._req(
             Service.PPS,
