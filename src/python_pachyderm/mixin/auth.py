@@ -1,8 +1,9 @@
-from python_pachyderm.service import Service
+from typing import Dict, List
+from python_pachyderm.service import Service, auth_proto
 
 
 class AuthMixin:
-    def activate_auth(self, root_token=None):
+    def activate_auth(self, root_token: str = None) -> str:
         """
         Activates auth. Returns the root token for the cluster, an
         irrevocable superuser credential that should be stored securely.
@@ -16,20 +17,20 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "Activate", root_token=root_token).pach_token
 
-    def deactivate_auth(self):
+    def deactivate_auth(self) -> None:
         """
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         """
-        return self._req(Service.AUTH, "Deactivate")
+        self._req(Service.AUTH, "Deactivate")
 
-    def get_auth_configuration(self):
+    def get_auth_configuration(self) -> auth_proto.OIDCConfig:
         """
         Gets the auth configuration. Returns an `AuthConfig` object.
         """
         return self._req(Service.AUTH, "GetConfiguration").configuration
 
-    def set_auth_configuration(self, configuration):
+    def set_auth_configuration(self, configuration: auth_proto.OIDCConfig) -> None:
         """
         Set the auth configuration.
 
@@ -37,15 +38,21 @@ class AuthMixin:
 
         * `config`: An `AuthConfig` object.
         """
-        return self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
+        self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
 
-    def get_role_binding(self, resource):
+    def get_role_binding(
+        self, resource: auth_proto.Resource
+    ) -> Dict[str, auth_proto.Roles]:
         """
         Returns the current set of cluster role bindings.
         """
-        return self._req(Service.AUTH, "GetRoleBinding", resource=resource)
+        return self._req(
+            Service.AUTH, "GetRoleBinding", resource=resource
+        ).binding.entries
 
-    def modify_role_binding(self, resource, principal, roles=None):
+    def modify_role_binding(
+        self, resource: auth_proto.Resource, principal: str, roles: List[str] = None
+    ) -> None:
         """
         Sets the roles for a given principal on a resource.
 
@@ -55,7 +62,7 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         """
-        return self._req(
+        self._req(
             Service.AUTH,
             "ModifyRoleBinding",
             resource=resource,
@@ -63,13 +70,13 @@ class AuthMixin:
             roles=roles,
         )
 
-    def get_oidc_login(self):
+    def get_oidc_login(self) -> auth_proto.GetOIDCLoginResponse:
         """
         Returns the OIDC login configuration.
         """
         return self._req(Service.AUTH, "GetOIDCLogin")
 
-    def authenticate_oidc(self, oidc_state):
+    def authenticate_oidc(self, oidc_state: str) -> str:
         """
         Authenticates a user to the Pachyderm cluster via OIDC. Returns a
         string that can be used for making authenticated requests.
@@ -80,7 +87,7 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
 
-    def authenticate_id_token(self, id_token):
+    def authenticate_id_token(self, id_token: str) -> str:
         """
         Authenticates a user to the Pachyderm cluster using an ID token issued
         by the OIDC provider. The token must include the Pachyderm client_id
@@ -93,7 +100,11 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "Authenticate", id_token=id_token).pach_token
 
-    def authorize(self, resource, permissions=None):
+    def authorize(
+        self,
+        resource: auth_proto.Resource,
+        permissions: List["auth_proto.Permission"] = None,
+    ) -> auth_proto.AuthorizeResponse:
         """
         Authorizes the user to a given resource.
 
@@ -106,13 +117,15 @@ class AuthMixin:
             Service.AUTH, "Authorize", resource=resource, permissions=permissions
         )
 
-    def who_am_i(self):
+    def who_am_i(self) -> auth_proto.WhoAmIResponse:
         """
         Returns info about the user tied to this `Client`.
         """
         return self._req(Service.AUTH, "WhoAmI")
 
-    def get_roles_for_permission(self, permission):
+    def get_roles_for_permission(
+        self, permission: auth_proto.Permission
+    ) -> List[auth_proto.Role]:
         """
         Returns roles that have the specified permission.
 
@@ -120,9 +133,11 @@ class AuthMixin:
 
         * `permission`: The Permission enum to check for.
         """
-        return self._req(Service.AUTH, "GetRolesForPermission", permission=permission)
+        return self._req(
+            Service.AUTH, "GetRolesForPermission", permission=permission
+        ).roles
 
-    def get_robot_token(self, robot, ttl=None):
+    def get_robot_token(self, robot: str, ttl: int = None) -> str:
         """
         Gets a new auth token for a robot user.
 
@@ -134,7 +149,7 @@ class AuthMixin:
         """
         return self._req(Service.AUTH, "GetRobotToken", robot=robot, ttl=ttl).token
 
-    def revoke_auth_token(self, token):
+    def revoke_auth_token(self, token: str) -> None:
         """
         Revokes an auth token.
 
@@ -143,9 +158,9 @@ class AuthMixin:
         * `token`: A string that indicates the Pachyderm token that is being
         revoked.
         """
-        return self._req(Service.AUTH, "RevokeAuthToken", token=token)
+        self._req(Service.AUTH, "RevokeAuthToken", token=token)
 
-    def set_groups_for_user(self, username, groups):
+    def set_groups_for_user(self, username: str, groups: List[str]) -> None:
         """
         Sets the group membership for a user.
 
@@ -154,11 +169,11 @@ class AuthMixin:
         * `username`: A string.
         * `groups`: A list of strings.
         """
-        return self._req(
-            Service.AUTH, "SetGroupsForUser", username=username, groups=groups
-        )
+        self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
 
-    def modify_members(self, group, add=None, remove=None):
+    def modify_members(
+        self, group: str, add: List[str] = None, remove: List[str] = None
+    ) -> None:
         """
         Adds and/or removes members of a group.
 
@@ -168,21 +183,21 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         """
-        return self._req(
+        self._req(
             Service.AUTH,
             "ModifyMembers",
             group=group,
-            add=add or [],
-            remove=remove or [],
+            add=add,
+            remove=remove,
         )
 
-    def get_groups(self):
+    def get_groups(self) -> List[str]:
         """
         Gets a list of groups this user belongs to.
         """
         return self._req(Service.AUTH, "GetGroups").groups
 
-    def get_users(self, group):
+    def get_users(self, group: str) -> List[str]:
         """
         Gets which users below to the given `group`. Returns a list of strings.
 

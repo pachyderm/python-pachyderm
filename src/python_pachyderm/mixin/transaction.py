@@ -1,7 +1,7 @@
 from contextlib import contextmanager
+from typing import Iterator, List, Union
 
-from python_pachyderm.proto.v2.transaction import transaction_pb2 as transaction_proto
-from python_pachyderm.service import Service
+from python_pachyderm.service import Service, transaction_proto
 
 
 def transaction_from(transaction):
@@ -12,7 +12,9 @@ def transaction_from(transaction):
 
 
 class TransactionMixin:
-    def batch_transaction(self, requests):
+    def batch_transaction(
+        self, requests: List[transaction_proto.TransactionRequest]
+    ) -> transaction_proto.TransactionInfo:
         """
         Executes a batch transaction.
 
@@ -22,13 +24,15 @@ class TransactionMixin:
         """
         return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
 
-    def start_transaction(self):
+    def start_transaction(self) -> transaction_proto.Transaction:
         """
         Starts a transaction.
         """
         return self._req(Service.TRANSACTION, "StartTransaction")
 
-    def inspect_transaction(self, transaction):
+    def inspect_transaction(
+        self, transaction: Union[str, transaction_proto.Transaction]
+    ) -> transaction_proto.TransactionInfo:
         """
         Inspects a given transaction.
 
@@ -42,7 +46,9 @@ class TransactionMixin:
             transaction=transaction_from(transaction),
         )
 
-    def delete_transaction(self, transaction):
+    def delete_transaction(
+        self, transaction: Union[str, transaction_proto.Transaction]
+    ) -> None:
         """
         Deletes a given transaction.
 
@@ -50,25 +56,27 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        return self._req(
+        self._req(
             Service.TRANSACTION,
             "DeleteTransaction",
             transaction=transaction_from(transaction),
         )
 
-    def delete_all_transactions(self):
+    def delete_all_transactions(self) -> None:
         """
         Deletes all transactions.
         """
-        return self._req(Service.TRANSACTION, "DeleteAll")
+        self._req(Service.TRANSACTION, "DeleteAll")
 
-    def list_transaction(self):
+    def list_transaction(self) -> List[transaction_proto.TransactionInfo]:
         """
         Lists transactions.
         """
         return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
 
-    def finish_transaction(self, transaction):
+    def finish_transaction(
+        self, transaction: Union[str, transaction_proto.Transaction]
+    ) -> transaction_proto.TransactionInfo:
         """
         Finishes a given transaction.
 
@@ -83,7 +91,7 @@ class TransactionMixin:
         )
 
     @contextmanager
-    def transaction(self):
+    def transaction(self) -> Iterator[transaction_proto.Transaction]:
         """
         A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an

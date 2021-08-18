@@ -42,11 +42,11 @@ def test_spout_commit():
 
     c = client.subscribe_commit(
         repo_name="pipeline-spout-commit",
-        branch="master",
-        state=pfs_proto.FINISHED,
+        branch_name="master",
+        commit_state=pfs_proto.FINISHED,
         origin_kind=pfs_proto.USER,
     )
     next(c)
 
     commit_infos = list(client.list_commit("pipeline-spout-commit"))
-    assert len(commit_infos) == 2
+    assert len(commit_infos) == 1

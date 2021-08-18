@@ -1,9 +1,12 @@
-from python_pachyderm.service import Service
-from python_pachyderm.proto.v2.debug import debug_pb2 as debug_proto
+from typing import Iterator
+from python_pachyderm.service import Service, debug_proto
+from google.protobuf import duration_pb2
 
 
 class DebugMixin:
-    def dump(self, filter=None, limit=None):
+    def dump(
+        self, filter: debug_proto.Filter = None, limit: int = None
+    ) -> Iterator[bytes]:
         """
         Gets a debug dump. Yields byte arrays.
 
@@ -18,7 +21,9 @@ class DebugMixin:
         for item in res:
             yield item.value
 
-    def profile_cpu(self, duration, filter=None):
+    def profile_cpu(
+        self, duration: duration_pb2.Duration, filter: debug_proto.Filter = None
+    ) -> Iterator[bytes]:
         """
         Gets a CPU profile. Yields byte arrays.
 
@@ -33,7 +38,7 @@ class DebugMixin:
         for item in res:
             yield item.value
 
-    def binary(self, filter=None):
+    def binary(self, filter: debug_proto.Filter = None) -> Iterator[bytes]:
         """
         Gets the pachd binary. Yields byte arrays.
 

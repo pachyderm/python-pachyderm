@@ -1,8 +1,12 @@
-from python_pachyderm.service import Service
+from typing import List
+from python_pachyderm.service import Service, license_proto, enterprise_proto
+from google.protobuf import timestamp_pb2
 
 
 class LicenseMixin:
-    def activate_license(self, activation_code, expires=None):
+    def activate_license(
+        self, activation_code: str, expires: timestamp_pb2.Timestamp = None
+    ) -> enterprise_proto.TokenInfo:
         """
         Activates the license service. Returns a `TokenInfo` object.
 
@@ -20,17 +24,17 @@ class LicenseMixin:
             "Activate",
             activation_code=activation_code,
             expires=expires,
-        )
+        ).info
 
     def add_cluster(
         self,
-        id,
-        address,
-        secret=None,
-        user_address=None,
-        cluster_deployment_id=None,
-        enterprise_server=None,
-    ):
+        id: str,
+        address: str,
+        secret: str = None,
+        user_address: str = None,
+        cluster_deployment_id: str = None,
+        enterprise_server: bool = False,
+    ) -> license_proto.AddClusterResponse:
         """
         Register a cluster with the license service.
 
@@ -54,8 +58,12 @@ class LicenseMixin:
         )
 
     def update_cluster(
-        self, id, address, user_address=None, cluster_deployment_id=None
-    ):
+        self,
+        id: str,
+        address: str,
+        user_address: str = None,
+        cluster_deployment_id: str = None,
+    ) -> None:
         """
         Update a cluster registered with the license service.
 
@@ -64,7 +72,7 @@ class LicenseMixin:
         * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         """
-        return self._req(
+        self._req(
             Service.LICENSE,
             "UpdateCluster",
             id=id,
@@ -73,7 +81,7 @@ class LicenseMixin:
             cluster_deployment_id=cluster_deployment_id,
         )
 
-    def delete_cluster(self, id):
+    def delete_cluster(self, id: str) -> None:
         """
         Delete a cluster registered with the license service.
 
@@ -81,28 +89,28 @@ class LicenseMixin:
 
         * `id`: The unique ID to identify the cluster.
         """
-        return self._req(Service.LICENSE, "DeleteCluster", id=id)
+        self._req(Service.LICENSE, "DeleteCluster", id=id)
 
-    def list_clusters(self):
+    def list_clusters(self) -> List[license_proto.ClusterStatus]:
         """
         List clusters registered with the license service.
         """
-        return self._req(Service.LICENSE, "ListClusters")
+        return self._req(Service.LICENSE, "ListClusters").clusters
 
-    def get_activation_code(self):
+    def get_activation_code(self) -> license_proto.GetActivationCodeResponse:
         """
         Returns the enterprise code used to activate the server.
         """
         return self._req(Service.LICENSE, "GetActivationCode")
 
-    def delete_all_license(self):
+    def delete_all_license(self) -> None:
         """
         Remove all clusters and deactivate the license service.
         """
-        return self._req(Service.LICENSE, "DeleteAll")
+        self._req(Service.LICENSE, "DeleteAll")
 
-    def list_user_clusters(self):
+    def list_user_clusters(self) -> List[license_proto.UserClusterInfo]:
         """
         Lists all clusters available to user.
         """
-        return self._req(Service.LICENSE, "ListUserClusters")
+        return self._req(Service.LICENSE, "ListUserClusters").clusters

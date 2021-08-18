@@ -1,14 +1,14 @@
-from python_pachyderm.proto.v2.admin import admin_pb2_grpc as admin_grpc
-from python_pachyderm.service import Service
+from python_pachyderm.service import Service, admin_proto
+from google.protobuf import empty_pb2
 
 
 class AdminMixin:
-    def inspect_cluster(self):
+    def inspect_cluster(self) -> admin_proto.ClusterInfo:
         """
         Inspects a cluster. Returns a `ClusterInfo` object.
         """
         return self._req(
             Service.ADMIN,
             "InspectCluster",
-            req=admin_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+            req=empty_pb2.Empty(),
         )

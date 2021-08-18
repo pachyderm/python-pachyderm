@@ -166,7 +166,7 @@ RENAMED_METHODS = {
     },
 }
 
-# Mapping of renamed method arguments. Multiple times of remappings are
+# Mapping of renamed method arguments. Multiple types of remappings are
 # supported:
 # * An argument can simply be renamed: `("old_arg_name", "new_arg_name")`
 # * An argument can be renamed to multiple arguments:
@@ -228,10 +228,10 @@ RENAMED_ARGS = {
         ("to_repos", "repos"),
     ],
     "get_file": [
-        ("file", ("commit", "path", "tag")),
+        ("file", ("commit", "path", "datum")),
     ],
     "get_file_tar": [
-        ("file", ("commit", "path", "tag")),
+        ("file", ("commit", "path", "datum")),
     ],
     "inspect_branch": [
         ("branch", ("repo_name", "branch_name")),
@@ -245,7 +245,7 @@ RENAMED_ARGS = {
         ("wait", "wait"),
     ],
     "inspect_file": [
-        ("file", ("commit", "path")),
+        ("file", ("commit", "path", "datum")),
     ],
     "inspect_repo": [
         ("repo", "repo_name"),
@@ -261,7 +261,7 @@ RENAMED_ARGS = {
         ("to", "to_commit"),
         ("repo", "repo_name"),
     ],
-    "list_file": [("file", ("commit", "path")), ("details", None)],
+    "list_file": [("file", ("commit", "path", "datum"))],
     "put_file_bytes": [
         ("file", ("commit", "path")),
         ("url", None),
@@ -274,20 +274,24 @@ RENAMED_ARGS = {
         ("delete", None),
     ],
     "start_commit": [
-        ("parent", ("repo_name", "parent")),
+        ("parent", ("repo_name", "parent_commit")),
+        ("branch", "branch_name"),
     ],
     "subscribe_commit": [
-        ("from", "from_commit_id"),
+        ("from", "from_commit"),
         ("repo", "repo_name"),
+        ("branch", "branch_name"),
+        ("state", "commit_state"),
     ],
     "walk_file": [
-        ("file", ("commit", "path")),
+        ("file", ("commit", "path", "datum")),
     ],
     # PPS
     "create_pipeline": [
         ("pipeline", "pipeline_name"),
         ("pod_spec", None),
         ("tf_job", None),
+        ("output_branch", "output_branch_name"),
     ],
     "create_tf_job_pipeline": [
         ("pipeline", "pipeline_name"),

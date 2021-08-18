@@ -1,8 +1,8 @@
-from python_pachyderm.service import Service
+from python_pachyderm.service import Service, enterprise_proto
 
 
 class EnterpriseMixin:
-    def activate_enterprise(self, license_server, id, secret):
+    def activate_enterprise(self, license_server: str, id: str, secret: str) -> None:
         """
         Activates enterprise by registering with a license server.
         Returns a `TokenInfo` object.
@@ -13,7 +13,7 @@ class EnterpriseMixin:
         * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         """
-        return self._req(
+        self._req(
             Service.ENTERPRISE,
             "Activate",
             license_server=license_server,
@@ -21,18 +21,18 @@ class EnterpriseMixin:
             secret=secret,
         )
 
-    def get_enterprise_state(self):
+    def get_enterprise_state(self) -> enterprise_proto.GetStateResponse:
         """
         Gets the current enterprise state of the cluster. Returns a
         `GetEnterpriseResponse` object.
         """
         return self._req(Service.ENTERPRISE, "GetState")
 
-    def deactivate_enterprise(self):
+    def deactivate_enterprise(self) -> None:
         """Deactivates enterprise."""
-        return self._req(Service.ENTERPRISE, "Deactivate")
+        self._req(Service.ENTERPRISE, "Deactivate")
 
-    def get_activation_code(self):
+    def get_activation_code(self) -> enterprise_proto.GetActivationCodeResponse:
         """
         Returns the enterprise code used to activate Pachdyerm Enterprise in
         this cluster.

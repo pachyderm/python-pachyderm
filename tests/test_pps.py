@@ -133,10 +133,10 @@ def test_datums():
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
     pipelines = list(
-        sandbox.client.list_pipeline(sandbox.pipeline_repo_name, history=-1)
+        sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
     )
     assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
 
@@ -167,11 +167,11 @@ def test_restart_pipeline():
     sandbox = Sandbox("restart_job")
 
     sandbox.client.stop_pipeline(sandbox.pipeline_repo_name)
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert pipeline.stopped
 
     sandbox.client.start_pipeline(sandbox.pipeline_repo_name)
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert not pipeline.stopped
 
 
@@ -220,9 +220,6 @@ def test_secrets():
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
     sandbox.wait()
-    # sleep 10 secs to wait for the k8s pod to be ready
-    # TODO remove this sleep once we figure out why this test is broken
-    # time.sleep(10)
 
     # Just make sure these spit out some logs
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
