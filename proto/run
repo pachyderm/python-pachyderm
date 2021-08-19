@@ -7,28 +7,28 @@ tar xf /dev/stdin
 # VERSION matches the MajorVersion of pachyderm
 OUTDIR="python_pachyderm/proto/v${VERSION}"
 
-mkdir -p ${OUTDIR}
-mv ./proto/pachyderm/src/* ${OUTDIR}
+mkdir -p "${OUTDIR}"
+mv ./proto/pachyderm/src/* "${OUTDIR}"
 
 # Make sure to remove the gogoproto line, as that is Go specific
-for i in $(find ${OUTDIR} -name "*.proto"); do
+for i in $(find "${OUTDIR}" -name "*.proto"); do
     # remove the import
-    sed -i 's/import.*gogo.proto.*\;//' ${i}
+    sed -i 's/import.*gogo.proto.*\;//' "${i}"
     # remove usages of gogoproto types
-    sed -i 's/\[.*gogoproto.*\]//' ${i}
-    sed -i 's/.*gogoproto.*//' ${i}
+    sed -i 's/\[.*gogoproto.*\]//' "${i}"
+    sed -i 's/.*gogoproto.*//' "${i}"
 done
 
 # fix imports to be relative to OUTDIR
-for i in $(find ${OUTDIR} -name "*.proto"); do
-    perl -pi -e "s/import \"((?!google).*)\"/import \"python_pachyderm\/proto\/v${VERSION}\/\$1\"/" ${i}
+for i in $(find "${OUTDIR}" -name "*.proto"); do
+    perl -pi -e "s/import \"((?!google).*)\"/import \"python_pachyderm\/proto\/v${VERSION}\/\$1\"/" "${i}"
 done
 
 # generate protobuf and gRPC code from proto files
 # should result in {}_pb2.py and {}_pb2_grpc.py per proto
-find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
-find ${OUTDIR} -name '*.proto' | xargs rm
+find "${OUTDIR}" -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
+find "${OUTDIR}" -name '*.proto' | xargs rm
 
-find ${OUTDIR} -type d -exec touch {}/__init__.py \;
+find "${OUTDIR}" -type d -exec touch {}/__init__.py \;
 
-tar cf - ${OUTDIR}
+tar cf - "${OUTDIR}"
