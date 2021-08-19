@@ -21,6 +21,7 @@ done
 
 # fix imports to be relative to OUTDIR
 for i in $(find "${OUTDIR}" -name "*.proto"); do
+    # Need to use perl for negative lookahead (which sed doesn't support)
     perl -pi -e "s/import \"((?!google).*)\"/import \"python_pachyderm\/proto\/v${VERSION}\/\$1\"/" "${i}"
 done
 
