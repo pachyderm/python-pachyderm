@@ -287,13 +287,16 @@ class PFSMixin:
                     )
                 ]
             )
-        else:
+        elif uuid_re.match(commit):
             return self._req(
                 Service.PFS,
                 "InspectCommitSet",
                 commit_set=pfs_proto.CommitSet(id=commit),
                 wait=commit_state == pfs_proto.CommitState.FINISHED,
             )
+        raise ValueError(
+            "Bad argument for commit passed- should either be a commit_id str or a Commit-like object"
+        )
 
     def list_commit(
         self,

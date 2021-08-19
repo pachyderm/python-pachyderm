@@ -107,8 +107,8 @@ class PPSMixin:
 
         Params:
 
-        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to delete.
+        * `pipeline_name`: A string representing the pipeline name.
         """
         return self._req(
             Service.PPS,
@@ -123,8 +123,8 @@ class PPSMixin:
         Stops a job given its pipeline_name and job_id.
 
         Params:
-        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to stop.
+        * `pipeline_name`: A string representing the pipeline name.
         * `reason`: a str specifying the reason for stopping the job.
         """
         return self._req(
