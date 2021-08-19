@@ -27,8 +27,8 @@ class Sandbox:
         return self.client.wait_commit(self.commit.id)[0].commit.id
 
 
-def test_list_job():
-    sandbox = Sandbox("list_job")
+def test_list_subjob():
+    sandbox = Sandbox("list_subjob")
     sandbox.wait()
 
     jobs = list(sandbox.client.list_job())
@@ -39,44 +39,45 @@ def test_list_job():
 
     jobs = list(
         sandbox.client.list_job(
-            input_commit=(sandbox.input_repo_name, sandbox.commit.id)
+            pipeline_name=sandbox.pipeline_repo_name,
+            input_commit=(sandbox.input_repo_name, sandbox.commit.id),
         )
     )
     assert len(jobs) >= 1
 
 
-def test_list_job_set():
-    sandbox = Sandbox("list_job_set1")
+def test_list_job():
+    sandbox = Sandbox("list_job1")
     sandbox.wait()
     client = sandbox.client
 
-    commit, _, _ = util.create_test_pipeline(client, "list_job_set2")
+    commit, _, _ = util.create_test_pipeline(client, "list_job2")
     client.wait_commit(commit.id)
 
-    jobs = list(client.list_job_set())
+    jobs = list(client.list_job())
     assert len(jobs) == 4
 
 
-def test_inspect_job():
-    sandbox = Sandbox("inspect_job")
+def test_inspect_subjob():
+    sandbox = Sandbox("inspect_subjob")
     job_id = sandbox.wait()
 
-    job_info = sandbox.client.inspect_job(sandbox.pipeline_repo_name, job_id)
-    assert job_info.job.id == job_id
+    job_info = list(sandbox.client.inspect_job(job_id, sandbox.pipeline_repo_name))
+    assert job_info[0].job.id == job_id
 
 
-def test_inspect_job_set():
-    sandbox = Sandbox("list_job_set1")
+def test_inspect_job():
+    sandbox = Sandbox("inspect_job1")
     sandbox.wait()
     client = sandbox.client
 
-    commit, _, _ = util.create_test_pipeline(client, "list_job_set2")
+    commit, _, _ = util.create_test_pipeline(client, "inspect_job2")
     client.wait_commit(commit.id)
 
-    jobs = list(client.list_job_set())
-    job_set1 = list(client.inspect_job_set(job_set_id=jobs[0].job_set.id))
+    jobs = list(client.list_job())
+    job1 = list(client.inspect_job(job_id=jobs[0].job_set.id))
 
-    assert job_set1[0].job.id == commit.id
+    assert job1[0].job.id == commit.id
     assert len(jobs) == 4
 
 
@@ -85,16 +86,16 @@ def test_stop_job():
     pipeline_name = sandbox.pipeline_repo_name
     job_id = sandbox.wait()
 
-    sandbox.client.stop_job(pipeline_name, job_id)
+    sandbox.client.stop_job(job_id, pipeline_name)
     # This is necessary because `StopJob` does not wait for the job to be
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
-    job_info = sandbox.client.inspect_job(pipeline_name, job_id)
+    job_info = list(sandbox.client.inspect_job(job_id, pipeline_name))
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
-    assert job_info.state in [
+    assert job_info[0].state in [
         pps_proto.JobState.JOB_KILLED,
         pps_proto.JobState.JOB_SUCCESS,
     ]
@@ -104,7 +105,7 @@ def test_delete_job():
     sandbox = Sandbox("delete_job")
     job_id = sandbox.wait()
     orig_job_count = len(list(sandbox.client.list_job()))
-    sandbox.client.delete_job(sandbox.pipeline_repo_name, job_id)
+    sandbox.client.delete_job(job_id, sandbox.pipeline_repo_name)
     jobs = len(list(sandbox.client.list_job()))
     assert jobs == orig_job_count - 1
 

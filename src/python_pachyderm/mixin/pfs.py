@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
+from python_pachyderm.proto.v2 import pfs
 from python_pachyderm.service import pfs_proto, Service
 from google.protobuf import empty_pb2, wrappers_pb2
 
@@ -279,11 +280,11 @@ class PFSMixin:
 
     def inspect_commit(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: Union[str, tuple, dict, Commit, pfs_proto.Commit],
         commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
-    ) -> pfs_proto.CommitInfo:
+    ) -> Iterator[pfs_proto.CommitInfo]:
         """
-        Inspects a commit. Returns a `CommitInfo` object.
+        Inspects a commit. Yields `CommitInfo` objects.
 
         Params:
 
@@ -291,50 +292,50 @@ class PFSMixin:
         commit.
         * `commit_state`: An optional int that causes this method to block
         until the commit is in the desired state.
-            0: STARTED
-            1: READY
-            2: FINISHED
+            1: STARTED
+            2: READY
+            3: FINISHING
+            4: FINISHED
         """
-        return self._req(
-            Service.PFS,
-            "InspectCommit",
-            commit=commit_from(commit),
-            wait=commit_state,
-        )
-
-    def inspect_commit_set(
-        self, commit_set_id: str, wait: bool = False
-    ) -> Iterator[pfs_proto.CommitInfo]:
-        """
-        Inspects a commit set and returns an iterator of `CommitInfo` objects.
-
-        * `commit_set_id`: the ID that represents this commit_set
-        * `wait`: if true then wait until all commits in the set are finished.
-        """
-        return self._req(
-            Service.PFS,
-            "InspectCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_set_id),
-            wait=wait,
+        if not isinstance(commit, str):
+            return iter(
+                [
+                    self._req(
+                        Service.PFS,
+                        "InspectCommit",
+                        commit=commit_from(commit),
+                        wait=commit_state,
+                    )
+                ]
+            )
+        elif uuid_re.match(commit):
+            return self._req(
+                Service.PFS,
+                "InspectCommitSet",
+                commit_set=pfs_proto.CommitSet(id=commit),
+                wait=commit_state == pfs_proto.CommitState.FINISHED,
+            )
+        raise ValueError(
+            "Bad argument for commit passed- should either be a commit_id str or a Commit-like object"
         )
 
     def list_commit(
         self,
-        repo_name: str,
+        repo_name: str = None,
         to_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
         from_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
         number: int = 0,
         reverse: bool = False,
         all: bool = False,
         origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
-    ) -> Iterator[pfs_proto.CommitInfo]:
+    ) -> Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]:
         """
-        Lists commits. Yields `CommitInfo` objects.
+        Lists commits. Yields `CommitInfo` or `CommitSetInfo` objects.
 
         Params:
 
-        * `repo_name`: If only `repo_name` is given, all commits in the repo
-        are returned.
+        * `repo_name`: Optional. If only `repo_name` is given, all commits
+        in the repo are returned.
         * `to_commit`: Optional. Only the ancestors of `to`, including `to`
         itself, are considered.
         * `from_commit`: Optional. Only the descendants of `from`, including
@@ -344,41 +345,35 @@ class PFSMixin:
         returned.
         * `reverse`: Optional. If true, commits are returned oldest to newest.
         * `all`: Optional. If true, all types of commits are returned.
-        * `origin_kind`: Optional. Returns only commits of this enum type.
+        * `origin_kind`: Optional. Returns only commits of this enum type if
+        `repo_name` is provided.
         """
-        req = pfs_proto.ListCommitRequest(
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
-            number=number,
-            reverse=reverse,
-            all=all,
-            origin_kind=origin_kind,
-        )
-        if to_commit is not None:
-            req.to.CopyFrom(commit_from(to_commit))
-        if from_commit is not None:
-            getattr(req, "from").CopyFrom(commit_from(from_commit))
-        return self._req(Service.PFS, "ListCommit", req=req)
+        if repo_name is not None:
+            req = pfs_proto.ListCommitRequest(
+                repo=pfs_proto.Repo(name=repo_name, type="user"),
+                number=number,
+                reverse=reverse,
+                all=all,
+                origin_kind=origin_kind,
+            )
+            if to_commit is not None:
+                req.to.CopyFrom(commit_from(to_commit))
+            if from_commit is not None:
+                getattr(req, "from").CopyFrom(commit_from(from_commit))
+            return self._req(Service.PFS, "ListCommit", req=req)
+        else:
+            return self._req(Service.PFS, "ListCommitSet")
 
-    def list_commit_set(self) -> Iterator[pfs_proto.CommitSetInfo]:
+    def squash_commit(self, commit_id: str) -> None:
         """
-        Lists all commits. Yields `CommitSetInfo` objects.
-        """
-        return self._req(
-            Service.PFS,
-            "ListCommitSet",
-        )
-
-    def squash_commit_set(self, commit_set_id: str) -> None:
-        """
-        Squashes the commits of a `CommitSet` into their children.
+        Squashes the subcommits of a `Commit` into their parents.
         Params:
-        * `commit_set_id`: the id shared by all commits that form a transaction.
-        commit.
+        * `commit_id`: the id of a `Commit`.
         """
         self._req(
             Service.PFS,
             "SquashCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_set_id),
+            commit_set=pfs_proto.CommitSet(id=commit_id),
         )
 
     def wait_commit(
@@ -391,9 +386,7 @@ class PFSMixin:
         * `commit`: A `Commit` object, tuple, or str. If passed a commit_set_id,
            then wait for the entire commit_set.
         """
-        if isinstance(commit, str) and uuid_re.match(commit):
-            return list(self.inspect_commit_set(commit, True))
-        return [self.inspect_commit(commit, pfs_proto.CommitState.FINISHED)]
+        return list(self.inspect_commit(commit, pfs_proto.CommitState.FINISHED))
 
     def subscribe_commit(
         self,
