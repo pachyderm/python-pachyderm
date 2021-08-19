@@ -8,44 +8,39 @@ from python_pachyderm.service import Service, pps_proto
 
 
 class PPSMixin:
-    def inspect_job(self, pipeline_name, job_id, wait=False, details=False):
+    def inspect_job(self, job_id, pipeline_name=None, wait=False, details=False):
         """
-        Inspects a job with a given ID. Returns a `JobInfo`.
+        Inspects a job with a given ID. Yields `JobInfo` objects.
 
         Params:
 
-        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to inspect.
+        * `pipeline_name`: A string representing the pipeline name.
         * `wait`: If true, block until the job completes.
         * `details`: If true, include worker details.
         """
-        return self._req(
-            Service.PPS,
-            "InspectJob",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-            ),
-            wait=wait,
-            details=details,
-        )
-
-    def inspect_job_set(self, job_set_id, wait=False, details=False):
-        """
-        Inspects a job set with a given ID. Yields `JobInfo` objects.
-
-        Params:
-
-        * `job_set_id`: The ID of the job set to inspect.
-        * `wait`: If true, block until the job set completes.
-        * `details`: If true, include worker details.
-        """
-        return self._req(
-            Service.PPS,
-            "InspectJobSet",
-            job_set=pps_proto.JobSet(id=job_set_id),
-            wait=wait,
-            details=details,
-        )
+        if pipeline_name is not None:
+            return iter(
+                [
+                    self._req(
+                        Service.PPS,
+                        "InspectJob",
+                        job=pps_proto.Job(
+                            pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+                        ),
+                        wait=wait,
+                        details=details,
+                    )
+                ]
+            )
+        else:
+            return self._req(
+                Service.PPS,
+                "InspectJobSet",
+                job_set=pps_proto.JobSet(id=job_id),
+                wait=wait,
+                details=details,
+            )
 
     def list_job(
         self,
@@ -56,75 +51,64 @@ class PPSMixin:
         jqFilter=None,
     ):
         """
-        Lists jobs. Yields `JobInfo` objects.
+        Lists jobs. Yields `JobInfo` or `JobSetInfo` objects.
 
         Params:
 
         * `pipeline_name`: An optional string representing a pipeline name to
           filter on.
         * `input_commit`: An optional list of tuples, strings, or `Commit`
-          objects representing input commits to filter on.
-        * `output_commit`: An optional tuple, string, or `Commit` object
-          representing an output commit to filter on.
+          objects representing input commits to filter on, only if
+          `pipeline_name` is provided.
         * `history`: An optional int that indicates to return jobs from
-          historical versions of pipelines. Semantics are:
+          historical versions of pipelines, only if `pipeline_name` is
+          provided. Semantics are:
             * 0: Return jobs from the current version of the pipeline or
               pipelines.
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
             * -1: Return jobs from all historical versions.
         * `details`: An optional bool indicating whether the result should
-          include all pipeline details in each `JobInfo`, or limited information
+          include all pipeline details, or limited information
           including name and status, but excluding information in the pipeline
           spec. Leaving this `None` (or `False`) can make the call significantly
           faster in clusters with a large number of pipelines and jobs. Note
-          that if `input_commit` is set, this field is coerced to `True`.
+          that if `input_commit` is valid, this field is coerced to `True`,
+          only if `pipeline_name` is provided.
         * `jqFilter`: An optional string containing a `jq` filter that can
-          restrict the list of jobs returned, for convenience
+          restrict the list of jobs returned, only if `pipeline_name` is
+          provided.
         """
-        if isinstance(input_commit, list):
-            input_commit = [commit_from(ic) for ic in input_commit]
-        elif input_commit is not None:
-            input_commit = [commit_from(input_commit)]
+        if pipeline_name is not None:
+            if isinstance(input_commit, list):
+                input_commit = [commit_from(ic) for ic in input_commit]
+            elif input_commit is not None:
+                input_commit = [commit_from(input_commit)]
 
-        return self._req(
-            Service.PPS,
-            "ListJob",
-            pipeline=pps_proto.Pipeline(name=pipeline_name)
-            if pipeline_name is not None
-            else None,
-            input_commit=input_commit,
-            history=history,
-            details=details,
-            jqFilter=jqFilter,
-        )
+            return self._req(
+                Service.PPS,
+                "ListJob",
+                pipeline=pps_proto.Pipeline(name=pipeline_name),
+                input_commit=input_commit,
+                history=history,
+                details=details,
+                jqFilter=jqFilter,
+            )
+        else:
+            return self._req(
+                Service.PPS,
+                "ListJobSet",
+                details=details,
+            )
 
-    def list_job_set(self, details=False):
-        """
-        Lists all jobs. Yields `JobSetInfo` objects.
-
-        Params:
-
-        * `details`: An optional bool indicating whether the result should
-          include all pipeline details, or limited information including name
-          and status, but excluding information in the pipeline spec. Leaving
-          this `None` (or `False`) can make the call significantly faster in
-          clusters with a large number of pipelines and jobs.
-        """
-        return self._req(
-            Service.PPS,
-            "ListJobSet",
-            details=details,
-        )
-
-    def delete_job(self, pipeline_name, job_id):
+    def delete_job(self, job_id, pipeline_name):
         """
         Deletes a job by its ID.
 
         Params:
 
-        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to delete.
+        * `pipeline_name`: A string representing the pipeline name.
         """
         return self._req(
             Service.PPS,
@@ -134,13 +118,13 @@ class PPSMixin:
             ),
         )
 
-    def stop_job(self, pipeline_name, job_id, reason=""):
+    def stop_job(self, job_id, pipeline_name, reason=""):
         """
         Stops a job given its pipeline_name and job_id.
 
         Params:
-        * `pipeline_name`: A string representing the pipeline name.
         * `job_id`: The ID of the job to stop.
+        * `pipeline_name`: A string representing the pipeline name.
         * `reason`: a str specifying the reason for stopping the job.
         """
         return self._req(

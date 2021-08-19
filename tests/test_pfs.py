@@ -389,7 +389,7 @@ def test_inspect_commit():
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
 
-    commit = client.inspect_commit(c, pfs_pb2.CommitState.FINISHED)
+    commit = list(client.inspect_commit(c, pfs_pb2.CommitState.FINISHED))[0]
     assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
@@ -398,8 +398,8 @@ def test_inspect_commit():
     assert commit.commit.branch.repo.name == repo_name
 
 
-def test_squash_commit_set():
-    client, repo_name = sandbox("squash_commit_set")
+def test_squash_commit():
+    client, repo_name = sandbox("squash_commit")
 
     with client.commit(repo_name, "master") as commit1:
         pass
@@ -409,7 +409,7 @@ def test_squash_commit_set():
 
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 2
-    client.squash_commit_set(commit1.id)
+    client.squash_commit(commit1.id)
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 1
 
@@ -426,22 +426,22 @@ def test_subscribe_commit():
     assert commit.commit.branch.name == "master"
 
 
-def test_list_commit_set():
+def test_list_commit():
     python_pachyderm.Client().delete_all_repos()
 
-    client, repo_name1 = sandbox("list_commit_set_1")
+    client, repo_name1 = sandbox("list_commit1")
 
     with client.commit(repo_name1, "master"):
         pass
     with client.commit(repo_name1, "master"):
         pass
 
-    repo_name2 = util.create_test_repo(client, "list_commit_set_2")
+    repo_name2 = util.create_test_repo(client, "list_commit2")
 
     with client.commit(repo_name2, "master"):
         pass
 
-    commits = list(client.list_commit_set())
+    commits = list(client.list_commit())
     assert len(commits) == 3
 
 

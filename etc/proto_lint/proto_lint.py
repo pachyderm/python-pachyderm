@@ -87,6 +87,9 @@ BLACKLISTED_METHODS = {
         "get_file_set",
         "modify_file",
         "renew_file_set",
+        "list_commit_set",
+        "squash_commit_set",
+        "inspect_commit_set",
     ],
     Service.PPS: [
         # ignore these
@@ -96,6 +99,8 @@ BLACKLISTED_METHODS = {
         "create_job",
         "update_job_state",
         "subscribe_job",
+        "list_job_set",
+        "inspect_job_set",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
