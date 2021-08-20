@@ -295,7 +295,7 @@ class PFSMixin:
                 wait=commit_state == pfs_proto.CommitState.FINISHED,
             )
         raise ValueError(
-            "Bad argument for commit passed- should either be a commit_id str or a Commit-like object"
+            "bad argument: commit should either be a commit ID (str) or a commit-like object"
         )
 
     def list_commit(
