@@ -345,13 +345,26 @@ class PFSMixin:
 
     def squash_commit(self, commit_id: str):
         """
-        Squashes the subcommits of a `Commit` into their parents.
+        Squashes the subcommits of a `Commit` into their children.
         Params:
         * `commit_id`: the id of a `Commit`.
         """
         return self._req(
             Service.PFS,
             "SquashCommitSet",
+            commit_set=pfs_proto.CommitSet(id=commit_id),
+        )
+
+    def drop_commit(self, commit_id: str):
+        """
+        Drops an entire commit.
+
+        Params:
+        * `commit_id`: the id of a `Commit`.
+        """
+        self._req(
+            Service.PFS,
+            "DropCommitSet",
             commit_set=pfs_proto.CommitSet(id=commit_id),
         )
 
@@ -502,7 +515,7 @@ class PFSMixin:
         commit,
         path,
         value,
-        tag=None,
+        datum=None,
         append=None,
     ):
         """
@@ -517,7 +530,7 @@ class PFSMixin:
         written to.
         * `value`: The file contents as bytes, represented as a file-like
         object, bytestring, or iterator of bytestrings.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
@@ -526,14 +539,14 @@ class PFSMixin:
                 return pfc.put_file_from_fileobj(
                     path,
                     value,
-                    tag=tag,
+                    datum=datum,
                     append=append,
                 )
             else:
                 return pfc.put_file_from_bytes(
                     path,
                     value,
-                    tag=tag,
+                    datum=datum,
                     append=append,
                 )
 
@@ -543,7 +556,7 @@ class PFSMixin:
         path,
         url,
         recursive=None,
-        tag=None,
+        datum=None,
         append=None,
     ):
         """
@@ -558,7 +571,7 @@ class PFSMixin:
         * `url`: A string specifying the url of the file to put.
         * `recursive`: allow for recursive scraping of some types URLs, for
         example on s3:// URLs.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
@@ -568,12 +581,18 @@ class PFSMixin:
                 path,
                 url,
                 recursive=recursive,
-                tag=tag,
+                datum=datum,
                 append=append,
             )
 
     def copy_file(
-        self, source_commit, source_path, dest_commit, dest_path, tag=None, append=None
+        self,
+        source_commit,
+        source_path,
+        dest_commit,
+        dest_path,
+        datum=None,
+        append=None,
     ):
         """
         Efficiently copies files already in PFS. Note that the destination
@@ -588,14 +607,16 @@ class PFSMixin:
         * `dest_commit`: A tuple, string, or `Commit` object representing the
         commit for the destination file.
         * `dest_path`: A string specifying the path of the destination file.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
         with self.modify_file_client(dest_commit) as pfc:
-            pfc.copy_file(source_commit, source_path, dest_path, tag=tag, append=append)
+            pfc.copy_file(
+                source_commit, source_path, dest_path, datum=datum, append=append
+            )
 
-    def get_file(self, commit, path, tag=None, URL=None):
+    def get_file(self, commit, path, datum=None, URL=None, offset=None):
         """
         Returns a `PFSFile` object, containing the contents of a file stored
         in PFS.
@@ -605,19 +626,22 @@ class PFSMixin:
         * `commit`: A tuple, dict, or `Commit` object representing the
         commit.
         * `path`: A string specifying the path of the file.
-        * `tag`: A string to distinguish files by.
+        * `datum`: A string to distinguish files by.
         * `URL`: A string that specifies an object storage URL that the file
         will be uploaded to.
+        * `offset`: An int that allows file read to begin at `offset` number of
+        bytes.
         """
         res = self._req(
             Service.PFS,
             "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, tag=tag),
+            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
+            offset=offset,
         )
         return PFSFile(io.BytesIO(next(res).value))
 
-    def get_file_tar(self, commit, path, tag=None, URL=None):
+    def get_file_tar(self, commit, path, datum=None, URL=None, offset=None):
         """
         Returns a `PFSFile` object, containing the contents of a file stored
         in PFS.
@@ -627,16 +651,19 @@ class PFSMixin:
         * `commit`: A tuple, dict, or `Commit` object representing the
         commit.
         * `path`: A string specifying the path of the file.
-        * `tag`: A string to distinguish files by.
+        * `datum`: A string to distinguish files by.
         * `URL`: A string that specifies an object storage URL that the file
         will be uploaded to.
+        * `offset`: An int that allows file read to begin at `offset` number of
+        bytes.
         """
         res = self._req(
             Service.PFS,
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
-                file=pfs_proto.File(commit=commit_from(commit), path=path, tag=tag),
+                file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
                 URL=URL,
+                offset=offset,
             ),
         )
         return PFSFile(io.BytesIO(next(res).value), is_tar=True)
@@ -778,7 +805,7 @@ class ModifyFileClient:
         self,
         pfs_path,
         local_path,
-        tag=None,
+        datum=None,
         append=None,
     ):
         """
@@ -794,13 +821,13 @@ class ModifyFileClient:
         * `local_path`: A string specifying the local file path.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         """
         self._ops.append(
             AtomicModifyFilepathOp(
                 pfs_path,
                 local_path,
-                tag,
+                datum,
                 append,
             )
         )
@@ -809,7 +836,7 @@ class ModifyFileClient:
         self,
         path,
         value,
-        tag=None,
+        datum=None,
         append=None,
     ):
         """
@@ -827,7 +854,7 @@ class ModifyFileClient:
             AtomicModifyFileobjOp(
                 path,
                 value,
-                tag,
+                datum,
                 append,
             )
         )
@@ -836,7 +863,7 @@ class ModifyFileClient:
         self,
         path,
         value,
-        tag=None,
+        datum=None,
         append=None,
     ):
         """
@@ -847,14 +874,14 @@ class ModifyFileClient:
         * `path`: A string specifying the path in the repo the file(s) will be
         written to.
         * `value`: The file contents as a bytestring.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
         self.put_file_from_fileobj(
             path,
             io.BytesIO(value),
-            tag=tag,
+            datum=datum,
             append=append,
         )
 
@@ -862,7 +889,7 @@ class ModifyFileClient:
         self,
         path,
         url,
-        tag=None,
+        datum=None,
         append=None,
         recursive=None,
     ):
@@ -874,7 +901,7 @@ class ModifyFileClient:
 
         * `path`: A string specifying the path to the file.
         * `url`: A string specifying the url of the file to put.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         * `recursive`: allow for recursive scraping of some types URLs, for
@@ -884,24 +911,26 @@ class ModifyFileClient:
             AtomicModifyFileURLOp(
                 path,
                 url,
-                tag=tag,
+                datum=datum,
                 append=append,
                 recursive=recursive,
             )
         )
 
-    def delete_file(self, path, tag=None):
+    def delete_file(self, path, datum=None):
         """
         Deletes a file.
 
         Params:
 
         * `path`: The path to the file.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         """
-        self._ops.append(AtomicDeleteFileOp(path, tag=tag))
+        self._ops.append(AtomicDeleteFileOp(path, datum=datum))
 
-    def copy_file(self, source_commit, source_path, dest_path, tag=None, append=False):
+    def copy_file(
+        self, source_commit, source_path, dest_path, datum=None, append=False
+    ):
         """
         Copy a file.
 
@@ -910,7 +939,7 @@ class ModifyFileClient:
         * `source_commit`: The commit the source file is in.
         * `source_path`: The path to the source file.
         * `dest_path`: The path to the destination file.
-        * `tag`: A string for the file tag.
+        * `datum`: A string for the file datum.
         * `append`: An optional bool, if true the data is appended to the file,
         if it already exists.
         """
@@ -919,7 +948,7 @@ class ModifyFileClient:
                 source_commit,
                 source_path,
                 dest_path,
-                tag=tag,
+                datum=datum,
                 append=append,
             )
         )
@@ -930,9 +959,9 @@ class AtomicOp:
     Represents an operation in a `ModifyFile` call.
     """
 
-    def __init__(self, path, tag):
+    def __init__(self, path, datum):
         self.path = path
-        self.tag = tag
+        self.datum = datum
 
     def reqs(self):
         """
@@ -949,55 +978,55 @@ class AtomicModifyFilepathOp(AtomicOp):
     files.
     """
 
-    def __init__(self, pfs_path, local_path, tag=None, append=False):
-        super().__init__(pfs_path, tag)
+    def __init__(self, pfs_path, local_path, datum=None, append=False):
+        super().__init__(pfs_path, datum)
         self.local_path = local_path
         self.append = append
 
     def reqs(self):
         if not self.append:
-            yield delete_file_req(self.path, self.tag)
+            yield delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
-            yield add_file_req(path=self.path, tag=self.tag)
+            yield add_file_req(path=self.path, datum=self.datum)
             for i, chunk in enumerate(f):
-                yield add_file_req(path=self.path, tag=self.tag, chunk=chunk)
+                yield add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
 class AtomicModifyFileobjOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a file-like object."""
 
-    def __init__(self, path, fobj, tag=None, append=False):
-        super().__init__(path, tag)
+    def __init__(self, path, fobj, datum=None, append=False):
+        super().__init__(path, datum)
         self.fobj = fobj
         self.append = append
 
     def reqs(self):
         if not self.append:
-            yield delete_file_req(self.path, self.tag)
-        yield add_file_req(path=self.path, tag=self.tag)
+            yield delete_file_req(self.path, self.datum)
+        yield add_file_req(path=self.path, datum=self.datum)
         for i in itertools.count():
             chunk = self.fobj.read(BUFFER_SIZE)
             if len(chunk) == 0:
                 return
-            yield add_file_req(path=self.path, tag=self.tag, chunk=chunk)
+            yield add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
 class AtomicModifyFileURLOp(AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
 
-    def __init__(self, path, url, tag=None, append=False, recursive=False):
-        super().__init__(path, tag)
+    def __init__(self, path, url, datum=None, append=False, recursive=False):
+        super().__init__(path, datum)
         self.url = url
         self.recursive = recursive
         self.append = append
 
     def reqs(self):
         if not self.append:
-            yield delete_file_req(self.path, self.tag)
+            yield delete_file_req(self.path, self.datum)
         yield pfs_proto.ModifyFileRequest(
             add_file=pfs_proto.AddFile(
                 path=self.path,
-                tag=self.tag,
+                datum=self.datum,
                 url=pfs_proto.AddFile.URLSource(
                     URL=self.url,
                     recursive=self.recursive,
@@ -1009,8 +1038,8 @@ class AtomicModifyFileURLOp(AtomicOp):
 class AtomicCopyFileOp(AtomicOp):
     """A `ModifyFile` operation to copy a file."""
 
-    def __init__(self, source_commit, source_path, dest_path, tag=None, append=False):
-        super().__init__(dest_path, tag)
+    def __init__(self, source_commit, source_path, dest_path, datum=None, append=False):
+        super().__init__(dest_path, datum)
         self.source_commit = commit_from(source_commit)
         self.source_path = source_path
         self.dest_path = dest_path
@@ -1020,7 +1049,7 @@ class AtomicCopyFileOp(AtomicOp):
         yield pfs_proto.ModifyFileRequest(
             copy_file=pfs_proto.CopyFile(
                 append=self.append,
-                tag=self.tag,
+                datum=self.datum,
                 dst=self.dest_path,
                 src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
             ),
@@ -1030,22 +1059,22 @@ class AtomicCopyFileOp(AtomicOp):
 class AtomicDeleteFileOp(AtomicOp):
     """A `ModifyFile` operation to delete a file."""
 
-    def __init__(self, pfs_path, tag=None):
-        super().__init__(pfs_path, tag)
+    def __init__(self, pfs_path, datum=None):
+        super().__init__(pfs_path, datum)
 
     def reqs(self):
-        yield delete_file_req(self.path, self.tag)
+        yield delete_file_req(self.path, self.datum)
 
 
-def add_file_req(path=None, tag=None, chunk=None):
+def add_file_req(path=None, datum=None, chunk=None):
     return pfs_proto.ModifyFileRequest(
         add_file=pfs_proto.AddFile(
-            path=path, tag=tag, raw=wrappers_pb2.BytesValue(value=chunk)
+            path=path, datum=datum, raw=wrappers_pb2.BytesValue(value=chunk)
         ),
     )
 
 
-def delete_file_req(path=None, tag=None):
+def delete_file_req(path=None, datum=None):
     return pfs_proto.ModifyFileRequest(
-        delete_file=pfs_proto.DeleteFile(path=path, tag=tag)
+        delete_file=pfs_proto.DeleteFile(path=path, datum=datum)
     )
