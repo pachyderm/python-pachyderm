@@ -27,7 +27,35 @@ done
 
 # generate protobuf and gRPC code from proto files
 # should result in {}_pb2.py and {}_pb2_grpc.py per proto
-find "${OUTDIR}" -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
+find "${OUTDIR}" -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. \
+  --python_out=. \
+  --grpc_python_out=.
+
+for i in $(find "${OUTDIR}" -name '*.proto' ); do 
+    cat "${i}" \
+      | awk '
+          /^service.*{/,/^}/ {
+              nope="true"
+          }
+          
+          nope != "true" {
+              print $0
+          }
+
+          nope == "true" {
+              nope = "false"
+          }
+        ' >"${i}.2" \
+      && mv "${i}.2" "${i}"
+done
+
+# Re-build protos again, but this time use betterproto (which generates
+# docstrings based the .proto file's comments, and generally more pythonic
+# structs)
+mkdir ./betterproto
+find "${OUTDIR}" -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. \
+  --python_betterproto_out=./betterproto
+
 find "${OUTDIR}" -name '*.proto' | xargs rm
 
 find "${OUTDIR}" -type d -exec touch {}/__init__.py \;
