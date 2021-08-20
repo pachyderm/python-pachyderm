@@ -119,11 +119,19 @@ make docs
 
 ## Releasing
 
+Our current process for publishing a release of python-pachyderm consists of the following steps:
+
+- [ ] Ensure compatibility with the latest protos:
+  - [ ] Make sure `version.json` references the most recent compatible release of Pachyderm
+  - [ ] Run `make src/python_pachyderm/proto/v2` to pull the latest pachyderm code
+  - [ ] Run `make lint` and our test suite (see `contributing.md`)
+- [ ] Ensure that all examples still pass:
+  - [ ] All examples in the `examples/` dir (they must be run manually—`tox example` only runs `examples/opencv`
+  - [ ] [Pachyerm's spouts101 example](github.com/pachyderm/pachyderm/tree/master/examples/spouts101) (should match `examples/spouts101` in this repo, but it's good to confirm
+- [ ] Rebuild docs to make sure they're in sync, and push the updated docs
+- [ ] Update `version.json` to the next version of `python-pachyderm` (this will be the released version). Commit and push this change to `master`
+- [ ] Edit the `make release` rule in `Makefile` so that it references the release branch (currently it's hard-coded to `master`)
+- [ ] Run `make release`, which will pull `master` (or whatever branch you configured in the previous step), build a package, and push it to pypi
+- [ ] Go to http://github.com/pachyderm/python-pachyderm and create a new GitHub release pointing at the commit from three steps ago (the one that incremented `version.json`
+- [ ] (Major releases only) Create a new branch for the new release. For example, if releasing 7.0.0, create a new `7.x` branch to hold future changes to the 7.x release line (master now contains the future contents of 8.x)
 To make a new release, from the master branch:
-
-* Rebuild docs to make sure they're in sync
-* Update `CHANGELOG.md` and `version.json`
-
-```bash
-make release
-```
