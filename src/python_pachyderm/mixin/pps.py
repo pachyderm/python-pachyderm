@@ -360,7 +360,7 @@ class PPSMixin:
             )
 
     def list_pipeline(
-        self, history=None, details=None, jqFilter=None
+        self, history: int = 0, details: bool = False, jqFilter: str = None
     ) -> Iterator[pps_proto.PipelineInfo]:
         """
         Lists pipelines. Yields `PipelineInfo` objects.
