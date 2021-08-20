@@ -134,10 +134,10 @@ def test_datums():
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
     pipelines = list(
-        sandbox.client.list_pipeline(sandbox.pipeline_repo_name, history=-1)
+        sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
     )
     assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
 
@@ -168,11 +168,11 @@ def test_restart_pipeline():
     sandbox = Sandbox("restart_job")
 
     sandbox.client.stop_pipeline(sandbox.pipeline_repo_name)
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert pipeline.stopped
 
     sandbox.client.start_pipeline(sandbox.pipeline_repo_name)
-    pipeline = sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name)
+    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
     assert not pipeline.stopped
 
 
