@@ -21,7 +21,7 @@ class AuthMixin:
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         """
-        return self._req(Service.AUTH, "Deactivate")
+        self._req(Service.AUTH, "Deactivate")
 
     def get_auth_configuration(self):
         """
@@ -37,7 +37,7 @@ class AuthMixin:
 
         * `config`: An `AuthConfig` object.
         """
-        return self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
+        self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
 
     def get_role_binding(self, resource):
         """
@@ -55,7 +55,7 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         """
-        return self._req(
+        self._req(
             Service.AUTH,
             "ModifyRoleBinding",
             resource=resource,
@@ -143,7 +143,7 @@ class AuthMixin:
         * `token`: A string that indicates the Pachyderm token that is being
         revoked.
         """
-        return self._req(Service.AUTH, "RevokeAuthToken", token=token)
+        self._req(Service.AUTH, "RevokeAuthToken", token=token)
 
     def set_groups_for_user(self, username, groups):
         """
@@ -154,9 +154,7 @@ class AuthMixin:
         * `username`: A string.
         * `groups`: A list of strings.
         """
-        return self._req(
-            Service.AUTH, "SetGroupsForUser", username=username, groups=groups
-        )
+        self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
 
     def modify_members(self, group, add=None, remove=None):
         """
@@ -168,7 +166,7 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         """
-        return self._req(
+        self._req(
             Service.AUTH,
             "ModifyMembers",
             group=group,

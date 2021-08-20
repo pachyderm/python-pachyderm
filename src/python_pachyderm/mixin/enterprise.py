@@ -13,7 +13,7 @@ class EnterpriseMixin:
         * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         """
-        return self._req(
+        self._req(
             Service.ENTERPRISE,
             "Activate",
             license_server=license_server,
@@ -30,7 +30,7 @@ class EnterpriseMixin:
 
     def deactivate_enterprise(self):
         """Deactivates enterprise."""
-        return self._req(Service.ENTERPRISE, "Deactivate")
+        self._req(Service.ENTERPRISE, "Deactivate")
 
     def get_activation_code(self):
         """

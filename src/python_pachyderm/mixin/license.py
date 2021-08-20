@@ -64,7 +64,7 @@ class LicenseMixin:
         * `id`: The unique ID to identify the cluster.
         * `address`: A GRPC address for the license server to reach the cluster.
         """
-        return self._req(
+        self._req(
             Service.LICENSE,
             "UpdateCluster",
             id=id,
@@ -81,7 +81,7 @@ class LicenseMixin:
 
         * `id`: The unique ID to identify the cluster.
         """
-        return self._req(Service.LICENSE, "DeleteCluster", id=id)
+        self._req(Service.LICENSE, "DeleteCluster", id=id)
 
     def list_clusters(self):
         """
@@ -99,7 +99,7 @@ class LicenseMixin:
         """
         Remove all clusters and deactivate the license service.
         """
-        return self._req(Service.LICENSE, "DeleteAll")
+        self._req(Service.LICENSE, "DeleteAll")
 
     def list_user_clusters(self):
         """

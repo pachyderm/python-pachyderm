@@ -112,7 +112,7 @@ class PFSMixin:
         * `description`: An optional string describing the repo.
         * `update`: Whether to update if the repo already exists.
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "CreateRepo",
             repo=pfs_proto.Repo(name=repo_name, type="user"),
@@ -153,7 +153,7 @@ class PFSMixin:
         * `force`: If set to true, the repo will be removed regardless of
           errors. This argument should be used with care.
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "DeleteRepo",
             repo=pfs_proto.Repo(name=repo_name, type="user"),
@@ -164,7 +164,7 @@ class PFSMixin:
         """
         Deletes all repos.
         """
-        return self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
+        self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
 
     def start_commit(self, repo_name, branch, parent=None, description=None) -> Commit:
         """
@@ -222,7 +222,7 @@ class PFSMixin:
         * `force`: An optional bool. If true, commit will be forcefully
         finished, even if it breaks provenance.
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "FinishCommit",
             commit=commit_from(commit),
@@ -349,7 +349,7 @@ class PFSMixin:
         Params:
         * `commit_id`: the id of a `Commit`.
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "SquashCommitSet",
             commit_set=pfs_proto.CommitSet(id=commit_id),
@@ -424,7 +424,7 @@ class PFSMixin:
         * `new_commitset`: A bool, overrides the default behavior of using the
            same Commitset as 'head'
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "CreateBranch",
             branch=pfs_proto.Branch(
@@ -477,7 +477,7 @@ class PFSMixin:
         * `branch_name`: A string specifying the name of the branch to delete.
         * `force`: A bool specifying whether to force the branch deletion.
         """
-        return self._req(
+        self._req(
             Service.PFS,
             "DeleteBranch",
             branch=pfs_proto.Branch(
@@ -523,14 +523,14 @@ class PFSMixin:
         """
         with self.modify_file_client(commit) as pfc:
             if hasattr(value, "read"):
-                return pfc.put_file_from_fileobj(
+                pfc.put_file_from_fileobj(
                     path,
                     value,
                     tag=tag,
                     append=append,
                 )
             else:
-                return pfc.put_file_from_bytes(
+                pfc.put_file_from_bytes(
                     path,
                     value,
                     tag=tag,
@@ -719,7 +719,7 @@ class PFSMixin:
         * `path`: The path to the file.
         """
         with self.modify_file_client(commit) as pfc:
-            return pfc.delete_file(path)
+            pfc.delete_file(path)
 
     def fsck(self, fix=None):
         """

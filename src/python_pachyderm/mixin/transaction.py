@@ -50,7 +50,7 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         """
-        return self._req(
+        self._req(
             Service.TRANSACTION,
             "DeleteTransaction",
             transaction=transaction_from(transaction),
@@ -60,7 +60,7 @@ class TransactionMixin:
         """
         Deletes all transactions.
         """
-        return self._req(Service.TRANSACTION, "DeleteAll")
+        self._req(Service.TRANSACTION, "DeleteAll")
 
     def list_transaction(self):
         """

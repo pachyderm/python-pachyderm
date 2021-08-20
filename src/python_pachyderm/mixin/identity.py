@@ -10,7 +10,7 @@ class IdentityMixin:
 
         * `issuer`: The issuer for the identity server.
         """
-        return self._req(Service.IDENTITY, "SetIdentityServerConfig", config=config)
+        self._req(Service.IDENTITY, "SetIdentityServerConfig", config=config)
 
     def get_identity_server_config(self):
         """
@@ -22,7 +22,7 @@ class IdentityMixin:
         """
         Create an IDP connector in the identity server.
         """
-        return self._req(Service.IDENTITY, "CreateIDPConnector", connector=connector)
+        self._req(Service.IDENTITY, "CreateIDPConnector", connector=connector)
 
     def list_idp_connectors(self):
         """
@@ -34,7 +34,7 @@ class IdentityMixin:
         """
         Update an IDP connector in the identity server.
         """
-        return self._req(Service.IDENTITY, "UpdateIDPConnector", connector=connector)
+        self._req(Service.IDENTITY, "UpdateIDPConnector", connector=connector)
 
     def get_idp_connector(self, id):
         """
@@ -46,7 +46,7 @@ class IdentityMixin:
         """
         Delete an IDP connector in the identity server.
         """
-        return self._req(Service.IDENTITY, "DeleteIDPConnector", id=id)
+        self._req(Service.IDENTITY, "DeleteIDPConnector", id=id)
 
     def create_oidc_client(self, client):
         """
@@ -70,7 +70,7 @@ class IdentityMixin:
         """
         Delete an OIDC client in the identity server.
         """
-        return self._req(Service.IDENTITY, "DeleteOIDCClient", id=id)
+        self._req(Service.IDENTITY, "DeleteOIDCClient", id=id)
 
     def list_oidc_clients(self):
         """
@@ -82,4 +82,4 @@ class IdentityMixin:
         """
         Delete all identity service information.
         """
-        return self._req(Service.IDENTITY, "DeleteAll")
+        self._req(Service.IDENTITY, "DeleteAll")
