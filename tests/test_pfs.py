@@ -404,12 +404,29 @@ def test_squash_commit():
     with client.commit(repo_name, "master") as commit1:
         pass
 
-    with client.commit(repo_name, "master"):
+    with client.commit(repo_name, "master") as commit2:
         pass
 
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 2
+    client.wait_commit(commit2.id)
     client.squash_commit(commit1.id)
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 1
+
+
+def test_drop_commit():
+    client, repo_name = sandbox("drop_commit")
+
+    with client.commit(repo_name, "master"):
+        pass
+
+    with client.commit(repo_name, "master") as commit2:
+        pass
+
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 2
+    client.drop_commit(commit2.id)
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 1
 

@@ -88,8 +88,8 @@ BLACKLISTED_METHODS = {
         "modify_file",
         "renew_file_set",
         "list_commit_set",
-        "squash_commit_set",
         "inspect_commit_set",
+        "run_load_test_default",
     ],
     Service.PPS: [
         # ignore these
@@ -101,6 +101,7 @@ BLACKLISTED_METHODS = {
         "subscribe_job",
         "list_job_set",
         "inspect_job_set",
+        "run_load_test_default",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
@@ -155,6 +156,8 @@ RENAMED_METHODS = {
         "put_file": ["put_file_bytes", "put_file_url"],
         "delete_all": ["delete_all_repos"],
         "get_file_t_a_r": ["get_file_tar"],
+        "squash_commit_set": ["squash_commit"],
+        "drop_commit_set": ["drop_commit"],
     },
     Service.PPS: {
         "get_logs": ["get_job_logs", "get_pipeline_logs"],
@@ -224,6 +227,9 @@ RENAMED_ARGS = {
         ("old_file", ("old_commit", "old_path")),
         ("new_file", ("new_commit", "new_path")),
     ],
+    "drop_commit": [
+        ("commit_set", "commit_id"),
+    ],
     "finish_commit": [
         ("tree", "input_tree_object_hash"),
         ("trees", "tree_object_hashes"),
@@ -233,10 +239,10 @@ RENAMED_ARGS = {
         ("to_repos", "repos"),
     ],
     "get_file": [
-        ("file", ("commit", "path", "tag")),
+        ("file", ("commit", "path", "datum")),
     ],
     "get_file_tar": [
-        ("file", ("commit", "path", "tag")),
+        ("file", ("commit", "path", "datum")),
     ],
     "inspect_branch": [
         ("branch", ("repo_name", "branch_name")),
@@ -277,6 +283,9 @@ RENAMED_ARGS = {
         ("file", ("commit", "path")),
         ("value", None),
         ("delete", None),
+    ],
+    "squash_commit": [
+        ("commit_set", "commit_id"),
     ],
     "start_commit": [
         ("parent", ("repo_name", "parent")),
