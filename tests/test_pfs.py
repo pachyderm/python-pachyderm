@@ -7,7 +7,7 @@ import tempfile
 from io import BytesIO
 
 import python_pachyderm
-from python_pachyderm.proto.v2.pfs import pfs_pb2
+from python_pachyderm.service import pfs_proto
 from tests import util
 
 
@@ -369,27 +369,74 @@ def test_wait_commit():
     """
     Ensure wait_commit works
     """
-
     client, repo_name = sandbox("wait_commit")
+    repo2_name = util.create_test_repo(client, "wait_commit2")
+
+    # Create provenance between repos (which counts as a commit)
+    client.create_branch(
+        repo2_name,
+        "master",
+        provenance=[
+            pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name="master"
+            )
+        ],
+    )
+    # Head commit is still open in repo2
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
+    client.finish_commit((repo2_name, "master"))
 
     # Just block until all of the commits are yielded
-    assert len(list(client.wait_commit(c.id))) == 1
-    assert len(list(client.wait_commit(c))) == 1
+    assert len(client.wait_commit(c.id)) == 2
+    c_downstream = list(
+        client.inspect_commit((repo2_name, "master"), pfs_proto.CommitState.FINISHED)
+    )[0]
+    assert c_downstream.finished
 
-    files = list(client.list_file(c, "/"))
+    with client.commit(repo_name, "master") as c2:
+        client.put_file_bytes(c2, "input.json", b"bye world")
+    client.finish_commit((repo2_name, "master"))
+
+    # Just block until the commit in repo1 is finished
+    assert len(client.wait_commit(c2)) == 1
+    c2_upstream = list(
+        client.inspect_commit((repo_name, "master"), pfs_proto.CommitState.FINISHED)
+    )[0]
+    assert c2_upstream.finished
+
+    files = list(client.list_file(c2, "/"))
     assert len(files) == 1
 
 
 def test_inspect_commit():
     client, repo_name = sandbox("inspect_commit")
+    repo2_name = util.create_test_repo(client, "inspect_commit2")
+
+    # Create provenance between repos (which counts as a commit)
+    client.create_branch(
+        repo2_name,
+        "master",
+        provenance=[
+            pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name="master"
+            )
+        ],
+    )
+    # Head commit is still open in repo2
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master") as c:
         client.put_file_bytes(c, "input.json", b"hello world")
+    client.finish_commit((repo2_name, "master"))
 
-    commit = list(client.inspect_commit(c, pfs_pb2.CommitState.FINISHED))[0]
+    # Inspect commit at a specific repo
+    commits = list(client.inspect_commit(c, pfs_proto.CommitState.FINISHED))
+    assert len(commits) == 1
+
+    commit = commits[0]
     assert commit.commit.branch.name == "master"
     assert commit.finished
     assert commit.description == ""
@@ -397,38 +444,79 @@ def test_inspect_commit():
     assert len(commit.commit.id) == 32
     assert commit.commit.branch.repo.name == repo_name
 
+    # Inspect entire commit
+    commits = list(client.inspect_commit(c.id, pfs_proto.CommitState.FINISHED))
+    assert len(commits) == 2
+
 
 def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
+    repo2_name = util.create_test_repo(client, "squash_commit2")
+
+    # Create provenance between repos (which counts as a commit)
+    client.create_branch(
+        repo2_name,
+        "master",
+        provenance=[
+            pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name="master"
+            )
+        ],
+    )
+    # Head commit is still open in repo2
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master") as commit1:
         pass
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master") as commit2:
         pass
+    client.finish_commit((repo2_name, "master"))
 
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 2
+    assert len(commits) == 3
     client.wait_commit(commit2.id)
     client.squash_commit(commit1.id)
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 1
+    assert len(commits) == 2
+    commits = list(client.list_commit(repo2_name))
+    assert len(commits) == 2
 
 
 def test_drop_commit():
     client, repo_name = sandbox("drop_commit")
+    repo2_name = util.create_test_repo(client, "drop_commit2")
+
+    # Create provenance between repos (which counts as a commit)
+    client.create_branch(
+        repo2_name,
+        "master",
+        provenance=[
+            pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name="master"
+            )
+        ],
+    )
+    # Head commit is still open in repo2
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master"):
         pass
+    client.finish_commit((repo2_name, "master"))
 
     with client.commit(repo_name, "master") as commit2:
         pass
+    client.finish_commit((repo2_name, "master"))
 
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 2
+    assert len(commits) == 3
+    client.wait_commit(commit2.id)
     client.drop_commit(commit2.id)
     commits = list(client.list_commit(repo_name))
-    assert len(commits) == 1
+    assert len(commits) == 2
+    commits = list(client.list_commit(repo2_name))
+    assert len(commits) == 2
 
 
 def test_subscribe_commit():
@@ -512,10 +600,10 @@ def test_list_file():
     files = list(client.list_file((repo_name, c.id), "/"))
     assert len(files) == 2
     # assert files[0].size_bytes == 4
-    assert files[0].file_type == pfs_pb2.FileType.FILE
+    assert files[0].file_type == pfs_proto.FileType.FILE
     assert files[0].file.path == "/file1.dat"
     # assert files[1].size_bytes == 4
-    assert files[1].file_type == pfs_pb2.FileType.FILE
+    assert files[1].file_type == pfs_proto.FileType.FILE
     assert files[1].file.path == "/file2.dat"
 
 
@@ -545,16 +633,16 @@ def test_glob_file():
     files = list(client.glob_file(c, "/*.dat"))
     assert len(files) == 2
     # assert files[0].size_bytes == 4
-    assert files[0].file_type == pfs_pb2.FileType.FILE
+    assert files[0].file_type == pfs_proto.FileType.FILE
     assert files[0].file.path == "/file1.dat"
     # assert files[1].size_bytes == 4
-    assert files[1].file_type == pfs_pb2.FileType.FILE
+    assert files[1].file_type == pfs_proto.FileType.FILE
     assert files[1].file.path == "/file2.dat"
 
     files = list(client.glob_file(c, "/*1.dat"))
     assert len(files) == 1
     # assert files[0].size_bytes == 4
-    assert files[0].file_type == pfs_pb2.FileType.FILE
+    assert files[0].file_type == pfs_proto.FileType.FILE
     assert files[0].file.path == "/file1.dat"
 
 

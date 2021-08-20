@@ -203,8 +203,8 @@ RENAMED_ARGS = {
     ],
     "create_branch": [
         ("branch", ("repo_name", "branch_name")),
-        ("head", "commit"),
-        ("s_branch", None),
+        ("head", "head_commit"),
+        ("new_commit_set", "new_commit"),
     ],
     "create_secret": [
         ("file", ("secret_name", "data", "labels", "annotations")),
