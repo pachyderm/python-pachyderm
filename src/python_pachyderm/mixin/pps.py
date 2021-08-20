@@ -311,32 +311,51 @@ class PPSMixin:
         """
         return self._req(Service.PPS, "CreatePipeline", req=req)
 
-    def inspect_pipeline(self, pipeline_name, details=None):
+    def inspect_pipeline(self, pipeline_name, history=None, details=None):
         """
-        Inspects a pipeline. Returns a `PipelineInfo` object.
+        Inspects a pipeline. Yields `PipelineInfo` objects.
 
         Params:
 
         * `pipeline_name`: A string representing the pipeline name.
+        * `history`: An optional int that indicates to return historical
+        versions of pipelines. Semantics are:
+            * 0: Return current version of pipelines.
+            * 1: Return the above and pipelines from the next most recent
+            version.
+            * 2: etc.
+            * -1: Return pipelines from all historical versions.
         * `details`: An optional bool that indicates to return details
         on the pipeline.
         """
-        return self._req(
-            Service.PPS,
-            "InspectPipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
-            details=details,
-        )
+        if history == 0:
+            return iter(
+                [
+                    self._req(
+                        Service.PPS,
+                        "InspectPipeline",
+                        pipeline=pps_proto.Pipeline(name=pipeline_name),
+                        details=details,
+                    )
+                ]
+            )
+        else:
+            # `InspectPipeline` doesn't support history, but `ListPipeline`
+            # with a pipeline filter does, so we use that here
+            return self._req(
+                Service.PPS,
+                "ListPipeline",
+                pipeline=pps_proto.Pipeline(name=pipeline_name),
+                history=history,
+                details=details,
+            )
 
-    def list_pipeline(
-        self, pipeline_name=None, history=None, details=None, jqFilter=None
-    ):
+    def list_pipeline(self, history=None, details=None, jqFilter=None):
         """
         Lists pipelines. Yields `PipelineInfo` objects.
 
         Params:
 
-        * `pipeline_name`: An optional string representing the pipeline name.
         * `history`: An optional int that indicates to return historical
         versions of pipelines. Semantics are:
             * 0: Return current version of pipelines.
@@ -352,9 +371,6 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "ListPipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name)
-            if pipeline_name is not None
-            else None,
             history=history,
             details=details,
             jqFilter=jqFilter,
