@@ -124,17 +124,17 @@ Our current process for publishing a release of python-pachyderm consists of the
 - [ ] Ensure compatibility with the latest protos:
   - [ ] Make sure `version.json` references the most recent compatible release of Pachyderm
   - [ ] Run `make src/python_pachyderm/proto/v2` to pull the latest pachyderm code
-  - [ ] Run `make lint` and our test suite (see `contributing.md`)
+  - [ ] Run `make lint`
+  - [ ] Deploy the version of pachyderm (and retrieve the version of `pachctl`) that matches `version.json` (the latest compatible release) and run out test suite (see above)
 - [ ] Ensure that all examples still pass:
   - [ ] All examples in the `examples/` dir (they must be run manually—`tox example` only runs `examples/opencv`)
   - [ ] [Pachyderm's spouts101 example](github.com/pachyderm/pachyderm/tree/master/examples/spouts101), which should match `examples/spouts101` in this repo, but it's good to confirm
 - [ ] Rebuild docs to make sure they're in sync, and push the updated docs
-- [ ] Update `version.json` to the next version of `python-pachyderm` (this will be the released version). Commit and push this change to `master`
-- [ ] Push to pypi
+- [ ] Update `version.json` to the next version of `python-pachyderm` (this will be the released version) and update the changelog. Commit this change and push it to `master`
+- [ ] Push to pypi:
   - [ ] Edit both the `make test-release` and `make release` rules in `Makefile`, so that they reference the release branch (currently it's hard-coded to `master`)
-  - [ ] Run `make test-release`, which will pull `master` (or whatever branch you used in the previous step), build a package, and push it to test-pypi. Confirm that it looks good, as pypi doesn't allow you to modify a release after pushing it.
+  - [ ] Run `make test-release`, which will pull `master` (or whatever branch you used in the previous step), build a package, and push it to test-pypi. Proofread the release page, as pypi doesn't allow you to modify a release after pushing it.
   - [ ] Run `make release`, which will pull `master` (or whatever branch you used above), build a package, and push it to test-pypi. Confirm that it looks good, as pypi doesn't allow you to modify a release after pushing it.
-- [ ] Make the GitHub release
+- [ ] Make the GitHub release:
   - [ ] Go to http://github.com/pachyderm/python-pachyderm and create a new GitHub release pointing at the commit from above (the one that incremented `version.json`)
   - [ ] (Major releases only) Create a new branch for the new release. For example, if releasing 7.0.0, create a new `7.x` branch to hold future changes to the 7.x release line (master now contains the future contents of 8.x)
-To make a new release, from the master branch:
