@@ -110,7 +110,7 @@ class PPSMixin:
         * `job_id`: The ID of the job to delete.
         * `pipeline_name`: A string representing the pipeline name.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "DeleteJob",
             job=pps_proto.Job(
@@ -127,7 +127,7 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         * `reason`: a str specifying the reason for stopping the job.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "StopJob",
             job=pps_proto.Job(
@@ -188,7 +188,7 @@ class PPSMixin:
         * `job_id`: The ID of the job.
         * `data_filters`: An optional iterable of strings.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "RestartDatum",
             job=pps_proto.Job(
@@ -266,7 +266,7 @@ class PPSMixin:
         resource limits for the pipeline sidecar.
         """
 
-        return self._req(
+        self._req(
             Service.PPS,
             "CreatePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
@@ -309,7 +309,7 @@ class PPSMixin:
 
         * `req`: A `CreatePipelineRequest` object.
         """
-        return self._req(Service.PPS, "CreatePipeline", req=req)
+        self._req(Service.PPS, "CreatePipeline", req=req)
 
     def inspect_pipeline(self, pipeline_name, history=None, details=None):
         """
@@ -386,7 +386,7 @@ class PPSMixin:
         * `force`: Whether to force delete.
         * `keep_repo`: Whether to keep the repo.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "DeletePipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
@@ -398,7 +398,7 @@ class PPSMixin:
         """
         Deletes all pipelines in pachyderm.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "DeleteAll",
             req=empty_pb2.Empty(),
@@ -412,7 +412,7 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         """
-        return self._req(
+        self._req(
             Service.PPS,
             "StartPipeline",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
@@ -426,7 +426,7 @@ class PPSMixin:
 
         * `pipeline_name`: A string representing the pipeline name.
         """
-        return self._req(
+        self._req(
             Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name)
         )
 
@@ -440,7 +440,7 @@ class PPSMixin:
         * `pipeline_name`: A string representing the pipeline name.
         """
 
-        return self._req(
+        self._req(
             Service.PPS,
             "RunCron",
             pipeline=pps_proto.Pipeline(name=pipeline_name),
@@ -481,7 +481,7 @@ class PPSMixin:
             }
         ).encode("utf8")
 
-        return self._req(Service.PPS, "CreateSecret", file=f)
+        self._req(Service.PPS, "CreateSecret", file=f)
 
     def delete_secret(self, secret_name):
         """
@@ -492,7 +492,7 @@ class PPSMixin:
         * `secret_name`: The name of the secret to delete.
         """
         secret = pps_proto.Secret(name=secret_name)
-        return self._req(Service.PPS, "DeleteSecret", secret=secret)
+        self._req(Service.PPS, "DeleteSecret", secret=secret)
 
     def list_secret(self):
         """
