@@ -126,8 +126,8 @@ Our current process for publishing a release of python-pachyderm consists of the
   - [ ] Run `make src/python_pachyderm/proto/v2` to pull the latest pachyderm code
   - [ ] Run `make lint` and our test suite (see `contributing.md`)
 - [ ] Ensure that all examples still pass:
-  - [ ] All examples in the `examples/` dir (they must be run manually—`tox example` only runs `examples/opencv`
-  - [ ] [Pachyerm's spouts101 example](github.com/pachyderm/pachyderm/tree/master/examples/spouts101) (should match `examples/spouts101` in this repo, but it's good to confirm
+  - [ ] All examples in the `examples/` dir (they must be run manually—`tox example` only runs `examples/opencv`)
+  - [ ] [Pachyderm's spouts101 example](github.com/pachyderm/pachyderm/tree/master/examples/spouts101), which should match `examples/spouts101` in this repo, but it's good to confirm
 - [ ] Rebuild docs to make sure they're in sync, and push the updated docs
 - [ ] Update `version.json` to the next version of `python-pachyderm` (this will be the released version). Commit and push this change to `master`
 - [ ] Edit the `make release` rule in `Makefile` so that it references the release branch (currently it's hard-coded to `master`)
