@@ -416,10 +416,10 @@ class PFSMixin:
         self,
         repo_name,
         branch_name,
-        commit=None,
+        head_commit=None,
         provenance=None,
         trigger=None,
-        new_commit_set=False,
+        new_commit=False,
     ):
         """
         Creates a new branch.
@@ -443,10 +443,10 @@ class PFSMixin:
             branch=pfs_proto.Branch(
                 repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
-            head=commit_from(commit),
+            head=commit_from(head_commit),
             provenance=provenance,
             trigger=trigger,
-            new_commit_set=new_commit_set,
+            new_commit_set=new_commit,
         )
 
     def inspect_branch(self, repo_name, branch_name):
