@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 7.0.0-rc.1
+
+- Parity with Pachyderm 2.0.0, including support for Global IDs, and corresponding API changes
+- Support for Pachyderm's new spout semantics (added in Pachyderm 1.12)
+  - Spout-manager has been consolidated into core client, as it's no longer necessary with this change.
+- Remove returns from methods whose RPC calls return a negligible protobuf (#328)
+- `put_files` supports putting individual files
+- `Client()` constructor reads connection settings from the Pachyderm config
+- API methods that take a commit now accept tuples of the form `(repo, branch, commit_id, repo_type)`
+- Support Pachyderm root tokens
+- Updated examples
+
 ## 6.1.0
 
 - Support for constructing a `Client` from a Pachyderm config file (PR #220)
