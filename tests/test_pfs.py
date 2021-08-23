@@ -372,7 +372,7 @@ def test_wait_commit():
     client, repo_name = sandbox("wait_commit")
     repo2_name = util.create_test_repo(client, "wait_commit2")
 
-    # Create provenance between repos (which counts as a commit)
+    # Create provenance between repos (which creates a new commit)
     client.create_branch(
         repo2_name,
         "master",
@@ -390,22 +390,18 @@ def test_wait_commit():
     client.finish_commit((repo2_name, "master"))
 
     # Just block until all of the commits are yielded
-    assert len(client.wait_commit(c.id)) == 2
-    c_downstream = list(
-        client.inspect_commit((repo2_name, "master"), pfs_proto.CommitState.FINISHED)
-    )[0]
-    assert c_downstream.finished
+    commits = client.wait_commit(c.id)
+    assert len(commits) == 2
+    assert commits[1].finished
 
     with client.commit(repo_name, "master") as c2:
         client.put_file_bytes(c2, "input.json", b"bye world")
     client.finish_commit((repo2_name, "master"))
 
     # Just block until the commit in repo1 is finished
-    assert len(client.wait_commit(c2)) == 1
-    c2_upstream = list(
-        client.inspect_commit((repo_name, "master"), pfs_proto.CommitState.FINISHED)
-    )[0]
-    assert c2_upstream.finished
+    commits = client.wait_commit(c2)
+    assert len(commits) == 1
+    assert commits[0].finished
 
     files = list(client.list_file(c2, "/"))
     assert len(files) == 1
@@ -415,7 +411,7 @@ def test_inspect_commit():
     client, repo_name = sandbox("inspect_commit")
     repo2_name = util.create_test_repo(client, "inspect_commit2")
 
-    # Create provenance between repos (which counts as a commit)
+    # Create provenance between repos (which creates a new commit)
     client.create_branch(
         repo2_name,
         "master",
@@ -453,7 +449,7 @@ def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
     repo2_name = util.create_test_repo(client, "squash_commit2")
 
-    # Create provenance between repos (which counts as a commit)
+    # Create provenance between repos (which creates a new commit)
     client.create_branch(
         repo2_name,
         "master",
@@ -488,7 +484,7 @@ def test_drop_commit():
     client, repo_name = sandbox("drop_commit")
     repo2_name = util.create_test_repo(client, "drop_commit2")
 
-    # Create provenance between repos (which counts as a commit)
+    # Create provenance between repos (which creates a new commit)
     client.create_branch(
         repo2_name,
         "master",
