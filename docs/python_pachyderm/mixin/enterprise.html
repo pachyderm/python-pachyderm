@@ -41,7 +41,7 @@ class EnterpriseMixin:
         * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.ENTERPRISE,
             &#34;Activate&#34;,
             license_server=license_server,
@@ -58,7 +58,7 @@ class EnterpriseMixin:
 
     def deactivate_enterprise(self):
         &#34;&#34;&#34;Deactivates enterprise.&#34;&#34;&#34;
-        return self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)
+        self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)
 
     def get_activation_code(self):
         &#34;&#34;&#34;
@@ -98,7 +98,7 @@ class EnterpriseMixin:
         * `id`: The unique ID for this cluster.
         * `secret`: The secret for registering this cluster.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.ENTERPRISE,
             &#34;Activate&#34;,
             license_server=license_server,
@@ -115,7 +115,7 @@ class EnterpriseMixin:
 
     def deactivate_enterprise(self):
         &#34;&#34;&#34;Deactivates enterprise.&#34;&#34;&#34;
-        return self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)
+        self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)
 
     def get_activation_code(self):
         &#34;&#34;&#34;
@@ -157,7 +157,7 @@ Returns a <code>TokenInfo</code> object.</p>
     * `id`: The unique ID for this cluster.
     * `secret`: The secret for registering this cluster.
     &#34;&#34;&#34;
-    return self._req(
+    self._req(
         Service.ENTERPRISE,
         &#34;Activate&#34;,
         license_server=license_server,
@@ -177,7 +177,7 @@ Returns a <code>TokenInfo</code> object.</p>
 </summary>
 <pre><code class="python">def deactivate_enterprise(self):
     &#34;&#34;&#34;Deactivates enterprise.&#34;&#34;&#34;
-    return self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)</code></pre>
+    self._req(Service.ENTERPRISE, &#34;Deactivate&#34;)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.enterprise.EnterpriseMixin.get_activation_code"><code class="name flex">

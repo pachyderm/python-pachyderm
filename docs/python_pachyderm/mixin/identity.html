@@ -38,7 +38,7 @@ class IdentityMixin:
 
         * `issuer`: The issuer for the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)
+        self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)
 
     def get_identity_server_config(self):
         &#34;&#34;&#34;
@@ -50,7 +50,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Create an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)
+        self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)
 
     def list_idp_connectors(self):
         &#34;&#34;&#34;
@@ -62,7 +62,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Update an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)
+        self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)
 
     def get_idp_connector(self, id):
         &#34;&#34;&#34;
@@ -74,7 +74,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)
+        self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)
 
     def create_oidc_client(self, client):
         &#34;&#34;&#34;
@@ -98,7 +98,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete an OIDC client in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)
+        self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)
 
     def list_oidc_clients(self):
         &#34;&#34;&#34;
@@ -110,7 +110,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete all identity service information.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
+        self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -140,7 +140,7 @@ class IdentityMixin:
 
         * `issuer`: The issuer for the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)
+        self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)
 
     def get_identity_server_config(self):
         &#34;&#34;&#34;
@@ -152,7 +152,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Create an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)
+        self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)
 
     def list_idp_connectors(self):
         &#34;&#34;&#34;
@@ -164,7 +164,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Update an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)
+        self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)
 
     def get_idp_connector(self, id):
         &#34;&#34;&#34;
@@ -176,7 +176,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete an IDP connector in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)
+        self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)
 
     def create_oidc_client(self, client):
         &#34;&#34;&#34;
@@ -200,7 +200,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete an OIDC client in the identity server.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)
+        self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)
 
     def list_oidc_clients(self):
         &#34;&#34;&#34;
@@ -212,7 +212,7 @@ class IdentityMixin:
         &#34;&#34;&#34;
         Delete all identity service information.
         &#34;&#34;&#34;
-        return self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
+        self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -233,7 +233,7 @@ class IdentityMixin:
     &#34;&#34;&#34;
     Create an IDP connector in the identity server.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)</code></pre>
+    self._req(Service.IDENTITY, &#34;CreateIDPConnector&#34;, connector=connector)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.create_oidc_client"><code class="name flex">
@@ -265,7 +265,7 @@ class IdentityMixin:
     &#34;&#34;&#34;
     Delete all identity service information.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
+    self._req(Service.IDENTITY, &#34;DeleteAll&#34;)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.delete_idp_connector"><code class="name flex">
@@ -281,7 +281,7 @@ class IdentityMixin:
     &#34;&#34;&#34;
     Delete an IDP connector in the identity server.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)</code></pre>
+    self._req(Service.IDENTITY, &#34;DeleteIDPConnector&#34;, id=id)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.delete_oidc_client"><code class="name flex">
@@ -297,7 +297,7 @@ class IdentityMixin:
     &#34;&#34;&#34;
     Delete an OIDC client in the identity server.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)</code></pre>
+    self._req(Service.IDENTITY, &#34;DeleteOIDCClient&#34;, id=id)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.get_identity_server_config"><code class="name flex">
@@ -401,7 +401,7 @@ class IdentityMixin:
 
     * `issuer`: The issuer for the identity server.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)</code></pre>
+    self._req(Service.IDENTITY, &#34;SetIdentityServerConfig&#34;, config=config)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.update_idp_connector"><code class="name flex">
@@ -417,7 +417,7 @@ class IdentityMixin:
     &#34;&#34;&#34;
     Update an IDP connector in the identity server.
     &#34;&#34;&#34;
-    return self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)</code></pre>
+    self._req(Service.IDENTITY, &#34;UpdateIDPConnector&#34;, connector=connector)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.identity.IdentityMixin.update_oidc_client"><code class="name flex">
