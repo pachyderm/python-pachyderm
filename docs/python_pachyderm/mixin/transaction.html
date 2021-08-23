@@ -78,7 +78,7 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.TRANSACTION,
             &#34;DeleteTransaction&#34;,
             transaction=transaction_from(transaction),
@@ -88,7 +88,7 @@ class TransactionMixin:
         &#34;&#34;&#34;
         Deletes all transactions.
         &#34;&#34;&#34;
-        return self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)
+        self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)
 
     def list_transaction(self):
         &#34;&#34;&#34;
@@ -209,7 +209,7 @@ class TransactionMixin:
 
         * `transaction`: A string or `Transaction` object.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.TRANSACTION,
             &#34;DeleteTransaction&#34;,
             transaction=transaction_from(transaction),
@@ -219,7 +219,7 @@ class TransactionMixin:
         &#34;&#34;&#34;
         Deletes all transactions.
         &#34;&#34;&#34;
-        return self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)
+        self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)
 
     def list_transaction(self):
         &#34;&#34;&#34;
@@ -306,7 +306,7 @@ class TransactionMixin:
     &#34;&#34;&#34;
     Deletes all transactions.
     &#34;&#34;&#34;
-    return self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)</code></pre>
+    self._req(Service.TRANSACTION, &#34;DeleteAll&#34;)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.transaction.TransactionMixin.delete_transaction"><code class="name flex">
@@ -330,7 +330,7 @@ class TransactionMixin:
 
     * `transaction`: A string or `Transaction` object.
     &#34;&#34;&#34;
-    return self._req(
+    self._req(
         Service.TRANSACTION,
         &#34;DeleteTransaction&#34;,
         transaction=transaction_from(transaction),

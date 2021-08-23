@@ -49,7 +49,7 @@ class AuthMixin:
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;Deactivate&#34;)
+        self._req(Service.AUTH, &#34;Deactivate&#34;)
 
     def get_auth_configuration(self):
         &#34;&#34;&#34;
@@ -65,7 +65,7 @@ class AuthMixin:
 
         * `config`: An `AuthConfig` object.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
+        self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
 
     def get_role_binding(self, resource):
         &#34;&#34;&#34;
@@ -83,7 +83,7 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.AUTH,
             &#34;ModifyRoleBinding&#34;,
             resource=resource,
@@ -140,11 +140,22 @@ class AuthMixin:
         &#34;&#34;&#34;
         return self._req(Service.AUTH, &#34;WhoAmI&#34;)
 
+    def get_roles_for_permission(self, permission):
+        &#34;&#34;&#34;
+        Returns roles that have the specified permission.
+
+        Params:
+
+        * `permission`: The Permission enum to check for.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRolesForPermission&#34;, permission=permission)
+
     def get_robot_token(self, robot, ttl=None):
         &#34;&#34;&#34;
         Gets a new auth token for a robot user.
 
         Params:
+
         * `robot`: The name of the robot user.
         * `ttl`: Optional. The expiration for the token.
         If empty, the token does not expire.
@@ -160,7 +171,7 @@ class AuthMixin:
         * `token`: A string that indicates the Pachyderm token that is being
         revoked.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
+        self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
 
     def set_groups_for_user(self, username, groups):
         &#34;&#34;&#34;
@@ -171,9 +182,7 @@ class AuthMixin:
         * `username`: A string.
         * `groups`: A list of strings.
         &#34;&#34;&#34;
-        return self._req(
-            Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
-        )
+        self._req(Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups)
 
     def modify_members(self, group, add=None, remove=None):
         &#34;&#34;&#34;
@@ -185,7 +194,7 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.AUTH,
             &#34;ModifyMembers&#34;,
             group=group,
@@ -276,7 +285,7 @@ class AuthMixin:
         Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;Deactivate&#34;)
+        self._req(Service.AUTH, &#34;Deactivate&#34;)
 
     def get_auth_configuration(self):
         &#34;&#34;&#34;
@@ -292,7 +301,7 @@ class AuthMixin:
 
         * `config`: An `AuthConfig` object.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
+        self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)
 
     def get_role_binding(self, resource):
         &#34;&#34;&#34;
@@ -310,7 +319,7 @@ class AuthMixin:
         * `principal`: A string specifying the principal.
         * `roles`: A list of roles to grant. If empty, all roles are revoked.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.AUTH,
             &#34;ModifyRoleBinding&#34;,
             resource=resource,
@@ -367,11 +376,22 @@ class AuthMixin:
         &#34;&#34;&#34;
         return self._req(Service.AUTH, &#34;WhoAmI&#34;)
 
+    def get_roles_for_permission(self, permission):
+        &#34;&#34;&#34;
+        Returns roles that have the specified permission.
+
+        Params:
+
+        * `permission`: The Permission enum to check for.
+        &#34;&#34;&#34;
+        return self._req(Service.AUTH, &#34;GetRolesForPermission&#34;, permission=permission)
+
     def get_robot_token(self, robot, ttl=None):
         &#34;&#34;&#34;
         Gets a new auth token for a robot user.
 
         Params:
+
         * `robot`: The name of the robot user.
         * `ttl`: Optional. The expiration for the token.
         If empty, the token does not expire.
@@ -387,7 +407,7 @@ class AuthMixin:
         * `token`: A string that indicates the Pachyderm token that is being
         revoked.
         &#34;&#34;&#34;
-        return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
+        self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)
 
     def set_groups_for_user(self, username, groups):
         &#34;&#34;&#34;
@@ -398,9 +418,7 @@ class AuthMixin:
         * `username`: A string.
         * `groups`: A list of strings.
         &#34;&#34;&#34;
-        return self._req(
-            Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
-        )
+        self._req(Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups)
 
     def modify_members(self, group, add=None, remove=None):
         &#34;&#34;&#34;
@@ -412,7 +430,7 @@ class AuthMixin:
         * `add`: An optional list of strings specifying members to add.
         * `remove`: An optional list of strings specifying members to remove.
         &#34;&#34;&#34;
-        return self._req(
+        self._req(
             Service.AUTH,
             &#34;ModifyMembers&#34;,
             group=group,
@@ -601,7 +619,7 @@ Pachyderm cluster and making all data publicly accessible.</p></div>
     Deactivates auth, removing all ACLs, tokens, and admins from the
     Pachyderm cluster and making all data publicly accessible.
     &#34;&#34;&#34;
-    return self._req(Service.AUTH, &#34;Deactivate&#34;)</code></pre>
+    self._req(Service.AUTH, &#34;Deactivate&#34;)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.extract_auth_tokens"><code class="name flex">
@@ -687,10 +705,12 @@ issue in github.com/pachyderm/pachyderm).</p></div>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets a new auth token for a robot user.</p>
-<p>Params:
-* <code>robot</code>: The name of the robot user.
-* <code>ttl</code>: Optional. The expiration for the token.
-If empty, the token does not expire.</p></div>
+<p>Params:</p>
+<ul>
+<li><code>robot</code>: The name of the robot user.</li>
+<li><code>ttl</code>: Optional. The expiration for the token.
+If empty, the token does not expire.</li>
+</ul></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -700,6 +720,7 @@ If empty, the token does not expire.</p></div>
     Gets a new auth token for a robot user.
 
     Params:
+
     * `robot`: The name of the robot user.
     * `ttl`: Optional. The expiration for the token.
     If empty, the token does not expire.
@@ -721,6 +742,30 @@ If empty, the token does not expire.</p></div>
     Returns the current set of cluster role bindings.
     &#34;&#34;&#34;
     return self._req(Service.AUTH, &#34;GetRoleBinding&#34;, resource=resource)</code></pre>
+</details>
+</dd>
+<dt id="python_pachyderm.mixin.auth.AuthMixin.get_roles_for_permission"><code class="name flex">
+<span>def <span class="ident">get_roles_for_permission</span></span>(<span>self, permission)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns roles that have the specified permission.</p>
+<p>Params:</p>
+<ul>
+<li><code>permission</code>: The Permission enum to check for.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_roles_for_permission(self, permission):
+    &#34;&#34;&#34;
+    Returns roles that have the specified permission.
+
+    Params:
+
+    * `permission`: The Permission enum to check for.
+    &#34;&#34;&#34;
+    return self._req(Service.AUTH, &#34;GetRolesForPermission&#34;, permission=permission)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.get_users"><code class="name flex">
@@ -770,7 +815,7 @@ If empty, the token does not expire.</p></div>
     * `add`: An optional list of strings specifying members to add.
     * `remove`: An optional list of strings specifying members to remove.
     &#34;&#34;&#34;
-    return self._req(
+    self._req(
         Service.AUTH,
         &#34;ModifyMembers&#34;,
         group=group,
@@ -804,7 +849,7 @@ If empty, the token does not expire.</p></div>
     * `principal`: A string specifying the principal.
     * `roles`: A list of roles to grant. If empty, all roles are revoked.
     &#34;&#34;&#34;
-    return self._req(
+    self._req(
         Service.AUTH,
         &#34;ModifyRoleBinding&#34;,
         resource=resource,
@@ -866,7 +911,7 @@ revoked.</li>
     * `token`: A string that indicates the Pachyderm token that is being
     revoked.
     &#34;&#34;&#34;
-    return self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)</code></pre>
+    self._req(Service.AUTH, &#34;RevokeAuthToken&#34;, token=token)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration"><code class="name flex">
@@ -890,7 +935,7 @@ revoked.</li>
 
     * `config`: An `AuthConfig` object.
     &#34;&#34;&#34;
-    return self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)</code></pre>
+    self._req(Service.AUTH, &#34;SetConfiguration&#34;, configuration=configuration)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user"><code class="name flex">
@@ -916,9 +961,7 @@ revoked.</li>
     * `username`: A string.
     * `groups`: A list of strings.
     &#34;&#34;&#34;
-    return self._req(
-        Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups
-    )</code></pre>
+    self._req(Service.AUTH, &#34;SetGroupsForUser&#34;, username=username, groups=groups)</code></pre>
 </details>
 </dd>
 <dt id="python_pachyderm.mixin.auth.AuthMixin.who_am_i"><code class="name flex">
@@ -969,6 +1012,7 @@ revoked.</li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_oidc_login" href="#python_pachyderm.mixin.auth.AuthMixin.get_oidc_login">get_oidc_login</a></code></li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_robot_token" href="#python_pachyderm.mixin.auth.AuthMixin.get_robot_token">get_robot_token</a></code></li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_role_binding" href="#python_pachyderm.mixin.auth.AuthMixin.get_role_binding">get_role_binding</a></code></li>
+<li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_roles_for_permission" href="#python_pachyderm.mixin.auth.AuthMixin.get_roles_for_permission">get_roles_for_permission</a></code></li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.get_users" href="#python_pachyderm.mixin.auth.AuthMixin.get_users">get_users</a></code></li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_members" href="#python_pachyderm.mixin.auth.AuthMixin.modify_members">modify_members</a></code></li>
 <li><code><a title="python_pachyderm.mixin.auth.AuthMixin.modify_role_binding" href="#python_pachyderm.mixin.auth.AuthMixin.modify_role_binding">modify_role_binding</a></code></li>

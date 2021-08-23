@@ -26,16 +26,15 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from python_pachyderm.service import Service
-from python_pachyderm.proto.v2.health import health_pb2_grpc as health_grpc
+<pre><code class="python">from python_pachyderm.service import health_proto, Service
 
 
 class HealthMixin:
-    def health(self):
+    def health_check(self):
         return self._req(
             Service.HEALTH,
-            &#34;Health&#34;,
-            req=health_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+            &#34;Check&#34;,
+            req=health_proto.HealthCheckRequest(),
         )</code></pre>
 </details>
 </section>
@@ -58,11 +57,11 @@ class HealthMixin:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class HealthMixin:
-    def health(self):
+    def health_check(self):
         return self._req(
             Service.HEALTH,
-            &#34;Health&#34;,
-            req=health_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+            &#34;Check&#34;,
+            req=health_proto.HealthCheckRequest(),
         )</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -71,8 +70,8 @@ class HealthMixin:
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="python_pachyderm.mixin.health.HealthMixin.health"><code class="name flex">
-<span>def <span class="ident">health</span></span>(<span>self)</span>
+<dt id="python_pachyderm.mixin.health.HealthMixin.health_check"><code class="name flex">
+<span>def <span class="ident">health_check</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -80,11 +79,11 @@ class HealthMixin:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def health(self):
+<pre><code class="python">def health_check(self):
     return self._req(
         Service.HEALTH,
-        &#34;Health&#34;,
-        req=health_grpc.google_dot_protobuf_dot_empty__pb2.Empty(),
+        &#34;Check&#34;,
+        req=health_proto.HealthCheckRequest(),
     )</code></pre>
 </details>
 </dd>
@@ -109,7 +108,7 @@ class HealthMixin:
 <li>
 <h4><code><a title="python_pachyderm.mixin.health.HealthMixin" href="#python_pachyderm.mixin.health.HealthMixin">HealthMixin</a></code></h4>
 <ul class="">
-<li><code><a title="python_pachyderm.mixin.health.HealthMixin.health" href="#python_pachyderm.mixin.health.HealthMixin.health">health</a></code></li>
+<li><code><a title="python_pachyderm.mixin.health.HealthMixin.health_check" href="#python_pachyderm.mixin.health.HealthMixin.health_check">health_check</a></code></li>
 </ul>
 </li>
 </ul>
