@@ -39,7 +39,7 @@ class Commit(NamedTuple):
 def commit_from(
     commit: Union[tuple, dict, Commit, pfs_pb2.Commit] = None,
 ) -> pfs_pb2.Commit:
-    """A commit can be identified by [repo, repo_type, branch, commit_id]
+    """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a
     protobuf Commit object.
