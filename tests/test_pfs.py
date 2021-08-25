@@ -74,24 +74,20 @@ def test_start_commit():
 def test_start_commit_on_branch_with_parent():
     client, repo_name = sandbox("start_commit_on_branch_with_parent")
 
-    commit1 = client.start_commit(repo_name, branch_name="master")
+    commit1 = client.start_commit(repo_name, branch="master")
     client.finish_commit(commit1)
 
-    commit2 = client.start_commit(
-        repo_name, branch_name="master", parent_commit=commit1.id
-    )
+    commit2 = client.start_commit(repo_name, branch="master", parent=commit1.id)
     assert commit2.branch.repo.name == repo_name
 
 
 def test_start_commit_fork():
     client, repo_name = sandbox("start_commit_fork")
 
-    commit1 = client.start_commit(repo_name, branch_name="master")
+    commit1 = client.start_commit(repo_name, branch="master")
     client.finish_commit((repo_name, commit1.id))
 
-    commit2 = client.start_commit(
-        repo_name, branch_name="patch", parent_commit="master"
-    )
+    commit2 = client.start_commit(repo_name, branch="patch", parent="master")
 
     assert commit2.branch.repo.name == repo_name
 
