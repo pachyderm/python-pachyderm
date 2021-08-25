@@ -322,11 +322,9 @@ class PFSMixin:
             that represents a subcommit (commit at the repo-level).
         commit_state : pfs_proto.CommitState, optional
             An enum that causes the method to block until the commit is in the
-            specified state: TODO MAKE SURE THIS LIST LOOKS CORRECT
-                * `pfs_proto.CommitState.STARTED`
-                * `pfs_proto.CommitState.READY`
-                * `pfs_proto.CommitState.FINISHING`
-                * `pfs_proto.CommitState.FINISHED`
+            specified state: {`pfs_proto.CommitState.STARTED`,
+            `pfs_proto.CommitState.READY`, `pfs_proto.CommitState.FINISHING`,
+            `pfs_proto.CommitState.FINISHED`}.
 
         Returns
         -------
@@ -394,12 +392,10 @@ class PFSMixin:
             specified.
         origin_kind : pfs_proto.OriginKind, optional
             An enum that specifies how a subcommit originated. Returns only
-            subcommits of this enum type: TODO
-                * `pfs_proto.OriginKind.USER`
-                * `pfs_proto.OriginKind.AUTO`
-                * `pfs_proto.OriginKind.FSCK`
-                * `pfs_proto.OriginKind.ALIAS`
-            Only impacts results if `repo_name` is specified.
+            subcommits of this enum type: {`pfs_proto.OriginKind.USER`,
+            `pfs_proto.OriginKind.AUTO`, `pfs_proto.OriginKind.FSCK`,
+            `pfs_proto.OriginKind.ALIAS`}. Only impacts results if `repo_name`
+            is specified.
 
         Returns
         -------
@@ -438,12 +434,14 @@ class PFSMixin:
             commit_set=pfs_proto.CommitSet(id=commit_id),
         )
 
-    def drop_commit(self, commit_id: str):
+    def drop_commit(self, commit_id: str) -> None:
         """
         Drops an entire commit.
 
-        Params:
-        * `commit_id`: the id of a `Commit`.
+        Parameters
+        ----------
+        commit_id : str
+            The ID of the commit.
         """
         self._req(
             Service.PFS,
@@ -494,21 +492,17 @@ class PFSMixin:
             entire commit or a subcommit (commit at the repo-level).
         commit_state : pfs_proto.CommitState, optional
             Return commits only when they're at least in the specifed enum
-            state: TODO
-                * `pfs_proto.CommitState.STARTED`
-                * `pfs_proto.CommitState.READY`
-                * `pfs_proto.CommitState.FINISHING`
-                * `pfs_proto.CommitState.FINISHED`
+            state: {`pfs_proto.CommitState.STARTED`,
+            `pfs_proto.CommitState.READY`, `pfs_proto.CommitState.FINISHING`,
+            `pfs_proto.CommitState.FINISHED`}.
         all : bool, optional
             If true, returns all types of commits. Otherwise, alias commits are
             excluded.
         origin_kind : pfs_proto.OriginKind, optional
             An enum that specifies how a commit originated. Returns only
-            commits of this enum type: TODO
-                * `pfs_proto.OriginKind.USER`
-                * `pfs_proto.OriginKind.AUTO`
-                * `pfs_proto.OriginKind.FSCK`
-                * `pfs_proto.OriginKind.ALIAS`
+            commits of this enum type: {`pfs_proto.OriginKind.USER`,
+            `pfs_proto.OriginKind.AUTO`, `pfs_proto.OriginKind.FSCK`,
+            `pfs_proto.OriginKind.ALIAS`}.
 
         Returns
         -------
@@ -804,7 +798,7 @@ class PFSMixin:
         datum : str, optional
             A tag that filters the files.
         URL : str, optional
-           Specifies an object storage URL that the file will be uploaded to.
+            Specifies an object storage URL that the file will be uploaded to.
         offset : int, optional
             Allows file read to begin at `offset` number of bytes.
 
@@ -841,7 +835,7 @@ class PFSMixin:
         datum : str, optional
             A tag that filters the files.
         URL : str, optional
-           Specifies an object storage URL that the file will be uploaded to.
+            Specifies an object storage URL that the file will be uploaded to.
         offset : int, optional
             Allows file read to begin at `offset` number of bytes.
 
@@ -1224,7 +1218,7 @@ class ModifyFileClient:
             The commit the source file is in.
         source_path : str
             The path to the source file.
-        dest_path :
+        dest_path : str
             The path to the destination file.
         datum : str, optional
             A tag for the added file.
