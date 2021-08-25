@@ -196,12 +196,12 @@ class PFSMixin:
     def start_commit(
         self,
         repo_name: str,
-        branch_name: str,
-        parent_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        branch: str,
+        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
         description: str = None,
     ) -> pfs_proto.Commit:
-        """Begins the process of committing data to a repo. Once started you can
-        write to the commit with ModifyFile. When all the data has been
+        """Begins the process of committing data to a repo. Once started you
+        can write to the commit with ModifyFile. When all the data has been
         written, you must finish the commit with FinishCommit. NOTE: data is
         not persisted until FinishCommit is called.
 
@@ -211,7 +211,7 @@ class PFSMixin:
             The name of the repo.
         branch_name : str
             A string specifying the branch.
-        parent_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
             A commit specifying the parent of the newly created commit. Upon
             creation, before data is modified, the new commit will appear
             identical to the parent.
@@ -224,9 +224,9 @@ class PFSMixin:
             A protobuf object that represents an open subcommit (commit at the
             repo-level).
         """
-        if parent_commit and isinstance(parent_commit, str):
-            parent_commit = pfs_proto.Commit(
-                id=parent_commit,
+        if parent and isinstance(parent, str):
+            parent = pfs_proto.Commit(
+                id=parent,
                 branch=pfs_proto.Branch(
                     repo=pfs_proto.Repo(name=repo_name, type="user"), name=None
                 ),
@@ -234,9 +234,9 @@ class PFSMixin:
         return self._req(
             Service.PFS,
             "StartCommit",
-            parent=commit_from(parent_commit),
+            parent=commit_from(parent),
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
+                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch
             ),
             description=description,
         )
@@ -278,8 +278,8 @@ class PFSMixin:
     def commit(
         self,
         repo_name: str,
-        branch_name: str,
-        parent_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        branch: str,
+        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
         description: str = None,
     ) -> Iterator[pfs_proto.Commit]:
         """A context manager for running operations within a commit.
@@ -290,7 +290,7 @@ class PFSMixin:
             The name of the repo.
         branch_name : str
             A string specifying the branch.
-        parent_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
             A commit specifying the parent of the newly created commit. Upon
             creation, before data is modified, the new commit will appear
             identical to the parent.
@@ -302,7 +302,7 @@ class PFSMixin:
         pfs_proto.Commit
             A protobuf object that represents a commit.
         """
-        commit = self.start_commit(repo_name, branch_name, parent_commit, description)
+        commit = self.start_commit(repo_name, branch, parent, description)
         try:
             yield commit
         finally:
@@ -353,7 +353,7 @@ class PFSMixin:
                 wait=commit_state == pfs_proto.CommitState.FINISHED,
             )
         raise ValueError(
-            "Bad argument for commit passed- should either be a commit_id str or a Commit-like object"
+            "bad argument: commit should either be a commit ID (str) or a commit-like object"
         )
 
     def list_commit(
@@ -438,6 +438,19 @@ class PFSMixin:
             commit_set=pfs_proto.CommitSet(id=commit_id),
         )
 
+    def drop_commit(self, commit_id: str):
+        """
+        Drops an entire commit.
+
+        Params:
+        * `commit_id`: the id of a `Commit`.
+        """
+        self._req(
+            Service.PFS,
+            "DropCommitSet",
+            commit_set=pfs_proto.CommitSet(id=commit_id),
+        )
+
     def wait_commit(
         self, commit: Union[str, tuple, dict, Commit, pfs_proto.Commit]
     ) -> List[pfs_proto.CommitInfo]:
@@ -461,7 +474,7 @@ class PFSMixin:
     def subscribe_commit(
         self,
         repo_name: str,
-        branch_name: str,
+        branch: str,
         from_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
         commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
         all: bool = False,
@@ -474,7 +487,7 @@ class PFSMixin:
         ----------
         repo_name : str
             The name of the repo.
-        branch_name : str
+        branch : str
             The name of the branch.
         from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
             Return commits only from this commit and onwards. Can either be an
@@ -508,7 +521,7 @@ class PFSMixin:
         repo = pfs_proto.Repo(name=repo_name, type="user")
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo,
-            branch=branch_name,
+            branch=branch,
             state=commit_state,
             all=all,
             origin_kind=origin_kind,
@@ -526,10 +539,10 @@ class PFSMixin:
         self,
         repo_name: str,
         branch_name: str,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+        head_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
         provenance: List[pfs_proto.Branch] = None,
         trigger: pfs_proto.Trigger = None,
-        new_commit_set: bool = False,
+        new_commit: bool = False,
     ) -> None:
         """Creates a new branch.
 
@@ -547,7 +560,7 @@ class PFSMixin:
             branch.
         trigger : pfs_proto.Trigger, optional
             Sets the conditions under which the head of this branch moves.
-        new_commit_set : bool, optional
+        new_commit : bool, optional
             If true and `head_commit` is specified, uses a different commit ID
             for head than `head_commit`.
         """
@@ -557,10 +570,10 @@ class PFSMixin:
             branch=pfs_proto.Branch(
                 repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
             ),
-            head=commit_from(commit),
+            head=commit_from(head_commit),
             provenance=provenance,
             trigger=trigger,
-            new_commit_set=new_commit_set,
+            new_commit_set=new_commit,
         )
 
     def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_proto.BranchInfo:
@@ -778,6 +791,7 @@ class PFSMixin:
         path: str,
         datum: str = None,
         URL: str = None,
+        offset: int = 0,
     ) -> PFSFile:
         """Gets a file from PFS.
 
@@ -791,6 +805,8 @@ class PFSMixin:
             A tag that filters the files.
         URL : str, optional
            Specifies an object storage URL that the file will be uploaded to.
+        offset : int, optional
+            Allows file read to begin at `offset` number of bytes.
 
         Returns
         -------
@@ -802,6 +818,7 @@ class PFSMixin:
             "GetFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
+            offset=offset,
         )
         return PFSFile(io.BytesIO(next(res).value))
 
@@ -811,6 +828,7 @@ class PFSMixin:
         path: str,
         datum: str = None,
         URL: str = None,
+        offset: int = 0,
     ) -> PFSFile:
         """Gets a file from PFS.
 
@@ -824,6 +842,8 @@ class PFSMixin:
             A tag that filters the files.
         URL : str, optional
            Specifies an object storage URL that the file will be uploaded to.
+        offset : int, optional
+            Allows file read to begin at `offset` number of bytes.
 
         Returns
         -------
@@ -836,6 +856,7 @@ class PFSMixin:
             req=pfs_proto.GetFileRequest(
                 file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
                 URL=URL,
+                offset=offset,
             ),
         )
         return PFSFile(io.BytesIO(next(res).value), is_tar=True)

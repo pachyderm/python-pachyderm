@@ -545,7 +545,7 @@ class PPSMixin:
             The name of the secret.
         """
         secret = pps_proto.Secret(name=secret_name)
-        return self._req(Service.PPS, "DeleteSecret", secret=secret)
+        self._req(Service.PPS, "DeleteSecret", secret=secret)
 
     def list_secret(self) -> List[pps_proto.SecretInfo]:
         """Lists secrets.

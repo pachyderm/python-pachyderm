@@ -81,6 +81,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.DropCommitSet = channel.unary_unary(
+                '/pfs_v2.API/DropCommitSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DropCommitSetRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
         self.CreateBranch = channel.unary_unary(
                 '/pfs_v2.API/CreateBranch',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateBranchRequest.SerializeToString,
@@ -181,6 +186,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
                 )
+        self.RunLoadTestDefault = channel.unary_unary(
+                '/pfs_v2.API/RunLoadTestDefault',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                )
 
 
 class APIServicer(object):
@@ -272,6 +282,13 @@ class APIServicer(object):
 
     def SquashCommitSet(self, request, context):
         """SquashCommitSet squashes the commits of a CommitSet into their children.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DropCommitSet(self, request, context):
+        """DropCommitSet drops the commits of a CommitSet and all data included in the commits.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -418,6 +435,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def RunLoadTestDefault(self, request, context):
+        """RunLoadTestDefault runs the default load tests.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -484,6 +508,11 @@ def add_APIServicer_to_server(servicer, server):
             'SquashCommitSet': grpc.unary_unary_rpc_method_handler(
                     servicer.SquashCommitSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'DropCommitSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.DropCommitSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DropCommitSetRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'CreateBranch': grpc.unary_unary_rpc_method_handler(
@@ -584,6 +613,11 @@ def add_APIServicer_to_server(servicer, server):
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTest,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
+            ),
+            'RunLoadTestDefault': grpc.unary_unary_rpc_method_handler(
+                    servicer.RunLoadTestDefault,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
             ),
     }
@@ -813,6 +847,23 @@ class API(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/SquashCommitSet',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.SquashCommitSetRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DropCommitSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/DropCommitSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DropCommitSetRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -1153,6 +1204,23 @@ class API(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RunLoadTest',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RunLoadTestDefault(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RunLoadTestDefault',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

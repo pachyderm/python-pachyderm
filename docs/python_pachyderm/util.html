@@ -36,13 +36,13 @@ from python_pachyderm.proto.v2.pps.pps_pb2 import CreatePipelineRequest
 
 def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     &#34;&#34;&#34;
-    Utility function for recursively inserting files from the local
-    `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
+    Utility function for inserting files from the local `source_path`
+    to pachyderm. Roughly equivalent to `pachctl put file [-r]`.
 
     Params:
 
     * `client`: The `Client` instance to use.
-    * `source_path`: The directory to recursively insert content from.
+    * `source_path`: The file/directory to recursively insert content from.
     * `commit`: The `Commit` object to use for inserting files.
     * `dest_path`: The destination path in PFS.
     * `kwargs`: Keyword arguments to forward. See
@@ -50,13 +50,18 @@ def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     &#34;&#34;&#34;
 
     with client.modify_file_client(commit) as pfc:
-        for root, _, filenames in os.walk(source_path):
-            for filename in filenames:
-                source_filepath = os.path.join(root, filename)
-                dest_filepath = os.path.join(
-                    dest_path, os.path.relpath(source_filepath, start=source_path)
-                )
-                pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+        if os.path.isfile(source_path):
+            pfc.put_file_from_filepath(dest_path, source_path, **kwargs)
+        elif os.path.isdir(source_path):
+            for root, _, filenames in os.walk(source_path):
+                for filename in filenames:
+                    source_filepath = os.path.join(root, filename)
+                    dest_filepath = os.path.join(
+                        dest_path, os.path.relpath(source_filepath, start=source_path)
+                    )
+                    pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+        else:
+            raise Exception(&#34;Please provide an existing directory or file&#34;)
 
 
 def parse_json_pipeline_spec(j):
@@ -116,12 +121,12 @@ def parse_dict_pipeline_spec(d):
 <span>def <span class="ident">put_files</span></span>(<span>client: <a title="python_pachyderm.client.Client" href="client.html#python_pachyderm.client.Client">Client</a>, source_path, commit, dest_path, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Utility function for recursively inserting files from the local
-<code>source_path</code> to pachyderm. Roughly equivalent to <code>pachctl put file -r</code>.</p>
+<div class="desc"><p>Utility function for inserting files from the local <code>source_path</code>
+to pachyderm. Roughly equivalent to <code>pachctl put file [-r]</code>.</p>
 <p>Params:</p>
 <ul>
 <li><code>client</code>: The <code>Client</code> instance to use.</li>
-<li><code>source_path</code>: The directory to recursively insert content from.</li>
+<li><code>source_path</code>: The file/directory to recursively insert content from.</li>
 <li><code>commit</code>: The <code>Commit</code> object to use for inserting files.</li>
 <li><code>dest_path</code>: The destination path in PFS.</li>
 <li><code>kwargs</code>: Keyword arguments to forward. See
@@ -133,13 +138,13 @@ def parse_dict_pipeline_spec(d):
 </summary>
 <pre><code class="python">def put_files(client: Client, source_path, commit, dest_path, **kwargs):
     &#34;&#34;&#34;
-    Utility function for recursively inserting files from the local
-    `source_path` to pachyderm. Roughly equivalent to `pachctl put file -r`.
+    Utility function for inserting files from the local `source_path`
+    to pachyderm. Roughly equivalent to `pachctl put file [-r]`.
 
     Params:
 
     * `client`: The `Client` instance to use.
-    * `source_path`: The directory to recursively insert content from.
+    * `source_path`: The file/directory to recursively insert content from.
     * `commit`: The `Commit` object to use for inserting files.
     * `dest_path`: The destination path in PFS.
     * `kwargs`: Keyword arguments to forward. See
@@ -147,13 +152,18 @@ def parse_dict_pipeline_spec(d):
     &#34;&#34;&#34;
 
     with client.modify_file_client(commit) as pfc:
-        for root, _, filenames in os.walk(source_path):
-            for filename in filenames:
-                source_filepath = os.path.join(root, filename)
-                dest_filepath = os.path.join(
-                    dest_path, os.path.relpath(source_filepath, start=source_path)
-                )
-                pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)</code></pre>
+        if os.path.isfile(source_path):
+            pfc.put_file_from_filepath(dest_path, source_path, **kwargs)
+        elif os.path.isdir(source_path):
+            for root, _, filenames in os.walk(source_path):
+                for filename in filenames:
+                    source_filepath = os.path.join(root, filename)
+                    dest_filepath = os.path.join(
+                        dest_path, os.path.relpath(source_filepath, start=source_path)
+                    )
+                    pfc.put_file_from_filepath(dest_filepath, source_filepath, **kwargs)
+        else:
+            raise Exception(&#34;Please provide an existing directory or file&#34;)</code></pre>
 </details>
 </dd>
 </dl>
