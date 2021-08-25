@@ -8,6 +8,8 @@ from google.protobuf import empty_pb2, duration_pb2
 
 
 class PPSMixin:
+    """A mixin for pps-related functionality."""
+
     def inspect_job(
         self,
         job_id: str,
@@ -15,15 +17,24 @@ class PPSMixin:
         wait: bool = False,
         details: bool = False,
     ) -> Iterator[pps_proto.JobInfo]:
-        """
-        Inspects a job with a given ID. Yields `JobInfo` objects.
+        """Inspects a job.
 
-        Params:
+        Parameters
+        ----------
+        job_id : str
+            The ID of the job.
+        pipeline_name : str, optional
+            The name of a pipeline.
+        wait : bool, optional
+            If true, wait until the job completes.
+        details : bool, optional
+            If true, return worker details.
 
-        * `job_id`: The ID of the job to inspect.
-        * `pipeline_name`: A string representing the pipeline name.
-        * `wait`: If true, block until the job completes.
-        * `details`: If true, include worker details.
+        Returns
+        -------
+        Iterator[pps_proto.JobInfo]
+            An iterator of protobuf objects that contain info on a subjob
+            (jobs at the pipeline-level).
         """
         if pipeline_name is not None:
             return iter(
@@ -56,34 +67,38 @@ class PPSMixin:
         details: bool = False,
         jqFilter: str = None,
     ) -> Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]:
-        """
-        Lists jobs. Yields `JobInfo` or `JobSetInfo` objects.
+        """Lists jobs.
 
-        Params:
-
-        * `pipeline_name`: An optional string representing a pipeline name to
-          filter on.
-        * `input_commit`: An optional list of tuples, strings, or `Commit`
-          objects representing input commits to filter on, only if
-          `pipeline_name` is provided.
-        * `history`: An optional int that indicates to return jobs from
-          historical versions of pipelines, only if `pipeline_name` is
-          provided. Semantics are:
-            * 0: Return jobs from the current version of the pipeline or
-              pipelines.
+        Parameters
+        ----------
+        pipeline_name : str, optional
+            The name of a pipeline. If set, returns subjobs (job at the
+            pipeline-level) only from this pipeline.
+        input_commit : Union[tuple, dict, Commit, pfs_proto.Commit, List], optional  # noqa: W505
+            A commit or list of commits from the input repo to filter jobs on.
+            Only impacts returned results if `pipeline_name` is specified.
+        history : int, optional
+            Indicates to return jobs from historical versions of
+            `pipeline_name`. Semantics are:
+            * 0: Return jobs from the current version of `pipeline_name`
             * 1: Return the above and jobs from the next most recent version
             * 2: etc.
-            * -1: Return jobs from all historical versions.
-        * `details`: An optional bool indicating whether the result should
-          include all pipeline details, or limited information
-          including name and status, but excluding information in the pipeline
-          spec. Leaving this `None` (or `False`) can make the call significantly
-          faster in clusters with a large number of pipelines and jobs. Note
-          that if `input_commit` is valid, this field is coerced to `True`,
-          only if `pipeline_name` is provided.
-        * `jqFilter`: An optional string containing a `jq` filter that can
-          restrict the list of jobs returned, only if `pipeline_name` is
-          provided.
+            * -1: Return jobs from all historical versions of `pipeline_name`
+        details : bool, optional
+            If true, return pipeline details for `pipeline_name`. Leaving this
+            ``None`` (or ``False``) can make the call significantly faster in
+            clusters with a large number of pipelines and jobs. Note that if
+            `input_commit` is valid, this field is coerced to `True`.
+        jqFilter : str, optional
+            A ``jq`` filter that can filter the list of jobs returned, only if
+            `pipeline_name` is provided.
+
+        Returns
+        -------
+        Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]
+            An iterator of protobuf objects that either contain info on a
+            subjob (job at the pipeline-level), if `pipeline_name` was
+            specified, or a job, if `pipeline_name` wasn't specified.
         """
         if pipeline_name is not None:
             if isinstance(input_commit, list):
@@ -108,13 +123,14 @@ class PPSMixin:
             )
 
     def delete_job(self, job_id: str, pipeline_name: str) -> None:
-        """
-        Deletes a job by its ID.
+        """Deletes a subjob (job at the pipeline-level).
 
-        Params:
-
-        * `job_id`: The ID of the job to delete.
-        * `pipeline_name`: A string representing the pipeline name.
+        Parameters
+        ----------
+        job_id : str
+            The ID of the job.
+        pipeline_name : str
+            The name of the pipeline.
         """
         self._req(
             Service.PPS,
@@ -125,13 +141,16 @@ class PPSMixin:
         )
 
     def stop_job(self, job_id: str, pipeline_name: str, reason: str = None) -> None:
-        """
-        Stops a job given its pipeline_name and job_id.
+        """Stops a subjob (job at the pipeline-level).
 
-        Params:
-        * `job_id`: The ID of the job to stop.
-        * `pipeline_name`: A string representing the pipeline name.
-        * `reason`: a str specifying the reason for stopping the job.
+        Parameters
+        ----------
+        job_id : str
+            The ID of the job.
+        pipeline_name : str
+            The name of the pipeline.
+        reason : str, optional
+            A reason for stopping the job.
         """
         self._req(
             Service.PPS,
@@ -145,14 +164,21 @@ class PPSMixin:
     def inspect_datum(
         self, pipeline_name: str, job_id: str, datum_id: str
     ) -> pps_proto.DatumInfo:
-        """
-        Inspects a datum. Returns a `DatumInfo` object.
+        """Inspects a datum.
 
-        Params:
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        job_id : str
+            The ID of the job.
+        datum_id : str
+            The ID of the datum.
 
-        * `pipeline_name`: A string representing the pipeline name.
-        * `job_id`: The ID of the job.
-        * `datum_id`: The ID of the datum.
+        Returns
+        -------
+        pps_proto.DatumInfo
+            A protobuf object with info on the datum.
         """
         return self._req(
             Service.PPS,
@@ -166,39 +192,55 @@ class PPSMixin:
         )
 
     def list_datum(
-        self, pipeline_name: str, job_id: str = None, input: pps_proto.Input = None
+        self,
+        pipeline_name: str = None,
+        job_id: str = None,
+        input: pps_proto.Input = None,
     ) -> Iterator[pps_proto.DatumInfo]:
-        """
-        Lists datums. Yields `DatumInfo` objects.
+        """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
+        `input` (hypothetical) must be set.
 
-        Params:
+        Parameters
+        ----------
+        pipeline_name : str, optional
+            The name of the pipeline.
+        job_id : str, optional
+            The ID of a job.
+        input : pps_proto.Input, optional
+            A protobuf object that filters the datums returned. The datums
+            listed are ones that would be run if a pipeline was created with
+            the provided input.
 
-        * `pipeline_name`: A string representing the pipeline name.
-        * `job_id`: An optional int specifying the ID of a job. Exactly one of
-          `job_id` (real) or `input` (hypothetical) must be set.
-        * `input`: an `Input` object. The datums listed are the ones that would
-           be run if a pipeline was created with the provided input.
+        Returns
+        -------
+        Iterator[pps_proto.DatumInfo]
+            An iterator of protobuf objects that contain info on a datum.
         """
-        return self._req(
-            Service.PPS,
-            "ListDatum",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-            ),
-            input=input,
-        )
+        req = pps_proto.ListDatumRequest()
+        if pipeline_name is not None and job_id is not None:
+            req.job.CopyFrom(
+                pps_proto.Job(
+                    pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+                )
+            )
+        else:
+            req.input.CopyFrom(input)
+        return self._req(Service.PPS, "ListDatum", req=req)
 
     def restart_datum(
         self, pipeline_name: str, job_id: str, data_filters: List[str] = None
     ) -> None:
-        """
-        Restarts a datum.
+        """Restarts a datum.
 
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
-        * `job_id`: The ID of the job.
-        * `data_filters`: An optional iterable of strings.
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        job_id : str
+            The ID of the job.
+        data_filters : List[str], optional
+            A list of paths or hashes of datums that filter which datums are
+            restarted.
         """
         self._req(
             Service.PPS,
@@ -238,46 +280,21 @@ class PPSMixin:
         metadata: pps_proto.Metadata = None,
         autoscaling: bool = False,
     ) -> None:
-        """
-        Creates a pipeline. For more info, please refer to the pipeline spec
-        document:
+        """Creates a pipeline.
+
+        For info on the params, please refer to the pipeline spec document:
         http://docs.pachyderm.io/en/latest/reference/pipeline_spec.html
 
-        Params:
+        Notes
+        -----
+        If creating a Spout pipeline, when committing data to the repo, use
+        commit methods (``client.commit()``, ``client.start_commit()``, etc.)
+        or ``ModifyFileClient`` methods (``mfc.put_file_from_bytes``,
+        ``mfc.delete_file()``, etc.)
 
-        * `pipeline_name`: A string representing the pipeline name.
-        * `transform`: A `Transform` object.
-        * `parallelism_spec`: An optional `ParallelismSpec` object.
-        * `egress`: An optional `Egress` object.
-        * `update`: An optional bool specifying whether this should behave as
-        an upsert.
-        * `output_branch`: An optional string representing the branch to output
-        results on.
-        * `resource_requests`: An optional `ResourceSpec` object.
-        * `resource_limits`: An optional `ResourceSpec` object.
-        * `input`: An optional `Input` object.
-        * `description`: An optional string describing the pipeline.
-        * `reprocess`: An optional bool. If true, pachyderm forces the pipeline
-        to reprocess all datums. It only has meaning if `update` is `True`.
-        * `service`: An optional `Service` object.
-        * `chunk_spec`: An optional `ChunkSpec` object.
-        * `datum_timeout`: An optional `Duration` object.
-        * `job_timeout`: An optional `Duration` object.
-        * `salt`: An optional string.
-        * `datum_tries`: An optional int.
-        * `scheduling_spec`: An optional `SchedulingSpec` object.
-        * `pod_patch`: An optional string.
-        * `spout`: An optional `Spout` object.
-        * `spec_commit`: An optional `Commit` object.
-        * `metadata`: An optional `Metadata` object.
-        * `s3_out`: An optional bool specifying whether the output repo should
-        be exposed as an s3 gateway bucket.
-        * `sidecar_resource_limits`: An optional `ResourceSpec` setting
-        * `reprocess_spec`: An optional string specifying how to handle
-        already-processed data
-        resource limits for the pipeline sidecar.
+        For other pipelines, when committing data to the repo, write out to
+        ``/pfs/out``.
         """
-
         self._req(
             Service.PPS,
             "CreatePipeline",
@@ -312,30 +329,41 @@ class PPSMixin:
     def create_pipeline_from_request(
         self, req: pps_proto.CreatePipelineRequest
     ) -> None:
-        """
-        Creates a pipeline from a `CreatePipelineRequest` object. Usually this
-        would be used in conjunction with `util.parse_json_pipeline_spec` or
-        `util.parse_dict_pipeline_spec`. If you're in pure python and not
-        working with a pipeline spec file, the sibling method
-        `create_pipeline` is more ergonomic.
+        """Creates a pipeline from a ``CreatePipelineRequest`` object. Usually
+        used in conjunction with ``util.parse_json_pipeline_spec()`` or
+        ``util.parse_dict_pipeline_spec``.
 
-        Params:
-
-        * `req`: A `CreatePipelineRequest` object.
+        Parameters
+        ----------
+        req : pps_proto.CreatePipelineRequest
+            The ``CreatePipelineRequest`` object.
         """
         self._req(Service.PPS, "CreatePipeline", req=req)
 
     def inspect_pipeline(
         self, pipeline_name: str, history: int = 0, details: bool = False
     ) -> Iterator[pps_proto.PipelineInfo]:
-        """
-        Inspects a pipeline. Returns a `PipelineInfo` object.
+        """Inspects a pipeline.
 
-        Params:
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        history : int, optional
+            Indicates to return historical versions of `pipeline_name`.
+            Semantics are:
+            * 0: Return current version of `pipeline_name`
+            * 1: Return the above and `pipeline_name` from the next most recent
+            version.
+            * 2: etc.
+            * -1: Return all historical versions of `pipeline_name`.
+        details : bool, optional
+            If true, return pipeline details.
 
-        * `pipeline_name`: A string representing the pipeline name.
-        * `details`: An optional bool that indicates to return details
-        on the pipeline.
+        Returns
+        -------
+        Iterator[pps_proto.PipelineInfo]
+            An iterator of protobuf objects that contain info on a pipeline.
         """
         if history == 0:
             return iter(
@@ -362,23 +390,27 @@ class PPSMixin:
     def list_pipeline(
         self, history: int = 0, details: bool = False, jqFilter: str = None
     ) -> Iterator[pps_proto.PipelineInfo]:
-        """
-        Lists pipelines. Yields `PipelineInfo` objects.
+        """Lists pipelines.
 
-        Params:
-
-        * `pipeline_name`: An optional string representing the pipeline name.
-        * `history`: An optional int that indicates to return historical
-        versions of pipelines. Semantics are:
-            * 0: Return current version of pipelines.
-            * 1: Return the above and pipelines from the next most recent
+        Parameters
+        ----------
+        history : int, optional
+            Indicates to return historical versions of `pipeline_name`.
+            Semantics are:
+            * 0: Return current version of `pipeline_name`
+            * 1: Return the above and `pipeline_name` from the next most recent
             version.
             * 2: etc.
-            * -1: Return pipelines from all historical versions.
-        * `details`: An optional bool that indicates to return details
-        on the pipeline(s).
-        * `jqFilter`: An optional string containing a `jq` filter that can
-          restrict the list of pipelines returned, for convenience.
+            * -1: Return all historical versions of `pipeline_name`.
+        details : bool, optional
+            If true, return pipeline details.
+        jqFilter : str, optional
+            A ``jq`` filter that can filter the list of pipelines returned.
+
+        Returns
+        -------
+        Iterator[pps_proto.PipelineInfo]
+            An iterator of protobuf objects that contain info on a pipeline.
         """
         return self._req(
             Service.PPS,
@@ -391,14 +423,16 @@ class PPSMixin:
     def delete_pipeline(
         self, pipeline_name: str, force: bool = False, keep_repo: bool = False
     ) -> None:
-        """
-        Deletes a pipeline.
+        """Deletes a pipeline.
 
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
-        * `force`: Whether to force delete.
-        * `keep_repo`: Whether to keep the repo.
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        force : bool, optional
+            If true, forces the pipeline deletion.
+        keep_repo : bool, optional
+            If true, keeps the output repo.
         """
         self._req(
             Service.PPS,
@@ -409,9 +443,7 @@ class PPSMixin:
         )
 
     def delete_all_pipelines(self) -> None:
-        """
-        Deletes all pipelines in pachyderm.
-        """
+        """Deletes all pipelines."""
         self._req(
             Service.PPS,
             "DeleteAll",
@@ -419,12 +451,12 @@ class PPSMixin:
         )
 
     def start_pipeline(self, pipeline_name: str) -> None:
-        """
-        Starts a pipeline.
+        """Starts a pipeline.
 
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
         """
         self._req(
             Service.PPS,
@@ -433,27 +465,28 @@ class PPSMixin:
         )
 
     def stop_pipeline(self, pipeline_name: str) -> None:
-        """
-        Stops a pipeline.
+        """Stops a pipeline.
 
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
         """
         self._req(
             Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name)
         )
 
     def run_cron(self, pipeline_name: str) -> None:
+        """Triggers a cron pipeline to run now.
+
+        For more info on cron pipelines:
+        https://docs.pachyderm.com/latest/concepts/pipeline-concepts/pipeline/cron/
+
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
         """
-        Explicitly triggers a pipeline with one or more cron inputs to run
-        now.
-
-        Params:
-
-        * `pipeline_name`: A string representing the pipeline name.
-        """
-
         self._req(
             Service.PPS,
             "RunCron",
@@ -467,19 +500,19 @@ class PPSMixin:
         labels: Dict[str, str] = None,
         annotations: Dict[str, str] = None,
     ) -> None:
-        """
-        Creates a new secret.
+        """Creates a new secret.
 
-        Params:
-
-        * `secret_name`: The name of the secret to create.
-        * `data`: A dict of string keys -> string or bytestring values to
-        store in the secret. Each key must consist of alphanumeric characters,
-        `-`, `_` or `.`.
-        * `labels`: A dict of string keys -> string values representing the
-        kubernetes labels to attach to the secret.
-        * `annotations`: A dict representing the kubernetes annotations to
-        attach to the secret.
+        Parameters
+        ----------
+        secret_name : str
+            The name of the secret.
+        data : Dict[str, Union[str, bytes]]
+            The data to store in the secret. Each key must consist of
+            alphanumeric characters, ``-``, ``_`` or ``.``.
+        labels : Dict[str, str], optional
+            Kubernetes labels to attach to the secret.
+        annotations : Dict[str, str], optional
+            Kubernetes annotations to attach to the secret.
         """
 
         encoded_data = {}
@@ -504,19 +537,23 @@ class PPSMixin:
         self._req(Service.PPS, "CreateSecret", file=f)
 
     def delete_secret(self, secret_name: str) -> None:
-        """
-        Deletes a new secret.
+        """Deletes a secret.
 
-        Params:
-
-        * `secret_name`: The name of the secret to delete.
+        Parameters
+        ----------
+        secret_name : str
+            The name of the secret.
         """
         secret = pps_proto.Secret(name=secret_name)
         return self._req(Service.PPS, "DeleteSecret", secret=secret)
 
     def list_secret(self) -> List[pps_proto.SecretInfo]:
-        """
-        Lists secrets. Returns a list of `SecretInfo` objects.
+        """Lists secrets.
+
+        Returns
+        -------
+        List[pps_proto.SecretInfo]
+            A list of protobuf objects that contain info on a secret.
         """
 
         return self._req(
@@ -526,12 +563,17 @@ class PPSMixin:
         ).secret_info
 
     def inspect_secret(self, secret_name: str) -> pps_proto.SecretInfo:
-        """
-        Inspects a secret.
+        """Inspects a secret.
 
-        Params:
+        Parameters
+        ----------
+        secret_name : str
+            The name of the secret.
 
-        * `secret_name`: The name of the secret to inspect.
+        Returns
+        -------
+        pps_proto.SecretInfo
+            A protobuf object with info on the secret.
         """
         secret = pps_proto.Secret(name=secret_name)
         return self._req(Service.PPS, "InspectSecret", secret=secret)
@@ -547,29 +589,41 @@ class PPSMixin:
         use_loki_backend: bool = False,
         since: duration_pb2.Duration = None,
     ) -> Iterator[pps_proto.LogMessage]:
-        """
-        Gets logs for a pipeline. Yields `LogMessage` objects.
+        """Gets logs for a pipeline.
 
-        Params:
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        data_filters : List[str], optional
+            A list of the names of input files from which we want processing
+            logs. This may contain multiple files, in case `pipeline_name`
+            contains multiple inputs. Each filter may be an absolute path of a
+            file within a repo, or it may be a hash for that file (to search
+            for files at specific versions).
+        master : bool, optional
+            If true, includes logs from the master
+        datum : pps_proto.Datum, optional
+            Filters log lines for the specified datum.
+        follow : bool, optional
+            If true, continue to follow new logs as they appear.
+        tail : int, optional
+            If nonzero, the number of lines from the end of the logs to return.
+            Note: tail applies per container, so you will get
+            `tail` * <number of pods> total lines back.
+        use_loki_backend : bool, optional
+            If true, use loki as a backend, rather than Kubernetes, for
+            fetching logs. Requires a loki-enabled cluster.
+        since : duration_pb2.Duration, optional
+            Specifies how far in the past to return logs from.
 
-        * `pipeline_name`: A string representing a pipeline to get
-          logs of.
-        * `data_filters`: An optional iterable of strings specifying the names
-          of input files from which we want processing logs. This may contain
-          multiple files, to query pipelines that contain multiple inputs. Each
-          filter may be an absolute path of a file within a pps repo, or it may
-          be a hash for that file (to search for files at specific versions.)
-        * `master`: An optional bool.
-        * `datum`: An optional `Datum` object.
-        * `follow`: An optional bool specifying whether logs should continue to
-          stream forever.
-        * `tail`: An optional int. If nonzero, the number of lines from the end
-          of the logs to return.  Note: tail applies per container, so you will
-          get tail * <number of pods> total lines back.
-        * `use_loki_backend`: Whether to use loki as a backend for fetching
-          logs. Requires a loki-enabled cluster.
-        * `since`: An optional `Duration` object specifying the start time for
-          returned logs
+        Returns
+        -------
+        Iterator[pps_proto.LogMessage]
+            An iterator of protobuf objects that contain info on a log from a
+            PPS worker. If `follow` is set to ``True``, use ``next()`` to
+            iterate through as the returned stream is potentially endless.
+            Might block your code otherwise.
         """
         return self._req(
             Service.PPS,
@@ -595,28 +649,41 @@ class PPSMixin:
         use_loki_backend: bool = False,
         since: duration_pb2.Duration = None,
     ) -> Iterator[pps_proto.LogMessage]:
-        """
-        Gets logs for a job. Yields `LogMessage` objects.
+        """Gets logs for a job.
 
-        Params:
+        Parameters
+        ----------
+        pipeline_name : str
+            The name of the pipeline.
+        job_id : str
+            The ID of the job.
+        data_filters : List[str], optional
+            A list of the names of input files from which we want processing
+            logs. This may contain multiple files, in case `pipeline_name`
+            contains multiple inputs. Each filter may be an absolute path of a
+            file within a repo, or it may be a hash for that file (to search
+            for files at specific versions).
+        datum : pps_proto.Datum, optional
+            Filters log lines for the specified datum.
+        follow : bool, optional
+            If true, continue to follow new logs as they appear.
+        tail : int, optional
+            If nonzero, the number of lines from the end of the logs to return.
+            Note: tail applies per container, so you will get
+            `tail` * <number of pods> total lines back.
+        use_loki_backend : bool, optional
+            If true, use loki as a backend, rather than Kubernetes, for
+            fetching logs. Requires a loki-enabled cluster.
+        since : duration_pb2.Duration, optional
+            Specifies how far in the past to return logs from.
 
-        * `pipeline_name`: A string representing a pipeline.
-        * `job_id`: A string representing a job to get logs of.
-        * `data_filters`: An optional iterable of strings specifying the names
-          of input files from which we want processing logs. This may contain
-          multiple files, to query pipelines that contain multiple inputs. Each
-          filter may be an absolute path of a file within a pps repo, or it may
-          be a hash for that file (to search for files at specific versions.)
-        * `datum`: An optional `Datum` object.
-        * `follow`: An optional bool specifying whether logs should continue to
-          stream forever.
-        * `tail`: An optional int. If nonzero, the number of lines from the end
-          of the logs to return.  Note: tail applies per container, so you will
-          get tail * <number of pods> total lines back.
-        * `use_loki_backend`: Whether to use loki as a backend for fetching
-          logs. Requires a loki-enabled cluster.
-        * `since`: An optional `Duration` object specifying the start time for
-          returned logs
+        Returns
+        -------
+        Iterator[pps_proto.LogMessage]
+            An iterator of protobuf objects that contain info on a log from a
+            PPS worker. If `follow` is set to ``True``, use ``next()`` to
+            iterate through as the returned stream is potentially endless.
+            Might block your code otherwise.
         """
         return self._req(
             Service.PPS,

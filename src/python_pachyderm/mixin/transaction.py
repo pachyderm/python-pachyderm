@@ -4,7 +4,7 @@ from typing import Iterator, List, Union
 from python_pachyderm.service import Service, transaction_proto
 
 
-def transaction_from(transaction):
+def _transaction_from(transaction):
     if isinstance(transaction, transaction_proto.Transaction):
         return transaction
     else:
@@ -12,90 +12,118 @@ def transaction_from(transaction):
 
 
 class TransactionMixin:
+    """A mixin for transaction-related functionality."""
+
     def batch_transaction(
         self, requests: List[transaction_proto.TransactionRequest]
     ) -> transaction_proto.TransactionInfo:
-        """
-        Executes a batch transaction.
+        """Executes a batch transaction.
 
-        Params:
+        Parameters
+        ----------
+        requests : List[transaction_proto.TransactionRequest]
+            A list of ``TransactionRequest``s protobufs. Each protobuf must
+            only have one field set.
 
-        * `requests`: A list of `TransactionRequest` objects.
+        Returns
+        -------
+        transaction_proto.TransactionInfo
+            A protobuf object with info on the transaction.
         """
         return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
 
     def start_transaction(self) -> transaction_proto.Transaction:
-        """
-        Starts a transaction.
+        """Starts a transaction.
+
+        Returns
+        -------
+        transaction_proto.Transaction
+            A protobuf object that represents the transaction.
         """
         return self._req(Service.TRANSACTION, "StartTransaction")
 
     def inspect_transaction(
         self, transaction: Union[str, transaction_proto.Transaction]
     ) -> transaction_proto.TransactionInfo:
-        """
-        Inspects a given transaction.
+        """Inspects a transaction.
 
-        Params:
+        Parameters
+        ----------
+        transaction : Union[str, transaction_proto.Transaction]
+            The ID or protobuf object representing the transaction.
 
-        * `transaction`: A string or `Transaction` object.
+        Returns
+        -------
+        transaction_proto.TransactionInfo
+            A protobuf object with info on the transaction.
         """
         return self._req(
             Service.TRANSACTION,
             "InspectTransaction",
-            transaction=transaction_from(transaction),
+            transaction=_transaction_from(transaction),
         )
 
     def delete_transaction(
         self, transaction: Union[str, transaction_proto.Transaction]
     ) -> None:
-        """
-        Deletes a given transaction.
+        """Deletes a transaction.
 
-        Params:
-
-        * `transaction`: A string or `Transaction` object.
+        Parameters
+        ----------
+        transaction : Union[str, transaction_proto.Transaction]
+            The ID or protobuf object representing the transaction.
         """
         self._req(
             Service.TRANSACTION,
             "DeleteTransaction",
-            transaction=transaction_from(transaction),
+            transaction=_transaction_from(transaction),
         )
 
     def delete_all_transactions(self) -> None:
-        """
-        Deletes all transactions.
-        """
+        """Deletes all transactions."""
         self._req(Service.TRANSACTION, "DeleteAll")
 
     def list_transaction(self) -> List[transaction_proto.TransactionInfo]:
-        """
-        Lists transactions.
+        """Lists transactions.
+
+        Returns
+        -------
+        List[transaction_proto.TransactionInfo]
+            A list of protobuf objects that contain info on a transaction.
         """
         return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
 
     def finish_transaction(
         self, transaction: Union[str, transaction_proto.Transaction]
     ) -> transaction_proto.TransactionInfo:
-        """
-        Finishes a given transaction.
+        """Finishes a transaction.
 
-        Params:
+        Parameters
+        ----------
+        transaction : Union[str, transaction_proto.Transaction]
+            The ID or protobuf object representing the transaction.
 
-        * `transaction`: A string or `Transaction` object.
+        Returns
+        -------
+        transaction_proto.TransactionInfo
+            A protobuf object with info on the transaction.
         """
         return self._req(
             Service.TRANSACTION,
             "FinishTransaction",
-            transaction=transaction_from(transaction),
+            transaction=_transaction_from(transaction),
         )
 
     @contextmanager
     def transaction(self) -> Iterator[transaction_proto.Transaction]:
-        """
-        A context manager for running operations within a transaction. When
+        """A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an
         error occurred, or otherwise finished.
+
+        Yields
+        -------
+        transaction_proto.Transaction
+            A protobuf object that represents a transaction.
         """
 
         old_transaction_id = self.transaction_id

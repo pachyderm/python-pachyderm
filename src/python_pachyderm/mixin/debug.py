@@ -4,18 +4,25 @@ from google.protobuf import duration_pb2
 
 
 class DebugMixin:
+    """A mixin for debug-related functionality."""
+
     def dump(
         self, filter: debug_proto.Filter = None, limit: int = None
     ) -> Iterator[bytes]:
-        """
-        Gets a debug dump. Yields byte arrays.
+        """Gets a debug dump.
 
-        Params:
+        Parameters
+        ----------
+        filter : debug_proto.Filter, optional
+            A protobuf object that filters what info is returned.
+        limit : int, optional
+            Sets a limit to how many commits, jobs, pipelines, etc. are
+            returned.
 
-        * `recursed`: An optional bool.
-        * `filter`: An optional `Filter` object.
-        * `limit`: An optional int, limiting the number of commits/jobs returned
-          for each repo/pipeline in the dump
+        Returns
+        -------
+        Iterator[bytes]
+            The debug dump as a sequence of bytearrays.
         """
         res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
         for item in res:
@@ -24,14 +31,20 @@ class DebugMixin:
     def profile_cpu(
         self, duration: duration_pb2.Duration, filter: debug_proto.Filter = None
     ) -> Iterator[bytes]:
-        """
-        Gets a CPU profile. Yields byte arrays.
+        """Gets a CPU profile.
 
-        Params:
+        Parameters
+        ----------
+        duration : duration_pb2.Duration
+            A google protobuf duration object indicating how long the profile
+            should run for.
+        filter : debug_proto.Filter, optional
+            A protobuf object that filters what info is returned.
 
-        * `duration`: A `Duration` object specifying how long to run the CPU
-          profiler.
-        * `filter`: An optional `Filter` object.
+        Returns
+        -------
+        Iterator[bytes]
+            The cpu profile as a sequence of bytearrays.
         """
         profile = debug_proto.Profile(name="cpu", duration=duration)
         res = self._req(Service.DEBUG, "Profile", profile=profile, filter=filter)
@@ -39,12 +52,17 @@ class DebugMixin:
             yield item.value
 
     def binary(self, filter: debug_proto.Filter = None) -> Iterator[bytes]:
-        """
-        Gets the pachd binary. Yields byte arrays.
+        """Gets the pachd binary.
 
-        Params:
+        Parameters
+        ----------
+        filter : debug_proto.Filter, optional
+            A protobuf object that filters what info is returned.
 
-        * `filter`: An optional `Filter` object.
+        Returns
+        -------
+        Iterator[bytes]
+            The pachd binary as a sequence of bytearrays.
         """
         res = self._req(Service.DEBUG, "Binary", filter=filter)
         for item in res:

@@ -14,8 +14,7 @@ BUFFER_SIZE = 19 * 1024 * 1024
 
 
 class FileTarstream:
-    """
-    Implements a file-like interface over a GRPC byte stream,
+    """Implements a file-like interface over a GRPC byte stream,
     so we can use tarfile to decode the file contents.
     """
 
@@ -59,8 +58,7 @@ class FileTarstream:
 
 
 class PFSFile:
-    """
-    The contents of a file stored in PFS. You can treat these as
+    """The contents of a file stored in PFS. You can treat these as
     file-like objects, like so:
 
     ```
@@ -91,29 +89,46 @@ class PFSFile:
             raise StopIteration
         return x
 
-    def read(self, size=-1) -> bytes:
+    def read(self, size: int = -1) -> bytes:
+        """Reads from the ``PFSFile`` buffer.
+
+        Parameters
+        ----------
+        size : int, optional
+            If set, the number of bytes to read from the buffer.
+
+        Returns
+        -------
+        bytes
+            Content from the stream.
+        """
         return self._file.read(size)
 
     def close(self):
+        """Closes the ``PFSFile``."""
         self._file.close()
 
 
 class PFSMixin:
+    """A mixin with pfs-related functionality."""
+
     def create_repo(
         self, repo_name: str, description: str = None, update: bool = False
     ) -> None:
-        """
-        Creates a new `Repo` object in PFS with the given name. Repos are the
+        """Creates a new repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
-        similar type. For example rather than having a single `Repo` for an
-        entire project you might have separate `Repo`s for logs, metrics,
+        similar type. For example rather than having a single repo for an
+        entire project you might have separate repos for logs, metrics,
         database dumps etc.
 
-        Params:
-
-        * `repo_name`: Name of the repo.
-        * `description`: An optional string describing the repo.
-        * `update`: Whether to update if the repo already exists.
+        Parameters
+        ----------
+        repo_name : str
+            Name of the repo.
+        description : str, optional
+            Description of the repo.
+        update : bool, optional
+            Whether to update if the repo already exists.
         """
         self._req(
             Service.PFS,
@@ -124,37 +139,48 @@ class PFSMixin:
         )
 
     def inspect_repo(self, repo_name: str) -> pfs_proto.RepoInfo:
-        """
-        Returns info about a specific repo. Returns a `RepoInfo` object.
+        """Inspects a repo.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str
+            Name of the repo.
 
-        * `repo_name`: Name of the repo.
+        Returns
+        -------
+        pfs_proto.RepoInfo
+            A protobuf object with info on the repo.
         """
         return self._req(
             Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name, type="user")
         )
 
-    def list_repo(self, type: str = None) -> Iterator[pfs_proto.RepoInfo]:
-        """
-        Returns info about all repos, as a list of `RepoInfo` objects.
+    def list_repo(self, type: str = "user") -> Iterator[pfs_proto.RepoInfo]:
+        """Lists all repos in PFS.
 
-        Params:
+        Parameters
+        ----------
+        type : str, optional
+            The type of repos that should be returned ("user", "meta", "spec").
+            If unset, returns all types of repos.
 
-        * `type`: the type of (system) repos that should be returned,
-        an empty value None or empty string requests all repos.
+        Returns
+        -------
+        Iterator[pfs_proto.RepoInfo]
+            An iterator of protobuf objects that contain info on a repo.
         """
         return self._req(Service.PFS, "ListRepo", type=type)
 
     def delete_repo(self, repo_name: str, force: bool = False) -> None:
-        """
-        Deletes a repo and reclaims the storage space it was using.
+        """Deletes a repo and reclaims the storage space it was using.
 
-        Params:
-
-        * `repo_name`: The name of the repo.
-        * `force`: If set to true, the repo will be removed regardless of
-          errors. This argument should be used with care.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        force : bool, optional
+            If set to true, the repo will be removed regardless of errors.
+            Use with care.
         """
         self._req(
             Service.PFS,
@@ -164,9 +190,7 @@ class PFSMixin:
         )
 
     def delete_all_repos(self) -> None:
-        """
-        Deletes all repos.
-        """
+        """Deletes all repos."""
         self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
 
     def start_commit(
@@ -176,27 +200,29 @@ class PFSMixin:
         parent_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
         description: str = None,
     ) -> pfs_proto.Commit:
-        """
-        Begins the process of committing data to a Repo. Once started you can
-        write to the Commit with ModifyFile and when all the data has been
-        written you must finish the Commit with FinishCommit. NOTE, data is
-        not persisted until FinishCommit is called. A Commit object is
-        returned.
+        """Begins the process of committing data to a repo. Once started you can
+        write to the commit with ModifyFile. When all the data has been
+        written, you must finish the commit with FinishCommit. NOTE: data is
+        not persisted until FinishCommit is called.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            A string specifying the branch.
+        parent_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+            A commit specifying the parent of the newly created commit. Upon
+            creation, before data is modified, the new commit will appear
+            identical to the parent.
+        description : str, optional
+            A description of the commit.
 
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying the branch name. This is a more
-        convenient way to build linear chains of commits. When a commit is
-        started with a non-empty branch the value of branch becomes an alias
-        for the created Commit. This enables a more intuitive access pattern.
-        When the commit is started on a branch the previous head of the branch
-        is used as the parent of the commit.
-        * `parent`: An optional `Commit` object specifying the parent commit.
-        Upon creation the new commit will appear identical to the parent
-        commit, data can safely be added to the new commit without affecting
-        the contents of the parent commit.
-        * `description`: An optional string describing the commit.
+        Returns
+        -------
+        pfs_proto.Commit
+            A protobuf object that represents an open subcommit (commit at the
+            repo-level).
         """
         if parent_commit and isinstance(parent_commit, str):
             parent_commit = pfs_proto.Commit(
@@ -222,20 +248,22 @@ class PFSMixin:
         error: str = None,
         force: bool = False,
     ) -> None:
-        """
-        Ends the process of committing data to a Repo and persists the
-        Commit. Once a Commit is finished the data becomes immutable and
+        """Ends the process of committing data to a repo and persists the
+        commit. Once a commit is finished the data becomes immutable and
         future attempts to write to it with ModifyFile will error.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `description`: An optional string describing this commit.
-        * `error`: An optional bool. Used to mark that even though this
-        commit is finished, it was interrupted or didn't occur properly.
-        * `force`: An optional bool. If true, commit will be forcefully
-        finished, even if it breaks provenance.
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) object to close.
+        description : str, optional
+            A description of the commit. It will overwrite the description set
+            in ``start_commit()``.
+        error : str, optional
+            If set, a message that errors out the commit. Don't use unless you
+            want the finish commit request to fail.
+        force : bool, optional
+            If true, forces commit to finish, even if it breaks provenance.
         """
         self._req(
             Service.PFS,
@@ -254,23 +282,25 @@ class PFSMixin:
         parent_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
         description: str = None,
     ) -> Iterator[pfs_proto.Commit]:
-        """
-        A context manager for running operations within a commit.
+        """A context manager for running operations within a commit.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            A string specifying the branch.
+        parent_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+            A commit specifying the parent of the newly created commit. Upon
+            creation, before data is modified, the new commit will appear
+            identical to the parent.
+        description : str, optional
+            A description of the commit.
 
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying the branch name. This is a more
-        convenient way to build linear chains of commits. When a commit is
-        started with a non-empty branch the value of branch becomes an alias
-        for the created Commit. This enables a more intuitive access pattern.
-        When the commit is started on a branch the previous head of the branch
-        is used as the parent of the commit.
-        * `parent`: An optional `Commit` object specifying the parent commit.
-        Upon creation the new commit will appear identical to the parent
-        commit, data can safely be added to the new commit without affecting
-        the contents of the parent commit.
-        * `description`: An optional string describing the commit.
+        Yields
+        -------
+        pfs_proto.Commit
+            A protobuf object that represents a commit.
         """
         commit = self.start_commit(repo_name, branch_name, parent_commit, description)
         try:
@@ -283,19 +313,26 @@ class PFSMixin:
         commit: Union[str, tuple, dict, Commit, pfs_proto.Commit],
         commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
     ) -> Iterator[pfs_proto.CommitInfo]:
-        """
-        Inspects a commit. Yields `CommitInfo` objects.
+        """Inspects a commit.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]
+            The commit to inspect. Can either be a commit ID or a commit object
+            that represents a subcommit (commit at the repo-level).
+        commit_state : pfs_proto.CommitState, optional
+            An enum that causes the method to block until the commit is in the
+            specified state: TODO MAKE SURE THIS LIST LOOKS CORRECT
+                * `pfs_proto.CommitState.STARTED`
+                * `pfs_proto.CommitState.READY`
+                * `pfs_proto.CommitState.FINISHING`
+                * `pfs_proto.CommitState.FINISHED`
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `commit_state`: An optional int that causes this method to block
-        until the commit is in the desired state.
-            1: STARTED
-            2: READY
-            3: FINISHING
-            4: FINISHED
+        Returns
+        -------
+        Iterator[pfs_proto.CommitInfo]
+            An iterator of protobuf objects that contain info on a subcommit
+            (commit at the repo-level).
         """
         if not isinstance(commit, str):
             return iter(
@@ -324,29 +361,52 @@ class PFSMixin:
         repo_name: str = None,
         to_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
         from_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-        number: int = 0,
+        number: int = None,
         reverse: bool = False,
         all: bool = False,
         origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
     ) -> Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]:
-        """
-        Lists commits. Yields `CommitInfo` or `CommitSetInfo` objects.
+        """Lists commits.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str, optional
+            The name of a repo. If set, returns subcommits (commit at
+            repo-level) only in this repo.
+        to_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+            A subcommit (commit at repo-level) that only impacts results if
+            `repo_name` is specified. If set, only the ancestors of
+            `to_commit`, including `to_commit`, are returned.
+        from_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+            A subcommit (commit at repo-level) that only impacts results if
+            `repo_name` is specified. If set, only the descendants of
+            `from_commit`, including `from_commit`, are returned.
+        number : int, optional
+            The number of subcommits to return. If unset, all subcommits that
+            matched the aforementioned criteria are returned. Only impacts
+            results if `repo_name` is specified.
+        reverse : bool, optional
+            If true, returns the subcommits oldest to newest. Only impacts
+            results if `repo_name` is specified.
+        all : bool, optional
+            If true, returns all types of subcommits. Otherwise, alias
+            subcommits are excluded. Only impacts results if `repo_name` is
+            specified.
+        origin_kind : pfs_proto.OriginKind, optional
+            An enum that specifies how a subcommit originated. Returns only
+            subcommits of this enum type: TODO
+                * `pfs_proto.OriginKind.USER`
+                * `pfs_proto.OriginKind.AUTO`
+                * `pfs_proto.OriginKind.FSCK`
+                * `pfs_proto.OriginKind.ALIAS`
+            Only impacts results if `repo_name` is specified.
 
-        * `repo_name`: Optional. If only `repo_name` is given, all commits
-        in the repo are returned.
-        * `to_commit`: Optional. Only the ancestors of `to`, including `to`
-        itself, are considered.
-        * `from_commit`: Optional. Only the descendants of `from`, including
-        `from` itself, are considered.
-        * `number`: Optional. Determines how many commits are returned.  If
-        `number` is 0, all commits that match the aforementioned criteria are
-        returned.
-        * `reverse`: Optional. If true, commits are returned oldest to newest.
-        * `all`: Optional. If true, all types of commits are returned.
-        * `origin_kind`: Optional. Returns only commits of this enum type if
-        `repo_name` is provided.
+        Returns
+        -------
+        Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]
+            An iterator of protobuf objects that either contain info on a
+            subcommit (commit at the repo-level), if `repo_name` was specified,
+            or a commit, if `repo_name` wasn't specified.
         """
         if repo_name is not None:
             req = pfs_proto.ListCommitRequest(
@@ -365,10 +425,12 @@ class PFSMixin:
             return self._req(Service.PFS, "ListCommitSet")
 
     def squash_commit(self, commit_id: str) -> None:
-        """
-        Squashes the subcommits of a `Commit` into their parents.
-        Params:
-        * `commit_id`: the id of a `Commit`.
+        """Squashes a commit into its parent.
+
+        Parameters
+        ----------
+        commit_id : str
+            The ID of the commit.
         """
         self._req(
             Service.PFS,
@@ -379,12 +441,20 @@ class PFSMixin:
     def wait_commit(
         self, commit: Union[str, tuple, dict, Commit, pfs_proto.Commit]
     ) -> List[pfs_proto.CommitInfo]:
-        """
-        Waits for the specified commit or commit_set to finish and return them.
+        """Waits for the specified commit to finish.
 
-        Params:
-        * `commit`: A `Commit` object, tuple, or str. If passed a commit_set_id,
-           then wait for the entire commit_set.
+        Parameters
+        ----------
+        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]
+            A commit object to wait on. Can either be an entire commit or a
+            subcommit (commit at the repo-level).
+
+        Returns
+        -------
+        List[pfs_proto.CommitInfo]
+            A list of protobuf objects that contain info on subcommits (commit
+            at the repo-level). These are the individual subcommits this
+            function waited on.
         """
         return list(self.inspect_commit(commit, pfs_proto.CommitState.FINISHED))
 
@@ -397,20 +467,44 @@ class PFSMixin:
         all: bool = False,
         origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
     ) -> Iterator[pfs_proto.CommitInfo]:
-        """
-        Yields `CommitInfo` objects as commits occur.
+        """Returns all commits on the branch and then listens for new commits
+        that are created.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            The name of the branch.
+        from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+            Return commits only from this commit and onwards. Can either be an
+            entire commit or a subcommit (commit at the repo-level).
+        commit_state : pfs_proto.CommitState, optional
+            Return commits only when they're at least in the specifed enum
+            state: TODO
+                * `pfs_proto.CommitState.STARTED`
+                * `pfs_proto.CommitState.READY`
+                * `pfs_proto.CommitState.FINISHING`
+                * `pfs_proto.CommitState.FINISHED`
+        all : bool, optional
+            If true, returns all types of commits. Otherwise, alias commits are
+            excluded.
+        origin_kind : pfs_proto.OriginKind, optional
+            An enum that specifies how a commit originated. Returns only
+            commits of this enum type: TODO
+                * `pfs_proto.OriginKind.USER`
+                * `pfs_proto.OriginKind.AUTO`
+                * `pfs_proto.OriginKind.FSCK`
+                * `pfs_proto.OriginKind.ALIAS`
 
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying branch to subscribe to.
-        * `from_commit_id`: An optional string specifying the commit ID. Only
-        commits created since this commit are returned.
-        * `state`: The commit state to filter on.
-        * `all`: Optional. If true, all types of commits are returned.
-        * `origin_kind`: Optional. Returns only commits of this enum type.
+        Returns
+        -------
+        Iterator[pfs_proto.CommitInfo]
+            An iterator of protobuf objects that contain info on subcommits
+            (commits at the repo-level). Use ``next()`` to iterate through as
+            the returned stream is potentially endless. Might block your code
+            otherwise.
         """
-        # TODO make it clear func requires next()
         repo = pfs_proto.Repo(name=repo_name, type="user")
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo,
@@ -437,21 +531,25 @@ class PFSMixin:
         trigger: pfs_proto.Trigger = None,
         new_commit_set: bool = False,
     ) -> None:
-        """
-        Creates a new branch.
+        """Creates a new branch.
 
-        Params:
-
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch_name`: A string specifying the new branch name.
-        * `commit`: An optional tuple, string, or `Commit` object representing
-           the head commit of the branch.
-        * `provenance`: An optional list of `Branch` objects representing
-          the branch provenance.
-        * `trigger`: An optional `Trigger` object controlling when the head of
-          `branch_name` is moved.
-        * `new_commitset`: A bool, overrides the default behavior of using the
-           same Commitset as 'head'
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            The name of the new branch.
+        head_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+            A subcommit (commit at repo-level) indicating the head of the
+            new branch.
+        provenance : List[pfs_proto.Branch], optional
+            A list of branches to establish provenance with this newly created
+            branch.
+        trigger : pfs_proto.Trigger, optional
+            Sets the conditions under which the head of this branch moves.
+        new_commit_set : bool, optional
+            If true and `head_commit` is specified, uses a different commit ID
+            for head than `head_commit`.
         """
         self._req(
             Service.PFS,
@@ -466,8 +564,19 @@ class PFSMixin:
         )
 
     def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_proto.BranchInfo:
-        """
-        Inspects a branch. Returns a `BranchInfo` object.
+        """Inspects a branch.
+
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            The name of the branch.
+
+        Returns
+        -------
+        pfs_proto.BranchInfo
+            A protobuf object with info on a branch.
         """
         return self._req(
             Service.PFS,
@@ -480,14 +589,19 @@ class PFSMixin:
     def list_branch(
         self, repo_name: str, reverse: bool = False
     ) -> Iterator[pfs_proto.BranchInfo]:
-        """
-        Lists the active branch objects on a repo. Returns a list of
-        `BranchInfo` objects.
+        """Lists the active branch objects in a repo.
 
-        Params:
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        reverse : bool, optional
+            If true, returns branches oldest to newest.
 
-        * `repo_name`: A string specifying the repo name.
-        * `reverse`: Optional. If true, returns branches oldest to newest.
+        Returns
+        -------
+        Iterator[pfs_proto.BranchInfo]
+            An iterator of protobuf objects that contain info on a branch.
         """
         return self._req(
             Service.PFS,
@@ -499,16 +613,18 @@ class PFSMixin:
     def delete_branch(
         self, repo_name: str, branch_name: str, force: bool = False
     ) -> None:
-        """
-        Deletes a branch, but leaves the commits themselves intact. In other
+        """Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
         branches they happen to be on.
 
-        Params:
-
-        * `repo_name`: A string specifying the repo name.
-        * `branch_name`: A string specifying the name of the branch to delete.
-        * `force`: A bool specifying whether to force the branch deletion.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            The name of the branch.
+        force : bool, optional
+            If true, forces the branch deletion.
         """
         self._req(
             Service.PFS,
@@ -523,10 +639,19 @@ class PFSMixin:
     def modify_file_client(
         self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]
     ) -> Iterator["ModifyFileClient"]:
-        """
-        A context manager that gives a `ModifyFileClient`. When the context
+        """A context manager that gives a `ModifyFileClient`. When the context
         manager exits, any operations enqueued from the `ModifyFileClient` are
         executed in a single, atomic `ModifyFile` call.
+
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            An open subcommit (commit at the repo-level) to modify.
+
+        Yields
+        -------
+        ModifyFileClient
+            An object that can queue operations to modify a commit atomically.
         """
         pfc = ModifyFileClient(commit)
         yield pfc
@@ -540,21 +665,23 @@ class PFSMixin:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Uploads a PFS file from a file-like object, bytestring, or iterator
+        """Uploads a PFS file from a file-like object, bytestring, or iterator
         of bytestrings.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file contents as bytes, represented as a file-like
-        object, bytestring, or iterator of bytestrings.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            An open subcommit (commit at the repo-level) to modify.
+        path : str
+            The path in the repo the file(s) will be written to.
+        value : Union[bytes, BinaryIO]
+            The file contents as bytes, represented as a file-like object,
+            bytestring, or iterator of bystrings.
+        datum : str, optional
+            A tag for the added file(s).
+        append : bool, optional
+            If true, appends the data to the file(s) specified at `path`, if
+            they already exist. Otherwise, overwrites them.
         """
         with self.modify_file_client(commit) as pfc:
             if hasattr(value, "read"):
@@ -581,21 +708,25 @@ class PFSMixin:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Puts a file using the content found at a URL. The URL is sent to the
+        """Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path to the file.
-        * `url`: A string specifying the url of the file to put.
-        * `recursive`: allow for recursive scraping of some types URLs, for
-        example on s3:// URLs.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            An open subcommit (commit at the repo-level) to modify.
+        path : str
+            The path in the repo the file(s) will be written to.
+        url : str
+            The URL of the file to put.
+        recursive : bool, optional
+            If true, allows for recursive scraping on some types URLs, for
+            example on s3:// URLs
+        datum : str, optional
+            A tag for the added file(s).
+        append : bool, optional
+            If true, appends the data to the file(s) specified at `path`, if
+            they already exist. Otherwise, overwrites them.
         """
         with self.modify_file_client(commit) as pfc:
             pfc.put_file_from_url(
@@ -615,22 +746,26 @@ class PFSMixin:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Efficiently copies files already in PFS. Note that the destination
-        repo cannot be an output repo, or the copy operation will (as of
-        1.9.0) silently fail.
+        """Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will silently fail.
 
-        Params:
-
-        * `source_commit`: A tuple, string, or `Commit` object representing the
-        commit for the source file.
-        * `source_path`: A string specifying the path of the source file.
-        * `dest_commit`: A tuple, string, or `Commit` object representing the
-        commit for the destination file.
-        * `dest_path`: A string specifying the path of the destination file.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) which holds the source
+            file.
+        source_path : str
+            The path of the source file.
+        dest_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The open subcommit (commit at the repo-level) to which to add the
+            file.
+        dest_path : str
+            The path of the destination file.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content of `source_path` to the file at
+            `dest_path`, if it already exists. Otherwise, overwrites the file.
         """
         with self.modify_file_client(dest_commit) as pfc:
             pfc.copy_file(
@@ -644,18 +779,23 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
     ) -> PFSFile:
-        """
-        Returns a `PFSFile` object, containing the contents of a file stored
-        in PFS.
+        """Gets a file from PFS.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to get the file from.
+        path : str
+            The path of the file.
+        datum : str, optional
+            A tag that filters the files.
+        URL : str, optional
+           Specifies an object storage URL that the file will be uploaded to.
 
-        * `commit`: A tuple, dict, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path of the file.
-        * `tag`: A string to distinguish files by.
-        * `URL`: A string that specifies an object storage URL that the file
-        will be uploaded to.
+        Returns
+        -------
+        PFSFile
+            The contents of the file in a file-like object.
         """
         res = self._req(
             Service.PFS,
@@ -672,18 +812,23 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
     ) -> PFSFile:
-        """
-        Returns a `PFSFile` object, containing the contents of a file stored
-        in PFS.
+        """Gets a file from PFS.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to get the file from.
+        path : str
+            The path of the file.
+        datum : str, optional
+            A tag that filters the files.
+        URL : str, optional
+           Specifies an object storage URL that the file will be uploaded to.
 
-        * `commit`: A tuple, dict, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path of the file.
-        * `tag`: A string to distinguish files by.
-        * `URL`: A string that specifies an object storage URL that the file
-        will be uploaded to.
+        Returns
+        -------
+        PFSFile
+            The contents of the file in a file-like object.
         """
         res = self._req(
             Service.PFS,
@@ -701,14 +846,21 @@ class PFSMixin:
         path: str,
         datum: str = None,
     ) -> pfs_proto.FileInfo:
-        """
-        Inspects a file. Returns a `FileInfo` object.
+        """Inspects a file.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to inspect the file from.
+        path : str
+            The path of the file.
+        datum : str, optional
+            A tag that filters the files.
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path to the file.
+        Returns
+        -------
+        pfs_proto.FileInfo
+            A protobuf object that contains info on a file.
         """
         return self._req(
             Service.PFS,
@@ -723,20 +875,28 @@ class PFSMixin:
         datum: str = None,
         details: bool = False,
     ) -> Iterator[pfs_proto.FileInfo]:
-        """
-        Lists the files in a directory.
+        """Lists the files in a directory.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to list files from.
+        path : str
+            The path to the directory.
+        datum : str, optional
+            A tag that filters the files.
+        details : bool, optional
+            Unused.
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the directory.
+        Returns
+        -------
+        Iterator[pfs_proto.FileInfo]
+            An iterator of protobuf objects that contain info on files.
         """
         return self._req(
             Service.PFS,
             "ListFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-            details=details,
         )
 
     def walk_file(
@@ -745,15 +905,21 @@ class PFSMixin:
         path: str,
         datum: str = None,
     ) -> Iterator[pfs_proto.FileInfo]:
-        """
-        Walks over all descendant files in a directory. Returns a generator of
-        `FileInfo` objects.
+        """Walks over all descendant files in a directory.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to walk files in.
+        path : str
+            The path to the directory.
+        datum : str, optional
+            A tag that filters the files.
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the directory.
+        Returns
+        -------
+        Iterator[pfs_proto.FileInfo]
+            An iterator of protobuf objects that contain info on files.
         """
         return self._req(
             Service.PFS,
@@ -764,14 +930,19 @@ class PFSMixin:
     def glob_file(
         self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], pattern: str
     ) -> Iterator[pfs_proto.FileInfo]:
-        """
-        Lists files that match a glob pattern. Yields `FileInfo` objects.
+        """Lists files that match a glob pattern.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to query against.
+        pattern : str
+            A glob pattern.
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `pattern`: A string representing a glob pattern.
+        Returns
+        -------
+        Iterator[pfs_proto.FileInfo]
+            An iterator of protobuf objects that contain info on files.
         """
         return self._req(
             Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern
@@ -780,24 +951,38 @@ class PFSMixin:
     def delete_file(
         self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
     ) -> None:
-        """
-        Deletes a file from a Commit. DeleteFile leaves a tombstone in the
-        Commit, assuming the file isn't written to later attempting to get the
-        file from the finished commit will result in not found error. The file
-        will of course remain intact in the Commit's parent.
+        """Deletes a file from an open commit. This leaves a tombstone in the
+        commit, assuming the file isn't written to later while the commit is
+        still open. Attempting to get the file from the finished commit will
+        result in a not found error. The file will of course remain intact in
+        the commit's parent.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the file.
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The open subcommit (commit at the repo-level) to delete a file
+            from.
+        path : str
+            The path to the file.
         """
         with self.modify_file_client(commit) as pfc:
             pfc.delete_file(path)
 
     def fsck(self, fix: bool = False) -> Iterator[pfs_proto.FsckResponse]:
-        """
-        Performs a file system consistency check for PFS.
+        """Performs a file system consistency check on PFS, ensuring the
+        correct provenance relationships are satisfied.
+
+        Parameters
+        ----------
+        fix : bool, optional
+            If true, attempts to fix as many problems as possible.
+
+        Returns
+        -------
+        Iterator[pfs_proto.FsckResponse]
+            An iterator of protobuf objects that contain info on either what
+            error was encountered (and was unable to be fixed, if `fix` is set
+            to ``True``) or a fix message (if `fix` is set to ``True``).
         """
         return self._req(Service.PFS, "Fsck", fix=fix)
 
@@ -809,22 +994,34 @@ class PFSMixin:
         old_path: str = None,
         shallow: bool = False,
     ) -> Iterator[pfs_proto.DiffFileResponse]:
+        """Diffs two PFS files (file = commit + path in Pachyderm) and returns
+        files that are different. Similar to ``git diff``.
+
+        If `old_commit` or `old_path` are not specified, `old_commit` will be
+        set to the parent of `new_commit` and `old_path` will be set to
+        `new_path`.
+
+        Parameters
+        ----------
+        new_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The newer subcommit (commit at the repo-level).
+        new_path : str
+            The path in `new_commit` to compare with.
+        old_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+            The older subcommit (commit at the repo-level).
+        old_path : str, optional
+            The path in `old_commit` to compare with.
+        shallow : bool, optional
+            Unused.
+
+        Returns
+        -------
+        Iterator[pfs_proto.DiffFileResponse]
+            An iterator of protobuf objects that contain info on files whose
+            content has changed between commits. If a file under one of the
+            paths is only in one commit, than the ``DiffFileResponse`` for it
+            will only have one ``FileInfo`` set.
         """
-        Diffs two files. If `old_commit` or `old_path` are not specified, the
-        same path in the parent of the file specified by `new_commit` and
-        `new_path` will be used.
-
-        Params:
-
-        * `new_commit`: A tuple, string, or `Commit` object representing the
-        commit for the new file.
-        * `new_path`: A string specifying the path of the new file.
-        * `old_commit`: A tuple, string, or `Commit` object representing the
-        commit for the old file.
-        * `old_path`: A string specifying the path of the old file.
-        * `shallow`: An optional bool specifying whether to do a shallow diff.
-        """
-
         if old_commit is not None and old_path is not None:
             old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
         else:
@@ -840,9 +1037,7 @@ class PFSMixin:
 
 
 class ModifyFileClient:
-    """
-    `ModifyFileClient` puts or deletes PFS files atomically.
-    """
+    """`ModifyFileClient` puts or deletes PFS files atomically."""
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
         self._ops = []
@@ -860,20 +1055,22 @@ class ModifyFileClient:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Uploads a PFS file from a local path at a specified path. This will
+        """Uploads a PFS file from a local path at a specified path. This will
         lazily open files, which will prevent too many files from being
         opened, or too much memory being consumed, when atomically putting
         many files.
 
-        Params:
-
-        * `pfs_path`: A string specifying the path in the repo the file(s)
-        will be written to.
-        * `local_path`: A string specifying the local file path.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
-        * `tag`: A string for the file tag.
+        Parameters
+        ----------
+        pfs_path : str
+            The path in the repo the file will be written to.
+        local_path : str
+            The local file path.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content of `local_path` to the file at
+            `pfs_path`, if it already exists. Otherwise, overwrites the file.
         """
         self._ops.append(
             AtomicModifyFilepathOp(
@@ -891,16 +1088,19 @@ class ModifyFileClient:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Uploads a PFS file from a file-like object.
+        """Uploads a PFS file from a file-like object.
 
-        Params:
-
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file-like object.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        path : str
+            The path in the repo the file will be written to.
+        value : BinaryIO
+            The file-like object.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content of `value` to the file at `path`,
+            if it already exists. Otherwise, overwrites the file.
         """
         self._ops.append(
             AtomicModifyFileobjOp(
@@ -918,17 +1118,19 @@ class ModifyFileClient:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Uploads a PFS file from a bytestring.
+        """Uploads a PFS file from a bytestring.
 
-        Params:
-
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file contents as a bytestring.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        path : str
+            The path in the repo the file will be written to.
+        value : BinaryIO
+            The file-like object.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content of `value` to the file at `path`,
+            if it already exists. Otherwise, overwrites the file.
         """
         self.put_file_from_fileobj(
             path,
@@ -945,19 +1147,23 @@ class ModifyFileClient:
         append: bool = False,
         recursive: bool = False,
     ) -> None:
-        """
-        Puts a file using the content found at a URL. The URL is sent to the
-        server which performs the request.
+        """Uploads a PFSFile from the content found at a URL. The URL is
+        sent to the server which performs the request.
 
-        Params:
-
-        * `path`: A string specifying the path to the file.
-        * `url`: A string specifying the url of the file to put.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
-        * `recursive`: allow for recursive scraping of some types URLs, for
-        example on s3:// URLs.
+        Parameters
+        ----------
+        path : str
+            The path in the repo the file will be written to.
+        url : str
+            The URL of the file to upload.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content to the file at `path`, if it
+            already exists. Otherwise, overwrites the file.
+        recursive : bool, optional
+            If true, allows for recursive scraping on some types URLs, for
+            example on s3:// URLs
         """
         self._ops.append(
             AtomicModifyFileURLOp(
@@ -970,13 +1176,14 @@ class ModifyFileClient:
         )
 
     def delete_file(self, path: str, datum: str = None) -> None:
-        """
-        Deletes a file.
+        """Deletes a file.
 
-        Params:
-
-        * `path`: The path to the file.
-        * `tag`: A string for the file tag.
+        Parameters
+        ----------
+        path : str
+            The path to the file.
+        datum : str, optional
+            A tag that filters the files.
         """
         self._ops.append(AtomicDeleteFileOp(path, datum=datum))
 
@@ -988,17 +1195,22 @@ class ModifyFileClient:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """
-        Copy a file.
+        """Copy a file.
 
-        Params:
-
-        * `source_commit`: The commit the source file is in.
-        * `source_path`: The path to the source file.
-        * `dest_path`: The path to the destination file.
-        * `tag`: A string for the file tag.
-        * `append`: An optional bool, if true the data is appended to the file,
-        if it already exists.
+        Parameters
+        ----------
+        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The commit the source file is in.
+        source_path : str
+            The path to the source file.
+        dest_path :
+            The path to the destination file.
+        datum : str, optional
+            A tag for the added file.
+        append : bool, optional
+            If true, appends the content of the source file to the
+            destination file, if it already exists. Otherwise, overwrites
+            the file.
         """
         self._ops.append(
             AtomicCopyFileOp(
@@ -1012,27 +1224,23 @@ class ModifyFileClient:
 
 
 class AtomicOp:
-    """
-    Represents an operation in a `ModifyFile` call.
-    """
+    """Represents an operation in a `ModifyFile` call."""
 
     def __init__(self, path: str, datum: str):
         self.path = path
         self.datum = datum
 
     def reqs(self):
-        """
-        Yields one or more protobuf `ModifyFileRequests`, which are then
+        """Yields one or more protobuf `ModifyFileRequests`, which are then
         enqueued into the request's channel.
         """
         pass
 
 
 class AtomicModifyFilepathOp(AtomicOp):
-    """
-    A `ModifyFile` operation to put a file locally stored at a given path. This
-    file is opened on-demand, which helps with minimizing the number of open
-    files.
+    """A `ModifyFile` operation to put a file locally stored at a given path.
+    This file is opened on-demand, which helps with minimizing the number of
+    open files.
     """
 
     def __init__(
@@ -1044,11 +1252,11 @@ class AtomicModifyFilepathOp(AtomicOp):
 
     def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
         if not self.append:
-            yield delete_file_req(self.path, self.datum)
+            yield _delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
-            yield add_file_req(path=self.path, datum=self.datum)
+            yield _add_file_req(path=self.path, datum=self.datum)
             for _, chunk in enumerate(f):
-                yield add_file_req(path=self.path, datum=self.datum, chunk=chunk)
+                yield _add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
 class AtomicModifyFileobjOp(AtomicOp):
@@ -1063,13 +1271,13 @@ class AtomicModifyFileobjOp(AtomicOp):
 
     def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
         if not self.append:
-            yield delete_file_req(self.path, self.datum)
-        yield add_file_req(path=self.path, datum=self.datum)
+            yield _delete_file_req(self.path, self.datum)
+        yield _add_file_req(path=self.path, datum=self.datum)
         for _ in itertools.count():
             chunk = self.fobj.read(BUFFER_SIZE)
             if len(chunk) == 0:
                 return
-            yield add_file_req(path=self.path, datum=self.datum, chunk=chunk)
+            yield _add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
 class AtomicModifyFileURLOp(AtomicOp):
@@ -1090,7 +1298,7 @@ class AtomicModifyFileURLOp(AtomicOp):
 
     def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
         if not self.append:
-            yield delete_file_req(self.path, self.datum)
+            yield _delete_file_req(self.path, self.datum)
         yield pfs_proto.ModifyFileRequest(
             add_file=pfs_proto.AddFile(
                 path=self.path,
@@ -1138,10 +1346,10 @@ class AtomicDeleteFileOp(AtomicOp):
         super().__init__(pfs_path, datum)
 
     def reqs(self):
-        yield delete_file_req(self.path, self.datum)
+        yield _delete_file_req(self.path, self.datum)
 
 
-def add_file_req(path: str, datum: str = None, chunk: bytes = None):
+def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
     return pfs_proto.ModifyFileRequest(
         add_file=pfs_proto.AddFile(
             path=path, datum=datum, raw=wrappers_pb2.BytesValue(value=chunk)
@@ -1149,7 +1357,7 @@ def add_file_req(path: str, datum: str = None, chunk: bytes = None):
     )
 
 
-def delete_file_req(path: str, datum: str = None):
+def _delete_file_req(path: str, datum: str = None):
     return pfs_proto.ModifyFileRequest(
         delete_file=pfs_proto.DeleteFile(path=path, datum=datum)
     )

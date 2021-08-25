@@ -3,48 +3,65 @@ from python_pachyderm.service import Service, auth_proto
 
 
 class AuthMixin:
+    """A mixin for auth-related functionality."""
+
     def activate_auth(self, root_token: str = None) -> str:
-        """
-        Activates auth. Returns the root token for the cluster, an
+        """Activates auth on the cluster. Returns the root token, an
         irrevocable superuser credential that should be stored securely.
 
-        Params:
+        Parameters
+        ----------
+        root_token : str, optional
+            If set, the token used as the root user login token. In general,
+            it is safer to not set and let Pachyderm generate one for you.
 
-        * `root_token`: An optional string. If specified, this string becomes
-          the Pachyderm cluster root user's token (otherwise, Pachyderm
-          generates a root token, which is generally safer). Currently this is
-          only used for testing and Pachyderm internals (migration).
+        Returns
+        -------
+        str
+            A token used as the root user login token.
         """
         return self._req(Service.AUTH, "Activate", root_token=root_token).pach_token
 
     def deactivate_auth(self) -> None:
-        """
-        Deactivates auth, removing all ACLs, tokens, and admins from the
+        """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         """
         self._req(Service.AUTH, "Deactivate")
 
     def get_auth_configuration(self) -> auth_proto.OIDCConfig:
-        """
-        Gets the auth configuration. Returns an `AuthConfig` object.
+        """Gets the auth configuration.
+
+        Returns
+        -------
+        auth_proto.OIDCConfig
+            A protobuf object with auth configuration information.
         """
         return self._req(Service.AUTH, "GetConfiguration").configuration
 
     def set_auth_configuration(self, configuration: auth_proto.OIDCConfig) -> None:
-        """
-        Set the auth configuration.
+        """Sets the auth configuration.
 
-        Params:
-
-        * `config`: An `AuthConfig` object.
+        Parameters
+        ----------
+        configuration : auth_proto.OIDCConfig
+            A protobuf object with auth configuration information.
         """
         self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
 
     def get_role_binding(
         self, resource: auth_proto.Resource
     ) -> Dict[str, auth_proto.Roles]:
-        """
-        Returns the current set of cluster role bindings.
+        """Returns the current set of role bindings to the resource specified.
+
+        Parameters
+        ----------
+        resource : auth_proto.Resource
+            A protobuf object representing the resource being checked.
+
+        Returns
+        -------
+        Dict[str, auth_proto.Roles]
+            A dictionary mapping the principals to the roles they have.
         """
         return self._req(
             Service.AUTH, "GetRoleBinding", resource=resource
@@ -53,14 +70,17 @@ class AuthMixin:
     def modify_role_binding(
         self, resource: auth_proto.Resource, principal: str, roles: List[str] = None
     ) -> None:
-        """
-        Sets the roles for a given principal on a resource.
+        """Sets the roles for a given principal on a resource.
 
-        Params:
-
-        * `resource`: The resource to grant the roles on.
-        * `principal`: A string specifying the principal.
-        * `roles`: A list of roles to grant. If empty, all roles are revoked.
+        Parameters
+        ----------
+        resource : auth_proto.Resource
+            A protobuf object representing the resource to grant the roles on.
+        principal : str
+            The principal to grant the roles for.
+        roles : List[str], optional
+            The absolute list of roles for the principtal to have. If roles is
+            unset, the principal will have no roles.
         """
         self._req(
             Service.AUTH,
@@ -71,32 +91,44 @@ class AuthMixin:
         )
 
     def get_oidc_login(self) -> auth_proto.GetOIDCLoginResponse:
-        """
-        Returns the OIDC login configuration.
+        """Gets the OIDC login configuration.
+
+        Returns
+        -------
+        auth_proto.GetOIDCLoginResponse
+            A protobuf object with the login configuration information.
         """
         return self._req(Service.AUTH, "GetOIDCLogin")
 
     def authenticate_oidc(self, oidc_state: str) -> str:
-        """
-        Authenticates a user to the Pachyderm cluster via OIDC. Returns a
-        string that can be used for making authenticated requests.
+        """Authenticates a user to the Pachyderm cluster via OIDC.
 
-        Params:
+        Parameters
+        ----------
+        oidc_state : str
+            An OIDC state token.
 
-        * `oidc_state`: A string of the OIDC state token.
+        Returns
+        -------
+        str
+            A token that can be used for making authenticate requests.
         """
         return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
 
     def authenticate_id_token(self, id_token: str) -> str:
-        """
-        Authenticates a user to the Pachyderm cluster using an ID token issued
-        by the OIDC provider. The token must include the Pachyderm client_id
-        in the set of audiences to be valid. Returns a string that can be used
-        for making authenticated requests.
+        """Authenticates a user to the Pachyderm cluster using an ID token
+        issued by the OIDC provider. The token must include the Pachyderm
+        client_id in the set of audiences to be valid.
 
-        Params:
+        Parameters
+        ----------
+        id_token : str
+            The ID token.
 
-        * `id_token`: A string of the ID token.
+        Returns
+        -------
+        str
+            A token that can be used for making authenticate requests.
         """
         return self._req(Service.AUTH, "Authenticate", id_token=id_token).pach_token
 
@@ -105,83 +137,111 @@ class AuthMixin:
         resource: auth_proto.Resource,
         permissions: List["auth_proto.Permission"] = None,
     ) -> auth_proto.AuthorizeResponse:
-        """
-        Authorizes the user to a given resource.
+        """Tests a list of permissions that the user might have on a resource.
 
-        Params:
+        Parameters
+        ----------
+        resource : auth_proto.Resource
+            The resource the user wants to test on.
+        permissions : List[auth_proto.Permission], optional
+            The list of permissions the users wants to test.
 
-        * `resource`: The resource the user wants access to
-        * `permissions`: A list of permissions the user wants to test.
+        Returns
+        -------
+        auth_proto.AuthorizeResponse
+            A protobuf object that indicates whether the user/principal had all
+            the inputted permissions on the resource, which permissions the
+            user had, which permissions the user lacked, and the name of the
+            principal.
         """
         return self._req(
             Service.AUTH, "Authorize", resource=resource, permissions=permissions
         )
 
     def who_am_i(self) -> auth_proto.WhoAmIResponse:
-        """
-        Returns info about the user tied to this `Client`.
+        """Returns info about the user tied to this `Client`.
+
+        Returns
+        -------
+        auth_proto.WhoAmIResponse
+            A protobuf object that returns the username and expiration for the
+            token used.
         """
         return self._req(Service.AUTH, "WhoAmI")
 
     def get_roles_for_permission(
         self, permission: auth_proto.Permission
     ) -> List[auth_proto.Role]:
-        """
-        Returns roles that have the specified permission.
+        """Returns a list of all roles that have the specified permission.
 
-        Params:
+        Parameters
+        ----------
+        permission : auth_proto.Permission
+            The Permission enum to check for.
 
-        * `permission`: The Permission enum to check for.
+        Returns
+        -------
+        List[auth_proto.Role]
+            A list of Role protobuf objects that all have the specified
+            permission.
         """
         return self._req(
             Service.AUTH, "GetRolesForPermission", permission=permission
         ).roles
 
     def get_robot_token(self, robot: str, ttl: int = None) -> str:
-        """
-        Gets a new auth token for a robot user.
+        """Gets a new auth token for a robot user.
 
-        Params:
+        Parameters
+        ----------
+        robot : str
+            The name of the robot user.
+        ttl : int, optional
+            The remaining lifetime of this token in seconds. If unset,
+            token doesn't expire.
 
-        * `robot`: The name of the robot user.
-        * `ttl`: Optional. The expiration for the token.
-        If empty, the token does not expire.
+        Returns
+        -------
+        str
+            The new auth token.
         """
         return self._req(Service.AUTH, "GetRobotToken", robot=robot, ttl=ttl).token
 
     def revoke_auth_token(self, token: str) -> None:
-        """
-        Revokes an auth token.
+        """Revokes an auth token.
 
-        Params:
-
-        * `token`: A string that indicates the Pachyderm token that is being
-        revoked.
+        Parameters
+        ----------
+        token : str
+            The Pachyderm token being revoked.
         """
         self._req(Service.AUTH, "RevokeAuthToken", token=token)
 
     def set_groups_for_user(self, username: str, groups: List[str]) -> None:
-        """
-        Sets the group membership for a user.
+        """Sets the group membership for a user.
 
-        Params:
-
-        * `username`: A string.
-        * `groups`: A list of strings.
+        Parameters
+        ----------
+        username : str
+            The username to be added.
+        groups : List[str]
+            The groups to add the username to.
         """
         self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
 
     def modify_members(
         self, group: str, add: List[str] = None, remove: List[str] = None
     ) -> None:
-        """
-        Adds and/or removes members of a group.
+        """Adds and/or removes members of a group.
 
-        Params:
-
-        * `group`: A string.
-        * `add`: An optional list of strings specifying members to add.
-        * `remove`: An optional list of strings specifying members to remove.
+        Parameters
+        ----------
+        group : str
+            The group to modify.
+        add : List[str], optional
+            A list of strings specifying members to add.
+        remove : List[str], optional
+            A list of strings specifying members to remove.
         """
         self._req(
             Service.AUTH,
@@ -192,24 +252,32 @@ class AuthMixin:
         )
 
     def get_groups(self) -> List[str]:
-        """
-        Gets a list of groups this user belongs to.
+        """Gets a list of groups this user belongs to.
+
+        Returns
+        -------
+        List[str]
+            List of groups the user belongs to.
         """
         return self._req(Service.AUTH, "GetGroups").groups
 
     def get_users(self, group: str) -> List[str]:
-        """
-        Gets which users below to the given `group`. Returns a list of strings.
+        """Gets users in a group.
 
-        Params:
+        Parameters
+        ----------
+        group : str
+            The group to list users from.
 
-        `group`: A string.
+        Returns
+        -------
+        List[str]
+            All the users in the specified group.
         """
         return self._req(Service.AUTH, "GetUsers", group=group).usernames
 
     def extract_auth_tokens(self):
-        """
-        This maps to an internal function that is only used for migration.
+        """This maps to an internal function that is only used for migration.
         Pachyderm's `extract` and `restore` functionality calls
         `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
         between clusters during migration. Currently this function is only used
@@ -222,8 +290,7 @@ class AuthMixin:
         )
 
     def restore_auth_token(self, token=None):
-        """
-        This maps to an internal function that is only used for migration.
+        """This maps to an internal function that is only used for migration.
         Pachyderm's `extract` and `restore` functionality calls
         `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens
         between clusters during migration. Currently this function is only used

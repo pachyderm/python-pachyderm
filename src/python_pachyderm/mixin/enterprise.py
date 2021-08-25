@@ -2,16 +2,19 @@ from python_pachyderm.service import Service, enterprise_proto
 
 
 class EnterpriseMixin:
+    """A mixin for enterprise-related functionality."""
+
     def activate_enterprise(self, license_server: str, id: str, secret: str) -> None:
-        """
-        Activates enterprise by registering with a license server.
-        Returns a `TokenInfo` object.
+        """Activates enterprise by registering with a license server.
 
-        Params:
-
-        * `license_server`: The Pachyderm Enterprise Server to register with.
-        * `id`: The unique ID for this cluster.
-        * `secret`: The secret for registering this cluster.
+        Parameters
+        ----------
+        license_server : str
+            The Pachyderm Enterprise Server to register with.
+        id : str
+            The unique ID for this cluster.
+        secret : str
+            The secret for registering this cluster.
         """
         self._req(
             Service.ENTERPRISE,
@@ -22,9 +25,13 @@ class EnterpriseMixin:
         )
 
     def get_enterprise_state(self) -> enterprise_proto.GetStateResponse:
-        """
-        Gets the current enterprise state of the cluster. Returns a
-        `GetEnterpriseResponse` object.
+        """Gets the current enterprise state of the cluster.
+
+        Returns
+        -------
+        enterprise_proto.GetStateResponse
+            A protobuf object that returns a state enum, info on the token,
+            and an empty activation code.
         """
         return self._req(Service.ENTERPRISE, "GetState")
 
@@ -33,8 +40,13 @@ class EnterpriseMixin:
         self._req(Service.ENTERPRISE, "Deactivate")
 
     def get_activation_code(self) -> enterprise_proto.GetActivationCodeResponse:
-        """
-        Returns the enterprise code used to activate Pachdyerm Enterprise in
+        """Returns the enterprise code used to activate Pachdyerm Enterprise in
         this cluster.
+
+        Returns
+        -------
+        enterprise_proto.GetActivationCodeResponse
+            A protobuf object that returns a state enum, info on the token,
+            and the activation code.
         """
         return self._req(Service.ENTERPRISE, "GetActivationCode")
