@@ -786,6 +786,34 @@ class PFSMixin:
             shallow=shallow,
         )
 
+    def path_exists(
+        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
+    ) -> bool:
+        """Checks whether the path exists in the specified commit. Agnostic to
+        whether `path` is a file or a directory.
+
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to check in.
+        path : str
+            The file or directory path in `commit`.
+
+        Returns
+        -------
+        bool
+            Returns ``True`` if `path` exists in `commit`. Otherwise, returns
+            ``False``.
+        """
+        try:
+            self.inspect_file(commit, path)
+        except Exception as e:
+            if "not found in repo" in e.details():
+                return False
+            raise e
+        else:
+            return True
+
 
 class ModifyFileClient:
     """
