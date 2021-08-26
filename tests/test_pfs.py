@@ -449,7 +449,7 @@ def test_squash_commit():
     client, repo_name = sandbox("squash_commit")
     repo2_name = util.create_test_repo(client, "squash_commit2")
 
-    # Create provenance between repos (which creates a new commit)
+    # Create provenance between repos (which creates an auto commit)
     client.create_branch(
         repo2_name,
         "master",
@@ -470,13 +470,20 @@ def test_squash_commit():
         pass
     client.finish_commit((repo2_name, "master"))
 
-    commits = list(client.list_commit(repo_name))
-    assert len(commits) == 3
     client.wait_commit(commit2.id)
-    client.squash_commit(commit1.id)
+
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 2
+
+    client.squash_commit(commit1.id)
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 1
+
     commits = list(client.list_commit(repo2_name))
+    assert len(commits) == 0  # since list_commit defaults to user commits
+    commits = list(
+        client.list_commit(repo2_name, origin_kind=pfs_proto.OriginKind.AUTO)
+    )
     assert len(commits) == 2
 
 
@@ -484,7 +491,7 @@ def test_drop_commit():
     client, repo_name = sandbox("drop_commit")
     repo2_name = util.create_test_repo(client, "drop_commit2")
 
-    # Create provenance between repos (which creates a new commit)
+    # Create provenance between repos (which creates an auto commit)
     client.create_branch(
         repo2_name,
         "master",
@@ -505,13 +512,20 @@ def test_drop_commit():
         pass
     client.finish_commit((repo2_name, "master"))
 
-    commits = list(client.list_commit(repo_name))
-    assert len(commits) == 3
     client.wait_commit(commit2.id)
-    client.drop_commit(commit2.id)
+
     commits = list(client.list_commit(repo_name))
     assert len(commits) == 2
+
+    client.drop_commit(commit2.id)
+    commits = list(client.list_commit(repo_name))
+    assert len(commits) == 1
+
     commits = list(client.list_commit(repo2_name))
+    assert len(commits) == 0  # since list_commit defaults to user commits
+    commits = list(
+        client.list_commit(repo2_name, origin_kind=pfs_proto.OriginKind.AUTO)
+    )
     assert len(commits) == 2
 
 
