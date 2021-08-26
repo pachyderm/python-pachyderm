@@ -81,6 +81,12 @@ class PFSFile:
         else:
             self._file = stream
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, val, tb):
+        self.close()
+
     def __iter__(self):
         return self
 
@@ -93,7 +99,7 @@ class PFSFile:
     def read(self, size=-1):
         return self._file.read(size)
 
-    def close(self):
+    def close(self) -> None:
         self._file.close()
 
 
