@@ -260,7 +260,7 @@ def test_put_file_url():
 
 
 def test_put_file_empty():
-    client, repo_name = sandbox("put_file_atomic")
+    client, repo_name = sandbox("put_file_empty")
     commit = (repo_name, "master")
 
     with tempfile.NamedTemporaryFile() as f:
@@ -319,7 +319,7 @@ def test_put_file_atomic():
 
 
 def test_get_file():
-    client, repo_name = sandbox("put_file_atomic")
+    client, repo_name = sandbox("get_file")
     commit = (repo_name, "master")
 
     with client.modify_file_client(commit) as pfc:
@@ -329,7 +329,7 @@ def test_get_file():
 
 
 def test_get_file_tar():
-    client, repo_name = sandbox("put_file_atomic")
+    client, repo_name = sandbox("get_file_tar")
     commit = (repo_name, "master")
 
     with client.modify_file_client(commit) as pfc:
@@ -338,8 +338,22 @@ def test_get_file_tar():
     assert client.get_file_tar(commit, "file1.dat").read() == b"DATA1"
 
 
+def test_PFSFile_with():
+    client, repo_name = sandbox("PFSFile_with")
+    commit = (repo_name, "master")
+
+    with client.modify_file_client(commit) as pfc:
+        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+
+    with client.get_file_tar(commit, "file1.dat") as f:
+        assert f.read() == b"DATA1"
+
+    with pytest.raises(ValueError, match="read of closed file"):
+        f.read()
+
+
 def test_PFSFile_iter():
-    client, repo_name = sandbox("put_file_atomic")
+    client, repo_name = sandbox("PFSFile_iter")
     commit = (repo_name, "master")
 
     with client.modify_file_client(commit) as pfc:
