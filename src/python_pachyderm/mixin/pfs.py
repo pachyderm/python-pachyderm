@@ -474,7 +474,7 @@ class PFSMixin:
         repo_name: str,
         branch: str,
         from_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
-        commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
+        state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
         all: bool = False,
         origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
     ) -> Iterator[pfs_proto.CommitInfo]:
@@ -490,7 +490,7 @@ class PFSMixin:
         from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
             Return commits only from this commit and onwards. Can either be an
             entire commit or a subcommit (commit at the repo-level).
-        commit_state : pfs_proto.CommitState, optional
+        state : pfs_proto.CommitState, optional
             Return commits only when they're at least in the specifed enum
             state: {`pfs_proto.CommitState.STARTED`,
             `pfs_proto.CommitState.READY`, `pfs_proto.CommitState.FINISHING`,
@@ -516,7 +516,7 @@ class PFSMixin:
         req = pfs_proto.SubscribeCommitRequest(
             repo=repo,
             branch=branch,
-            state=commit_state,
+            state=state,
             all=all,
             origin_kind=origin_kind,
         )

@@ -43,7 +43,7 @@ def test_spout_commit():
     c = client.subscribe_commit(
         repo_name="pipeline-spout-commit",
         branch="master",
-        commit_state=pfs_proto.FINISHED,
+        state=pfs_proto.FINISHED,
         origin_kind=pfs_proto.USER,
     )
     next(c)
