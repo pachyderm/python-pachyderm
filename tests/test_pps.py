@@ -219,9 +219,6 @@ def test_secrets():
 def test_get_pipeline_logs():
     sandbox = Sandbox("get_pipeline_logs")
     sandbox.wait()
-    # sleep 10 secs to wait for the k8s pod to be ready
-    # TODO remove this sleep once we figure out why this test is broken
-    # time.sleep(10)
 
     # Just make sure these spit out some logs
     logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)

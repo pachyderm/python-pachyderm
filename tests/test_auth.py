@@ -60,13 +60,13 @@ def test_auth_configuration(client):
 def test_cluster_role_bindings(client):
     cluster_resource = auth_proto.Resource(type=auth_proto.CLUSTER)
     binding = client.get_role_binding(cluster_resource)
-    assert binding.binding.entries["pach:root"].roles["clusterAdmin"]
+    assert binding["pach:root"].roles["clusterAdmin"]
     client.modify_role_binding(
         cluster_resource, "robot:someuser", roles=["clusterAdmin"]
     )
 
     binding = client.get_role_binding(cluster_resource)
-    assert binding.binding.entries["robot:someuser"].roles["clusterAdmin"]
+    assert binding["robot:someuser"].roles["clusterAdmin"]
 
 
 @util.skip_if_no_enterprise()
@@ -86,13 +86,13 @@ def test_who_am_i(client):
 def test_get_roles_for_permission(client):
     # Checks built-in roles
     roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
-    for r in roles.roles:
+    for r in roles:
         assert auth_proto.Permission.REPO_READ in r.permissions
 
     roles = client.get_roles_for_permission(
         auth_proto.Permission.CLUSTER_GET_PACHD_LOGS
     )
-    for r in roles.roles:
+    for r in roles:
         assert auth_proto.Permission.CLUSTER_GET_PACHD_LOGS in r.permissions
 
 

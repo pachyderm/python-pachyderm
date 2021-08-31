@@ -49,4 +49,4 @@ def test_spout_commit():
     next(c)
 
     commit_infos = list(client.list_commit("pipeline-spout-commit"))
-    assert len(commit_infos) == 2
+    assert len(commit_infos) == 1
