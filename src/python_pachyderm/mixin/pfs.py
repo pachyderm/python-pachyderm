@@ -80,6 +80,12 @@ class PFSFile:
         else:
             self._file = stream
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, val, tb):
+        self.close()
+
     def __iter__(self):
         return self
 
@@ -104,7 +110,7 @@ class PFSFile:
         """
         return self._file.read(size)
 
-    def close(self):
+    def close(self) -> None:
         """Closes the ``PFSFile``."""
         self._file.close()
 
