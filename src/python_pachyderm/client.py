@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+from typing import TextIO
 from urllib.parse import urlparse
 
 from .mixin.admin import AdminMixin
@@ -18,16 +19,15 @@ from .service import Service
 
 
 class ConfigError(Exception):
-    """Error for issues related to the pachyderm config file"""
+    """Error for issues related to the pachyderm config file."""
 
     def __init__(self, message):
         super().__init__(message)
 
 
 class BadClusterDeploymentID(ConfigError):
-    """
-    Error triggered when connected to a cluster that reports back a different
-    cluster deployment ID than what is stored in the config file
+    """Error triggered when connected to a cluster that reports back a different
+    cluster deployment ID than what is stored in the config file.
     """
 
     def __init__(self, expected_deployment_id, actual_deployment_id):
@@ -54,6 +54,13 @@ class Client(
     VersionMixin,
     object,
 ):
+    """The ``Client`` class that users will primarily interact with. Initialize
+    an instance with ``python_pachyderm.Client()``.
+
+    To see documentation on the methods ``Client`` can call, refer to the
+    `mixins` module.
+    """
+
     # Class variables for checking config
     env_config = "PACH_CONFIG"
     spout_config = "/pachctl/config.json"
@@ -61,40 +68,45 @@ class Client(
 
     def __init__(
         self,
-        host=None,
-        port=None,
-        auth_token=None,
-        root_certs=None,
-        transaction_id=None,
-        tls=None,
-        use_default_host=True,
+        host: str = None,
+        port: int = None,
+        auth_token: str = None,
+        root_certs: bytes = None,
+        transaction_id: str = None,
+        tls: bool = None,
+        use_default_host: bool = True,
     ):
         """
         Creates a Pachyderm client. If host and port are unset, checks the
-        PACH_CONFIG env var for a path. If that's unset, it checks two
+        ``PACH_CONFIG`` env var for a path. If that's unset, it checks two
         file paths for a config file. If both files don't exist, a client
         with default settings is created.
 
-        Params:
-
-        * `host`: The pachd host. Default is 'localhost', which is used with
-        `pachctl port-forward`.
-        * `port`: The port to connect to. Default is 30650.
-        * `auth_token`: The authentication token. Used if authentication is
-        enabled on the cluster. Defaults to `None`.
-        * `root_certs`:  The PEM-encoded root certificates as byte string.
-        * `transaction_id`: The ID of the transaction to run operations on.
-        * `tls`: Specifies whether TLS should be used. If `root_certs` are
-        specified, they are used; otherwise, we use the certs provided by
-        certifi.
-        * `use_default_host`: Boolean for replicating `pachctl` behavior
-        of searching for config. Default is True.
+        Parameters
+        ----------
+        host : str, optional
+            The pachd host. Default is 'localhost', which is used with
+            ``pachctl port-forward``.
+        port : int, optional
+            The port to connect to. Default is 30650.
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        root_certs : bytes, optional
+            The PEM-encoded root certificates as byte string.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
+        tls : bool, optional
+            Whether TLS should be used. If `root_certs` are specified, they are
+            used. Otherwise, we use the certs provided by certifi.
+        use_default_host : bool, optional
+            Whether to replicate `pachctl` behavior of searching for config.
         """
 
         # replicate pachctl behavior to searching for config
         # if host and port are unset
         if host is None and port is None and use_default_host:
-            config = Client.check_for_config()
+            config = Client._check_for_config()
 
             if config is not None:
                 (
@@ -134,15 +146,23 @@ class Client(
             self._metadata = self._build_metadata()
 
     @classmethod
-    def new_in_cluster(cls, auth_token=None, transaction_id=None):
-        """
-        Creates a Pachyderm client that operates within a Pachyderm cluster.
+    def new_in_cluster(
+        cls, auth_token: str = None, transaction_id: str = None
+    ) -> "Client":
+        """Creates a Pachyderm client that operates within a Pachyderm cluster.
 
-        Params:
+        Parameters
+        ----------
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
 
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `transaction_id`: The ID of the transaction to run operations on.
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         if (
@@ -170,19 +190,31 @@ class Client(
 
     @classmethod
     def new_from_pachd_address(
-        cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None
-    ):
-        """
-        Creates a Pachyderm client from a given pachd address.
+        cls,
+        pachd_address: str,
+        auth_token: str = None,
+        root_certs: bytes = None,
+        transaction_id: str = None,
+    ) -> "Client":
+        """Creates a Pachyderm client from a given pachd address.
 
-        Params:
+        Parameters
+        ----------
+        pachd_address : str
+            The address of pachd server
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        root_certs : bytes, optional
+            The PEM-encoded root certificates as byte string. If unspecified,
+            this will load default certs from certifi.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
 
-        * `pachd_address`: The address of pachd server.
-        * `auth_token`: The authentication token. Used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string. If
-        unspecified, this will load default certs from certifi.
-        * `transaction_id`: The ID of the transaction to run operations on.
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         u = Client._parse_address(pachd_address)
@@ -198,14 +230,18 @@ class Client(
         )
 
     @classmethod
-    def new_from_config(cls, config_file):
-        """
-        Creates a Pachyderm client from a config file-like object.
+    def new_from_config(cls, config_file: TextIO) -> "Client":
+        """Creates a Pachyderm client from a config file-like object.
 
-        Params:
+        Parameters
+        ----------
+        config_file : TextIO
+            A file-like object containing the config json file.
 
-        * `config_file`: A file-like object containing the config
-        json file.
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         if config_file is None:
@@ -241,23 +277,18 @@ class Client(
         return client
 
     @staticmethod
-    def check_for_config():
-        """
-        Checks for config.
+    def _check_for_config():
+        """Checks for Pachyderm config file locally."""
 
-        Returns:
-        * `j`: The config as a json object.
-        """
-
-        j = Client.check_pach_config_env_var()
+        j = Client._check_pach_config_env_var()
         if j is not None:
             return j
 
-        j = Client.check_pach_config_spout()
+        j = Client._check_pach_config_spout()
         if j is not None:
             return j
 
-        j = Client.check_pach_config_local()
+        j = Client._check_pach_config_local()
         if j is not None:
             return j
 
@@ -266,7 +297,7 @@ class Client(
         return j
 
     @staticmethod
-    def check_pach_config_env_var():
+    def _check_pach_config_env_var():
         j = None
         if Client.env_config in os.environ:
             with open(os.environ.get(Client.env_config), "r") as config_file:
@@ -275,7 +306,7 @@ class Client(
         return j
 
     @staticmethod
-    def check_pach_config_spout():
+    def _check_pach_config_spout():
         j = None
         if os.path.isfile(Client.spout_config):
             with open(Client.spout_config, "r") as config_file:
@@ -284,7 +315,7 @@ class Client(
         return j
 
     @staticmethod
-    def check_pach_config_local():
+    def _check_pach_config_local():
         j = None
         if os.path.isfile(Client.local_config):
             with open(Client.local_config, "r") as config_file:
@@ -343,6 +374,7 @@ class Client(
         host = u.hostname
         port = u.port
         tls = u.scheme == "grpcs" or u.scheme == "https"
+        root_certs = bytes(root_certs, "utf-8") if root_certs is not None else None
 
         return host, port, pachd_address, auth_token, root_certs, transaction_id, tls
 
@@ -407,7 +439,10 @@ class Client(
         grpc_method = getattr(stub, grpc_method_name)
         return grpc_method(req, metadata=self._metadata)
 
-    def delete_all(self):
+    def delete_all(self) -> None:
+        """Delete all repos, commits, files, pipelines, and jobs. This resets
+        the cluster to its initial state.
+        """
         self.delete_all_pipelines()
         self.delete_all_repos()
         self.delete_all_transactions()

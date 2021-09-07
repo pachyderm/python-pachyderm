@@ -19,9 +19,9 @@ class DebugMixin:
             Sets a limit to how many commits, jobs, pipelines, etc. are
             returned.
 
-        Returns
+        Yields
         -------
-        Iterator[bytes]
+        bytes
             The debug dump as a sequence of bytearrays.
         """
         res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
@@ -41,9 +41,9 @@ class DebugMixin:
         filter : debug_proto.Filter, optional
             A protobuf object that filters what info is returned.
 
-        Returns
+        Yields
         -------
-        Iterator[bytes]
+        bytes
             The cpu profile as a sequence of bytearrays.
         """
         profile = debug_proto.Profile(name="cpu", duration=duration)
@@ -59,9 +59,9 @@ class DebugMixin:
         filter : debug_proto.Filter, optional
             A protobuf object that filters what info is returned.
 
-        Returns
+        Yields
         -------
-        Iterator[bytes]
+        bytes
             The pachd binary as a sequence of bytearrays.
         """
         res = self._req(Service.DEBUG, "Binary", filter=filter)

@@ -1,7 +1,7 @@
 import re
 from typing import NamedTuple, Union
 
-from python_pachyderm.proto.v2.pfs import pfs_pb2
+from python_pachyderm.service import pfs_proto
 
 
 # copied from pachyderm/pachyderm
@@ -10,24 +10,26 @@ uuid_re = re.compile(r"[0-9a-f]{12}4[0-9a-f]{19}")
 
 
 class Commit(NamedTuple):
+    """A namedtuple subclass to specify a Commit."""
+
     repo: str
     branch: str = None
     id: str = None
     repo_type: str = "user"
 
-    """A namedtuple subclass to specify a Commit."""
-
-    def to_pb(self) -> pfs_pb2.Commit:
-        """Converts itself into a `pfs_pb2.Commit`"""
-        return pfs_pb2.Commit(
+    def to_pb(self) -> pfs_proto.Commit:
+        """Converts itself into a `pfs_proto.Commit`"""
+        return pfs_proto.Commit(
             id=self.id,
-            branch=pfs_pb2.Branch(
-                repo=pfs_pb2.Repo(name=self.repo, type=self.repo_type), name=self.branch
+            branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name=self.repo, type=self.repo_type),
+                name=self.branch,
             ),
         )
 
     @staticmethod
-    def from_pb(commit: pfs_pb2.Commit) -> "Commit":
+    def from_pb(commit: pfs_proto.Commit) -> "Commit":
+        """Converts a ``pfs_proto.Commit`` object into a ``Commit`` object."""
         return Commit(
             repo=commit.branch.repo.name,
             branch=commit.branch.name,
@@ -37,14 +39,24 @@ class Commit(NamedTuple):
 
 
 def commit_from(
-    commit: Union[tuple, dict, Commit, pfs_pb2.Commit] = None,
-) -> pfs_pb2.Commit:
+    commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+) -> pfs_proto.Commit:
     """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a
     protobuf Commit object.
+
+    Parameters
+    ----------
+    commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+        The commit representation to convert to a protobuf commit object.
+
+    Returns
+    -------
+    pfs_proto.Commit
+        A protobuf object that represents a commit.
     """
-    if isinstance(commit, pfs_pb2.Commit):
+    if isinstance(commit, pfs_proto.Commit):
         return commit
     if isinstance(commit, Commit):
         return commit.to_pb()

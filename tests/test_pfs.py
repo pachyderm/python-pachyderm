@@ -195,7 +195,7 @@ def test_put_file_bytes_filelike():
     assert len(files) == 1
 
 
-def test_put_file_zero_bytes_pfc():
+def test_put_file_zero_bytes_mfc():
     """
     Put a zero-byte file using PutFileClient
     """
@@ -264,17 +264,17 @@ def test_put_file_empty():
     commit = (repo_name, "master")
 
     with tempfile.NamedTemporaryFile() as f:
-        with client.modify_file_client(commit) as pfc:
-            pfc.put_file_from_fileobj("file1.dat", BytesIO(b""))
-            pfc.put_file_from_url(
+        with client.modify_file_client(commit) as mfc:
+            mfc.put_file_from_fileobj("file1.dat", BytesIO(b""))
+            mfc.put_file_from_url(
                 "index.html",
                 "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
             )
-            pfc.put_file_from_bytes("file2.dat", b"DATA2")
+            mfc.put_file_from_bytes("file2.dat", b"DATA2")
 
             f.write(b"DATA3")
             f.flush()
-            pfc.put_file_from_filepath("file3.dat", f.name)
+            mfc.put_file_from_filepath("file3.dat", f.name)
 
     files = list(client.list_file(commit, ""))
     # assert len(files) == 4
@@ -289,17 +289,17 @@ def test_put_file_atomic():
     commit = (repo_name, "master")
 
     with tempfile.NamedTemporaryFile() as f:
-        with client.modify_file_client(commit) as pfc:
-            pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-            pfc.put_file_from_bytes("file2.dat", b"DATA2")
-            pfc.put_file_from_url(
+        with client.modify_file_client(commit) as mfc:
+            mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+            mfc.put_file_from_bytes("file2.dat", b"DATA2")
+            mfc.put_file_from_url(
                 "index.html",
                 "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
             )
 
             f.write(b"DATA3")
             f.flush()
-            pfc.put_file_from_filepath("file3.dat", f.name)
+            mfc.put_file_from_filepath("file3.dat", f.name)
 
     files = list(client.list_file(commit, ""))
     assert len(files) == 4
@@ -308,10 +308,10 @@ def test_put_file_atomic():
     assert files[2].file.path == "/file3.dat"
     assert files[3].file.path == "/index.html"
 
-    with client.modify_file_client(commit) as pfc:
-        pfc.delete_file("/file1.dat")
-        pfc.delete_file("/file2.dat")
-        pfc.delete_file("/file3.dat")
+    with client.modify_file_client(commit) as mfc:
+        mfc.delete_file("/file1.dat")
+        mfc.delete_file("/file2.dat")
+        mfc.delete_file("/file3.dat")
 
     files = list(client.list_file(commit, ""))
     assert len(files) == 1
@@ -322,8 +322,8 @@ def test_get_file():
     client, repo_name = sandbox("get_file")
     commit = (repo_name, "master")
 
-    with client.modify_file_client(commit) as pfc:
-        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+    with client.modify_file_client(commit) as mfc:
+        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
     assert client.get_file(commit, "file1.dat").read() == b"DATA1"
 
@@ -332,8 +332,8 @@ def test_get_file_tar():
     client, repo_name = sandbox("get_file_tar")
     commit = (repo_name, "master")
 
-    with client.modify_file_client(commit) as pfc:
-        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+    with client.modify_file_client(commit) as mfc:
+        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
     assert client.get_file_tar(commit, "file1.dat").read() == b"DATA1"
 
@@ -342,8 +342,8 @@ def test_PFSFile_with():
     client, repo_name = sandbox("PFSFile_with")
     commit = (repo_name, "master")
 
-    with client.modify_file_client(commit) as pfc:
-        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+    with client.modify_file_client(commit) as mfc:
+        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
     with client.get_file_tar(commit, "file1.dat") as f:
         assert f.read() == b"DATA1"
@@ -356,8 +356,8 @@ def test_PFSFile_iter():
     client, repo_name = sandbox("PFSFile_iter")
     commit = (repo_name, "master")
 
-    with client.modify_file_client(commit) as pfc:
-        pfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
+    with client.modify_file_client(commit) as mfc:
+        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
 
     assert list(client.get_file(commit, "file1.dat"))[0] == b"DATA1"
 

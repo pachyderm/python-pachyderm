@@ -22,7 +22,7 @@ class TransactionMixin:
         Parameters
         ----------
         requests : List[transaction_proto.TransactionRequest]
-            A list of ``TransactionRequest``s protobufs. Each protobuf must
+            A list of ``TransactionRequest`` protobufs. Each protobuf must
             only have one field set.
 
         Returns

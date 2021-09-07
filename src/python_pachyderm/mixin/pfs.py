@@ -58,14 +58,16 @@ class FileTarstream:
 
 
 class PFSFile:
-    """The contents of a file stored in PFS. You can treat these as
-    file-like objects, like so:
+    """File-like objects containing content of a file stored in PFS.
 
-    ```
-    source_file = client.get_file("montage/master", "/montage.png")
-    with open("montage.png", "wb") as dest_file:
-        shutil.copyfileobj(source_file, dest_file)
-    ```
+    Examples
+    --------
+    >>> source_file = client.get_file(("montage", "master"), "/montage.png")
+    >>> with open("montage.png", "wb") as dest_file:
+    >>>     shutil.copyfileobj(source_file, dest_file)
+    ...
+    >>> with client.get_file(("montage", "master"), "/montage2.png") as f:
+    >>>     content = f.read()
     """
 
     def __init__(self, stream, is_tar=False):
@@ -326,17 +328,17 @@ class PFSMixin:
         commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]
             The commit to inspect. Can either be a commit ID or a commit object
             that represents a subcommit (commit at the repo-level).
-        commit_state : pfs_proto.CommitState, optional
+        commit_state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
             An enum that causes the method to block until the commit is in the
-            specified state: {`pfs_proto.CommitState.STARTED`,
-            `pfs_proto.CommitState.READY`, `pfs_proto.CommitState.FINISHING`,
-            `pfs_proto.CommitState.FINISHED`}.
+            specified state. (Default value = ``pfs_proto.CommitState.STARTED``)
 
         Returns
         -------
         Iterator[pfs_proto.CommitInfo]
             An iterator of protobuf objects that contain info on a subcommit
             (commit at the repo-level).
+
+        .. # noqa: W505
         """
         if not isinstance(commit, str):
             return iter(
@@ -396,11 +398,9 @@ class PFSMixin:
             If true, returns all types of subcommits. Otherwise, alias
             subcommits are excluded. Only impacts results if `repo_name` is
             specified.
-        origin_kind : pfs_proto.OriginKind, optional
+        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional
             An enum that specifies how a subcommit originated. Returns only
-            subcommits of this enum type: {`pfs_proto.OriginKind.USER`,
-            `pfs_proto.OriginKind.AUTO`, `pfs_proto.OriginKind.FSCK`,
-            `pfs_proto.OriginKind.ALIAS`}. Only impacts results if `repo_name`
+            subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
 
         Returns
@@ -409,6 +409,8 @@ class PFSMixin:
             An iterator of protobuf objects that either contain info on a
             subcommit (commit at the repo-level), if `repo_name` was specified,
             or a commit, if `repo_name` wasn't specified.
+
+        .. # noqa: W505
         """
         if repo_name is not None:
             req = pfs_proto.ListCommitRequest(
@@ -493,22 +495,18 @@ class PFSMixin:
             The name of the repo.
         branch : str
             The name of the branch.
-        from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional  # noqa: W505
+        from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
             Return commits only from this commit and onwards. Can either be an
             entire commit or a subcommit (commit at the repo-level).
-        state : pfs_proto.CommitState, optional
+        state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
             Return commits only when they're at least in the specifed enum
-            state: {`pfs_proto.CommitState.STARTED`,
-            `pfs_proto.CommitState.READY`, `pfs_proto.CommitState.FINISHING`,
-            `pfs_proto.CommitState.FINISHED`}.
+            state. (Default value = ``pfs_proto.CommitState.STARTED``)
         all : bool, optional
             If true, returns all types of commits. Otherwise, alias commits are
             excluded.
-        origin_kind : pfs_proto.OriginKind, optional
+        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional
             An enum that specifies how a commit originated. Returns only
-            commits of this enum type: {`pfs_proto.OriginKind.USER`,
-            `pfs_proto.OriginKind.AUTO`, `pfs_proto.OriginKind.FSCK`,
-            `pfs_proto.OriginKind.ALIAS`}.
+            commits of this enum type. (Default value = ``pfs_proto.OriginKind.USER``)
 
         Returns
         -------
@@ -517,6 +515,8 @@ class PFSMixin:
             (commits at the repo-level). Use ``next()`` to iterate through as
             the returned stream is potentially endless. Might block your code
             otherwise.
+
+        .. # noqa: W505
         """
         repo = pfs_proto.Repo(name=repo_name, type="user")
         req = pfs_proto.SubscribeCommitRequest(
@@ -666,9 +666,9 @@ class PFSMixin:
         ModifyFileClient
             An object that can queue operations to modify a commit atomically.
         """
-        pfc = ModifyFileClient(commit)
-        yield pfc
-        self._req(Service.PFS, "ModifyFile", req=pfc._reqs())
+        mfc = ModifyFileClient(commit)
+        yield mfc
+        self._req(Service.PFS, "ModifyFile", req=mfc._reqs())
 
     def put_file_bytes(
         self,
@@ -696,16 +696,16 @@ class PFSMixin:
             If true, appends the data to the file(s) specified at `path`, if
             they already exist. Otherwise, overwrites them.
         """
-        with self.modify_file_client(commit) as pfc:
+        with self.modify_file_client(commit) as mfc:
             if hasattr(value, "read"):
-                pfc.put_file_from_fileobj(
+                mfc.put_file_from_fileobj(
                     path,
                     value,
                     datum=datum,
                     append=append,
                 )
             else:
-                pfc.put_file_from_bytes(
+                mfc.put_file_from_bytes(
                     path,
                     value,
                     datum=datum,
@@ -741,8 +741,8 @@ class PFSMixin:
             If true, appends the data to the file(s) specified at `path`, if
             they already exist. Otherwise, overwrites them.
         """
-        with self.modify_file_client(commit) as pfc:
-            pfc.put_file_from_url(
+        with self.modify_file_client(commit) as mfc:
+            mfc.put_file_from_url(
                 path,
                 url,
                 recursive=recursive,
@@ -780,8 +780,8 @@ class PFSMixin:
             If true, appends the content of `source_path` to the file at
             `dest_path`, if it already exists. Otherwise, overwrites the file.
         """
-        with self.modify_file_client(dest_commit) as pfc:
-            pfc.copy_file(
+        with self.modify_file_client(dest_commit) as mfc:
+            mfc.copy_file(
                 source_commit, source_path, dest_path, datum=datum, append=append
             )
 
@@ -986,8 +986,8 @@ class PFSMixin:
         path : str
             The path to the file.
         """
-        with self.modify_file_client(commit) as pfc:
-            pfc.delete_file(path)
+        with self.modify_file_client(commit) as mfc:
+            mfc.delete_file(path)
 
     def fsck(self, fix: bool = False) -> Iterator[pfs_proto.FsckResponse]:
         """Performs a file system consistency check on PFS, ensuring the
@@ -1058,7 +1058,9 @@ class PFSMixin:
 
 
 class ModifyFileClient:
-    """`ModifyFileClient` puts or deletes PFS files atomically."""
+    """``ModifyFileClient`` puts or deletes PFS files atomically. Replaces
+    ``PutFileClient`` from python_pachyderm 6.x.
+    """
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
         self._ops = []

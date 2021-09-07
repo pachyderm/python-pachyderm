@@ -74,7 +74,7 @@ class PPSMixin:
         pipeline_name : str, optional
             The name of a pipeline. If set, returns subjobs (job at the
             pipeline-level) only from this pipeline.
-        input_commit : Union[tuple, dict, Commit, pfs_proto.Commit, List], optional  # noqa: W505
+        input_commit : Union[tuple, dict, Commit, pfs_proto.Commit, List], optional
             A commit or list of commits from the input repo to filter jobs on.
             Only impacts returned results if `pipeline_name` is specified.
         history : int, optional
@@ -99,6 +99,8 @@ class PPSMixin:
             An iterator of protobuf objects that either contain info on a
             subjob (job at the pipeline-level), if `pipeline_name` was
             specified, or a job, if `pipeline_name` wasn't specified.
+
+        .. # noqa: W505
         """
         if pipeline_name is not None:
             if isinstance(input_commit, list):
@@ -284,6 +286,70 @@ class PPSMixin:
 
         For info on the params, please refer to the pipeline spec document:
         http://docs.pachyderm.io/en/latest/reference/pipeline_spec.html
+
+        Parameters
+        ----------
+        pipeline_name : str
+            The pipeline name.
+        transform : pps_proto.Transform
+            The image and commands run during pipeline execution.
+        parallelism_spec : pps_proto.ParallelismSpec, optional
+            Specifies how the pipeline is parallelized.
+        egress : pps_proto.Egress, optional
+            An external data store to publish the results of the pipeline to.
+        reprocess_spec : str, optional
+            Specifies how to handle already-processed datums.
+        update : bool, optional
+            If true, updates the existing pipeline with new args.
+        output_branch_name : str, optional
+            The branch name to output results on.
+        s3_out : bool, optional
+            If true, the output repo is exposed as an S3 gateway bucket.
+        resource_requests : pps_proto.ResourceSpec, optional
+            The amount of resources that the pipeline workers will consume.
+        resource_limits: pps_proto.ResourceSpec, optional
+            The upper threshold of allowed resources a given worker can
+            consume. If a worker exceeds this value, it will be evicted.
+        sidecar_resource_limits : pps_proto.ResourceSpec, optional
+            The upper threshold of resources allocated to the sidecar
+            containers.
+        input : pps_proto.Input, optional
+            The input repos to the pipeline. Commits to these repos will
+            automatically trigger the pipeline to create new jobs to
+            process them.
+        description : str, optional
+            A description of the pipeline.
+        reprocess : bool, optional
+            If true, forces the pipeline to reprocess all datums. Only has
+            meaning if `update` is ``True``.
+        service : pps_proto.Service, optional
+            Creates a Service pipeline instead of a normal pipeline.
+        datum_set_spec : pps_proto.DatumSetSpec, optional
+            Specifies how a pipeline should split its datums into datum sets.
+        datum_timeout : duration_pb2.Duration, optional
+            The maximum execution time allowed for each datum.
+        job_timeout : duration_pb2.Duration, optional
+            The maximum execution time allowed for a job.
+        salt : str, optional
+            A tag for the pipeline.
+        datum_tries : int, optional
+            The number of times a job attempts to run on a datum when a failure
+            occurs.
+        scheduling_spec : pps_proto.SchedulingSpec, optional
+            Specifies how the pods for a pipeline should be scheduled.
+        pod_patch : str, optional
+            Allows one to set fields in the pod spec that haven't been
+            explicitly exposed in the rest of the pipeline spec.
+        spout : pps_proto.Spout, optional
+            Creates a Spout pipeline instead of a normal pipeline.
+        spec_commit : pfs_proto.Commit, optional
+            A spec commit to base the pipeline spec from.
+        metadata : pps_proto.Metadata, optional
+            Kubernetes labels and annotations to add as metadata to the
+            pipeline pods.
+        autoscaling : bool, optional
+            If true, automatically scales the worker pool based on the datums
+            it has to process.
 
         Notes
         -----
