@@ -1,4 +1,5 @@
 import io
+import re
 import itertools
 import tarfile
 from contextlib import contextmanager
@@ -1055,6 +1056,39 @@ class PFSMixin:
             old_file=old_file,
             shallow=shallow,
         )
+
+    def path_exists(
+        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
+    ) -> bool:
+        """Checks whether the path exists in the specified commit, agnostic to
+        whether `path` is a file or a directory.
+
+        Parameters
+        ----------
+        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+            The subcommit (commit at the repo-level) to check in.
+        path : str
+            The file or directory path in `commit`.
+
+        Returns
+        -------
+        bool
+            Returns ``True`` if `path` exists in `commit`. Otherwise, returns
+            ``False``.
+        """
+        try:
+            self.inspect_file(commit, path)
+        except Exception as e:
+            valid_commit_re = re.compile("^file .+ not found in repo .+ at commit .+$")
+            invalid_commit_re = re.compile("^branch .+ not found in repo .+$")
+
+            if valid_commit_re.match(e.details()):
+                return False
+            elif invalid_commit_re.match(e.details()):
+                raise ValueError("bad argument: nonexistent commit provided")
+            raise e
+
+        return True
 
 
 class ModifyFileClient:

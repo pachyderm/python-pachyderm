@@ -717,3 +717,22 @@ def test_diff_file():
     diff = list(client.diff_file(new_commit, "file1.dat", old_commit, "file2.dat"))
     assert diff[0].new_file.file.path == "/file1.dat"
     assert diff[1].old_file.file.path == "/file2.dat"
+
+
+def test_path_exists():
+    client, repo_name = sandbox("path_exists")
+
+    with client.commit(repo_name, "master") as c:
+        client.put_file_bytes(c, "dir/file1", b"I'm a file in a dir.")
+        client.put_file_bytes(c, "file2", b"I'm a file.")
+
+    assert client.path_exists(c, "/")
+    assert client.path_exists(c, "dir/")
+    assert client.path_exists(c, "dir")
+    assert client.path_exists(c, "dir/file1")
+    assert client.path_exists(c, "dir/file1/")
+    assert client.path_exists(c, "file2")
+    assert not client.path_exists(c, "file1")
+
+    with pytest.raises(ValueError, match=r"nonexistent commit provided"):
+        assert not client.path_exists(("fake_repo", "master"), "dir")
