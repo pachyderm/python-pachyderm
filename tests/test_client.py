@@ -63,14 +63,14 @@ def test_check_config_order(mocker):
     )
 
     mocker.patch(
-        "python_pachyderm.Client.check_pach_config_env_var", return_value=env_config
+        "python_pachyderm.Client._check_pach_config_env_var", return_value=env_config
     )
     mocker.patch(
-        "python_pachyderm.Client.check_pach_config_spout",
+        "python_pachyderm.Client._check_pach_config_spout",
         return_value=spout_config,
     )
     mocker.patch(
-        "python_pachyderm.Client.check_pach_config_local",
+        "python_pachyderm.Client._check_pach_config_local",
         return_value=local_config,
     )
 
@@ -79,17 +79,19 @@ def test_check_config_order(mocker):
     assert client.address == "172.17.0.6:30650"
 
     # Retrieves from spout config file
-    mocker.patch("python_pachyderm.Client.check_pach_config_env_var", return_value=None)
+    mocker.patch(
+        "python_pachyderm.Client._check_pach_config_env_var", return_value=None
+    )
     client = python_pachyderm.Client()
     assert client.address == "::1:80"
 
     # Retrieves from local config file
-    mocker.patch("python_pachyderm.Client.check_pach_config_spout", return_value=None)
+    mocker.patch("python_pachyderm.Client._check_pach_config_spout", return_value=None)
     client = python_pachyderm.Client()
     assert client.address == "localhost:10101"
 
     # Executes default constructor behavior
-    mocker.patch("python_pachyderm.Client.check_pach_config_local", return_value=None)
+    mocker.patch("python_pachyderm.Client._check_pach_config_local", return_value=None)
     client = python_pachyderm.Client()
     assert client.address == "localhost:30650"
 
@@ -126,7 +128,7 @@ def test_parse_config():
     assert port == 30650
     assert pachd_address == "grpcs://172.17.0.6:30650"
     assert auth_token == "bar"
-    assert root_certs == "foo"
+    assert root_certs == b"foo"
     assert transaction_id == "baz"
     assert tls is True
 
@@ -289,7 +291,7 @@ def test_client_new_from_config():
         )
     )
     assert client.address == "172.17.0.6:30650"
-    assert client.root_certs == "foo"
+    assert client.root_certs == b"foo"
     assert client.auth_token == "bar"
     assert client.transaction_id == "baz"
 
