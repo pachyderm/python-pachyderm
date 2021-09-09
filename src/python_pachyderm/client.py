@@ -54,10 +54,10 @@ class Client(
     VersionMixin,
     object,
 ):
-    """The ``Client`` class that users will primarily interact with. Initialize
-    an instance with ``python_pachyderm.Client()``.
+    """The :class:`.Client` class that users will primarily interact with.
+    Initialize an instance with ``python_pachyderm.Client()``.
 
-    To see documentation on the methods ``Client`` can call, refer to the
+    To see documentation on the methods :class:`.Client` can call, refer to the
     `mixins` module.
     """
 

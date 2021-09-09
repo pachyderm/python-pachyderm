@@ -18,7 +18,7 @@ class Commit(NamedTuple):
     repo_type: str = "user"
 
     def to_pb(self) -> pfs_proto.Commit:
-        """Converts itself into a `pfs_proto.Commit`"""
+        """Converts itself into a ``pfs_proto.Commit``."""
         return pfs_proto.Commit(
             id=self.id,
             branch=pfs_proto.Branch(
@@ -29,7 +29,9 @@ class Commit(NamedTuple):
 
     @staticmethod
     def from_pb(commit: pfs_proto.Commit) -> "Commit":
-        """Converts a ``pfs_proto.Commit`` object into a ``Commit`` object."""
+        """Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`
+        object.
+        """
         return Commit(
             repo=commit.branch.repo.name,
             branch=commit.branch.name,

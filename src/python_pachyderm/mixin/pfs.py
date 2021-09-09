@@ -99,7 +99,7 @@ class PFSFile:
         return x
 
     def read(self, size: int = -1) -> bytes:
-        """Reads from the ``PFSFile`` buffer.
+        """Reads from the :class:`.PFSFile` buffer.
 
         Parameters
         ----------
@@ -114,7 +114,7 @@ class PFSFile:
         return self._file.read(size)
 
     def close(self) -> None:
-        """Closes the ``PFSFile``."""
+        """Closes the :class:`.PFSFile`."""
         self._file.close()
 
 
@@ -653,9 +653,10 @@ class PFSMixin:
     def modify_file_client(
         self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]
     ) -> Iterator["ModifyFileClient"]:
-        """A context manager that gives a `ModifyFileClient`. When the context
-        manager exits, any operations enqueued from the `ModifyFileClient` are
-        executed in a single, atomic `ModifyFile` call.
+        """A context manager that gives a :class:`.ModifyFileClient`. When the
+        context manager exits, any operations enqueued from the
+        :class:`.ModifyFileClient` are executed in a single, atomic
+        ModifyFile gRPC call.
 
         Parameters
         ----------
@@ -1092,8 +1093,8 @@ class PFSMixin:
 
 
 class ModifyFileClient:
-    """``ModifyFileClient`` puts or deletes PFS files atomically. Replaces
-    ``PutFileClient`` from python_pachyderm 6.x.
+    """:class:`.ModifyFileClient` puts or deletes PFS files atomically.
+    Replaces :class:`.PutFileClient` from python_pachyderm 6.x.
     """
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
@@ -1204,8 +1205,8 @@ class ModifyFileClient:
         append: bool = False,
         recursive: bool = False,
     ) -> None:
-        """Uploads a PFSFile from the content found at a URL. The URL is
-        sent to the server which performs the request.
+        """Uploads a :class:`.PFSFile` from the content found at a URL. The URL
+        is sent to the server which performs the request.
 
         Parameters
         ----------

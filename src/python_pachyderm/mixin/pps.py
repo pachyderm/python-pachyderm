@@ -355,7 +355,7 @@ class PPSMixin:
         -----
         If creating a Spout pipeline, when committing data to the repo, use
         commit methods (``client.commit()``, ``client.start_commit()``, etc.)
-        or ``ModifyFileClient`` methods (``mfc.put_file_from_bytes``,
+        or :class:`.ModifyFileClient` methods (``mfc.put_file_from_bytes``,
         ``mfc.delete_file()``, etc.)
 
         For other pipelines, when committing data to the repo, write out to
