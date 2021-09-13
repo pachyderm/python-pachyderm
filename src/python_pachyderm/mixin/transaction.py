@@ -29,6 +29,16 @@ class TransactionMixin:
         -------
         transaction_proto.TransactionInfo
             A protobuf object with info on the transaction.
+
+        Examples
+        --------
+        >>> # Deletes one repo and creates a branch in another repo atomically
+        >>> client.batch_transaction([
+            transaction_proto.TransactionRequest(delete_repo=pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name="foo"))),
+            transaction_proto.TransactionRequest(create_branch=pfs_proto.CreateBranchRequest(branch=pfs_proto.Branch(
+                repo=pfs_proto.Repo(name="bar", type="user"), name="staging"
+            )))
+        ])
         """
         return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
 
@@ -39,6 +49,12 @@ class TransactionMixin:
         -------
         transaction_proto.Transaction
             A protobuf object that represents the transaction.
+
+        Examples
+        --------
+        >>> transaction = client.start_transaction()
+        >>> # do stuff
+        >>> client.finish_transaction(transaction)
         """
         return self._req(Service.TRANSACTION, "StartTransaction")
 
@@ -56,6 +72,14 @@ class TransactionMixin:
         -------
         transaction_proto.TransactionInfo
             A protobuf object with info on the transaction.
+
+        Examples
+        --------
+        >>> transaction = client.inspect_transaction("6fe754facd9c41e99d04e1037e3be9ee")
+        ...
+        >>> transaction = client.inspect_transaction(transaction_protobuf)
+
+        .. # noqa: W505
         """
         return self._req(
             Service.TRANSACTION,
@@ -72,6 +96,15 @@ class TransactionMixin:
         ----------
         transaction : Union[str, transaction_proto.Transaction]
             The ID or protobuf object representing the transaction.
+
+        Examples
+        --------
+        >>> client.delete_transaction("6fe754facd9c41e99d04e1037e3be9ee")
+        ...
+        >>> transaction = client.finish_transaction("a3ak09467c580611234cdb8cc9758c7a")
+        >>> client.delete_transaction(transaction)
+
+        .. # noqa: W505
         """
         self._req(
             Service.TRANSACTION,
@@ -84,7 +117,7 @@ class TransactionMixin:
         self._req(Service.TRANSACTION, "DeleteAll")
 
     def list_transaction(self) -> List[transaction_proto.TransactionInfo]:
-        """Lists transactions.
+        """Lists unfinished transactions.
 
         Returns
         -------
@@ -107,6 +140,12 @@ class TransactionMixin:
         -------
         transaction_proto.TransactionInfo
             A protobuf object with info on the transaction.
+
+        Examples
+        --------
+        >>> transaction = client.start_transaction()
+        >>> # do stuff
+        >>> client.finish_transaction(transaction)
         """
         return self._req(
             Service.TRANSACTION,
@@ -124,6 +163,22 @@ class TransactionMixin:
         -------
         transaction_proto.Transaction
             A protobuf object that represents a transaction.
+
+        Examples
+        --------
+        If a pipeline has two input repos, `foo` and `bar`, a transaction is
+        useful for adding data to both atomically before the pipeline runs
+        even once.
+
+        >>> with client.transaction() as t:
+        >>>     c1 = client.start_commit("foo", "master")
+        >>>     c2 = client.start_commit("bar", "master")
+        >>>
+        >>>     client.put_file_bytes(c1, "/joint_data.txt", b"DATA1")
+        >>>     client.put_file_bytes(c2, "/joint_data.txt", b"DATA2")
+        >>>
+        >>>     client.finish_commit(c1)
+        >>>     client.finish_commit(c2)
         """
 
         old_transaction_id = self.transaction_id

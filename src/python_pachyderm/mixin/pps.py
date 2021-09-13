@@ -35,6 +35,16 @@ class PPSMixin:
         Iterator[pps_proto.JobInfo]
             An iterator of protobuf objects that contain info on a subjob
             (jobs at the pipeline-level).
+
+        Examples
+        --------
+        >>> # Look at all subjobs in a job
+        >>> subjobs = list(client.inspect_job("467c580611234cdb8cc9758c7aa96087"))
+        ...
+        >>> # Look at single subjob (job at the pipeline-level)
+        >>> subjob = list(client.inspect_job("467c580611234cdb8cc9758c7aa96087", "foo"))[0]
+
+        .. # noqa: W505
         """
         if pipeline_name is not None:
             return iter(
@@ -99,6 +109,14 @@ class PPSMixin:
             An iterator of protobuf objects that either contain info on a
             subjob (job at the pipeline-level), if `pipeline_name` was
             specified, or a job, if `pipeline_name` wasn't specified.
+
+        Examples
+        --------
+        >>> # List all jobs
+        >>> jobs = list(client.list_job())
+        ...
+        >>> # List all jobs at a pipeline-level
+        >>> subjobs = list(client.list_job("foo"))
 
         .. # noqa: W505
         """
@@ -217,6 +235,19 @@ class PPSMixin:
         -------
         Iterator[pps_proto.DatumInfo]
             An iterator of protobuf objects that contain info on a datum.
+
+        Examples
+        --------
+        >>> # See hypothetical datums with specified input cross
+        >>> datums = list(client.list_datum(input=pps_proto.Input(
+        ...     pfs=pps_proto.PFSInput(repo="foo", branch="master", glob="/*"),
+        ...     cross=[
+        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="bar", branch="master", glob="/")),
+        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="baz", branch="master", glob="/*/*")),
+        ...     ]
+        ... )))
+
+        .. # noqa: W505
         """
         req = pps_proto.ListDatumRequest()
         if pipeline_name is not None and job_id is not None:
@@ -359,7 +390,22 @@ class PPSMixin:
         ``mfc.delete_file()``, etc.)
 
         For other pipelines, when committing data to the repo, write out to
-        ``/pfs/out``.
+        ``/pfs/out/``.
+
+        Examples
+        --------
+        >>> client.create_pipeline(
+        ...     "foo",
+        ...     transform=pps_proto.Transform(
+        ...         cmd=["python3", "main.py"],
+        ...         image="example/image",
+        ...     ),
+        ...     input=pps_proto.Input(pfs=pps_proto.PFSInput(
+        ...         repo="foo",
+        ...         branch="master",
+        ...         glob="/*"
+        ...     ))
+        ... )
         """
         self._req(
             Service.PPS,
@@ -430,6 +476,13 @@ class PPSMixin:
         -------
         Iterator[pps_proto.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
+
+        Examples
+        --------
+        >>> pipeline = next(client.inspect_pipeline("foo"))
+        ...
+        >>> for p in client.inspect_pipeline("foo", 2):
+        >>>     print(p)
         """
         if history == 0:
             return iter(
@@ -477,6 +530,10 @@ class PPSMixin:
         -------
         Iterator[pps_proto.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
+
+        Examples
+        --------
+        >>> pipelines = list(client.list_pipeline())
         """
         return self._req(
             Service.PPS,
