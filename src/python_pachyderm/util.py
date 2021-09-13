@@ -30,7 +30,7 @@ def put_files(
         The destination path in PFS.
     **kwargs : dict
         Keyword arguments to forward. See
-        ``ModifyFileClient.put_file_from_filepath`` for more details.
+        ``ModifyFileClient.put_file_from_filepath()`` for more details.
     """
 
     with client.modify_file_client(commit) as mfc:

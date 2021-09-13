@@ -80,10 +80,12 @@ class PPSMixin:
         history : int, optional
             Indicates to return jobs from historical versions of
             `pipeline_name`. Semantics are:
-            * 0: Return jobs from the current version of `pipeline_name`
-            * 1: Return the above and jobs from the next most recent version
-            * 2: etc.
-            * -1: Return jobs from all historical versions of `pipeline_name`
+
+            - 0: Return jobs from the current version of `pipeline_name`
+            - 1: Return the above and jobs from the next most recent version
+            - 2: etc.
+            - -1: Return jobs from all historical versions of `pipeline_name`
+
         details : bool, optional
             If true, return pipeline details for `pipeline_name`. Leaving this
             ``None`` (or ``False``) can make the call significantly faster in
@@ -418,11 +420,12 @@ class PPSMixin:
         history : int, optional
             Indicates to return historical versions of `pipeline_name`.
             Semantics are:
-            * 0: Return current version of `pipeline_name`
-            * 1: Return the above and `pipeline_name` from the next most recent
-            version.
-            * 2: etc.
-            * -1: Return all historical versions of `pipeline_name`.
+
+            - 0: Return current version of `pipeline_name`
+            - 1: Return the above and `pipeline_name` from the next most recent version.
+            - 2: etc.
+            - -1: Return all historical versions of `pipeline_name`.
+
         details : bool, optional
             If true, return pipeline details.
 
@@ -430,6 +433,8 @@ class PPSMixin:
         -------
         Iterator[pps_proto.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
+
+        .. # noqa: W505
         """
         if history == 0:
             return iter(
@@ -463,11 +468,12 @@ class PPSMixin:
         history : int, optional
             Indicates to return historical versions of `pipeline_name`.
             Semantics are:
-            * 0: Return current version of `pipeline_name`
-            * 1: Return the above and `pipeline_name` from the next most recent
-            version.
-            * 2: etc.
-            * -1: Return all historical versions of `pipeline_name`.
+
+            - 0: Return current version of `pipeline_name`
+            - 1: Return the above and `pipeline_name` from the next most recent version.
+            - 2: etc.
+            - -1: Return all historical versions of `pipeline_name`.
+
         details : bool, optional
             If true, return pipeline details.
         jqFilter : str, optional
@@ -477,6 +483,8 @@ class PPSMixin:
         -------
         Iterator[pps_proto.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
+
+        .. # noqa: W505
         """
         return self._req(
             Service.PPS,
@@ -574,7 +582,7 @@ class PPSMixin:
             The name of the secret.
         data : Dict[str, Union[str, bytes]]
             The data to store in the secret. Each key must consist of
-            alphanumeric characters, ``-``, ``_`` or ``.``.
+            alphanumeric characters ``-``, ``_`` or ``.``.
         labels : Dict[str, str], optional
             Kubernetes labels to attach to the secret.
         annotations : Dict[str, str], optional
