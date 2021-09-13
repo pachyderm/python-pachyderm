@@ -13,28 +13,26 @@ def transaction_from(transaction):
 
 class TransactionMixin:
     def batch_transaction(self, requests):
-        """
-        Executes a batch transaction.
+        """Executes a batch transaction.
 
-        Params:
-
-        * `requests`: A list of `TransactionRequest` objects.
+        Parameters
+        ----------
+        requests : List[TransactionRequest protobuf]
+            A list of `TransactionRequest` objects.
         """
         return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
 
     def start_transaction(self):
-        """
-        Starts a transaction.
-        """
+        """Starts a transaction."""
         return self._req(Service.TRANSACTION, "StartTransaction")
 
     def inspect_transaction(self, transaction):
-        """
-        Inspects a given transaction.
+        """Inspects a given transaction.
 
-        Params:
-
-        * `transaction`: A string or `Transaction` object.
+        Parameters
+        ----------
+        transaction : Union[str, Transaction protobuf]
+            Transaction ID or ``Transaction`` object.
         """
         return self._req(
             Service.TRANSACTION,
@@ -43,12 +41,12 @@ class TransactionMixin:
         )
 
     def delete_transaction(self, transaction):
-        """
-        Deletes a given transaction.
+        """Deletes a given transaction.
 
-        Params:
-
-        * `transaction`: A string or `Transaction` object.
+        Parameters
+        ----------
+        transaction : Union[str, Transaction protobuf]
+            Transaction ID or ``Transaction`` object.
         """
         return self._req(
             Service.TRANSACTION,
@@ -57,24 +55,20 @@ class TransactionMixin:
         )
 
     def delete_all_transactions(self):
-        """
-        Deletes all transactions.
-        """
+        """Deletes all transactions."""
         return self._req(Service.TRANSACTION, "DeleteAll")
 
     def list_transaction(self):
-        """
-        Lists transactions.
-        """
+        """Lists transactions."""
         return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
 
     def finish_transaction(self, transaction):
-        """
-        Finishes a given transaction.
+        """Finishes a given transaction.
 
-        Params:
-
-        * `transaction`: A string or `Transaction` object.
+        Parameters
+        ----------
+        transaction : Union[str, Transaction protobuf]
+            Transaction ID or ``Transaction`` object.
         """
         return self._req(
             Service.TRANSACTION,
@@ -84,12 +78,10 @@ class TransactionMixin:
 
     @contextmanager
     def transaction(self):
-        """
-        A context manager for running operations within a transaction. When
+        """A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an
         error occurred, or otherwise finished.
         """
-
         old_transaction_id = self.transaction_id
         transaction = self.start_transaction()
         self.transaction_id = transaction.id

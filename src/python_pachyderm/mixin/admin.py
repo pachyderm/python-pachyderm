@@ -13,23 +13,24 @@ class AdminMixin:
         no_auth=None,
         no_enterprise=None,
     ):
-        """
-        Extracts cluster data for backup. Yields `Op` objects.
+        """Extracts cluster data for backup. Yields `Op` objects.
 
-        Params:
-
-        * `url`: An optional string specifying an object storage URL. If set,
-          data will be extracted to this URL rather than returned.
-        * `no_objects`: An optional bool. If true, will cause extract to omit
-          objects (and tags.)
-        * `no_repos`: An optional bool. If true, will cause extract to omit
-          repos, commits and branches.
-        * `no_pipelines`: An optional bool. If true, will cause extract to
-          omit pipelines.
-        * `no_auth`: An optional bool. If true, will cause extract to omit
-          acls, tokens, etc.
-        * `no_enterprise`: An optional bool. If true, will cause extract to
-          omit any enterprise activation key (which may break auth restore)
+        Parameters
+        ----------
+        url : str, optional
+            A string specifying an object storage URL. If set, data will be
+            extracted to this URL rather than returned.
+        no_objects : bool, optional
+            If true, will cause extract to omit objects (and tags.)
+        no_repos : bool, optional
+            If true, will cause extract to omit repos, commits and branches.
+        no_pipelines : bool, optional
+            If true, will cause extract to omit pipelines.
+        no_auth : bool, optional
+            If true, will cause extract to omit acls, tokens, etc.
+        no_enterprise : bool, optional
+            If true, will cause extract to omit any enterprise activation key
+            (which may break auth restore)
         """
         return self._req(
             Service.ADMIN,
@@ -43,12 +44,12 @@ class AdminMixin:
         )
 
     def extract_pipeline(self, pipeline_name):
-        """
-        Extracts a pipeline for backup. Returns an `Op` object.
+        """Extracts a pipeline for backup. Returns an `Op` object.
 
-        Params:
-
-        * `pipeline_name`: A string representing a pipeline name to extract.
+        Parameters
+        ----------
+        pipeline_name : str
+            The pipeline name to extract.
         """
         return self._req(
             Service.ADMIN,
@@ -59,19 +60,17 @@ class AdminMixin:
         )
 
     def restore(self, requests):
-        """
-        Restores a cluster.
+        """Restores a cluster.
 
-        Params:
-
-        * `requests`: A generator of `RestoreRequest` objects.
+        Parameters
+        ----------
+        requests : Iterator[RestoreRequest protobufs]
+            A generator of `RestoreRequest` objects.
         """
         return self._req(Service.ADMIN, "Restore", req=requests)
 
     def inspect_cluster(self):
-        """
-        Inspects a cluster. Returns a `ClusterInfo` object.
-        """
+        """Inspects a cluster. Returns a `ClusterInfo` object."""
         return self._req(
             Service.ADMIN,
             "InspectCluster",

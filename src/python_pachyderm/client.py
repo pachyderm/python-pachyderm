@@ -15,16 +15,15 @@ from .mixin.version import VersionMixin
 
 
 class ConfigError(Exception):
-    """Error for issues related to the pachyderm config file"""
+    """Error for issues related to the pachyderm config file."""
 
     def __init__(self, message):
         super().__init__(message)
 
 
 class BadClusterDeploymentID(ConfigError):
-    """
-    Error triggered when connected to a cluster that reports back a different
-    cluster deployment ID than what is stored in the config file
+    """Error triggered when connected to a cluster that reports back a different
+    cluster deployment ID than what is stored in the config file.
     """
 
     def __init__(self, expected_deployment_id, actual_deployment_id):
@@ -58,21 +57,25 @@ class Client(
         transaction_id=None,
         tls=None,
     ):
-        """
-        Creates a Pachyderm client.
+        """Creates a Pachyderm client.
 
-        Params:
-
-        * `host`: The pachd host. Default is 'localhost', which is used with
-        `pachctl port-forward`.
-        * `port`: The port to connect to. Default is 30650.
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Defaults to `None`.
-        * `root_certs`:  The PEM-encoded root certificates as byte string.
-        * `transaction_id`: The ID of the transaction to run operations on.
-        * `tls`: Specifies whether TLS should be used. If `root_certs` are
-        specified, they are used; otherwise, we use the certs provided by
-        certifi.
+        Parameters
+        ----------
+        host : str, optional
+            The pachd host. Default is 'localhost', which is used with
+            ``pachctl port-forward``.
+        port : int, optional
+            The port to connect to. Default is 30650.
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        root_certs : bytes, optional
+            The PEM-encoded root certificates as byte string.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
+        tls : bool, optional
+            Whether TLS should be used. If `root_certs` are specified, they are
+            used. Otherwise, we use the certs provided by certifi.
         """
 
         host = host or "localhost"
@@ -103,14 +106,20 @@ class Client(
 
     @classmethod
     def new_in_cluster(cls, auth_token=None, transaction_id=None):
-        """
-        Creates a Pachyderm client that operates within a Pachyderm cluster.
+        """Creates a Pachyderm client that operates within a Pachyderm cluster.
 
-        Params:
+        Parameters
+        ----------
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
 
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `transaction_id`: The ID of the transaction to run operations on.
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         if (
@@ -136,16 +145,25 @@ class Client(
     def new_from_pachd_address(
         cls, pachd_address, auth_token=None, root_certs=None, transaction_id=None
     ):
-        """
-        Creates a Pachyderm client from a given pachd address.
+        """Creates a Pachyderm client from a given pachd address.
 
-        Params:
+        Parameters
+        ----------
+        pachd_address : str
+            The address of pachd server
+        auth_token : str, optional
+            The authentication token. Used if authentication is enabled on the
+            cluster.
+        root_certs : bytes, optional
+            The PEM-encoded root certificates as byte string. If unspecified,
+            this will load default certs from certifi.
+        transaction_id : str, optional
+            The ID of the transaction to run operations on.
 
-        * `auth_token`: The authentication token; used if authentication is
-        enabled on the cluster. Default to `None`.
-        * `root_certs`: The PEM-encoded root certificates as byte string. If
-        unspecified, this will load default certs from certifi.
-        * `transaction_id`: The ID of the transaction to run operations on.
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         if "://" not in pachd_address:
@@ -171,17 +189,22 @@ class Client(
 
     @classmethod
     def new_from_config(cls, config_file=None):
-        """
-        Creates a Pachyderm client from a config file, which can either be
+        """Creates a Pachyderm client from a config file, which can either be
         passed in as a file-like object, or if unset, checks the PACH_CONFIG env
         var for a path. If that's also unset, it defaults to loading from
         '~/.pachyderm/config.json'.
 
-        Params:
+        Parameters
+        ----------
+        config_file : TextIO, optional
+            A file-like object containing the config json file. If unspecified,
+            we load the config from the default location
+            ('~/.pachyderm/config.json').
 
-        * `config_file`: An optional file-like object containing the config
-        json file. If unspecified, we load the config from the default
-        location ('~/.pachyderm/config.json'.)
+        Returns
+        -------
+        Client
+            A python_pachyderm client instance.
         """
 
         if config_file is not None:

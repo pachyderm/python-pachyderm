@@ -13,24 +13,22 @@ BUFFER_SIZE = 19 * 1024 * 1024
 
 
 class PFSFile:
-    """
-    The contents of a file stored in PFS. You can treat these as either
-    file-like objects, like so:
+    """The contents of a file stored in PFS.
 
-    ```
-    source_file = client.get_file("montage/master", "/montage.png")
-    with open("montage.png", "wb") as dest_file:
-        shutil.copyfileobj(source_file, dest_file)
-    ```
+    Examples
+    --------
+    You can treat these as either file-like objects, like so:
+
+    >>> source_file = client.get_file("montage/master", "/montage.png")
+    >>> with open("montage.png", "wb") as dest_file:
+    >>>     shutil.copyfileobj(source_file, dest_file)
 
     Or as an iterator of bytes, like so:
 
-    ```
-    source_file = client.get_file("montage/master", "/montage.png")
-    with open("montage.png", "wb") as dest_file:
-        for chunk in source_file:
-            dest_file.write(chunk)
-    ```
+    >>> source_file = client.get_file("montage/master", "/montage.png")
+    >>> with open("montage.png", "wb") as dest_file:
+    >>>     for chunk in source_file:
+    >>>         dest_file.write(chunk)
     """
 
     def __init__(self, res):
@@ -44,9 +42,17 @@ class PFSFile:
         return next(self.res).value
 
     def close(self):
+        """Closes the :class:`.PFSFile`"""
         self.res.cancel()
 
     def read(self, size=-1):
+        """Reads from the :class:`.PFSFile` buffer.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of bytes to read from the buffer.
+        """
         if self.res.cancelled():
             return b""
 
@@ -77,18 +83,20 @@ class PFSFile:
 
 class PFSMixin:
     def create_repo(self, repo_name, description=None, update=None):
-        """
-        Creates a new `Repo` object in PFS with the given name. Repos are the
-        top level data object in PFS and should be used to store data of a
-        similar type. For example rather than having a single `Repo` for an
-        entire project you might have separate `Repo`s for logs, metrics,
+        """Creates a new ``Repo`` object in PFS with the given name. Repos are
+        the top level data object in PFS and should be used to store data of a
+        similar type. For example rather than having a single ``Repo`` for an
+        entire project you might have separate ``Repo``s for logs, metrics,
         database dumps etc.
 
-        Params:
-
-        * `repo_name`: Name of the repo.
-        * `description`: An optional string describing the repo.
-        * `update`: Whether to update if the repo already exists.
+        Parameters
+        ----------
+        repo_name : str
+            Name of the repo.
+        description : str, optional
+            Description of the repo.
+        update : bool, optional
+            Whether to update if the repo already exists.
         """
         return self._req(
             Service.PFS,
@@ -99,36 +107,36 @@ class PFSMixin:
         )
 
     def inspect_repo(self, repo_name):
-        """
-        Returns info about a specific repo. Returns a `RepoInfo` object.
+        """Returns info about a specific repo. Returns a ``RepoInfo`` object.
 
-        Params:
-
-        * `repo_name`: Name of the repo.
+        Parameters
+        ----------
+        repo_name : str
+            Name of the repo.
         """
         return self._req(
             Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name)
         )
 
     def list_repo(self):
-        """
-        Returns info about all repos, as a list of `RepoInfo` objects.
-        """
+        """Returns info about all repos, as a list of ``RepoInfo`` objects."""
         return self._req(Service.PFS, "ListRepo").repo_info
 
     def delete_repo(self, repo_name, force=None, split_transaction=None):
-        """
-        Deletes a repo and reclaims the storage space it was using.
+        """Deletes a repo and reclaims the storage space it was using.
 
-        Params:
-
-        * `repo_name`: The name of the repo.
-        * `force`: If set to true, the repo will be removed regardless of
-          errors. This argument should be used with care.
-        * `split_transaction`: An optional bool that controls whether Pachyderm
-          attempts to delete the entire repo in a single database transaction.
-          Setting this to `True` can work around certain Pachyderm errors, but,
-          if set, the `delete_repo` call may need to be retried.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        force : bool, optional
+            If set to true, the repo will be removed regardless of errors. This
+            argument should be used with care.
+        split_transaction : bool, optional
+            Controls whether Pachyderm attempts to delete the entire repo in a
+            single database transaction. Setting this to ``True`` can work
+            around certain Pachyderm errors, but, if set, the ``delete_repo()``
+            call may need to be retried.
         """
         return self._req(
             Service.PFS,
@@ -140,42 +148,46 @@ class PFSMixin:
         )
 
     def delete_all_repos(self, force=None):
-        """
-        Deletes all repos.
+        """Deletes all repos.
 
-        Params:
-
-        * `force`: If set to true, the repo will be removed regardless of
-        errors. This argument should be used with care.
+        Parameters
+        ----------
+        force : bool, optional
+            If set to true, the repo will be removed regardless of errors. This
+            argument should be used with care.
         """
         return self._req(Service.PFS, "DeleteRepo", force=force, all=True)
 
     def start_commit(
         self, repo_name, branch=None, parent=None, description=None, provenance=None
     ):
-        """
-        Begins the process of committing data to a Repo. Once started you can
-        write to the Commit with PutFile and when all the data has been
+        """Begins the process of committing data to a Repo. Once started you
+        can write to the Commit with PutFile and when all the data has been
         written you must finish the Commit with FinishCommit. NOTE, data is
         not persisted until FinishCommit is called. A Commit object is
         returned.
 
-        Params:
-
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying the branch name. This is a more
-        convenient way to build linear chains of commits. When a commit is
-        started with a non-empty branch the value of branch becomes an alias
-        for the created Commit. This enables a more intuitive access pattern.
-        When the commit is started on a branch the previous head of the branch
-        is used as the parent of the commit.
-        * `parent`: An optional `Commit` object specifying the parent commit.
-        Upon creation the new commit will appear identical to the parent
-        commit, data can safely be added to the new commit without affecting
-        the contents of the parent commit.
-        * `description`: An optional string describing the commit.
-        * `provenance`: An optional iterable of `CommitProvenance` objects
-        specifying the commit provenance.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch : str, optional
+            The branch name. This is a more convenient way to build linear
+            chains of commits. When a commit is started with a non-empty
+            branch the value of branch becomes an alias for the created Commit.
+            This enables a more intuitive access pattern. When the commit is
+            started on a branch the previous head of the branch is used as the
+            parent of the commit.
+        parent : Union[tuple, str, Commit probotuf], optional
+            An optional ``Commit`` object specifying the parent commit. Upon
+            creation the new commit will appear identical to the parent commit,
+            data can safely be added to the new commit without affecting the
+            contents of the parent commit.
+        description : str, optional
+            Description of the commit.
+        provenance : List[CommitProvenance protobuf], optional
+            An optional iterable of `CommitProvenance` objects specifying the
+            commit provenance.
         """
         return self._req(
             Service.PFS,
@@ -196,25 +208,28 @@ class PFSMixin:
         size_bytes=None,
         empty=None,
     ):
-        """
-        Ends the process of committing data to a Repo and persists the
+        """Ends the process of committing data to a Repo and persists the
         Commit. Once a Commit is finished the data becomes immutable and
         future attempts to write to it with PutFile will error.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `description`: An optional string describing this commit.
-        * `input_tree_object_hash`: An optional string specifying an input tree
-        object hash.
-        * `tree_object_hashes`: A list of zero or more strings specifying
-        object hashes for the output trees.
-        * `datum_object_hash`: An optional string specifying an object hash.
-        * `size_bytes`: An optional int.
-        * `empty`: An optional bool. If set, the commit will be closed (its
-        `finished` field will be set to the current time) but its `tree` will
-        be left nil.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        description : str, optional
+            Description of this commit.
+        input_tree_object_hash : str, optional
+            Specifies an input tree object hash.
+        tree_object_hashes : List[str], optional
+            A list of zero or more strings specifying object hashes for the
+            output trees.
+        datum_object_hash : str, optional
+            Specifies an object hash.
+        size_bytes : int, optional
+            An optional int.
+        empty : bool, optional
+            If set, the commit will be closed (its `finished` field will be set
+            to the current time) but its `tree` will be left None.
         """
         return self._req(
             Service.PFS,
@@ -236,23 +251,26 @@ class PFSMixin:
 
     @contextmanager
     def commit(self, repo_name, branch=None, parent=None, description=None):
-        """
-        A context manager for running operations within a commit.
+        """A context manager for running operations within a commit.
 
-        Params:
-
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying the branch name. This is a more
-        convenient way to build linear chains of commits. When a commit is
-        started with a non-empty branch the value of branch becomes an alias
-        for the created Commit. This enables a more intuitive access pattern.
-        When the commit is started on a branch the previous head of the branch
-        is used as the parent of the commit.
-        * `parent`: An optional `Commit` object specifying the parent commit.
-        Upon creation the new commit will appear identical to the parent
-        commit, data can safely be added to the new commit without affecting
-        the contents of the parent commit.
-        * `description`: An optional string describing the commit.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch : str, optional
+            The branch name. This is a more convenient way to build linear
+            chains of commits. When a commit is started with a non-empty
+            branch the value of branch becomes an alias for the created Commit.
+            This enables a more intuitive access pattern. When the commit is
+            started on a branch the previous head of the branch is used as the
+            parent of the commit.
+        parent : Union[tuple, str, Commit probotuf], optional
+            An optional ``Commit`` object specifying the parent commit. Upon
+            creation the new commit will appear identical to the parent commit,
+            data can safely be added to the new commit without affecting the
+            contents of the parent commit.
+        description : str, optional
+            Description of the commit.
         """
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
@@ -261,15 +279,15 @@ class PFSMixin:
             self.finish_commit(commit)
 
     def inspect_commit(self, commit, block_state=None):
-        """
-        Inspects a commit. Returns a `CommitInfo` object.
+        """Inspects a commit. Returns a ``CommitInfo`` object.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * An optional int that causes this method to block until the commit is
-        in the desired commit state. See the `CommitState` enum.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        block_state : int, optional
+            Causes this method to block until the commit is in the desired
+            commit state. See the ``CommitState`` enum.
         """
         return self._req(
             Service.PFS,
@@ -281,20 +299,22 @@ class PFSMixin:
     def list_commit(
         self, repo_name, to_commit=None, from_commit=None, number=None, reverse=None
     ):
-        """
-        Lists commits. Yields `CommitInfo` objects.
+        """Lists commits. Yields ``CommitInfo`` objects.
 
-        Params:
-
-        * `repo_name`: If only `repo_name` is given, all commits in the repo
-        are returned.
-        * `to_commit`: Optional. Only the ancestors of `to`, including `to`
-        itself, are considered.
-        * `from_commit`: Optional. Only the descendants of `from`, including
-        `from` itself, are considered.
-        * `number`: Optional. Determines how many commits are returned.  If
-        `number` is 0, all commits that match the aforementioned criteria are
-        returned.
+        Parameters
+        ----------
+        repo_name : str
+            If only `repo_name` is given, all commits in the repo are returned.
+        to_commit : Union[tuple, str, Commit protobuf], optional
+            Only the ancestors of `to`, including `to` itself, are considered.
+        from_commit : Union[tuple, str, Commit protobuf], optional
+            Only the descendants of `from`, including `from` itself, are
+            considered.
+        number : int, optional
+            Determines how many commits are returned. If `number` is 0, all
+            commits that match the aforementioned criteria are returned.
+        reverse : bool, optional
+            If true, returns commits oldest to newest.
         """
         req = pfs_proto.ListCommitRequest(
             repo=pfs_proto.Repo(name=repo_name), number=number, reverse=reverse
@@ -306,19 +326,17 @@ class PFSMixin:
         return self._req(Service.PFS, "ListCommitStream", req=req)
 
     def delete_commit(self, commit):
-        """
-        Deletes a commit.
+        """Deletes a commit.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            The commit to delete.
         """
         return self._req(Service.PFS, "DeleteCommit", commit=commit_from(commit))
 
     def flush_commit(self, commits, repos=None):
-        """
-        Blocks until all of the commits which have a set of commits as
+        """Blocks until all of the commits which have a set of commits as
         provenance have finished. For commits to be considered they must have
         all of the specified commits as provenance. This in effect waits for
         all of the jobs that are triggered by a set of commits to complete.
@@ -329,14 +347,15 @@ class PFSMixin:
         them to complete and see their output once they do. This returns an
         iterator of CommitInfo objects.
 
-        Yields `CommitInfo` objects.
+        Yields ``CommitInfo`` objects.
 
-        Params:
-
-        * `commits`: A list of tuples, strings, or `Commit` objects
-        representing the commits to flush.
-        * `repos`: An optional list of strings specifying repo names. If
-        specified, only commits within these repos will be flushed.
+        Parameters
+        ----------
+        commits : List[Union[tuple, str, Commit protobuf]]
+            The commits to flush.
+        repos : List[str], optional
+            An optional list of strings specifying repo names. If specified,
+            only commits within these repos will be flushed.
         """
         return self._req(
             Service.PFS,
@@ -350,17 +369,20 @@ class PFSMixin:
     def subscribe_commit(
         self, repo_name, branch, from_commit_id=None, state=None, prov=None
     ):
-        """
-        Yields `CommitInfo` objects as commits occur.
+        """Yields ``CommitInfo`` objects as commits occur.
 
-        Params:
-
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch`: A string specifying branch to subscribe to.
-        * `from_commit_id`: An optional string specifying the commit ID. Only
-        commits created since this commit are returned.
-        * `state`: The commit state to filter on.
-        * `prov`: An optional `CommitProvenance` object.
+        Parameters
+        ----------
+        repo_name :  str
+            The name of the repo.
+        branch : str
+            The branch to subscribe to.
+        from_commit_id : str, optional
+            A commit ID. Only commits created since this commit are returned.
+        state : int, optional
+            The commit state to filter on. See the ``CommitState`` enum.
+        prov : CommitProvenance protobuf, optional
+            An optional ``CommitProvenance`` object.
         """
         repo = pfs_proto.Repo(name=repo_name)
         req = pfs_proto.SubscribeCommitRequest(
@@ -375,19 +397,22 @@ class PFSMixin:
     def create_branch(
         self, repo_name, branch_name, commit=None, provenance=None, trigger=None
     ):
-        """
-        Creates a new branch.
+        """Creates a new branch.
 
-        Params:
-
-        * `repo_name`: A string specifying the name of the repo.
-        * `branch_name`: A string specifying the new branch name.
-        * `commit`: An optional tuple, string, or `Commit` object representing
-          the head commit of the branch.
-        * `provenance`: An optional iterable of `Branch` objects representing
-          the branch provenance.
-        * `trigger`: An optional `Trigger` object controlling when the head of
-          `branch_name` is moved.
+        Parameters
+        ----------
+        repo_name : str
+            The name of the repo.
+        branch_name : str
+            The new branch name.
+        commit : Union[tuple, str, Commit protobuf], optional
+            Represents the head commit of the new branch.
+        provenance : List[Branch protobuf], optional
+            An optional iterable of `Branch` objects representing the branch
+            provenance.
+        trigger : Trigger protobuf, optional
+            An optional `Trigger` object controlling when the head of
+            `branch_name` is moved.
         """
         return self._req(
             Service.PFS,
@@ -401,8 +426,14 @@ class PFSMixin:
         )
 
     def inspect_branch(self, repo_name, branch_name):
-        """
-        Inspects a branch. Returns a `BranchInfo` object.
+        """Inspects a branch. Returns a ``BranchInfo`` object.
+
+        Parameters
+        ----------
+        repo_name : str
+            The repo name.
+        branch_name : str
+            The branch name.
         """
         return self._req(
             Service.PFS,
@@ -413,13 +444,15 @@ class PFSMixin:
         )
 
     def list_branch(self, repo_name, reverse=None):
-        """
-        Lists the active branch objects on a repo. Returns a list of
-        `BranchInfo` objects.
+        """Lists the active branch objects on a repo. Returns a list of
+        ``BranchInfo`` objects.
 
-        Params:
-
-        * `repo_name`: A string specifying the repo name.
+        Parameters
+        ----------
+        repo_name : str
+            The repo name.
+        reverse : bool, optional
+            If true, returns branches oldest to newest.
         """
         return self._req(
             Service.PFS,
@@ -429,16 +462,18 @@ class PFSMixin:
         ).branch_info
 
     def delete_branch(self, repo_name, branch_name, force=None):
-        """
-        Deletes a branch, but leaves the commits themselves intact. In other
+        """Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
         branches they happen to be on.
 
-        Params:
-
-        * `repo_name`: A string specifying the repo name.
-        * `branch_name`: A string specifying the name of the branch to delete.
-        * `force`: A bool specifying whether to force the branch deletion.
+        Parameters
+        ----------
+        repo_name : str
+            The repo name.
+        branch_name : str
+            The name of the branch to delete.
+        force : bool, optional
+            Whether to force the branch deletion.
         """
         return self._req(
             Service.PFS,
@@ -451,10 +486,10 @@ class PFSMixin:
 
     @contextmanager
     def put_file_client(self):
-        """
-        A context manager that gives a `PutFileClient`. When the context
-        manager exits, any operations enqueued from the `PutFileClient` are
-        executed in a single, atomic `PutFile` call.
+        """A context manager that gives a :class:`.PutFileClient`. When the
+        context manager exits, any operations enqueued from the
+        :class:`.PutFileClient` are executed in a single, atomic ``PutFile``
+        call.
         """
         pfc = PutFileClient()
         yield pfc
@@ -471,34 +506,37 @@ class PFSMixin:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Uploads a PFS file from a file-like object, bytestring, or iterator
+        """Uploads a PFS file from a file-like object, bytestring, or iterator
         of bytestrings.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file contents as bytes, represented as a file-like
-        object, bytestring, or iterator of bytestrings.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path in the repo the file(s) will be written to.
+        value : Union[bytes, BinaryIO]
+            The file contents as bytes, represented as a file-like object,
+            bytestring, or iterator of bytestrings.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
         if isinstance(value, collections.abc.Iterable) and not isinstance(
             value, (str, bytes)
@@ -554,34 +592,39 @@ class PFSMixin:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Puts a file using the content found at a URL. The URL is sent to the
+        """Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path to the file.
-        * `url`: A string specifying the url of the file to put.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `recursive`: allow for recursive scraping of some types URLs, for
-        example on s3:// URLs.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path in the repo the file will be written to.
+        url : str
+            The url of the file to put.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        recursive : bool, optional
+            Allow for recursive scraping of some types URLs, for example on
+            s3:// URLs.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
 
         with self.put_file_client() as pfc:
@@ -600,21 +643,22 @@ class PFSMixin:
     def copy_file(
         self, source_commit, source_path, dest_commit, dest_path, overwrite=None
     ):
-        """
-        Efficiently copies files already in PFS. Note that the destination
-        repo cannot be an output repo, or the copy operation will (as of
-        1.9.0) silently fail.
+        """Efficiently copies files already in PFS. Note that the destination
+        repo cannot be an output repo, or the copy operation will (as of 1.9.0)
+        silently fail.
 
-        Params:
-
-        * `source_commit`: A tuple, string, or `Commit` object representing the
-        commit for the source file.
-        * `source_path`: A string specifying the path of the source file.
-        * `dest_commit`: A tuple, string, or `Commit` object representing the
-        commit for the destination file.
-        * `dest_path`: A string specifying the path of the destination file.
-        * `overwrite`: An optional bool specifying whether to overwrite the
-        destination file if it already exists.
+        Parameters
+        ----------
+        source_commit : Union[tuple, str, Commit protobuf]
+            Represents the commit with the source file.
+        source_path : str
+            The path of the source file.
+        dest_commit : Union[tuple, str, Commit protobuf]
+            Represents the commit for the destination file.
+        dest_path : str
+            The path of the destination file.
+        overwrite : bool, optional
+            Whether to overwrite the destination file if it already exists.
         """
         return self._req(
             Service.PFS,
@@ -625,21 +669,22 @@ class PFSMixin:
         )
 
     def get_file(self, commit, path, offset_bytes=None, size_bytes=None):
-        """
-        Returns a `PFSFile` object, containing the contents of a file stored
-        in PFS.
+        """Returns a :class:`.PFSFile` object, containing the contents of a
+        file stored in PFS.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path of the file.
-        * `offset_bytes`: An optional int. Specifies a number of bytes that
-        should be skipped in the beginning of the file.
-        * `size_bytes`: An optional int. limits the total amount of data
-        returned, note you will get fewer bytes than size if you pass a value
-        larger than the size of the file. If size is set to 0 then all of the
-        data will be returned.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path of the file.
+        offset_bytes : int, optional
+            Specifies the number of bytes that should be skipped in the
+            beginning of the file.
+        size_bytes : int, optional
+            Limits the total amount of data returned, note you will get fewer
+            bytes than `size_bytes` if you pass a value larger than the size of
+            the file. If 0, then all of the data will be returned.
         """
         res = self._req(
             Service.PFS,
@@ -651,14 +696,14 @@ class PFSMixin:
         return PFSFile(res)
 
     def inspect_file(self, commit, path):
-        """
-        Inspects a file. Returns a `FileInfo` object.
+        """Inspects a file. Returns a ``FileInfo`` object.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path to the file.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path to the file.
         """
         return self._req(
             Service.PFS,
@@ -667,22 +712,27 @@ class PFSMixin:
         )
 
     def list_file(self, commit, path, history=None, include_contents=None):
-        """
+        """.. # noqa: W505
+
         Lists the files in a directory.
 
-        Params:
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path to the directory.
+        history : int, optional
+            Indicates how many historical versions you want returned.
+            Semantics are:
 
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the directory.
-        * `history`: An optional int that indicates to return jobs from
-        historical versions of pipelines. Semantics are:
-         0: Return jobs from the current version of the pipeline or pipelines.
-         1: Return the above and jobs from the next most recent version
-         2: etc.
-        -1: Return jobs from all historical versions.
-        * `include_contents`: An optional bool. If `True`, file contents are
-        included.
+            - 0: Return the files as they are in `commit`
+            - 1: Return above and the files as they are in the last commit they were modified in.
+            - 2: etc.
+            - -1: Return all historical versions.
+
+        include_contents : bool, optional
+            If `True`, file contents are included.
         """
         return self._req(
             Service.PFS,
@@ -693,15 +743,15 @@ class PFSMixin:
         )
 
     def walk_file(self, commit, path):
-        """
-        Walks over all descendant files in a directory. Returns a generator of
-        `FileInfo` objects.
+        """Walks over all descendant files in a directory. Returns a generator
+        of ``FileInfo`` objects.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the directory.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path to the directory.
         """
         return self._req(
             Service.PFS,
@@ -710,31 +760,31 @@ class PFSMixin:
         )
 
     def glob_file(self, commit, pattern):
-        """
-        Lists files that match a glob pattern. Yields `FileInfo` objects.
+        """Lists files that match a glob pattern. Yields ``FileInfo`` objects.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `pattern`: A string representing a glob pattern.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        pattern : str
+            The glob pattern.
         """
         return self._req(
             Service.PFS, "GlobFileStream", commit=commit_from(commit), pattern=pattern
         )
 
     def delete_file(self, commit, path):
-        """
-        Deletes a file from a Commit. DeleteFile leaves a tombstone in the
+        """Deletes a file from a Commit. DeleteFile leaves a tombstone in the
         Commit, assuming the file isn't written to later attempting to get the
         file from the finished commit will result in not found error. The file
         will of course remain intact in the Commit's parent.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the file.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path to the file.
         """
         return self._req(
             Service.PFS,
@@ -743,30 +793,29 @@ class PFSMixin:
         )
 
     def fsck(self, fix=None):
-        """
-        Performs a file system consistency check for PFS.
-        """
+        """Performs a file system consistency check for PFS."""
         return self._req(Service.PFS, "Fsck", fix=fix)
 
     def diff_file(
         self, new_commit, new_path, old_commit=None, old_path=None, shallow=None
     ):
-        """
-        Diffs two files. If `old_commit` or `old_path` are not specified, the
-        same path in the parent of the file specified by `new_commit` and
+        """Diffs two files. If `old_commit` or `old_path` are not specified,
+        the same path in the parent of the file specified by `new_commit` and
         `new_path` will be used.
 
-        Params:
-
-        * `new_commit`: A tuple, string, or `Commit` object representing the
-        commit for the new file.
-        * `new_path`: A string specifying the path of the new file.
-        * `old_commit`: A tuple, string, or `Commit` object representing the
-        commit for the old file.
-        * `old_path`: A string specifying the path of the old file.
-        * `shallow`: An optional bool specifying whether to do a shallow diff.
+        Parameters
+        ----------
+        new_commit : Union[tuple, str, Commit protobuf]
+            Represents the commit for the new file.
+        new_path : str
+            The path of the new file.
+        old_commit : Union[tuple, str, Commit protobuf]
+            Represents the commit for the old file.
+        old_path : str
+            The path of the old file.
+        shallow : bool, optional
+            Whether to do a shallow diff.
         """
-
         if old_commit is not None and old_path is not None:
             old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
         else:
@@ -781,39 +830,34 @@ class PFSMixin:
         )
 
     def create_tmp_file_set(self):
-        """
-        Creates a temporary fileset (used internally). Currently,
+        """Creates a temporary fileset (used internally). Currently,
         temp-fileset-related APIs are only used for Pachyderm internals (job
         merging), so we're avoiding support for these functions until we find a
         use for them (feel free to file an issue in
         github.com/pachyderm/pachyderm)
-
-        Params:
-
-        * `fileset_id`: A string identifying the fileset.
         """
         raise NotImplementedError("temporary filesets are internal-use-only")
 
     def renew_tmp_file_set(self, fileset_id, ttl_seconds):
-        """
-        Renews a temporary fileset (used internally). Currently,
+        """Renews a temporary fileset (used internally). Currently,
         temp-fileset-related APIs are only used for Pachyderm internals (job
         merging), so we're avoiding support for these functions until we find a
         use for them (feel free to file an issue in
         github.com/pachyderm/pachyderm)
 
-        Params:
-
-        * `fileset_id`: A string identifying the fileset.
-        * `ttl_seconds`: A int determining the number of seconds to keep alive
-        the temporary fileset
+        Parameters
+        ----------
+        fileset_id : str
+            The fileset ID.
+        ttl_seconds : int
+            The number of seconds to keep alive the temporary fileset.
         """
         raise NotImplementedError("temporary filesets are internal-use-only")
 
 
 class PutFileClient:
     """
-    `PutFileClient` puts or deletes PFS files atomically.
+    :class:`.PutFileClient` puts or deletes PFS files atomically.
     """
 
     def __init__(self):
@@ -834,35 +878,38 @@ class PutFileClient:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Uploads a PFS file from a local path at a specified path. This will
+        """Uploads a PFS file from a local path at a specified path. This will
         lazily open files, which will prevent too many files from being
         opened, or too much memory being consumed, when atomically putting
         many files.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `pfs_path`: A string specifying the path in the repo the file(s)
-        will be written to.
-        * `local_path`: A string specifying the local file path.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        pfs_path : str
+            The path in the repo to upload the file to will be written to.
+        local_path : str
+            The local file path.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
         self._ops.append(
             AtomicPutFilepathOp(
@@ -890,32 +937,35 @@ class PutFileClient:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Uploads a PFS file from a file-like object.
+        """Uploads a PFS file from a file-like object.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file-like object.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path in the repo to upload the file to will be written to.
+        value : BinaryIO
+            The file-like object.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
         self._ops.append(
             AtomicPutFileobjOp(
@@ -943,32 +993,35 @@ class PutFileClient:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Uploads a PFS file from a bytestring.
+        """Uploads a PFS file from a bytestring.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path in the repo the file(s) will be
-        written to.
-        * `value`: The file contents as a bytestring.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path in the repo to upload the file to will be written to.
+        value : bytes
+            The file contents as a bytestring.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
         self.put_file_from_fileobj(
             commit,
@@ -993,34 +1046,39 @@ class PutFileClient:
         overwrite_index=None,
         header_records=None,
     ):
-        """
-        Puts a file using the content found at a URL. The URL is sent to the
+        """Puts a file using the content found at a URL. The URL is sent to the
         server which performs the request.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: A string specifying the path to the file.
-        * `url`: A string specifying the url of the file to put.
-        * `delimiter`: An optional int. causes data to be broken up into
-        separate files by the delimiter. e.g. if you used
-        `Delimiter.CSV.value`, a separate PFS file will be created for each
-        row in the input CSV file, rather than one large CSV file.
-        * `recursive`: allow for recursive scraping of some types URLs, for
-        example on s3:// URLs.
-        * `target_file_datums`: An optional int. Specifies the target number of
-        datums in each written file. It may be lower if data does not split
-        evenly, but will never be higher, unless the value is 0.
-        * `target_file_bytes`: An optional int. Specifies the target number of
-        bytes in each written file, files may have more or fewer bytes than
-        the target.
-        * `overwrite_index`: An optional int. This is the object index where
-        the write starts from.  All existing objects starting from the index
-        are deleted.
-        * `header_records: An optional int for splitting data when `delimiter`
-        is not `NONE` (or `SQL`). It specifies the number of records that are
-        converted to a header and applied to all file shards.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path in the repo the file will be written to.
+        url : str
+            The url of the file to put.
+        delimiter : int, optional
+            Causes data to be broken up into separate files by the delimiter
+            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will
+            be created for each row in the input CSV file, rather than one
+            large CSV file.
+        recursive : bool, optional
+            Allow for recursive scraping of some types URLs, for example on
+            s3:// URLs.
+        target_file_datums : int, optional
+            Specifies the target number of datums in each written file. It may
+            be lower if data does not split evenly, but will never be higher,
+            unless the value is 0.
+        target_file_bytes : int, optional
+            Specifies the target number of bytes in each written file, file
+            may have more or fewer bytes than the target.
+        overwrite_index : int, optional
+            This is the object index where the write starts from.  All existing
+            objects starting from the index are deleted.
+        header_records : int, optional
+            An optional int for splitting data when `delimiter` is not ``NONE``
+            (or ``SQL``). It specifies the number of records that are converted
+            to a header and applied to all file shards.
         """
         self._ops.append(
             AtomicOp(
@@ -1039,21 +1097,21 @@ class PutFileClient:
         )
 
     def delete_file(self, commit, path):
-        """
-        Deletes a file.
+        """Deletes a file.
 
-        Params:
-
-        * `commit`: A tuple, string, or `Commit` object representing the
-        commit.
-        * `path`: The path to the file.
+        Parameters
+        ----------
+        commit : Union[tuple, str, Commit protobuf]
+            Represents the commit.
+        path : str
+            The path to the file.
         """
         self._ops.append(AtomicOp(commit, path, delete=True))
 
 
 class AtomicOp:
     """
-    Represents an operation in a `PutFile` call.
+    Represents an operation in a ``PutFile`` call.
     """
 
     def __init__(self, commit, path, **kwargs):
@@ -1062,7 +1120,7 @@ class AtomicOp:
 
     def reqs(self):
         """
-        Yields one or more protobuf `PutFileRequests`, which are then enqueued
+        Yields one or more protobuf ``PutFileRequests``, which are then enqueued
         into the request's channel.
         """
         yield pfs_proto.PutFileRequest(**self.kwargs)
@@ -1070,7 +1128,7 @@ class AtomicOp:
 
 class AtomicPutFilepathOp(AtomicOp):
     """
-    A `PutFile` operation to put a file locally stored at a given path. This
+    A ``PutFile`` operation to put a file locally stored at a given path. This
     file is opened on-demand, which helps with minimizing the number of open
     files.
     """
@@ -1085,7 +1143,7 @@ class AtomicPutFilepathOp(AtomicOp):
 
 
 class AtomicPutFileobjOp(AtomicOp):
-    """A `PutFile` operation to put a file from a file-like object."""
+    """A ``PutFile`` operation to put a file from a file-like object."""
 
     def __init__(self, commit, path, value, **kwargs):
         super().__init__(commit, path, **kwargs)

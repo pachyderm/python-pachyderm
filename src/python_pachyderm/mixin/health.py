@@ -4,6 +4,7 @@ from python_pachyderm.proto.health import health_pb2_grpc as health_grpc
 
 class HealthMixin:
     def health(self):
+        """Returns a health check indicating if the server can handle RPCs."""
         return self._req(
             Service.HEALTH,
             "Health",
