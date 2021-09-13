@@ -27,7 +27,7 @@ author = "Joe Doliner"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "numpydoc", "sphinx.ext.viewcode", "recommonmark"]
+extensions = ["sphinx.ext.autodoc", "numpydoc", "sphinx.ext.viewcode", "myst_parser"]
 
 # Remove type hints in method signatures as they clutter up docs.
 autodoc_typehints = "none"
