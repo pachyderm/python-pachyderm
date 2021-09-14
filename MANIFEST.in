@@ -9,6 +9,6 @@ include README.md
 
 include version.json
 
-include tox.ini .travis.yml
+include tox.ini
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib
