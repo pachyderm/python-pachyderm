@@ -37,23 +37,6 @@ init:
 	python -m pip install -e .[DEV]
 	pre-commit install
 
-ci-install:
-	sudo apt-get update
-	sudo apt-get install jq socat
-	sudo etc/testing/travis_cache.sh
-	sudo etc/testing/travis_install.sh
-	curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v$(PACHYDERM_VERSION)/pachctl_$(PACHYDERM_VERSION)_amd64.deb
-	sudo dpkg -i /tmp/pachctl.deb
-	pip install tox tox-travis
-
-ci-setup:
-	docker version
-	which pachctl
-	etc/kube/start-minikube.sh
-	echo 'y' | pachctl deploy local
-	until timeout 1s ./etc/kube/check_ready.sh app=pachd; do sleep 1; done
-	pachctl version
-
 release:
 	git checkout v6.x
 	rm -rf build dist
@@ -65,4 +48,4 @@ lint:
 	flake8 src/python_pachyderm etc setup.py
 	PYTHONPATH=./src:$(PYTHONPATH) etc/proto_lint/proto_lint.py
 
-.PHONY: docker-build-proto init ci-install ci-setup release lint
+.PHONY: docs docker-build-proto init release lint
