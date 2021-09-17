@@ -14,7 +14,8 @@ class DebugMixin:
         Parameters
         ----------
         filter : debug_proto.Filter, optional
-            A protobuf object that filters what info is returned.
+            A protobuf object that filters what info is returned. Is one of
+            pachd bool, pipeline protobuf, or worker protobuf.
         limit : int, optional
             Sets a limit to how many commits, jobs, pipelines, etc. are
             returned.
@@ -23,6 +24,13 @@ class DebugMixin:
         -------
         bytes
             The debug dump as a sequence of bytearrays.
+
+        Examples
+        --------
+        >>> for b in client.dump(debug_proto.Filter(pipeline=pps_proto.Pipeline(name="foo"))):
+        >>>     print(b)
+
+        .. # noqa: W505
         """
         res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
         for item in res:
@@ -39,12 +47,18 @@ class DebugMixin:
             A google protobuf duration object indicating how long the profile
             should run for.
         filter : debug_proto.Filter, optional
-            A protobuf object that filters what info is returned.
+            A protobuf object that filters what info is returned. Is one of
+            pachd bool, pipeline protobuf, or worker protobuf.
 
         Yields
         -------
         bytes
             The cpu profile as a sequence of bytearrays.
+
+        Examples
+        --------
+        >>> for b in client.profile_cpu(duration_pb2.Duration(seconds=1)):
+        >>>     print(b)
         """
         profile = debug_proto.Profile(name="cpu", duration=duration)
         res = self._req(Service.DEBUG, "Profile", profile=profile, filter=filter)
@@ -57,12 +71,18 @@ class DebugMixin:
         Parameters
         ----------
         filter : debug_proto.Filter, optional
-            A protobuf object that filters what info is returned.
+            A protobuf object that filters what info is returned. Is one of
+            pachd bool, pipeline protobuf, or worker protobuf.
 
         Yields
         -------
         bytes
             The pachd binary as a sequence of bytearrays.
+
+        Examples
+        --------
+        >>> for b in client.binary():
+        >>>     print(b)
         """
         res = self._req(Service.DEBUG, "Binary", filter=filter)
         for item in res:

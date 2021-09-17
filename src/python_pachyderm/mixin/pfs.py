@@ -63,6 +63,7 @@ class PFSFile:
 
     Examples
     --------
+    >>> # client.get_file() returns a PFSFile
     >>> source_file = client.get_file(("montage", "master"), "/montage.png")
     >>> with open("montage.png", "wb") as dest_file:
     >>>     shutil.copyfileobj(source_file, dest_file)
@@ -232,6 +233,10 @@ class PFSMixin:
         pfs_proto.Commit
             A protobuf object that represents an open subcommit (commit at the
             repo-level).
+
+        Examples
+        --------
+        >>> c = client.start_commit("foo", "master", ("foo", "staging"))
         """
         if parent and isinstance(parent, str):
             parent = pfs_proto.Commit(
@@ -273,6 +278,20 @@ class PFSMixin:
             want the finish commit request to fail.
         force : bool, optional
             If true, forces commit to finish, even if it breaks provenance.
+
+        Examples
+        --------
+        Commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> client.start_commit("foo", "master")
+        >>> # modify open commit
+        >>> client.finish_commit(("foo", "master))
+        ...
+        >>> # same as above
+        >>> c = client.start_commit("foo", "master")
+        >>> # modify open commit
+        >>> client.finish_commit(c)
         """
         self._req(
             Service.PFS,
@@ -310,6 +329,12 @@ class PFSMixin:
         -------
         pfs_proto.Commit
             A protobuf object that represents a commit.
+
+        Examples
+        --------
+        >>> with client.commit("foo", "master") as c:
+        >>>     client.delete_file(c, "/dir/delete_me.txt")
+        >>>     client.put_file_bytes(c, "/new_file.txt", b"DATA")
         """
         commit = self.start_commit(repo_name, branch, parent, description)
         try:
@@ -338,6 +363,15 @@ class PFSMixin:
         Iterator[pfs_proto.CommitInfo]
             An iterator of protobuf objects that contain info on a subcommit
             (commit at the repo-level).
+
+        Examples
+        --------
+        >>> # commit at repo-level
+        >>> list(client.inspect_commit(("foo", "master~2")))
+        ...
+        >>> # an entire commit
+        >>> for commit in client.inspect_commit("467c580611234cdb8cc9758c7aa96087", pfs_proto.CommitState.FINISHED)
+        >>>     print(commit)
 
         .. # noqa: W505
         """
@@ -411,6 +445,15 @@ class PFSMixin:
             subcommit (commit at the repo-level), if `repo_name` was specified,
             or a commit, if `repo_name` wasn't specified.
 
+        Examples
+        --------
+        >>> # all commits at repo-level
+        >>> for c in client.list_commit("foo"):
+        >>>     print(c)
+        ...
+        >>> # all commits
+        >>> commits = list(client.list_commit())
+
         .. # noqa: W505
         """
         if repo_name is not None:
@@ -475,6 +518,14 @@ class PFSMixin:
             A list of protobuf objects that contain info on subcommits (commit
             at the repo-level). These are the individual subcommits this
             function waited on.
+
+        Examples
+        --------
+        >>> # wait for an entire commit to finish
+        >>> subcommits = client.wait_commit("467c580611234cdb8cc9758c7aa96087")
+        ...
+        >>> # wait for a commit to finish at a certain repo
+        >>> client.wait_commit(("foo", "master"))
         """
         return list(self.inspect_commit(commit, pfs_proto.CommitState.FINISHED))
 
@@ -516,6 +567,11 @@ class PFSMixin:
             (commits at the repo-level). Use ``next()`` to iterate through as
             the returned stream is potentially endless. Might block your code
             otherwise.
+
+        Examples
+        --------
+        >>> commits = client.subscribe_commit("foo", "master", state=pfs_proto.CommitState.FINISHED)
+        >>> c = next(commits)
 
         .. # noqa: W505
         """
@@ -564,6 +620,20 @@ class PFSMixin:
         new_commit : bool, optional
             If true and `head_commit` is specified, uses a different commit ID
             for head than `head_commit`.
+
+        Examples
+        --------
+        >>> client.create_branch(
+        ...     "bar",
+        ...     "master",
+        ...     provenance=[
+        ...         pfs_proto.Branch(
+        ...             repo=pfs_proto.Repo(name="foo", type="user"), name="master"
+        ...         )
+        ...     ]
+        ... )
+
+        .. # noqa: W505
         """
         self._req(
             Service.PFS,
@@ -616,6 +686,10 @@ class PFSMixin:
         -------
         Iterator[pfs_proto.BranchInfo]
             An iterator of protobuf objects that contain info on a branch.
+
+        Examples
+        --------
+        >>> branches = list(client.list_branch("foo"))
         """
         return self._req(
             Service.PFS,
@@ -667,6 +741,19 @@ class PFSMixin:
         -------
         ModifyFileClient
             An object that can queue operations to modify a commit atomically.
+
+        Examples
+        --------
+        Commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> c = client.start_commit("foo", "master")
+        >>> with client.modify_file_client(c) as mfc:
+        >>>     mfc.delete_file("/delete_me.txt")
+        >>>     mfc.put_file_from_url(
+        ...         "/new_file.txt",
+        ...         "https://example.com/data/train/input.txt"
+        ...     )
         """
         mfc = ModifyFileClient(commit)
         yield mfc
@@ -697,6 +784,14 @@ class PFSMixin:
         append : bool, optional
             If true, appends the data to the file(s) specified at `path`, if
             they already exist. Otherwise, overwrites them.
+
+        Examples
+        --------
+        Commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> with client.commit("foo", "master") as c:
+        >>>     client.put_file_bytes(c, "/file.txt", b"SOME BYTES")
         """
         with self.modify_file_client(commit) as mfc:
             if hasattr(value, "read"):
@@ -723,8 +818,8 @@ class PFSMixin:
         datum: str = None,
         append: bool = False,
     ) -> None:
-        """Puts a file using the content found at a URL. The URL is sent to the
-        server which performs the request.
+        """Uploads a PFS file using the content found at a URL. The URL is sent
+        to the server which performs the request.
 
         Parameters
         ----------
@@ -742,6 +837,18 @@ class PFSMixin:
         append : bool, optional
             If true, appends the data to the file(s) specified at `path`, if
             they already exist. Otherwise, overwrites them.
+
+        Examples
+        --------
+        Commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> with client.commit("foo", "master") as c:
+        >>>     client.put_file_url(
+        ...         c,
+        ...         "/file.txt",
+        ...         "https://example.com/data/train/input.txt"
+        ...     )
         """
         with self.modify_file_client(commit) as mfc:
             mfc.put_file_from_url(
@@ -762,7 +869,8 @@ class PFSMixin:
         append: bool = False,
     ) -> None:
         """Efficiently copies files already in PFS. Note that the destination
-        repo cannot be an output repo, or the copy operation will silently fail.
+        repo cannot be an output repo, or the copy operation will silently
+        fail.
 
         Parameters
         ----------
@@ -781,6 +889,16 @@ class PFSMixin:
         append : bool, optional
             If true, appends the content of `source_path` to the file at
             `dest_path`, if it already exists. Otherwise, overwrites the file.
+
+        Examples
+        --------
+        Destination commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> with client.commit("bar", "master") as c:
+        >>>     client.copy_file(("foo", "master"), "/src/file.txt", c, "/file.txt")
+
+        .. # noqa: W505
         """
         with self.modify_file_client(dest_commit) as mfc:
             mfc.copy_file(
@@ -915,6 +1033,10 @@ class PFSMixin:
         -------
         Iterator[pfs_proto.FileInfo]
             An iterator of protobuf objects that contain info on files.
+
+        Examples
+        --------
+        >>> files = list(client.list_file(("foo", "master"), "/dir/subdir/"))
         """
         return self._req(
             Service.PFS,
@@ -943,6 +1065,10 @@ class PFSMixin:
         -------
         Iterator[pfs_proto.FileInfo]
             An iterator of protobuf objects that contain info on files.
+
+        Examples
+        --------
+        >>> files = list(client.walk_file(("foo", "master"), "/dir/subdir/"))
         """
         return self._req(
             Service.PFS,
@@ -966,6 +1092,10 @@ class PFSMixin:
         -------
         Iterator[pfs_proto.FileInfo]
             An iterator of protobuf objects that contain info on files.
+
+        Examples
+        --------
+        >>> files = list(client.glob_file(("foo", "master"), "/*.txt"))
         """
         return self._req(
             Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern
@@ -987,6 +1117,14 @@ class PFSMixin:
             from.
         path : str
             The path to the file.
+
+        Examples
+        --------
+        Commit needs to be open still, either from the result of
+        ``start_commit()`` or within scope of ``commit()``
+
+        >>> with client.commit("bar", "master") as c:
+        >>>     client.delete_file(c, "/delete_me.txt")
         """
         with self.modify_file_client(commit) as mfc:
             mfc.delete_file(path)
@@ -1006,6 +1144,11 @@ class PFSMixin:
             An iterator of protobuf objects that contain info on either what
             error was encountered (and was unable to be fixed, if `fix` is set
             to ``True``) or a fix message (if `fix` is set to ``True``).
+
+        Examples
+        --------
+        >>> for action in client.fsck(True):
+        >>>     print(action)
         """
         return self._req(Service.PFS, "Fsck", fix=fix)
 
@@ -1044,6 +1187,26 @@ class PFSMixin:
             content has changed between commits. If a file under one of the
             paths is only in one commit, than the ``DiffFileResponse`` for it
             will only have one ``FileInfo`` set.
+
+        Examples
+        --------
+        >>> # Compare files
+        >>> res = client.diff_file(
+        ...     ("foo", "master"),
+        ...     "/a/file.txt",
+        ...     ("foo", "master~2"),
+        ...     "/a/file.txt"
+        ... )
+        >>> diff = next(res)
+        ...
+        >>> # Compare files in directories
+        >>> res = client.diff_file(
+        ...     ("foo", "master"),
+        ...     "/a/",
+        ...     ("foo", "master~2"),
+        ...     "/a/"
+        ... )
+        >>> diff = next(res)
         """
         if old_commit is not None and old_path is not None:
             old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
@@ -1205,8 +1368,8 @@ class ModifyFileClient:
         append: bool = False,
         recursive: bool = False,
     ) -> None:
-        """Uploads a :class:`.PFSFile` from the content found at a URL. The URL
-        is sent to the server which performs the request.
+        """Uploads a PFS File from the content found at a URL. The URL is
+        sent to the server which performs the request.
 
         Parameters
         ----------

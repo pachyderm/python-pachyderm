@@ -16,7 +16,7 @@ def put_files(
     **kwargs
 ) -> None:
     """Utility function for inserting files from the local `source_path`
-    to Pachyderm. Roughly equivalent to ``pachctl put file [-r]``.
+    into Pachyderm. Roughly equivalent to ``pachctl put file [-r]``.
 
     Parameters
     ----------
@@ -31,8 +31,19 @@ def put_files(
     **kwargs : dict
         Keyword arguments to forward. See
         ``ModifyFileClient.put_file_from_filepath()`` for more details.
-    """
 
+    Examples
+    --------
+    >>> source_dir = "data/training/
+    >>> with client.commit("repo_name", "master") as commit:
+    >>>     python_pachyderm.put_files(client, source_dir, commit, "/training_set/")
+    ...
+    >>> with client.commit("repo_name", "master") as commit2:
+    >>>     python_pachyderm.put_files(client, "metadata/params.csv", commit2, "/hyperparams.csv")
+    >>>     python_pachyderm.put_files(client, "spec.json", commit2, "/")
+
+    .. # noqa: W505
+    """
     with client.modify_file_client(commit) as mfc:
         if os.path.isfile(source_path):
             mfc.put_file_from_filepath(dest_path, source_path, **kwargs)
@@ -62,6 +73,32 @@ def parse_json_pipeline_spec(j: str) -> pps_proto.CreatePipelineRequest:
     pps_proto.CreatePipelineRequest
         A protobuf object that contains the spec info necessary to create a
         pipeline.
+
+    Examples
+    --------
+    Useful for going from Pachyderm spec to creating a pipeline. Pachyderm
+    spec: https://docs.pachyderm.com/latest/reference/pipeline_spec/
+
+    >>> spec = '''{
+    ...     "pipeline": {
+    ...         "name": "foobar"
+    ...     },
+    ...     "description": "A pipeline that performs image edge detection by using the OpenCV library.",
+    ...     "input": {
+    ...         "pfs": {
+    ...         "glob": "/*",
+    ...         "repo": "images"
+    ...         }
+    ...     },
+    ...     "transform": {
+    ...         "cmd": [ "python3", "/edges.py" ],
+    ...         "image": "pachyderm/opencv"
+    ...     }
+    ... }'''
+    >>> req = python_pachyderm.parse_json_pipeline_spec(spec)
+    >>> client.create_pipeline_from_request(req)
+
+    .. # noqa: W505
     """
     return json_format.Parse(j, pps_proto.CreatePipelineRequest())
 
@@ -79,5 +116,32 @@ def parse_dict_pipeline_spec(d: dict) -> pps_proto.CreatePipelineRequest:
     pps_proto.CreatePipelineRequest
         A protobuf object that contains the spec info necessary to create a
         pipeline.
+
+    Examples
+    --------
+    Useful for going from Pachyderm spec to creating a pipeline. Pachyderm
+    spec: https://docs.pachyderm.com/latest/reference/pipeline_spec/
+
+    >>> spec = '''{
+    ...     "pipeline": {
+    ...         "name": "foobar"
+    ...     },
+    ...     "description": "A pipeline that performs image edge detection by using the OpenCV library.",
+    ...     "input": {
+    ...         "pfs": {
+    ...         "glob": "/*",
+    ...         "repo": "images"
+    ...         }
+    ...     },
+    ...     "transform": {
+    ...         "cmd": [ "python3", "/edges.py" ],
+    ...         "image": "pachyderm/opencv"
+    ...     }
+    ... }'''
+    >>> req = python_pachyderm.parse_dict_pipeline_spec(json.loads(spec))
+    >>> client.create_pipeline_from_request(req)
+
+    .. # noqa: W505
     """
+
     return json_format.ParseDict(d, pps_proto.CreatePipelineRequest())

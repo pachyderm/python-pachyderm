@@ -3,7 +3,7 @@ from python_pachyderm.service import Service, identity_proto
 
 
 class IdentityMixin:
-    """ """
+    """A mixin for identity-related functionality."""
 
     def set_identity_server_config(
         self, config: identity_proto.IdentityServerConfig

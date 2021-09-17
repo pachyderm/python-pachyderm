@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.spout &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.spout</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.spout</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+
+
+<div class="viewcode-block" id="SpoutManager"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutManager">[docs]</a><span class="k">class</span> <span class="nc">SpoutManager</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A convenience context manager for creating spouts.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; spout = SpoutManager()</span>
+<span class="sd">    &gt;&gt;&gt; while True:</span>
+<span class="sd">    &gt;&gt;&gt;     with spout.commit() as commit:</span>
+<span class="sd">    &gt;&gt;&gt;         commit.put_file_from_bytes(&quot;foo&quot;, b&quot;#&quot;)</span>
+<span class="sd">    &gt;&gt;&gt;     time.sleep(1.0)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpoutManager.__init__"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutManager.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">marker_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pfs_directory</span><span class="o">=</span><span class="s2">&quot;/pfs&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new spout manager.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        marker_filename : str, optional</span>
+<span class="sd">            The name of the file for storing markers. If unspecified,</span>
+<span class="sd">            marker-related operations will fail.</span>
+<span class="sd">        pfs_directory : str, optional</span>
+<span class="sd">            The directory for PFS content. Usually this shouldn&#39;t be explicitly</span>
+<span class="sd">            specified, unless the spout manager is being tested outside of a</span>
+<span class="sd">            real Pachyderm pipeline.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span> <span class="o">=</span> <span class="n">marker_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pfs_directory</span> <span class="o">=</span> <span class="n">pfs_directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipe</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pfs_directory</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_open_commit</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="SpoutManager.close"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutManager.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the :class:`.SpoutManager`&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipe</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SpoutManager.marker"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutManager.marker">[docs]</a>    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">marker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the marker file as a context manager.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no marker filename set&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pfs_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">f</span></div>
+
+<div class="viewcode-block" id="SpoutManager.commit"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutManager.commit">[docs]</a>    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Opens a commit on the spout. When the context manager exits, any</span>
+<span class="sd">        added files will be committed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_open_commit</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;spout commit context manager already opened&quot;</span><span class="p">)</span>
+        <span class="n">spout_commit</span> <span class="o">=</span> <span class="n">SpoutCommit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pipe</span><span class="p">,</span> <span class="n">marker_filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_open_commit</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">spout_commit</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">spout_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_has_open_commit</span> <span class="o">=</span> <span class="kc">False</span></div></div>
+
+
+<div class="viewcode-block" id="SpoutCommit"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit">[docs]</a><span class="k">class</span> <span class="nc">SpoutCommit</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Represents a commit on a spout, permitting the addition of files.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpoutCommit.__init__"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">marker_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tarstream</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">pipe</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w|&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span> <span class="o">=</span> <span class="n">marker_filename</span></div>
+
+<div class="viewcode-block" id="SpoutCommit.close"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the commit&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tarstream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SpoutCommit.put_file_from_fileobj"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.put_file_from_fileobj">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_fileobj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a file to the spout from a file-like object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the file in the spout.</span>
+<span class="sd">        size : int</span>
+<span class="sd">            The size of the file.</span>
+<span class="sd">        fileobj : BinaryIO</span>
+<span class="sd">            The file-like object to add.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tar_info</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarInfo</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">tar_info</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="n">tar_info</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="mo">0o600</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tarstream</span><span class="o">.</span><span class="n">addfile</span><span class="p">(</span><span class="n">tarinfo</span><span class="o">=</span><span class="n">tar_info</span><span class="p">,</span> <span class="n">fileobj</span><span class="o">=</span><span class="n">fileobj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpoutCommit.put_file_from_bytes"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.put_file_from_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a file to the spout from a bytestring.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the file in the spout.</span>
+<span class="sd">        bytes : bytes</span>
+<span class="sd">            The bytestring representing the file contents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_file_from_fileobj</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">bytes</span><span class="p">),</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">bytes</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SpoutCommit.put_marker_from_fileobj"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.put_marker_from_fileobj">[docs]</a>    <span class="k">def</span> <span class="nf">put_marker_from_fileobj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes to the marker file from a file-like object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        size : int</span>
+<span class="sd">            The size of the file.</span>
+<span class="sd">        fileobj : BinaryIO</span>
+<span class="sd">            The file-like object to add.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no marker filename set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_file_from_fileobj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpoutCommit.put_marker_from_bytes"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.spout.SpoutCommit.put_marker_from_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_marker_from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds to the marker from a bytestring.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bytes : bytes</span>
+<span class="sd">            The bytestring representing the file contents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no marker filename set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_file_from_fileobj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_filename</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">bytes</span><span class="p">),</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">bytes</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
