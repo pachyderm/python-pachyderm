@@ -99,7 +99,7 @@ class PFSFile:
         return x
 
     def read(self, size: int = -1) -> bytes:
-        """Reads from the ``PFSFile`` buffer.
+        """Reads from the :class:`.PFSFile` buffer.
 
         Parameters
         ----------
@@ -114,7 +114,7 @@ class PFSFile:
         return self._file.read(size)
 
     def close(self) -> None:
-        """Closes the ``PFSFile``."""
+        """Closes the :class:`.PFSFile`."""
         self._file.close()
 
 
@@ -653,9 +653,10 @@ class PFSMixin:
     def modify_file_client(
         self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]
     ) -> Iterator["ModifyFileClient"]:
-        """A context manager that gives a `ModifyFileClient`. When the context
-        manager exits, any operations enqueued from the `ModifyFileClient` are
-        executed in a single, atomic `ModifyFile` call.
+        """A context manager that gives a :class:`.ModifyFileClient`. When the
+        context manager exits, any operations enqueued from the
+        :class:`.ModifyFileClient` are executed in a single, atomic
+        ModifyFile gRPC call.
 
         Parameters
         ----------
@@ -1092,8 +1093,8 @@ class PFSMixin:
 
 
 class ModifyFileClient:
-    """``ModifyFileClient`` puts or deletes PFS files atomically. Replaces
-    ``PutFileClient`` from python_pachyderm 6.x.
+    """:class:`.ModifyFileClient` puts or deletes PFS files atomically.
+    Replaces :class:`.PutFileClient` from python_pachyderm 6.x.
     """
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
@@ -1130,7 +1131,7 @@ class ModifyFileClient:
             `pfs_path`, if it already exists. Otherwise, overwrites the file.
         """
         self._ops.append(
-            AtomicModifyFilepathOp(
+            _AtomicModifyFilepathOp(
                 pfs_path,
                 local_path,
                 datum,
@@ -1160,7 +1161,7 @@ class ModifyFileClient:
             if it already exists. Otherwise, overwrites the file.
         """
         self._ops.append(
-            AtomicModifyFileobjOp(
+            _AtomicModifyFileobjOp(
                 path,
                 value,
                 datum,
@@ -1204,8 +1205,8 @@ class ModifyFileClient:
         append: bool = False,
         recursive: bool = False,
     ) -> None:
-        """Uploads a PFSFile from the content found at a URL. The URL is
-        sent to the server which performs the request.
+        """Uploads a :class:`.PFSFile` from the content found at a URL. The URL
+        is sent to the server which performs the request.
 
         Parameters
         ----------
@@ -1223,7 +1224,7 @@ class ModifyFileClient:
             example on s3:// URLs
         """
         self._ops.append(
-            AtomicModifyFileURLOp(
+            _AtomicModifyFileURLOp(
                 path,
                 url,
                 datum=datum,
@@ -1242,7 +1243,7 @@ class ModifyFileClient:
         datum : str, optional
             A tag that filters the files.
         """
-        self._ops.append(AtomicDeleteFileOp(path, datum=datum))
+        self._ops.append(_AtomicDeleteFileOp(path, datum=datum))
 
     def copy_file(
         self,
@@ -1270,7 +1271,7 @@ class ModifyFileClient:
             the file.
         """
         self._ops.append(
-            AtomicCopyFileOp(
+            _AtomicCopyFileOp(
                 source_commit,
                 source_path,
                 dest_path,
@@ -1280,7 +1281,7 @@ class ModifyFileClient:
         )
 
 
-class AtomicOp:
+class _AtomicOp:
     """Represents an operation in a `ModifyFile` call."""
 
     def __init__(self, path: str, datum: str):
@@ -1294,7 +1295,7 @@ class AtomicOp:
         pass
 
 
-class AtomicModifyFilepathOp(AtomicOp):
+class _AtomicModifyFilepathOp(_AtomicOp):
     """A `ModifyFile` operation to put a file locally stored at a given path.
     This file is opened on-demand, which helps with minimizing the number of
     open files.
@@ -1316,7 +1317,7 @@ class AtomicModifyFilepathOp(AtomicOp):
                 yield _add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
-class AtomicModifyFileobjOp(AtomicOp):
+class _AtomicModifyFileobjOp(_AtomicOp):
     """A `ModifyFile` operation to put a file from a file-like object."""
 
     def __init__(
@@ -1337,7 +1338,7 @@ class AtomicModifyFileobjOp(AtomicOp):
             yield _add_file_req(path=self.path, datum=self.datum, chunk=chunk)
 
 
-class AtomicModifyFileURLOp(AtomicOp):
+class _AtomicModifyFileURLOp(_AtomicOp):
     """A `ModifyFile` operation to put a file from a URL."""
 
     def __init__(
@@ -1368,7 +1369,7 @@ class AtomicModifyFileURLOp(AtomicOp):
         )
 
 
-class AtomicCopyFileOp(AtomicOp):
+class _AtomicCopyFileOp(_AtomicOp):
     """A `ModifyFile` operation to copy a file."""
 
     def __init__(
@@ -1396,7 +1397,7 @@ class AtomicCopyFileOp(AtomicOp):
         )
 
 
-class AtomicDeleteFileOp(AtomicOp):
+class _AtomicDeleteFileOp(_AtomicOp):
     """A `ModifyFile` operation to delete a file."""
 
     def __init__(self, pfs_path: str, datum: str = None):
