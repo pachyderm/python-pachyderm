@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.client &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.client</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="kn">from</span> <span class="nn">.mixin.admin</span> <span class="kn">import</span> <span class="n">AdminMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.auth</span> <span class="kn">import</span> <span class="n">AuthMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.debug</span> <span class="kn">import</span> <span class="n">DebugMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.enterprise</span> <span class="kn">import</span> <span class="n">EnterpriseMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.health</span> <span class="kn">import</span> <span class="n">HealthMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.pfs</span> <span class="kn">import</span> <span class="n">PFSMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.pps</span> <span class="kn">import</span> <span class="n">PPSMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.transaction</span> <span class="kn">import</span> <span class="n">TransactionMixin</span>
+<span class="kn">from</span> <span class="nn">.mixin.version</span> <span class="kn">import</span> <span class="n">VersionMixin</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error for issues related to the pachyderm config file.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BadClusterDeploymentID</span><span class="p">(</span><span class="n">ConfigError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error triggered when connected to a cluster that reports back a different</span>
+<span class="sd">    cluster deployment ID than what is stored in the config file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_deployment_id</span><span class="p">,</span> <span class="n">actual_deployment_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="s2">&quot;connected to the wrong cluster (&#39;</span><span class="si">{}</span><span class="s2">&#39; vs &#39;</span><span class="si">{}</span><span class="s2">&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">expected_deployment_id</span><span class="p">,</span> <span class="n">actual_deployment_id</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_deployment_id</span> <span class="o">=</span> <span class="n">expected_deployment_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual_deployment_id</span> <span class="o">=</span> <span class="n">actual_deployment_id</span>
+
+
+<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span>
+    <span class="n">AdminMixin</span><span class="p">,</span>
+    <span class="n">AuthMixin</span><span class="p">,</span>
+    <span class="n">DebugMixin</span><span class="p">,</span>
+    <span class="n">EnterpriseMixin</span><span class="p">,</span>
+    <span class="n">HealthMixin</span><span class="p">,</span>
+    <span class="n">PFSMixin</span><span class="p">,</span>
+    <span class="n">PPSMixin</span><span class="p">,</span>
+    <span class="n">TransactionMixin</span><span class="p">,</span>
+    <span class="n">VersionMixin</span><span class="p">,</span>
+    <span class="nb">object</span><span class="p">,</span>
+<span class="p">):</span>
+<div class="viewcode-block" id="Client.__init__"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">auth_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">root_certs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">transaction_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">tls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Pachyderm client.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        host : str, optional</span>
+<span class="sd">            The pachd host. Default is &#39;localhost&#39;, which is used with</span>
+<span class="sd">            ``pachctl port-forward``.</span>
+<span class="sd">        port : int, optional</span>
+<span class="sd">            The port to connect to. Default is 30650.</span>
+<span class="sd">        auth_token : str, optional</span>
+<span class="sd">            The authentication token. Used if authentication is enabled on the</span>
+<span class="sd">            cluster.</span>
+<span class="sd">        root_certs : bytes, optional</span>
+<span class="sd">            The PEM-encoded root certificates as byte string.</span>
+<span class="sd">        transaction_id : str, optional</span>
+<span class="sd">            The ID of the transaction to run operations on.</span>
+<span class="sd">        tls : bool, optional</span>
+<span class="sd">            Whether TLS should be used. If `root_certs` are specified, they are</span>
+<span class="sd">            used. Otherwise, we use the certs provided by certifi.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">host</span> <span class="o">=</span> <span class="n">host</span> <span class="ow">or</span> <span class="s2">&quot;localhost&quot;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">port</span> <span class="ow">or</span> <span class="mi">30650</span>
+
+        <span class="k">if</span> <span class="n">auth_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">auth_token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_PYTHON_AUTH_TOKEN&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tls</span> <span class="o">=</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">tls</span> <span class="ow">and</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># load default certs if none are specified</span>
+            <span class="kn">import</span> <span class="nn">certifi</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">(),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">root_certs</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span> <span class="o">=</span> <span class="n">root_certs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stubs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">auth_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span> <span class="o">=</span> <span class="n">transaction_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">auth_token</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_PYTHON_OIDC_TOKEN&quot;</span><span class="p">):</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">authenticate_id_token</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_PYTHON_OIDC_TOKEN&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">resp</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Client.new_in_cluster"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client.new_in_cluster">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new_in_cluster</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">transaction_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Pachyderm client that operates within a Pachyderm cluster.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        auth_token : str, optional</span>
+<span class="sd">            The authentication token. Used if authentication is enabled on the</span>
+<span class="sd">            cluster.</span>
+<span class="sd">        transaction_id : str, optional</span>
+<span class="sd">            The ID of the transaction to run operations on.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Client</span>
+<span class="sd">            A python_pachyderm client instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;PACHD_PEER_SERVICE_HOST&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+            <span class="ow">and</span> <span class="s2">&quot;PACHD_PEER_SERVICE_PORT&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+        <span class="p">):</span>
+            <span class="c1"># Try to use the pachd peer service if it&#39;s available. This is</span>
+            <span class="c1"># only supported in pachyderm&gt;=1.10, but is more reliable because</span>
+            <span class="c1"># it&#39;ll work when TLS is enabled on the cluster.</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PACHD_PEER_SERVICE_HOST&quot;</span><span class="p">]</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PACHD_PEER_SERVICE_PORT&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Otherwise use the normal service host/port, which will not work</span>
+            <span class="c1"># when TLS is enabled on the cluster.</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PACHD_SERVICE_HOST&quot;</span><span class="p">]</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PACHD_SERVICE_PORT&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span> <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction_id</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Client.new_from_pachd_address"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client.new_from_pachd_address">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new_from_pachd_address</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">pachd_address</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">root_certs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">transaction_id</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Pachyderm client from a given pachd address.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pachd_address : str</span>
+<span class="sd">            The address of pachd server</span>
+<span class="sd">        auth_token : str, optional</span>
+<span class="sd">            The authentication token. Used if authentication is enabled on the</span>
+<span class="sd">            cluster.</span>
+<span class="sd">        root_certs : bytes, optional</span>
+<span class="sd">            The PEM-encoded root certificates as byte string. If unspecified,</span>
+<span class="sd">            this will load default certs from certifi.</span>
+<span class="sd">        transaction_id : str, optional</span>
+<span class="sd">            The ID of the transaction to run operations on.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Client</span>
+<span class="sd">            A python_pachyderm client instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="s2">&quot;://&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pachd_address</span><span class="p">:</span>
+            <span class="n">pachd_address</span> <span class="o">=</span> <span class="s2">&quot;grpc://</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pachd_address</span><span class="p">)</span>
+
+        <span class="n">u</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">pachd_address</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;grpc&quot;</span><span class="p">,</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="s2">&quot;grpcs&quot;</span><span class="p">,</span> <span class="s2">&quot;https&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unrecognized pachd address scheme: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">scheme</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">params</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">query</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">fragment</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid pachd address&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid pachd address&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+            <span class="n">auth_token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span>
+            <span class="n">root_certs</span><span class="o">=</span><span class="n">root_certs</span><span class="p">,</span>
+            <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction_id</span><span class="p">,</span>
+            <span class="n">tls</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;grpcs&quot;</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;https&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Client.new_from_config"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client.new_from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new_from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Pachyderm client from a config file, which can either be</span>
+<span class="sd">        passed in as a file-like object, or if unset, checks the PACH_CONFIG env</span>
+<span class="sd">        var for a path. If that&#39;s also unset, it defaults to loading from</span>
+<span class="sd">        &#39;~/.pachyderm/config.json&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        config_file : TextIO, optional</span>
+<span class="sd">            A file-like object containing the config json file. If unspecified,</span>
+<span class="sd">            we load the config from the default location</span>
+<span class="sd">            (&#39;~/.pachyderm/config.json&#39;).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Client</span>
+<span class="sd">            A python_pachyderm client instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">&quot;PACH_CONFIG&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_CONFIG&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;config: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Search for config file in default home location</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.pachyderm/config.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span>
+                <span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="c1"># If not found, search in &quot;/pachctl&quot; (default mount for spout)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/pachctl/config.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">active_context</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s2">&quot;v2&quot;</span><span class="p">][</span><span class="s2">&quot;active_context&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="s2">&quot;no active context&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s2">&quot;v2&quot;</span><span class="p">][</span><span class="s2">&quot;contexts&quot;</span><span class="p">][</span><span class="n">active_context</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="s2">&quot;missing active context &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">active_context</span><span class="p">))</span>
+
+        <span class="n">auth_token</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;session_token&quot;</span><span class="p">)</span>
+        <span class="n">root_certs</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server_cas&quot;</span><span class="p">)</span>
+        <span class="n">transaction_id</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;active_transaction&quot;</span><span class="p">)</span>
+
+        <span class="n">pachd_address</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pachd_address&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pachd_address</span><span class="p">:</span>
+            <span class="n">client</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">new_from_pachd_address</span><span class="p">(</span>
+                <span class="n">pachd_address</span><span class="p">,</span>
+                <span class="n">auth_token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span>
+                <span class="n">root_certs</span><span class="o">=</span><span class="n">root_certs</span><span class="p">,</span>
+                <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction_id</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">port_forwarders</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;port_forwarders&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">pachd_port</span> <span class="o">=</span> <span class="n">port_forwarders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pachd&quot;</span><span class="p">,</span> <span class="mi">30650</span><span class="p">)</span>
+            <span class="n">pachd_address</span> <span class="o">=</span> <span class="s2">&quot;grpc://localhost:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pachd_port</span><span class="p">)</span>
+            <span class="n">client</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">new_from_pachd_address</span><span class="p">(</span>
+                <span class="n">pachd_address</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span> <span class="n">transaction_id</span><span class="o">=</span><span class="n">transaction_id</span>
+            <span class="p">)</span>
+
+        <span class="n">expected_deployment_id</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cluster_deployment_id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expected_deployment_id</span><span class="p">:</span>
+            <span class="n">cluster_info</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">inspect_cluster</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cluster_info</span><span class="o">.</span><span class="n">deployment_id</span> <span class="o">!=</span> <span class="n">expected_deployment_id</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BadClusterDeploymentID</span><span class="p">(</span>
+                    <span class="n">expected_deployment_id</span><span class="p">,</span> <span class="n">cluster_info</span><span class="o">.</span><span class="n">deployment_id</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">client</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span>
+
+    <span class="nd">@auth_token</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">transaction_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span>
+
+    <span class="nd">@transaction_id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">transaction_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_build_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;authn-token&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;pach-transaction&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_req</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grpc_service</span><span class="p">,</span> <span class="n">grpc_method_name</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">stub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stubs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">grpc_service</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stub</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">grpc_module</span> <span class="o">=</span> <span class="n">grpc_service</span><span class="o">.</span><span class="n">grpc_module</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span><span class="p">:</span>
+                <span class="n">ssl_channel_credentials</span> <span class="o">=</span> <span class="n">grpc_module</span><span class="o">.</span><span class="n">grpc</span><span class="o">.</span><span class="n">ssl_channel_credentials</span>
+                <span class="n">ssl</span> <span class="o">=</span> <span class="n">ssl_channel_credentials</span><span class="p">(</span><span class="n">root_certificates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span><span class="p">)</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="n">grpc_module</span><span class="o">.</span><span class="n">grpc</span><span class="o">.</span><span class="n">secure_channel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">ssl</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="n">grpc_module</span><span class="o">.</span><span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+            <span class="n">stub</span> <span class="o">=</span> <span class="n">grpc_service</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stubs</span><span class="p">[</span><span class="n">grpc_service</span><span class="p">]</span> <span class="o">=</span> <span class="n">stub</span>
+
+        <span class="k">assert</span> <span class="n">req</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">req</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">proto_module</span> <span class="o">=</span> <span class="n">grpc_service</span><span class="o">.</span><span class="n">proto_module</span>
+            <span class="k">if</span> <span class="n">grpc_method_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Stream&quot;</span><span class="p">):</span>
+                <span class="n">req_cls_name_prefix</span> <span class="o">=</span> <span class="n">grpc_method_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">req_cls_name_prefix</span> <span class="o">=</span> <span class="n">grpc_method_name</span>
+            <span class="n">req_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">proto_module</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">Request&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">req_cls_name_prefix</span><span class="p">))</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">req_cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">grpc_method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">stub</span><span class="p">,</span> <span class="n">grpc_method_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grpc_method</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

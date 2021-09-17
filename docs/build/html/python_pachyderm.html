@@ -1,0 +1,993 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Information" href="python_pachyderm.mixin.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">python_pachyderm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mixins">Mixins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html">Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.debug">python_pachyderm.mixin.debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.enterprise">python_pachyderm.mixin.enterprise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.health">python_pachyderm.mixin.health</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.pfs">python_pachyderm.mixin.pfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.pps">python_pachyderm.mixin.pps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.transaction">python_pachyderm.mixin.transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.util">python_pachyderm.mixin.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.version">python_pachyderm.mixin.version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.client">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.spout">Spout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.util">Util Helper</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>python_pachyderm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/python_pachyderm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-pachyderm">
+<h1>python_pachyderm<a class="headerlink" href="#python-pachyderm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mixins">
+<h2>Mixins<a class="headerlink" href="#mixins" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html">Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.debug">python_pachyderm.mixin.debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.enterprise">python_pachyderm.mixin.enterprise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.health">python_pachyderm.mixin.health</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.pfs">python_pachyderm.mixin.pfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.pps">python_pachyderm.mixin.pps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.transaction">python_pachyderm.mixin.transaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.util">python_pachyderm.mixin.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.version">python_pachyderm.mixin.version</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-python_pachyderm.client">
+<span id="client"></span><h2>Client<a class="headerlink" href="#module-python_pachyderm.client" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.admin.AdminMixin" title="python_pachyderm.mixin.admin.AdminMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.admin.AdminMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin" title="python_pachyderm.mixin.auth.AuthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.auth.AuthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.debug.DebugMixin" title="python_pachyderm.mixin.debug.DebugMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.debug.DebugMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="python_pachyderm.mixin.enterprise.EnterpriseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.enterprise.EnterpriseMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.health.HealthMixin" title="python_pachyderm.mixin.health.HealthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.health.HealthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin" title="python_pachyderm.mixin.pfs.PFSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.pfs.PFSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin" title="python_pachyderm.mixin.pps.PPSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.pps.PPSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin" title="python_pachyderm.mixin.transaction.TransactionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.transaction.TransactionMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.version.VersionMixin" title="python_pachyderm.mixin.version.VersionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.version.VersionMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>auth_token</strong></dt><dd></dd>
+<dt><strong>transaction_id</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_auth</span></code>(subject[, github_token, …])</p></td>
+<td><p>Activates auth, creating an initial set of admins.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_enterprise</span></code>(activation_code[, expires])</p></td>
+<td><p>Activates enterprise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_github</span></code>(github_token)</p></td>
+<td><p>Authenticates a GitHub user to the Pachyderm cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_id_token</span></code>(id_token)</p></td>
+<td><p>Authenticates a user to the Pachyderm cluster using an ID token issued by the OIDC provider.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_oidc</span></code>(oidc_state)</p></td>
+<td><p>Authenticates a user to the Pachyderm cluster via OIDC.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_one_time_password</span></code>(one_time_password)</p></td>
+<td><p>Authenticates a user to the Pachyderm cluster using a one-time password.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authorize</span></code>(repo, scope)</p></td>
+<td><p>Authorizes the user to a given repo/scope.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">batch_transaction</span></code>(requests)</p></td>
+<td><p>Executes a batch transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary</span></code>([filter])</p></td>
+<td><p>Gets the pachd binary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit</span></code>(repo_name[, branch, parent, description])</p></td>
+<td><p>A context manager for running operations within a commit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy_file</span></code>(source_commit, source_path, …[, …])</p></td>
+<td><p>Efficiently copies files already in PFS.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_branch</span></code>(repo_name, branch_name[, …])</p></td>
+<td><p>Creates a new branch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_pipeline</span></code>(pipeline_name, transform[, …])</p></td>
+<td><p>Creates a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_pipeline_from_request</span></code>(req)</p></td>
+<td><p>Creates a pipeline from a <code class="docutils literal notranslate"><span class="pre">CreatePipelineRequest</span></code> object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_repo</span></code>(repo_name[, description, update])</p></td>
+<td><p>Creates a new <code class="docutils literal notranslate"><span class="pre">Repo</span></code> object in PFS with the given name. Repos are the top level data object in PFS and should be used to store data of a similar type. For example rather than having a single <code class="docutils literal notranslate"><span class="pre">Repo</span></code> for an entire project you might have separate <a href="#id1"><span class="problematic" id="id2">``</span></a>Repo``s for logs, metrics, database dumps etc.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_secret</span></code>(secret_name, data[, labels, …])</p></td>
+<td><p>Creates a new secret.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_tf_job_pipeline</span></code>(pipeline_name, tf_job)</p></td>
+<td><p>Creates a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_tmp_file_set</span></code>()</p></td>
+<td><p>Creates a temporary fileset (used internally).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deactivate_auth</span></code>()</p></td>
+<td><p>Deactivates auth, removing all ACLs, tokens, and admins from the Pachyderm cluster and making all data publicly accessible.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deactivate_enterprise</span></code>()</p></td>
+<td><p>Deactivates enterprise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all</span></code>()</p></td>
+<td><p>Deletes everything in Pachyderm.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_pipelines</span></code>([force])</p></td>
+<td><p>Deletes all pipelines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_repos</span></code>([force])</p></td>
+<td><p>Deletes all repos.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_transactions</span></code>()</p></td>
+<td><p>Deletes all transactions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_branch</span></code>(repo_name, branch_name[, force])</p></td>
+<td><p>Deletes a branch, but leaves the commits themselves intact.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_commit</span></code>(commit)</p></td>
+<td><p>Deletes a commit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_file</span></code>(commit, path)</p></td>
+<td><p>Deletes a file from a Commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_job</span></code>(job_id)</p></td>
+<td><p>Deletes a job by its ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_pipeline</span></code>(pipeline_name[, force, …])</p></td>
+<td><p>Deletes a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_repo</span></code>(repo_name[, force, …])</p></td>
+<td><p>Deletes a repo and reclaims the storage space it was using.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_secret</span></code>(secret_name)</p></td>
+<td><p>Deletes a secret.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_transaction</span></code>(transaction)</p></td>
+<td><p>Deletes a given transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">diff_file</span></code>(new_commit, new_path[, …])</p></td>
+<td><p>Diffs two files.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code>([filter, limit])</p></td>
+<td><p>Gets a debug dump.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extend_auth_token</span></code>(token, ttl)</p></td>
+<td><p>Extends an existing auth token.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract</span></code>([url, no_objects, no_repos, …])</p></td>
+<td><p>Extracts cluster data for backup.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_auth_tokens</span></code>()</p></td>
+<td><p>This maps to an internal function that is only used for migration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_pipeline</span></code>(pipeline_name)</p></td>
+<td><p>Extracts a pipeline for backup.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">finish_commit</span></code>(commit[, description, …])</p></td>
+<td><p>Ends the process of committing data to a Repo and persists the Commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">finish_transaction</span></code>(transaction)</p></td>
+<td><p>Finishes a given transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush_commit</span></code>(commits[, repos])</p></td>
+<td><p>Blocks until all of the commits which have a set of commits as provenance have finished.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush_job</span></code>(commits[, pipeline_names])</p></td>
+<td><p>Blocks until all of the jobs which have a set of commits as provenance have finished.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fsck</span></code>([fix])</p></td>
+<td><p>Performs a file system consistency check for PFS.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">garbage_collect</span></code>([memory_bytes])</p></td>
+<td><p>Runs garbage collection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_acl</span></code>(repo)</p></td>
+<td><p>Gets the ACL of a repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_activation_code</span></code>()</p></td>
+<td><p>Returns the enterprise code used to activate Pachdyerm Enterprise in this cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_admins</span></code>()</p></td>
+<td><p>Returns a list of strings specifying the cluster admins.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_configuration</span></code>()</p></td>
+<td><p>Gets the auth configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_token</span></code>(subject[, ttl])</p></td>
+<td><p>Gets an auth token for a subject.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cluster_role_bindings</span></code>()</p></td>
+<td><p>Returns the current set of cluster role bindings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_enterprise_state</span></code>()</p></td>
+<td><p>Gets the current enterprise state of the cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_file</span></code>(commit, path[, offset_bytes, …])</p></td>
+<td><p>Returns a <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile" title="python_pachyderm.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a> object, containing the contents of a file stored in PFS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups</span></code>([username])</p></td>
+<td><p>Gets which groups the given <cite>username</cite> belongs to.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_job_logs</span></code>(job_id[, data_filters, datum, …])</p></td>
+<td><p>Gets logs for a job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_oidc_login</span></code>()</p></td>
+<td><p>Returns the OIDC login configuration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_one_time_password</span></code>([subject, ttl])</p></td>
+<td><p>If this <a class="reference internal" href="#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> is authenticated as an admin, you can generate a one-time password for any given <cite>subject</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pipeline_logs</span></code>(pipeline_name[, …])</p></td>
+<td><p>Gets logs for a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_remote_version</span></code>()</p></td>
+<td><p>Gets version of Pachyderm server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_scope</span></code>(username, repos)</p></td>
+<td><p>Gets the auth scope.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_users</span></code>(group)</p></td>
+<td><p>Gets which users below to the <cite>given</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">glob_file</span></code>(commit, pattern)</p></td>
+<td><p>Lists files that match a glob pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">health</span></code>()</p></td>
+<td><p>Returns a health check indicating if the server can handle RPCs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_branch</span></code>(repo_name, branch_name)</p></td>
+<td><p>Inspects a branch.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_cluster</span></code>()</p></td>
+<td><p>Inspects a cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_commit</span></code>(commit[, block_state])</p></td>
+<td><p>Inspects a commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_datum</span></code>(job_id, datum_id)</p></td>
+<td><p>Inspects a datum.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_file</span></code>(commit, path)</p></td>
+<td><p>Inspects a file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_job</span></code>(job_id[, block_state, …])</p></td>
+<td><p>Inspects a job with a given ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_pipeline</span></code>(pipeline_name[, history])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_repo</span></code>(repo_name)</p></td>
+<td><p>Returns info about a specific repo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_secret</span></code>(secret_name)</p></td>
+<td><p>Inspects a secret.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_transaction</span></code>(transaction)</p></td>
+<td><p>Inspects a given transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_branch</span></code>(repo_name[, reverse])</p></td>
+<td><p>Lists the active branch objects on a repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_commit</span></code>(repo_name[, to_commit, …])</p></td>
+<td><p>Lists commits.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_datum</span></code>([job_id, page_size, page, input, …])</p></td>
+<td><p>Lists datums.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code>(commit, path[, history, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_job</span></code>([pipeline_name, input_commit, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_pipeline</span></code>([history, allow_incomplete, …])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_repo</span></code>()</p></td>
+<td><p>Returns info about all repos, as a list of <code class="docutils literal notranslate"><span class="pre">RepoInfo</span></code> objects.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_secret</span></code>()</p></td>
+<td><p>Lists secrets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_transaction</span></code>()</p></td>
+<td><p>Lists transactions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_admins</span></code>([add, remove])</p></td>
+<td><p>Adds and/or removes admins.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_cluster_role_binding</span></code>(principal[, roles])</p></td>
+<td><p>Sets the list of admin roles for a principal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_members</span></code>(group[, add, remove])</p></td>
+<td><p>Adds and/or removes members of a group.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_config" title="python_pachyderm.client.Client.new_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_config</span></code></a>([config_file])</p></td>
+<td><p>Creates a Pachyderm client from a config file, which can either be passed in as a file-like object, or if unset, checks the PACH_CONFIG env var for a path.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_pachd_address" title="python_pachyderm.client.Client.new_from_pachd_address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_pachd_address</span></code></a>(pachd_address[, …])</p></td>
+<td><p>Creates a Pachyderm client from a given pachd address.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_in_cluster" title="python_pachyderm.client.Client.new_in_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_in_cluster</span></code></a>([auth_token, transaction_id])</p></td>
+<td><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">profile_cpu</span></code>(duration[, filter])</p></td>
+<td><p>Gets a CPU profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_bytes</span></code>(commit, path, value[, …])</p></td>
+<td><p>Uploads a PFS file from a file-like object, bytestring, or iterator of bytestrings.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_client</span></code>()</p></td>
+<td><p>A context manager that gives a <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient" title="python_pachyderm.mixin.pfs.PutFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">PutFileClient</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_url</span></code>(commit, path, url[, delimiter, …])</p></td>
+<td><p>Puts a file using the content found at a URL.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">renew_tmp_file_set</span></code>(fileset_id, ttl_seconds)</p></td>
+<td><p>Renews a temporary fileset (used internally).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">restart_datum</span></code>(job_id[, data_filters])</p></td>
+<td><p>Restarts a datum.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore</span></code>(requests)</p></td>
+<td><p>Restores a cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore_auth_token</span></code>([token])</p></td>
+<td><p>This maps to an internal function that is only used for migration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">revoke_auth_token</span></code>(token)</p></td>
+<td><p>Revokes an auth token.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_cron</span></code>(pipeline_name)</p></td>
+<td><p>Explicitly triggers a pipeline with one or more cron inputs to run now.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_pipeline</span></code>(pipeline_name[, provenance, job_id])</p></td>
+<td><p>Runs a pipeline.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_acl</span></code>(repo, entries)</p></td>
+<td><p>Sets the ACL of a repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_auth_configuration</span></code>(configuration)</p></td>
+<td><p>Set the auth configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_groups_for_user</span></code>(username, groups)</p></td>
+<td><p>Sets the group membership for a user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_scope</span></code>(username, repo, scope)</p></td>
+<td><p>Set the auth scope.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_commit</span></code>(repo_name[, branch, parent, …])</p></td>
+<td><p>Begins the process of committing data to a Repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_pipeline</span></code>(pipeline_name)</p></td>
+<td><p>Starts a pipeline.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_transaction</span></code>()</p></td>
+<td><p>Starts a transaction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_job</span></code>(job_id)</p></td>
+<td><p>Stops a job by its ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_pipeline</span></code>(pipeline_name)</p></td>
+<td><p>Stops a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">subscribe_commit</span></code>(repo_name, branch[, …])</p></td>
+<td><p>Yields <code class="docutils literal notranslate"><span class="pre">CommitInfo</span></code> objects as commits occur.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transaction</span></code>()</p></td>
+<td><p>A context manager for running operations within a transaction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">walk_file</span></code>(commit, path)</p></td>
+<td><p>Walks over all descendant files in a directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">who_am_i</span></code>()</p></td>
+<td><p>Returns info about the user tied to this <a class="reference internal" href="#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pachyderm client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>host</strong><span class="classifier">str, optional</span></dt><dd><p>The pachd host. Default is ‘localhost’, which is used with
+<code class="docutils literal notranslate"><span class="pre">pachctl</span> <span class="pre">port-forward</span></code>.</p>
+</dd>
+<dt><strong>port</strong><span class="classifier">int, optional</span></dt><dd><p>The port to connect to. Default is 30650.</p>
+</dd>
+<dt><strong>auth_token</strong><span class="classifier">str, optional</span></dt><dd><p>The authentication token. Used if authentication is enabled on the
+cluster.</p>
+</dd>
+<dt><strong>root_certs</strong><span class="classifier">bytes, optional</span></dt><dd><p>The PEM-encoded root certificates as byte string.</p>
+</dd>
+<dt><strong>transaction_id</strong><span class="classifier">str, optional</span></dt><dd><p>The ID of the transaction to run operations on.</p>
+</dd>
+<dt><strong>tls</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether TLS should be used. If <cite>root_certs</cite> are specified, they are
+used. Otherwise, we use the certs provided by certifi.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.auth_token">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">auth_token</span></span><a class="headerlink" href="#python_pachyderm.client.Client.auth_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.new_from_config">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">new_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client.new_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client.new_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pachyderm client from a config file, which can either be
+passed in as a file-like object, or if unset, checks the PACH_CONFIG env
+var for a path. If that’s also unset, it defaults to loading from
+‘~/.pachyderm/config.json’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config_file</strong><span class="classifier">TextIO, optional</span></dt><dd><p>A file-like object containing the config json file. If unspecified,
+we load the config from the default location
+(‘~/.pachyderm/config.json’).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Client</dt><dd><p>A python_pachyderm client instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.new_from_pachd_address">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">new_from_pachd_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pachd_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client.new_from_pachd_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client.new_from_pachd_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pachyderm client from a given pachd address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pachd_address</strong><span class="classifier">str</span></dt><dd><p>The address of pachd server</p>
+</dd>
+<dt><strong>auth_token</strong><span class="classifier">str, optional</span></dt><dd><p>The authentication token. Used if authentication is enabled on the
+cluster.</p>
+</dd>
+<dt><strong>root_certs</strong><span class="classifier">bytes, optional</span></dt><dd><p>The PEM-encoded root certificates as byte string. If unspecified,
+this will load default certs from certifi.</p>
+</dd>
+<dt><strong>transaction_id</strong><span class="classifier">str, optional</span></dt><dd><p>The ID of the transaction to run operations on.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Client</dt><dd><p>A python_pachyderm client instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.new_in_cluster">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">new_in_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client.new_in_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client.new_in_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>auth_token</strong><span class="classifier">str, optional</span></dt><dd><p>The authentication token. Used if authentication is enabled on the
+cluster.</p>
+</dd>
+<dt><strong>transaction_id</strong><span class="classifier">str, optional</span></dt><dd><p>The ID of the transaction to run operations on.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Client</dt><dd><p>A python_pachyderm client instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="python_pachyderm.client.Client.transaction_id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">transaction_id</span></span><a class="headerlink" href="#python_pachyderm.client.Client.transaction_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-python_pachyderm.spout">
+<span id="spout"></span><h2>Spout<a class="headerlink" href="#module-python_pachyderm.spout" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.spout.</span></span><span class="sig-name descname"><span class="pre">SpoutCommit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a commit on a spout, permitting the addition of files.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutCommit.close" title="python_pachyderm.spout.SpoutCommit.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Closes the commit</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutCommit.put_file_from_bytes" title="python_pachyderm.spout.SpoutCommit.put_file_from_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_from_bytes</span></code></a>(path, bytes)</p></td>
+<td><p>Adds a file to the spout from a bytestring.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutCommit.put_file_from_fileobj" title="python_pachyderm.spout.SpoutCommit.put_file_from_fileobj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_from_fileobj</span></code></a>(path, size, fileobj)</p></td>
+<td><p>Adds a file to the spout from a file-like object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutCommit.put_marker_from_bytes" title="python_pachyderm.spout.SpoutCommit.put_marker_from_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_marker_from_bytes</span></code></a>(bytes)</p></td>
+<td><p>Adds to the marker from a bytestring.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutCommit.put_marker_from_fileobj" title="python_pachyderm.spout.SpoutCommit.put_marker_from_fileobj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_marker_from_fileobj</span></code></a>(size, fileobj)</p></td>
+<td><p>Writes to the marker file from a file-like object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the commit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.put_file_from_bytes">
+<span class="sig-name descname"><span class="pre">put_file_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.put_file_from_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.put_file_from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a file to the spout from a bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the file in the spout.</p>
+</dd>
+<dt><strong>bytes</strong><span class="classifier">bytes</span></dt><dd><p>The bytestring representing the file contents.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.put_file_from_fileobj">
+<span class="sig-name descname"><span class="pre">put_file_from_fileobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileobj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.put_file_from_fileobj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.put_file_from_fileobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a file to the spout from a file-like object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the file in the spout.</p>
+</dd>
+<dt><strong>size</strong><span class="classifier">int</span></dt><dd><p>The size of the file.</p>
+</dd>
+<dt><strong>fileobj</strong><span class="classifier">BinaryIO</span></dt><dd><p>The file-like object to add.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.put_marker_from_bytes">
+<span class="sig-name descname"><span class="pre">put_marker_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.put_marker_from_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.put_marker_from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds to the marker from a bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bytes</strong><span class="classifier">bytes</span></dt><dd><p>The bytestring representing the file contents.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutCommit.put_marker_from_fileobj">
+<span class="sig-name descname"><span class="pre">put_marker_from_fileobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileobj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutCommit.put_marker_from_fileobj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutCommit.put_marker_from_fileobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes to the marker file from a file-like object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>size</strong><span class="classifier">int</span></dt><dd><p>The size of the file.</p>
+</dd>
+<dt><strong>fileobj</strong><span class="classifier">BinaryIO</span></dt><dd><p>The file-like object to add.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.spout.</span></span><span class="sig-name descname"><span class="pre">SpoutManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marker_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfs_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/pfs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience context manager for creating spouts.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spout</span> <span class="o">=</span> <span class="n">SpoutManager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">with</span> <span class="n">spout</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span> <span class="k">as</span> <span class="n">commit</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">commit</span><span class="o">.</span><span class="n">put_file_from_bytes</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutManager.close" title="python_pachyderm.spout.SpoutManager.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Closes the <a class="reference internal" href="#python_pachyderm.spout.SpoutManager" title="python_pachyderm.spout.SpoutManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpoutManager</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutManager.commit" title="python_pachyderm.spout.SpoutManager.commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit</span></code></a>()</p></td>
+<td><p>Opens a commit on the spout.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.spout.SpoutManager.marker" title="python_pachyderm.spout.SpoutManager.marker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">marker</span></code></a>()</p></td>
+<td><p>Gets the marker file as a context manager.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marker_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfs_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/pfs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new spout manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>marker_filename</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the file for storing markers. If unspecified,
+marker-related operations will fail.</p>
+</dd>
+<dt><strong>pfs_directory</strong><span class="classifier">str, optional</span></dt><dd><p>The directory for PFS content. Usually this shouldn’t be explicitly
+specified, unless the spout manager is being tested outside of a
+real Pachyderm pipeline.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutManager.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutManager.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutManager.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the <a class="reference internal" href="#python_pachyderm.spout.SpoutManager" title="python_pachyderm.spout.SpoutManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpoutManager</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutManager.commit">
+<span class="sig-name descname"><span class="pre">commit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutManager.commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutManager.commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a commit on the spout. When the context manager exits, any
+added files will be committed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.spout.SpoutManager.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/spout.html#SpoutManager.marker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.spout.SpoutManager.marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the marker file as a context manager.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-python_pachyderm.util">
+<span id="util-helper"></span><h2>Util Helper<a class="headerlink" href="#module-python_pachyderm.util" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="python_pachyderm.util.create_python_pipeline">
+<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">create_python_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_pull_secrets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secrets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">pipeline_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#create_python_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.create_python_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for creating (or updating) a pipeline specially built
+for executing python code that is stored locally at <cite>path</cite>.</p>
+<p>A normal pipeline creation process requires you to first build and push a
+container image with the source and dependencies baked in. As an alternative
+process, this function circumvents container image creation by using build
+step-enabled pipelines. See the pachyderm core docs for more info.</p>
+<p>If <cite>path</cite> references a directory, it should have:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, as the pipeline entry-point.</p></li>
+<li><p>An optional <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> that specifies pip requirements.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>client</strong><span class="classifier">Client</span></dt><dd><p>The <cite>Client</cite> instance to use.</p>
+</dd>
+<dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The directory containing the python pipeline source, or an individual
+python file.</p>
+</dd>
+<dt><strong>input</strong><span class="classifier">Input protobuf, optional</span></dt><dd><p>An <code class="docutils literal notranslate"><span class="pre">Input</span></code> object specifying the pipeline input.</p>
+</dd>
+<dt><strong>pipeline_name</strong><span class="classifier">str, optional</span></dt><dd><p>A string specifying the pipeline name. Defaults to using the last
+directory name in <cite>path</cite>.</p>
+</dd>
+<dt><strong>image_pull_secrets</strong><span class="classifier">List[str], optional</span></dt><dd><p>A list of strings specifying the pipeline transform’s image pull
+secrets, which are used for pulling images from a private registry.
+Defaults to <cite>None</cite>, in which case the public docker registry will be
+used. See the pipeline spec document for more details.</p>
+</dd>
+<dt><strong>debug</strong><span class="classifier">bool, optional</span></dt><dd><p>Specifies whether debug logging should be enabled for the pipeline.
+Defaults to <cite>False</cite>.</p>
+</dd>
+<dt><strong>env</strong><span class="classifier">Dict[str, str], optional</span></dt><dd><p>A mapping of string keys to string values specifying custom environment
+variables.</p>
+</dd>
+<dt><strong>secrets</strong><span class="classifier">List[Secret protobufs], optional</span></dt><dd><p>A list of <cite>Secret</cite> objects for secret environment variables.</p>
+</dd>
+<dt><strong>image</strong><span class="classifier">str, optional</span></dt><dd><p>A string specifying the docker image to use for the pipeline. Defaults
+to using pachyderm’s official python language builder.</p>
+</dd>
+<dt><strong>update</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to act as an upsert.</p>
+</dd>
+<dt><strong>**pipeline_kwargs</strong><span class="classifier">dict</span></dt><dd><p>Keyword arguments to forward to <cite>create_pipeline</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_pachyderm.util.parse_dict_pipeline_spec">
+<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">parse_dict_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_dict_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_dict_pipeline_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a dict of serialized JSON into a <cite>CreatePipelineRequest</cite>
+protobuf.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_pachyderm.util.parse_json_pipeline_spec">
+<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">parse_json_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_json_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_json_pipeline_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a string of JSON into a <cite>CreatePipelineRequest</cite> protobuf.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_pachyderm.util.put_files">
+<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">put_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#put_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.put_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for inserting files from the local <cite>source_path</cite>
+to Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"><span class="pre">pachctl</span> <span class="pre">put</span> <span class="pre">file</span> <span class="pre">[-r]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>client</strong><span class="classifier">Client</span></dt><dd><p>The <a class="reference internal" href="#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> instance to use.</p>
+</dd>
+<dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The file/directory to recursively insert content from.</p>
+</dd>
+<dt><strong>commit</strong><span class="classifier">Union[tuple, str, Commit protobuf]</span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Commit</span></code> object to use for inserting files.</p>
+</dd>
+<dt><strong>dest_path</strong><span class="classifier">str</span></dt><dd><p>The destination path in PFS.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">dict</span></dt><dd><p>Keyword arguments to forward. See
+<code class="docutils literal notranslate"><span class="pre">PutFileClient.put_file_from_fileobj()</span></code> for details.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="python_pachyderm.mixin.html" class="btn btn-neutral float-right" title="Information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

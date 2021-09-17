@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.mixin.auth &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.mixin.auth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.mixin.auth</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
+
+
+<div class="viewcode-block" id="AuthMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin">[docs]</a><span class="k">class</span> <span class="nc">AuthMixin</span><span class="p">:</span>
+<div class="viewcode-block" id="AuthMixin.activate_auth"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.activate_auth">[docs]</a>    <span class="k">def</span> <span class="nf">activate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">github_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">root_token</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Activates auth, creating an initial set of admins. Returns a string</span>
+<span class="sd">        that can be used for making authenticated requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        subject : str</span>
+<span class="sd">            If set to a github user (i.e. it has a &#39;github:&#39; prefix or no</span>
+<span class="sd">            prefix) then Pachyderm will confirm that it matches the user</span>
+<span class="sd">            associated with `github_token`.</span>
+<span class="sd">            If set to a robot user (i.e. it has a &#39;robot:&#39; prefix), then</span>
+<span class="sd">            Pachyderm will generate a new token for the robot user; this token</span>
+<span class="sd">            will be the only way to administer this cluster until more admins</span>
+<span class="sd">            are added.</span>
+<span class="sd">        github_token : str, optional</span>
+<span class="sd">            This is the token returned by GitHub and used to authenticate the</span>
+<span class="sd">            caller. When Pachyderm is deployed locally, setting this value to a</span>
+<span class="sd">            given string will automatically authenticate the caller as a GitHub</span>
+<span class="sd">            user whose username is that string (unless this &quot;looks like&quot; a</span>
+<span class="sd">            GitHub access code, in which case Pachyderm does retrieve the</span>
+<span class="sd">            corresponding GitHub username)</span>
+<span class="sd">        root_token : str, optional</span>
+<span class="sd">            Unused</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Activate&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">github_token</span><span class="o">=</span><span class="n">github_token</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">pach_token</span></div>
+
+<div class="viewcode-block" id="AuthMixin.deactivate_auth"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.deactivate_auth">[docs]</a>    <span class="k">def</span> <span class="nf">deactivate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deactivates auth, removing all ACLs, tokens, and admins from the</span>
+<span class="sd">        Pachyderm cluster and making all data publicly accessible.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Deactivate&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_auth_configuration"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_auth_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_auth_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the auth configuration. Returns an `AuthConfig` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetConfiguration&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">configuration</span></div>
+
+<div class="viewcode-block" id="AuthMixin.set_auth_configuration"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.set_auth_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">set_auth_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the auth configuration.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        config : AuthConfig protobuf</span>
+<span class="sd">            The auth configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;SetConfiguration&quot;</span><span class="p">,</span> <span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_admins"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_admins">[docs]</a>    <span class="k">def</span> <span class="nf">get_admins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of strings specifying the cluster admins.&quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;deprecated in 1.11, use &#39;get_cluster_role_bindings&#39; instead&quot;</span><span class="p">,</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetAdmins&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">admins</span></div>
+
+<div class="viewcode-block" id="AuthMixin.modify_admins"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.modify_admins">[docs]</a>    <span class="k">def</span> <span class="nf">modify_admins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds and/or removes admins.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        add : List[str], optional</span>
+<span class="sd">            A list of strings specifying admins to add.</span>
+<span class="sd">        remove : List[str], optional</span>
+<span class="sd">            A list of strings specifying admins to remove.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;deprecated in 1.11, use &#39;modify_cluster_role_binding&#39; instead&quot;</span><span class="p">,</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;ModifyAdmins&quot;</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="n">add</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">remove</span><span class="o">=</span><span class="n">remove</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_cluster_role_bindings"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_cluster_role_bindings">[docs]</a>    <span class="k">def</span> <span class="nf">get_cluster_role_bindings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current set of cluster role bindings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetClusterRoleBindings&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.modify_cluster_role_binding"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.modify_cluster_role_binding">[docs]</a>    <span class="k">def</span> <span class="nf">modify_cluster_role_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">principal</span><span class="p">,</span> <span class="n">roles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the list of admin roles for a principal.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        principal : str, optional</span>
+<span class="sd">            A string specifying the principal.</span>
+<span class="sd">        roles : ClusterRoles protobuf</span>
+<span class="sd">            A `ClusterRoles` object specifying cluster-wide permissions the</span>
+<span class="sd">            principal has. If unspecified, all roles are revoked for the</span>
+<span class="sd">            principal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;ModifyClusterRoleBinding&quot;</span><span class="p">,</span> <span class="n">principal</span><span class="o">=</span><span class="n">principal</span><span class="p">,</span> <span class="n">roles</span><span class="o">=</span><span class="n">roles</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_oidc_login"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_oidc_login">[docs]</a>    <span class="k">def</span> <span class="nf">get_oidc_login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the OIDC login configuration.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetOIDCLogin&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.authenticate_github"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_github">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate_github</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">github_token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Authenticates a GitHub user to the Pachyderm cluster. Returns a</span>
+<span class="sd">        string that can be used for making authenticated requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        github_token: str</span>
+<span class="sd">            This is the token returned by GitHub and used to authenticate the</span>
+<span class="sd">            caller. When Pachyderm is deployed locally, setting this value to</span>
+<span class="sd">            a given string will automatically authenticate the caller as a</span>
+<span class="sd">            GitHub user whose username is that string (unless this &quot;looks like&quot;</span>
+<span class="sd">            a GitHub access code, in which case Pachyderm does retrieve the</span>
+<span class="sd">            corresponding GitHub username.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Authenticate&quot;</span><span class="p">,</span> <span class="n">github_token</span><span class="o">=</span><span class="n">github_token</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">pach_token</span></div>
+
+<div class="viewcode-block" id="AuthMixin.authenticate_oidc"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_oidc">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate_oidc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oidc_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Authenticates a user to the Pachyderm cluster via OIDC. Returns a</span>
+<span class="sd">        string that can be used for making authenticated requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        oidc_state : str</span>
+<span class="sd">            The OIDC state token.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Authenticate&quot;</span><span class="p">,</span> <span class="n">oidc_state</span><span class="o">=</span><span class="n">oidc_state</span><span class="p">)</span><span class="o">.</span><span class="n">pach_token</span></div>
+
+<div class="viewcode-block" id="AuthMixin.authenticate_id_token"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_id_token">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate_id_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Authenticates a user to the Pachyderm cluster using an ID token</span>
+<span class="sd">        issued by the OIDC provider. The token must include the Pachyderm</span>
+<span class="sd">        client_id in the set of audiences to be valid. Returns a string that</span>
+<span class="sd">        can be used for making authenticated requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id_token : str</span>
+<span class="sd">            The ID token.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Authenticate&quot;</span><span class="p">,</span> <span class="n">id_token</span><span class="o">=</span><span class="n">id_token</span><span class="p">)</span><span class="o">.</span><span class="n">pach_token</span></div>
+
+<div class="viewcode-block" id="AuthMixin.authenticate_one_time_password"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.authenticate_one_time_password">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate_one_time_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one_time_password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Authenticates a user to the Pachyderm cluster using a one-time</span>
+<span class="sd">        password. Returns a string that can be used for making authenticated</span>
+<span class="sd">        requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        one_time_password : str</span>
+<span class="sd">            This is a short-lived, one-time-use password generated by</span>
+<span class="sd">            Pachyderm, for the purpose of propagating authentication to new</span>
+<span class="sd">            clients (e.g. from the dash to pachd.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Authenticate&quot;</span><span class="p">,</span> <span class="n">one_time_password</span><span class="o">=</span><span class="n">one_time_password</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">pach_token</span></div>
+
+<div class="viewcode-block" id="AuthMixin.authorize"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.authorize">[docs]</a>    <span class="k">def</span> <span class="nf">authorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">scope</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Authorizes the user to a given repo/scope. Return a bool specifying</span>
+<span class="sd">        if the caller has at least `scope`-level access to `repo`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo : str</span>
+<span class="sd">            The repo name that the caller wants access to.</span>
+<span class="sd">        scope : int</span>
+<span class="sd">            The access level that the caller needs to perform an action. See</span>
+<span class="sd">            the ``Scope`` enum for variants.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;Authorize&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span><span class="o">.</span><span class="n">authorized</span></div>
+
+<div class="viewcode-block" id="AuthMixin.who_am_i"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.who_am_i">[docs]</a>    <span class="k">def</span> <span class="nf">who_am_i</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns info about the user tied to this :class:`.Client`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;WhoAmI&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_scope"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_scope">[docs]</a>    <span class="k">def</span> <span class="nf">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">repos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the auth scope. Returns a list of `Scope` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        username : str</span>
+<span class="sd">            A string specifying the principal (some of which belong to robots</span>
+<span class="sd">            rather than users, but the name is preserved for now to provide</span>
+<span class="sd">            compatibility with the pachyderm dash) whose access level is</span>
+<span class="sd">            queried. To query the access level of a robot user, the caller must</span>
+<span class="sd">            prefix username with &quot;robot:&quot;. If `username` has no prefix (i.e.</span>
+<span class="sd">            no &quot;:&quot;), then it&#39;s assumed to be a github user&#39;s principal.</span>
+<span class="sd">        repos : List[str]</span>
+<span class="sd">            A list of strings specifying the objects to which `username`s</span>
+<span class="sd">            access level is being queried</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetScope&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">repos</span><span class="o">=</span><span class="n">repos</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">scopes</span></div>
+
+<div class="viewcode-block" id="AuthMixin.set_scope"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.set_scope">[docs]</a>    <span class="k">def</span> <span class="nf">set_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">scope</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the auth scope.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        username : str</span>
+<span class="sd">            A string specifying the principal (some of which belong to robots</span>
+<span class="sd">            rather than users, but the name is preserved for now to provide</span>
+<span class="sd">            compatibility with the pachyderm dash) whose access level is</span>
+<span class="sd">            queried. To query the access level of a robot user, the caller must</span>
+<span class="sd">            prefix username with &quot;robot:&quot;. If &#39;username&#39; has no prefix (i.e.</span>
+<span class="sd">            no &quot;:&quot;), then it&#39;s assumed to be a github user&#39;s principal.</span>
+<span class="sd">        repo : str</span>
+<span class="sd">            A string specifying the object to which `username`s access level is</span>
+<span class="sd">            being granted/revoked.</span>
+<span class="sd">        scope : int</span>
+<span class="sd">            The access level that `username` will now have. See the ``Scope``</span>
+<span class="sd">            enum for variants.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;SetScope&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_acl"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_acl">[docs]</a>    <span class="k">def</span> <span class="nf">get_acl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the ACL of a repo. Returns a ``GetACLResponse`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo : str</span>
+<span class="sd">            The repo to get an ACL for.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetACL&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.set_acl"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.set_acl">[docs]</a>    <span class="k">def</span> <span class="nf">set_acl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">entries</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the ACL of a repo.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo : str</span>
+<span class="sd">            The repo to set an ACL on.</span>
+<span class="sd">        entries : List[ACLEntry protobuf]</span>
+<span class="sd">            A list of `ACLEntry` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;SetACL&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_auth_token"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_auth_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets an auth token for a subject. Returns an</span>
+<span class="sd">        ``GetAuthTokenResponse`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        subject : str</span>
+<span class="sd">            The returned token will allow the caller to access resources as</span>
+<span class="sd">            this subject.</span>
+<span class="sd">        ttl : int, optional</span>
+<span class="sd">            Indicates the approximate remaining lifetime of this token, in</span>
+<span class="sd">            seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetAuthToken&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="n">ttl</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.extend_auth_token"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.extend_auth_token">[docs]</a>    <span class="k">def</span> <span class="nf">extend_auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">ttl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extends an existing auth token.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        token : str</span>
+<span class="sd">            Indicates the Pachyderm token whose TTL is being extended.</span>
+<span class="sd">        ttl : int</span>
+<span class="sd">            Indicates the approximate remaining lifetime of this token, in</span>
+<span class="sd">            seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;ExtendAuthToken&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="n">ttl</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.revoke_auth_token"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.revoke_auth_token">[docs]</a>    <span class="k">def</span> <span class="nf">revoke_auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Revokes an auth token.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">         ----------</span>
+<span class="sd">         token : str</span>
+<span class="sd">             Indicates the Pachyderm token that is being revoked.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;RevokeAuthToken&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.set_groups_for_user"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.set_groups_for_user">[docs]</a>    <span class="k">def</span> <span class="nf">set_groups_for_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">groups</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the group membership for a user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        username : str</span>
+<span class="sd">            The username.</span>
+<span class="sd">        groups : List[str]</span>
+<span class="sd">            The groups to add `username` to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;SetGroupsForUser&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.modify_members"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.modify_members">[docs]</a>    <span class="k">def</span> <span class="nf">modify_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds and/or removes members of a group.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        group : str</span>
+<span class="sd">            The group to modify.</span>
+<span class="sd">        add : List[str], optional</span>
+<span class="sd">            A list of strings specifying members to add.</span>
+<span class="sd">        remove : List[str], optional</span>
+<span class="sd">            A list of strings specifying members to remove.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span>
+            <span class="s2">&quot;ModifyMembers&quot;</span><span class="p">,</span>
+            <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+            <span class="n">add</span><span class="o">=</span><span class="n">add</span> <span class="ow">or</span> <span class="p">[],</span>
+            <span class="n">remove</span><span class="o">=</span><span class="n">remove</span> <span class="ow">or</span> <span class="p">[],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_groups"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets which groups the given `username` belongs to. Returns a list of</span>
+<span class="sd">        strings.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        username : str, optional</span>
+<span class="sd">            The username.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetGroups&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_users"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_users">[docs]</a>    <span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets which users below to the `given`. Returns a list of strings.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        group : str</span>
+<span class="sd">            The group to list users for.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetUsers&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">usernames</span></div>
+
+<div class="viewcode-block" id="AuthMixin.get_one_time_password"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.get_one_time_password">[docs]</a>    <span class="k">def</span> <span class="nf">get_one_time_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If this :class:`.Client` is authenticated as an admin, you can</span>
+<span class="sd">        generate a one-time password for any given `subject`. If the caller is</span>
+<span class="sd">        not an admin or the `subject` is not set, a one-time password will be</span>
+<span class="sd">        returned for logged-in subject. Returns a string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        subject : str, optional</span>
+<span class="sd">            The subject.</span>
+<span class="sd">        ttl : int, optional</span>
+<span class="sd">            Indicates the approximate remaining lifetime of this token, in</span>
+<span class="sd">            seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">AUTH</span><span class="p">,</span> <span class="s2">&quot;GetOneTimePassword&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="n">ttl</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">code</span></div>
+
+<div class="viewcode-block" id="AuthMixin.extract_auth_tokens"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.extract_auth_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">extract_auth_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This maps to an internal function that is only used for migration.</span>
+<span class="sd">        Pachyderm&#39;s `extract` and `restore` functionality calls</span>
+<span class="sd">        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens</span>
+<span class="sd">        between clusters during migration. Currently this function is only used</span>
+<span class="sd">        for Pachyderm internals, so we&#39;re avoiding support for this function in</span>
+<span class="sd">        python-pachyderm client until we find a use for it (feel free to file an</span>
+<span class="sd">        issue in github.com/pachyderm/pachyderm).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;extract/restore are for testing and internal use only&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthMixin.restore_auth_token"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin.restore_auth_token">[docs]</a>    <span class="k">def</span> <span class="nf">restore_auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This maps to an internal function that is only used for migration.</span>
+<span class="sd">        Pachyderm&#39;s `extract` and `restore` functionality calls</span>
+<span class="sd">        `extract_auth_tokens` and `restore_auth_tokens` to move Pachyderm tokens</span>
+<span class="sd">        between clusters during migration. Currently this function is only used</span>
+<span class="sd">        for Pachyderm internals, so we&#39;re avoiding support for this function in</span>
+<span class="sd">        python-pachyderm client until we find a use for it (feel free to file an</span>
+<span class="sd">        issue in github.com/pachyderm/pachyderm).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;extract/restore are for testing and internal use only&quot;</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

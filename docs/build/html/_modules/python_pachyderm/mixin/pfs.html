@@ -1,0 +1,1370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.mixin.pfs &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.mixin.pfs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.mixin.pfs</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.pfs</span> <span class="kn">import</span> <span class="n">pfs_pb2</span> <span class="k">as</span> <span class="n">pfs_proto</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">commit_from</span>
+
+
+<span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
+
+
+<div class="viewcode-block" id="PFSFile"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile">[docs]</a><span class="k">class</span> <span class="nc">PFSFile</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The contents of a file stored in PFS.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    You can treat these as either file-like objects, like so:</span>
+
+<span class="sd">    &gt;&gt;&gt; source_file = client.get_file(&quot;montage/master&quot;, &quot;/montage.png&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:</span>
+<span class="sd">    &gt;&gt;&gt;     shutil.copyfileobj(source_file, dest_file)</span>
+
+<span class="sd">    Or as an iterator of bytes, like so:</span>
+
+<span class="sd">    &gt;&gt;&gt; source_file = client.get_file(&quot;montage/master&quot;, &quot;/montage.png&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:</span>
+<span class="sd">    &gt;&gt;&gt;     for chunk in source_file:</span>
+<span class="sd">    &gt;&gt;&gt;         dest_file.write(chunk)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="PFSFile.close"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the :class:`.PFSFile`&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PFSFile.read"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reads from the :class:`.PFSFile` buffer.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        size : int, optional</span>
+<span class="sd">            The number of bytes to read from the buffer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancelled</span><span class="p">():</span>
+            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+
+        <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">size</span> <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">:</span>
+            <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
+            <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">remaining</span><span class="p">:</span>
+                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+                <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PFSMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin">[docs]</a><span class="k">class</span> <span class="nc">PFSMixin</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.create_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.create_repo">[docs]</a>    <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new ``Repo`` object in PFS with the given name. Repos are</span>
+<span class="sd">        the top level data object in PFS and should be used to store data of a</span>
+<span class="sd">        similar type. For example rather than having a single ``Repo`` for an</span>
+<span class="sd">        entire project you might have separate ``Repo``s for logs, metrics,</span>
+<span class="sd">        database dumps etc.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            Name of the repo.</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Description of the repo.</span>
+<span class="sd">        update : bool, optional</span>
+<span class="sd">            Whether to update if the repo already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;CreateRepo&quot;</span><span class="p">,</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.inspect_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_repo">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns info about a specific repo. Returns a ``RepoInfo`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            Name of the repo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;InspectRepo&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.list_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_repo">[docs]</a>    <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns info about all repos, as a list of ``RepoInfo`` objects.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ListRepo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">repo_info</span></div>
+
+<div class="viewcode-block" id="PFSMixin.delete_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_repo">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">split_transaction</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a repo and reclaims the storage space it was using.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The name of the repo.</span>
+<span class="sd">        force : bool, optional</span>
+<span class="sd">            If set to true, the repo will be removed regardless of errors. This</span>
+<span class="sd">            argument should be used with care.</span>
+<span class="sd">        split_transaction : bool, optional</span>
+<span class="sd">            Controls whether Pachyderm attempts to delete the entire repo in a</span>
+<span class="sd">            single database transaction. Setting this to ``True`` can work</span>
+<span class="sd">            around certain Pachyderm errors, but, if set, the ``delete_repo()``</span>
+<span class="sd">            call may need to be retried.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;DeleteRepo&quot;</span><span class="p">,</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
+            <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+            <span class="nb">all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">split_transaction</span><span class="o">=</span><span class="n">split_transaction</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.delete_all_repos"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes all repos.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force : bool, optional</span>
+<span class="sd">            If set to true, the repo will be removed regardless of errors. This</span>
+<span class="sd">            argument should be used with care.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;DeleteRepo&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.start_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.start_commit">[docs]</a>    <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">provenance</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Begins the process of committing data to a Repo. Once started you</span>
+<span class="sd">        can write to the Commit with PutFile and when all the data has been</span>
+<span class="sd">        written you must finish the Commit with FinishCommit. NOTE, data is</span>
+<span class="sd">        not persisted until FinishCommit is called. A Commit object is</span>
+<span class="sd">        returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The name of the repo.</span>
+<span class="sd">        branch : str, optional</span>
+<span class="sd">            The branch name. This is a more convenient way to build linear</span>
+<span class="sd">            chains of commits. When a commit is started with a non-empty</span>
+<span class="sd">            branch the value of branch becomes an alias for the created Commit.</span>
+<span class="sd">            This enables a more intuitive access pattern. When the commit is</span>
+<span class="sd">            started on a branch the previous head of the branch is used as the</span>
+<span class="sd">            parent of the commit.</span>
+<span class="sd">        parent : Union[tuple, str, Commit probotuf], optional</span>
+<span class="sd">            An optional ``Commit`` object specifying the parent commit. Upon</span>
+<span class="sd">            creation the new commit will appear identical to the parent commit,</span>
+<span class="sd">            data can safely be added to the new commit without affecting the</span>
+<span class="sd">            contents of the parent commit.</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Description of the commit.</span>
+<span class="sd">        provenance : List[CommitProvenance protobuf], optional</span>
+<span class="sd">            An optional iterable of `CommitProvenance` objects specifying the</span>
+<span class="sd">            commit provenance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;StartCommit&quot;</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">parent</span><span class="p">),</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">branch</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">provenance</span><span class="o">=</span><span class="n">provenance</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.finish_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">[docs]</a>    <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">input_tree_object_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">tree_object_hashes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">datum_object_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">size_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">empty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ends the process of committing data to a Repo and persists the</span>
+<span class="sd">        Commit. Once a Commit is finished the data becomes immutable and</span>
+<span class="sd">        future attempts to write to it with PutFile will error.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Description of this commit.</span>
+<span class="sd">        input_tree_object_hash : str, optional</span>
+<span class="sd">            Specifies an input tree object hash.</span>
+<span class="sd">        tree_object_hashes : List[str], optional</span>
+<span class="sd">            A list of zero or more strings specifying object hashes for the</span>
+<span class="sd">            output trees.</span>
+<span class="sd">        datum_object_hash : str, optional</span>
+<span class="sd">            Specifies an object hash.</span>
+<span class="sd">        size_bytes : int, optional</span>
+<span class="sd">            An optional int.</span>
+<span class="sd">        empty : bool, optional</span>
+<span class="sd">            If set, the commit will be closed (its `finished` field will be set</span>
+<span class="sd">            to the current time) but its `tree` will be left None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;FinishCommit&quot;</span><span class="p">,</span>
+            <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">tree</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="n">input_tree_object_hash</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">input_tree_object_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">trees</span><span class="o">=</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="n">h</span><span class="p">)</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">tree_object_hashes</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">tree_object_hashes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">datums</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="n">datum_object_hash</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">datum_object_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">size_bytes</span><span class="o">=</span><span class="n">size_bytes</span><span class="p">,</span>
+            <span class="n">empty</span><span class="o">=</span><span class="n">empty</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.commit">[docs]</a>    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A context manager for running operations within a commit.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The name of the repo.</span>
+<span class="sd">        branch : str, optional</span>
+<span class="sd">            The branch name. This is a more convenient way to build linear</span>
+<span class="sd">            chains of commits. When a commit is started with a non-empty</span>
+<span class="sd">            branch the value of branch becomes an alias for the created Commit.</span>
+<span class="sd">            This enables a more intuitive access pattern. When the commit is</span>
+<span class="sd">            started on a branch the previous head of the branch is used as the</span>
+<span class="sd">            parent of the commit.</span>
+<span class="sd">        parent : Union[tuple, str, Commit probotuf], optional</span>
+<span class="sd">            An optional ``Commit`` object specifying the parent commit. Upon</span>
+<span class="sd">            creation the new commit will appear identical to the parent commit,</span>
+<span class="sd">            data can safely be added to the new commit without affecting the</span>
+<span class="sd">            contents of the parent commit.</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Description of the commit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_commit</span><span class="p">(</span><span class="n">repo_name</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">commit</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finish_commit</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.inspect_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_commit">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">block_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inspects a commit. Returns a ``CommitInfo`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        block_state : int, optional</span>
+<span class="sd">            Causes this method to block until the commit is in the desired</span>
+<span class="sd">            commit state. See the ``CommitState`` enum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;InspectCommit&quot;</span><span class="p">,</span>
+            <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
+            <span class="n">block_state</span><span class="o">=</span><span class="n">block_state</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.list_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_commit">[docs]</a>    <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">to_commit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_commit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lists commits. Yields ``CommitInfo`` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            If only `repo_name` is given, all commits in the repo are returned.</span>
+<span class="sd">        to_commit : Union[tuple, str, Commit protobuf], optional</span>
+<span class="sd">            Only the ancestors of `to`, including `to` itself, are considered.</span>
+<span class="sd">        from_commit : Union[tuple, str, Commit protobuf], optional</span>
+<span class="sd">            Only the descendants of `from`, including `from` itself, are</span>
+<span class="sd">            considered.</span>
+<span class="sd">        number : int, optional</span>
+<span class="sd">            Determines how many commits are returned. If `number` is 0, all</span>
+<span class="sd">            commits that match the aforementioned criteria are returned.</span>
+<span class="sd">        reverse : bool, optional</span>
+<span class="sd">            If true, returns commits oldest to newest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ListCommitRequest</span><span class="p">(</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">to_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">req</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">to_commit</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">from_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">from_commit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ListCommitStream&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.delete_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_commit">[docs]</a>    <span class="k">def</span> <span class="nf">delete_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a commit.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            The commit to delete.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;DeleteCommit&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="PFSMixin.flush_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.flush_commit">[docs]</a>    <span class="k">def</span> <span class="nf">flush_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commits</span><span class="p">,</span> <span class="n">repos</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Blocks until all of the commits which have a set of commits as</span>
+<span class="sd">        provenance have finished. For commits to be considered they must have</span>
+<span class="sd">        all of the specified commits as provenance. This in effect waits for</span>
+<span class="sd">        all of the jobs that are triggered by a set of commits to complete.</span>
+<span class="sd">        It returns an error if any of the commits it&#39;s waiting on are</span>
+<span class="sd">        cancelled due to one of the jobs encountering an error during runtime.</span>
+<span class="sd">        Note that it&#39;s never necessary to call FlushCommit to run jobs,</span>
+<span class="sd">        they&#39;ll run no matter what, FlushCommit just allows you to wait for</span>
+<span class="sd">        them to complete and see their output once they do. This returns an</span>
+<span class="sd">        iterator of CommitInfo objects.</span>
+
+<span class="sd">        Yields ``CommitInfo`` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commits : List[Union[tuple, str, Commit protobuf]]</span>
+<span class="sd">            The commits to flush.</span>
+<span class="sd">        repos : List[str], optional</span>
+<span class="sd">            An optional list of strings specifying repo names. If specified,</span>
+<span class="sd">            only commits within these repos will be flushed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;FlushCommit&quot;</span><span class="p">,</span>
+            <span class="n">commits</span><span class="o">=</span><span class="p">[</span><span class="n">commit_from</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">],</span>
+            <span class="n">to_repos</span><span class="o">=</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">repos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.subscribe_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">from_commit_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prov</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Yields ``CommitInfo`` objects as commits occur.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name :  str</span>
+<span class="sd">            The name of the repo.</span>
+<span class="sd">        branch : str</span>
+<span class="sd">            The branch to subscribe to.</span>
+<span class="sd">        from_commit_id : str, optional</span>
+<span class="sd">            A commit ID. Only commits created since this commit are returned.</span>
+<span class="sd">        state : int, optional</span>
+<span class="sd">            The commit state to filter on. See the ``CommitState`` enum.</span>
+<span class="sd">        prov : CommitProvenance protobuf, optional</span>
+<span class="sd">            An optional ``CommitProvenance`` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">SubscribeCommitRequest</span><span class="p">(</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="n">branch</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span> <span class="n">prov</span><span class="o">=</span><span class="n">prov</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">from_commit_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">from_commit_id</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;SubscribeCommit&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.create_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.create_branch">[docs]</a>    <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">provenance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trigger</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new branch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The name of the repo.</span>
+<span class="sd">        branch_name : str</span>
+<span class="sd">            The new branch name.</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf], optional</span>
+<span class="sd">            Represents the head commit of the new branch.</span>
+<span class="sd">        provenance : List[Branch protobuf], optional</span>
+<span class="sd">            An optional iterable of `Branch` objects representing the branch</span>
+<span class="sd">            provenance.</span>
+<span class="sd">        trigger : Trigger protobuf, optional</span>
+<span class="sd">            An optional `Trigger` object controlling when the head of</span>
+<span class="sd">            `branch_name` is moved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;CreateBranch&quot;</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+            <span class="p">),</span>
+            <span class="n">head</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span> <span class="k">if</span> <span class="n">commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">provenance</span><span class="o">=</span><span class="n">provenance</span><span class="p">,</span>
+            <span class="n">trigger</span><span class="o">=</span><span class="n">trigger</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.inspect_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_branch">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inspects a branch. Returns a ``BranchInfo`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The repo name.</span>
+<span class="sd">        branch_name : str</span>
+<span class="sd">            The branch name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;InspectBranch&quot;</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.list_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_branch">[docs]</a>    <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lists the active branch objects on a repo. Returns a list of</span>
+<span class="sd">        ``BranchInfo`` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The repo name.</span>
+<span class="sd">        reverse : bool, optional</span>
+<span class="sd">            If true, returns branches oldest to newest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;ListBranch&quot;</span><span class="p">,</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">branch_info</span></div>
+
+<div class="viewcode-block" id="PFSMixin.delete_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_branch">[docs]</a>    <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a branch, but leaves the commits themselves intact. In other</span>
+<span class="sd">        words, those commits can still be accessed via commit IDs and other</span>
+<span class="sd">        branches they happen to be on.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_name : str</span>
+<span class="sd">            The repo name.</span>
+<span class="sd">        branch_name : str</span>
+<span class="sd">            The name of the branch to delete.</span>
+<span class="sd">        force : bool, optional</span>
+<span class="sd">            Whether to force the branch deletion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;DeleteBranch&quot;</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+            <span class="p">),</span>
+            <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.put_file_client"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_client">[docs]</a>    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">put_file_client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.PutFileClient`. When the</span>
+<span class="sd">        context manager exits, any operations enqueued from the</span>
+<span class="sd">        :class:`.PutFileClient` are executed in a single, atomic ``PutFile``</span>
+<span class="sd">        call.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pfc</span> <span class="o">=</span> <span class="n">PutFileClient</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">pfc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;PutFile&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">pfc</span><span class="o">.</span><span class="n">_reqs</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="PFSMixin.put_file_bytes"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_bytes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uploads a PFS file from a file-like object, bytestring, or iterator</span>
+<span class="sd">        of bytestrings.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path in the repo the file(s) will be written to.</span>
+<span class="sd">        value : Union[bytes, BinaryIO]</span>
+<span class="sd">            The file contents as bytes, represented as a file-like object,</span>
+<span class="sd">            bytestring, or iterator of bytestrings.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;put_file_bytes&#39; with an iterable &#39;value&#39; is deprecated, use file-like objects or bytestrings instead&quot;</span><span class="p">,</span>
+                <span class="ne">DeprecationWarning</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">reqs</span> <span class="o">=</span> <span class="n">put_file_from_iterable_reqs</span><span class="p">(</span>
+                <span class="n">value</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                <span class="n">overwrite_index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">,</span>
+                <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;PutFile&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">reqs</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">put_file_client</span><span class="p">()</span> <span class="k">as</span> <span class="n">pfc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">pfc</span><span class="o">.</span><span class="n">put_file_from_fileobj</span><span class="p">(</span>
+                    <span class="n">commit</span><span class="p">,</span>
+                    <span class="n">path</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                    <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                    <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                    <span class="n">overwrite_index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">,</span>
+                    <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pfc</span><span class="o">.</span><span class="n">put_file_from_bytes</span><span class="p">(</span>
+                    <span class="n">commit</span><span class="p">,</span>
+                    <span class="n">path</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                    <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                    <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                    <span class="n">overwrite_index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">,</span>
+                    <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.put_file_url"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_url</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">recursive</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Puts a file using the content found at a URL. The URL is sent to the</span>
+<span class="sd">        server which performs the request.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path in the repo the file will be written to.</span>
+<span class="sd">        url : str</span>
+<span class="sd">            The url of the file to put.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        recursive : bool, optional</span>
+<span class="sd">            Allow for recursive scraping of some types URLs, for example on</span>
+<span class="sd">            s3:// URLs.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">put_file_client</span><span class="p">()</span> <span class="k">as</span> <span class="n">pfc</span><span class="p">:</span>
+            <span class="n">pfc</span><span class="o">.</span><span class="n">put_file_from_url</span><span class="p">(</span>
+                <span class="n">commit</span><span class="p">,</span>
+                <span class="n">path</span><span class="p">,</span>
+                <span class="n">url</span><span class="p">,</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span>
+                <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                <span class="n">overwrite_index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">,</span>
+                <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.copy_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.copy_file">[docs]</a>    <span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">source_commit</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="n">dest_commit</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Efficiently copies files already in PFS. Note that the destination</span>
+<span class="sd">        repo cannot be an output repo, or the copy operation will (as of 1.9.0)</span>
+<span class="sd">        silently fail.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source_commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit with the source file.</span>
+<span class="sd">        source_path : str</span>
+<span class="sd">            The path of the source file.</span>
+<span class="sd">        dest_commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit for the destination file.</span>
+<span class="sd">        dest_path : str</span>
+<span class="sd">            The path of the destination file.</span>
+<span class="sd">        overwrite : bool, optional</span>
+<span class="sd">            Whether to overwrite the destination file if it already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;CopyFile&quot;</span><span class="p">,</span>
+            <span class="n">src</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">source_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">source_path</span><span class="p">),</span>
+            <span class="n">dst</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">dest_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">dest_path</span><span class="p">),</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.get_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.get_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">offset_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a :class:`.PFSFile` object, containing the contents of a</span>
+<span class="sd">        file stored in PFS.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path of the file.</span>
+<span class="sd">        offset_bytes : int, optional</span>
+<span class="sd">            Specifies the number of bytes that should be skipped in the</span>
+<span class="sd">            beginning of the file.</span>
+<span class="sd">        size_bytes : int, optional</span>
+<span class="sd">            Limits the total amount of data returned, note you will get fewer</span>
+<span class="sd">            bytes than `size_bytes` if you pass a value larger than the size of</span>
+<span class="sd">            the file. If 0, then all of the data will be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;GetFile&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+            <span class="n">offset_bytes</span><span class="o">=</span><span class="n">offset_bytes</span><span class="p">,</span>
+            <span class="n">size_bytes</span><span class="o">=</span><span class="n">size_bytes</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.inspect_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_file">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inspects a file. Returns a ``FileInfo`` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;InspectFile&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.list_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_file">[docs]</a>    <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_contents</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;.. # noqa: W505</span>
+
+<span class="sd">        Lists the files in a directory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the directory.</span>
+<span class="sd">        history : int, optional</span>
+<span class="sd">            Indicates how many historical versions you want returned.</span>
+<span class="sd">            Semantics are:</span>
+
+<span class="sd">            - 0: Return the files as they are in `commit`</span>
+<span class="sd">            - 1: Return above and the files as they are in the last commit they were modified in.</span>
+<span class="sd">            - 2: etc.</span>
+<span class="sd">            - -1: Return all historical versions.</span>
+
+<span class="sd">        include_contents : bool, optional</span>
+<span class="sd">            If `True`, file contents are included.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;ListFileStream&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+            <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+            <span class="n">full</span><span class="o">=</span><span class="n">include_contents</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.walk_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.walk_file">[docs]</a>    <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Walks over all descendant files in a directory. Returns a generator</span>
+<span class="sd">        of ``FileInfo`` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;WalkFile&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.glob_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.glob_file">[docs]</a>    <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lists files that match a glob pattern. Yields ``FileInfo`` objects.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        pattern : str</span>
+<span class="sd">            The glob pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;GlobFileStream&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a file from a Commit. DeleteFile leaves a tombstone in the</span>
+<span class="sd">        Commit, assuming the file isn&#39;t written to later attempting to get the</span>
+<span class="sd">        file from the finished commit will result in not found error. The file</span>
+<span class="sd">        will of course remain intact in the Commit&#39;s parent.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;DeleteFile&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.fsck"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.fsck">[docs]</a>    <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs a file system consistency check for PFS.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;Fsck&quot;</span><span class="p">,</span> <span class="n">fix</span><span class="o">=</span><span class="n">fix</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.diff_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.diff_file">[docs]</a>    <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">new_commit</span><span class="p">,</span> <span class="n">new_path</span><span class="p">,</span> <span class="n">old_commit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">old_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shallow</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Diffs two files. If `old_commit` or `old_path` are not specified,</span>
+<span class="sd">        the same path in the parent of the file specified by `new_commit` and</span>
+<span class="sd">        `new_path` will be used.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit for the new file.</span>
+<span class="sd">        new_path : str</span>
+<span class="sd">            The path of the new file.</span>
+<span class="sd">        old_commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit for the old file.</span>
+<span class="sd">        old_path : str</span>
+<span class="sd">            The path of the old file.</span>
+<span class="sd">        shallow : bool, optional</span>
+<span class="sd">            Whether to do a shallow diff.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">old_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">old_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">old_file</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">old_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">old_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">old_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
+            <span class="s2">&quot;DiffFile&quot;</span><span class="p">,</span>
+            <span class="n">new_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">new_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">new_path</span><span class="p">),</span>
+            <span class="n">old_file</span><span class="o">=</span><span class="n">old_file</span><span class="p">,</span>
+            <span class="n">shallow</span><span class="o">=</span><span class="n">shallow</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.create_tmp_file_set"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.create_tmp_file_set">[docs]</a>    <span class="k">def</span> <span class="nf">create_tmp_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a temporary fileset (used internally). Currently,</span>
+<span class="sd">        temp-fileset-related APIs are only used for Pachyderm internals (job</span>
+<span class="sd">        merging), so we&#39;re avoiding support for these functions until we find a</span>
+<span class="sd">        use for them (feel free to file an issue in</span>
+<span class="sd">        github.com/pachyderm/pachyderm)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;temporary filesets are internal-use-only&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PFSMixin.renew_tmp_file_set"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.renew_tmp_file_set">[docs]</a>    <span class="k">def</span> <span class="nf">renew_tmp_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileset_id</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Renews a temporary fileset (used internally). Currently,</span>
+<span class="sd">        temp-fileset-related APIs are only used for Pachyderm internals (job</span>
+<span class="sd">        merging), so we&#39;re avoiding support for these functions until we find a</span>
+<span class="sd">        use for them (feel free to file an issue in</span>
+<span class="sd">        github.com/pachyderm/pachyderm)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fileset_id : str</span>
+<span class="sd">            The fileset ID.</span>
+<span class="sd">        ttl_seconds : int</span>
+<span class="sd">            The number of seconds to keep alive the temporary fileset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;temporary filesets are internal-use-only&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PutFileClient"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient">[docs]</a><span class="k">class</span> <span class="nc">PutFileClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :class:`.PutFileClient` puts or deletes PFS files atomically.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">op</span><span class="o">.</span><span class="n">reqs</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PutFileClient.put_file_from_filepath"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient.put_file_from_filepath">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_filepath</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">pfs_path</span><span class="p">,</span>
+        <span class="n">local_path</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uploads a PFS file from a local path at a specified path. This will</span>
+<span class="sd">        lazily open files, which will prevent too many files from being</span>
+<span class="sd">        opened, or too much memory being consumed, when atomically putting</span>
+<span class="sd">        many files.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        pfs_path : str</span>
+<span class="sd">            The path in the repo to upload the file to will be written to.</span>
+<span class="sd">        local_path : str</span>
+<span class="sd">            The local file path.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">AtomicPutFilepathOp</span><span class="p">(</span>
+                <span class="n">commit</span><span class="p">,</span>
+                <span class="n">pfs_path</span><span class="p">,</span>
+                <span class="n">local_path</span><span class="p">,</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                <span class="n">overwrite_index</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">OverwriteIndex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">overwrite_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PutFileClient.put_file_from_fileobj"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient.put_file_from_fileobj">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_fileobj</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uploads a PFS file from a file-like object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path in the repo to upload the file to will be written to.</span>
+<span class="sd">        value : BinaryIO</span>
+<span class="sd">            The file-like object.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">AtomicPutFileobjOp</span><span class="p">(</span>
+                <span class="n">commit</span><span class="p">,</span>
+                <span class="n">path</span><span class="p">,</span>
+                <span class="n">value</span><span class="p">,</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                <span class="n">overwrite_index</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">OverwriteIndex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">overwrite_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PutFileClient.put_file_from_bytes"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient.put_file_from_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_bytes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uploads a PFS file from a bytestring.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path in the repo to upload the file to will be written to.</span>
+<span class="sd">        value : bytes</span>
+<span class="sd">            The file contents as a bytestring.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_file_from_fileobj</span><span class="p">(</span>
+            <span class="n">commit</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+            <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+            <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+            <span class="n">overwrite_index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">,</span>
+            <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PutFileClient.put_file_from_url"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient.put_file_from_url">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_from_url</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">recursive</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_datums</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_file_bytes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">header_records</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Puts a file using the content found at a URL. The URL is sent to the</span>
+<span class="sd">        server which performs the request.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path in the repo the file will be written to.</span>
+<span class="sd">        url : str</span>
+<span class="sd">            The url of the file to put.</span>
+<span class="sd">        delimiter : int, optional</span>
+<span class="sd">            Causes data to be broken up into separate files by the delimiter</span>
+<span class="sd">            e.g. if you used ``Delimiter.CSV.value``, a separate PFS file will</span>
+<span class="sd">            be created for each row in the input CSV file, rather than one</span>
+<span class="sd">            large CSV file.</span>
+<span class="sd">        recursive : bool, optional</span>
+<span class="sd">            Allow for recursive scraping of some types URLs, for example on</span>
+<span class="sd">            s3:// URLs.</span>
+<span class="sd">        target_file_datums : int, optional</span>
+<span class="sd">            Specifies the target number of datums in each written file. It may</span>
+<span class="sd">            be lower if data does not split evenly, but will never be higher,</span>
+<span class="sd">            unless the value is 0.</span>
+<span class="sd">        target_file_bytes : int, optional</span>
+<span class="sd">            Specifies the target number of bytes in each written file, file</span>
+<span class="sd">            may have more or fewer bytes than the target.</span>
+<span class="sd">        overwrite_index : int, optional</span>
+<span class="sd">            This is the object index where the write starts from.  All existing</span>
+<span class="sd">            objects starting from the index are deleted.</span>
+<span class="sd">        header_records : int, optional</span>
+<span class="sd">            An optional int for splitting data when `delimiter` is not ``NONE``</span>
+<span class="sd">            (or ``SQL``). It specifies the number of records that are converted</span>
+<span class="sd">            to a header and applied to all file shards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">AtomicOp</span><span class="p">(</span>
+                <span class="n">commit</span><span class="p">,</span>
+                <span class="n">path</span><span class="p">,</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span>
+                <span class="n">target_file_datums</span><span class="o">=</span><span class="n">target_file_datums</span><span class="p">,</span>
+                <span class="n">target_file_bytes</span><span class="o">=</span><span class="n">target_file_bytes</span><span class="p">,</span>
+                <span class="n">overwrite_index</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">OverwriteIndex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">overwrite_index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">overwrite_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">header_records</span><span class="o">=</span><span class="n">header_records</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PutFileClient.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PutFileClient.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">            Represents the commit.</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The path to the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="AtomicOp"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicOp">[docs]</a><span class="k">class</span> <span class="nc">AtomicOp</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an operation in a ``PutFile`` call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+<div class="viewcode-block" id="AtomicOp.reqs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicOp.reqs">[docs]</a>    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Yields one or more protobuf ``PutFileRequests``, which are then enqueued</span>
+<span class="sd">        into the request&#39;s channel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">PutFileRequest</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AtomicPutFilepathOp"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicPutFilepathOp">[docs]</a><span class="k">class</span> <span class="nc">AtomicPutFilepathOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ``PutFile`` operation to put a file locally stored at a given path. This</span>
+<span class="sd">    file is opened on-demand, which helps with minimizing the number of open</span>
+<span class="sd">    files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">pfs_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">pfs_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="o">=</span> <span class="n">local_path</span>
+
+<div class="viewcode-block" id="AtomicPutFilepathOp.reqs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicPutFilepathOp.reqs">[docs]</a>    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">put_file_from_fileobj_reqs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AtomicPutFileobjOp"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicPutFileobjOp">[docs]</a><span class="k">class</span> <span class="nc">AtomicPutFileobjOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A ``PutFile`` operation to put a file from a file-like object.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="AtomicPutFileobjOp.reqs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.AtomicPutFileobjOp.reqs">[docs]</a>    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="n">put_file_from_fileobj_reqs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="put_file_from_fileobj_reqs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.put_file_from_fileobj_reqs">[docs]</a><span class="k">def</span> <span class="nf">put_file_from_fileobj_reqs</span><span class="p">(</span><span class="n">fileish</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">chunked_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">fileish</span><span class="o">.</span><span class="n">read</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">BUFFER_SIZE</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">put_file_from_iterable_reqs</span><span class="p">(</span><span class="n">chunked_iter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="put_file_from_iterable_reqs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.put_file_from_iterable_reqs">[docs]</a><span class="k">def</span> <span class="nf">put_file_from_iterable_reqs</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">PutFileRequest</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">chunk</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">chunk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">PutFileRequest</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

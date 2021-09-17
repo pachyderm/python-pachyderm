@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.util &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.util</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">.proto.pps.pps_pb2</span> <span class="kn">import</span> <span class="n">Transform</span><span class="p">,</span> <span class="n">CreatePipelineRequest</span><span class="p">,</span> <span class="n">BuildSpec</span>
+
+<span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">json_format</span>
+
+<span class="c1"># Default script for running python code with wheels in a pipeline that was</span>
+<span class="c1"># deployed with `create_python_pipeline`.</span>
+<span class="n">RUNNER_SCRIPT_WITH_WHEELS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#!/bin/sh</span>
+<span class="s2">set -</span><span class="si">{set_args}</span><span class="s2"></span>
+
+<span class="s2">cd /pfs/</span><span class="si">{source_repo_name}</span><span class="s2"></span>
+<span class="s2">pip install /pfs/</span><span class="si">{build_pipeline_name}</span><span class="s2">/*.whl</span>
+<span class="s2">python main.py</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Default script for running python code without wheels in a pipeline that was</span>
+<span class="c1"># deployed with `create_python_pipeline`.</span>
+<span class="n">RUNNER_SCRIPT_WITHOUT_WHEELS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#!/bin/sh</span>
+<span class="s2">set -</span><span class="si">{set_args}</span><span class="s2"></span>
+
+<span class="s2">cd /pfs/</span><span class="si">{source_repo_name}</span><span class="s2"></span>
+<span class="s2">python main.py</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Default script for building python wheels for a pipeline that was deployed</span>
+<span class="c1"># with `create_python_pipeline`.</span>
+<span class="n">BUILDER_SCRIPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#!/bin/sh</span>
+<span class="s2">set -</span><span class="si">{set_args}</span><span class="s2"></span>
+<span class="s2">python --version</span>
+<span class="s2">pip --version</span>
+
+<span class="s2">cd /pfs/</span><span class="si">{source_repo_name}</span><span class="s2"></span>
+<span class="s2">test -f requirements.txt &amp;&amp; pip wheel -r requirements.txt -w /pfs/out</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="put_files"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.put_files">[docs]</a><span class="k">def</span> <span class="nf">put_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for inserting files from the local `source_path`</span>
+<span class="sd">    to Pachyderm. Roughly equivalent to ``pachctl put file [-r]``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    client : Client</span>
+<span class="sd">        The :class:`.Client` instance to use.</span>
+<span class="sd">    source_path : str</span>
+<span class="sd">        The file/directory to recursively insert content from.</span>
+<span class="sd">    commit : Union[tuple, str, Commit protobuf]</span>
+<span class="sd">        The ``Commit`` object to use for inserting files.</span>
+<span class="sd">    dest_path : str</span>
+<span class="sd">        The destination path in PFS.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Keyword arguments to forward. See</span>
+<span class="sd">        ``PutFileClient.put_file_from_fileobj()`` for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">put_file_client</span><span class="p">()</span> <span class="k">as</span> <span class="n">pfc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
+            <span class="n">pfc</span><span class="o">.</span><span class="n">put_file_from_filepath</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                    <span class="n">source_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                    <span class="n">dest_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">dest_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">source_filepath</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">source_path</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">pfc</span><span class="o">.</span><span class="n">put_file_from_filepath</span><span class="p">(</span>
+                        <span class="n">commit</span><span class="p">,</span> <span class="n">dest_filepath</span><span class="p">,</span> <span class="n">source_filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Please provide an existing directory or file&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_python_pipeline"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.create_python_pipeline">[docs]</a><span class="k">def</span> <span class="nf">create_python_pipeline</span><span class="p">(</span>
+    <span class="n">client</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pipeline_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_pull_secrets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">debug</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">secrets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">pipeline_kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for creating (or updating) a pipeline specially built</span>
+<span class="sd">    for executing python code that is stored locally at `path`.</span>
+
+<span class="sd">    A normal pipeline creation process requires you to first build and push a</span>
+<span class="sd">    container image with the source and dependencies baked in. As an alternative</span>
+<span class="sd">    process, this function circumvents container image creation by using build</span>
+<span class="sd">    step-enabled pipelines. See the pachyderm core docs for more info.</span>
+
+<span class="sd">    If `path` references a directory, it should have:</span>
+
+<span class="sd">    - A ``main.py``, as the pipeline entry-point.</span>
+<span class="sd">    - An optional ``requirements.txt`` that specifies pip requirements.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    client : Client</span>
+<span class="sd">        The `Client` instance to use.</span>
+<span class="sd">    path : str</span>
+<span class="sd">        The directory containing the python pipeline source, or an individual</span>
+<span class="sd">        python file.</span>
+<span class="sd">    input : Input protobuf, optional</span>
+<span class="sd">        An ``Input`` object specifying the pipeline input.</span>
+<span class="sd">    pipeline_name : str, optional</span>
+<span class="sd">        A string specifying the pipeline name. Defaults to using the last</span>
+<span class="sd">        directory name in `path`.</span>
+<span class="sd">    image_pull_secrets : List[str], optional</span>
+<span class="sd">        A list of strings specifying the pipeline transform&#39;s image pull</span>
+<span class="sd">        secrets, which are used for pulling images from a private registry.</span>
+<span class="sd">        Defaults to `None`, in which case the public docker registry will be</span>
+<span class="sd">        used. See the pipeline spec document for more details.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Specifies whether debug logging should be enabled for the pipeline.</span>
+<span class="sd">        Defaults to `False`.</span>
+<span class="sd">    env : Dict[str, str], optional</span>
+<span class="sd">        A mapping of string keys to string values specifying custom environment</span>
+<span class="sd">        variables.</span>
+<span class="sd">    secrets : List[Secret protobufs], optional</span>
+<span class="sd">        A list of `Secret` objects for secret environment variables.</span>
+<span class="sd">    image : str, optional</span>
+<span class="sd">        A string specifying the docker image to use for the pipeline. Defaults</span>
+<span class="sd">        to using pachyderm&#39;s official python language builder.</span>
+<span class="sd">    update : bool, optional</span>
+<span class="sd">        Whether to act as an upsert.</span>
+<span class="sd">    **pipeline_kwargs : dict</span>
+<span class="sd">        Keyword arguments to forward to `create_pipeline`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">create_pipeline</span><span class="p">(</span>
+        <span class="n">pipeline_name</span> <span class="ow">or</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">Transform</span><span class="p">(</span>
+            <span class="n">image_pull_secrets</span><span class="o">=</span><span class="n">image_pull_secrets</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">secrets</span><span class="o">=</span><span class="n">secrets</span><span class="p">,</span>
+            <span class="n">build</span><span class="o">=</span><span class="n">BuildSpec</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">image</span>
+            <span class="k">else</span> <span class="n">BuildSpec</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">,</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">pipeline_kwargs</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="parse_json_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_json_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_json_pipeline_spec</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parses a string of JSON into a `CreatePipelineRequest` protobuf.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="parse_dict_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_dict_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_dict_pipeline_spec</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parses a dict of serialized JSON into a `CreatePipelineRequest`</span>
+<span class="sd">    protobuf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">ParseDict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

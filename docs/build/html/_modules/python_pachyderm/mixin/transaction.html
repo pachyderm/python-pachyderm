@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>python_pachyderm.mixin.transaction &mdash; python-pachyderm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> python-pachyderm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">python-pachyderm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_pachyderm.mixin.transaction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_pachyderm.mixin.transaction</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.transaction</span> <span class="kn">import</span> <span class="n">transaction_pb2</span> <span class="k">as</span> <span class="n">transaction_proto</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
+
+
+<div class="viewcode-block" id="transaction_from"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.transaction_from">[docs]</a><span class="k">def</span> <span class="nf">transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transaction</span><span class="p">,</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">transaction</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">transaction</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransactionMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin">[docs]</a><span class="k">class</span> <span class="nc">TransactionMixin</span><span class="p">:</span>
+<div class="viewcode-block" id="TransactionMixin.batch_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.batch_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">batch_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requests</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Executes a batch transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        requests : List[TransactionRequest protobuf]</span>
+<span class="sd">            A list of `TransactionRequest` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;BatchTransaction&quot;</span><span class="p">,</span> <span class="n">requests</span><span class="o">=</span><span class="n">requests</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.start_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.start_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">start_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts a transaction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;StartTransaction&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.inspect_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.inspect_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inspects a given transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, Transaction protobuf]</span>
+<span class="sd">            Transaction ID or ``Transaction`` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;InspectTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.delete_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.delete_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">delete_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a given transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, Transaction protobuf]</span>
+<span class="sd">            Transaction ID or ``Transaction`` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;DeleteTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.delete_all_transactions"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.delete_all_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes all transactions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.list_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.list_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">list_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lists transactions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;ListTransaction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transaction_info</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.finish_transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.finish_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">finish_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finishes a given transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, Transaction protobuf]</span>
+<span class="sd">            Transaction ID or ``Transaction`` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;FinishTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.transaction"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.transaction">[docs]</a>    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A context manager for running operations within a transaction. When</span>
+<span class="sd">        the context manager completes, the transaction will be deleted if an</span>
+<span class="sd">        error occurred, or otherwise finished.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">old_transaction_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_transaction</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">transaction</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finish_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span> <span class="o">=</span> <span class="n">old_transaction_id</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joe Doliner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
