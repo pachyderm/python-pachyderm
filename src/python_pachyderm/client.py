@@ -54,10 +54,10 @@ class Client(
     VersionMixin,
     object,
 ):
-    """The ``Client`` class that users will primarily interact with. Initialize
-    an instance with ``python_pachyderm.Client()``.
+    """The :class:`.Client` class that users will primarily interact with.
+    Initialize an instance with ``python_pachyderm.Client()``.
 
-    To see documentation on the methods ``Client`` can call, refer to the
+    To see documentation on the methods :class:`.Client` can call, refer to the
     `mixins` module.
     """
 
@@ -101,6 +101,13 @@ class Client(
             used. Otherwise, we use the certs provided by certifi.
         use_default_host : bool, optional
             Whether to replicate `pachctl` behavior of searching for config.
+
+        Examples
+        --------
+        >>> client = python_pachyderm.Client()
+        ...
+        >>> # Manually set host and port
+        >>> client = python_pachyderm.Client("pachd.example.com", 12345)
         """
 
         # replicate pachctl behavior to searching for config
@@ -163,6 +170,11 @@ class Client(
         -------
         Client
             A python_pachyderm client instance.
+
+        Examples
+        --------
+        >>> from python_pachyderm import Client
+        >>> client = Client.new_in_cluster()
         """
 
         if (
@@ -215,6 +227,15 @@ class Client(
         -------
         Client
             A python_pachyderm client instance.
+
+        Examples
+        --------
+        >>> from python_pachyderm import Client
+        >>> client = Client.new_from_pachd_address("grpc://pachyderm.com:80/")
+        ...
+        >>> client = Client.new_from_pachd_address("https://pachyderm.com:80", root_certs=b"foo")
+
+        .. # noqa: W505
         """
 
         u = Client._parse_address(pachd_address)
@@ -242,6 +263,24 @@ class Client(
         -------
         Client
             A python_pachyderm client instance.
+
+        Examples
+        --------
+        >>> from python_pachyderm import Client
+        >>> config = '''{
+        ...   "v2": {
+        ...     "active_context": "local",
+        ...     "contexts": {
+        ...       "local": {
+        ...         "pachd_address": "grpcs://172.17.0.6:30650",
+        ...         "server_cas": "foo",
+        ...         "session_token": "bar",
+        ...         "active_transaction": "baz"
+        ...       }
+        ...     }
+        ...   }
+        ... }'''
+        >>> client = Client.new_from_config(io.StringIO(config))
         """
 
         if config_file is None:

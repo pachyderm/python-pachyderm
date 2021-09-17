@@ -45,6 +45,15 @@ class AuthMixin:
         ----------
         configuration : auth_proto.OIDCConfig
             A protobuf object with auth configuration information.
+
+        Examples
+        --------
+        >>> client.set_auth_configuration(auth_proto.OIDCConfig(
+        ...     issuer="http://localhost:1658",
+        ...     client_id="client",
+        ...     client_secret="secret",
+        ...     redirect_uri="http://test.example.com",
+        ... ))
         """
         self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
 
@@ -62,6 +71,34 @@ class AuthMixin:
         -------
         Dict[str, auth_proto.Roles]
             A dictionary mapping the principals to the roles they have.
+
+        Examples
+        --------
+        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.CLUSTER))
+        {
+            'robot:someuser': roles {
+                key: "clusterAdmin"
+                value: true
+            },
+            'pach:root': roles {
+                key: "clusterAdmin"
+                value: true
+            }
+        }
+        ...
+        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.REPO, name="foobar"))
+        {
+            'user:person_a': roles {
+                key: "repoWriter"
+                value: true
+            },
+            'pach:root': roles {
+                key: "repoOwner"
+                value: true
+            }
+        }
+
+        .. # noqa: W505
         """
         return self._req(
             Service.AUTH, "GetRoleBinding", resource=resource
@@ -81,6 +118,22 @@ class AuthMixin:
         roles : List[str], optional
             The absolute list of roles for the principtal to have. If roles is
             unset, the principal will have no roles.
+
+        Examples
+        --------
+        You can find some of the built-in roles here:
+        https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27
+
+        >>> client.modify_role_binding(
+        ...     auth_proto.Resource(type=auth_proto.CLUSTER),
+        ...     "user:someuser",
+        ...     roles=["clusterAdmin"]
+        ... )
+        >>> client.modify_role_binding(
+        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        ...     "user:someuser",
+        ...     roles=["repoWriter"]
+        ... )
         """
         self._req(
             Service.AUTH,
@@ -153,6 +206,16 @@ class AuthMixin:
             the inputted permissions on the resource, which permissions the
             user had, which permissions the user lacked, and the name of the
             principal.
+
+        Examples
+        --------
+        >>> client.authorize(
+        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        ...     [auth_proto.Permission.REPO_READ]
+        ... )
+        authorized: true
+        satisfied: REPO_READ
+        principal: "pach:root"
         """
         return self._req(
             Service.AUTH, "Authorize", resource=resource, permissions=permissions
@@ -184,6 +247,14 @@ class AuthMixin:
         List[auth_proto.Role]
             A list of Role protobuf objects that all have the specified
             permission.
+
+        Examples
+        --------
+        All available permissions can be found in auth proto Permissions enum
+
+        >>> roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+
+        .. # noqa: W505
         """
         return self._req(
             Service.AUTH, "GetRolesForPermission", permission=permission
@@ -226,6 +297,12 @@ class AuthMixin:
             The username to be added.
         groups : List[str]
             The groups to add the username to.
+
+        Examples
+        --------
+        >>> client.set_groups_for_user("user:someuser", ["foogroup", "bargroup"])
+
+        .. # noqa: W505
         """
         self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
 
@@ -242,6 +319,14 @@ class AuthMixin:
             A list of strings specifying members to add.
         remove : List[str], optional
             A list of strings specifying members to remove.
+
+        Examples
+        --------
+        >>> client.modify_members(
+        ...     "foogroup",
+        ...     add=["user:otheruser"],
+        ...     remove=["user:someuser"]
+        ... )
         """
         self._req(
             Service.AUTH,
