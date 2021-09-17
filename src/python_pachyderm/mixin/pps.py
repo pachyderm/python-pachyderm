@@ -90,10 +90,12 @@ class PPSMixin:
         history : int, optional
             Indicates to return jobs from historical versions of
             `pipeline_name`. Semantics are:
-            * 0: Return jobs from the current version of `pipeline_name`
-            * 1: Return the above and jobs from the next most recent version
-            * 2: etc.
-            * -1: Return jobs from all historical versions of `pipeline_name`
+
+            - 0: Return jobs from the current version of `pipeline_name`
+            - 1: Return the above and jobs from the next most recent version
+            - 2: etc.
+            - -1: Return jobs from all historical versions of `pipeline_name`
+
         details : bool, optional
             If true, return pipeline details for `pipeline_name`. Leaving this
             ``None`` (or ``False``) can make the call significantly faster in
@@ -386,7 +388,7 @@ class PPSMixin:
         -----
         If creating a Spout pipeline, when committing data to the repo, use
         commit methods (``client.commit()``, ``client.start_commit()``, etc.)
-        or ``ModifyFileClient`` methods (``mfc.put_file_from_bytes``,
+        or :class:`.ModifyFileClient` methods (``mfc.put_file_from_bytes``,
         ``mfc.delete_file()``, etc.)
 
         For other pipelines, when committing data to the repo, write out to
@@ -455,7 +457,9 @@ class PPSMixin:
     def inspect_pipeline(
         self, pipeline_name: str, history: int = 0, details: bool = False
     ) -> Iterator[pps_proto.PipelineInfo]:
-        """Inspects a pipeline.
+        """.. # noqa: W505
+
+        Inspects a pipeline.
 
         Parameters
         ----------
@@ -464,11 +468,12 @@ class PPSMixin:
         history : int, optional
             Indicates to return historical versions of `pipeline_name`.
             Semantics are:
-            * 0: Return current version of `pipeline_name`
-            * 1: Return the above and `pipeline_name` from the next most recent
-            version.
-            * 2: etc.
-            * -1: Return all historical versions of `pipeline_name`.
+
+            - 0: Return current version of `pipeline_name`
+            - 1: Return the above and `pipeline_name` from the next most recent version.
+            - 2: etc.
+            - -1: Return all historical versions of `pipeline_name`.
+
         details : bool, optional
             If true, return pipeline details.
 
@@ -509,18 +514,21 @@ class PPSMixin:
     def list_pipeline(
         self, history: int = 0, details: bool = False, jqFilter: str = None
     ) -> Iterator[pps_proto.PipelineInfo]:
-        """Lists pipelines.
+        """.. # noqa: W505
+
+        Lists pipelines.
 
         Parameters
         ----------
         history : int, optional
             Indicates to return historical versions of `pipeline_name`.
             Semantics are:
-            * 0: Return current version of `pipeline_name`
-            * 1: Return the above and `pipeline_name` from the next most recent
-            version.
-            * 2: etc.
-            * -1: Return all historical versions of `pipeline_name`.
+
+            - 0: Return current version of `pipeline_name`
+            - 1: Return the above and `pipeline_name` from the next most recent version.
+            - 2: etc.
+            - -1: Return all historical versions of `pipeline_name`.
+
         details : bool, optional
             If true, return pipeline details.
         jqFilter : str, optional
@@ -631,7 +639,7 @@ class PPSMixin:
             The name of the secret.
         data : Dict[str, Union[str, bytes]]
             The data to store in the secret. Each key must consist of
-            alphanumeric characters, ``-``, ``_`` or ``.``.
+            alphanumeric characters ``-``, ``_`` or ``.``.
         labels : Dict[str, str], optional
             Kubernetes labels to attach to the secret.
         annotations : Dict[str, str], optional

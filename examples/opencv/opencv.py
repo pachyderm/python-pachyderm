@@ -35,6 +35,9 @@ def main():
     # Create a repo called images
     client.create_repo("images")
 
+    # Create the edges pipeline (and the edges repo automatically). This
+    # pipeline runs when data is committed to the images repo, as indicated
+    # by the input field.
     client.create_pipeline(
         "edges",
         transform=pps_proto.Transform(
@@ -44,7 +47,9 @@ def main():
         input=pps_proto.Input(pfs=pps_proto.PFSInput(repo="images", glob="/*")),
     )
 
-    # Create the montage pipeline
+    # Create the montage pipeline (and the montage repo automatically). This
+    # pipeline runs when data is committed to either the images repo or edges
+    # repo, as indicated by the input field.
     client.create_pipeline(
         "montage",
         transform=pps_proto.Transform(

@@ -44,7 +44,6 @@ def put_files(
 
     .. # noqa: W505
     """
-
     with client.modify_file_client(commit) as mfc:
         if os.path.isfile(source_path):
             mfc.put_file_from_filepath(dest_path, source_path, **kwargs)
