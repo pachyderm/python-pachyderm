@@ -4,6 +4,7 @@ from python_pachyderm.proto.version.versionpb import version_pb2_grpc as version
 
 class VersionMixin:
     def get_remote_version(self):
+        """Gets version of Pachyderm server."""
         return self._req(
             Service.VERSION,
             "GetVersion",
