@@ -445,7 +445,7 @@ class PPSMixin:
     ) -> None:
         """Creates a pipeline from a ``CreatePipelineRequest`` object. Usually
         used in conjunction with ``util.parse_json_pipeline_spec()`` or
-        ``util.parse_dict_pipeline_spec``.
+        ``util.parse_dict_pipeline_spec()``.
 
         Parameters
         ----------
