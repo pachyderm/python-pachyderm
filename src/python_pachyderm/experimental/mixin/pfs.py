@@ -4,6 +4,9 @@ import itertools
 import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
+import subprocess
+from pathlib import Path
+import time
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.proto.v2 import pfs
@@ -117,6 +120,26 @@ class PFSFile:
     def close(self) -> None:
         """Closes the :class:`.PFSFile`."""
         self._file.close()
+
+
+class Mount:
+    def __init__(self, mount_dir: str, repos: List[str] = [], debug: bool = False):
+        Path(mount_dir).mkdir(parents=True, exist_ok=True)
+
+        cmd = ["sudo", "pachctl", "mount", mount_dir]
+        for r in repos:
+            cmd.append("-r")
+            cmd.append(r)
+        if debug:
+            cmd.append("-d")
+
+        self.path = mount_dir
+        self.ps = subprocess.Popen(cmd)
+        time.sleep(0.1)
+
+    def unmount(self):
+        self.ps.terminate()
+        subprocess.Popen(["sudo", "pachctl", "unmount", self.path])
 
 
 class PFSMixin:
@@ -1253,6 +1276,14 @@ class PFSMixin:
             raise e
 
         return True
+
+    @contextmanager
+    def mount(self, mount_dir: str, repos: List[str] = [], debug: bool = False):
+        m = Mount(mount_dir, repos, debug)
+        try:
+            yield
+        finally:
+            m.unmount()
 
 
 class ModifyFileClient:
