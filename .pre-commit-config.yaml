@@ -9,6 +9,7 @@ repos:
     hooks:
       - id: flake8
         language_version: python3
+        exclude: experimental/proto/*
   - repo: local
     hooks:
     - id: proto_lint
