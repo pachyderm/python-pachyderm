@@ -86,10 +86,11 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="python_pachyderm.html">python_pachyderm</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html#mixins">mixins</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html#mixins">Mixins</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
@@ -104,9 +105,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.version">python_pachyderm.mixin.version</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.client">python_pachyderm.client module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.pfs">python_pachyderm.pfs module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.util">python_pachyderm.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.client">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.pfs">PFS Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.util">Util Helper</a></li>
 </ul>
 </li>
 </ul>
@@ -185,7 +186,7 @@
 <p>Exposes a mixin for each pachyderm service. These mixins should not be used
 directly; instead, you should use <code class="docutils literal notranslate"><span class="pre">python_pachyderm.Client()</span></code>. The mixins
 exist exclusively in order to provide better code organization (because we have
-several mixins, rather than one giant <code class="docutils literal notranslate"><span class="pre">Client</span></code> class.)</p>
+several mixins, rather than one giant <a class="reference internal" href="python_pachyderm.html#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> class.)</p>
 </div>
 <div class="section" id="module-python_pachyderm.mixin.admin">
 <span id="python-pachyderm-mixin-admin"></span><h1>python_pachyderm.mixin.admin<a class="headerlink" href="#module-python_pachyderm.mixin.admin" title="Permalink to this headline">¶</a></h1>
@@ -1400,8 +1401,8 @@ available to the users.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.ModifyFileClient">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">ModifyFileClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#ModifyFileClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">ModifyFileClient</span></code> puts or deletes PFS files atomically. Replaces
-<code class="docutils literal notranslate"><span class="pre">PutFileClient</span></code> from python_pachyderm 6.x.</p>
+<dd><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> puts or deletes PFS files atomically.
+Replaces <code class="xref py py-class docutils literal notranslate"><span class="pre">PutFileClient</span></code> from python_pachyderm 6.x.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -1584,23 +1585,23 @@ example on s3:// URLs</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile.close" title="python_pachyderm.mixin.pfs.PFSFile.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
-<td><p>Closes the <code class="docutils literal notranslate"><span class="pre">PFSFile</span></code>.</p></td>
+<td><p>Closes the <a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile" title="python_pachyderm.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile.read" title="python_pachyderm.mixin.pfs.PFSFile.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>([size])</p></td>
-<td><p>Reads from the <code class="docutils literal notranslate"><span class="pre">PFSFile</span></code> buffer.</p></td>
+<td><p>Reads from the <a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile" title="python_pachyderm.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a> buffer.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the <code class="docutils literal notranslate"><span class="pre">PFSFile</span></code>.</p>
+<dd><p>Closes the <a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile" title="python_pachyderm.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile.read">
 <span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads from the <code class="docutils literal notranslate"><span class="pre">PFSFile</span></code> buffer.</p>
+<dd><p>Reads from the <a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSFile" title="python_pachyderm.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a> buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -1700,7 +1701,7 @@ example on s3:// URLs</p>
 <td><p>Lists all repos in PFS.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client" title="python_pachyderm.mixin.pfs.PFSMixin.modify_file_client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_file_client</span></code></a>(commit)</p></td>
-<td><p>A context manager that gives a <cite>ModifyFileClient</cite>.</p></td>
+<td><p>A context manager that gives a <a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.PFSMixin.path_exists" title="python_pachyderm.mixin.pfs.PFSMixin.path_exists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">path_exists</span></code></a>(commit, path)</p></td>
 <td><p>Checks whether the path exists in the specified commit, agnostic to whether <cite>path</cite> is a file or a directory.</p></td>
@@ -2381,9 +2382,10 @@ If unset, returns all types of repos.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">
 <span class="sig-name descname"><span class="pre">modify_file_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSMixin.modify_file_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client" title="Permalink to this definition">¶</a></dt>
-<dd><p>A context manager that gives a <cite>ModifyFileClient</cite>. When the context
-manager exits, any operations enqueued from the <cite>ModifyFileClient</cite> are
-executed in a single, atomic <cite>ModifyFile</cite> call.</p>
+<dd><p>A context manager that gives a <a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>. When the
+context manager exits, any operations enqueued from the
+<a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> are executed in a single, atomic
+ModifyFile gRPC call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -2708,7 +2710,7 @@ function waited on.</p>
 <td><p>Inspects a job.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline" title="python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_pipeline</span></code></a>(pipeline_name[, history, …])</p></td>
-<td><p>Inspects a pipeline.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pps.PPSMixin.inspect_secret" title="python_pachyderm.mixin.pps.PPSMixin.inspect_secret"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_secret</span></code></a>(secret_name)</p></td>
 <td><p>Inspects a secret.</p></td>
@@ -2720,7 +2722,7 @@ function waited on.</p>
 <td><p>Lists jobs.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pps.PPSMixin.list_pipeline" title="python_pachyderm.mixin.pps.PPSMixin.list_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_pipeline</span></code></a>([history, details, jqFilter])</p></td>
-<td><p>Lists pipelines.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.mixin.pps.PPSMixin.list_secret" title="python_pachyderm.mixin.pps.PPSMixin.list_secret"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_secret</span></code></a>()</p></td>
 <td><p>Lists secrets.</p></td>
@@ -2818,7 +2820,7 @@ it has to process.</p>
 <p class="rubric">Notes</p>
 <p>If creating a Spout pipeline, when committing data to the repo, use
 commit methods (<code class="docutils literal notranslate"><span class="pre">client.commit()</span></code>, <code class="docutils literal notranslate"><span class="pre">client.start_commit()</span></code>, etc.)
-or <code class="docutils literal notranslate"><span class="pre">ModifyFileClient</span></code> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
+or <a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
 <code class="docutils literal notranslate"><span class="pre">mfc.delete_file()</span></code>, etc.)</p>
 <p>For other pipelines, when committing data to the repo, write out to
 <code class="docutils literal notranslate"><span class="pre">/pfs/out/</span></code>.</p>
@@ -2865,7 +2867,7 @@ used in conjunction with <code class="docutils literal notranslate"><span class=
 <dt><strong>secret_name</strong><span class="classifier">str</span></dt><dd><p>The name of the secret.</p>
 </dd>
 <dt><strong>data</strong><span class="classifier">Dict[str, Union[str, bytes]]</span></dt><dd><p>The data to store in the secret. Each key must consist of
-alphanumeric characters, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code> or <code class="docutils literal notranslate"><span class="pre">.</span></code>.</p>
+alphanumeric characters <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code> or <code class="docutils literal notranslate"><span class="pre">.</span></code>.</p>
 </dd>
 <dt><strong>labels</strong><span class="classifier">Dict[str, str], optional</span></dt><dd><p>Kubernetes labels to attach to the secret.</p>
 </dd>
@@ -3087,12 +3089,13 @@ Might block your code otherwise.</p>
 <dt><strong>pipeline_name</strong><span class="classifier">str</span></dt><dd><p>The name of the pipeline.</p>
 </dd>
 <dt><strong>history</strong><span class="classifier">int, optional</span></dt><dd><p>Indicates to return historical versions of <cite>pipeline_name</cite>.
-Semantics are:
-* 0: Return current version of <cite>pipeline_name</cite>
-* 1: Return the above and <cite>pipeline_name</cite> from the next most recent
-version.
-* 2: etc.
-* -1: Return all historical versions of <cite>pipeline_name</cite>.</p>
+Semantics are:</p>
+<ul class="simple">
+<li><p>0: Return current version of <cite>pipeline_name</cite></p></li>
+<li><p>1: Return the above and <cite>pipeline_name</cite> from the next most recent version.</p></li>
+<li><p>2: etc.</p></li>
+<li><p>-1: Return all historical versions of <cite>pipeline_name</cite>.</p></li>
+</ul>
 </dd>
 <dt><strong>details</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, return pipeline details.</p>
 </dd>
@@ -3186,11 +3189,13 @@ pipeline-level) only from this pipeline.</p>
 Only impacts returned results if <cite>pipeline_name</cite> is specified.</p>
 </dd>
 <dt><strong>history</strong><span class="classifier">int, optional</span></dt><dd><p>Indicates to return jobs from historical versions of
-<cite>pipeline_name</cite>. Semantics are:
-* 0: Return jobs from the current version of <cite>pipeline_name</cite>
-* 1: Return the above and jobs from the next most recent version
-* 2: etc.
-* -1: Return jobs from all historical versions of <cite>pipeline_name</cite></p>
+<cite>pipeline_name</cite>. Semantics are:</p>
+<ul class="simple">
+<li><p>0: Return jobs from the current version of <cite>pipeline_name</cite></p></li>
+<li><p>1: Return the above and jobs from the next most recent version</p></li>
+<li><p>2: etc.</p></li>
+<li><p>-1: Return jobs from all historical versions of <cite>pipeline_name</cite></p></li>
+</ul>
 </dd>
 <dt><strong>details</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, return pipeline details for <cite>pipeline_name</cite>. Leaving this
 <code class="docutils literal notranslate"><span class="pre">None</span></code> (or <code class="docutils literal notranslate"><span class="pre">False</span></code>) can make the call significantly faster in
@@ -3229,12 +3234,13 @@ specified, or a job, if <cite>pipeline_name</cite> wasn’t specified.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>history</strong><span class="classifier">int, optional</span></dt><dd><p>Indicates to return historical versions of <cite>pipeline_name</cite>.
-Semantics are:
-* 0: Return current version of <cite>pipeline_name</cite>
-* 1: Return the above and <cite>pipeline_name</cite> from the next most recent
-version.
-* 2: etc.
-* -1: Return all historical versions of <cite>pipeline_name</cite>.</p>
+Semantics are:</p>
+<ul class="simple">
+<li><p>0: Return current version of <cite>pipeline_name</cite></p></li>
+<li><p>1: Return the above and <cite>pipeline_name</cite> from the next most recent version.</p></li>
+<li><p>2: etc.</p></li>
+<li><p>-1: Return all historical versions of <cite>pipeline_name</cite>.</p></li>
+</ul>
 </dd>
 <dt><strong>details</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, return pipeline details.</p>
 </dd>
