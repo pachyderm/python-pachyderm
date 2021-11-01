@@ -104,17 +104,10 @@ To run the linter locally, run `make lint`
 
 ## Rebuilding API docs
 
-We use [pdoc](https://github.com/mitmproxy/pdoc) for API documentation. It
-sadly doesn't see much maintenance though, so [I made a fork with a branch
-that has some fixes.](https://github.com/ysimonson/pdoc/tree/sandbox) Install
-that version of pdoc locally.
+We use Sphinx for API documentation. Once installed, to rebuild API
+documentation:
 
-Once installed, to rebuild API documentation:
-
-* Remove the `docs` directory.
-* Run `make docs`. Note that this should be run outside of a virtualenv, and
-it will globally install `python_pachyderm`. This is needed because pdoc
-treats virtualenv vs globally installed packages differently.
+* Run `make docs`.
 
 ## Releasing
 
@@ -122,4 +115,6 @@ To make a new release, from the master branch:
 
 * Rebuild docs to make sure they're in sync
 * Update `CHANGELOG.md` and `version.json`
+* Run `make test-release`
+* Ensure the test release page looks acceptable
 * Run `make release`

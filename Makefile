@@ -2,16 +2,7 @@ SHELL := /bin/bash
 PACHYDERM_VERSION ?= $(shell jq -r .pachyderm version.json)
 
 docs:
-	# NOTE: do not run this in a virtualenv -- instead, ensure that
-	# python-pachyderm is installed to the "system" python3 site-packages.
-	# This is for a couple of reasons:
-	# 1) pdoc has totally different flows for virtualenv-based vs system-based
-	# packages, and will generate different docs.
-	# 2) pdoc will frequently ignore virtualenv anyways.
-	sudo rm -rf build dist
-	python3 setup.py clean build
-	sudo python3 setup.py install
-	pdoc --html --html-dir docs python_pachyderm
+	$(MAKE) -C docs html
 
 docker-build-proto:
 	cd proto && \
@@ -42,6 +33,14 @@ release:
 	rm -rf build dist
 	python3 setup.py sdist
 	twine upload dist/*
+
+test-release:
+	git checkout v6.x
+	rm -rf build dist
+	sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
+	python3 setup.py sdist
+	-twine upload --repository testpypi dist/*
+	sed -i "" 's/name="python-pachyderm-test"/name="python-pachyderm"/g' setup.py
 
 lint:
 	black --check --diff .
