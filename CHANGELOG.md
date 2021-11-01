@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 7.0.0 (2021-11-01)
+
+- Improved documentation
 
 ## 7.0.0-rc.1
 

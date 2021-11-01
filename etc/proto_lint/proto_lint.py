@@ -87,6 +87,7 @@ BLACKLISTED_METHODS = {
         "get_file_set",
         "modify_file",
         "renew_file_set",
+        "compose_file_set",
         "list_commit_set",
         "inspect_commit_set",
         "run_load_test_default",
@@ -101,6 +102,7 @@ BLACKLISTED_METHODS = {
         "subscribe_job",
         "list_job_set",
         "inspect_job_set",
+        "run_load_test",
         "run_load_test_default",
     ],
     Service.ENTERPRISE: [
