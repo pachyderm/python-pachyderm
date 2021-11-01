@@ -85,8 +85,9 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../python_pachyderm.html">python_pachyderm</a></li>
 </ul>
 
@@ -200,7 +201,6 @@
 
 <span class="sd">    .. # noqa: W505</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
             <span class="n">mfc</span><span class="o">.</span><span class="n">put_file_from_filepath</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

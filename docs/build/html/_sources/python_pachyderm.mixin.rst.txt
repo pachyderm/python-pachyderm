@@ -61,7 +61,7 @@ python\_pachyderm.mixin.pfs
 .. automodule:: python_pachyderm.mixin.pfs
    :members:
    :undoc-members:
-   :exclude-members: AtomicModifyFileURLOp, AtomicOp, AtomicCopyFileOp, AtomicDeleteFileOp, AtomicModifyFileobjOp, FileTarstream, AtomicModifyFilepathOp
+   :exclude-members: FileTarstream
 
 python\_pachyderm.mixin.pps
 ---------------------------

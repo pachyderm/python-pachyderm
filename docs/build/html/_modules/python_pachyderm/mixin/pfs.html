@@ -85,8 +85,9 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
 </ul>
 
@@ -256,7 +257,7 @@
         <span class="k">return</span> <span class="n">x</span>
 
 <div class="viewcode-block" id="PFSFile.read"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reads from the ``PFSFile`` buffer.</span>
+        <span class="sd">&quot;&quot;&quot;Reads from the :class:`.PFSFile` buffer.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -271,7 +272,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSFile.close"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Closes the ``PFSFile``.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Closes the :class:`.PFSFile`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
@@ -883,9 +884,10 @@
     <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;A context manager that gives a `ModifyFileClient`. When the context</span>
-<span class="sd">        manager exits, any operations enqueued from the `ModifyFileClient` are</span>
-<span class="sd">        executed in a single, atomic `ModifyFile` call.</span>
+        <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.ModifyFileClient`. When the</span>
+<span class="sd">        context manager exits, any operations enqueued from the</span>
+<span class="sd">        :class:`.ModifyFileClient` are executed in a single, atomic</span>
+<span class="sd">        ModifyFile gRPC call.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1411,8 +1413,8 @@
 
 
 <div class="viewcode-block" id="ModifyFileClient"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.ModifyFileClient">[docs]</a><span class="k">class</span> <span class="nc">ModifyFileClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;``ModifyFileClient`` puts or deletes PFS files atomically. Replaces</span>
-<span class="sd">    ``PutFileClient`` from python_pachyderm 6.x.</span>
+    <span class="sd">&quot;&quot;&quot;:class:`.ModifyFileClient` puts or deletes PFS files atomically.</span>
+<span class="sd">    Replaces :class:`.PutFileClient` from python_pachyderm 6.x.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]):</span>
@@ -1449,7 +1451,7 @@
 <span class="sd">            `pfs_path`, if it already exists. Otherwise, overwrites the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFilepathOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFilepathOp</span><span class="p">(</span>
                 <span class="n">pfs_path</span><span class="p">,</span>
                 <span class="n">local_path</span><span class="p">,</span>
                 <span class="n">datum</span><span class="p">,</span>
@@ -1479,7 +1481,7 @@
 <span class="sd">            if it already exists. Otherwise, overwrites the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFileobjOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFileobjOp</span><span class="p">(</span>
                 <span class="n">path</span><span class="p">,</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">datum</span><span class="p">,</span>
@@ -1542,7 +1544,7 @@
 <span class="sd">            example on s3:// URLs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFileURLOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFileURLOp</span><span class="p">(</span>
                 <span class="n">path</span><span class="p">,</span>
                 <span class="n">url</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span>
@@ -1561,7 +1563,7 @@
 <span class="sd">        datum : str, optional</span>
 <span class="sd">            A tag that filters the files.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AtomicDeleteFileOp</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_AtomicDeleteFileOp</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ModifyFileClient.copy_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.ModifyFileClient.copy_file">[docs]</a>    <span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1589,7 +1591,7 @@
 <span class="sd">            the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicCopyFileOp</span><span class="p">(</span>
+            <span class="n">_AtomicCopyFileOp</span><span class="p">(</span>
                 <span class="n">source_commit</span><span class="p">,</span>
                 <span class="n">source_path</span><span class="p">,</span>
                 <span class="n">dest_path</span><span class="p">,</span>
@@ -1599,7 +1601,7 @@
         <span class="p">)</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">AtomicOp</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_AtomicOp</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Represents an operation in a `ModifyFile` call.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1613,7 +1615,7 @@
         <span class="k">pass</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFilepathOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFilepathOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file locally stored at a given path.</span>
 <span class="sd">    This file is opened on-demand, which helps with minimizing the number of</span>
 <span class="sd">    open files.</span>
@@ -1635,7 +1637,7 @@
                 <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFileobjOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFileobjOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file from a file-like object.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1656,7 +1658,7 @@
             <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFileURLOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFileURLOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file from a URL.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1687,7 +1689,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicCopyFileOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicCopyFileOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to copy a file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1715,7 +1717,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicDeleteFileOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicDeleteFileOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to delete a file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pfs_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
