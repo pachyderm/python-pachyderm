@@ -146,6 +146,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.RunLoadTest = channel.unary_unary(
+                '/pps_v2.API/RunLoadTest',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                )
         self.RunLoadTestDefault = channel.unary_unary(
                 '/pps_v2.API/RunLoadTestDefault',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -318,8 +323,15 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def RunLoadTest(self, request, context):
+        """RunLoadTest runs a load test.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def RunLoadTestDefault(self, request, context):
-        """RunLoadTest runs the default load test.
+        """RunLoadTestDefault runs the default load test.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -457,6 +469,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.UpdateJobState,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.UpdateJobStateRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'RunLoadTest': grpc.unary_unary_rpc_method_handler(
+                    servicer.RunLoadTest,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
             ),
             'RunLoadTestDefault': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTestDefault,
@@ -912,6 +929,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/UpdateJobState',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.UpdateJobStateRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RunLoadTest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunLoadTest',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
