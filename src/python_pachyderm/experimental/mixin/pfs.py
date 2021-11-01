@@ -4,6 +4,9 @@ import itertools
 import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
+import subprocess
+from pathlib import Path
+import time
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.proto.v2 import pfs
@@ -1253,6 +1256,63 @@ class PFSMixin:
             raise e
 
         return True
+
+    def mount(self, mount_dir: str, repos: List[str] = []) -> None:
+        """Mounts Pachyderm repos locally.
+
+        Parameters
+        ----------
+        mount_dir : str
+            The directory to mount repos to.
+        repos : List[str], optional
+            The repos to mount. If empty, all repos are mounted.
+
+        Examples
+        --------
+        >>> client.mount("dir_a", ["repo1", "repo2@staging"])
+        """
+        Path(mount_dir).mkdir(parents=True, exist_ok=True)
+
+        subprocess.run(
+            ["sudo", "pachctl", "unmount", mount_dir],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+        )
+
+        cmd = ["pachctl", "mount", mount_dir]
+        for r in repos:
+            cmd.append("-r")
+            cmd.append(r)
+
+        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+        time.sleep(0.25)
+
+    def unmount(self, mount_dir: str = None, *, all_mounts: bool = False) -> None:
+        """Unmounts directories with local Pachyderm repos.
+
+        Parameters
+        ----------
+        mount_dir : str, optional
+            The mounted directory to unmount.
+        all_mounts : bool, optional
+            If ``True``, unmounts all mounted directories.
+
+        Examples
+        --------
+        >>> client.unmount("dir_a")
+        ...
+        >>> client.unmount(all_mounts=True)
+        """
+        if mount_dir is not None:
+            subprocess.run(
+                ["sudo", "pachctl", "unmount", mount_dir],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.STDOUT,
+            )
+        elif all_mounts:
+            subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
+        else:
+            print("No repos unmounted, pass arguments or see documentation")
 
 
 class ModifyFileClient:
