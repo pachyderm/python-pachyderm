@@ -1267,6 +1267,14 @@ class PFSMixin:
         repos : List[str], optional
             The repos to mount. If empty, all repos are mounted.
 
+        Notes
+        -----
+        Mounting uses FUSE, which causes some known issues on macOS. For the
+        best experience, we recommend using mount on Linux. We do not support
+        mounting on macOS 1.11 and later.
+
+        Additionally, we recommend using mount in read-only access.
+
         Examples
         --------
         >>> client.mount("dir_a", ["repo1", "repo2@staging"])
