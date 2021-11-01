@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 6.3.3
+
+- Improved documentation
 
 ## 6.3.2
 
