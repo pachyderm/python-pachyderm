@@ -1,12 +1,13 @@
 import io
 import re
+import os
+import time
 import itertools
 import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 import subprocess
 from pathlib import Path
-import time
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.proto.v2 import pfs
@@ -1263,9 +1264,11 @@ class PFSMixin:
         Parameters
         ----------
         mount_dir : str
-            The directory to mount repos to.
+            The directory to mount repos to. Make sure if this folder already
+            exists that it's empty (including hidden files).
         repos : List[str], optional
-            The repos to mount. If empty, all repos are mounted.
+            The repos to mount. Each repo can only be mounted once, even if
+            multiple branches are passed. If empty, all repos are mounted.
 
         Notes
         -----
@@ -1295,6 +1298,22 @@ class PFSMixin:
         subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
         time.sleep(0.25)
 
+        # Check for successful mount
+        pach_repos = list(self.list_repo())
+        pach_repos = {repo_info.repo.name for repo_info in pach_repos}
+        repo_names = {r.split("@")[0] for r in repos}
+
+        if not repo_names:
+            repo_names = pach_repos
+        elif not repo_names.issubset(pach_repos):
+            raise ValueError(
+                f"bad argument: repos passed that don't exist in Pachyderm: {repo_names - pach_repos}"
+            )
+
+        mounted_repos = set(next(os.walk(mount_dir))[1])
+
+        assert repo_names == mounted_repos
+
     def unmount(self, mount_dir: str = None, *, all_mounts: bool = False) -> None:
         """Unmounts directories with local Pachyderm repos.
 
@@ -1312,11 +1331,7 @@ class PFSMixin:
         >>> client.unmount(all_mounts=True)
         """
         if mount_dir is not None:
-            subprocess.run(
-                ["sudo", "pachctl", "unmount", mount_dir],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.STDOUT,
-            )
+            subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
         elif all_mounts:
             subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
         else:
