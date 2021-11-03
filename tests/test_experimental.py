@@ -1,4 +1,6 @@
 import os
+import pytest
+from pathlib import Path
 
 import python_pachyderm
 from tests import util
@@ -38,3 +40,9 @@ def test_mount():
 
     client.unmount("mount_c")
     assert not os.path.exists(f"mount_c/{repo_name}/file3.txt")
+
+    # Test runtime error
+    Path("mount_d").mkdir()
+    Path("mount_d/file.txt").touch()
+    with pytest.raises(RuntimeError, match="must be empty to mount"):
+        client.mount("mount_d")

@@ -1290,32 +1290,40 @@ class PFSMixin:
             stderr=subprocess.STDOUT,
         )
 
+        # Check for non-empty mount dir
+        mount_dir_contents = next(os.walk(mount_dir))
+        if mount_dir_contents[1] or mount_dir_contents[2]:
+            raise RuntimeError(
+                f"{mount_dir} must be empty to mount (including hidden files)"
+            )
+
+        # If 0 Pachyderm repos, no need to mount
+        if not list(self.list_repo()):
+            print("no repos in Pachyderm to mount")
+            return
+
         cmd = ["pachctl", "mount", mount_dir]
         for r in repos:
             cmd.append("-r")
             cmd.append(r)
 
         subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-        time.sleep(0.25)
 
-        # Check for successful mount
-        pach_repos = list(self.list_repo())
-        pach_repos = {repo_info.repo.name for repo_info in pach_repos}
-        repo_names = {r.split("@")[0] for r in repos}
+        # Ensure mount has finished
+        for _ in range(3):
+            time.sleep(0.25)
+            mounted_repos = next(os.walk(mount_dir))[1]
 
-        if not repo_names:
-            repo_names = pach_repos
-        elif not repo_names.issubset(pach_repos):
-            raise ValueError(
-                f"bad argument: repos passed that don't exist in Pachyderm: {repo_names - pach_repos}"
-            )
+            if mounted_repos:
+                return
 
-        mounted_repos = set(next(os.walk(mount_dir))[1])
-
-        assert repo_names == mounted_repos
+        self.unmount(mount_dir)
+        raise RuntimeError(
+            "mount failed to expose data after three read attempts (0.75s)"
+        )
 
     def unmount(self, mount_dir: str = None, *, all_mounts: bool = False) -> None:
-        """Unmounts directories with local Pachyderm repos.
+        """Unmounts mounted local filesystems with Pachyderm repos.
 
         Parameters
         ----------
@@ -1335,7 +1343,7 @@ class PFSMixin:
         elif all_mounts:
             subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
         else:
-            print("No repos unmounted, pass arguments or see documentation")
+            print("no repos unmounted, pass arguments or see documentation")
 
 
 class ModifyFileClient:
