@@ -1,9 +1,13 @@
 import io
 import re
+import os
+import time
 import itertools
 import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
+import subprocess
+from pathlib import Path
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.proto.v2 import pfs
@@ -1253,6 +1257,93 @@ class PFSMixin:
             raise e
 
         return True
+
+    def mount(self, mount_dir: str, repos: List[str] = []) -> None:
+        """Mounts Pachyderm repos locally.
+
+        Parameters
+        ----------
+        mount_dir : str
+            The directory to mount repos to. Make sure if this folder already
+            exists that it's empty (including hidden files).
+        repos : List[str], optional
+            The repos to mount. Each repo can only be mounted once, even if
+            multiple branches are passed. If empty, all repos are mounted.
+
+        Notes
+        -----
+        Mounting uses FUSE, which causes some known issues on macOS. For the
+        best experience, we recommend using mount on Linux. We do not support
+        mounting on macOS 1.11 and later.
+
+        Additionally, we recommend using mount in read-only access.
+
+        Examples
+        --------
+        >>> client.mount("dir_a", ["repo1", "repo2@staging"])
+        """
+        Path(mount_dir).mkdir(parents=True, exist_ok=True)
+
+        subprocess.run(
+            ["sudo", "pachctl", "unmount", mount_dir],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+        )
+
+        # Check for non-empty mount dir
+        mount_dir_contents = next(os.walk(mount_dir))
+        if mount_dir_contents[1] or mount_dir_contents[2]:
+            raise RuntimeError(
+                f"{mount_dir} must be empty to mount (including hidden files)"
+            )
+
+        # If 0 Pachyderm repos, no need to mount
+        if not list(self.list_repo()):
+            print("no repos in Pachyderm to mount")
+            return
+
+        cmd = ["pachctl", "mount", mount_dir]
+        for r in repos:
+            cmd.append("-r")
+            cmd.append(r)
+
+        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
+        # Ensure mount has finished
+        for _ in range(3):
+            time.sleep(0.25)
+            mounted_repos = next(os.walk(mount_dir))[1]
+
+            if mounted_repos:
+                return
+
+        self.unmount(mount_dir)
+        raise RuntimeError(
+            "mount failed to expose data after three read attempts (0.75s)"
+        )
+
+    def unmount(self, mount_dir: str = None, *, all_mounts: bool = False) -> None:
+        """Unmounts mounted local filesystems with Pachyderm repos.
+
+        Parameters
+        ----------
+        mount_dir : str, optional
+            The mounted directory to unmount.
+        all_mounts : bool, optional
+            If ``True``, unmounts all mounted directories.
+
+        Examples
+        --------
+        >>> client.unmount("dir_a")
+        ...
+        >>> client.unmount(all_mounts=True)
+        """
+        if mount_dir is not None:
+            subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
+        elif all_mounts:
+            subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
+        else:
+            print("no repos unmounted, pass arguments or see documentation")
 
 
 class ModifyFileClient:
