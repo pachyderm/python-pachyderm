@@ -2,9 +2,7 @@ SHELL := /bin/bash
 PACHYDERM_VERSION ?= $(shell jq -r .pachyderm version.json)
 
 docs:
-	cd docs
-	make html
-	cd ..
+	$(MAKE) -C docs html
 
 docker-build-proto:
 	docker build -t pachyderm_python_proto proto
@@ -29,13 +27,13 @@ init:
 	pre-commit install
 
 release:
-	git checkout v7.x
+	git checkout v7.0.x
 	rm -rf build dist
 	python3 setup.py sdist
 	twine upload dist/*
 
 test-release:
-	git checkout v7.x
+	git checkout v7.0.x
 	rm -rf build dist
 	sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
 	python3 setup.py sdist

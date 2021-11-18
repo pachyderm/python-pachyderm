@@ -57,16 +57,22 @@ setup(
     extras_require={
         "system_certs": ["certifi>=2019.11.28"],
         "DEV": [
+            # certs
+            "certifi>=2019.11.28",
+            # code formatting/linting
             "black>=21.5b0",
             "flake8>=3.9.1",
             "pre-commit>=2.12.1",
+            # testing
             "pytest>=5.3.4",
             "pytest-mock>=3.6.1",
             "pytest-timeout>=1.4.2",
             "tox>=3.23.1",
-            "pdoc3>=0.9.2",
-            "certifi>=2019.11.28",
+            # docs
             "numpydoc>=1.1.0",
+            "Sphinx==4.3.0",
+            "sphinx-rtd-theme==1.0.0",
+            "myst-parser==0.15.2",
         ],
         "test": [
             "pytest==5.3.4",
