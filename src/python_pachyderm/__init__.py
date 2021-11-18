@@ -13,8 +13,7 @@ from .util import (
     parse_dict_pipeline_spec,
 )
 from grpc import RpcError
-from .experimental import ExperimentalClient
-
+from . import experimental
 
 __pdoc__ = {"proto": False}
 
