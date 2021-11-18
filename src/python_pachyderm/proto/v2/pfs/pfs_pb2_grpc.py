@@ -181,6 +181,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.ComposeFileSet = channel.unary_unary(
+                '/pfs_v2.API/ComposeFileSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
+                )
         self.RunLoadTest = channel.unary_unary(
                 '/pfs_v2.API/RunLoadTest',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
@@ -428,6 +433,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ComposeFileSet(self, request, context):
+        """ComposeFileSet composes a file set from a list of file sets.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def RunLoadTest(self, request, context):
         """RunLoadTest runs a load test.
         """
@@ -609,6 +621,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.RenewFileSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'ComposeFileSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.ComposeFileSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.SerializeToString,
             ),
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTest,
@@ -1188,6 +1205,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RenewFileSet',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RenewFileSetRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ComposeFileSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ComposeFileSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
