@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
 from python_pachyderm.pfs import commit_from, Commit, uuid_re
+from python_pachyderm.proto.v2 import pfs
 from python_pachyderm.service import pfs_proto, Service
 from google.protobuf import empty_pb2, wrappers_pb2
 
