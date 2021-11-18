@@ -1,7 +1,7 @@
 python\_pachyderm
 =================
 
-mixins
+Mixins
 -----------
 
 .. toctree::
@@ -10,22 +10,24 @@ mixins
    python_pachyderm.mixin
 
 
-python\_pachyderm.client module
--------------------------------
+Client
+------
 
 .. automodule:: python_pachyderm.client
    :members:
+   :show-inheritance:
    :exclude-members: BadClusterDeploymentID, ConfigError
+   :special-members: __init__
 
-python\_pachyderm.pfs module
-----------------------------
+PFS Helper
+----------
 
 .. automodule:: python_pachyderm.pfs
    :members:
    :show-inheritance:
 
-python\_pachyderm.util module
------------------------------
+Util Helper
+-----------
 
 .. automodule:: python_pachyderm.util
    :members:

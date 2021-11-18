@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.1.0 (2021-11-18)
+
+- New experimental client (available via `import python-pachyderm.experimental`, which will contain beta/unstable APIs and features (#352)
+- New `Mount()` API in the experimental client, which runs `pachctl mount` in a subprocess to expose pachyderm data on the local filesystem (#353)
+
 ## 7.0.0 (2021-11-01)
 
 - Improved documentation
