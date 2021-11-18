@@ -67,6 +67,7 @@ setup(
             "pdoc3>=0.9.2",
             "certifi>=2019.11.28",
             "numpydoc>=1.1.0",
+            "betterproto==2.0.0b3",
         ],
         "test": [
             "pytest==5.3.4",
@@ -76,6 +77,7 @@ setup(
             "protobuf>=3.11.2",
             "grpcio>=1.26.0",
             "certifi>=2019.11.28",
+            "betterproto==2.0.0b3",
         ],
     },
     test_suite="tests",
