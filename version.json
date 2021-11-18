@@ -1,6 +1,6 @@
 {
     "pachyderm": "2.0.2",
-    "python-pachyderm": "7.1.0",
+    "python-pachyderm": "7.1.1",
     "kubernetes": "1.21.0",
     "minikube": "1.22.0"
 }
