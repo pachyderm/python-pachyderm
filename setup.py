@@ -66,7 +66,10 @@ setup(
             "tox>=3.23.1",
             "pdoc3>=0.9.2",
             "certifi>=2019.11.28",
+            # For docs
             "numpydoc>=1.1.0",
+            "Sphinx==4.3.0",
+            "sphinx-rtd-theme==1.0.0",
         ],
         "test": [
             "pytest==5.3.4",
