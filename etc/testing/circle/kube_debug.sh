@@ -10,6 +10,7 @@ export PATH=$(pwd):$(pwd)/cached-deps:$GOPATH/bin:$PATH
 # SC2016 blocks variables in single-quoted strings, but these are 'eval'ed below
 # shellcheck disable=SC2016
 cmds=(
+  'rm ~/.pachyderm/config.json'
   'pachctl version'
   'pachctl list repo'
   'pachctl list repo --raw | jq -r ".repo.name" | while read r; do
