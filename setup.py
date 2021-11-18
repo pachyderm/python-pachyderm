@@ -69,7 +69,6 @@ setup(
             "pytest-timeout>=1.4.2",
             "tox>=3.23.1",
             # docs
-            "pdoc3>=0.9.2",
             "numpydoc>=1.1.0",
             "Sphinx==4.3.0",
             "sphinx-rtd-theme==1.0.0",
