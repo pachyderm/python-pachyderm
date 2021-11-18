@@ -5,10 +5,16 @@ import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
-from python_pachyderm.pfs import commit_from, Commit, uuid_re
-from python_pachyderm.proto.v2 import pfs
-from python_pachyderm.service import pfs_proto, Service
+from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
+from python_pachyderm.service import Service  # , pfs_proto
+from python_pachyderm.experimental.service import pfs_proto
 from google.protobuf import empty_pb2, wrappers_pb2
+import betterproto.lib.google.protobuf as bp_proto
+
+# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
+# bp_to_pb: raw=chunk -> raw=wrappers_pb2.BytesValue(value=chunk)
+# bp_to_pb: AddFileUrlSource -> AddFile.URLSource
+# bp_to_pb: url -> URL (get_file_tar(), AddFile.URLSource)
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -201,7 +207,7 @@ class PFSMixin:
 
     def delete_all_repos(self) -> None:
         """Deletes all repos."""
-        self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
+        self._req(Service.PFS, "DeleteAll", req=bp_proto.Empty())
 
     def start_commit(
         self,
@@ -465,9 +471,9 @@ class PFSMixin:
                 origin_kind=origin_kind,
             )
             if to_commit is not None:
-                req.to.CopyFrom(commit_from(to_commit))
+                req.to = commit_from(to_commit)
             if from_commit is not None:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
+                req.from_ = commit_from(from_commit)
             return self._req(Service.PFS, "ListCommit", req=req)
         else:
             return self._req(Service.PFS, "ListCommitSet")
@@ -585,11 +591,9 @@ class PFSMixin:
         )
         if from_commit is not None:
             if isinstance(from_commit, str):
-                getattr(req, "from").CopyFrom(
-                    pfs_proto.Commit(repo=repo, id=from_commit)
-                )
+                req.from_ = pfs_proto.Commit(repo=repo, id=from_commit)
             else:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
+                req.from_ = commit_from(from_commit)
         return self._req(Service.PFS, "SubscribeCommit", req=req)
 
     def create_branch(
@@ -975,7 +979,7 @@ class PFSMixin:
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
                 file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-                URL=URL,
+                url=URL,
                 offset=offset,
             ),
         )
@@ -1524,8 +1528,8 @@ class _AtomicModifyFileURLOp(_AtomicOp):
             add_file=pfs_proto.AddFile(
                 path=self.path,
                 datum=self.datum,
-                url=pfs_proto.AddFile.URLSource(
-                    URL=self.url,
+                url=pfs_proto.AddFileUrlSource(
+                    url=self.url,
                     recursive=self.recursive,
                 ),
             ),
@@ -1573,7 +1577,9 @@ class _AtomicDeleteFileOp(_AtomicOp):
 def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
     return pfs_proto.ModifyFileRequest(
         add_file=pfs_proto.AddFile(
-            path=path, datum=datum, raw=wrappers_pb2.BytesValue(value=chunk)
+            path=path,
+            datum=datum,
+            raw=chunk,
         ),
     )
 

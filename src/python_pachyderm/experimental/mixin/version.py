@@ -1,5 +1,9 @@
-from python_pachyderm.service import Service, version_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import version_proto
 from google.protobuf import empty_pb2
+import betterproto.lib.google.protobuf as bp_proto
+
+# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
 
 
 class VersionMixin:
@@ -16,5 +20,5 @@ class VersionMixin:
         return self._req(
             Service.VERSION,
             "GetVersion",
-            req=empty_pb2.Empty(),
+            req=bp_proto.Empty(),
         )

@@ -1,10 +1,16 @@
 import json
 import base64
+import datetime
 from typing import Dict, Iterator, List, Union
 
-from python_pachyderm.pfs import commit_from, Commit
-from python_pachyderm.service import Service, pps_proto, pfs_proto
+from python_pachyderm.experimental.pfs import commit_from, Commit
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import pps_proto, pfs_proto
 from google.protobuf import empty_pb2, duration_pb2
+import betterproto.lib.google.protobuf as bp_proto
+
+# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
+# bp_to_pb: PfsInput -> PFSInput, datetime.timedelta -> duration_pb2.Duration
 
 
 class PPSMixin:
@@ -253,13 +259,11 @@ class PPSMixin:
         """
         req = pps_proto.ListDatumRequest()
         if pipeline_name is not None and job_id is not None:
-            req.job.CopyFrom(
-                pps_proto.Job(
-                    pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-                )
+            req.job = pps_proto.Job(
+                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
             )
         else:
-            req.input.CopyFrom(input)
+            req.input = input
         return self._req(Service.PPS, "ListDatum", req=req)
 
     def restart_datum(
@@ -304,8 +308,8 @@ class PPSMixin:
         reprocess: bool = False,
         service: pps_proto.Service = None,
         datum_set_spec: pps_proto.DatumSetSpec = None,
-        datum_timeout: duration_pb2.Duration = None,
-        job_timeout: duration_pb2.Duration = None,
+        datum_timeout: datetime.timedelta = None,
+        job_timeout: datetime.timedelta = None,
         salt: str = None,
         datum_tries: int = 3,
         scheduling_spec: pps_proto.SchedulingSpec = None,
@@ -359,9 +363,9 @@ class PPSMixin:
             Creates a Service pipeline instead of a normal pipeline.
         datum_set_spec : pps_proto.DatumSetSpec, optional
             Specifies how a pipeline should split its datums into datum sets.
-        datum_timeout : duration_pb2.Duration, optional
+        datum_timeout : datetime.timedelta, optional
             The maximum execution time allowed for each datum.
-        job_timeout : duration_pb2.Duration, optional
+        job_timeout : datetime.timedelta, optional
             The maximum execution time allowed for a job.
         salt : str, optional
             A tag for the pipeline.
@@ -402,7 +406,7 @@ class PPSMixin:
         ...         cmd=["python3", "main.py"],
         ...         image="example/image",
         ...     ),
-        ...     input=pps_proto.Input(pfs=pps_proto.PFSInput(
+        ...     input=pps_proto.Input(pfs=pps_proto.PfsInput(
         ...         repo="foo",
         ...         branch="master",
         ...         glob="/*"
@@ -578,7 +582,7 @@ class PPSMixin:
         self._req(
             Service.PPS,
             "DeleteAll",
-            req=empty_pb2.Empty(),
+            req=bp_proto.Empty(),
         )
 
     def start_pipeline(self, pipeline_name: str) -> None:
@@ -690,7 +694,7 @@ class PPSMixin:
         return self._req(
             Service.PPS,
             "ListSecret",
-            req=empty_pb2.Empty(),
+            req=bp_proto.Empty(),
         ).secret_info
 
     def inspect_secret(self, secret_name: str) -> pps_proto.SecretInfo:
@@ -718,7 +722,7 @@ class PPSMixin:
         follow: bool = False,
         tail: int = 0,
         use_loki_backend: bool = False,
-        since: duration_pb2.Duration = None,
+        since: datetime.timedelta = None,
     ) -> Iterator[pps_proto.LogMessage]:
         """Gets logs for a pipeline.
 
@@ -745,7 +749,7 @@ class PPSMixin:
         use_loki_backend : bool, optional
             If true, use loki as a backend, rather than Kubernetes, for
             fetching logs. Requires a loki-enabled cluster.
-        since : duration_pb2.Duration, optional
+        since : datetime.timedelta, optional
             Specifies how far in the past to return logs from.
 
         Returns
@@ -778,7 +782,7 @@ class PPSMixin:
         follow: bool = False,
         tail: int = 0,
         use_loki_backend: bool = False,
-        since: duration_pb2.Duration = None,
+        since: datetime.timedelta = None,
     ) -> Iterator[pps_proto.LogMessage]:
         """Gets logs for a job.
 
@@ -805,7 +809,7 @@ class PPSMixin:
         use_loki_backend : bool, optional
             If true, use loki as a backend, rather than Kubernetes, for
             fetching logs. Requires a loki-enabled cluster.
-        since : duration_pb2.Duration, optional
+        since : datetime.timedelta, optional
             Specifies how far in the past to return logs from.
 
         Returns
