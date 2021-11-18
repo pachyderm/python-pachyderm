@@ -7,13 +7,15 @@ import time
 import pytest
 
 import python_pachyderm
-from python_pachyderm.service import pps_proto
-from tests import util
+from python_pachyderm.experimental.service import pps_proto
+from tests.experimental import util
+
+# bp_to_pb: PfsInput -> PFSInput
 
 
 class Sandbox:
     def __init__(self, test_name):
-        client = python_pachyderm.Client()
+        client = python_pachyderm.experimental.Client()
         client.delete_all()
         commit, input_repo_name, pipeline_repo_name = util.create_test_pipeline(
             client, test_name
@@ -190,7 +192,7 @@ def test_run_cron():
 
 
 def test_secrets():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     secret_name = util.test_repo_name("test-secrets")
 
     client.create_secret(
@@ -243,7 +245,7 @@ def test_get_job_logs():
 
 
 def test_create_pipeline():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.delete_all()
 
     input_repo_name = util.create_test_repo(client, "input_repo_test_create_pipeline")
@@ -255,13 +257,13 @@ def test_create_pipeline():
             image="alpine",
             stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
         ),
-        input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
+        input=pps_proto.Input(pfs=pps_proto.PfsInput(glob="/*", repo=input_repo_name)),
     )
     assert len(list(client.list_pipeline())) == 1
 
 
 def test_create_pipeline_from_request():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
 
     repo_name = util.create_test_repo(client, "test_create_pipeline_from_request")
     pipeline_name = util.test_repo_name("test_create_pipeline_from_request")
@@ -272,7 +274,7 @@ def test_create_pipeline_from_request():
             pipeline=pps_proto.Pipeline(name=pipeline_name),
             description="A pipeline that performs image edge detection by using the OpenCV library.",
             input=pps_proto.Input(
-                pfs=pps_proto.PFSInput(
+                pfs=pps_proto.PfsInput(
                     glob="/*",
                     repo=repo_name,
                 ),

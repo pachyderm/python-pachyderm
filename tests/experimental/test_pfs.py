@@ -7,12 +7,12 @@ import tempfile
 from io import BytesIO
 
 import python_pachyderm
-from python_pachyderm.service import pfs_proto
-from tests import util
+from python_pachyderm.experimental.service import pfs_proto
+from tests.experimental import util
 
 
 def sandbox(test_name):
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     repo_name = util.create_test_repo(client, test_name)
     return client, repo_name
 
@@ -34,14 +34,14 @@ def test_delete_repo():
 
 
 def test_delete_non_existent_repo():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     orig_repo_count = len(list(client.list_repo()))
     client.delete_repo("BOGUS_NAME")
     assert len(list(client.list_repo())) == orig_repo_count
 
 
 def test_delete_all_repos():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
 
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
@@ -132,15 +132,11 @@ def test_finish_commit(commit_arg):
     assert commit_infos[0].commit.id == commit.id
 
     commit_match_count = len(
-        [
-            c
-            for c in commit_infos
-            if c.commit.id == commit.id and c.finished.seconds != 0
-        ]
+        [c for c in commit_infos if c.commit.id == commit.id and c.finished]
     )
     assert commit_match_count == 1
-    assert commit_infos[0].finished.seconds != 0
-    assert commit_infos[0].finished.nanos != 0
+    assert commit_infos[0].finished > commit_infos[0].started
+    assert commit_infos[0].finished > commit_infos[0].finishing
 
 
 def test_commit_context_mgr():
@@ -556,7 +552,7 @@ def test_subscribe_commit():
 
 
 def test_list_commit():
-    python_pachyderm.Client().delete_all_repos()
+    python_pachyderm.experimental.Client().delete_all_repos()
 
     client, repo_name1 = sandbox("list_commit1")
 
@@ -700,7 +696,7 @@ def test_inspect_branch():
 
 
 def test_fsck():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert len(list(client.fsck())) == 0
 
 

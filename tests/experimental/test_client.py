@@ -75,24 +75,24 @@ def test_check_config_order(mocker):
     )
 
     # Retrieves from env var config file
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert client.address == "172.17.0.6:30650"
 
     # Retrieves from spout config file
     mocker.patch(
         "python_pachyderm.Client._check_pach_config_env_var", return_value=None
     )
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert client.address == "::1:80"
 
     # Retrieves from local config file
     mocker.patch("python_pachyderm.Client._check_pach_config_spout", return_value=None)
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert client.address == "localhost:10101"
 
     # Executes default constructor behavior
     mocker.patch("python_pachyderm.Client._check_pach_config_local", return_value=None)
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert client.address == "localhost:30650"
 
 

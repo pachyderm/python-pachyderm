@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 """Spout tests"""
-import time
 import pytest
 import python_pachyderm
-from python_pachyderm.service import pps_proto, pfs_proto
+from python_pachyderm.experimental.service import pps_proto, pfs_proto
 
 
 def test_create_spout():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.delete_all()
 
     client.create_pipeline(
@@ -25,7 +24,7 @@ def test_create_spout():
 
 @pytest.mark.timeout(45)
 def test_spout_commit():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.delete_all()
 
     client.create_pipeline(
@@ -43,8 +42,8 @@ def test_spout_commit():
     c = client.subscribe_commit(
         repo_name="pipeline-spout-commit",
         branch="master",
-        state=pfs_proto.FINISHED,
-        origin_kind=pfs_proto.USER,
+        state=pfs_proto.CommitState.FINISHED,
+        origin_kind=pfs_proto.OriginKind.USER,
     )
     next(c)
 

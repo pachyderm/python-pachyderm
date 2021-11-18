@@ -5,19 +5,18 @@
 import pytest
 
 import python_pachyderm
-from python_pachyderm.proto.v2.pfs import pfs_pb2
-from python_pachyderm.proto.v2.transaction import transaction_pb2
+from python_pachyderm.experimental.service import pfs_proto, transaction_proto
 from tests import util
 
 
 def test_batch_transaction():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     expected_repo_count = len(list(client.list_repo())) + 3
 
     def create_repo_request():
-        return transaction_pb2.TransactionRequest(
-            create_repo=pfs_pb2.CreateRepoRequest(
-                repo=pfs_pb2.Repo(name=util.test_repo_name("test_batch_transaction"))
+        return transaction_proto.TransactionRequest(
+            create_repo=pfs_proto.CreateRepoRequest(
+                repo=pfs_proto.Repo(name=util.test_repo_name("test_batch_transaction"))
             )
         )
 
@@ -34,7 +33,7 @@ def test_batch_transaction():
 
 
 def test_transaction_context_mgr():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     expected_repo_count = len(list(client.list_repo())) + 2
 
     with client.transaction() as transaction:
@@ -54,7 +53,7 @@ def test_transaction_context_mgr():
 
 
 def test_transaction_context_mgr_nested():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
 
     with client.transaction():
         assert client.transaction_id is not None
@@ -68,7 +67,7 @@ def test_transaction_context_mgr_nested():
 
 
 def test_transaction_context_mgr_exception():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     expected_repo_count = len(list(client.list_repo()))
 
     with pytest.raises(Exception):
@@ -82,7 +81,7 @@ def test_transaction_context_mgr_exception():
 
 
 def test_delete_transaction():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     expected_repo_count = len(list(client.list_repo()))
 
     transaction = client.start_transaction()
@@ -101,7 +100,7 @@ def test_delete_transaction():
 
 
 def test_delete_all_transactions():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.start_transaction()
     client.start_transaction()
     assert len(client.list_transaction()) == 2

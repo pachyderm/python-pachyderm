@@ -9,13 +9,15 @@ from time import sleep
 import pytest
 
 import python_pachyderm
-from python_pachyderm.service import auth_proto, identity_proto
+from python_pachyderm.experimental.service import auth_proto, identity_proto
 from tests import util
+
+# bp_to_pb: OidcConfig -> OIDCConfig
 
 
 @pytest.fixture
 def client():
-    pc = python_pachyderm.Client()
+    pc = python_pachyderm.experimental.Client()
     pc.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
     pc.add_cluster("localhost", "localhost:1650", secret="secret")
     pc.activate_enterprise("localhost:1650", "localhost", "secret")
@@ -47,7 +49,7 @@ def client():
 def test_auth_configuration(client):
     client.get_auth_configuration()
     client.set_auth_configuration(
-        auth_proto.OIDCConfig(
+        auth_proto.OidcConfig(
             issuer="http://localhost:1658",
             client_id="client",
             client_secret="secret",
@@ -58,7 +60,7 @@ def test_auth_configuration(client):
 
 @util.skip_if_no_enterprise()
 def test_cluster_role_bindings(client):
-    cluster_resource = auth_proto.Resource(type=auth_proto.CLUSTER)
+    cluster_resource = auth_proto.Resource(type=auth_proto.ResourceType.CLUSTER)
     binding = client.get_role_binding(cluster_resource)
     assert binding["pach:root"].roles["clusterAdmin"]
     client.modify_role_binding(
@@ -72,7 +74,7 @@ def test_cluster_role_bindings(client):
 @util.skip_if_no_enterprise()
 def test_authorize(client):
     client.authorize(
-        auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        auth_proto.Resource(type=auth_proto.ResourceType.REPO, name="foobar"),
         [auth_proto.Permission.REPO_READ],
     )
 

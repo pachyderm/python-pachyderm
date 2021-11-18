@@ -7,8 +7,10 @@ import json
 import tempfile
 
 import python_pachyderm
-from python_pachyderm.service import pps_proto
+from python_pachyderm.experimental.service import pps_proto
 from tests import util
+
+# bp_to_pb: PfsInput -> PFSInput
 
 # script that copies a file using just stdlibs
 TEST_STDLIB_SOURCE = """
@@ -69,7 +71,7 @@ def check_expected_files(client: python_pachyderm.Client, commit, expected):
 
 
 def test_put_files():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.delete_all()
     repo_name = util.create_test_repo(client, "put_files")
 
@@ -107,7 +109,7 @@ def test_put_files():
 
 
 def test_put_files_single_file():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     client.delete_all()
     repo_name = util.create_test_repo(client, "put_files_single_file")
 
@@ -123,12 +125,14 @@ def test_put_files_single_file():
 
 
 def test_parse_json_pipeline_spec():
-    req = python_pachyderm.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
+    req = python_pachyderm.experimental.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
     check_pipeline_spec(req)
 
 
 def test_parse_dict_pipeline_spec():
-    req = python_pachyderm.parse_dict_pipeline_spec(json.loads(TEST_PIPELINE_SPEC))
+    req = python_pachyderm.experimental.parse_dict_pipeline_spec(
+        json.loads(TEST_PIPELINE_SPEC)
+    )
     check_pipeline_spec(req)
 
 
@@ -137,7 +141,7 @@ def check_pipeline_spec(req):
         pipeline=pps_proto.Pipeline(name="foobar"),
         description="A pipeline that performs image edge detection by using the OpenCV library.",
         input=pps_proto.Input(
-            pfs=pps_proto.PFSInput(glob="/*", repo="images"),
+            pfs=pps_proto.PfsInput(glob="/*", repo="images"),
         ),
         transform=pps_proto.Transform(
             cmd=["python3", "/edges.py"],
