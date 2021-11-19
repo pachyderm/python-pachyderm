@@ -73,6 +73,8 @@ setup(
             "Sphinx==4.3.0",
             "sphinx-rtd-theme==1.0.0",
             "myst-parser==0.15.2",
+            # releasing
+            "twine==3.6.0",
         ],
         "test": [
             "pytest==5.3.4",
