@@ -27,13 +27,13 @@ init:
 	pre-commit install
 
 release:
-	git checkout <branch>
+	git checkout origin/v7.1.x
 	rm -rf build dist
 	python3 setup.py sdist
 	twine upload dist/*
 
 test-release:
-	git checkout <branch>
+	git checkout origin/v7.1.x
 	rm -rf build dist
 	sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
 	python3 setup.py sdist
