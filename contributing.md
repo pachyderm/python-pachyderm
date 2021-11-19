@@ -131,7 +131,7 @@ Our current process for publishing a release of python-pachyderm consists of the
 - [ ] Ensure the docs are up-to-date
   - Rebuild the docs (with `make docs`), and make sure the generated docs are unchanged
   - Merge any changes in a PR
-- [ ] Ensure the changelog is up-to-date
+- [ ] Ensure `CHANGELOG.md` is up-to-date
   - Commit any additional change notes in a PR.
 
 #### Test everything
@@ -150,6 +150,7 @@ This is mostly necessary for major releases, but it always reduces risk.
 
 #### Make GitHub release
   - [ ] Go to http://github.com/pachyderm/python-pachyderm and create a new GitHub release pointing at the Git commit that was just pushed to pypi
+    - Include any notes added to `CHANGELOG.md` for this release
   - [ ] &#40;Only when releasing from `master`&#41; Create a new branch for patch releases called `vA.B.x`. For example, if releasing 1.0.0, create a new `v1.0.x` branch to hold future patch-sized changes made to 1.0.0.
 
 #### Update versions for next release
