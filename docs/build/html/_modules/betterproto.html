@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>betterproto &mdash; python-pachyderm  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> python-pachyderm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_pachyderm.html">python_pachyderm</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">python-pachyderm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>betterproto</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for betterproto</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span><span class="p">,</span> <span class="n">b64encode</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">isoparse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Generator</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Set</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Type</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">get_type_hints</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">._types</span> <span class="kn">import</span> <span class="n">T</span>
+<span class="kn">from</span> <span class="nn">._version</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">.casing</span> <span class="kn">import</span> <span class="n">camel_case</span><span class="p">,</span> <span class="n">safe_snake_case</span><span class="p">,</span> <span class="n">snake_case</span>
+<span class="kn">from</span> <span class="nn">.grpc.grpclib_client</span> <span class="kn">import</span> <span class="n">ServiceStub</span>
+
+
+<span class="c1"># Proto 3 data types</span>
+<span class="n">TYPE_ENUM</span> <span class="o">=</span> <span class="s2">&quot;enum&quot;</span>
+<span class="n">TYPE_BOOL</span> <span class="o">=</span> <span class="s2">&quot;bool&quot;</span>
+<span class="n">TYPE_INT32</span> <span class="o">=</span> <span class="s2">&quot;int32&quot;</span>
+<span class="n">TYPE_INT64</span> <span class="o">=</span> <span class="s2">&quot;int64&quot;</span>
+<span class="n">TYPE_UINT32</span> <span class="o">=</span> <span class="s2">&quot;uint32&quot;</span>
+<span class="n">TYPE_UINT64</span> <span class="o">=</span> <span class="s2">&quot;uint64&quot;</span>
+<span class="n">TYPE_SINT32</span> <span class="o">=</span> <span class="s2">&quot;sint32&quot;</span>
+<span class="n">TYPE_SINT64</span> <span class="o">=</span> <span class="s2">&quot;sint64&quot;</span>
+<span class="n">TYPE_FLOAT</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
+<span class="n">TYPE_DOUBLE</span> <span class="o">=</span> <span class="s2">&quot;double&quot;</span>
+<span class="n">TYPE_FIXED32</span> <span class="o">=</span> <span class="s2">&quot;fixed32&quot;</span>
+<span class="n">TYPE_SFIXED32</span> <span class="o">=</span> <span class="s2">&quot;sfixed32&quot;</span>
+<span class="n">TYPE_FIXED64</span> <span class="o">=</span> <span class="s2">&quot;fixed64&quot;</span>
+<span class="n">TYPE_SFIXED64</span> <span class="o">=</span> <span class="s2">&quot;sfixed64&quot;</span>
+<span class="n">TYPE_STRING</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span>
+<span class="n">TYPE_BYTES</span> <span class="o">=</span> <span class="s2">&quot;bytes&quot;</span>
+<span class="n">TYPE_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span>
+<span class="n">TYPE_MAP</span> <span class="o">=</span> <span class="s2">&quot;map&quot;</span>
+
+
+<span class="c1"># Fields that use a fixed amount of space (4 or 8 bytes)</span>
+<span class="n">FIXED_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">TYPE_FLOAT</span><span class="p">,</span>
+    <span class="n">TYPE_DOUBLE</span><span class="p">,</span>
+    <span class="n">TYPE_FIXED32</span><span class="p">,</span>
+    <span class="n">TYPE_SFIXED32</span><span class="p">,</span>
+    <span class="n">TYPE_FIXED64</span><span class="p">,</span>
+    <span class="n">TYPE_SFIXED64</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Fields that are numerical 64-bit types</span>
+<span class="n">INT_64_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">TYPE_INT64</span><span class="p">,</span> <span class="n">TYPE_UINT64</span><span class="p">,</span> <span class="n">TYPE_SINT64</span><span class="p">,</span> <span class="n">TYPE_FIXED64</span><span class="p">,</span> <span class="n">TYPE_SFIXED64</span><span class="p">]</span>
+
+<span class="c1"># Fields that are efficiently packed when</span>
+<span class="n">PACKED_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">TYPE_ENUM</span><span class="p">,</span>
+    <span class="n">TYPE_BOOL</span><span class="p">,</span>
+    <span class="n">TYPE_INT32</span><span class="p">,</span>
+    <span class="n">TYPE_INT64</span><span class="p">,</span>
+    <span class="n">TYPE_UINT32</span><span class="p">,</span>
+    <span class="n">TYPE_UINT64</span><span class="p">,</span>
+    <span class="n">TYPE_SINT32</span><span class="p">,</span>
+    <span class="n">TYPE_SINT64</span><span class="p">,</span>
+    <span class="n">TYPE_FLOAT</span><span class="p">,</span>
+    <span class="n">TYPE_DOUBLE</span><span class="p">,</span>
+    <span class="n">TYPE_FIXED32</span><span class="p">,</span>
+    <span class="n">TYPE_SFIXED32</span><span class="p">,</span>
+    <span class="n">TYPE_FIXED64</span><span class="p">,</span>
+    <span class="n">TYPE_SFIXED64</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Wire types</span>
+<span class="c1"># https://developers.google.com/protocol-buffers/docs/encoding#structure</span>
+<span class="n">WIRE_VARINT</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">WIRE_FIXED_64</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">WIRE_LEN_DELIM</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">WIRE_FIXED_32</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Mappings of which Proto 3 types correspond to which wire types.</span>
+<span class="n">WIRE_VARINT_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">TYPE_ENUM</span><span class="p">,</span>
+    <span class="n">TYPE_BOOL</span><span class="p">,</span>
+    <span class="n">TYPE_INT32</span><span class="p">,</span>
+    <span class="n">TYPE_INT64</span><span class="p">,</span>
+    <span class="n">TYPE_UINT32</span><span class="p">,</span>
+    <span class="n">TYPE_UINT64</span><span class="p">,</span>
+    <span class="n">TYPE_SINT32</span><span class="p">,</span>
+    <span class="n">TYPE_SINT64</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">WIRE_FIXED_32_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">TYPE_FLOAT</span><span class="p">,</span> <span class="n">TYPE_FIXED32</span><span class="p">,</span> <span class="n">TYPE_SFIXED32</span><span class="p">]</span>
+<span class="n">WIRE_FIXED_64_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">TYPE_DOUBLE</span><span class="p">,</span> <span class="n">TYPE_FIXED64</span><span class="p">,</span> <span class="n">TYPE_SFIXED64</span><span class="p">]</span>
+<span class="n">WIRE_LEN_DELIM_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">TYPE_STRING</span><span class="p">,</span> <span class="n">TYPE_BYTES</span><span class="p">,</span> <span class="n">TYPE_MESSAGE</span><span class="p">,</span> <span class="n">TYPE_MAP</span><span class="p">]</span>
+
+
+<span class="c1"># Protobuf datetimes start at the Unix Epoch in 1970 in UTC.</span>
+<span class="k">def</span> <span class="nf">datetime_default_gen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+
+<span class="n">DATETIME_ZERO</span> <span class="o">=</span> <span class="n">datetime_default_gen</span><span class="p">()</span>
+
+
+<span class="c1"># Special protobuf json doubles</span>
+<span class="n">INFINITY</span> <span class="o">=</span> <span class="s2">&quot;Infinity&quot;</span>
+<span class="n">NEG_INFINITY</span> <span class="o">=</span> <span class="s2">&quot;-Infinity&quot;</span>
+<span class="n">NAN</span> <span class="o">=</span> <span class="s2">&quot;NaN&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Casing</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Casing constants for serialization.&quot;&quot;&quot;</span>
+
+    <span class="n">CAMEL</span> <span class="o">=</span> <span class="n">camel_case</span>  <span class="c1">#: A camelCase sterilization function.</span>
+    <span class="n">SNAKE</span> <span class="o">=</span> <span class="n">snake_case</span>  <span class="c1">#: A snake_case sterilization function.</span>
+
+
+<span class="n">PLACEHOLDER</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
+
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">FieldMetadata</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Stores internal metadata used for parsing &amp; serialization.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Protobuf field number</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1"># Protobuf type name</span>
+    <span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="c1"># Map information if the proto_type is a map</span>
+    <span class="n">map_types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Groups several &quot;one-of&quot; fields together</span>
+    <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Describes the wrapped type (e.g. when using google.protobuf.BoolValue)</span>
+    <span class="n">wraps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FieldMetadata&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns the field metadata for a dataclass field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">field</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;betterproto&quot;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">dataclass_field</span><span class="p">(</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">map_types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">wraps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Creates a dataclass field with attached protobuf metadata.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">PLACEHOLDER</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;betterproto&quot;</span><span class="p">:</span> <span class="n">FieldMetadata</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">proto_type</span><span class="p">,</span> <span class="n">map_types</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">wraps</span><span class="p">)</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># Note: the fields below return `Any` to prevent type errors in the generated</span>
+<span class="c1"># data classes since the types won&#39;t match with `Field` and they get swapped</span>
+<span class="c1"># out at runtime. The generated dataclass variables are still typed correctly.</span>
+
+
+<span class="k">def</span> <span class="nf">enum_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_ENUM</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">bool_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_BOOL</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">int32_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_INT32</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">int64_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_INT64</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">uint32_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_UINT32</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">uint64_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_UINT64</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sint32_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_SINT32</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sint64_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_SINT64</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">float_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_FLOAT</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">double_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_DOUBLE</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">fixed32_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_FIXED32</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">fixed64_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_FIXED64</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sfixed32_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_SFIXED32</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sfixed64_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_SFIXED64</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">string_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_STRING</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">bytes_field</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_BYTES</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">message_field</span><span class="p">(</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">wraps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_MESSAGE</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span> <span class="n">wraps</span><span class="o">=</span><span class="n">wraps</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">map_field</span><span class="p">(</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dataclass_field</span><span class="p">(</span>
+        <span class="n">number</span><span class="p">,</span> <span class="n">TYPE_MAP</span><span class="p">,</span> <span class="n">map_types</span><span class="o">=</span><span class="p">(</span><span class="n">key_type</span><span class="p">,</span> <span class="n">value_type</span><span class="p">),</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Enum</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base class for protobuf enumerations, all generated enumerations will inherit</span>
+<span class="sd">    from this. Bases :class:`enum.IntEnum`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Enum&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return the value which corresponds to the string name.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        name: :class:`str`</span>
+<span class="sd">            The name of the enum member to get</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        :exc:`ValueError`</span>
+<span class="sd">            The member was not found in the Enum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_member_map_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown value </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> for enum </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+
+<span class="k">def</span> <span class="nf">_pack_fmt</span><span class="p">(</span><span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns a little-endian format string for reading/writing binary.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">TYPE_DOUBLE</span><span class="p">:</span> <span class="s2">&quot;&lt;d&quot;</span><span class="p">,</span>
+        <span class="n">TYPE_FLOAT</span><span class="p">:</span> <span class="s2">&quot;&lt;f&quot;</span><span class="p">,</span>
+        <span class="n">TYPE_FIXED32</span><span class="p">:</span> <span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span>
+        <span class="n">TYPE_FIXED64</span><span class="p">:</span> <span class="s2">&quot;&lt;Q&quot;</span><span class="p">,</span>
+        <span class="n">TYPE_SFIXED32</span><span class="p">:</span> <span class="s2">&quot;&lt;i&quot;</span><span class="p">,</span>
+        <span class="n">TYPE_SFIXED64</span><span class="p">:</span> <span class="s2">&quot;&lt;q&quot;</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">proto_type</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">encode_varint</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Encodes a single varint value for serialization.&quot;&quot;&quot;</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">64</span>
+
+    <span class="n">bits</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="mh">0x7F</span>
+    <span class="n">value</span> <span class="o">&gt;&gt;=</span> <span class="mi">7</span>
+    <span class="k">while</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mh">0x80</span> <span class="o">|</span> <span class="n">bits</span><span class="p">)</span>
+        <span class="n">bits</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="mh">0x7F</span>
+        <span class="n">value</span> <span class="o">&gt;&gt;=</span> <span class="mi">7</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="p">[</span><span class="n">bits</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_preprocess_single</span><span class="p">(</span><span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wraps</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Adjusts values before serialization.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">TYPE_ENUM</span><span class="p">,</span>
+        <span class="n">TYPE_BOOL</span><span class="p">,</span>
+        <span class="n">TYPE_INT32</span><span class="p">,</span>
+        <span class="n">TYPE_INT64</span><span class="p">,</span>
+        <span class="n">TYPE_UINT32</span><span class="p">,</span>
+        <span class="n">TYPE_UINT64</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">encode_varint</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_SINT32</span><span class="p">,</span> <span class="n">TYPE_SINT64</span><span class="p">):</span>
+        <span class="c1"># Handle zig-zag encoding.</span>
+        <span class="k">return</span> <span class="n">encode_varint</span><span class="p">(</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="o">~</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="n">FIXED_TYPES</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">_pack_fmt</span><span class="p">(</span><span class="n">proto_type</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_STRING</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MESSAGE</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">datetime</span><span class="p">):</span>
+            <span class="c1"># Convert the `datetime` to a timestamp message.</span>
+            <span class="n">seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>
+            <span class="n">nanos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">microsecond</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_Timestamp</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">seconds</span><span class="p">,</span> <span class="n">nanos</span><span class="o">=</span><span class="n">nanos</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">):</span>
+            <span class="c1"># Convert the `timedelta` to a duration message.</span>
+            <span class="n">total_ms</span> <span class="o">=</span> <span class="n">value</span> <span class="o">//</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">microseconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_ms</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
+            <span class="n">nanos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">total_ms</span> <span class="o">%</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_Duration</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">seconds</span><span class="p">,</span> <span class="n">nanos</span><span class="o">=</span><span class="n">nanos</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">wraps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_get_wrapper</span><span class="p">(</span><span class="n">wraps</span><span class="p">)(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">_serialize_single</span><span class="p">(</span>
+    <span class="n">field_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">serialize_empty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">wraps</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Serializes a single field and value.&quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">_preprocess_single</span><span class="p">(</span><span class="n">proto_type</span><span class="p">,</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="n">WIRE_VARINT_TYPES</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">encode_varint</span><span class="p">(</span><span class="n">field_number</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="n">WIRE_FIXED_32_TYPES</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">encode_varint</span><span class="p">((</span><span class="n">field_number</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="n">WIRE_FIXED_64_TYPES</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">encode_varint</span><span class="p">((</span><span class="n">field_number</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="n">proto_type</span> <span class="ow">in</span> <span class="n">WIRE_LEN_DELIM_TYPES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">or</span> <span class="n">serialize_empty</span> <span class="ow">or</span> <span class="n">wraps</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">encode_varint</span><span class="p">((</span><span class="n">field_number</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">encode_varint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="o">+</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">proto_type</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_float</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Parse the given value to a float</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : Any</span>
+<span class="sd">        Value to parse</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Parsed value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">INFINITY</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">NEG_INFINITY</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">NAN</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_dump_float</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Dump the given float to JSON</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : float</span>
+<span class="sd">        Value to dump</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Union[float, str]</span>
+<span class="sd">        Dumped valid, either a float or the strings</span>
+<span class="sd">        &quot;Infinity&quot; or &quot;-Infinity&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">INFINITY</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NEG_INFINITY</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NAN</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">decode_varint</span><span class="p">(</span><span class="n">buffer</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decode a single varint value from a byte buffer. Returns the value and the</span>
+<span class="sd">    new position in the buffer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">shift</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">|=</span> <span class="p">(</span><span class="n">b</span> <span class="o">&amp;</span> <span class="mh">0x7F</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">shift</span>
+        <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">b</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="n">shift</span> <span class="o">+=</span> <span class="mi">7</span>
+        <span class="k">if</span> <span class="n">shift</span> <span class="o">&gt;=</span> <span class="mi">64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Too many bytes when decoding varint.&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ParsedField</span><span class="p">:</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">wire_type</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span>
+
+
+<span class="k">def</span> <span class="nf">parse_fields</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">ParsedField</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">num_wire</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">decode_varint</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">num_wire</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span>
+        <span class="n">wire_type</span> <span class="o">=</span> <span class="n">num_wire</span> <span class="o">&amp;</span> <span class="mh">0x7</span>
+
+        <span class="n">decoded</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_VARINT</span><span class="p">:</span>
+            <span class="n">decoded</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">decode_varint</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_FIXED_64</span><span class="p">:</span>
+            <span class="n">decoded</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">8</span>
+        <span class="k">elif</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_LEN_DELIM</span><span class="p">:</span>
+            <span class="n">length</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">decode_varint</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">length</span>
+        <span class="k">elif</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_FIXED_32</span><span class="p">:</span>
+            <span class="n">decoded</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">],</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span>
+
+        <span class="k">yield</span> <span class="n">ParsedField</span><span class="p">(</span>
+            <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span> <span class="n">wire_type</span><span class="o">=</span><span class="n">wire_type</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">decoded</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ProtoClassMetadata</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;oneof_group_by_field&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oneof_field_by_group&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;default_gen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cls_by_field&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;field_name_by_number&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meta_by_field_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sorted_field_names&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">oneof_group_by_field</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">oneof_field_by_group</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">]]</span>
+    <span class="n">field_name_by_number</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">meta_by_field_name</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FieldMetadata</span><span class="p">]</span>
+    <span class="n">sorted_field_names</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">default_gen</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="n">cls_by_field</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">]):</span>
+        <span class="n">by_field</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">by_group</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">by_field_name</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">by_field_number</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">meta</span> <span class="o">=</span> <span class="n">FieldMetadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">:</span>
+                <span class="c1"># This is part of a one-of group.</span>
+                <span class="n">by_field</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">group</span>
+
+                <span class="n">by_group</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+            <span class="n">by_field_name</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span>
+            <span class="n">by_field_number</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">number</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneof_group_by_field</span> <span class="o">=</span> <span class="n">by_field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneof_field_by_group</span> <span class="o">=</span> <span class="n">by_group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_name_by_number</span> <span class="o">=</span> <span class="n">by_field_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_by_field_name</span> <span class="o">=</span> <span class="n">by_field_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sorted_field_names</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">by_field_number</span><span class="p">[</span><span class="n">number</span><span class="p">]</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">by_field_number</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_gen</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls_by_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cls_by_field</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_default_gen</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">],</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_field_default_gen</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">}</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_cls_by_field</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">],</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">]:</span>
+        <span class="n">field_cls</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">meta</span> <span class="o">=</span> <span class="n">FieldMetadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MAP</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cls_for</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">vt</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cls_for</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">field_cls</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">make_dataclass</span><span class="p">(</span>
+                    <span class="s2">&quot;Entry&quot;</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="n">kt</span><span class="p">,</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span>
+                        <span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">vt</span><span class="p">,</span> <span class="n">dataclass_field</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+                    <span class="p">],</span>
+                    <span class="n">bases</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">,),</span>
+                <span class="p">)</span>
+                <span class="n">field_cls</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vt</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">field_cls</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_cls_for</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">field_cls</span>
+
+
+<span class="k">class</span> <span class="nc">Message</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base class for protobuf messages, all generated messages will inherit from</span>
+<span class="sd">    this. This class registers the message fields which are used by the serializers and</span>
+<span class="sd">    parsers to go between the Python, binary and JSON representations of the message.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: bytes(x)</span>
+
+<span class="sd">            Calls :meth:`__bytes__`.</span>
+
+<span class="sd">        .. describe:: bool(x)</span>
+
+<span class="sd">            Calls :meth:`__bool__`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_serialized_on_wire</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">_unknown_fields</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">_group_current</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Keep track of whether every field was default</span>
+        <span class="n">all_sentinel</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Set current field of each group after `__init__` has already been run.</span>
+        <span class="n">group_current</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">:</span>
+                <span class="n">group_current</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raw_get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PLACEHOLDER</span><span class="p">:</span>
+                <span class="c1"># Found a non-sentinel value</span>
+                <span class="n">all_sentinel</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">:</span>
+                    <span class="c1"># This was set, so make it the selected value of the one-of.</span>
+                    <span class="n">group_current</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_name</span>
+
+        <span class="c1"># Now that all the defaults are set, reset it!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;_serialized_on_wire&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">all_sentinel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;_unknown_fields&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;_group_current&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_current</span>
+
+    <span class="k">def</span> <span class="nf">__raw_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="p">:</span>
+            <span class="n">self_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raw_get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="n">other_val</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">__raw_get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">self_val</span> <span class="ow">is</span> <span class="n">PLACEHOLDER</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">other_val</span> <span class="ow">is</span> <span class="n">PLACEHOLDER</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">self_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">other_val</span> <span class="ow">is</span> <span class="n">PLACEHOLDER</span><span class="p">:</span>
+                <span class="n">other_val</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">self_val</span> <span class="o">!=</span> <span class="n">other_val</span><span class="p">:</span>
+                <span class="c1"># We consider two nan values to be the same for the</span>
+                <span class="c1"># purposes of comparing messages (otherwise a message</span>
+                <span class="c1"># is not equal to itself)</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">self_val</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_val</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">self_val</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">other_val</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">sorted_field_names</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_get</span><span class="p">(</span><span class="n">field_name</span><span class="p">),)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">PLACEHOLDER</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lazily initialize default values to avoid infinite recursion for recursive</span>
+<span class="sd">        message types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">PLACEHOLDER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">!=</span> <span class="s2">&quot;_serialized_on_wire&quot;</span><span class="p">:</span>
+            <span class="c1"># Track when a field has been set.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;_serialized_on_wire&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_group_current&quot;</span><span class="p">):</span>  <span class="c1"># __post_init__ had already run</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">oneof_group_by_field</span><span class="p">:</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">oneof_group_by_field</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">oneof_field_by_group</span><span class="p">[</span><span class="n">group</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">attr</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_group_current</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">PLACEHOLDER</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;True if the Message has any fields with non-default values.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raw_get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">PLACEHOLDER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">field_name</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_betterproto</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProtoClassMetadata</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lazy initialize metadata for each protobuf class.</span>
+<span class="sd">        It may be initialized multiple times in a multi-threaded environment,</span>
+<span class="sd">        but that won&#39;t affect the correctness.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;_betterproto_meta&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>
+            <span class="n">meta</span> <span class="o">=</span> <span class="n">ProtoClassMetadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_betterproto_meta</span> <span class="o">=</span> <span class="n">meta</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="n">meta</span>
+
+    <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the binary encoded Protobuf representation of this message instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Optional items should be skipped. This is used for the Google</span>
+                <span class="c1"># wrapper types.</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Being selected in a a group means this field is the one that is</span>
+            <span class="c1"># currently set in a `oneof` group, so it must be serialized even</span>
+            <span class="c1"># if the value is the default zero value.</span>
+            <span class="n">selected_in_group</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">meta</span><span class="o">.</span><span class="n">group</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_current</span><span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">]</span> <span class="o">==</span> <span class="n">field_name</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Empty messages can still be sent on the wire if they were</span>
+            <span class="c1"># set (or received empty).</span>
+            <span class="n">serialize_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Message</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">_serialized_on_wire</span>
+
+            <span class="n">include_default_value_for_oneof</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_default_value_for_oneof</span><span class="p">(</span>
+                <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+                <span class="n">selected_in_group</span> <span class="ow">or</span> <span class="n">serialize_empty</span> <span class="ow">or</span> <span class="n">include_default_value_for_oneof</span>
+            <span class="p">):</span>
+                <span class="c1"># Default (zero) values are not serialized. Two exceptions are</span>
+                <span class="c1"># if this is the selected oneof item or if we know we have to</span>
+                <span class="c1"># serialize an empty message (i.e. zero value was explicitly</span>
+                <span class="c1"># set by the user).</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="n">PACKED_TYPES</span><span class="p">:</span>
+                    <span class="c1"># Packed lists look like a length-delimited field. First,</span>
+                    <span class="c1"># preprocess/encode each value into a buffer and then</span>
+                    <span class="c1"># treat it like a field of raw bytes.</span>
+                    <span class="n">buf</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">buf</span> <span class="o">+=</span> <span class="n">_preprocess_single</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">_serialize_single</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">TYPE_BYTES</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">output</span> <span class="o">+=</span> <span class="p">(</span>
+                            <span class="n">_serialize_single</span><span class="p">(</span>
+                                <span class="n">meta</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+                                <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">,</span>
+                                <span class="n">item</span><span class="p">,</span>
+                                <span class="n">wraps</span><span class="o">=</span><span class="n">meta</span><span class="o">.</span><span class="n">wraps</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                            <span class="p">)</span>
+                            <span class="c1"># if it&#39;s an empty message it still needs to be represented</span>
+                            <span class="c1"># as an item in the repeated list</span>
+                            <span class="ow">or</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n\x00</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">assert</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span>
+                    <span class="n">sk</span> <span class="o">=</span> <span class="n">_serialize_single</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">)</span>
+                    <span class="n">sv</span> <span class="o">=</span> <span class="n">_serialize_single</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">)</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">_serialize_single</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">,</span> <span class="n">sk</span> <span class="o">+</span> <span class="n">sv</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># If we have an empty string and we&#39;re including the default value for</span>
+                <span class="c1"># a oneof, make sure we serialize it. This ensures that the byte string</span>
+                <span class="c1"># output isn&#39;t simply an empty string. This also ensures that round trip</span>
+                <span class="c1"># serialization will keep `which_one_of` calls consistent.</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+                    <span class="ow">and</span> <span class="n">include_default_value_for_oneof</span>
+                <span class="p">):</span>
+                    <span class="n">serialize_empty</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">_serialize_single</span><span class="p">(</span>
+                    <span class="n">meta</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+                    <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">serialize_empty</span><span class="o">=</span><span class="n">serialize_empty</span> <span class="ow">or</span> <span class="nb">bool</span><span class="p">(</span><span class="n">selected_in_group</span><span class="p">),</span>
+                    <span class="n">wraps</span><span class="o">=</span><span class="n">meta</span><span class="o">.</span><span class="n">wraps</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">output</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unknown_fields</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+    <span class="c1"># For compatibility with other libraries</span>
+    <span class="k">def</span> <span class="nf">SerializeToString</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the binary encoded Protobuf representation of this message instance.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This is a method for compatibility with other libraries,</span>
+<span class="sd">            you should really use ``bytes(x)``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`bytes`</span>
+<span class="sd">            The binary encoded Protobuf representation of this message instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_type_hint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_type_hints</span><span class="p">()[</span><span class="n">field_name</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">]:</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_cls_for</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the message class for a field from the type hints.&quot;&quot;&quot;</span>
+        <span class="n">field_cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_type_hint</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_cls</span><span class="p">,</span> <span class="s2">&quot;__args__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field_cls</span><span class="o">.</span><span class="n">__args__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">field_cls</span> <span class="o">=</span> <span class="n">field_cls</span><span class="o">.</span><span class="n">__args__</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">field_cls</span>
+
+    <span class="k">def</span> <span class="nf">_get_field_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">default_gen</span><span class="p">[</span><span class="n">field_name</span><span class="p">]()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_field_default_gen</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_type_hint</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;__origin__&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">__origin__</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">):</span>
+                <span class="c1"># This is some kind of map (dict in Python).</span>
+                <span class="k">return</span> <span class="nb">dict</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">__origin__</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">List</span><span class="p">):</span>
+                <span class="c1"># This is some kind of list (repeated) field.</span>
+                <span class="k">return</span> <span class="nb">list</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">__origin__</span> <span class="ow">is</span> <span class="n">Union</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">__args__</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+                <span class="c1"># This is an optional (wrapped) field. For setting the default we</span>
+                <span class="c1"># really don&#39;t care what kind of field it is.</span>
+                <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span>
+        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+            <span class="c1"># Enums always default to zero.</span>
+            <span class="k">return</span> <span class="nb">int</span>
+        <span class="k">elif</span> <span class="n">t</span> <span class="ow">is</span> <span class="n">datetime</span><span class="p">:</span>
+            <span class="c1"># Offsets are relative to 1970-01-01T00:00:00Z</span>
+            <span class="k">return</span> <span class="n">datetime_default_gen</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># This is either a primitive scalar or another message type. Calling</span>
+            <span class="c1"># it should result in its zero value.</span>
+            <span class="k">return</span> <span class="n">t</span>
+
+    <span class="k">def</span> <span class="nf">_postprocess_single</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wire_type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">meta</span><span class="p">:</span> <span class="n">FieldMetadata</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Adjusts values after parsing.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_VARINT</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_INT32</span><span class="p">,</span> <span class="n">TYPE_INT64</span><span class="p">):</span>
+                <span class="n">bits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">bits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">signbit</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">value</span> <span class="o">^</span> <span class="n">signbit</span><span class="p">)</span> <span class="o">-</span> <span class="n">signbit</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_SINT32</span><span class="p">,</span> <span class="n">TYPE_SINT64</span><span class="p">):</span>
+                <span class="c1"># Undo zig-zag encoding</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">value</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_BOOL</span><span class="p">:</span>
+                <span class="c1"># Booleans use a varint encoding, so convert it to true/false.</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">wire_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">WIRE_FIXED_32</span><span class="p">,</span> <span class="n">WIRE_FIXED_64</span><span class="p">):</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="n">_pack_fmt</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_LEN_DELIM</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_STRING</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MESSAGE</span><span class="p">:</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">datetime</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_Timestamp</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">timedelta</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_Duration</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">wraps</span><span class="p">:</span>
+                    <span class="c1"># This is a Google wrapper value message around a single</span>
+                    <span class="c1"># scalar type.</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_get_wrapper</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">wraps</span><span class="p">)()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                    <span class="n">value</span><span class="o">.</span><span class="n">_serialized_on_wire</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MAP</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="n">field_name</span><span class="p">]()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_include_default_value_for_oneof</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">meta</span><span class="p">:</span> <span class="n">FieldMetadata</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">meta</span><span class="o">.</span><span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_current</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="n">field_name</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the binary encoded Protobuf into this message instance. This</span>
+<span class="sd">        returns the instance itself and is therefore assignable and chainable.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        data: :class:`bytes`</span>
+<span class="sd">            The data to parse the protobuf from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`Message`</span>
+<span class="sd">            The initialized message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Got some data over the wire</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialized_on_wire</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">proto_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span>
+        <span class="k">for</span> <span class="n">parsed</span> <span class="ow">in</span> <span class="n">parse_fields</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">field_name</span> <span class="o">=</span> <span class="n">proto_meta</span><span class="o">.</span><span class="n">field_name_by_number</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">field_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_unknown_fields</span> <span class="o">+=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">raw</span>
+                <span class="k">continue</span>
+
+            <span class="n">meta</span> <span class="o">=</span> <span class="n">proto_meta</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+
+            <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+            <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">wire_type</span> <span class="o">==</span> <span class="n">WIRE_LEN_DELIM</span> <span class="ow">and</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="n">PACKED_TYPES</span><span class="p">:</span>
+                <span class="c1"># This is a packed repeated field.</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">while</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_FLOAT</span><span class="p">,</span> <span class="n">TYPE_FIXED32</span><span class="p">,</span> <span class="n">TYPE_SFIXED32</span><span class="p">):</span>
+                        <span class="n">decoded</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">pos</span> <span class="p">:</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">4</span><span class="p">],</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">4</span>
+                        <span class="n">wire_type</span> <span class="o">=</span> <span class="n">WIRE_FIXED_32</span>
+                    <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_DOUBLE</span><span class="p">,</span> <span class="n">TYPE_FIXED64</span><span class="p">,</span> <span class="n">TYPE_SFIXED64</span><span class="p">):</span>
+                        <span class="n">decoded</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">pos</span> <span class="p">:</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">8</span>
+                        <span class="n">wire_type</span> <span class="o">=</span> <span class="n">WIRE_FIXED_64</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">decoded</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">decode_varint</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+                        <span class="n">wire_type</span> <span class="o">=</span> <span class="n">WIRE_VARINT</span>
+                    <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postprocess_single</span><span class="p">(</span>
+                        <span class="n">wire_type</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">decoded</span>
+                    <span class="p">)</span>
+                    <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postprocess_single</span><span class="p">(</span>
+                    <span class="n">parsed</span><span class="o">.</span><span class="n">wire_type</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">value</span>
+                <span class="p">)</span>
+
+            <span class="n">current</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MAP</span><span class="p">:</span>
+                <span class="c1"># Value represents a single key/value pair entry in the map.</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">current</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="c1"># For compatibility with other libraries.</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">FromString</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the binary encoded Protobuf into this message instance. This</span>
+<span class="sd">        returns the instance itself and is therefore assignable and chainable.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This is a method for compatibility with other libraries,</span>
+<span class="sd">            you should really use :meth:`parse`.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        data: :class:`bytes`</span>
+<span class="sd">            The data to parse the protobuf from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`Message`</span>
+<span class="sd">            The initialized message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">casing</span><span class="p">:</span> <span class="n">Casing</span> <span class="o">=</span> <span class="n">Casing</span><span class="o">.</span><span class="n">CAMEL</span><span class="p">,</span> <span class="n">include_default_values</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a JSON serializable dict representation of this object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        casing: :class:`Casing`</span>
+<span class="sd">            The casing to use for key values. Default is :attr:`Casing.CAMEL` for</span>
+<span class="sd">            compatibility purposes.</span>
+<span class="sd">        include_default_values: :class:`bool`</span>
+<span class="sd">            If ``True`` will include the default values of fields. Default is ``False``.</span>
+<span class="sd">            E.g. an ``int32`` field will be included with a value of ``0`` if this is</span>
+<span class="sd">            set to ``True``, otherwise this would be ignored.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        Dict[:class:`str`, Any]</span>
+<span class="sd">            The JSON serializable dict representation of this object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type_hints</span><span class="p">()</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">default_gen</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">field_is_repeated</span> <span class="o">=</span> <span class="n">defaults</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="ow">is</span> <span class="nb">list</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+            <span class="n">cased_name</span> <span class="o">=</span> <span class="n">casing</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MESSAGE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">datetime</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="n">value</span> <span class="o">!=</span> <span class="n">DATETIME_ZERO</span>
+                        <span class="ow">or</span> <span class="n">include_default_values</span>
+                        <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_default_value_for_oneof</span><span class="p">(</span>
+                            <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span>
+                        <span class="p">)</span>
+                    <span class="p">):</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_Timestamp</span><span class="o">.</span><span class="n">timestamp_to_json</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="n">value</span> <span class="o">!=</span> <span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="ow">or</span> <span class="n">include_default_values</span>
+                        <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_default_value_for_oneof</span><span class="p">(</span>
+                            <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span>
+                        <span class="p">)</span>
+                    <span class="p">):</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_Duration</span><span class="o">.</span><span class="n">delta_to_json</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">wraps</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">include_default_values</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">field_is_repeated</span><span class="p">:</span>
+                    <span class="c1"># Convert each item.</span>
+                    <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">datetime</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">_Timestamp</span><span class="o">.</span><span class="n">timestamp_to_json</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">timedelta</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">_Duration</span><span class="o">.</span><span class="n">delta_to_json</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="n">i</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">casing</span><span class="p">,</span> <span class="n">include_default_values</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">value</span>
+                        <span class="p">]</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="ow">or</span> <span class="n">include_default_values</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="p">(</span>
+                    <span class="n">value</span><span class="o">.</span><span class="n">_serialized_on_wire</span>
+                    <span class="ow">or</span> <span class="n">include_default_values</span>
+                    <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_default_value_for_oneof</span><span class="p">(</span>
+                        <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span>
+                    <span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">casing</span><span class="p">,</span> <span class="n">include_default_values</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MAP</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="s2">&quot;to_dict&quot;</span><span class="p">):</span>
+                        <span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">casing</span><span class="p">,</span> <span class="n">include_default_values</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">value</span> <span class="ow">or</span> <span class="n">include_default_values</span><span class="p">:</span>
+                    <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_field_default</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">include_default_values</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_default_value_for_oneof</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="n">INT_64_TYPES</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">field_is_repeated</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_BYTES</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">field_is_repeated</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="n">b64encode</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">value</span>
+                        <span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_ENUM</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">field_is_repeated</span><span class="p">:</span>
+                        <span class="n">enum_class</span> <span class="o">=</span> <span class="n">field_types</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span><span class="o">.</span><span class="n">__args__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+                            <span class="n">value</span><span class="p">,</span> <span class="nb">str</span>
+                        <span class="p">):</span>
+                            <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">enum_class</span><span class="p">(</span><span class="n">el</span><span class="p">)</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># transparently upgrade single value to repeated</span>
+                            <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">enum_class</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">enum_class</span> <span class="o">=</span> <span class="n">field_types</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>  <span class="c1"># noqa</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">enum_class</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_FLOAT</span><span class="p">,</span> <span class="n">TYPE_DOUBLE</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">field_is_repeated</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_dump_float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dump_float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">output</span><span class="p">[</span><span class="n">cased_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the key/value pairs into the current message instance. This returns the</span>
+<span class="sd">        instance itself and is therefore assignable and chainable.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        value: Dict[:class:`str`, Any]</span>
+<span class="sd">            The dictionary to parse from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`Message`</span>
+<span class="sd">            The initialized message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialized_on_wire</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">field_name</span> <span class="o">=</span> <span class="n">safe_snake_case</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">meta_by_field_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_MESSAGE</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">datetime</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">isoparse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+                        <span class="k">elif</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">timedelta</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span>
+                                <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">item</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                            <span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">datetime</span><span class="p">):</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">):</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">wraps</span><span class="p">:</span>
+                        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># NOTE: `from_dict` mutates the underlying message, so no</span>
+                        <span class="c1"># assignment here is necessary.</span>
+                        <span class="n">v</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span> <span class="ow">and</span> <span class="n">meta</span><span class="o">.</span><span class="n">map_types</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">TYPE_MESSAGE</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                    <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">.value&quot;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                        <span class="n">v</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">k</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="n">INT_64_TYPES</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_BYTES</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">b64decode</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="o">==</span> <span class="n">TYPE_ENUM</span><span class="p">:</span>
+                        <span class="n">enum_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betterproto</span><span class="o">.</span><span class="n">cls_by_field</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">enum_cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="n">enum_cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">meta</span><span class="o">.</span><span class="n">proto_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TYPE_FLOAT</span><span class="p">,</span> <span class="n">TYPE_DOUBLE</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">_parse_float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="n">_parse_float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A helper function to parse the message instance into its JSON</span>
+<span class="sd">        representation.</span>
+
+<span class="sd">        This is equivalent to::</span>
+
+<span class="sd">            json.dumps(message.to_dict(), indent=indent)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        indent: Optional[Union[:class:`int`, :class:`str`]]</span>
+<span class="sd">            The indent to pass to :func:`json.dumps`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`str`</span>
+<span class="sd">            The JSON representation of the message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A helper function to return the message instance from its JSON</span>
+<span class="sd">        representation. This returns the instance itself and is therefore assignable</span>
+<span class="sd">        and chainable.</span>
+
+<span class="sd">        This is equivalent to::</span>
+
+<span class="sd">            return message.from_dict(json.loads(value))</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        value: Union[:class:`str`, :class:`bytes`]</span>
+<span class="sd">            The value to pass to :func:`json.loads`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        :class:`Message`</span>
+<span class="sd">            The initialized message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">serialized_on_wire</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If this message was or should be serialized on the wire. This can be used to detect</span>
+<span class="sd">    presence (e.g. optional wrapper message) and is used internally during</span>
+<span class="sd">    parsing/serialization.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    :class:`bool`</span>
+<span class="sd">        Whether this message was or should be serialized on the wire.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">_serialized_on_wire</span>
+
+
+<span class="k">def</span> <span class="nf">which_one_of</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the name and value of a message&#39;s one-of field group.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    Tuple[:class:`str`, Any]</span>
+<span class="sd">        The field name and the value for that field.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">field_name</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">_group_current</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">field_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">field_name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+
+
+<span class="c1"># Circular import workaround: google.protobuf depends on base classes defined above.</span>
+<span class="kn">from</span> <span class="nn">.lib.google.protobuf</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa</span>
+    <span class="n">BoolValue</span><span class="p">,</span>
+    <span class="n">BytesValue</span><span class="p">,</span>
+    <span class="n">DoubleValue</span><span class="p">,</span>
+    <span class="n">Duration</span><span class="p">,</span>
+    <span class="n">EnumValue</span><span class="p">,</span>
+    <span class="n">FloatValue</span><span class="p">,</span>
+    <span class="n">Int32Value</span><span class="p">,</span>
+    <span class="n">Int64Value</span><span class="p">,</span>
+    <span class="n">StringValue</span><span class="p">,</span>
+    <span class="n">Timestamp</span><span class="p">,</span>
+    <span class="n">UInt32Value</span><span class="p">,</span>
+    <span class="n">UInt64Value</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_Duration</span><span class="p">(</span><span class="n">Duration</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_timedelta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">timedelta</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span> <span class="n">microseconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nanos</span> <span class="o">/</span> <span class="mf">1e3</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">delta_to_json</span><span class="p">(</span><span class="n">delta</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">delta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+                <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">0&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2">s&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">_Timestamp</span><span class="p">(</span><span class="n">Timestamp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_datetime</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nanos</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">timestamp_to_json</span><span class="p">(</span><span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">nanos</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">microsecond</span> <span class="o">*</span> <span class="mf">1e3</span>
+        <span class="n">copy</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nanos</span> <span class="o">%</span> <span class="mf">1e9</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># If there are 0 fractional digits, the fractional</span>
+            <span class="c1"># point &#39;.&#39; should be omitted when serializing.</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">Z&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nanos</span> <span class="o">%</span> <span class="mf">1e6</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Serialize 3 fractional digits.</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">nanos</span> <span class="o">//</span> <span class="mf">1e6</span><span class="p">)</span> <span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">Z&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nanos</span> <span class="o">%</span> <span class="mf">1e3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Serialize 6 fractional digits.</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">nanos</span> <span class="o">//</span> <span class="mf">1e3</span><span class="p">)</span> <span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">Z&quot;</span>
+        <span class="c1"># Serialize 9 fractional digits.</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">nanos</span><span class="si">:</span><span class="s2">09d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_wrapper</span><span class="p">(</span><span class="n">proto_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get the wrapper message class for a wrapped type.&quot;&quot;&quot;</span>
+
+    <span class="c1"># TODO: include ListValue and NullValue?</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">TYPE_BOOL</span><span class="p">:</span> <span class="n">BoolValue</span><span class="p">,</span>
+        <span class="n">TYPE_BYTES</span><span class="p">:</span> <span class="n">BytesValue</span><span class="p">,</span>
+        <span class="n">TYPE_DOUBLE</span><span class="p">:</span> <span class="n">DoubleValue</span><span class="p">,</span>
+        <span class="n">TYPE_FLOAT</span><span class="p">:</span> <span class="n">FloatValue</span><span class="p">,</span>
+        <span class="n">TYPE_ENUM</span><span class="p">:</span> <span class="n">EnumValue</span><span class="p">,</span>
+        <span class="n">TYPE_INT32</span><span class="p">:</span> <span class="n">Int32Value</span><span class="p">,</span>
+        <span class="n">TYPE_INT64</span><span class="p">:</span> <span class="n">Int64Value</span><span class="p">,</span>
+        <span class="n">TYPE_STRING</span><span class="p">:</span> <span class="n">StringValue</span><span class="p">,</span>
+        <span class="n">TYPE_UINT32</span><span class="p">:</span> <span class="n">UInt32Value</span><span class="p">,</span>
+        <span class="n">TYPE_UINT64</span><span class="p">:</span> <span class="n">UInt64Value</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">proto_type</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

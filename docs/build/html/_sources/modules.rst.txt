@@ -1,3 +1,6 @@
+python_pachyderm
+================
+
 .. toctree::
    :maxdepth: 4
 

@@ -153,6 +153,12 @@ class Client(
     VersionMixin,
     _Client,
 ):
+    """An experimental Client. New ``python_pachyderm`` features are available
+    here first. Refer to the :class:`.Introduction` section in the Experimental
+    Mixins doc page to see the existing experimental prototypes Initialize an
+    instance with ``python_pachyderm.experimental.Client()``.
+    """
+
     def __init__(
         self,
         host: str = None,
