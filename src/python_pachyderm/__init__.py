@@ -15,8 +15,6 @@ from .util import (
 from grpc import RpcError
 from . import experimental
 
-__pdoc__ = {"proto": False}
-
 
 __all__ = [
     "Client",

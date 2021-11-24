@@ -110,12 +110,27 @@ make lint
 
 ## Rebuilding API docs
 
-We use [pdoc3](https://github.com/pdoc3/pdoc) to generate our API docs site.
-To rebuild the docs, run
+We use Sphinx to generate our API docs site.
+
+**If you added any new files or modules** that you want included in the docs
+site, you must first create the RST files for them so Sphinx can reference and
+include them. To create these RST files, run:
+
+```bash
+sphinx-apidoc -o source ../src/
+```
+
+You'll see the new RST file(s) in `docs/source`. Make sure to add the reference
+to these new file(s) in the other RST files.
+
+To rebuild the docs, run:
 
 ```bash
 make docs
 ```
+
+This is a great way to check locally that the docs look as you expect them
+before you make a commit or release.
 
 ## Releasing
 
