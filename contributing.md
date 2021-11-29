@@ -123,6 +123,9 @@ sphinx-apidoc -o source ../src/
 You'll see the new RST file(s) in `docs/source`. Make sure to add the reference
 to these new file(s) in the other RST files.
 
+Additionally, add any new libraries to `docs/requirements.txt` that are
+needed to build the docs.
+
 To rebuild the docs, run:
 
 ```bash
