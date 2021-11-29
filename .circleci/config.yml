@@ -46,6 +46,9 @@ jobs:
             echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
+          name: Install deps
+          command: pip install twine
+      - run:
           name: build
           command: |
             python3 setup.py sdist
