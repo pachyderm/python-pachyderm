@@ -47,7 +47,17 @@ jobs:
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
           name: Install deps
-          command: pip install twine
+          command: |
+            pip install twine
+            sudo apt install moreutils
+            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && sudo mkdir -p /home/circleci/bin && mv jq-linux64 /home/circleci/bin/jq
+      - run:
+          name: Compute Version
+          command: |
+            VERSION=`jq -r '."python-pachyderm"' version.json`
+            SHA=`git rev-parse --short HEAD`
+            jq --arg version $(echo $VERSION-$SHA) '."python-pachyderm" = $version' version.json | sponge version.json
+
       - run:
           name: build
           command: |
