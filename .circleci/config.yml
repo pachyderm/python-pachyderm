@@ -40,9 +40,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: publish
+          name: Init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: build
           command: |
             python3 setup.py sdist
+      - run:
+          name: Publish
+          command: |
+            twine upload --repository testpypi dist/*
 
 workflows:
   circleci:
