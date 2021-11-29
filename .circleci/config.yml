@@ -54,9 +54,7 @@ jobs:
       - run:
           name: Compute Version
           command: |
-            VERSION=`jq -r '."python-pachyderm"' version.json`
-            SHA=`git rev-parse --short HEAD`
-            jq --arg version $(echo $VERSION-$SHA) '."python-pachyderm" = $version' version.json | sponge version.json
+            jq --arg version $(git describe) '."python-pachyderm" = $version' version.json | sponge version.json
 
       - run:
           name: build
