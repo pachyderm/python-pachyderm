@@ -50,7 +50,7 @@ jobs:
           command: |
             pip install twine
             sudo apt install moreutils
-            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && sudo mkdir -p /home/circleci/bin && mv jq-linux64 /home/circleci/bin/jq
+            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && mkdir -p /home/circleci/bin && mv jq-linux64 /home/circleci/bin/jq
       - run:
           name: Compute Version
           command: |
