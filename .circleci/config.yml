@@ -42,10 +42,7 @@ jobs:
       - run:
           name: publish
           command: |
-            sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
             python3 setup.py sdist
-            -twine upload --repository testpypi dist/*
-
 
 workflows:
   circleci:
