@@ -35,10 +35,8 @@ release:
 test-release:
 	git checkout origin/master
 	rm -rf build dist
-	sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
 	python3 setup.py sdist
-	-twine upload --repository testpypi dist/*
-	sed -i "" 's/name="python-pachyderm-test"/name="python-pachyderm"/g' setup.py
+	twine upload --repository testpypi dist/*
 
 lint:
 	black --check --diff .
