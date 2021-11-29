@@ -34,15 +34,28 @@ jobs:
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh
+  test-publish:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: publish
+          command: |
+            sed -i "" 's/name="python-pachyderm"/name="python-pachyderm-test"/g' setup.py
+	          python3 setup.py sdist
+	          -twine upload --repository testpypi dist/*
+
 
 workflows:
   circleci:
     jobs:
-      - tox:
-          matrix:
-            parameters:
-              toxenv:
-              - py36
-              - py39
-              - lint
-              - examples
+      #- tox:
+      #    matrix:
+      #      parameters:
+      #        toxenv:
+      #        - py36
+      #        - py39
+      #        - lint
+      #        - examples
+      - test-publish
