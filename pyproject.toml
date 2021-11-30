@@ -1,3 +1,46 @@
+[tool.poetry]
+name = "python-pachyderm"
+version = "7.2.0"
+description = "Python Pachyderm Client"
+authors = ["Pachyderm <python-pachyderm@pachyderm.io>"]
+include = ["version.json"]
+license = "Apache 2.0"
+documentation = "https://python-pachyderm.readthedocs.io/en/stable/"
+readme = 'README.md'
+repository = "https://github.com/pachyderm/python-pachyderm"
+keywords = ["pachyderm"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.6.2,<4.0"
+protobuf = ">=3.17.1"
+grpcio = ">=1.38.0"
+grpcio-health-checking = ">=1.38.0"
+
+[tool.poetry.dev-dependencies]
+black = ">=21.5b0"
+certifi = ">=2019.11.28"
+flake8 = ">=3.9.1"
+myst-parser = "0.15.2"
+numpydoc = ">=1.1.0"
+pre-commit = ">=2.12.1"
+pytest = ">=5.3.4"
+pytest-mock = ">=3.6.1"
+pytest-timeout = ">=1.4.2"
+Sphinx = "4.3.0"
+sphinx-rtd-theme = "1.0.0"
+tox = ">=3.23.1"
+
 [tool.black]
 force-exclude = '''
 /(
@@ -5,3 +48,7 @@ force-exclude = '''
   | src/python_pachyderm/proto
 )/
 '''
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
