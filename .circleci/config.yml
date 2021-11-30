@@ -10,24 +10,25 @@ jobs:
       image: ubuntu-2004:202101-01
     steps:
       - checkout
-      - run: 
+      - run:
           name: Install dependencies
           command: etc/testing/circle/install.sh
       - when:
-          condition: 
+          condition:
             not:
-              equal: [ lint, <<parameters.toxenv>> ] 
+              equal: [ lint, <<parameters.toxenv>> ]
           steps:
-            - run: 
+            - run:
                 name: Start minikube
                 command: etc/testing/circle/start-minikube.sh
             - run:
                 name: Deploy pachyderm
-                command: etc/testing/circle/deploy-pachyderm.sh 
-      - run: 
+                command: etc/testing/circle/deploy-pachyderm.sh
+      - run:
           name: TOXENV=<<parameters.toxenv>> tox
           command: |
-            pachctl port-forward & 
+            pachctl port-forward &
+            source $HOME/.poetry/env
             python3 -m tox
           environment:
             TOXENV: << parameters.toxenv >>
