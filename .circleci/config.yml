@@ -78,6 +78,6 @@ workflows:
             - tox
           filters:
             tags:
-              only: /[0-9]+(\.[0-9]+)*/
+              only: /^\d+\.\d+\.\d.*/
             branches:
               ignore: /.*/
