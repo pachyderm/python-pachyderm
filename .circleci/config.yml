@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Install deps
           command: |
-            pip install twine
+            python3 -m pip install twine
 
       - run:
           name: build
