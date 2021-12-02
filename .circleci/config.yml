@@ -35,6 +35,30 @@ jobs:
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh
+  test-publish:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: Init .pypirc
+          command: |
+            echo -e "[testpypi]" >> ~/.pypirc
+            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: Install deps
+          command: |
+            python3 -m pip install twine
+
+      - run:
+          name: build
+          command: |
+            python3 setup.py sdist
+      - run:
+          name: Publish
+          command: |
+            twine upload --repository testpypi dist/*
 
 workflows:
   circleci:
@@ -43,7 +67,18 @@ workflows:
           matrix:
             parameters:
               toxenv:
-              - py36
-              - py39
-              - lint
-              - examples
+                - py36
+                - py39
+                - lint
+                - examples
+          filters:
+            tags:
+              only: /.*/
+      - test-publish:
+          requires:
+            - tox
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d.*/
+            branches:
+              ignore: /.*/
