@@ -6,7 +6,7 @@ from grpc._channel import _InactiveRpcError
 
 
 class AuthServiceNotActivated(ConnectionError):
-    """ If the auth service is not activated but is required. """
+    """If the auth service is not activated but is required."""
 
     @classmethod
     def try_from(cls, error: RpcError) -> Union["AuthServiceNotActivated", RpcError]:
