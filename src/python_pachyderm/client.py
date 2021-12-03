@@ -5,7 +5,7 @@ from typing import TextIO
 from urllib.parse import urlparse
 
 from .mixin.admin import AdminMixin
-from .mixin.auth import AuthMixin
+from .mixin.auth import AuthMixin, AuthServiceNotActivated
 from .mixin.debug import DebugMixin
 from .mixin.enterprise import EnterpriseMixin
 from .mixin.health import HealthMixin
@@ -483,7 +483,10 @@ class Client(
         the cluster to its initial state.
         """
         self.delete_all_identity()
-        self.deactivate_auth()
+        try:
+            self.deactivate_auth()
+        except AuthServiceNotActivated:
+            pass
         self.delete_all_license()
         self.delete_all_pipelines()
         self.delete_all_repos()

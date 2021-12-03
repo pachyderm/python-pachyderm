@@ -1,5 +1,12 @@
 from typing import Dict, List
+
+from grpc._channel import _InactiveRpcError as RpcError
+
 from python_pachyderm.service import Service, auth_proto
+
+
+class AuthServiceNotActivated(ConnectionError):
+    pass
 
 
 class AuthMixin:
@@ -25,8 +32,18 @@ class AuthMixin:
     def deactivate_auth(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
+
+        Raises
+        ------
+        AuthServiceNotActivated
         """
-        self._req(Service.AUTH, "Deactivate")
+        try:
+            self._req(Service.AUTH, "Deactivate")
+        except RpcError as err:
+            error_details = err.details()
+            if "not activated" in error_details:
+                raise AuthServiceNotActivated(error_details)
+            raise err
 
     def get_auth_configuration(self) -> auth_proto.OIDCConfig:
         """Gets the auth configuration.
