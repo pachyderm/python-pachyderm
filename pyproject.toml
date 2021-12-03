@@ -2,7 +2,7 @@
 name = "python-pachyderm"
 version = "7.2.0"
 description = "Python Pachyderm Client"
-authors = ["Pachyderm <python-pachyderm@pachyderm.io>"]
+authors = ["Pachyderm Integrations <integrations@pachyderm.io>"]
 include = ["version.json"]
 license = "Apache 2.0"
 documentation = "https://python-pachyderm.readthedocs.io/en/stable/"
