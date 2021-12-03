@@ -59,7 +59,8 @@ def test_oidc_client(client):
 
 
 def test_delete_all_error():
-    """Test that calling IdentityMixin.delete_all_identity returns a custom error if auth has not been activated."""
+    """Test that calling IdentityMixin.delete_all_identity returns a custom
+    error if auth has not been activated."""
     client = python_pachyderm.Client()
     with pytest.raises(AuthServiceNotActivated):
         client.delete_all_identity()

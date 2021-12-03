@@ -106,7 +106,8 @@ def test_groups(client):
 
 
 def test_deactivate_error():
-    """Test that calling AuthMixin.deactivate_auth returns a custom error if auth has not been activated."""
+    """Test that calling AuthMixin.deactivate_auth returns a custom error
+    if auth has not been activated."""
     client = python_pachyderm.Client()
     with pytest.raises(AuthServiceNotActivated):
         client.deactivate_auth()
