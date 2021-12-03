@@ -165,4 +165,8 @@ This is mostly necessary for major releases, but it always reduces risk.
     - This is the python-pachyderm version that is currently in development in that branch.
   - [ ] &#40;Only when releasing from `master`&#41; In `master`, create a PR to update the python-pachyderm version in `version.json` to contain the next _minor_ release (e.g. 1.1.0)
     - This is the python-pachyderm version that is currently in development in `master`.
-  - [ ] &#40;Only when releasing from `master`&#41; In the new patch release branch (e.g. `v1.0.x`), create a PR (or add to the above PR) to update `make release` so that it checks out `v1.0.x` instead of `master` when releasing from this branch.
+  - [ ] &#40;Only when releasing from `master`&#41; In the new patch release branch (e.g. `v1.0.x`):
+    - Create a PR (or add to the above PR) to update `make release` so that it checks out `v1.0.x` instead of `master` when releasing from this branch.
+    - Go to the python-pachyderm Read the Docs (RTD) page and activate the [newly created patch release branch](https://readthedocs.org/projects/python-pachyderm/versions/). This will serve up that branch's docs on RTD.
+    - Update the docs link in `README.md` to point to the branch's RTD page.
+    - Update the examples directory link to point to the `examples/` directory of that Github branch.
