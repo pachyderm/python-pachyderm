@@ -22,21 +22,17 @@ src/python_pachyderm/proto/v2: docker-build-proto
 
 init:
 	git submodule update --init
-	python -m pip install -U pip wheel setuptools
-	python -m pip install -e ".[DEV]"
 	pre-commit install
 
 release:
 	git checkout origin/master
 	rm -rf build dist
-	python3 setup.py sdist
-	twine upload dist/*
+	poetry publish --build
 
 test-release:
 	git checkout origin/master
 	rm -rf build dist
-	python3 setup.py sdist
-	twine upload --repository testpypi dist/*
+	poetry publish --build --repository testpypi
 
 lint:
 	black --check --diff .

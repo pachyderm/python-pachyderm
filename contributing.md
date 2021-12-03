@@ -2,11 +2,18 @@
 
 ## Getting started
 
-Setup & initialize virtualenv, for example:
+We use [poetry](https://python-poetry.org/) to both manage dependencies
+  and publish this package. You can find information about installing this
+  software [here](https://python-poetry.org/docs/).
 
+
+Once both `poetry` is installed, you can use `poetry` to create your
+  virtual environment for this project. The following command
+  (run at the root of this project) will create a virtual environment
+  within the `.venv` directory:
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+poetry install
+source .venv/bin/activate
 ```
 
 Run the init script which pulls submodules as well as sets up the Python project and install development tools locally:
