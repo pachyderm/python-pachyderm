@@ -482,6 +482,9 @@ class Client(
         """Delete all repos, commits, files, pipelines, and jobs. This resets
         the cluster to its initial state.
         """
+        self.delete_all_identity()
+        self.deactivate_auth()
+        self.delete_all_license()
         self.delete_all_pipelines()
         self.delete_all_repos()
         self.delete_all_transactions()
