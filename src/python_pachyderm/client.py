@@ -4,8 +4,9 @@ from pathlib import Path
 from typing import TextIO
 from urllib.parse import urlparse
 
+from .errors import AuthServiceNotActivated
 from .mixin.admin import AdminMixin
-from .mixin.auth import AuthMixin, AuthServiceNotActivated
+from .mixin.auth import AuthMixin
 from .mixin.debug import DebugMixin
 from .mixin.enterprise import EnterpriseMixin
 from .mixin.health import HealthMixin
@@ -482,11 +483,18 @@ class Client(
         """Delete all repos, commits, files, pipelines, and jobs. This resets
         the cluster to its initial state.
         """
-        self.delete_all_identity()
+        # Try removing all identities if auth is activated.
+        try:
+            self.delete_all_identity()
+        except AuthServiceNotActivated:
+            pass
+
+        # Try deactivating auth if activated.
         try:
             self.deactivate_auth()
         except AuthServiceNotActivated:
             pass
+
         self.delete_all_license()
         self.delete_all_pipelines()
         self.delete_all_repos()
