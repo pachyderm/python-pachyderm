@@ -3,14 +3,13 @@
 """Tests admin-related functionality"""
 
 import os
-from contextlib import contextmanager
-from time import sleep
 
 import pytest
 
 import python_pachyderm
-from tests import util
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.service import auth_proto, identity_proto
+from tests import util
 
 
 @pytest.fixture
@@ -28,18 +27,7 @@ def client():
     yield pc
     # not redundant because auth_token could be overriden by tests
     pc.auth_token = "iamroot"
-    try:
-        pc.delete_all_identity()
-    except Exception:
-        pass
-    try:
-        pc.delete_all_license()
-    except Exception:
-        pass
-    try:
-        pc.deactivate_auth()
-    except Exception:
-        pass
+    pc.delete_all()
     pc.deactivate_enterprise()
 
 
@@ -115,3 +103,10 @@ def test_groups(client):
     client.modify_members("foogroup", remove=["pach:root"])
     assert client.get_groups() == []
     assert client.get_users("foogroup") == []
+
+
+def test_deactivate_error():
+    """Test that calling AuthMixin.deactivate_auth returns a custom error if auth has not been activated."""
+    client = python_pachyderm.Client()
+    with pytest.raises(AuthServiceNotActivated):
+        client.deactivate_auth()
