@@ -54,7 +54,7 @@ jobs:
       - run:
           name: build + publish
           command: |
-            make test-release
+            poetry publish --build
 
 workflows:
   circleci:
