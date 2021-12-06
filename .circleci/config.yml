@@ -47,18 +47,14 @@ jobs:
             echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
-          name: Install deps
+          name: Install poetry
           command: |
-            python3 -m pip install twine
-
+              curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
+              python get-poetry.py -y
       - run:
-          name: build
+          name: build + publish
           command: |
-            python3 setup.py sdist
-      - run:
-          name: Publish
-          command: |
-            twine upload --repository testpypi dist/*
+            make test-release
 
 workflows:
   circleci:
@@ -74,11 +70,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test-publish:
-          requires:
-            - tox
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d.*/
-            branches:
-              ignore: /.*/
+      - test-publish
+#          requires:
+#            - tox
+#          filters:
+#            tags:
+#              only: /^\d+\.\d+\.\d.*/
+#            branches:
+#              ignore: /.*/
