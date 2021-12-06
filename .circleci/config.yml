@@ -41,12 +41,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Init .pypirc
-          command: |
-            echo -e "[testpypi]" >> ~/.pypirc
-            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-      - run:
           name: Install poetry
           command: |
               curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
@@ -74,11 +68,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test-publish
-#          requires:
-#            - tox
-#          filters:
-#            tags:
-#              only: /^\d+\.\d+\.\d.*/
-#            branches:
-#              ignore: /.*/
+      - test-publish:
+          requires:
+            - tox
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d.*/
+            branches:
+              ignore: /.*/
