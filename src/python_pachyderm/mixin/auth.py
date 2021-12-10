@@ -48,7 +48,9 @@ class AuthMixin:
             A protobuf object with auth configuration information.
         """
         message = auth_pb2.GetConfigurationRequest()
-        return self.__stub.GetConfiguration(message, metadata=self._metadata).configuration
+        return self.__stub.GetConfiguration(
+            message, metadata=self._metadata
+        ).configuration
 
     def set_auth_configuration(self, configuration: auth_pb2.OIDCConfig) -> None:
         """Sets the auth configuration.
@@ -70,7 +72,9 @@ class AuthMixin:
         message = auth_pb2.SetConfigurationRequest(configuration=configuration)
         self.__stub.SetConfiguration(message, metadata=self._metadata)
 
-    def get_role_binding(self, resource: auth_pb2.Resource) -> Dict[str, auth_pb2.Roles]:
+    def get_role_binding(
+        self, resource: auth_pb2.Resource
+    ) -> Dict[str, auth_pb2.Roles]:
         """Returns the current set of role bindings to the resource specified.
 
         Parameters
@@ -112,7 +116,9 @@ class AuthMixin:
         .. # noqa: W505
         """
         message = auth_pb2.GetRoleBindingRequest(resource=resource)
-        return self.__stub.GetRoleBinding(message, metadata=self._metadata).binding_entries
+        return self.__stub.GetRoleBinding(
+            message, metadata=self._metadata
+        ).binding_entries
 
     def modify_role_binding(
         self, resource: auth_pb2.Resource, principal: str, roles: List[str] = None
@@ -146,7 +152,9 @@ class AuthMixin:
         ... )
         """
         message = auth_pb2.ModifyRoleBindingRequest(
-            resource=resource, principal=principal, roles=roles,
+            resource=resource,
+            principal=principal,
+            roles=roles,
         )
         self.__stub.ModifyRoleBinding(message, metadata=self._metadata)
 
@@ -198,7 +206,7 @@ class AuthMixin:
     def authorize(
         self,
         resource: auth_pb2.Resource,
-        permissions: List[auth_pb2.Permission] = None,
+        permissions: List["auth_pb2.Permission"] = None,
     ) -> auth_pb2.AuthorizeResponse:
         """Tests a list of permissions that the user might have on a resource.
 
