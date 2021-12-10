@@ -545,7 +545,7 @@
 
 
 <div class="viewcode-block" id="ApiStub"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub">[docs]</a><span class="k">class</span> <span class="nc">ApiStub</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">ServiceStub</span><span class="p">):</span>
-<div class="viewcode-block" id="ApiStub.create_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.create_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -557,17 +557,17 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/CreateRepo&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.inspect_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.inspect_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RepoInfo&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RepoInfo&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">InspectRepoRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">repo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">repo</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectRepo&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">RepoInfo</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectRepo&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">RepoInfo</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.list_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.list_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;RepoInfo&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;RepoInfo&quot;</span><span class="p">]:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">ListRepoRequest</span><span class="p">()</span>
         <span class="n">request</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
@@ -577,9 +577,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">RepoInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.delete_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.delete_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -590,9 +590,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/DeleteRepo&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.start_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.start_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Commit&quot;</span><span class="p">:</span>
 
@@ -603,9 +603,9 @@
         <span class="k">if</span> <span class="n">branch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">branch</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/StartCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">Commit</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/StartCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">Commit</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.finish_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.finish_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -623,9 +623,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/FinishCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.clear_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.clear_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -635,9 +635,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/ClearCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.inspect_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.inspect_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="s2">&quot;CommitState&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CommitInfo&quot;</span><span class="p">:</span>
 
@@ -646,9 +646,9 @@
             <span class="n">request</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">commit</span>
         <span class="n">request</span><span class="o">.</span><span class="n">wait</span> <span class="o">=</span> <span class="n">wait</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CommitInfo</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectCommit&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CommitInfo</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.list_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.list_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -677,9 +677,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">CommitInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.subscribe_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.subscribe_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -705,9 +705,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">CommitInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.inspect_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.inspect_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitInfo&quot;</span><span class="p">]:</span>
 
@@ -721,9 +721,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">CommitInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.list_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.list_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitSetInfo&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitSetInfo&quot;</span><span class="p">]:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">ListCommitSetRequest</span><span class="p">()</span>
 
@@ -732,9 +732,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">CommitSetInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.squash_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.squash_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">squash_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">squash_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -746,9 +746,9 @@
             <span class="s2">&quot;/pfs_v2.API/SquashCommitSet&quot;</span><span class="p">,</span>
             <span class="n">request</span><span class="p">,</span>
             <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.drop_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.drop_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">drop_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">drop_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -758,9 +758,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/DropCommitSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.create_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.create_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">head</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -784,17 +784,17 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/CreateBranch&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.inspect_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.inspect_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BranchInfo&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BranchInfo&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">InspectBranchRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">branch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">branch</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectBranch&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">BranchInfo</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectBranch&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">BranchInfo</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.list_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.list_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;BranchInfo&quot;</span><span class="p">]:</span>
 
@@ -808,9 +808,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">BranchInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.delete_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.delete_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -821,9 +821,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/DeleteBranch&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.modify_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.modify_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">modify_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">modify_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">request_iterator</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
             <span class="n">AsyncIterable</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">]</span>
@@ -835,9 +835,9 @@
             <span class="n">request_iterator</span><span class="p">,</span>
             <span class="n">ModifyFileRequest</span><span class="p">,</span>
             <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.get_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.get_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;betterproto_lib_google_protobuf.BytesValue&quot;</span><span class="p">]:</span>
 
@@ -852,9 +852,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">BytesValue</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.get_file_tar"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.get_file_tar">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;betterproto_lib_google_protobuf.BytesValue&quot;</span><span class="p">]:</span>
 
@@ -869,17 +869,17 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">BytesValue</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.inspect_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.inspect_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FileInfo&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FileInfo&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">InspectFileRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectFile&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">FileInfo</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectFile&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">FileInfo</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.list_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.list_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
 
@@ -893,9 +893,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">FileInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.walk_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.walk_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">WalkFileRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -906,9 +906,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">FileInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.glob_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.glob_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
 
@@ -922,9 +922,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">FileInfo</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.diff_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.diff_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">new_file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">old_file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">shallow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;DiffFileResponse&quot;</span><span class="p">]:</span>
 
@@ -940,25 +940,25 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">DiffFileResponse</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.activate_auth"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.activate_auth">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">activate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ActivateAuthResponse&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">activate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ActivateAuthResponse&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">ActivateAuthRequest</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/ActivateAuth&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">ActivateAuthResponse</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.delete_all"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.delete_all">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/DeleteAll&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.fsck"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.fsck">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FsckResponse&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FsckResponse&quot;</span><span class="p">]:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">FsckRequest</span><span class="p">()</span>
         <span class="n">request</span><span class="o">.</span><span class="n">fix</span> <span class="o">=</span> <span class="n">fix</span>
@@ -968,9 +968,9 @@
             <span class="n">request</span><span class="p">,</span>
             <span class="n">FsckResponse</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="k">yield</span> <span class="n">response</span></div>
+            <span class="k">yield</span> <span class="n">response</span>
 
-<div class="viewcode-block" id="ApiStub.create_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.create_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">request_iterator</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
             <span class="n">AsyncIterable</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">]</span>
@@ -982,9 +982,9 @@
             <span class="n">request_iterator</span><span class="p">,</span>
             <span class="n">ModifyFileRequest</span><span class="p">,</span>
             <span class="n">CreateFileSetResponse</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.get_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.get_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">GetFileSetRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -992,9 +992,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/GetFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CreateFileSetResponse</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.add_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.add_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_set_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -1005,9 +1005,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/AddFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.renew_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.renew_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">renew_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">renew_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file_set_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
 
@@ -1017,9 +1017,9 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/RenewFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.run_load_test"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.run_load_test">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
 
@@ -1031,55 +1031,55 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTest&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">RunLoadTestResponse</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="ApiStub.run_load_test_default"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub.run_load_test_default">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTestDefault&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">RunLoadTestResponse</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ApiBase"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase">[docs]</a><span class="k">class</span> <span class="nc">ApiBase</span><span class="p">(</span><span class="n">ServiceBase</span><span class="p">):</span>
-<div class="viewcode-block" id="ApiBase.create_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.create_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.inspect_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.inspect_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RepoInfo&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RepoInfo&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.list_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.list_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;RepoInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;RepoInfo&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.delete_repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.delete_repo">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.start_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.start_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Commit&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.finish_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.finish_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.clear_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.clear_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.inspect_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.inspect_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="s2">&quot;CommitState&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CommitInfo&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.list_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.list_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">,</span>
         <span class="n">from_</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span>
@@ -1089,9 +1089,9 @@
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">origin_kind</span><span class="p">:</span> <span class="s2">&quot;OriginKind&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.subscribe_commit"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.subscribe_commit">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -1100,27 +1100,27 @@
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">origin_kind</span><span class="p">:</span> <span class="s2">&quot;OriginKind&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.inspect_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.inspect_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.list_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.list_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitSetInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_commit_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;CommitSetInfo&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.squash_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.squash_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">squash_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">squash_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.drop_commit_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.drop_commit_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">drop_commit_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">drop_commit_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit_set</span><span class="p">:</span> <span class="s2">&quot;CommitSet&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.create_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.create_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">head</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">,</span>
@@ -1128,89 +1128,89 @@
         <span class="n">trigger</span><span class="p">:</span> <span class="s2">&quot;Trigger&quot;</span><span class="p">,</span>
         <span class="n">new_commit_set</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.inspect_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.inspect_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BranchInfo&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BranchInfo&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.list_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.list_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span><span class="p">,</span> <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;BranchInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.delete_branch"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.delete_branch">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.modify_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.modify_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">modify_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">modify_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">request_iterator</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.get_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.get_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;betterproto_lib_google_protobuf.BytesValue&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.get_file_tar"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.get_file_tar">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;betterproto_lib_google_protobuf.BytesValue&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.inspect_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.inspect_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FileInfo&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FileInfo&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.list_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.list_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.walk_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.walk_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.glob_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.glob_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.diff_file"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.diff_file">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">new_file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">old_file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">shallow</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;DiffFileResponse&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.activate_auth"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.activate_auth">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">activate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ActivateAuthResponse&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">activate_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ActivateAuthResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.delete_all"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.delete_all">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.fsck"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.fsck">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FsckResponse&quot;</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FsckResponse&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.create_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.create_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">request_iterator</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileRequest&quot;</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.get_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.get_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.add_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.add_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span> <span class="n">file_set_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.renew_file_set"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.renew_file_set">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">renew_file_set</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">renew_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file_set_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.run_load_test"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.run_load_test">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ApiBase.run_load_test_default"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase.run_load_test_default">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_create_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>

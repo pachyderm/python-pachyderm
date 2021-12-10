@@ -59,7 +59,7 @@ PFS proto
 .. automodule:: python_pachyderm.experimental.proto.v2.pfs_v2
    :members:
    :undoc-members:
-   :exclude-members: ApiBase, ApiStub
+   :exclude-members: ApiBase, ApiStub, ActivateAuthRequest, ActivateAuthResponse
 
 PPS proto
 ---------
@@ -67,7 +67,7 @@ PPS proto
 .. automodule:: python_pachyderm.experimental.proto.v2.pps_v2
    :members:
    :undoc-members:
-   :exclude-members: ApiBase, ApiStub
+   :exclude-members: ApiBase, ApiStub, ActivateAuthRequest, ActivateAuthResponse
 
 Transaction proto
 -----------------
