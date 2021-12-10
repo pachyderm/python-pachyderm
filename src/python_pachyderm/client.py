@@ -1,8 +1,10 @@
 import os
 import json
 from pathlib import Path
-from typing import TextIO
+from typing import List, Optional, TextIO, Tuple
 from urllib.parse import urlparse
+
+import grpc
 
 from .mixin.admin import AdminMixin
 from .mixin.auth import AuthMixin
@@ -15,7 +17,7 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
-from .service import Service
+from .service import Service, GRPC_CHANNEL_OPTIONS
 
 
 class ConfigError(Exception):
@@ -143,6 +145,9 @@ class Client(
 
         self.address = "{}:{}".format(host, port)
         self.root_certs = root_certs
+        self._channel = _create_channel(
+            self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
+        )
         self._stubs = {}
         self._auth_token = auth_token
         self._transaction_id = transaction_id
@@ -151,6 +156,8 @@ class Client(
             resp = self.authenticate_id_token(os.environ.get("PACH_PYTHON_OIDC_TOKEN"))
             self._auth_token = resp
             self._metadata = self._build_metadata()
+
+        super().__init__()  # Initialize all the Mixin classes.
 
     @classmethod
     def new_in_cluster(
@@ -485,3 +492,14 @@ class Client(
         self.delete_all_pipelines()
         self.delete_all_repos()
         self.delete_all_transactions()
+
+
+def _create_channel(
+    address: str,
+    root_certs: Optional[bytes],
+    options: List[Tuple[str, str]],
+) -> grpc.Channel:
+    if root_certs is not None:
+        ssl = grpc.ssl_channel_credentials(root_certificates=root_certs)
+        return grpc.secure_channel(address, ssl, options=options)
+    return grpc.insecure_channel(address, options=options)
