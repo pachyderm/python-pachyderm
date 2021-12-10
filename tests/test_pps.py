@@ -131,6 +131,15 @@ def test_datums():
     ):
         sandbox.client.restart_datum(pipeline_name, job_id)
 
+    datums = list(
+        sandbox.client.list_datum(
+            input=pps_proto.Input(
+                pfs=pps_proto.PFSInput(glob="/*", repo=sandbox.input_repo_name)
+            )
+        )
+    )
+    assert len(datums) == 1
+
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
