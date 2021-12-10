@@ -146,18 +146,20 @@ class Client(
 
         self.address = "{}:{}".format(host, port)
         self.root_certs = root_certs
-        self._channel = _create_channel(
+        channel = _create_channel(
             self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
         )
+
         self._stubs = {}
         self._auth_token = auth_token
         self._transaction_id = transaction_id
         self._metadata = self._build_metadata()
+        self._channel = _apply_metadata_interceptor(channel, self._metadata)
         if not auth_token and os.environ.get("PACH_PYTHON_OIDC_TOKEN"):
             resp = self.authenticate_id_token(os.environ.get("PACH_PYTHON_OIDC_TOKEN"))
             self._auth_token = resp
             self._metadata = self._build_metadata()
-        self._channel = _apply_metadata_interceptor(self._channel, self._metadata)
+            self._channel = _apply_metadata_interceptor(channel, self._metadata)
         super().__init__()  # Initialize all the Mixin classes.
 
     @classmethod
