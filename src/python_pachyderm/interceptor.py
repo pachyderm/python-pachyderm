@@ -13,13 +13,14 @@ class MetadataClientInterceptor(ClientInterceptor):
     def intercept(
         self, method: Callable, request: Any, call_details: grpc.ClientCallDetails
     ):
-        old_metadata = list(call_details.metadata or [])
+        call_details_metadata = list(call_details.metadata or [])
+        call_details_metadata.extend(self.metadata)
         new_details = ClientCallDetails(
-            call_details.method,
-            call_details.timeout,
-            old_metadata.extend(self.metadata),
-            call_details.credentials,
-            call_details.wait_for_ready,
-            call_details.compression,
+            compression=call_details.compression,
+            credentials=call_details.credentials,
+            metadata=call_details_metadata,
+            method=call_details.method,
+            timeout=call_details.timeout,
+            wait_for_ready=call_details.wait_for_ready,
         )
         return method(request, new_details)
