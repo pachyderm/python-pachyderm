@@ -57,6 +57,8 @@ def test_oidc_client(client):
     )
 
     assert len(client.list_oidc_clients()) == 2
+    assert client.get_oidc_client(oidc1.id).name == "pach1"
+    assert client.get_oidc_client("oidc2").name == "pach2"
 
     client.update_oidc_client(
         identity_proto.OIDCClient(id="oidc1", name="pach3", secret="secret1")
