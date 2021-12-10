@@ -435,6 +435,13 @@ class Client(
     def auth_token(self, value):
         self._auth_token = value
         self._metadata = self._build_metadata()
+        self._channel = _apply_metadata_interceptor(
+            channel=_create_channel(
+                self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
+            ),
+            metadata=self._metadata
+        )
+        super().__init__()
 
     @property
     def transaction_id(self):
@@ -444,6 +451,13 @@ class Client(
     def transaction_id(self, value):
         self._transaction_id = value
         self._metadata = self._build_metadata()
+        self._channel = _apply_metadata_interceptor(
+            channel=_create_channel(
+                self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
+            ),
+            metadata=self._metadata
+        )
+        super().__init__()
 
     def _build_metadata(self):
         metadata = []
