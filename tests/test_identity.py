@@ -7,8 +7,9 @@ import os
 import pytest
 
 import python_pachyderm
-from tests import util
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.service import identity_proto
+from tests import util
 
 
 @pytest.fixture
@@ -26,18 +27,7 @@ def client():
     yield pc
     # not redundant because auth_token could be overriden by tests
     pc.auth_token = "iamroot"
-    try:
-        pc.delete_all_identity()
-    except Exception:
-        pass
-    try:
-        pc.delete_all_license()
-    except Exception:
-        pass
-    try:
-        pc.deactivate_auth()
-    except Exception:
-        pass
+    pc.delete_all()
     pc.deactivate_enterprise()
 
 
@@ -68,3 +58,11 @@ def test_oidc_client(client):
 
     client.delete_oidc_client(oidc1.id)
     assert len(client.list_oidc_clients()) == 1
+
+
+def test_delete_all_error():
+    """Test that calling IdentityMixin.delete_all_identity returns a custom
+    error if auth has not been activated."""
+    client = python_pachyderm.Client()
+    with pytest.raises(AuthServiceNotActivated):
+        client.delete_all_identity()

@@ -1,6 +1,10 @@
 from typing import List
-from python_pachyderm.service import Service, license_proto, enterprise_proto
+
 from google.protobuf import timestamp_pb2
+from grpc import RpcError
+
+from python_pachyderm.errors import AuthServiceNotActivated
+from python_pachyderm.service import Service, license_proto, enterprise_proto
 
 
 class LicenseMixin:
@@ -138,8 +142,16 @@ class LicenseMixin:
         return self._req(Service.LICENSE, "GetActivationCode")
 
     def delete_all_license(self) -> None:
-        """Remove all clusters and deactivate the license service."""
-        self._req(Service.LICENSE, "DeleteAll")
+        """Remove all clusters and deactivate the license service.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
+        try:
+            self._req(Service.LICENSE, "DeleteAll")
+        except RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)
 
     def list_user_clusters(self) -> List[license_proto.UserClusterInfo]:
         """Lists all clusters available to user.
