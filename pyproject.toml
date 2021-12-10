@@ -25,6 +25,7 @@ classifiers = [
 python = ">=3.6.2,<4.0"
 grpcio = ">=1.38.0"
 grpcio-health-checking = ">=1.38.0"
+grpc-interceptor = "^0.13.0"
 importlib-metadata = { version = ">1.5.1", python = "<3.8" }
 protobuf = ">=3.17.1"
 

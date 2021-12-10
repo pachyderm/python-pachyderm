@@ -9,7 +9,6 @@ class AuthMixin:
     """A mixin for auth-related functionality."""
 
     _channel: grpc.Channel
-    _metadata: List[Tuple[str, str]]
 
     def __init__(self):
         self.__stub = auth_pb2_grpc.APIStub(self._channel)
@@ -31,14 +30,14 @@ class AuthMixin:
             A token used as the root user login token.
         """
         message = auth_pb2.ActivateRequest(root_token=root_token)
-        return self.__stub.Activate(message, metadata=self._metadata).pach_token
+        return self.__stub.Activate(message).pach_token
 
     def deactivate_auth(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
         """
         message = auth_pb2.DeactivateRequest()
-        self.__stub.Deactivate(message, metadata=self._metadata)
+        self.__stub.Deactivate(message)
 
     def get_auth_configuration(self) -> auth_pb2.OIDCConfig:
         """Gets the auth configuration.
@@ -49,9 +48,7 @@ class AuthMixin:
             A protobuf object with auth configuration information.
         """
         message = auth_pb2.GetConfigurationRequest()
-        return self.__stub.GetConfiguration(
-            message, metadata=self._metadata
-        ).configuration
+        return self.__stub.GetConfiguration(message).configuration
 
     def set_auth_configuration(self, configuration: auth_pb2.OIDCConfig) -> None:
         """Sets the auth configuration.
@@ -71,7 +68,7 @@ class AuthMixin:
         ... ))
         """
         message = auth_pb2.SetConfigurationRequest(configuration=configuration)
-        self.__stub.SetConfiguration(message, metadata=self._metadata)
+        self.__stub.SetConfiguration(message)
 
     def get_role_binding(
         self, resource: auth_pb2.Resource
@@ -117,9 +114,7 @@ class AuthMixin:
         .. # noqa: W505
         """
         message = auth_pb2.GetRoleBindingRequest(resource=resource)
-        return self.__stub.GetRoleBinding(
-            message, metadata=self._metadata
-        ).binding.entries
+        return self.__stub.GetRoleBinding(message).binding.entries
 
     def modify_role_binding(
         self, resource: auth_pb2.Resource, principal: str, roles: List[str] = None
@@ -157,7 +152,7 @@ class AuthMixin:
             principal=principal,
             roles=roles,
         )
-        self.__stub.ModifyRoleBinding(message, metadata=self._metadata)
+        self.__stub.ModifyRoleBinding(message)
 
     def get_oidc_login(self) -> auth_pb2.GetOIDCLoginResponse:
         """Gets the OIDC login configuration.
@@ -168,7 +163,7 @@ class AuthMixin:
             A protobuf object with the login configuration information.
         """
         message = auth_pb2.GetOIDCLoginRequest()
-        return self.__stub.GetOIDCLogin(message, metadata=self._metadata)
+        return self.__stub.GetOIDCLogin(message)
 
     def authenticate_oidc(self, oidc_state: str) -> str:
         """Authenticates a user to the Pachyderm cluster via OIDC.
@@ -184,7 +179,7 @@ class AuthMixin:
             A token that can be used for making authenticate requests.
         """
         message = auth_pb2.AuthenticateRequest(oidc_state=oidc_state)
-        return self.__stub.Authorize(message, metadata=self._metadata).pach_token
+        return self.__stub.Authorize(message).pach_token
 
     def authenticate_id_token(self, id_token: str) -> str:
         """Authenticates a user to the Pachyderm cluster using an ID token
@@ -202,7 +197,7 @@ class AuthMixin:
             A token that can be used for making authenticate requests.
         """
         message = auth_pb2.AuthenticateRequest(id_token=id_token)
-        return self.__stub.Authorize(message, metadata=self._metadata).pach_token
+        return self.__stub.Authorize(message).pach_token
 
     def authorize(
         self,
@@ -237,7 +232,7 @@ class AuthMixin:
         principal: "pach:root"
         """
         message = auth_pb2.AuthorizeRequest(resource=resource, permissions=permissions)
-        return self.__stub.Authorize(message, metadata=self._metadata)
+        return self.__stub.Authorize(message)
 
     def who_am_i(self) -> auth_pb2.WhoAmIResponse:
         """Returns info about the user tied to this `Client`.
@@ -249,7 +244,7 @@ class AuthMixin:
             token used.
         """
         message = auth_pb2.WhoAmIRequest()
-        return self.__stub.WhoAmI(message, metadata=self._metadata)
+        return self.__stub.WhoAmI(message)
 
     def get_roles_for_permission(
         self, permission: auth_pb2.Permission
@@ -276,7 +271,7 @@ class AuthMixin:
         .. # noqa: W505
         """
         message = auth_pb2.GetRolesForPermissionRequest(permission=permission)
-        return self.__stub.GetRolesForPermission(message, metadata=self._metadata).roles
+        return self.__stub.GetRolesForPermission(message).roles
 
     def get_robot_token(self, robot: str, ttl: int = None) -> str:
         """Gets a new auth token for a robot user.
@@ -295,7 +290,7 @@ class AuthMixin:
             The new auth token.
         """
         message = auth_pb2.GetRobotTokenRequest(robot=robot, ttl=ttl)
-        return self.__stub.GetRobotToken(message, metadata=self._metadata).token
+        return self.__stub.GetRobotToken(message).token
 
     def revoke_auth_token(self, token: str) -> None:
         """Revokes an auth token.
@@ -306,7 +301,7 @@ class AuthMixin:
             The Pachyderm token being revoked.
         """
         message = auth_pb2.RevokeAuthTokenRequest(token=token)
-        self.__stub.RevokeAuthToken(message, metadata=self._metadata)
+        self.__stub.RevokeAuthToken(message)
 
     def set_groups_for_user(self, username: str, groups: List[str]) -> None:
         """Sets the group membership for a user.
@@ -325,7 +320,7 @@ class AuthMixin:
         .. # noqa: W505
         """
         message = auth_pb2.SetGroupsForUserRequest(username=username, groups=groups)
-        self.__stub.SetGroupsForUser(message, metadata=self._metadata)
+        self.__stub.SetGroupsForUser(message)
 
     def modify_members(
         self, group: str, add: List[str] = None, remove: List[str] = None
@@ -350,7 +345,7 @@ class AuthMixin:
         ... )
         """
         message = auth_pb2.ModifyMembersRequest(group=group, add=add, remove=remove)
-        self.__stub.ModifyMembers(message, metadata=self._metadata)
+        self.__stub.ModifyMembers(message)
 
     def get_groups(self) -> List[str]:
         """Gets a list of groups this user belongs to.
@@ -361,7 +356,7 @@ class AuthMixin:
             List of groups the user belongs to.
         """
         message = auth_pb2.GetGroupsRequest()
-        return self.__stub.GetGroups(message, metadata=self._metadata).groups
+        return self.__stub.GetGroups(message).groups
 
     def get_users(self, group: str) -> List[str]:
         """Gets users in a group.
@@ -377,7 +372,7 @@ class AuthMixin:
             All the users in the specified group.
         """
         message = auth_pb2.GetUsersRequest(group=group)
-        return self.__stub.GetUsers(message, metadata=self._metadata).usernames
+        return self.__stub.GetUsers(message).usernames
 
     def extract_auth_tokens(self):
         """This maps to an internal function that is only used for migration.

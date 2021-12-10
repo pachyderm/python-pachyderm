@@ -10,7 +10,6 @@ class AdminMixin:
     """A mixin for admin-related functionality."""
 
     _channel: grpc.Channel
-    _metadata: List[Tuple[str, str]]
 
     def __init__(self):
         self.__stub = admin_pb2_grpc.APIStub(self._channel)
@@ -25,4 +24,4 @@ class AdminMixin:
             A protobuf object with info on the cluster.
         """
         message = empty_pb2.Empty()
-        return self.__stub.InspectCluster(message, metadata=self._metadata)
+        return self.__stub.InspectCluster(message)

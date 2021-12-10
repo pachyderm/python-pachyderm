@@ -1,11 +1,12 @@
 import os
 import json
 from pathlib import Path
-from typing import List, Optional, TextIO, Tuple
+from typing import Optional, TextIO
 from urllib.parse import urlparse
 
 import grpc
 
+from .interceptor import MetadataClientInterceptor, MetadataType
 from .mixin.admin import AdminMixin
 from .mixin.auth import AuthMixin
 from .mixin.debug import DebugMixin
@@ -156,7 +157,7 @@ class Client(
             resp = self.authenticate_id_token(os.environ.get("PACH_PYTHON_OIDC_TOKEN"))
             self._auth_token = resp
             self._metadata = self._build_metadata()
-
+        self._channel = _apply_metadata_interceptor(self._channel, self._metadata)
         super().__init__()  # Initialize all the Mixin classes.
 
     @classmethod
@@ -494,10 +495,17 @@ class Client(
         self.delete_all_transactions()
 
 
+def _apply_metadata_interceptor(
+    channel: grpc.Channel, metadata: MetadataType
+) -> grpc.Channel:
+    metadata_interceptor = MetadataClientInterceptor(metadata)
+    return grpc.intercept_channel(channel, metadata_interceptor)
+
+
 def _create_channel(
     address: str,
     root_certs: Optional[bytes],
-    options: List[Tuple[str, str]],
+    options: MetadataType,
 ) -> grpc.Channel:
     if root_certs is not None:
         ssl = grpc.ssl_channel_credentials(root_certificates=root_certs)
