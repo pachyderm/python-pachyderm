@@ -14,6 +14,7 @@ class AdminMixin:
 
     def __init__(self):
         self.__stub = admin_pb2_grpc.APIStub(self._channel)
+        super().__init__()
 
     def inspect_cluster(self) -> admin_pb2.ClusterInfo:
         """Inspects a cluster.

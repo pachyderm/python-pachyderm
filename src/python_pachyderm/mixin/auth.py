@@ -13,6 +13,7 @@ class AuthMixin:
 
     def __init__(self):
         self.__stub = auth_pb2_grpc.APIStub(self._channel)
+        super().__init__()
 
     def activate_auth(self, root_token: str = None) -> str:
         """Activates auth on the cluster. Returns the root token, an
