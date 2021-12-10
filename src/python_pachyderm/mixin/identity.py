@@ -162,7 +162,12 @@ class IdentityMixin:
         return self._req(Service.IDENTITY, "ListOIDCClients").clients
 
     def delete_all_identity(self) -> None:
-        """Delete all identity service information."""
+        """Delete all identity service information.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
         try:
             self._req(Service.IDENTITY, "DeleteAll")
         except RpcError as err:

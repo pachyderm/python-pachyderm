@@ -495,7 +495,12 @@ class Client(
         except AuthServiceNotActivated:
             pass
 
-        self.delete_all_license()
+        # Try removing all licenses if auth is activated.
+        try:
+            self.delete_all_license()
+        except AuthServiceNotActivated:
+            pass
+
         self.delete_all_pipelines()
         self.delete_all_repos()
         self.delete_all_transactions()

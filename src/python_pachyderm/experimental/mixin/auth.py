@@ -29,6 +29,10 @@ class AuthMixin:
     def deactivate_auth(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
+
+        Raises
+        ------
+        AuthServiceNotActivated
         """
         try:
             self._req(Service.AUTH, "Deactivate")
