@@ -119,7 +119,7 @@ class AuthMixin:
         message = auth_pb2.GetRoleBindingRequest(resource=resource)
         return self.__stub.GetRoleBinding(
             message, metadata=self._metadata
-        ).binding_entries
+        ).binding.entries
 
     def modify_role_binding(
         self, resource: auth_pb2.Resource, principal: str, roles: List[str] = None
