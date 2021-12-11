@@ -19,7 +19,8 @@ jobs:
       - run:
           name: TOXENV=py39 tox
           command: |
-            pachctl port-forward &
+            set -x
+            nohup pachctl port-forward &
             sleep 3
             until pachctl version; do sleep 1; done
             pachctl create repo foo
