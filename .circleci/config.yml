@@ -3,9 +3,6 @@ version: 2.1
 jobs:
   tox:
     resource_class: large
-    parameters:
-      toxenv:
-        type: string
     machine:
       image: ubuntu-2004:202101-01
     steps:
@@ -13,66 +10,30 @@ jobs:
       - run:
           name: Install dependencies
           command: etc/testing/circle/install.sh
-      - when:
-          condition:
-            not:
-              equal: [ lint, <<parameters.toxenv>> ]
-          steps:
-            - run:
-                name: Start minikube
-                command: etc/testing/circle/start-minikube.sh
-            - run:
-                name: Deploy pachyderm
-                command: etc/testing/circle/deploy-pachyderm.sh
       - run:
-          name: TOXENV=<<parameters.toxenv>> tox
+          name: Start minikube
+          command: etc/testing/circle/start-minikube.sh
+      - run:
+          name: Deploy pachyderm
+          command: etc/testing/circle/deploy-pachyderm.sh
+      - run:
+          name: TOXENV=py39 tox
           command: |
             pachctl port-forward &
-            source $HOME/.poetry/env
-            python3 -m tox
+            sleep 3
+            until pachctl version; do sleep 1; done
+            pachctl create repo foo
+            echo data | pachctl put file foo@master:/data
+            pachctl list repo
+            pachctl list commit foo
+            pachctl get file foo@master:/data
+            exit 1
           environment:
-            TOXENV: << parameters.toxenv >>
+            TOXENV: py39
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh
-  test-publish:
-    docker:
-      - image: circleci/python:3.7
-    steps:
-      - checkout
-      - run:
-          name: Install poetry
-          command: |
-              curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-              python get-poetry.py -y
-      - run:
-          name: Install deps
-          command: |
-              poetry install
-      - run:
-          name: build + publish
-          command: |
-            poetry publish --build --repository testpypi --username $PYPI_USERNAME --password $PYPI_PASSWORD
-
 workflows:
   circleci:
     jobs:
-      - tox:
-          matrix:
-            parameters:
-              toxenv:
-                - py36
-                - py39
-                - lint
-                - examples
-          filters:
-            tags:
-              only: /.*/
-      - test-publish:
-          requires:
-            - tox
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d.*/
-            branches:
-              ignore: /.*/
+      - tox
