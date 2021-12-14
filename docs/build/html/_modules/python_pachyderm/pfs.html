@@ -1,71 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>python_pachyderm.pfs &mdash; python-pachyderm  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> python-pachyderm
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,86 +33,37 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../python_pachyderm.html">python_pachyderm</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">python-pachyderm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-        
       <li>python_pachyderm.pfs</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for python_pachyderm.pfs</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Union</span>
@@ -174,7 +85,7 @@
     <span class="n">repo_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 
 <div class="viewcode-block" id="Commit.to_pb"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.Commit.to_pb">[docs]</a>    <span class="k">def</span> <span class="nf">to_pb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts itself into a `pfs_proto.Commit`&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Converts itself into a ``pfs_proto.Commit``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
@@ -185,7 +96,9 @@
 
 <div class="viewcode-block" id="Commit.from_pb"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.Commit.from_pb">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_pb</span><span class="p">(</span><span class="n">commit</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Commit&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts a ``pfs_proto.Commit`` object into a ``Commit`` object.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`</span>
+<span class="sd">        object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Commit</span><span class="p">(</span>
             <span class="n">repo</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">branch</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">branch</span><span class="o">=</span><span class="n">commit</span><span class="o">.</span><span class="n">branch</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -194,8 +107,39 @@
         <span class="p">)</span></div></div>
 
 
+<span class="n">SubcommitType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Composite type for a subcommit, a commit at the repo-level.</span>
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">Tuple:</span>
+
+<span class="sd">&gt;&gt;&gt; sc = (&quot;foo&quot;, &quot;master&quot;)</span>
+<span class="sd">&gt;&gt;&gt; sc2 = (&quot;foo&quot;, &quot;467c580611234cdb8cc9758c7aa96087&quot;)</span>
+
+<span class="sd">Dict:</span>
+
+<span class="sd">&gt;&gt;&gt; sc = {repo: &quot;foo&quot;, branch: &quot;master&quot;, repo_type: &quot;spec&quot;}</span>
+
+<span class="sd">Commit:</span>
+
+<span class="sd">&gt;&gt;&gt; from python_pachyderm.pfs import Commit</span>
+<span class="sd">&gt;&gt;&gt; sc = Commit(repo=&quot;foo&quot;, branch=&quot;master&quot;)</span>
+
+<span class="sd">pfs_proto.Commit:</span>
+
+<span class="sd">&gt;&gt;&gt; from python_pachyderm.service import pfs_proto</span>
+<span class="sd">&gt;&gt;&gt; sc = pfs_proto.Commit(</span>
+<span class="sd">...     branch=pfs_proto.Branch(</span>
+<span class="sd">...         repo=pfs_proto.Repo(name=&quot;foo&quot;, type=&quot;user&quot;),</span>
+<span class="sd">...         name=&quot;master&quot;,</span>
+<span class="sd">...     )</span>
+<span class="sd">... )</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
 <div class="viewcode-block" id="commit_from"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.commit_from">[docs]</a><span class="k">def</span> <span class="nf">commit_from</span><span class="p">(</span>
-    <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A commit can be identified by (repo, branch, commit_id, repo_type)</span>
 
@@ -204,7 +148,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">    commit : SubcommitType, optional</span>
 <span class="sd">        The commit representation to convert to a protobuf commit object.</span>
 
 <span class="sd">    Returns</span>
@@ -242,46 +186,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Joe Doliner.
-
-    </p>
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

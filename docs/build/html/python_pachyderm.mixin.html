@@ -309,6 +309,13 @@ principal.</p>
 <span class="sig-name descname"><span class="pre">deactivate_auth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin.deactivate_auth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin.deactivate_auth" title="Permalink to this definition"></a></dt>
 <dd><p>Deactivates auth, removing all ACLs, tokens, and admins from the
 Pachyderm cluster and making all data publicly accessible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -953,6 +960,13 @@ name, secret, and lists of redirect URIs and trusted peers.</p>
 <dt class="sig sig-object py" id="python_pachyderm.mixin.identity.IdentityMixin.delete_all_identity">
 <span class="sig-name descname"><span class="pre">delete_all_identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin.delete_all_identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin.delete_all_identity" title="Permalink to this definition"></a></dt>
 <dd><p>Delete all identity service information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1220,6 +1234,13 @@ specified, a random secret will be generated and returned.</p>
 <dt class="sig sig-object py" id="python_pachyderm.mixin.license.LicenseMixin.delete_all_license">
 <span class="sig-name descname"><span class="pre">delete_all_license</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin.delete_all_license"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin.delete_all_license" title="Permalink to this definition"></a></dt>
 <dd><p>Remove all clusters and deactivate the license service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1344,7 +1365,7 @@ Replaces <code class="xref py py-class docutils literal notranslate"><span class
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>source_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The commit the source file is in.</p>
+<dt><strong>source_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The commit the source file is in.</p>
 </dd>
 <dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The path to the source file.</p>
 </dd>
@@ -1647,7 +1668,7 @@ example on s3:// URLs</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
 </dd>
-<dt><strong>parent</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
+<dt><strong>parent</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
 creation, before data is modified, the new commit will appear
 identical to the parent.</p>
 </dd>
@@ -1679,12 +1700,12 @@ fail.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>source_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) which holds the source
+<dt><strong>source_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) which holds the source
 file.</p>
 </dd>
 <dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The path of the source file.</p>
 </dd>
-<dt><strong>dest_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The open subcommit (commit at the repo-level) to which to add the
+<dt><strong>dest_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The open subcommit (commit at the repo-level) to which to add the
 file.</p>
 </dd>
 <dt><strong>dest_path</strong><span class="classifier">str</span></dt><dd><p>The path of the destination file.</p>
@@ -1717,7 +1738,7 @@ file.</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>The name of the new branch.</p>
 </dd>
-<dt><strong>head_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) indicating the head of the
+<dt><strong>head_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) indicating the head of the
 new branch.</p>
 </dd>
 <dt><strong>provenance</strong><span class="classifier">List[pfs_proto.Branch], optional</span></dt><dd><p>A list of branches to establish provenance with this newly created
@@ -1804,7 +1825,7 @@ the commit’s parent.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The open subcommit (commit at the repo-level) to delete a file
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The open subcommit (commit at the repo-level) to delete a file
 from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the file.</p>
@@ -1849,11 +1870,11 @@ set to the parent of <cite>new_commit</cite> and <cite>old_path</cite> will be s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>new_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The newer subcommit (commit at the repo-level).</p>
+<dt><strong>new_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The newer subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>new_path</strong><span class="classifier">str</span></dt><dd><p>The path in <cite>new_commit</cite> to compare with.</p>
 </dd>
-<dt><strong>old_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>The older subcommit (commit at the repo-level).</p>
+<dt><strong>old_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>The older subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>old_path</strong><span class="classifier">str, optional</span></dt><dd><p>The path in <cite>old_commit</cite> to compare with.</p>
 </dd>
@@ -1916,7 +1937,7 @@ future attempts to write to it with ModifyFile will error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) object to close.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) object to close.</p>
 </dd>
 <dt><strong>description</strong><span class="classifier">str, optional</span></dt><dd><p>A description of the commit. It will overwrite the description set
 in <code class="docutils literal notranslate"><span class="pre">start_commit()</span></code>.</p>
@@ -1979,7 +2000,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2007,7 +2028,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2035,7 +2056,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to query against.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to query against.</p>
 </dd>
 <dt><strong>pattern</strong><span class="classifier">str</span></dt><dd><p>A glob pattern.</p>
 </dd>
@@ -2083,7 +2104,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The commit to inspect. Can either be a commit ID or a commit object
+<dt><strong>commit</strong><span class="classifier">Union[str, SubcommitType]</span></dt><dd><p>The commit to inspect. Can either be a commit ID or a commit object
 that represents a subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>commit_state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>An enum that causes the method to block until the commit is in the
@@ -2117,7 +2138,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to inspect the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to inspect the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2190,11 +2211,11 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 <dt><strong>repo_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of a repo. If set, returns subcommits (commit at
 repo-level) only in this repo.</p>
 </dd>
-<dt><strong>to_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
+<dt><strong>to_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
 <cite>repo_name</cite> is specified. If set, only the ancestors of
 <cite>to_commit</cite>, including <cite>to_commit</cite>, are returned.</p>
 </dd>
-<dt><strong>from_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
+<dt><strong>from_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
 <cite>repo_name</cite> is specified. If set, only the descendants of
 <cite>from_commit</cite>, including <cite>from_commit</cite>, are returned.</p>
 </dd>
@@ -2242,7 +2263,7 @@ or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to list files from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to list files from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the directory.</p>
 </dd>
@@ -2296,7 +2317,7 @@ ModifyFile gRPC call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
 </dd>
 </dl>
 </dd>
@@ -2329,7 +2350,7 @@ whether <cite>path</cite> is a file or a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to check in.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to check in.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The file or directory path in <cite>commit</cite>.</p>
 </dd>
@@ -2353,7 +2374,7 @@ of bytestrings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path in the repo the file(s) will be written to.</p>
 </dd>
@@ -2385,7 +2406,7 @@ to the server which performs the request.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path in the repo the file(s) will be written to.</p>
 </dd>
@@ -2443,7 +2464,7 @@ not persisted until FinishCommit is called.</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
 </dd>
-<dt><strong>parent</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
+<dt><strong>parent</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
 creation, before data is modified, the new commit will appear
 identical to the parent.</p>
 </dd>
@@ -2477,7 +2498,7 @@ that are created.</p>
 </dd>
 <dt><strong>branch</strong><span class="classifier">str</span></dt><dd><p>The name of the branch.</p>
 </dd>
-<dt><strong>from_commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>Return commits only from this commit and onwards. Can either be an
+<dt><strong>from_commit</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>Return commits only from this commit and onwards. Can either be an
 entire commit or a subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>Return commits only when they’re at least in the specifed enum
@@ -2515,7 +2536,7 @@ otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>A commit object to wait on. Can either be an entire commit or a
+<dt><strong>commit</strong><span class="classifier">Union[str, SubcommitType]</span></dt><dd><p>A commit object to wait on. Can either be an entire commit or a
 subcommit (commit at the repo-level).</p>
 </dd>
 </dl>
@@ -2546,7 +2567,7 @@ function waited on.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to walk files in.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to walk files in.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the directory.</p>
 </dd>
@@ -3092,7 +3113,7 @@ the provided input.</p>
 <dt><strong>pipeline_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of a pipeline. If set, returns subjobs (job at the
 pipeline-level) only from this pipeline.</p>
 </dd>
-<dt><strong>input_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit, List], optional</span></dt><dd><p>A commit or list of commits from the input repo to filter jobs on.
+<dt><strong>input_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A commit or list of commits from the input repo to filter jobs on.
 Only impacts returned results if <cite>pipeline_name</cite> is specified.</p>
 </dd>
 <dt><strong>history</strong><span class="classifier">int, optional</span></dt><dd><p>Indicates to return jobs from historical versions of
