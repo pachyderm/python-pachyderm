@@ -739,7 +739,10 @@ class PFSMixin:
         Parameters
         ----------
         commit : Union[tuple, dict, Commit, pfs_proto.Commit]
-            An open subcommit (commit at the repo-level) to modify.
+            A subcommit (commit at the repo-level) to modify. If this subcommit
+            is opened before ``modify_file_client()`` is called, it will remain
+            open after. If ``modify_file_client()`` opens the subcommit, it
+            will close when exiting the ``with`` scope.
 
         Yields
         -------
@@ -748,11 +751,20 @@ class PFSMixin:
 
         Examples
         --------
-        Commit needs to be open still, either from the result of
-        ``start_commit()`` or within scope of ``commit()``
+        On an open subcommit:
 
         >>> c = client.start_commit("foo", "master")
         >>> with client.modify_file_client(c) as mfc:
+        >>>     mfc.delete_file("/delete_me.txt")
+        >>>     mfc.put_file_from_url(
+        ...         "/new_file.txt",
+        ...         "https://example.com/data/train/input.txt"
+        ...     )
+        >>> client.finish_commit(c)
+
+        Opening a subcommit:
+
+        >>> with client.modify_file_client(("foo", "master")) as mfc:
         >>>     mfc.delete_file("/delete_me.txt")
         >>>     mfc.put_file_from_url(
         ...         "/new_file.txt",
