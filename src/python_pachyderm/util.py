@@ -34,7 +34,7 @@ def put_files(
     ...
     >>> with client.commit("repo_name", "master") as commit2:
     >>>     python_pachyderm.put_files(client, "metadata/params.csv", commit2, "/hyperparams.csv")
-    >>>     python_pachyderm.put_files(client, "spec.json", commit2, "/")
+    >>>     python_pachyderm.put_files(client, "spec.json", commit2, "/spec.json")
 
     .. # noqa: W505
     """

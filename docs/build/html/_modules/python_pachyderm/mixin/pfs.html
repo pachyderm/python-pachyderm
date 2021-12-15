@@ -790,9 +790,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.modify_file_client"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">[docs]</a>    <span class="nd">@contextmanager</span>
-    <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.ModifyFileClient`. When the</span>
 <span class="sd">        context manager exits, any operations enqueued from the</span>
 <span class="sd">        :class:`.ModifyFileClient` are executed in a single, atomic</span>
@@ -800,8 +798,11 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : SubcommitType</span>
-<span class="sd">            An open subcommit (commit at the repo-level) to modify.</span>
+<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">            A subcommit (commit at the repo-level) to modify. If this subcommit</span>
+<span class="sd">            is opened before ``modify_file_client()`` is called, it will remain</span>
+<span class="sd">            open after. If ``modify_file_client()`` opens the subcommit, it</span>
+<span class="sd">            will close when exiting the ``with`` scope.</span>
 
 <span class="sd">        Yields</span>
 <span class="sd">        -------</span>
@@ -810,11 +811,20 @@
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        Commit needs to be open still, either from the result of</span>
-<span class="sd">        ``start_commit()`` or within scope of ``commit()``</span>
+<span class="sd">        On an open subcommit:</span>
 
 <span class="sd">        &gt;&gt;&gt; c = client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; with client.modify_file_client(c) as mfc:</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
+<span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
+<span class="sd">        ...         &quot;https://example.com/data/train/input.txt&quot;</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_commit(c)</span>
+
+<span class="sd">        Opening a subcommit:</span>
+
+<span class="sd">        &gt;&gt;&gt; with client.modify_file_client((&quot;foo&quot;, &quot;master&quot;)) as mfc:</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
 <span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
@@ -1167,9 +1177,7 @@
             <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;GlobFile&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a file from an open commit. This leaves a tombstone in the</span>
 <span class="sd">        commit, assuming the file isn&#39;t written to later while the commit is</span>
 <span class="sd">        still open. Attempting to get the file from the finished commit will</span>
@@ -1287,9 +1295,7 @@
             <span class="n">shallow</span><span class="o">=</span><span class="n">shallow</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.path_exists"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">path_exists</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.path_exists"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">path_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Checks whether the path exists in the specified commit, agnostic to</span>
 <span class="sd">        whether `path` is a file or a directory.</span>
 

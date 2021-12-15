@@ -2317,7 +2317,10 @@ ModifyFile gRPC call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>A subcommit (commit at the repo-level) to modify. If this subcommit
+is opened before <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> is called, it will remain
+open after. If <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> opens the subcommit, it
+will close when exiting the <code class="docutils literal notranslate"><span class="pre">with</span></code> scope.</p>
 </dd>
 </dl>
 </dd>
@@ -2329,10 +2332,19 @@ ModifyFile gRPC call.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Commit needs to be open still, either from the result of
-<code class="docutils literal notranslate"><span class="pre">start_commit()</span></code> or within scope of <code class="docutils literal notranslate"><span class="pre">commit()</span></code></p>
+<p>On an open subcommit:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s2">&quot;/delete_me.txt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">put_file_from_url</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="s2">&quot;/new_file.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;https://example.com/data/train/input.txt&quot;</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">finish_commit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Opening a subcommit:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">((</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s2">&quot;/delete_me.txt&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">put_file_from_url</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="s2">&quot;/new_file.txt&quot;</span><span class="p">,</span>
