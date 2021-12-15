@@ -1,71 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>python_pachyderm.mixin.pps &mdash; python-pachyderm  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> python-pachyderm
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,92 +33,43 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">python-pachyderm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>python_pachyderm.mixin.pps</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for python_pachyderm.mixin.pps</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">SubcommitType</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">pps_proto</span><span class="p">,</span> <span class="n">pfs_proto</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">duration_pb2</span>
 
@@ -228,7 +139,7 @@
 <div class="viewcode-block" id="PPSMixin.list_job"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_job">[docs]</a>    <span class="k">def</span> <span class="nf">list_job</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">input_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">,</span> <span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">input_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">jqFilter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -240,16 +151,18 @@
 <span class="sd">        pipeline_name : str, optional</span>
 <span class="sd">            The name of a pipeline. If set, returns subjobs (job at the</span>
 <span class="sd">            pipeline-level) only from this pipeline.</span>
-<span class="sd">        input_commit : Union[tuple, dict, Commit, pfs_proto.Commit, List], optional</span>
+<span class="sd">        input_commit : SubcommitType, optional</span>
 <span class="sd">            A commit or list of commits from the input repo to filter jobs on.</span>
 <span class="sd">            Only impacts returned results if `pipeline_name` is specified.</span>
 <span class="sd">        history : int, optional</span>
 <span class="sd">            Indicates to return jobs from historical versions of</span>
 <span class="sd">            `pipeline_name`. Semantics are:</span>
-<span class="sd">            * 0: Return jobs from the current version of `pipeline_name`</span>
-<span class="sd">            * 1: Return the above and jobs from the next most recent version</span>
-<span class="sd">            * 2: etc.</span>
-<span class="sd">            * -1: Return jobs from all historical versions of `pipeline_name`</span>
+
+<span class="sd">            - 0: Return jobs from the current version of `pipeline_name`</span>
+<span class="sd">            - 1: Return the above and jobs from the next most recent version</span>
+<span class="sd">            - 2: etc.</span>
+<span class="sd">            - -1: Return jobs from all historical versions of `pipeline_name`</span>
+
 <span class="sd">        details : bool, optional</span>
 <span class="sd">            If true, return pipeline details for `pipeline_name`. Leaving this</span>
 <span class="sd">            ``None`` (or ``False``) can make the call significantly faster in</span>
@@ -542,7 +455,7 @@
 <span class="sd">        -----</span>
 <span class="sd">        If creating a Spout pipeline, when committing data to the repo, use</span>
 <span class="sd">        commit methods (``client.commit()``, ``client.start_commit()``, etc.)</span>
-<span class="sd">        or ``ModifyFileClient`` methods (``mfc.put_file_from_bytes``,</span>
+<span class="sd">        or :class:`.ModifyFileClient` methods (``mfc.put_file_from_bytes``,</span>
 <span class="sd">        ``mfc.delete_file()``, etc.)</span>
 
 <span class="sd">        For other pipelines, when committing data to the repo, write out to</span>
@@ -599,7 +512,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Creates a pipeline from a ``CreatePipelineRequest`` object. Usually</span>
 <span class="sd">        used in conjunction with ``util.parse_json_pipeline_spec()`` or</span>
-<span class="sd">        ``util.parse_dict_pipeline_spec``.</span>
+<span class="sd">        ``util.parse_dict_pipeline_spec()``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -611,7 +524,9 @@
 <div class="viewcode-block" id="PPSMixin.inspect_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Inspects a pipeline.</span>
+        <span class="sd">&quot;&quot;&quot;.. # noqa: W505</span>
+
+<span class="sd">        Inspects a pipeline.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -620,11 +535,12 @@
 <span class="sd">        history : int, optional</span>
 <span class="sd">            Indicates to return historical versions of `pipeline_name`.</span>
 <span class="sd">            Semantics are:</span>
-<span class="sd">            * 0: Return current version of `pipeline_name`</span>
-<span class="sd">            * 1: Return the above and `pipeline_name` from the next most recent</span>
-<span class="sd">            version.</span>
-<span class="sd">            * 2: etc.</span>
-<span class="sd">            * -1: Return all historical versions of `pipeline_name`.</span>
+
+<span class="sd">            - 0: Return current version of `pipeline_name`</span>
+<span class="sd">            - 1: Return the above and `pipeline_name` from the next most recent version.</span>
+<span class="sd">            - 2: etc.</span>
+<span class="sd">            - -1: Return all historical versions of `pipeline_name`.</span>
+
 <span class="sd">        details : bool, optional</span>
 <span class="sd">            If true, return pipeline details.</span>
 
@@ -665,18 +581,21 @@
 <div class="viewcode-block" id="PPSMixin.list_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">list_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">jqFilter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Lists pipelines.</span>
+        <span class="sd">&quot;&quot;&quot;.. # noqa: W505</span>
+
+<span class="sd">        Lists pipelines.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        history : int, optional</span>
 <span class="sd">            Indicates to return historical versions of `pipeline_name`.</span>
 <span class="sd">            Semantics are:</span>
-<span class="sd">            * 0: Return current version of `pipeline_name`</span>
-<span class="sd">            * 1: Return the above and `pipeline_name` from the next most recent</span>
-<span class="sd">            version.</span>
-<span class="sd">            * 2: etc.</span>
-<span class="sd">            * -1: Return all historical versions of `pipeline_name`.</span>
+
+<span class="sd">            - 0: Return current version of `pipeline_name`</span>
+<span class="sd">            - 1: Return the above and `pipeline_name` from the next most recent version.</span>
+<span class="sd">            - 2: etc.</span>
+<span class="sd">            - -1: Return all historical versions of `pipeline_name`.</span>
+
 <span class="sd">        details : bool, optional</span>
 <span class="sd">            If true, return pipeline details.</span>
 <span class="sd">        jqFilter : str, optional</span>
@@ -787,7 +706,7 @@
 <span class="sd">            The name of the secret.</span>
 <span class="sd">        data : Dict[str, Union[str, bytes]]</span>
 <span class="sd">            The data to store in the secret. Each key must consist of</span>
-<span class="sd">            alphanumeric characters, ``-``, ``_`` or ``.``.</span>
+<span class="sd">            alphanumeric characters ``-``, ``_`` or ``.``.</span>
 <span class="sd">        labels : Dict[str, str], optional</span>
 <span class="sd">            Kubernetes labels to attach to the secret.</span>
 <span class="sd">        annotations : Dict[str, str], optional</span>
@@ -980,46 +899,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Joe Doliner.
-
-    </p>
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

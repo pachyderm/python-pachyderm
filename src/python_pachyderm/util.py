@@ -1,19 +1,13 @@
 import os
-from typing import Union
-
 from google.protobuf import json_format
 
 from python_pachyderm import Client
-from python_pachyderm.pfs import Commit
-from python_pachyderm.service import pps_proto, pfs_proto
+from python_pachyderm.pfs import SubcommitType
+from python_pachyderm.service import pps_proto
 
 
 def put_files(
-    client: Client,
-    source_path: str,
-    commit: Union[tuple, dict, Commit, pfs_proto.Commit],
-    dest_path: str,
-    **kwargs
+    client: Client, source_path: str, commit: SubcommitType, dest_path: str, **kwargs
 ) -> None:
     """Utility function for inserting files from the local `source_path`
     into Pachyderm. Roughly equivalent to ``pachctl put file [-r]``.
@@ -24,7 +18,7 @@ def put_files(
         A python_pachyderm client instance.
     source_path : str
         The file/directory to recursively insert content from.
-    commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+    commit : SubcommitType
         The open commit to add files to.
     dest_path : str
         The destination path in PFS.
