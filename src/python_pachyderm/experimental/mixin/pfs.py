@@ -10,15 +10,13 @@ from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
 from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
-from python_pachyderm.service import Service  # , pfs_proto
+from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
 from python_pachyderm.experimental.service import pfs_proto
 from google.protobuf import empty_pb2, wrappers_pb2
 import betterproto.lib.google.protobuf as bp_proto
 
 # bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
-# bp_to_pb: raw=chunk -> raw=wrappers_pb2.BytesValue(value=chunk)
-# bp_to_pb: AddFileUrlSource -> AddFile.URLSource
-# bp_to_pb: url -> URL (get_file_tar(), AddFile.URLSource)
+# bp_to_pb: url -> URL (get_file_tar())
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -1357,10 +1355,10 @@ class ModifyFileClient:
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
         self._ops = []
-        self.commit = commit_from(commit)
+        self.commit = Commit.from_bp(commit_from(commit)).to_pb()
 
-    def _reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(set_commit=self.commit)
+    def _reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+        yield pfs_proto_pb.ModifyFileRequest(set_commit=self.commit)
         for op in self._ops:
             yield from op.reqs()
 
@@ -1566,7 +1564,7 @@ class _AtomicModifyFilepathOp(_AtomicOp):
         self.local_path = local_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
@@ -1585,7 +1583,7 @@ class _AtomicModifyFileobjOp(_AtomicOp):
         self.fobj = fobj
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         yield _add_file_req(path=self.path, datum=self.datum)
@@ -1612,15 +1610,15 @@ class _AtomicModifyFileURLOp(_AtomicOp):
         self.recursive = recursive
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
-        yield pfs_proto.ModifyFileRequest(
-            add_file=pfs_proto.AddFile(
+        yield pfs_proto_pb.ModifyFileRequest(
+            add_file=pfs_proto_pb.AddFile(
                 path=self.path,
                 datum=self.datum,
-                url=pfs_proto.AddFileUrlSource(
-                    url=self.url,
+                url=pfs_proto_pb.AddFile.URLSource(
+                    URL=self.url,
                     recursive=self.recursive,
                 ),
             ),
@@ -1639,18 +1637,18 @@ class _AtomicCopyFileOp(_AtomicOp):
         append: bool = False,
     ):
         super().__init__(dest_path, datum)
-        self.source_commit = commit_from(source_commit)
+        self.source_commit = Commit.from_bp(commit_from(source_commit)).to_pb()
         self.source_path = source_path
         self.dest_path = dest_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(
-            copy_file=pfs_proto.CopyFile(
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+        yield pfs_proto_pb.ModifyFileRequest(
+            copy_file=pfs_proto_pb.CopyFile(
                 append=self.append,
                 datum=self.datum,
                 dst=self.dest_path,
-                src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+                src=pfs_proto_pb.File(commit=self.source_commit, path=self.source_path),
             ),
         )
 
@@ -1666,16 +1664,16 @@ class _AtomicDeleteFileOp(_AtomicOp):
 
 
 def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
-    return pfs_proto.ModifyFileRequest(
-        add_file=pfs_proto.AddFile(
+    return pfs_proto_pb.ModifyFileRequest(
+        add_file=pfs_proto_pb.AddFile(
             path=path,
             datum=datum,
-            raw=chunk,
+            raw=wrappers_pb2.BytesValue(value=chunk),
         ),
     )
 
 
 def _delete_file_req(path: str, datum: str = None):
-    return pfs_proto.ModifyFileRequest(
-        delete_file=pfs_proto.DeleteFile(path=path, datum=datum)
+    return pfs_proto_pb.ModifyFileRequest(
+        delete_file=pfs_proto_pb.DeleteFile(path=path, datum=datum)
     )

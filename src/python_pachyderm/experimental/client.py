@@ -182,7 +182,7 @@ class Client(
 
     def _req(self, grpc_service: Service, grpc_method_name: str, req=None, **kwargs):
         # For proto request objects with no equivalent betterproto
-        if "pb2" in type(req).__module__:
+        if "pb2" in type(req).__module__ or grpc_method_name == "ModifyFile":
             return _Client._req(self, grpc_service, grpc_method_name, req, **kwargs)
 
         # convert betterproto to google protobuf
