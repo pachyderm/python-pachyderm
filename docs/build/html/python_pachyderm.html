@@ -720,6 +720,38 @@ object.</p>
 
 </dd></dl>
 
+<dl class="py data">
+<dt class="sig sig-object py" id="python_pachyderm.pfs.SubcommitType">
+<span class="sig-name descname"><span class="pre">SubcommitType</span></span><a class="headerlink" href="#python_pachyderm.pfs.SubcommitType" title="Permalink to this definition"></a></dt>
+<dd><p>Composite type for a subcommit, a commit at the repo-level.</p>
+<p class="rubric">Examples</p>
+<p>Tuple:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc2</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;467c580611234cdb8cc9758c7aa96087&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dict:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="p">{</span><span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">repo_type</span><span class="p">:</span> <span class="s2">&quot;spec&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Commit:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">Commit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>pfs_proto.Commit:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>alias of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>, <a class="reference internal" href="#python_pachyderm.pfs.Commit" title="python_pachyderm.pfs.Commit"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.pfs.Commit</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.proto.v2.pfs.pfs_pb2.Commit</span></code>]</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.commit_from">
 <span class="sig-name descname"><span class="pre">commit_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#commit_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.commit_from" title="Permalink to this definition"></a></dt>
@@ -729,7 +761,7 @@ protobuf Commit object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>The commit representation to convert to a protobuf commit object.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>The commit representation to convert to a protobuf commit object.</p>
 </dd>
 </dl>
 </dd>
@@ -845,7 +877,7 @@ into Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"
 </dd>
 <dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The file/directory to recursively insert content from.</p>
 </dd>
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The open commit to add files to.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The open commit to add files to.</p>
 </dd>
 <dt><strong>dest_path</strong><span class="classifier">str</span></dt><dd><p>The destination path in PFS.</p>
 </dd>
@@ -862,7 +894,7 @@ into Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="s2">&quot;repo_name&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">commit2</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">python_pachyderm</span><span class="o">.</span><span class="n">put_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;metadata/params.csv&quot;</span><span class="p">,</span> <span class="n">commit2</span><span class="p">,</span> <span class="s2">&quot;/hyperparams.csv&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">python_pachyderm</span><span class="o">.</span><span class="n">put_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;spec.json&quot;</span><span class="p">,</span> <span class="n">commit2</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">python_pachyderm</span><span class="o">.</span><span class="n">put_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;spec.json&quot;</span><span class="p">,</span> <span class="n">commit2</span><span class="p">,</span> <span class="s2">&quot;/spec.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

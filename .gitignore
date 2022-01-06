@@ -31,5 +31,6 @@ __pycache__/
 src/python_pachyderm/version.py
 
 # virtualenv
-venv
+.venv
 .python-version
+venv

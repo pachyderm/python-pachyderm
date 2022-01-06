@@ -15,6 +15,16 @@ from .util import (
 from grpc import RpcError
 from . import experimental
 
+# Python version compatibility.
+try:
+    # >= 3.8
+    import importlib.metadata as metadata
+except ImportError:
+    #  < 3.8
+    import importlib_metadata as metadata  # type: ignore
+
+
+__pdoc__ = {"proto": False}
 
 __all__ = [
     "Client",
@@ -28,18 +38,11 @@ __all__ = [
     "BadClusterDeploymentID",
 ]
 
-
+__version__ = ""
 try:
-    from .version import __version__
-
-    __version__ = __version__
-except ModuleNotFoundError:
-    # The version module is dynamically generated at install time, so if
-    # referencing python-pachyderm without having installed it, the import
-    # will fail -- so we just ignore import failures here.
+    __version__ = metadata.version(__name__)  # type: ignore
+except FileNotFoundError:
     pass
-else:
-    __all__.append("__version__")
 
 
 def _import_protos(path):

@@ -17,12 +17,17 @@ def sandbox(test_name):
     return client, repo_name
 
 
-def test_inspect_repo():
-    client, repo_name = sandbox("inspect_repo")
-    client.inspect_repo(repo_name)
+def test_list_repo():
+    client, repo_name = sandbox("list_repo")
     repos = list(client.list_repo())
     assert len(repos) >= 1
     assert repo_name in [r.repo.name for r in repos]
+
+
+def test_inspect_repo():
+    client, repo_name = sandbox("inspect_repo")
+    r = client.inspect_repo(repo_name)
+    assert r.repo.name == repo_name
 
 
 def test_delete_repo():
@@ -736,3 +741,33 @@ def test_path_exists():
 
     with pytest.raises(ValueError, match=r"nonexistent commit provided"):
         assert not client.path_exists(("fake_repo", "master"), "dir")
+
+
+def test_modify_file_client():
+    client, repo_name = sandbox("modify_file_client")
+
+    # test on open commit
+    c = client.start_commit(repo_name, "master")
+    with client.modify_file_client(c) as mfc:
+        mfc.put_file_from_bytes("/file1.txt", b"DATA1")
+        mfc.put_file_from_fileobj("/file2.txt", BytesIO(b"DATA2"))
+
+    client.finish_commit(c)
+    client.wait_commit(c)
+
+    assert len(list(client.list_commit(repo_name))) == 1
+    assert len(list(client.list_file(c, "/"))) == 2
+
+    # test on unopened commit
+    c2 = (repo_name, "master")
+    with client.modify_file_client(c2) as mfc:
+        mfc.delete_file("/file2.txt")
+        mfc.copy_file(c, "/file1.txt", "/file3.txt")
+
+    client.wait_commit(c2)
+
+    assert len(list(client.list_commit(repo_name))) == 2
+
+    files = list(client.list_file(c2, "/"))
+    assert len(files) == 2
+    assert "/file3.txt" in [f.file.path for f in files]

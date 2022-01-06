@@ -1,4 +1,7 @@
 from typing import List
+from grpc import RpcError
+
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.service import Service
 from python_pachyderm.experimental.service import identity_proto
 
@@ -161,5 +164,13 @@ class IdentityMixin:
         return self._req(Service.IDENTITY, "ListOIDCClients").clients
 
     def delete_all_identity(self) -> None:
-        """Delete all identity service information."""
-        self._req(Service.IDENTITY, "DeleteAll")
+        """Delete all identity service information.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
+        try:
+            self._req(Service.IDENTITY, "DeleteAll")
+        except RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)

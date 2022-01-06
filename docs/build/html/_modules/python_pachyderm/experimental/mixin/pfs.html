@@ -77,15 +77,13 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
 <span class="kn">from</span> <span class="nn">python_pachyderm.experimental.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">uuid_re</span>
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>  <span class="c1"># , pfs_proto</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">pfs_proto</span> <span class="k">as</span> <span class="n">pfs_proto_pb</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.experimental.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
 <span class="kn">import</span> <span class="nn">betterproto.lib.google.protobuf</span> <span class="k">as</span> <span class="nn">bp_proto</span>
 
 <span class="c1"># bp_to_pb: bp_proto.Empty -&gt; empty_pb2.Empty</span>
-<span class="c1"># bp_to_pb: raw=chunk -&gt; raw=wrappers_pb2.BytesValue(value=chunk)</span>
-<span class="c1"># bp_to_pb: AddFileUrlSource -&gt; AddFile.URLSource</span>
-<span class="c1"># bp_to_pb: url -&gt; URL (get_file_tar(), AddFile.URLSource)</span>
+<span class="c1"># bp_to_pb: url -&gt; URL (get_file_tar())</span>
 
 
 <span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
@@ -810,7 +808,10 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
-<span class="sd">            An open subcommit (commit at the repo-level) to modify.</span>
+<span class="sd">            A subcommit (commit at the repo-level) to modify. If this subcommit</span>
+<span class="sd">            is opened before ``modify_file_client()`` is called, it will remain</span>
+<span class="sd">            open after. If ``modify_file_client()`` opens the subcommit, it</span>
+<span class="sd">            will close when exiting the ``with`` scope.</span>
 
 <span class="sd">        Yields</span>
 <span class="sd">        -------</span>
@@ -819,11 +820,20 @@
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        Commit needs to be open still, either from the result of</span>
-<span class="sd">        ``start_commit()`` or within scope of ``commit()``</span>
+<span class="sd">        On an open subcommit:</span>
 
 <span class="sd">        &gt;&gt;&gt; c = client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; with client.modify_file_client(c) as mfc:</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
+<span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
+<span class="sd">        ...         &quot;https://example.com/data/train/input.txt&quot;</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_commit(c)</span>
+
+<span class="sd">        Opening a subcommit:</span>
+
+<span class="sd">        &gt;&gt;&gt; with client.modify_file_client((&quot;foo&quot;, &quot;master&quot;)) as mfc:</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
 <span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
@@ -1424,10 +1434,10 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="o">.</span><span class="n">from_bp</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">))</span><span class="o">.</span><span class="n">to_pb</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span><span class="n">set_commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+        <span class="k">yield</span> <span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span><span class="n">set_commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="n">op</span><span class="o">.</span><span class="n">reqs</span><span class="p">()</span>
 
@@ -1633,7 +1643,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="o">=</span> <span class="n">local_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1652,7 +1662,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fobj</span> <span class="o">=</span> <span class="n">fobj</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
@@ -1679,15 +1689,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">recursive</span> <span class="o">=</span> <span class="n">recursive</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-            <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
+        <span class="k">yield</span> <span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+            <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
                 <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span>
-                <span class="n">url</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFileUrlSource</span><span class="p">(</span>
-                    <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">AddFile</span><span class="o">.</span><span class="n">URLSource</span><span class="p">(</span>
+                    <span class="n">URL</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
                     <span class="n">recursive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">),</span>
@@ -1706,18 +1716,18 @@
         <span class="n">append</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="n">datum</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span> <span class="o">=</span> <span class="n">commit_from</span><span class="p">(</span><span class="n">source_commit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="o">.</span><span class="n">from_bp</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">source_commit</span><span class="p">))</span><span class="o">.</span><span class="n">to_pb</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source_path</span> <span class="o">=</span> <span class="n">source_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dest_path</span> <span class="o">=</span> <span class="n">dest_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-            <span class="n">copy_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+        <span class="k">yield</span> <span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+            <span class="n">copy_file</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span>
                 <span class="n">append</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span>
                 <span class="n">dst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dest_path</span><span class="p">,</span>
-                <span class="n">src</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_path</span><span class="p">),</span>
+                <span class="n">src</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_path</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
 
@@ -1733,18 +1743,18 @@
 
 
 <span class="k">def</span> <span class="nf">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-        <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+        <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
             <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
             <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span>
-            <span class="n">raw</span><span class="o">=</span><span class="n">chunk</span><span class="p">,</span>
+            <span class="n">raw</span><span class="o">=</span><span class="n">wrappers_pb2</span><span class="o">.</span><span class="n">BytesValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">chunk</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_delete_file_req</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-        <span class="n">delete_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">DeleteFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+        <span class="n">delete_file</span><span class="o">=</span><span class="n">pfs_proto_pb</span><span class="o">.</span><span class="n">DeleteFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 

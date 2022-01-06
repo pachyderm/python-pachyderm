@@ -10,30 +10,49 @@ jobs:
       image: ubuntu-2004:202101-01
     steps:
       - checkout
-      - run: 
+      - run:
           name: Install dependencies
           command: etc/testing/circle/install.sh
       - when:
-          condition: 
+          condition:
             not:
-              equal: [ lint, <<parameters.toxenv>> ] 
+              equal: [ lint, <<parameters.toxenv>> ]
           steps:
-            - run: 
+            - run:
                 name: Start minikube
                 command: etc/testing/circle/start-minikube.sh
             - run:
                 name: Deploy pachyderm
-                command: etc/testing/circle/deploy-pachyderm.sh 
-      - run: 
+                command: etc/testing/circle/deploy-pachyderm.sh
+      - run:
           name: TOXENV=<<parameters.toxenv>> tox
           command: |
-            pachctl port-forward & 
+            pachctl port-forward &
+            source $HOME/.poetry/env
             python3 -m tox
           environment:
             TOXENV: << parameters.toxenv >>
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh
+  test-publish:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: Install poetry
+          command: |
+              curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
+              python get-poetry.py -y
+      - run:
+          name: Install deps
+          command: |
+              poetry install
+      - run:
+          name: build + publish
+          command: |
+            poetry publish --build --repository testpypi --username $PYPI_USERNAME --password $PYPI_PASSWORD
 
 workflows:
   circleci:
@@ -42,7 +61,18 @@ workflows:
           matrix:
             parameters:
               toxenv:
-              - py36
-              - py39
-              - lint
-              - examples
+                - py36
+                - py39
+                - lint
+                - examples
+          filters:
+            tags:
+              only: /.*/
+      - test-publish:
+          requires:
+            - tox
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d.*/
+            branches:
+              ignore: /.*/

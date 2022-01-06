@@ -66,6 +66,9 @@
              
   <h1>Source code for python_pachyderm.experimental.mixin.license</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">grpc</span> <span class="kn">import</span> <span class="n">RpcError</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.errors</span> <span class="kn">import</span> <span class="n">AuthServiceNotActivated</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.experimental.service</span> <span class="kn">import</span> <span class="n">license_proto</span><span class="p">,</span> <span class="n">enterprise_proto</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">timestamp_pb2</span>
@@ -209,8 +212,16 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;GetActivationCode&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.delete_all_license"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.license.LicenseMixin.delete_all_license">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_license</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Remove all clusters and deactivate the license service.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Remove all clusters and deactivate the license service.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        AuthServiceNotActivated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">RpcError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AuthServiceNotActivated</span><span class="o">.</span><span class="n">try_from</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.list_user_clusters"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.license.LicenseMixin.list_user_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">list_user_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">license_proto</span><span class="o">.</span><span class="n">UserClusterInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists all clusters available to user.</span>
