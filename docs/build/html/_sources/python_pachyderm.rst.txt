@@ -1,14 +1,10 @@
-python\_pachyderm
-=================
-
 Mixins
------------
+------
 
 .. toctree::
    :maxdepth: 4
 
    python_pachyderm.mixin
-
 
 Client
 ------
@@ -32,3 +28,11 @@ Util Helper
 .. automodule:: python_pachyderm.util
    :members:
    :undoc-members:
+
+Experimental Module
+-------------------
+
+.. toctree::
+   :maxdepth: 4
+
+   python_pachyderm.experimental

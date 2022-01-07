@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="python_pachyderm" href="python_pachyderm.html" /> 
+    <link rel="next" title="Information" href="python_pachyderm.experimental.html" />
+    <link rel="prev" title="Mixins" href="python_pachyderm.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,8 +40,8 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="python_pachyderm.html">python_pachyderm</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html#mixins">Mixins</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python_pachyderm</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html">Mixins</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
@@ -58,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.client">Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.pfs">PFS Helper</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.util">Util Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#experimental-module">Experimental Module</a></li>
 </ul>
 </li>
 </ul>
@@ -76,8 +78,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="python_pachyderm.html">python_pachyderm</a> &raquo;</li>
+          <li><a href="modules.html">python_pachyderm</a> &raquo;</li>
+          <li><a href="python_pachyderm.html">Mixins</a> &raquo;</li>
       <li>Information</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/python_pachyderm.mixin.rst.txt" rel="nofollow"> View page source</a>
@@ -99,7 +101,7 @@ several mixins, rather than one giant <a class="reference internal" href="python
 <span id="python-pachyderm-mixin-admin"></span><h1>python_pachyderm.mixin.admin<a class="headerlink" href="#module-python_pachyderm.mixin.admin" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.admin.AdminMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.admin.</span></span><span class="sig-name descname"><span class="pre">AdminMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/admin.html#AdminMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.admin.AdminMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AdminMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/admin.html#AdminMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.admin.AdminMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for admin-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -134,7 +136,7 @@ several mixins, rather than one giant <a class="reference internal" href="python
 <span id="python-pachyderm-mixin-auth"></span><h1>python_pachyderm.mixin.auth<a class="headerlink" href="#module-python_pachyderm.mixin.auth" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.auth.AuthMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.auth.</span></span><span class="sig-name descname"><span class="pre">AuthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AuthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for auth-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -638,7 +640,7 @@ token used.</p>
 <span id="python-pachyderm-mixin-debug"></span><h1>python_pachyderm.mixin.debug<a class="headerlink" href="#module-python_pachyderm.mixin.debug" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.debug.DebugMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.debug.</span></span><span class="sig-name descname"><span class="pre">DebugMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/debug.html#DebugMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.debug.DebugMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DebugMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/debug.html#DebugMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.debug.DebugMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for debug-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -749,7 +751,7 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <span id="python-pachyderm-mixin-enterprise"></span><h1>python_pachyderm.mixin.enterprise<a class="headerlink" href="#module-python_pachyderm.mixin.enterprise" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.enterprise.EnterpriseMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.enterprise.</span></span><span class="sig-name descname"><span class="pre">EnterpriseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/enterprise.html#EnterpriseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnterpriseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/enterprise.html#EnterpriseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for enterprise-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -834,7 +836,7 @@ and an empty activation code.</p>
 <span id="python-pachyderm-mixin-health"></span><h1>python_pachyderm.mixin.health<a class="headerlink" href="#module-python_pachyderm.mixin.health" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.health.HealthMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.health.</span></span><span class="sig-name descname"><span class="pre">HealthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/health.html#HealthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.health.HealthMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HealthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/health.html#HealthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.health.HealthMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for health-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -870,7 +872,7 @@ RPCs.</p>
 <span id="python-pachyderm-mixin-identity"></span><h1>python_pachyderm.mixin.identity<a class="headerlink" href="#module-python_pachyderm.mixin.identity" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.identity.IdentityMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.identity.</span></span><span class="sig-name descname"><span class="pre">IdentityMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IdentityMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for identity-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -1138,7 +1140,7 @@ provider.</p>
 <span id="python-pachyderm-mixin-license"></span><h1>python_pachyderm.mixin.license<a class="headerlink" href="#module-python_pachyderm.mixin.license" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.license.LicenseMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.license.</span></span><span class="sig-name descname"><span class="pre">LicenseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LicenseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for license-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -1328,7 +1330,7 @@ available to the users.</p>
 <span id="python-pachyderm-mixin-pfs"></span><h1>python_pachyderm.mixin.pfs<a class="headerlink" href="#module-python_pachyderm.mixin.pfs" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.ModifyFileClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">ModifyFileClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#ModifyFileClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModifyFileClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#ModifyFileClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> puts or deletes PFS files atomically.
 Replaces <code class="xref py py-class docutils literal notranslate"><span class="pre">PutFileClient</span></code> from python_pachyderm 6.x.</p>
 <p class="rubric">Methods</p>
@@ -1493,7 +1495,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
 <dd><p>File-like objects containing content of a file stored in PFS.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># client.get_file() returns a PFSFile</span>
@@ -1550,7 +1552,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">PFSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin with pfs-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -2607,7 +2609,7 @@ function waited on.</p>
 <span id="python-pachyderm-mixin-pps"></span><h1>python_pachyderm.mixin.pps<a class="headerlink" href="#module-python_pachyderm.mixin.pps" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pps.PPSMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pps.</span></span><span class="sig-name descname"><span class="pre">PPSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pps.html#PPSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pps.PPSMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PPSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pps.html#PPSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pps.PPSMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for pps-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -2760,7 +2762,7 @@ it has to process.</p>
 <p class="rubric">Notes</p>
 <p>If creating a Spout pipeline, when committing data to the repo, use
 commit methods (<code class="docutils literal notranslate"><span class="pre">client.commit()</span></code>, <code class="docutils literal notranslate"><span class="pre">client.start_commit()</span></code>, etc.)
-or <a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
+or <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.ModifyFileClient" title="python_pachyderm.experimental.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
 <code class="docutils literal notranslate"><span class="pre">mfc.delete_file()</span></code>, etc.)</p>
 <p>For other pipelines, when committing data to the repo, write out to
 <code class="docutils literal notranslate"><span class="pre">/pfs/out/</span></code>.</p>
@@ -3303,7 +3305,7 @@ restarted.</p>
 <span id="python-pachyderm-mixin-transaction"></span><h1>python_pachyderm.mixin.transaction<a class="headerlink" href="#module-python_pachyderm.mixin.transaction" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.transaction.TransactionMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.transaction.</span></span><span class="sig-name descname"><span class="pre">TransactionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/transaction.html#TransactionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.transaction.TransactionMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TransactionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/transaction.html#TransactionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.transaction.TransactionMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for transaction-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -3520,7 +3522,7 @@ even once.</p>
 <span id="python-pachyderm-mixin-version"></span><h1>python_pachyderm.mixin.version<a class="headerlink" href="#module-python_pachyderm.mixin.version" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.version.VersionMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.version.</span></span><span class="sig-name descname"><span class="pre">VersionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/version.html#VersionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.version.VersionMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VersionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/version.html#VersionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.version.VersionMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for version-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -3556,7 +3558,8 @@ even once.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_pachyderm.html" class="btn btn-neutral float-left" title="python_pachyderm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pachyderm.html" class="btn btn-neutral float-left" title="Mixins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pachyderm.experimental.html" class="btn btn-neutral float-right" title="Information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

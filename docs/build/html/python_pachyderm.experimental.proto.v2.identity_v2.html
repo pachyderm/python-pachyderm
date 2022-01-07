@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python_pachyderm.experimental.proto.v2.identity_v2 package &mdash; python-pachyderm  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> python-pachyderm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">python_pachyderm</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">python-pachyderm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>python_pachyderm.experimental.proto.v2.identity_v2 package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/python_pachyderm.experimental.proto.v2.identity_v2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="python-pachyderm-experimental-proto-v2-identity-v2-package">
+<h1>python_pachyderm.experimental.proto.v2.identity_v2 package<a class="headerlink" href="#python-pachyderm-experimental-proto-v2-identity-v2-package" title="Permalink to this headline"></a></h1>
+<section id="module-python_pachyderm.experimental.proto.v2.identity_v2">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-python_pachyderm.experimental.proto.v2.identity_v2" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ApiBase</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.grpc.grpclib_server.ServiceBase</span></code></p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>create_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>create_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>delete_all</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>delete_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>delete_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_identity_server_config</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>get_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>list_idp_connectors</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>list_oidc_clients</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>set_identity_server_config</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>update_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>update_oidc_client</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.create_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.create_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.create_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.create_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.create_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.create_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_all">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.delete_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_all" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.delete_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.delete_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.delete_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_identity_server_config">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_identity_server_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.get_identity_server_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_identity_server_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.get_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.get_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.get_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.list_idp_connectors">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_idp_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.list_idp_connectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.list_idp_connectors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.list_oidc_clients">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_oidc_clients</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.list_oidc_clients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.list_oidc_clients" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.set_identity_server_config">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_identity_server_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.set_identity_server_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.set_identity_server_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.update_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.update_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.update_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.update_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiBase.update_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiBase.update_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ApiStub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deadline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.grpc.grpclib_client.ServiceStub</span></code></p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>create_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>create_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>delete_all</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>delete_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>delete_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_identity_server_config</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>get_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_oidc_client</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>list_idp_connectors</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>list_oidc_clients</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>set_identity_server_config</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>update_idp_connector</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>update_oidc_client</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.create_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.create_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.create_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.create_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.create_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.create_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_all">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.delete_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_all" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.delete_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.delete_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.delete_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_identity_server_config">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_identity_server_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.get_identity_server_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_identity_server_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.get_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.get_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.get_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.list_idp_connectors">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_idp_connectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.list_idp_connectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.list_idp_connectors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.list_oidc_clients">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_oidc_clients</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.list_oidc_clients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.list_oidc_clients" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.set_identity_server_config">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_identity_server_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.set_identity_server_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.set_identity_server_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.update_idp_connector">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_idp_connector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.update_idp_connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.update_idp_connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.update_oidc_client">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_oidc_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ApiStub.update_oidc_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ApiStub.update_oidc_client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CreateIdpConnectorRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector:</span> <span class="pre">'IdpConnector'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#CreateIdpConnectorRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorRequest.connector">
+<span class="sig-name descname"><span class="pre">connector</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorRequest.connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CreateIdpConnectorResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#CreateIdpConnectorResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateIdpConnectorResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CreateOidcClientRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client:</span> <span class="pre">'OidcClient'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#CreateOidcClientRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientRequest.client">
+<span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientRequest.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CreateOidcClientResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client:</span> <span class="pre">'OidcClient'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#CreateOidcClientResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientResponse.client">
+<span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.CreateOidcClientResponse.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteAllRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteAllRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteAllRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteAllRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteAllResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteAllResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteAllResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteAllResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteIdpConnectorRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteIdpConnectorRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorRequest.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorRequest.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteIdpConnectorResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteIdpConnectorResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteIdpConnectorResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteOidcClientRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteOidcClientRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientRequest.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientRequest.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeleteOidcClientResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#DeleteOidcClientResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.DeleteOidcClientResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetIdentityServerConfigRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetIdentityServerConfigRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetIdentityServerConfigResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">'IdentityServerConfig'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetIdentityServerConfigResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse.config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetIdpConnectorRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetIdpConnectorRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorRequest.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorRequest.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetIdpConnectorResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector:</span> <span class="pre">'IdpConnector'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetIdpConnectorResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorResponse.connector">
+<span class="sig-name descname"><span class="pre">connector</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetIdpConnectorResponse.connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetOidcClientRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetOidcClientRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientRequest.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientRequest.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetOidcClientResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client:</span> <span class="pre">'OidcClient'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#GetOidcClientResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientResponse.client">
+<span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.GetOidcClientResponse.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IdentityServerConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_token_expiry=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#IdentityServerConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p>IdentityServerConfig is the configuration for the identity web server. When
+the configuration is changed the web server is reloaded automatically.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.id_token_expiry">
+<span class="sig-name descname"><span class="pre">id_token_expiry</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.id_token_expiry" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.issuer">
+<span class="sig-name descname"><span class="pre">issuer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.issuer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IdpConnector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_version=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_config=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#IdpConnector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p>IDPConnector represents a connection to an identity provider</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.config_version">
+<span class="sig-name descname"><span class="pre">config_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.config_version" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.json_config">
+<span class="sig-name descname"><span class="pre">json_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.json_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.IdpConnector.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListIdpConnectorsRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ListIdpConnectorsRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListIdpConnectorsResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connectors:</span> <span class="pre">List[ForwardRef('IdpConnector')]</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ListIdpConnectorsResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsResponse.connectors">
+<span class="sig-name descname"><span class="pre">connectors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListIdpConnectorsResponse.connectors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListOidcClientsRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ListOidcClientsRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListOidcClientsResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clients:</span> <span class="pre">List[ForwardRef('OidcClient')]</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#ListOidcClientsResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse.clients">
+<span class="sig-name descname"><span class="pre">clients</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse.clients" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OidcClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redirect_uris:</span> <span class="pre">List[str]</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trusted_peers:</span> <span class="pre">List[str]</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#OidcClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.redirect_uris">
+<span class="sig-name descname"><span class="pre">redirect_uris</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.redirect_uris" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.secret">
+<span class="sig-name descname"><span class="pre">secret</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.secret" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.trusted_peers">
+<span class="sig-name descname"><span class="pre">trusted_peers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.OidcClient.trusted_peers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SetIdentityServerConfigRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">'IdentityServerConfig'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#SetIdentityServerConfigRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigRequest.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigRequest.config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SetIdentityServerConfigResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#SetIdentityServerConfigResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.SetIdentityServerConfigResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UpdateIdpConnectorRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector:</span> <span class="pre">'IdpConnector'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#UpdateIdpConnectorRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorRequest.connector">
+<span class="sig-name descname"><span class="pre">connector</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorRequest.connector" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UpdateIdpConnectorResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#UpdateIdpConnectorResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateIdpConnectorResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UpdateOidcClientRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client:</span> <span class="pre">'OidcClient'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x107efd2f0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#UpdateOidcClientRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest.client">
+<span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UpdateOidcClientResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#UpdateOidcClientResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.User">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_authenticated=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/identity_v2.html#User"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.User" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p>User represents an IDP user that has authenticated via OIDC</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.User.email">
+<span class="sig-name descname"><span class="pre">email</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.User.email" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.identity_v2.User.last_authenticated">
+<span class="sig-name descname"><span class="pre">last_authenticated</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.identity_v2.User.last_authenticated" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

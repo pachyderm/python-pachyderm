@@ -1,6 +1,10 @@
 from typing import Iterator
-from python_pachyderm.service import Service, debug_proto
+import datetime
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import debug_proto
 from google.protobuf import duration_pb2
+
+# bp_to_pb: datetime.deltatime -> duration_pb2.Duration
 
 
 class DebugMixin:
@@ -37,13 +41,13 @@ class DebugMixin:
             yield item.value
 
     def profile_cpu(
-        self, duration: duration_pb2.Duration, filter: debug_proto.Filter = None
+        self, duration: datetime.timedelta, filter: debug_proto.Filter = None
     ) -> Iterator[bytes]:
         """Gets a CPU profile.
 
         Parameters
         ----------
-        duration : duration_pb2.Duration
+        duration : datetime.timedelta
             A google protobuf duration object indicating how long the profile
             should run for.
         filter : debug_proto.Filter, optional
@@ -57,7 +61,7 @@ class DebugMixin:
 
         Examples
         --------
-        >>> for b in client.profile_cpu(duration_pb2.Duration(seconds=1)):
+        >>> for b in client.profile_cpu(datetime.timedelta(seconds=1)):
         >>>     print(b)
         """
         profile = debug_proto.Profile(name="cpu", duration=duration)

@@ -1,4 +1,5 @@
-from python_pachyderm.service import health_proto, Service
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import health_proto
 
 
 class HealthMixin:

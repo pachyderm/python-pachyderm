@@ -1,4 +1,5 @@
-from python_pachyderm.service import Service, enterprise_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import enterprise_proto
 
 
 class EnterpriseMixin:

@@ -27,6 +27,7 @@ grpcio = ">=1.38.0"
 grpcio-health-checking = ">=1.38.0"
 importlib-metadata = { version = ">1.5.1", python = "<3.8" }
 protobuf = ">=3.17.1"
+betterproto = "2.0.0b3"
 
 [tool.poetry.dev-dependencies]
 black = ">=21.5b0"

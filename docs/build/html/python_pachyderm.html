@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>python_pachyderm &mdash; python-pachyderm  documentation</title>
+  <title>Mixins &mdash; python-pachyderm  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Information" href="python_pachyderm.mixin.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="modules.html" /> 
+    <link rel="prev" title="python_pachyderm" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,8 +40,8 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">python_pachyderm</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mixins">Mixins</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python_pachyderm</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mixins</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html">Information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pachyderm.mixin.html#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
@@ -59,6 +59,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.client">Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.pfs">PFS Helper</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-python_pachyderm.util">Util Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experimental-module">Experimental Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.experimental.html">Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.experimental.html#experimental-mixins">Experimental Mixins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.experimental.html#experimental-protos">Experimental Protos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pachyderm.experimental.html#module-python_pachyderm.experimental.client">Experimental Client</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -77,8 +84,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">&lt;no title&gt;</a> &raquo;</li>
-      <li>python_pachyderm</li>
+          <li><a href="modules.html">python_pachyderm</a> &raquo;</li>
+      <li>Mixins</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/python_pachyderm.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,10 +95,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="python-pachyderm">
-<h1>python_pachyderm<a class="headerlink" href="#python-pachyderm" title="Permalink to this headline"></a></h1>
-<section id="mixins">
-<h2>Mixins<a class="headerlink" href="#mixins" title="Permalink to this headline"></a></h2>
+  <section id="mixins">
+<h1>Mixins<a class="headerlink" href="#mixins" title="Permalink to this headline"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="python_pachyderm.mixin.html">Information</a></li>
@@ -110,10 +115,10 @@
 </div>
 </section>
 <section id="module-python_pachyderm.client">
-<span id="client"></span><h2>Client<a class="headerlink" href="#module-python_pachyderm.client" title="Permalink to this headline"></a></h2>
+<span id="client"></span><h1>Client<a class="headerlink" href="#module-python_pachyderm.client" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.client.Client">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.client.Client" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.admin.AdminMixin" title="python_pachyderm.mixin.admin.AdminMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.admin.AdminMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.auth.AuthMixin" title="python_pachyderm.mixin.auth.AuthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.auth.AuthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.debug.DebugMixin" title="python_pachyderm.mixin.debug.DebugMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.debug.DebugMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="python_pachyderm.mixin.enterprise.EnterpriseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.enterprise.EnterpriseMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.health.HealthMixin" title="python_pachyderm.mixin.health.HealthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.health.HealthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.identity.IdentityMixin" title="python_pachyderm.mixin.identity.IdentityMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.identity.IdentityMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin" title="python_pachyderm.mixin.license.LicenseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.license.LicenseMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin" title="python_pachyderm.mixin.pfs.PFSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.pfs.PFSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin" title="python_pachyderm.mixin.pps.PPSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.pps.PPSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin" title="python_pachyderm.mixin.transaction.TransactionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.transaction.TransactionMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.version.VersionMixin" title="python_pachyderm.mixin.version.VersionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.mixin.version.VersionMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The <a class="reference internal" href="#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> class that users will primarily interact with.
 Initialize an instance with <code class="docutils literal notranslate"><span class="pre">python_pachyderm.Client()</span></code>.</p>
@@ -390,7 +395,7 @@ Initialize an instance with <code class="docutils literal notranslate"><span cla
 <td><p>Lists all clusters available to user.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_file_client</span></code>(commit)</p></td>
-<td><p>A context manager that gives a <a class="reference internal" href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>.</p></td>
+<td><p>A context manager that gives a <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.ModifyFileClient" title="python_pachyderm.experimental.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_members</span></code>(group[, add, remove])</p></td>
 <td><p>Adds and/or removes members of a group.</p></td>
@@ -635,10 +640,10 @@ cluster.</p>
 
 </section>
 <section id="module-python_pachyderm.pfs">
-<span id="pfs-helper"></span><h2>PFS Helper<a class="headerlink" href="#module-python_pachyderm.pfs" title="Permalink to this headline"></a></h2>
+<span id="pfs-helper"></span><h1>PFS Helper<a class="headerlink" href="#module-python_pachyderm.pfs" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.Commit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.pfs.</span></span><span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'user'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#Commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.Commit" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'user'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#Commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.Commit" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></p>
 <p>A namedtuple subclass to specify a Commit.</p>
 <dl class="field-list simple">
@@ -717,7 +722,7 @@ object.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.SubcommitType">
-<span class="sig-prename descclassname"><span class="pre">python_pachyderm.pfs.</span></span><span class="sig-name descname"><span class="pre">SubcommitType</span></span><a class="headerlink" href="#python_pachyderm.pfs.SubcommitType" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SubcommitType</span></span><a class="headerlink" href="#python_pachyderm.pfs.SubcommitType" title="Permalink to this definition"></a></dt>
 <dd><p>Composite type for a subcommit, a commit at the repo-level.</p>
 <p class="rubric">Examples</p>
 <p>Tuple:</p>
@@ -749,7 +754,7 @@ object.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.commit_from">
-<span class="sig-prename descclassname"><span class="pre">python_pachyderm.pfs.</span></span><span class="sig-name descname"><span class="pre">commit_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#commit_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.commit_from" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">commit_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#commit_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.commit_from" title="Permalink to this definition"></a></dt>
 <dd><p>A commit can be identified by (repo, branch, commit_id, repo_type)</p>
 <p>Helper function to convert objects that represent a Commit query into a
 protobuf Commit object.</p>
@@ -771,10 +776,10 @@ protobuf Commit object.</p>
 
 </section>
 <section id="module-python_pachyderm.util">
-<span id="util-helper"></span><h2>Util Helper<a class="headerlink" href="#module-python_pachyderm.util" title="Permalink to this headline"></a></h2>
+<span id="util-helper"></span><h1>Util Helper<a class="headerlink" href="#module-python_pachyderm.util" title="Permalink to this headline"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pachyderm.util.parse_dict_pipeline_spec">
-<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">parse_dict_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_dict_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_dict_pipeline_spec" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parse_dict_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_dict_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_dict_pipeline_spec" title="Permalink to this definition"></a></dt>
 <dd><p>Parses a dict of serialized JSON into a <cite>CreatePipelineRequest</cite> protobuf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -818,7 +823,7 @@ spec: <a class="reference external" href="https://docs.pachyderm.com/latest/refe
 
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pachyderm.util.parse_json_pipeline_spec">
-<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">parse_json_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_json_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_json_pipeline_spec" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parse_json_pipeline_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#parse_json_pipeline_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.parse_json_pipeline_spec" title="Permalink to this definition"></a></dt>
 <dd><p>Parses a string of JSON into a <cite>CreatePipelineRequest</cite> protobuf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -862,7 +867,7 @@ spec: <a class="reference external" href="https://docs.pachyderm.com/latest/refe
 
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pachyderm.util.put_files">
-<span class="sig-prename descclassname"><span class="pre">python_pachyderm.util.</span></span><span class="sig-name descname"><span class="pre">put_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#put_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.put_files" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">put_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/util.html#put_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.util.put_files" title="Permalink to this definition"></a></dt>
 <dd><p>Utility function for inserting files from the local <cite>source_path</cite>
 into Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"><span class="pre">pachctl</span> <span class="pre">put</span> <span class="pre">file</span> <span class="pre">[-r]</span></code>.</p>
 <dl class="field-list simple">
@@ -895,13 +900,50 @@ into Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"
 </dd></dl>
 
 </section>
+<section id="experimental-module">
+<h1>Experimental Module<a class="headerlink" href="#experimental-module" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.html">Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.html#experimental-mixins">Experimental Mixins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html">Important</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.admin">Admin mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.auth">Auth mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.debug">Debug mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.enterprise">Enterprise mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.health">Health mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.identity">Identity mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.license">License mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pfs">PFS mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pps">PPS mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.transaction">Transaction mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.version">Version mixin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.html#experimental-protos">Experimental Protos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html">Important</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.admin_v2">Admin proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.auth_v2">Auth proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.debug_v2">Debug proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.enterprise_v2">Enterprise proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.identity_v2">Identity proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.license_v2">License proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pfs_v2">PFS proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pps_v2">PPS proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.transaction_v2">Transaction proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.versionpb_v2">Version proto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.html#module-python_pachyderm.experimental.client">Experimental Client</a></li>
+</ul>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="python_pachyderm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="python_pachyderm.mixin.html" class="btn btn-neutral float-right" title="Information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

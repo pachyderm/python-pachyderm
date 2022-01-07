@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python_pachyderm.experimental.mixin.transaction &mdash; python-pachyderm  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> python-pachyderm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">python_pachyderm</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">python-pachyderm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>python_pachyderm.experimental.mixin.transaction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for python_pachyderm.experimental.mixin.transaction</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.experimental.service</span> <span class="kn">import</span> <span class="n">transaction_proto</span>
+
+
+<span class="k">def</span> <span class="nf">_transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transaction</span><span class="p">,</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">transaction</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">transaction</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TransactionMixin"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin">[docs]</a><span class="k">class</span> <span class="nc">TransactionMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A mixin for transaction-related functionality.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TransactionMixin.batch_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.batch_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">batch_transaction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">requests</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">transaction_proto</span><span class="o">.</span><span class="n">TransactionRequest</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">TransactionInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Executes a batch transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        requests : List[transaction_proto.TransactionRequest]</span>
+<span class="sd">            A list of ``TransactionRequest`` protobufs. Each protobuf must</span>
+<span class="sd">            only have one field set.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        transaction_proto.TransactionInfo</span>
+<span class="sd">            A protobuf object with info on the transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; # Deletes one repo and creates a branch in another repo atomically</span>
+<span class="sd">        &gt;&gt;&gt; client.batch_transaction([</span>
+<span class="sd">            transaction_proto.TransactionRequest(delete_repo=pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name=&quot;foo&quot;))),</span>
+<span class="sd">            transaction_proto.TransactionRequest(create_branch=pfs_proto.CreateBranchRequest(branch=pfs_proto.Branch(</span>
+<span class="sd">                repo=pfs_proto.Repo(name=&quot;bar&quot;, type=&quot;user&quot;), name=&quot;staging&quot;</span>
+<span class="sd">            )))</span>
+<span class="sd">        ])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;BatchTransaction&quot;</span><span class="p">,</span> <span class="n">requests</span><span class="o">=</span><span class="n">requests</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.start_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.start_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">start_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Starts a transaction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        transaction_proto.Transaction</span>
+<span class="sd">            A protobuf object that represents the transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; transaction = client.start_transaction()</span>
+<span class="sd">        &gt;&gt;&gt; # do stuff</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_transaction(transaction)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;StartTransaction&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.inspect_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.inspect_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_transaction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">TransactionInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Inspects a transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, transaction_proto.Transaction]</span>
+<span class="sd">            The ID or protobuf object representing the transaction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        transaction_proto.TransactionInfo</span>
+<span class="sd">            A protobuf object with info on the transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; transaction = client.inspect_transaction(&quot;6fe754facd9c41e99d04e1037e3be9ee&quot;)</span>
+<span class="sd">        ...</span>
+<span class="sd">        &gt;&gt;&gt; transaction = client.inspect_transaction(transaction_protobuf)</span>
+
+<span class="sd">        .. # noqa: W505</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;InspectTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">_transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.delete_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.delete_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">delete_transaction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, transaction_proto.Transaction]</span>
+<span class="sd">            The ID or protobuf object representing the transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; client.delete_transaction(&quot;6fe754facd9c41e99d04e1037e3be9ee&quot;)</span>
+<span class="sd">        ...</span>
+<span class="sd">        &gt;&gt;&gt; transaction = client.finish_transaction(&quot;a3ak09467c580611234cdb8cc9758c7a&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; client.delete_transaction(transaction)</span>
+
+<span class="sd">        .. # noqa: W505</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;DeleteTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">_transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.delete_all_transactions"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.delete_all_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Deletes all transactions.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.list_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.list_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">list_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">transaction_proto</span><span class="o">.</span><span class="n">TransactionInfo</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Lists unfinished transactions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[transaction_proto.TransactionInfo]</span>
+<span class="sd">            A list of protobuf objects that contain info on a transaction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span> <span class="s2">&quot;ListTransaction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transaction_info</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.finish_transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.finish_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">finish_transaction</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">transaction_proto</span><span class="o">.</span><span class="n">TransactionInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Finishes a transaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transaction : Union[str, transaction_proto.Transaction]</span>
+<span class="sd">            The ID or protobuf object representing the transaction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        transaction_proto.TransactionInfo</span>
+<span class="sd">            A protobuf object with info on the transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; transaction = client.start_transaction()</span>
+<span class="sd">        &gt;&gt;&gt; # do stuff</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_transaction(transaction)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+            <span class="n">Service</span><span class="o">.</span><span class="n">TRANSACTION</span><span class="p">,</span>
+            <span class="s2">&quot;FinishTransaction&quot;</span><span class="p">,</span>
+            <span class="n">transaction</span><span class="o">=</span><span class="n">_transaction_from</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransactionMixin.transaction"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.transaction">[docs]</a>    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">transaction_proto</span><span class="o">.</span><span class="n">Transaction</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;A context manager for running operations within a transaction. When</span>
+<span class="sd">        the context manager completes, the transaction will be deleted if an</span>
+<span class="sd">        error occurred, or otherwise finished.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        -------</span>
+<span class="sd">        transaction_proto.Transaction</span>
+<span class="sd">            A protobuf object that represents a transaction.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        If a pipeline has two input repos, `foo` and `bar`, a transaction is</span>
+<span class="sd">        useful for adding data to both atomically before the pipeline runs</span>
+<span class="sd">        even once.</span>
+
+<span class="sd">        &gt;&gt;&gt; with client.transaction() as t:</span>
+<span class="sd">        &gt;&gt;&gt;     c1 = client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;     c2 = client.start_commit(&quot;bar&quot;, &quot;master&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt;     client.put_file_bytes(c1, &quot;/joint_data.txt&quot;, b&quot;DATA1&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;     client.put_file_bytes(c2, &quot;/joint_data.txt&quot;, b&quot;DATA2&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt;     client.finish_commit(c1)</span>
+<span class="sd">        &gt;&gt;&gt;     client.finish_commit(c2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">old_transaction_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_transaction</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">transaction</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finish_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transaction_id</span> <span class="o">=</span> <span class="n">old_transaction_id</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,17 +1,20 @@
 from typing import List
-
-from google.protobuf import timestamp_pb2
 from grpc import RpcError
 
 from python_pachyderm.errors import AuthServiceNotActivated
-from python_pachyderm.service import Service, license_proto, enterprise_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import license_proto, enterprise_proto
+from google.protobuf import timestamp_pb2
+import datetime
+
+# bp_to_pb: datetime.datetime -> timestamp_pb2.Timestamp
 
 
 class LicenseMixin:
     """A mixin for license-related functionality."""
 
     def activate_license(
-        self, activation_code: str, expires: timestamp_pb2.Timestamp = None
+        self, activation_code: str, expires: datetime.datetime = None
     ) -> enterprise_proto.TokenInfo:
         """Activates the license service.
 
@@ -20,7 +23,7 @@ class LicenseMixin:
         activation_code : str
             A Pachyderm enterprise activation code. New users can obtain trial
             activation codes.
-        expires : timestamp_pb2.Timestamp, optional
+        expires : datetime.datetime, optional
             A protobuf object indicating when this activation code will expire.
             This should generally not be set and is only applied if it is
             earlier than the signed expiration time of `activation_code`.

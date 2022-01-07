@@ -1,7 +1,8 @@
 from contextlib import contextmanager
 from typing import Iterator, List, Union
 
-from python_pachyderm.service import Service, transaction_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import transaction_proto
 
 
 def _transaction_from(transaction):

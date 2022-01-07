@@ -1,9 +1,12 @@
 from typing import Dict, List
-
 from grpc import RpcError
 
 from python_pachyderm.errors import AuthServiceNotActivated
-from python_pachyderm.service import Service, auth_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import auth_proto
+
+# bp_to_pb: OidcConfig -> OIDCConfig
+# bp_to_pb: GetOidcLoginResponse -> GetOIDCLoginResponse
 
 
 class AuthMixin:
@@ -39,27 +42,27 @@ class AuthMixin:
         except RpcError as err:
             raise AuthServiceNotActivated.try_from(err)
 
-    def get_auth_configuration(self) -> auth_proto.OIDCConfig:
+    def get_auth_configuration(self) -> auth_proto.OidcConfig:
         """Gets the auth configuration.
 
         Returns
         -------
-        auth_proto.OIDCConfig
+        auth_proto.OidcConfig
             A protobuf object with auth configuration information.
         """
         return self._req(Service.AUTH, "GetConfiguration").configuration
 
-    def set_auth_configuration(self, configuration: auth_proto.OIDCConfig) -> None:
+    def set_auth_configuration(self, configuration: auth_proto.OidcConfig) -> None:
         """Sets the auth configuration.
 
         Parameters
         ----------
-        configuration : auth_proto.OIDCConfig
+        configuration : auth_proto.OidcConfig
             A protobuf object with auth configuration information.
 
         Examples
         --------
-        >>> client.set_auth_configuration(auth_proto.OIDCConfig(
+        >>> client.set_auth_configuration(auth_proto.OidcConfig(
         ...     issuer="http://localhost:1658",
         ...     client_id="client",
         ...     client_secret="secret",
@@ -154,12 +157,12 @@ class AuthMixin:
             roles=roles,
         )
 
-    def get_oidc_login(self) -> auth_proto.GetOIDCLoginResponse:
+    def get_oidc_login(self) -> auth_proto.GetOidcLoginResponse:
         """Gets the OIDC login configuration.
 
         Returns
         -------
-        auth_proto.GetOIDCLoginResponse
+        auth_proto.GetOidcLoginResponse
             A protobuf object with the login configuration information.
         """
         return self._req(Service.AUTH, "GetOIDCLogin")

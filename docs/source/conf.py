@@ -43,6 +43,9 @@ exclude_patterns = []
 # The master toctree document.
 master_doc = "index"
 
+# If True, module will be added to title of every member
+add_module_names = False
+
 
 # -- Options for HTML output -------------------------------------------------
 

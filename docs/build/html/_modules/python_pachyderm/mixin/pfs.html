@@ -37,7 +37,11 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<<<<<<< HEAD
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">python_pachyderm</a></li>
+=======
 <li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
+>>>>>>> master
 </ul>
 
         </div>
@@ -72,7 +76,11 @@
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
+<<<<<<< HEAD
+<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">uuid_re</span>
+=======
 <span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">uuid_re</span><span class="p">,</span> <span class="n">SubcommitType</span>
+>>>>>>> master
 <span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span><span class="p">,</span> <span class="n">Service</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
 
@@ -790,7 +798,13 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.modify_file_client"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">[docs]</a>    <span class="nd">@contextmanager</span>
+<<<<<<< HEAD
+    <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
+=======
     <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
+>>>>>>> master
         <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.ModifyFileClient`. When the</span>
 <span class="sd">        context manager exits, any operations enqueued from the</span>
 <span class="sd">        :class:`.ModifyFileClient` are executed in a single, atomic</span>

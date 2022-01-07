@@ -3,3 +3,4 @@ protobuf
 grpcio-health-checking
 grpcio
 myst-parser
+betterproto==2.0.0b3

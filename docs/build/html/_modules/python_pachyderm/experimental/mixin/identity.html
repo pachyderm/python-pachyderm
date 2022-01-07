@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python_pachyderm.experimental.mixin.identity &mdash; python-pachyderm  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> python-pachyderm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">python_pachyderm</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">python-pachyderm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>python_pachyderm.experimental.mixin.identity</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for python_pachyderm.experimental.mixin.identity</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">grpc</span> <span class="kn">import</span> <span class="n">RpcError</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.errors</span> <span class="kn">import</span> <span class="n">AuthServiceNotActivated</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.experimental.service</span> <span class="kn">import</span> <span class="n">identity_proto</span>
+
+<span class="c1"># bp_to_pb: OidcClient -&gt; OIDCClient, IdpConnector -&gt; IDPConnector</span>
+
+
+<div class="viewcode-block" id="IdentityMixin"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin">[docs]</a><span class="k">class</span> <span class="nc">IdentityMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A mixin for identity-related functionality.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IdentityMixin.set_identity_server_config"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.set_identity_server_config">[docs]</a>    <span class="k">def</span> <span class="nf">set_identity_server_config</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">IdentityServerConfig</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Configure the embedded identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        config : identity_proto.IdentityServerConfig</span>
+<span class="sd">            A protobuf object that is the configuration for the identity web</span>
+<span class="sd">            server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;SetIdentityServerConfig&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.get_identity_server_config"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.get_identity_server_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_identity_server_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">IdentityServerConfig</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the embedded identity server configuration.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        identity_proto.IdentityServerConfig</span>
+<span class="sd">            A protobuf object that holds configuration info (issuer and ID</span>
+<span class="sd">            token expiry) for the identity web server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;GetIdentityServerConfig&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">config</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.create_idp_connector"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.create_idp_connector">[docs]</a>    <span class="k">def</span> <span class="nf">create_idp_connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">IdpConnector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create an IDP connector in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        connector : identity_proto.IdpConnector</span>
+<span class="sd">            A protobuf object that represents a connection to an identity</span>
+<span class="sd">            provider.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;CreateIDPConnector&quot;</span><span class="p">,</span> <span class="n">connector</span><span class="o">=</span><span class="n">connector</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.list_idp_connectors"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.list_idp_connectors">[docs]</a>    <span class="k">def</span> <span class="nf">list_idp_connectors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">identity_proto</span><span class="o">.</span><span class="n">IdpConnector</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;List IDP connectors in the identity server.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[identity_proto.IdpConnector]</span>
+<span class="sd">            A list of probotuf objects that return info on the connector ID,</span>
+<span class="sd">            name, type, config version, and configuration of the upstream IDP</span>
+<span class="sd">            connector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;ListIDPConnectors&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">connectors</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.update_idp_connector"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.update_idp_connector">[docs]</a>    <span class="k">def</span> <span class="nf">update_idp_connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">IdpConnector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Update an IDP connector in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        connector : identity_proto.IdpConnector</span>
+<span class="sd">            A protobuf object that represents a connection to an identity</span>
+<span class="sd">            provider.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;UpdateIDPConnector&quot;</span><span class="p">,</span> <span class="n">connector</span><span class="o">=</span><span class="n">connector</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.get_idp_connector"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.get_idp_connector">[docs]</a>    <span class="k">def</span> <span class="nf">get_idp_connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">IdpConnector</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get an IDP connector in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : str</span>
+<span class="sd">            The connector ID.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        identity_proto.IdpConnector</span>
+<span class="sd">            A protobuf object that returns info on the connector ID, name,</span>
+<span class="sd">            type, config version, and configuration of the upstream IDP</span>
+<span class="sd">            connector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;GetIDPConnector&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">connector</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.delete_idp_connector"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.delete_idp_connector">[docs]</a>    <span class="k">def</span> <span class="nf">delete_idp_connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Delete an IDP connector in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : str</span>
+<span class="sd">            The connector ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;DeleteIDPConnector&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.create_oidc_client"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.create_oidc_client">[docs]</a>    <span class="k">def</span> <span class="nf">create_oidc_client</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">OidcClient</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">OidcClient</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create an OIDC client in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        client : identity_proto.OidcClient</span>
+<span class="sd">            A protobuf object representing an OIDC client.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        identity_proto.OidcClient</span>
+<span class="sd">            A protobuf object that returns a client with info on the client ID,</span>
+<span class="sd">            name, secret, and lists of redirect URIs and trusted peers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;CreateOIDCClient&quot;</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span><span class="o">.</span><span class="n">client</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.update_oidc_client"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.update_oidc_client">[docs]</a>    <span class="k">def</span> <span class="nf">update_oidc_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">OidcClient</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Update an OIDC client in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        client : identity_proto.OidcClient</span>
+<span class="sd">            A protobuf object representing an OIDC client.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;UpdateOIDCClient&quot;</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.get_oidc_client"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.get_oidc_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_oidc_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">identity_proto</span><span class="o">.</span><span class="n">OidcClient</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get an OIDC client in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : str</span>
+<span class="sd">            The client ID.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        identity_proto.OidcClient</span>
+<span class="sd">            A protobuf object that returns a client with info on the client ID,</span>
+<span class="sd">            name, secret, and lists of redirect URIs and trusted peers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;GetOIDCClient&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">client</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.delete_oidc_client"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.delete_oidc_client">[docs]</a>    <span class="k">def</span> <span class="nf">delete_oidc_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Delete an OIDC client in the identity server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : str</span>
+<span class="sd">            The client ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;DeleteOIDCClient&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.list_oidc_clients"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.list_oidc_clients">[docs]</a>    <span class="k">def</span> <span class="nf">list_oidc_clients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">identity_proto</span><span class="o">.</span><span class="n">OidcClient</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;List OIDC clients in the identity server.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[identity_proto.OidcClient]</span>
+<span class="sd">            A list of protobuf objects that return a client with info on the</span>
+<span class="sd">            client ID, name, secret, and lists of redirect URIs and trusted</span>
+<span class="sd">            peers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;ListOIDCClients&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">clients</span></div>
+
+<div class="viewcode-block" id="IdentityMixin.delete_all_identity"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin.delete_all_identity">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Delete all identity service information.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        AuthServiceNotActivated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">IDENTITY</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">RpcError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AuthServiceNotActivated</span><span class="o">.</span><span class="n">try_from</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

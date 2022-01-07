@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Information &mdash; python-pachyderm  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Important" href="python_pachyderm.experimental.mixin.html" />
+    <link rel="prev" title="Information" href="python_pachyderm.mixin.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> python-pachyderm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python_pachyderm</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html">Mixins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.client">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.pfs">PFS Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.util">Util Helper</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html#experimental-module">Experimental Module</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experimental-mixins">Experimental Mixins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html">Important</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.admin">Admin mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.auth">Auth mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.debug">Debug mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.enterprise">Enterprise mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.health">Health mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.identity">Identity mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.license">License mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pfs">PFS mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pps">PPS mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.transaction">Transaction mixin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.version">Version mixin</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#experimental-protos">Experimental Protos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html">Important</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.admin_v2">Admin proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.auth_v2">Auth proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.debug_v2">Debug proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.enterprise_v2">Enterprise proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.identity_v2">Identity proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.license_v2">License proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pfs_v2">PFS proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pps_v2">PPS proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.transaction_v2">Transaction proto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.versionpb_v2">Version proto</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.experimental.client">Experimental Client</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">python-pachyderm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">python_pachyderm</a> &raquo;</li>
+          <li><a href="python_pachyderm.html">Mixins</a> &raquo;</li>
+      <li>Information</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/python_pachyderm.experimental.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-python_pachyderm.experimental">
+<span id="information"></span><h1>Information<a class="headerlink" href="#module-python_pachyderm.experimental" title="Permalink to this headline"></a></h1>
+<p>The experimental module is where new features will be first tested before being
+added to the regular module. Check out mixins to see method documentation.
+Check out protos to inspect input and output proto objects for the mixin
+methods.</p>
+<dl class="simple">
+<dt>Current experimental features:</dt><dd><ul class="simple">
+<li><p>All: Replaced google protobuf-generated code with betterproto-generated code</p></li>
+<li><p>PFS: <code class="docutils literal notranslate"><span class="pre">mount()</span></code>/<code class="docutils literal notranslate"><span class="pre">unmount()</span></code>- Mounting/unmounting Pachyderm repos locally</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Note:</strong> The experimental module WILL NOT follow semver. Breaking changes can
+be introduced in the next minor version of <code class="xref py py-mod docutils literal notranslate"><span class="pre">python_pachyderm</span></code>.</p>
+</section>
+<section id="experimental-mixins">
+<h1>Experimental Mixins<a class="headerlink" href="#experimental-mixins" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html">Important</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.admin">Admin mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.auth">Auth mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.debug">Debug mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.enterprise">Enterprise mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.health">Health mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.identity">Identity mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.license">License mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pfs">PFS mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.pps">PPS mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.transaction">Transaction mixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.mixin.html#module-python_pachyderm.experimental.mixin.version">Version mixin</a></li>
+</ul>
+</div>
+</section>
+<section id="experimental-protos">
+<h1>Experimental Protos<a class="headerlink" href="#experimental-protos" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html">Important</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.admin_v2">Admin proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.auth_v2">Auth proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.debug_v2">Debug proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.enterprise_v2">Enterprise proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.identity_v2">Identity proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.license_v2">License proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pfs_v2">PFS proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.pps_v2">PPS proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.transaction_v2">Transaction proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_pachyderm.experimental.proto.html#module-python_pachyderm.experimental.proto.v2.versionpb_v2">Version proto</a></li>
+</ul>
+</div>
+</section>
+<section id="module-python_pachyderm.experimental.client">
+<span id="experimental-client"></span><h1>Experimental Client<a class="headerlink" href="#module-python_pachyderm.experimental.client" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.client.Client">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_certs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.client.Client" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.admin.AdminMixin" title="python_pachyderm.experimental.mixin.admin.AdminMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.admin.AdminMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.auth.AuthMixin" title="python_pachyderm.experimental.mixin.auth.AuthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.auth.AuthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.debug.DebugMixin" title="python_pachyderm.experimental.mixin.debug.DebugMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.debug.DebugMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin" title="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.health.HealthMixin" title="python_pachyderm.experimental.mixin.health.HealthMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.health.HealthMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.identity.IdentityMixin" title="python_pachyderm.experimental.mixin.identity.IdentityMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.identity.IdentityMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.license.LicenseMixin" title="python_pachyderm.experimental.mixin.license.LicenseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.license.LicenseMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin" title="python_pachyderm.experimental.mixin.pfs.PFSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.pfs.PFSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pps.PPSMixin" title="python_pachyderm.experimental.mixin.pps.PPSMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.pps.PPSMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin" title="python_pachyderm.experimental.mixin.transaction.TransactionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.transaction.TransactionMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.version.VersionMixin" title="python_pachyderm.experimental.mixin.version.VersionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.experimental.mixin.version.VersionMixin</span></code></a>, <a class="reference internal" href="python_pachyderm.html#python_pachyderm.client.Client" title="python_pachyderm.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_pachyderm.client.Client</span></code></a></p>
+<p>An experimental Client. New <code class="docutils literal notranslate"><span class="pre">python_pachyderm</span></code> features are available
+here first. Refer to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Introduction</span></code> section in the Experimental
+Mixins doc page to see the existing experimental prototypes Initialize an
+instance with <code class="docutils literal notranslate"><span class="pre">python_pachyderm.experimental.Client()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>auth_token</strong></dt><dd></dd>
+<dt><strong>transaction_id</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_auth</span></code>([root_token])</p></td>
+<td><p>Activates auth on the cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_enterprise</span></code>(license_server, id, secret)</p></td>
+<td><p>Activates enterprise by registering with a license server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_license</span></code>(activation_code[, expires])</p></td>
+<td><p>Activates the license service.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_cluster</span></code>(id, address[, secret, ...])</p></td>
+<td><p>Register a cluster with the license service.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_id_token</span></code>(id_token)</p></td>
+<td><p>Authenticates a user to the Pachyderm cluster using an ID token issued by the OIDC provider.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authenticate_oidc</span></code>(oidc_state)</p></td>
+<td><p>Authenticates a user to the Pachyderm cluster via OIDC.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">authorize</span></code>(resource[, permissions])</p></td>
+<td><p>Tests a list of permissions that the user might have on a resource.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">batch_transaction</span></code>(requests)</p></td>
+<td><p>Executes a batch transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary</span></code>([filter])</p></td>
+<td><p>Gets the pachd binary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit</span></code>(repo_name, branch[, parent, description])</p></td>
+<td><p>A context manager for running operations within a commit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy_file</span></code>(source_commit, source_path, ...[, ...])</p></td>
+<td><p>Efficiently copies files already in PFS.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_branch</span></code>(repo_name, branch_name[, ...])</p></td>
+<td><p>Creates a new branch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_idp_connector</span></code>(connector)</p></td>
+<td><p>Create an IDP connector in the identity server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_oidc_client</span></code>(client)</p></td>
+<td><p>Create an OIDC client in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_pipeline</span></code>(pipeline_name, transform[, ...])</p></td>
+<td><p>Creates a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_pipeline_from_request</span></code>(req)</p></td>
+<td><p>Creates a pipeline from a <code class="docutils literal notranslate"><span class="pre">CreatePipelineRequest</span></code> object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_repo</span></code>(repo_name[, description, update])</p></td>
+<td><p>Creates a new repo object in PFS with the given name.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_secret</span></code>(secret_name, data[, labels, ...])</p></td>
+<td><p>Creates a new secret.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deactivate_auth</span></code>()</p></td>
+<td><p>Deactivates auth, removing all ACLs, tokens, and admins from the Pachyderm cluster and making all data publicly accessible.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deactivate_enterprise</span></code>()</p></td>
+<td><p>Deactivates enterprise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all</span></code>()</p></td>
+<td><p>Delete all repos, commits, files, pipelines, and jobs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_identity</span></code>()</p></td>
+<td><p>Delete all identity service information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_license</span></code>()</p></td>
+<td><p>Remove all clusters and deactivate the license service.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_pipelines</span></code>()</p></td>
+<td><p>Deletes all pipelines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_repos</span></code>()</p></td>
+<td><p>Deletes all repos.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_all_transactions</span></code>()</p></td>
+<td><p>Deletes all transactions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_branch</span></code>(repo_name, branch_name[, force])</p></td>
+<td><p>Deletes a branch, but leaves the commits themselves intact.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_cluster</span></code>(id)</p></td>
+<td><p>Delete a cluster registered with the license service.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_file</span></code>(commit, path)</p></td>
+<td><p>Deletes a file from an open commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_idp_connector</span></code>(id)</p></td>
+<td><p>Delete an IDP connector in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_job</span></code>(job_id, pipeline_name)</p></td>
+<td><p>Deletes a subjob (job at the pipeline-level).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_oidc_client</span></code>(id)</p></td>
+<td><p>Delete an OIDC client in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_pipeline</span></code>(pipeline_name[, force, ...])</p></td>
+<td><p>Deletes a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_repo</span></code>(repo_name[, force])</p></td>
+<td><p>Deletes a repo and reclaims the storage space it was using.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_secret</span></code>(secret_name)</p></td>
+<td><p>Deletes a secret.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_transaction</span></code>(transaction)</p></td>
+<td><p>Deletes a transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">diff_file</span></code>(new_commit, new_path[, ...])</p></td>
+<td><p>Diffs two PFS files (file = commit + path in Pachyderm) and returns files that are different.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_commit</span></code>(commit_id)</p></td>
+<td><p>Drops an entire commit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code>([filter, limit])</p></td>
+<td><p>Gets a debug dump.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_auth_tokens</span></code>()</p></td>
+<td><p>This maps to an internal function that is only used for migration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">finish_commit</span></code>(commit[, description, error, ...])</p></td>
+<td><p>Ends the process of committing data to a repo and persists the commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">finish_transaction</span></code>(transaction)</p></td>
+<td><p>Finishes a transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fsck</span></code>([fix])</p></td>
+<td><p>Performs a file system consistency check on PFS, ensuring the correct provenance relationships are satisfied.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_activation_code</span></code>()</p></td>
+<td><p>Returns the enterprise code used to activate Pachdyerm Enterprise in this cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_configuration</span></code>()</p></td>
+<td><p>Gets the auth configuration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_enterprise_state</span></code>()</p></td>
+<td><p>Gets the current enterprise state of the cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_file</span></code>(commit, path[, datum, URL, offset])</p></td>
+<td><p>Gets a file from PFS.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_file_tar</span></code>(commit, path[, datum, URL, offset])</p></td>
+<td><p>Gets a file from PFS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups</span></code>()</p></td>
+<td><p>Gets a list of groups this user belongs to.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_identity_server_config</span></code>()</p></td>
+<td><p>Get the embedded identity server configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_idp_connector</span></code>(id)</p></td>
+<td><p>Get an IDP connector in the identity server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_job_logs</span></code>(pipeline_name, job_id[, ...])</p></td>
+<td><p>Gets logs for a job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_oidc_client</span></code>(id)</p></td>
+<td><p>Get an OIDC client in the identity server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_oidc_login</span></code>()</p></td>
+<td><p>Gets the OIDC login configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pipeline_logs</span></code>(pipeline_name[, ...])</p></td>
+<td><p>Gets logs for a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_remote_version</span></code>()</p></td>
+<td><p>Gets version of Pachyderm server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_robot_token</span></code>(robot[, ttl])</p></td>
+<td><p>Gets a new auth token for a robot user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_role_binding</span></code>(resource)</p></td>
+<td><p>Returns the current set of role bindings to the resource specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_roles_for_permission</span></code>(permission)</p></td>
+<td><p>Returns a list of all roles that have the specified permission.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_users</span></code>(group)</p></td>
+<td><p>Gets users in a group.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">glob_file</span></code>(commit, pattern)</p></td>
+<td><p>Lists files that match a glob pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">health_check</span></code>()</p></td>
+<td><p>Returns a health check indicating if the server can handle RPCs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_branch</span></code>(repo_name, branch_name)</p></td>
+<td><p>Inspects a branch.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_cluster</span></code>()</p></td>
+<td><p>Inspects a cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_commit</span></code>(commit[, commit_state])</p></td>
+<td><p>Inspects a commit.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_datum</span></code>(pipeline_name, job_id, datum_id)</p></td>
+<td><p>Inspects a datum.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_file</span></code>(commit, path[, datum])</p></td>
+<td><p>Inspects a file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_job</span></code>(job_id[, pipeline_name, wait, ...])</p></td>
+<td><p>Inspects a job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_pipeline</span></code>(pipeline_name[, history, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_repo</span></code>(repo_name)</p></td>
+<td><p>Inspects a repo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_secret</span></code>(secret_name)</p></td>
+<td><p>Inspects a secret.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_transaction</span></code>(transaction)</p></td>
+<td><p>Inspects a transaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_branch</span></code>(repo_name[, reverse])</p></td>
+<td><p>Lists the active branch objects in a repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_clusters</span></code>()</p></td>
+<td><p>List clusters registered with the license service.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_commit</span></code>([repo_name, to_commit, ...])</p></td>
+<td><p>Lists commits.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_datum</span></code>([pipeline_name, job_id, input])</p></td>
+<td><p>Lists datums.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code>(commit, path[, datum, details])</p></td>
+<td><p>Lists the files in a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_idp_connectors</span></code>()</p></td>
+<td><p>List IDP connectors in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_job</span></code>([pipeline_name, input_commit, ...])</p></td>
+<td><p>Lists jobs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_oidc_clients</span></code>()</p></td>
+<td><p>List OIDC clients in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_pipeline</span></code>([history, details, jqFilter])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_repo</span></code>([type])</p></td>
+<td><p>Lists all repos in PFS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_secret</span></code>()</p></td>
+<td><p>Lists secrets.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_transaction</span></code>()</p></td>
+<td><p>Lists unfinished transactions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_user_clusters</span></code>()</p></td>
+<td><p>Lists all clusters available to user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_file_client</span></code>(commit)</p></td>
+<td><p>A context manager that gives a <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.ModifyFileClient" title="python_pachyderm.experimental.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_members</span></code>(group[, add, remove])</p></td>
+<td><p>Adds and/or removes members of a group.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_role_binding</span></code>(resource, principal[, roles])</p></td>
+<td><p>Sets the roles for a given principal on a resource.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mount</span></code>(mount_dir[, repos])</p></td>
+<td><p>Mounts Pachyderm repos locally.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_config</span></code>(config_file)</p></td>
+<td><p>Creates a Pachyderm client from a config file-like object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_pachd_address</span></code>(pachd_address[, ...])</p></td>
+<td><p>Creates a Pachyderm client from a given pachd address.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_in_cluster</span></code>([auth_token, transaction_id])</p></td>
+<td><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">path_exists</span></code>(commit, path)</p></td>
+<td><p>Checks whether the path exists in the specified commit, agnostic to whether <cite>path</cite> is a file or a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">profile_cpu</span></code>(duration[, filter])</p></td>
+<td><p>Gets a CPU profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_bytes</span></code>(commit, path, value[, datum, ...])</p></td>
+<td><p>Uploads a PFS file from a file-like object, bytestring, or iterator of bytestrings.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_file_url</span></code>(commit, path, url[, recursive, ...])</p></td>
+<td><p>Uploads a PFS file using the content found at a URL.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">restart_datum</span></code>(pipeline_name, job_id[, ...])</p></td>
+<td><p>Restarts a datum.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore_auth_token</span></code>([token])</p></td>
+<td><p>This maps to an internal function that is only used for migration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">revoke_auth_token</span></code>(token)</p></td>
+<td><p>Revokes an auth token.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_cron</span></code>(pipeline_name)</p></td>
+<td><p>Triggers a cron pipeline to run now.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_auth_configuration</span></code>(configuration)</p></td>
+<td><p>Sets the auth configuration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_groups_for_user</span></code>(username, groups)</p></td>
+<td><p>Sets the group membership for a user.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_identity_server_config</span></code>(config)</p></td>
+<td><p>Configure the embedded identity server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">squash_commit</span></code>(commit_id)</p></td>
+<td><p>Squashes a commit into its parent.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_commit</span></code>(repo_name, branch[, parent, ...])</p></td>
+<td><p>Begins the process of committing data to a repo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_pipeline</span></code>(pipeline_name)</p></td>
+<td><p>Starts a pipeline.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_transaction</span></code>()</p></td>
+<td><p>Starts a transaction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_job</span></code>(job_id, pipeline_name[, reason])</p></td>
+<td><p>Stops a subjob (job at the pipeline-level).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_pipeline</span></code>(pipeline_name)</p></td>
+<td><p>Stops a pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">subscribe_commit</span></code>(repo_name, branch[, ...])</p></td>
+<td><p>Returns all commits on the branch and then listens for new commits that are created.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transaction</span></code>()</p></td>
+<td><p>A context manager for running operations within a transaction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">unmount</span></code>([mount_dir, all_mounts])</p></td>
+<td><p>Unmounts mounted local filesystems with Pachyderm repos.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cluster</span></code>(id, address[, user_address, ...])</p></td>
+<td><p>Update a cluster registered with the license service.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_idp_connector</span></code>(connector)</p></td>
+<td><p>Update an IDP connector in the identity server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_oidc_client</span></code>(client)</p></td>
+<td><p>Update an OIDC client in the identity server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait_commit</span></code>(commit)</p></td>
+<td><p>Waits for the specified commit to finish.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">walk_file</span></code>(commit, path[, datum])</p></td>
+<td><p>Walks over all descendant files in a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">who_am_i</span></code>()</p></td>
+<td><p>Returns info about the user tied to this <cite>Client</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="python_pachyderm.mixin.html" class="btn btn-neutral float-left" title="Information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pachyderm.experimental.mixin.html" class="btn btn-neutral float-right" title="Important" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

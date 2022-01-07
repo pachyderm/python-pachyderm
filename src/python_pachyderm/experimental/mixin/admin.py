@@ -1,5 +1,9 @@
-from python_pachyderm.service import Service, admin_proto
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import admin_proto
 from google.protobuf import empty_pb2
+import betterproto.lib.google.protobuf as bp_proto
+
+# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
 
 
 class AdminMixin:
@@ -16,5 +20,5 @@ class AdminMixin:
         return self._req(
             Service.ADMIN,
             "InspectCluster",
-            req=empty_pb2.Empty(),
+            req=bp_proto.Empty(),
         )
