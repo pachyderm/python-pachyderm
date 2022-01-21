@@ -439,7 +439,7 @@ class Client(
             channel=_create_channel(
                 self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
             ),
-            metadata=self._metadata
+            metadata=self._metadata,
         )
         super().__init__()
 
@@ -455,7 +455,7 @@ class Client(
             channel=_create_channel(
                 self.address, self.root_certs, options=GRPC_CHANNEL_OPTIONS
             ),
-            metadata=self._metadata
+            metadata=self._metadata,
         )
         super().__init__()
 
