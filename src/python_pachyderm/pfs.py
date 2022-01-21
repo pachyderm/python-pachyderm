@@ -1,8 +1,7 @@
 import re
-from typing import NamedTuple, Union
+from typing import NamedTuple, Optional, Union
 
-from python_pachyderm.service import pfs_proto
-
+from python_pachyderm.proto.v2.pfs import pfs_pb2
 
 # copied from pachyderm/pachyderm
 valid_branch_re = re.compile(r"^[a-zA-Z0-9_-]+$")
@@ -17,18 +16,18 @@ class Commit(NamedTuple):
     id: str = None
     repo_type: str = "user"
 
-    def to_pb(self) -> pfs_proto.Commit:
+    def to_pb(self) -> pfs_pb2.Commit:
         """Converts itself into a ``pfs_proto.Commit``."""
-        return pfs_proto.Commit(
+        return pfs_pb2.Commit(
             id=self.id,
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=self.repo, type=self.repo_type),
+            branch=pfs_pb2.Branch(
+                repo=pfs_pb2.Repo(name=self.repo, type=self.repo_type),
                 name=self.branch,
             ),
         )
 
     @staticmethod
-    def from_pb(commit: pfs_proto.Commit) -> "Commit":
+    def from_pb(commit: pfs_pb2.Commit) -> "Commit":
         """Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`
         object.
         """
@@ -40,9 +39,10 @@ class Commit(NamedTuple):
         )
 
 
-def commit_from(
-    commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-) -> pfs_proto.Commit:
+COMMIT_LIKE = Union[tuple, dict, "Commit", pfs_pb2.Commit]
+
+
+def commit_from(commit: Optional[COMMIT_LIKE] = None) -> pfs_pb2.Commit:
     """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a
@@ -58,7 +58,7 @@ def commit_from(
     pfs_proto.Commit
         A protobuf object that represents a commit.
     """
-    if isinstance(commit, pfs_proto.Commit):
+    if isinstance(commit, pfs_pb2.Commit):
         return commit
     if isinstance(commit, Commit):
         return commit.to_pb()

@@ -1,10 +1,17 @@
-from python_pachyderm.service import health_proto, Service
+import grpc
+from grpc_health.v1 import health_pb2, health_pb2_grpc
 
 
 class HealthMixin:
     """A mixin for health-related functionality."""
 
-    def health_check(self) -> health_proto.HealthCheckResponse:
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = health_pb2_grpc.HealthStub(self._channel)
+        super().__init__()
+
+    def health_check(self) -> health_pb2.HealthCheckResponse:
         """Returns a health check indicating if the server can handle
         RPCs.
 
@@ -13,8 +20,5 @@ class HealthMixin:
         health_proto.HealthCheckResponse
             A protobuf object with a status enum indicating server health.
         """
-        return self._req(
-            Service.HEALTH,
-            "Check",
-            req=health_proto.HealthCheckRequest(),
-        )
+        message = health_pb2.HealthCheckRequest()
+        return self.__stub.Check(message)

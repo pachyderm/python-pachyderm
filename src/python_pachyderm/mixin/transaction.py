@@ -1,22 +1,30 @@
 from contextlib import contextmanager
 from typing import Iterator, List, Union
 
-from python_pachyderm.service import Service, transaction_proto
+import grpc
+
+from python_pachyderm.proto.v2.transaction import transaction_pb2, transaction_pb2_grpc
 
 
 def _transaction_from(transaction):
-    if isinstance(transaction, transaction_proto.Transaction):
+    if isinstance(transaction, transaction_pb2.Transaction):
         return transaction
     else:
-        return transaction_proto.Transaction(id=transaction)
+        return transaction_pb2.Transaction(id=transaction)
 
 
 class TransactionMixin:
     """A mixin for transaction-related functionality."""
 
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = transaction_pb2_grpc.APIStub(self._channel)
+        super().__init__()
+
     def batch_transaction(
-        self, requests: List[transaction_proto.TransactionRequest]
-    ) -> transaction_proto.TransactionInfo:
+        self, requests: List[transaction_pb2.TransactionRequest]
+    ) -> transaction_pb2.TransactionInfo:
         """Executes a batch transaction.
 
         Parameters
@@ -40,9 +48,10 @@ class TransactionMixin:
             )))
         ])
         """
-        return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
+        message = transaction_pb2.BatchTransactionRequest(requests=requests)
+        return self.__stub.BatchTransaction(message)
 
-    def start_transaction(self) -> transaction_proto.Transaction:
+    def start_transaction(self) -> transaction_pb2.Transaction:
         """Starts a transaction.
 
         Returns
@@ -56,11 +65,12 @@ class TransactionMixin:
         >>> # do stuff
         >>> client.finish_transaction(transaction)
         """
-        return self._req(Service.TRANSACTION, "StartTransaction")
+        message = transaction_pb2.StartTransactionRequest()
+        return self.__stub.StartTransaction(message)
 
     def inspect_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
-    ) -> transaction_proto.TransactionInfo:
+        self, transaction: Union[str, transaction_pb2.Transaction]
+    ) -> transaction_pb2.TransactionInfo:
         """Inspects a transaction.
 
         Parameters
@@ -81,14 +91,13 @@ class TransactionMixin:
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.TRANSACTION,
-            "InspectTransaction",
+        message = transaction_pb2.InspectTransactionRequest(
             transaction=_transaction_from(transaction),
         )
+        return self.__stub.InspectTransaction(message)
 
     def delete_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
+        self, transaction: Union[str, transaction_pb2.Transaction]
     ) -> None:
         """Deletes a transaction.
 
@@ -106,17 +115,17 @@ class TransactionMixin:
 
         .. # noqa: W505
         """
-        self._req(
-            Service.TRANSACTION,
-            "DeleteTransaction",
+        message = transaction_pb2.DeleteTransactionRequest(
             transaction=_transaction_from(transaction),
         )
+        self.__stub.DeleteTransaction(message)
 
     def delete_all_transactions(self) -> None:
         """Deletes all transactions."""
-        self._req(Service.TRANSACTION, "DeleteAll")
+        message = transaction_pb2.DeleteAllRequest()
+        self.__stub.DeleteAll(message)
 
-    def list_transaction(self) -> List[transaction_proto.TransactionInfo]:
+    def list_transaction(self) -> List[transaction_pb2.TransactionInfo]:
         """Lists unfinished transactions.
 
         Returns
@@ -124,11 +133,12 @@ class TransactionMixin:
         List[transaction_proto.TransactionInfo]
             A list of protobuf objects that contain info on a transaction.
         """
-        return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
+        message = transaction_pb2.ListTransactionRequest()
+        return self.__stub.ListTransaction(message).transaction_info
 
     def finish_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
-    ) -> transaction_proto.TransactionInfo:
+        self, transaction: Union[str, transaction_pb2.Transaction]
+    ) -> transaction_pb2.TransactionInfo:
         """Finishes a transaction.
 
         Parameters
@@ -147,14 +157,13 @@ class TransactionMixin:
         >>> # do stuff
         >>> client.finish_transaction(transaction)
         """
-        return self._req(
-            Service.TRANSACTION,
-            "FinishTransaction",
-            transaction=_transaction_from(transaction),
+        message = transaction_pb2.FinishTransactionRequest(
+            transaction=_transaction_from(transaction)
         )
+        return self.__stub.FinishTransaction(message)
 
     @contextmanager
-    def transaction(self) -> Iterator[transaction_proto.Transaction]:
+    def transaction(self) -> Iterator[transaction_pb2.Transaction]:
         """A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an
         error occurred, or otherwise finished.

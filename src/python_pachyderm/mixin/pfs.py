@@ -5,10 +5,12 @@ import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
-from python_pachyderm.pfs import commit_from, Commit, uuid_re
+import grpc
 from python_pachyderm.service import pfs_proto, Service
 from google.protobuf import empty_pb2, wrappers_pb2
 
+from python_pachyderm.pfs import commit_from, uuid_re, COMMIT_LIKE
+from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
 
 BUFFER_SIZE = 19 * 1024 * 1024
 
@@ -121,6 +123,12 @@ class PFSFile:
 class PFSMixin:
     """A mixin with pfs-related functionality."""
 
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = pfs_pb2_grpc.APIStub(self._channel)
+        super().__init__()
+
     def create_repo(
         self, repo_name: str, description: str = None, update: bool = False
     ) -> None:
@@ -139,15 +147,14 @@ class PFSMixin:
         update : bool, optional
             Whether to update if the repo already exists.
         """
-        self._req(
-            Service.PFS,
-            "CreateRepo",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
+        message = pfs_pb2.CreateRepoRequest(
             description=description,
+            repo=pfs_pb2.Repo(name=repo_name, type="user"),
             update=update,
         )
+        self.__stub.CreateRepo(message)
 
-    def inspect_repo(self, repo_name: str) -> pfs_proto.RepoInfo:
+    def inspect_repo(self, repo_name: str) -> pfs_pb2.RepoInfo:
         """Inspects a repo.
 
         Parameters
@@ -160,11 +167,12 @@ class PFSMixin:
         pfs_proto.RepoInfo
             A protobuf object with info on the repo.
         """
-        return self._req(
-            Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name, type="user")
+        message = pfs_pb2.InspectRepoRequest(
+            repo=pfs_pb2.Repo(name=repo_name, type="user")
         )
+        return self.__stub.InspectRepo(message)
 
-    def list_repo(self, type: str = "user") -> Iterator[pfs_proto.RepoInfo]:
+    def list_repo(self, type: str = "user") -> Iterator[pfs_pb2.RepoInfo]:
         """Lists all repos in PFS.
 
         Parameters
@@ -178,7 +186,8 @@ class PFSMixin:
         Iterator[pfs_proto.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
-        return self._req(Service.PFS, "ListRepo", type=type)
+        message = pfs_pb2.ListRepoRequest(type=type)
+        return self.__stub.ListRepo(message)
 
     def delete_repo(self, repo_name: str, force: bool = False) -> None:
         """Deletes a repo and reclaims the storage space it was using.
@@ -191,24 +200,24 @@ class PFSMixin:
             If set to true, the repo will be removed regardless of errors.
             Use with care.
         """
-        self._req(
-            Service.PFS,
-            "DeleteRepo",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
+        message = pfs_pb2.DeleteRepoRequest(
             force=force,
+            repo=pfs_pb2.Repo(name=repo_name, type="user"),
         )
+        self.__stub.DeleteRepo(message)
 
     def delete_all_repos(self) -> None:
         """Deletes all repos."""
-        self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
+        message = empty_pb2.Empty()
+        self.__stub.DeleteAll(message)
 
     def start_commit(
         self,
         repo_name: str,
         branch: str,
-        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        parent: COMMIT_LIKE = None,
         description: str = None,
-    ) -> pfs_proto.Commit:
+    ) -> pfs_pb2.Commit:
         """Begins the process of committing data to a repo. Once started you
         can write to the commit with ModifyFile. When all the data has been
         written, you must finish the commit with FinishCommit. NOTE: data is
@@ -237,26 +246,22 @@ class PFSMixin:
         --------
         >>> c = client.start_commit("foo", "master", ("foo", "staging"))
         """
+        repo = pfs_pb2.Repo(name=repo_name, type="user")
         if parent and isinstance(parent, str):
-            parent = pfs_proto.Commit(
+            parent = pfs_pb2.Commit(
                 id=parent,
-                branch=pfs_proto.Branch(
-                    repo=pfs_proto.Repo(name=repo_name, type="user"), name=None
-                ),
+                branch=pfs_pb2.Branch(name=None, repo=repo),
             )
-        return self._req(
-            Service.PFS,
-            "StartCommit",
-            parent=commit_from(parent),
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch
-            ),
+        message = pfs_pb2.StartCommitRequest(
+            branch=pfs_pb2.Branch(name=branch, repo=repo),
             description=description,
+            parent=commit_from(parent),
         )
+        return self.__stub.StartCommit(message)
 
     def finish_commit(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         description: str = None,
         error: str = None,
         force: bool = False,
@@ -285,37 +290,36 @@ class PFSMixin:
 
         >>> client.start_commit("foo", "master")
         >>> # modify open commit
-        >>> client.finish_commit(("foo", "master))
+        >>> client.finish_commit(("foo", "master"))
         ...
         >>> # same as above
         >>> c = client.start_commit("foo", "master")
         >>> # modify open commit
         >>> client.finish_commit(c)
         """
-        self._req(
-            Service.PFS,
-            "FinishCommit",
+        message = pfs_pb2.FinishCommitRequest(
             commit=commit_from(commit),
             description=description,
             error=error,
             force=force,
         )
+        self.__stub.FinishCommit(message)
 
     @contextmanager
     def commit(
         self,
         repo_name: str,
         branch: str,
-        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        parent: COMMIT_LIKE = None,
         description: str = None,
-    ) -> Iterator[pfs_proto.Commit]:
+    ) -> Iterator[pfs_pb2.Commit]:
         """A context manager for running operations within a commit.
 
         Parameters
         ----------
         repo_name : str
             The name of the repo.
-        branch_name : str
+        branch : str
             A string specifying the branch.
         parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
             A commit specifying the parent of the newly created commit. Upon
@@ -343,9 +347,9 @@ class PFSMixin:
 
     def inspect_commit(
         self,
-        commit: Union[str, tuple, dict, Commit, pfs_proto.Commit],
-        commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
-    ) -> Iterator[pfs_proto.CommitInfo]:
+        commit: COMMIT_LIKE,
+        commit_state: pfs_pb2.CommitState = pfs_pb2.CommitState.STARTED,
+    ) -> Iterator[pfs_pb2.CommitInfo]:
         """Inspects a commit.
 
         Parameters
@@ -375,23 +379,16 @@ class PFSMixin:
         .. # noqa: W505
         """
         if not isinstance(commit, str):
-            return iter(
-                [
-                    self._req(
-                        Service.PFS,
-                        "InspectCommit",
-                        commit=commit_from(commit),
-                        wait=commit_state,
-                    )
-                ]
+            message = pfs_pb2.InspectCommitRequest(
+                commit=commit_from(commit), wait=commit_state
             )
+            return iter([self.__stub.InspectCommit(message)])
         elif uuid_re.match(commit):
-            return self._req(
-                Service.PFS,
-                "InspectCommitSet",
-                commit_set=pfs_proto.CommitSet(id=commit),
-                wait=commit_state == pfs_proto.CommitState.FINISHED,
+            message = pfs_pb2.InspectCommitSetRequest(
+                commit_set=pfs_pb2.CommitSet(id=commit),
+                wait=commit_state == pfs_pb2.CommitState.FINISHED,
             )
+            return self.__stub.InspectCommitSet(message)
         raise ValueError(
             "bad argument: commit should either be a commit ID (str) or a commit-like object"
         )
@@ -399,13 +396,13 @@ class PFSMixin:
     def list_commit(
         self,
         repo_name: str = None,
-        to_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-        from_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+        to_commit: COMMIT_LIKE = None,
+        from_commit: COMMIT_LIKE = None,
         number: int = None,
         reverse: bool = False,
         all: bool = False,
-        origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
-    ) -> Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]:
+        origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
+    ) -> Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]:
         """Lists commits.
 
         Parameters
@@ -456,20 +453,21 @@ class PFSMixin:
         .. # noqa: W505
         """
         if repo_name is not None:
-            req = pfs_proto.ListCommitRequest(
-                repo=pfs_proto.Repo(name=repo_name, type="user"),
+            message = pfs_pb2.ListCommitRequest(
+                repo=pfs_pb2.Repo(name=repo_name, type="user"),
                 number=number,
                 reverse=reverse,
                 all=all,
                 origin_kind=origin_kind,
             )
             if to_commit is not None:
-                req.to.CopyFrom(commit_from(to_commit))
+                message.to.CopyFrom(commit_from(to_commit))
             if from_commit is not None:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
-            return self._req(Service.PFS, "ListCommit", req=req)
+                getattr(message, "from").CopyFrom(commit_from(from_commit))
+            return self.__stub.ListCommit(message)
         else:
-            return self._req(Service.PFS, "ListCommitSet")
+            message = pfs_pb2.ListCommitSetRequest()
+            return self.__stub.ListCommitSet(message)
 
     def squash_commit(self, commit_id: str) -> None:
         """Squashes a commit into its parent.
@@ -479,11 +477,10 @@ class PFSMixin:
         commit_id : str
             The ID of the commit.
         """
-        self._req(
-            Service.PFS,
-            "SquashCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_id),
+        message = pfs_pb2.SquashCommitSetRequest(
+            commit_set=pfs_pb2.CommitSet(id=commit_id)
         )
+        self.__stub.SquashCommitSet(message)
 
     def drop_commit(self, commit_id: str) -> None:
         """
@@ -494,15 +491,12 @@ class PFSMixin:
         commit_id : str
             The ID of the commit.
         """
-        self._req(
-            Service.PFS,
-            "DropCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_id),
+        message = pfs_pb2.DropCommitSetRequest(
+            commit_set=pfs_pb2.CommitSet(id=commit_id),
         )
+        self.__stub.DropCommitSet(message)
 
-    def wait_commit(
-        self, commit: Union[str, tuple, dict, Commit, pfs_proto.Commit]
-    ) -> List[pfs_proto.CommitInfo]:
+    def wait_commit(self, commit: COMMIT_LIKE) -> List[pfs_pb2.CommitInfo]:
         """Waits for the specified commit to finish.
 
         Parameters
@@ -526,17 +520,17 @@ class PFSMixin:
         >>> # wait for a commit to finish at a certain repo
         >>> client.wait_commit(("foo", "master"))
         """
-        return list(self.inspect_commit(commit, pfs_proto.CommitState.FINISHED))
+        return list(self.inspect_commit(commit, pfs_pb2.CommitState.FINISHED))
 
     def subscribe_commit(
         self,
         repo_name: str,
         branch: str,
-        from_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
-        state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
+        from_commit: COMMIT_LIKE = None,
+        state: pfs_pb2.CommitState = pfs_pb2.CommitState.STARTED,
         all: bool = False,
-        origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
-    ) -> Iterator[pfs_proto.CommitInfo]:
+        origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
+    ) -> Iterator[pfs_pb2.CommitInfo]:
         """Returns all commits on the branch and then listens for new commits
         that are created.
 
@@ -574,8 +568,8 @@ class PFSMixin:
 
         .. # noqa: W505
         """
-        repo = pfs_proto.Repo(name=repo_name, type="user")
-        req = pfs_proto.SubscribeCommitRequest(
+        repo = pfs_pb2.Repo(name=repo_name, type="user")
+        message = pfs_pb2.SubscribeCommitRequest(
             repo=repo,
             branch=branch,
             state=state,
@@ -584,20 +578,20 @@ class PFSMixin:
         )
         if from_commit is not None:
             if isinstance(from_commit, str):
-                getattr(req, "from").CopyFrom(
-                    pfs_proto.Commit(repo=repo, id=from_commit)
+                getattr(message, "from").CopyFrom(
+                    pfs_pb2.Commit(repo=repo, id=from_commit)
                 )
             else:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
-        return self._req(Service.PFS, "SubscribeCommit", req=req)
+                getattr(message, "from").CopyFrom(commit_from(from_commit))
+        return self.__stub.SubscribeCommit(message)
 
     def create_branch(
         self,
         repo_name: str,
         branch_name: str,
-        head_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-        provenance: List[pfs_proto.Branch] = None,
-        trigger: pfs_proto.Trigger = None,
+        head_commit: COMMIT_LIKE = None,
+        provenance: List[pfs_pb2.Branch] = None,
+        trigger: pfs_pb2.Trigger = None,
         new_commit: bool = False,
     ) -> None:
         """Creates a new branch.
@@ -634,19 +628,19 @@ class PFSMixin:
 
         .. # noqa: W505
         """
-        self._req(
-            Service.PFS,
-            "CreateBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
+        message = pfs_pb2.CreateBranchRequest(
+            branch=pfs_pb2.Branch(
+                name=branch_name,
+                repo=pfs_pb2.Repo(name=repo_name, type="user"),
             ),
             head=commit_from(head_commit),
+            new_commit_set=new_commit,
             provenance=provenance,
             trigger=trigger,
-            new_commit_set=new_commit,
         )
+        self.__stub.CreateBranch(message)
 
-    def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_proto.BranchInfo:
+    def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_pb2.BranchInfo:
         """Inspects a branch.
 
         Parameters
@@ -661,17 +655,16 @@ class PFSMixin:
         pfs_proto.BranchInfo
             A protobuf object with info on a branch.
         """
-        return self._req(
-            Service.PFS,
-            "InspectBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
+        message = pfs_pb2.InspectBranchRequest(
+            branch=pfs_pb2.Branch(
+                repo=pfs_pb2.Repo(name=repo_name, type="user"), name=branch_name
             ),
         )
+        return self.__stub.InspectBranch(message)
 
     def list_branch(
         self, repo_name: str, reverse: bool = False
-    ) -> Iterator[pfs_proto.BranchInfo]:
+    ) -> Iterator[pfs_pb2.BranchInfo]:
         """Lists the active branch objects in a repo.
 
         Parameters
@@ -690,12 +683,11 @@ class PFSMixin:
         --------
         >>> branches = list(client.list_branch("foo"))
         """
-        return self._req(
-            Service.PFS,
-            "ListBranch",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
+        message = pfs_pb2.ListBranchRequest(
+            repo=pfs_pb2.Repo(name=repo_name, type="user"),
             reverse=reverse,
         )
+        return self.__stub.ListBranch(message)
 
     def delete_branch(
         self, repo_name: str, branch_name: str, force: bool = False
@@ -713,19 +705,17 @@ class PFSMixin:
         force : bool, optional
             If true, forces the branch deletion.
         """
-        self._req(
-            Service.PFS,
-            "DeleteBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
+        message = pfs_pb2.DeleteBranchRequest(
+            branch=pfs_pb2.Branch(
+                name=branch_name,
+                repo=pfs_pb2.Repo(name=repo_name, type="user"),
             ),
             force=force,
         )
+        self.__stub.DeleteBranch(message)
 
     @contextmanager
-    def modify_file_client(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]
-    ) -> Iterator["ModifyFileClient"]:
+    def modify_file_client(self, commit: COMMIT_LIKE) -> Iterator["ModifyFileClient"]:
         """A context manager that gives a :class:`.ModifyFileClient`. When the
         context manager exits, any operations enqueued from the
         :class:`.ModifyFileClient` are executed in a single, atomic
@@ -756,11 +746,12 @@ class PFSMixin:
         """
         mfc = ModifyFileClient(commit)
         yield mfc
-        self._req(Service.PFS, "ModifyFile", req=mfc._reqs())
+        messages = mfc._reqs()
+        self.__stub.ModifyFile(messages)
 
     def put_file_bytes(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         value: Union[bytes, BinaryIO],
         datum: str = None,
@@ -810,7 +801,7 @@ class PFSMixin:
 
     def put_file_url(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         url: str,
         recursive: bool = False,
@@ -860,9 +851,9 @@ class PFSMixin:
 
     def copy_file(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: COMMIT_LIKE,
         source_path: str,
-        dest_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        dest_commit: COMMIT_LIKE,
         dest_path: str,
         datum: str = None,
         append: bool = False,
@@ -906,7 +897,7 @@ class PFSMixin:
 
     def get_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -932,18 +923,18 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
-            Service.PFS,
-            "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-            URL=URL,
+        message = pfs_pb2.GetFileRequest(
+            file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
             offset=offset,
+            URL=URL,
         )
-        return PFSFile(io.BytesIO(next(res).value))
+        response = self.__stub.GetFile(message)
+        data = next(response).value
+        return PFSFile(io.BytesIO(data))
 
     def get_file_tar(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -969,23 +960,21 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
-            Service.PFS,
-            "GetFileTAR",
-            req=pfs_proto.GetFileRequest(
-                file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-                URL=URL,
-                offset=offset,
-            ),
+        message = pfs_pb2.GetFileRequest(
+            file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
+            URL=URL,
+            offset=offset,
         )
-        return PFSFile(io.BytesIO(next(res).value), is_tar=True)
+        response = self.__stub.GetFileTAR(message)
+        data = next(response).value
+        return PFSFile(io.BytesIO(data), is_tar=True)
 
     def inspect_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         datum: str = None,
-    ) -> pfs_proto.FileInfo:
+    ) -> pfs_pb2.FileInfo:
         """Inspects a file.
 
         Parameters
@@ -1002,19 +991,18 @@ class PFSMixin:
         pfs_proto.FileInfo
             A protobuf object that contains info on a file.
         """
-        return self._req(
-            Service.PFS,
-            "InspectFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
+        message = pfs_pb2.InspectFileRequest(
+            file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
         )
+        return self.__stub.InspectFile(message)
 
     def list_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         datum: str = None,
         details: bool = False,
-    ) -> Iterator[pfs_proto.FileInfo]:
+    ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists the files in a directory.
 
         Parameters
@@ -1037,18 +1025,18 @@ class PFSMixin:
         --------
         >>> files = list(client.list_file(("foo", "master"), "/dir/subdir/"))
         """
-        return self._req(
-            Service.PFS,
-            "ListFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
+        message = pfs_pb2.ListFileRequest(
+            details=details,
+            file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
         )
+        return self.__stub.ListFile(message)
 
     def walk_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: COMMIT_LIKE,
         path: str,
         datum: str = None,
-    ) -> Iterator[pfs_proto.FileInfo]:
+    ) -> Iterator[pfs_pb2.FileInfo]:
         """Walks over all descendant files in a directory.
 
         Parameters
@@ -1069,15 +1057,14 @@ class PFSMixin:
         --------
         >>> files = list(client.walk_file(("foo", "master"), "/dir/subdir/"))
         """
-        return self._req(
-            Service.PFS,
-            "WalkFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
+        message = pfs_pb2.WalkFileRequest(
+            file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
         )
+        return self.__stub.WalkFile(message)
 
     def glob_file(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], pattern: str
-    ) -> Iterator[pfs_proto.FileInfo]:
+        self, commit: COMMIT_LIKE, pattern: str
+    ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists files that match a glob pattern.
 
         Parameters
@@ -1096,13 +1083,13 @@ class PFSMixin:
         --------
         >>> files = list(client.glob_file(("foo", "master"), "/*.txt"))
         """
-        return self._req(
-            Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern
+        message = pfs_pb2.GlobFileRequest(
+            commit=commit_from(commit),
+            pattern=pattern,
         )
+        return self.__stub.GlobFile(message)
 
-    def delete_file(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
-    ) -> None:
+    def delete_file(self, commit: COMMIT_LIKE, path: str) -> None:
         """Deletes a file from an open commit. This leaves a tombstone in the
         commit, assuming the file isn't written to later while the commit is
         still open. Attempting to get the file from the finished commit will
@@ -1128,7 +1115,7 @@ class PFSMixin:
         with self.modify_file_client(commit) as mfc:
             mfc.delete_file(path)
 
-    def fsck(self, fix: bool = False) -> Iterator[pfs_proto.FsckResponse]:
+    def fsck(self, fix: bool = False) -> Iterator[pfs_pb2.FsckResponse]:
         """Performs a file system consistency check on PFS, ensuring the
         correct provenance relationships are satisfied.
 
@@ -1149,16 +1136,17 @@ class PFSMixin:
         >>> for action in client.fsck(True):
         >>>     print(action)
         """
-        return self._req(Service.PFS, "Fsck", fix=fix)
+        message = pfs_pb2.FsckRequest(fix=fix)
+        return self.__stub.Fsck(message)
 
     def diff_file(
         self,
-        new_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        new_commit: COMMIT_LIKE,
         new_path: str,
-        old_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+        old_commit: COMMIT_LIKE = None,
         old_path: str = None,
         shallow: bool = False,
-    ) -> Iterator[pfs_proto.DiffFileResponse]:
+    ) -> Iterator[pfs_pb2.DiffFileResponse]:
         """Diffs two PFS files (file = commit + path in Pachyderm) and returns
         files that are different. Similar to ``git diff``.
 
@@ -1208,21 +1196,18 @@ class PFSMixin:
         >>> diff = next(res)
         """
         if old_commit is not None and old_path is not None:
-            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+            old_file = pfs_pb2.File(commit=commit_from(old_commit), path=old_path)
         else:
             old_file = None
 
-        return self._req(
-            Service.PFS,
-            "DiffFile",
-            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
+        message = pfs_pb2.DiffFileRequest(
+            new_file=pfs_pb2.File(commit=commit_from(new_commit), path=new_path),
             old_file=old_file,
             shallow=shallow,
         )
+        return self.__stub.DiffFile(message)
 
-    def path_exists(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
-    ) -> bool:
+    def path_exists(self, commit: COMMIT_LIKE, path: str) -> bool:
         """Checks whether the path exists in the specified commit, agnostic to
         whether `path` is a file or a directory.
 
@@ -1259,12 +1244,12 @@ class ModifyFileClient:
     Replaces :class:`.PutFileClient` from python_pachyderm 6.x.
     """
 
-    def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
+    def __init__(self, commit: COMMIT_LIKE):
         self._ops = []
         self.commit = commit_from(commit)
 
-    def _reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(set_commit=self.commit)
+    def _reqs(self) -> Iterator[pfs_pb2.ModifyFileRequest]:
+        yield pfs_pb2.ModifyFileRequest(set_commit=self.commit)
         for op in self._ops:
             yield from op.reqs()
 
@@ -1409,7 +1394,7 @@ class ModifyFileClient:
 
     def copy_file(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: COMMIT_LIKE,
         source_path: str,
         dest_path: str,
         datum: str = None,
@@ -1470,7 +1455,7 @@ class _AtomicModifyFilepathOp(_AtomicOp):
         self.local_path = local_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_pb2.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
@@ -1489,7 +1474,7 @@ class _AtomicModifyFileobjOp(_AtomicOp):
         self.fobj = fobj
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_pb2.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         yield _add_file_req(path=self.path, datum=self.datum)
@@ -1516,14 +1501,14 @@ class _AtomicModifyFileURLOp(_AtomicOp):
         self.recursive = recursive
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_pb2.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
-        yield pfs_proto.ModifyFileRequest(
-            add_file=pfs_proto.AddFile(
+        yield pfs_pb2.ModifyFileRequest(
+            add_file=pfs_pb2.AddFile(
                 path=self.path,
                 datum=self.datum,
-                url=pfs_proto.AddFile.URLSource(
+                url=pfs_pb2.AddFile.URLSource(
                     URL=self.url,
                     recursive=self.recursive,
                 ),
@@ -1536,7 +1521,7 @@ class _AtomicCopyFileOp(_AtomicOp):
 
     def __init__(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: COMMIT_LIKE,
         source_path: str,
         dest_path: str,
         datum: str = None,
@@ -1548,13 +1533,13 @@ class _AtomicCopyFileOp(_AtomicOp):
         self.dest_path = dest_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(
-            copy_file=pfs_proto.CopyFile(
+    def reqs(self) -> Iterator[pfs_pb2.ModifyFileRequest]:
+        yield pfs_pb2.ModifyFileRequest(
+            copy_file=pfs_pb2.CopyFile(
                 append=self.append,
                 datum=self.datum,
                 dst=self.dest_path,
-                src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+                src=pfs_pb2.File(commit=self.source_commit, path=self.source_path),
             ),
         )
 
@@ -1570,14 +1555,14 @@ class _AtomicDeleteFileOp(_AtomicOp):
 
 
 def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
-    return pfs_proto.ModifyFileRequest(
-        add_file=pfs_proto.AddFile(
+    return pfs_pb2.ModifyFileRequest(
+        add_file=pfs_pb2.AddFile(
             path=path, datum=datum, raw=wrappers_pb2.BytesValue(value=chunk)
         ),
     )
 
 
 def _delete_file_req(path: str, datum: str = None):
-    return pfs_proto.ModifyFileRequest(
-        delete_file=pfs_proto.DeleteFile(path=path, datum=datum)
+    return pfs_pb2.ModifyFileRequest(
+        delete_file=pfs_pb2.DeleteFile(path=path, datum=datum)
     )

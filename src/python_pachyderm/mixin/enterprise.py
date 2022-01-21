@@ -1,8 +1,16 @@
-from python_pachyderm.service import Service, enterprise_proto
+import grpc
+
+from python_pachyderm.proto.v2.enterprise import enterprise_pb2, enterprise_pb2_grpc
 
 
 class EnterpriseMixin:
     """A mixin for enterprise-related functionality."""
+
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = enterprise_pb2_grpc.APIStub(self._channel)
+        super().__init__()
 
     def activate_enterprise(self, license_server: str, id: str, secret: str) -> None:
         """Activates enterprise by registering with a license server.
@@ -16,15 +24,14 @@ class EnterpriseMixin:
         secret : str
             The secret for registering this cluster.
         """
-        self._req(
-            Service.ENTERPRISE,
-            "Activate",
+        message = enterprise_pb2.ActivateRequest(
             license_server=license_server,
             id=id,
             secret=secret,
         )
+        self.__stub.Activate(message)
 
-    def get_enterprise_state(self) -> enterprise_proto.GetStateResponse:
+    def get_enterprise_state(self) -> enterprise_pb2.GetStateResponse:
         """Gets the current enterprise state of the cluster.
 
         Returns
@@ -33,14 +40,16 @@ class EnterpriseMixin:
             A protobuf object that returns a state enum, info on the token,
             and an empty activation code.
         """
-        return self._req(Service.ENTERPRISE, "GetState")
+        message = enterprise_pb2.GetStateRequest()
+        return self.__stub.GetState(message)
 
     def deactivate_enterprise(self) -> None:
         """Deactivates enterprise."""
-        self._req(Service.ENTERPRISE, "Deactivate")
+        message = enterprise_pb2.DeactivateRequest()
+        self.__stub.Deactivate(message)
 
-    def get_activation_code(self) -> enterprise_proto.GetActivationCodeResponse:
-        """Returns the enterprise code used to activate Pachdyerm Enterprise in
+    def get_activation_code(self) -> enterprise_pb2.GetActivationCodeResponse:
+        """Returns the enterprise code used to activate Pachyderm Enterprise in
         this cluster.
 
         Returns
@@ -49,4 +58,5 @@ class EnterpriseMixin:
             A protobuf object that returns a state enum, info on the token,
             and the activation code.
         """
-        return self._req(Service.ENTERPRISE, "GetActivationCode")
+        message = enterprise_pb2.GetActivationCodeRequest()
+        return self.__stub.GetActivationCode(message)
