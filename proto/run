@@ -6,8 +6,10 @@ tar xf /dev/stdin
 
 # VERSION matches the MajorVersion of pachyderm
 OUTDIR="python_pachyderm/proto/v${VERSION}"
+BETTERPROTO_OUTDIR="python_pachyderm/experimental/proto/v${VERSION}"
 
 mkdir -p ${OUTDIR}
+mkdir -p ${BETTERPROTO_OUTDIR}
 mv ./proto/pachyderm/src/* ${OUTDIR}
 
 # Make sure to remove the gogoproto line, as that is Go specific
@@ -26,9 +28,9 @@ done
 
 # generate protobuf and gRPC code from proto files
 # should result in {}_pb2.py and {}_pb2_grpc.py per proto
-find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
+find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_betterproto_out=${BETTERPROTO_OUTDIR} --python_out=. --grpc_python_out=.
 find ${OUTDIR} -name '*.proto' | xargs rm
 
 find ${OUTDIR} -type d -exec touch {}/__init__.py \;
 
-tar cf - ${OUTDIR}
+tar cf - ${OUTDIR} ${BETTERPROTO_OUTDIR}

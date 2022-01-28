@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 import grpc
 
+from .errors import AuthServiceNotActivated
 from .interceptor import MetadataClientInterceptor, MetadataType
 from .mixin.admin import AdminMixin
 from .mixin.auth import AuthMixin
@@ -506,6 +507,24 @@ class Client(
         """Delete all repos, commits, files, pipelines, and jobs. This resets
         the cluster to its initial state.
         """
+        # Try removing all identities if auth is activated.
+        try:
+            self.delete_all_identity()
+        except AuthServiceNotActivated:
+            pass
+
+        # Try deactivating auth if activated.
+        try:
+            self.deactivate_auth()
+        except AuthServiceNotActivated:
+            pass
+
+        # Try removing all licenses if auth is activated.
+        try:
+            self.delete_all_license()
+        except AuthServiceNotActivated:
+            pass
+
         self.delete_all_pipelines()
         self.delete_all_repos()
         self.delete_all_transactions()

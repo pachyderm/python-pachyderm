@@ -5,7 +5,7 @@ from typing import Dict, Iterator, List, Union
 import grpc
 from google.protobuf import empty_pb2, duration_pb2
 
-from python_pachyderm.pfs import commit_from, COMMIT_LIKE
+from python_pachyderm.pfs import commit_from, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2
 from python_pachyderm.proto.v2.pps import pps_pb2, pps_pb2_grpc
 
@@ -75,7 +75,7 @@ class PPSMixin:
     def list_job(
         self,
         pipeline_name: str = None,
-        input_commit: COMMIT_LIKE = None,
+        input_commit: SubcommitType = None,
         history: int = 0,
         details: bool = False,
         jqFilter: str = None,
@@ -87,7 +87,7 @@ class PPSMixin:
         pipeline_name : str, optional
             The name of a pipeline. If set, returns subjobs (job at the
             pipeline-level) only from this pipeline.
-        input_commit : Union[tuple, dict, Commit, pfs_proto.Commit, List], optional
+        input_commit : SubcommitType, optional
             A commit or list of commits from the input repo to filter jobs on.
             Only impacts returned results if `pipeline_name` is specified.
         history : int, optional

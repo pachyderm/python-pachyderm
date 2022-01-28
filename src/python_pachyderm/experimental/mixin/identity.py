@@ -1,5 +1,11 @@
 from typing import List
-from python_pachyderm.service import Service, identity_proto
+from grpc import RpcError
+
+from python_pachyderm.errors import AuthServiceNotActivated
+from python_pachyderm.service import Service
+from python_pachyderm.experimental.service import identity_proto
+
+# bp_to_pb: OidcClient -> OIDCClient, IdpConnector -> IDPConnector
 
 
 class IdentityMixin:
@@ -29,41 +35,41 @@ class IdentityMixin:
         """
         return self._req(Service.IDENTITY, "GetIdentityServerConfig").config
 
-    def create_idp_connector(self, connector: identity_proto.IDPConnector) -> None:
+    def create_idp_connector(self, connector: identity_proto.IdpConnector) -> None:
         """Create an IDP connector in the identity server.
 
         Parameters
         ----------
-        connector : identity_proto.IDPConnector
+        connector : identity_proto.IdpConnector
             A protobuf object that represents a connection to an identity
             provider.
         """
         self._req(Service.IDENTITY, "CreateIDPConnector", connector=connector)
 
-    def list_idp_connectors(self) -> List[identity_proto.IDPConnector]:
+    def list_idp_connectors(self) -> List[identity_proto.IdpConnector]:
         """List IDP connectors in the identity server.
 
         Returns
         -------
-        List[identity_proto.IDPConnector]
+        List[identity_proto.IdpConnector]
             A list of probotuf objects that return info on the connector ID,
             name, type, config version, and configuration of the upstream IDP
             connector.
         """
         return self._req(Service.IDENTITY, "ListIDPConnectors").connectors
 
-    def update_idp_connector(self, connector: identity_proto.IDPConnector) -> None:
+    def update_idp_connector(self, connector: identity_proto.IdpConnector) -> None:
         """Update an IDP connector in the identity server.
 
         Parameters
         ----------
-        connector : identity_proto.IDPConnector
+        connector : identity_proto.IdpConnector
             A protobuf object that represents a connection to an identity
             provider.
         """
         self._req(Service.IDENTITY, "UpdateIDPConnector", connector=connector)
 
-    def get_idp_connector(self, id: str) -> identity_proto.IDPConnector:
+    def get_idp_connector(self, id: str) -> identity_proto.IdpConnector:
         """Get an IDP connector in the identity server.
 
         Parameters
@@ -73,7 +79,7 @@ class IdentityMixin:
 
         Returns
         -------
-        identity_proto.IDPConnector
+        identity_proto.IdpConnector
             A protobuf object that returns info on the connector ID, name,
             type, config version, and configuration of the upstream IDP
             connector.
@@ -91,35 +97,35 @@ class IdentityMixin:
         self._req(Service.IDENTITY, "DeleteIDPConnector", id=id)
 
     def create_oidc_client(
-        self, client: identity_proto.OIDCClient
-    ) -> identity_proto.OIDCClient:
+        self, client: identity_proto.OidcClient
+    ) -> identity_proto.OidcClient:
         """Create an OIDC client in the identity server.
 
         Parameters
         ----------
-        client : identity_proto.OIDCClient
+        client : identity_proto.OidcClient
             A protobuf object representing an OIDC client.
 
         Returns
         -------
-        identity_proto.OIDCClient
+        identity_proto.OidcClient
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
         return self._req(Service.IDENTITY, "CreateOIDCClient", client=client).client
 
-    def update_oidc_client(self, client: identity_proto.OIDCClient) -> None:
+    def update_oidc_client(self, client: identity_proto.OidcClient) -> None:
         """Update an OIDC client in the identity server.
 
         Parameters
         ----------
-        client : identity_proto.OIDCClient
+        client : identity_proto.OidcClient
             A protobuf object representing an OIDC client.
 
         """
         return self._req(Service.IDENTITY, "UpdateOIDCClient", client=client)
 
-    def get_oidc_client(self, id: str) -> identity_proto.OIDCClient:
+    def get_oidc_client(self, id: str) -> identity_proto.OidcClient:
         """Get an OIDC client in the identity server.
 
         Parameters
@@ -129,7 +135,7 @@ class IdentityMixin:
 
         Returns
         -------
-        identity_proto.OIDCClient
+        identity_proto.OidcClient
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
@@ -145,12 +151,12 @@ class IdentityMixin:
         """
         self._req(Service.IDENTITY, "DeleteOIDCClient", id=id)
 
-    def list_oidc_clients(self) -> List[identity_proto.OIDCClient]:
+    def list_oidc_clients(self) -> List[identity_proto.OidcClient]:
         """List OIDC clients in the identity server.
 
         Returns
         -------
-        List[identity_proto.OIDCClient]
+        List[identity_proto.OidcClient]
             A list of protobuf objects that return a client with info on the
             client ID, name, secret, and lists of redirect URIs and trusted
             peers.
@@ -158,5 +164,13 @@ class IdentityMixin:
         return self._req(Service.IDENTITY, "ListOIDCClients").clients
 
     def delete_all_identity(self) -> None:
-        """Delete all identity service information."""
-        self._req(Service.IDENTITY, "DeleteAll")
+        """Delete all identity service information.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
+        try:
+            self._req(Service.IDENTITY, "DeleteAll")
+        except RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)

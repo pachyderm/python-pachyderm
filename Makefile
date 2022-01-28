@@ -9,7 +9,8 @@ docker-build-proto:
 
 src/python_pachyderm/proto/v2: docker-build-proto
 	@echo "Building with pachyderm core v$(PACHYDERM_VERSION)"
-	rm -rf src/python_pachyderm/proto/v2
+	rm -rf src/python_pachyderm/proto/v2 && \
+		rm -rf src/python_pachyderm/experimental/proto/v2
 	cd proto/pachyderm && \
 		git fetch --all && \
 		git checkout v$(PACHYDERM_VERSION)

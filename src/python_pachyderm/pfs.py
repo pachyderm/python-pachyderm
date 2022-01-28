@@ -39,10 +39,40 @@ class Commit(NamedTuple):
         )
 
 
-COMMIT_LIKE = Union[tuple, dict, "Commit", pfs_pb2.Commit]
+SubcommitType = Union[tuple, dict, Commit, pfs_pb2.Commit]
+"""Composite type for a subcommit, a commit at the repo-level.
+
+Examples
+--------
+Tuple:
+
+>>> sc = ("foo", "master")
+>>> sc2 = ("foo", "467c580611234cdb8cc9758c7aa96087")
+
+Dict:
+
+>>> sc = {repo: "foo", branch: "master", repo_type: "spec"}
+
+Commit:
+
+>>> from python_pachyderm.pfs import Commit
+>>> sc = Commit(repo="foo", branch="master")
+
+pfs_proto.Commit:
+
+>>> from python_pachyderm.service import pfs_proto
+>>> sc = pfs_proto.Commit(
+...     branch=pfs_proto.Branch(
+...         repo=pfs_proto.Repo(name="foo", type="user"),
+...         name="master",
+...     )
+... )
+"""
 
 
-def commit_from(commit: Optional[COMMIT_LIKE] = None) -> pfs_pb2.Commit:
+def commit_from(
+    commit: SubcommitType = None,
+) -> pfs_pb2.Commit:
     """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a
@@ -50,7 +80,7 @@ def commit_from(commit: Optional[COMMIT_LIKE] = None) -> pfs_pb2.Commit:
 
     Parameters
     ----------
-    commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+    commit : SubcommitType, optional
         The commit representation to convert to a protobuf commit object.
 
     Returns

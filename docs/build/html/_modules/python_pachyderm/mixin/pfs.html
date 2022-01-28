@@ -1,71 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>python_pachyderm.mixin.pfs &mdash; python-pachyderm  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> python-pachyderm
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,86 +33,41 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<<<<<<< HEAD
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">python_pachyderm</a></li>
+=======
 <li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
+>>>>>>> master
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">python-pachyderm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>python_pachyderm.mixin.pfs</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for python_pachyderm.mixin.pfs</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -161,8 +76,11 @@
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
+<<<<<<< HEAD
 <span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">uuid_re</span>
-<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2</span> <span class="kn">import</span> <span class="n">pfs</span>
+=======
+<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">uuid_re</span><span class="p">,</span> <span class="n">SubcommitType</span>
+>>>>>>> master
 <span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span><span class="p">,</span> <span class="n">Service</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
 
@@ -256,7 +174,7 @@
         <span class="k">return</span> <span class="n">x</span>
 
 <div class="viewcode-block" id="PFSFile.read"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reads from the ``PFSFile`` buffer.</span>
+        <span class="sd">&quot;&quot;&quot;Reads from the :class:`.PFSFile` buffer.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -271,7 +189,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSFile.close"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Closes the ``PFSFile``.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Closes the :class:`.PFSFile`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
@@ -363,7 +281,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Begins the process of committing data to a repo. Once started you</span>
@@ -377,7 +295,7 @@
 <span class="sd">            The name of the repo.</span>
 <span class="sd">        branch_name : str</span>
 <span class="sd">            A string specifying the branch.</span>
-<span class="sd">        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        parent : Union[str, SubcommitType], optional</span>
 <span class="sd">            A commit specifying the parent of the newly created commit. Upon</span>
 <span class="sd">            creation, before data is modified, the new commit will appear</span>
 <span class="sd">            identical to the parent.</span>
@@ -413,7 +331,7 @@
 
 <div class="viewcode-block" id="PFSMixin.finish_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">[docs]</a>    <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -424,7 +342,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) object to close.</span>
 <span class="sd">        description : str, optional</span>
 <span class="sd">            A description of the commit. It will overwrite the description set</span>
@@ -463,7 +381,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;A context manager for running operations within a commit.</span>
@@ -474,7 +392,7 @@
 <span class="sd">            The name of the repo.</span>
 <span class="sd">        branch_name : str</span>
 <span class="sd">            A string specifying the branch.</span>
-<span class="sd">        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        parent : Union[str, SubcommitType], optional</span>
 <span class="sd">            A commit specifying the parent of the newly created commit. Upon</span>
 <span class="sd">            creation, before data is modified, the new commit will appear</span>
 <span class="sd">            identical to the parent.</span>
@@ -500,14 +418,14 @@
 
 <div class="viewcode-block" id="PFSMixin.inspect_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_commit">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">],</span>
         <span class="n">commit_state</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a commit.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : Union[str, SubcommitType]</span>
 <span class="sd">            The commit to inspect. Can either be a commit ID or a commit object</span>
 <span class="sd">            that represents a subcommit (commit at the repo-level).</span>
 <span class="sd">        commit_state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span>
@@ -556,8 +474,8 @@
 <div class="viewcode-block" id="PFSMixin.list_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_commit">[docs]</a>    <span class="k">def</span> <span class="nf">list_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">to_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">from_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">from_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -570,11 +488,11 @@
 <span class="sd">        repo_name : str, optional</span>
 <span class="sd">            The name of a repo. If set, returns subcommits (commit at</span>
 <span class="sd">            repo-level) only in this repo.</span>
-<span class="sd">        to_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        to_commit : SubcommitType, optional</span>
 <span class="sd">            A subcommit (commit at repo-level) that only impacts results if</span>
 <span class="sd">            `repo_name` is specified. If set, only the ancestors of</span>
 <span class="sd">            `to_commit`, including `to_commit`, are returned.</span>
-<span class="sd">        from_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        from_commit : SubcommitType, optional</span>
 <span class="sd">            A subcommit (commit at repo-level) that only impacts results if</span>
 <span class="sd">            `repo_name` is specified. If set, only the descendants of</span>
 <span class="sd">            `from_commit`, including `from_commit`, are returned.</span>
@@ -658,13 +576,13 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.wait_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.wait_commit">[docs]</a>    <span class="k">def</span> <span class="nf">wait_commit</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Waits for the specified commit to finish.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : Union[str, SubcommitType]</span>
 <span class="sd">            A commit object to wait on. Can either be an entire commit or a</span>
 <span class="sd">            subcommit (commit at the repo-level).</span>
 
@@ -689,7 +607,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">from_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">from_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">origin_kind</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span>
@@ -703,7 +621,7 @@
 <span class="sd">            The name of the repo.</span>
 <span class="sd">        branch : str</span>
 <span class="sd">            The name of the branch.</span>
-<span class="sd">        from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        from_commit : Union[str, SubcommitType], optional</span>
 <span class="sd">            Return commits only from this commit and onwards. Can either be an</span>
 <span class="sd">            entire commit or a subcommit (commit at the repo-level).</span>
 <span class="sd">        state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span>
@@ -752,7 +670,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">head_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">head_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">provenance</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">trigger</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Trigger</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">new_commit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -765,7 +683,7 @@
 <span class="sd">            The name of the repo.</span>
 <span class="sd">        branch_name : str</span>
 <span class="sd">            The name of the new branch.</span>
-<span class="sd">        head_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        head_commit : SubcommitType, optional</span>
 <span class="sd">            A subcommit (commit at repo-level) indicating the head of the</span>
 <span class="sd">            new branch.</span>
 <span class="sd">        provenance : List[pfs_proto.Branch], optional</span>
@@ -880,17 +798,25 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.modify_file_client"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">[docs]</a>    <span class="nd">@contextmanager</span>
+<<<<<<< HEAD
     <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;A context manager that gives a `ModifyFileClient`. When the context</span>
-<span class="sd">        manager exits, any operations enqueued from the `ModifyFileClient` are</span>
-<span class="sd">        executed in a single, atomic `ModifyFile` call.</span>
+=======
+    <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
+>>>>>>> master
+        <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.ModifyFileClient`. When the</span>
+<span class="sd">        context manager exits, any operations enqueued from the</span>
+<span class="sd">        :class:`.ModifyFileClient` are executed in a single, atomic</span>
+<span class="sd">        ModifyFile gRPC call.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
-<span class="sd">            An open subcommit (commit at the repo-level) to modify.</span>
+<span class="sd">            A subcommit (commit at the repo-level) to modify. If this subcommit</span>
+<span class="sd">            is opened before ``modify_file_client()`` is called, it will remain</span>
+<span class="sd">            open after. If ``modify_file_client()`` opens the subcommit, it</span>
+<span class="sd">            will close when exiting the ``with`` scope.</span>
 
 <span class="sd">        Yields</span>
 <span class="sd">        -------</span>
@@ -899,11 +825,20 @@
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        Commit needs to be open still, either from the result of</span>
-<span class="sd">        ``start_commit()`` or within scope of ``commit()``</span>
+<span class="sd">        On an open subcommit:</span>
 
 <span class="sd">        &gt;&gt;&gt; c = client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; with client.modify_file_client(c) as mfc:</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
+<span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
+<span class="sd">        ...         &quot;https://example.com/data/train/input.txt&quot;</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_commit(c)</span>
+
+<span class="sd">        Opening a subcommit:</span>
+
+<span class="sd">        &gt;&gt;&gt; with client.modify_file_client((&quot;foo&quot;, &quot;master&quot;)) as mfc:</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.delete_file(&quot;/delete_me.txt&quot;)</span>
 <span class="sd">        &gt;&gt;&gt;     mfc.put_file_from_url(</span>
 <span class="sd">        ...         &quot;/new_file.txt&quot;,</span>
@@ -916,7 +851,7 @@
 
 <div class="viewcode-block" id="PFSMixin.put_file_bytes"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_bytes</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">BinaryIO</span><span class="p">],</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -927,7 +862,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            An open subcommit (commit at the repo-level) to modify.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path in the repo the file(s) will be written to.</span>
@@ -966,7 +901,7 @@
 
 <div class="viewcode-block" id="PFSMixin.put_file_url"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_url">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_url</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">recursive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -978,7 +913,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            An open subcommit (commit at the repo-level) to modify.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path in the repo the file(s) will be written to.</span>
@@ -1016,9 +951,9 @@
 
 <div class="viewcode-block" id="PFSMixin.copy_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.copy_file">[docs]</a>    <span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">source_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">source_commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">dest_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">dest_commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">dest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">append</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1029,12 +964,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        source_commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) which holds the source</span>
 <span class="sd">            file.</span>
 <span class="sd">        source_path : str</span>
 <span class="sd">            The path of the source file.</span>
-<span class="sd">        dest_commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        dest_commit : SubcommitType</span>
 <span class="sd">            The open subcommit (commit at the repo-level) to which to add the</span>
 <span class="sd">            file.</span>
 <span class="sd">        dest_path : str</span>
@@ -1062,7 +997,7 @@
 
 <div class="viewcode-block" id="PFSMixin.get_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.get_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1072,7 +1007,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to get the file from.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path of the file.</span>
@@ -1099,7 +1034,7 @@
 
 <div class="viewcode-block" id="PFSMixin.get_file_tar"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.get_file_tar">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1109,7 +1044,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to get the file from.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path of the file.</span>
@@ -1138,7 +1073,7 @@
 
 <div class="viewcode-block" id="PFSMixin.inspect_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_file">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">:</span>
@@ -1146,7 +1081,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to inspect the file from.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path of the file.</span>
@@ -1166,7 +1101,7 @@
 
 <div class="viewcode-block" id="PFSMixin.list_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_file">[docs]</a>    <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1175,7 +1110,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to list files from.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path to the directory.</span>
@@ -1201,7 +1136,7 @@
 
 <div class="viewcode-block" id="PFSMixin.walk_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.walk_file">[docs]</a>    <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
@@ -1209,7 +1144,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to walk files in.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The path to the directory.</span>
@@ -1232,13 +1167,13 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.glob_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.glob_file">[docs]</a>    <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists files that match a glob pattern.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to query against.</span>
 <span class="sd">        pattern : str</span>
 <span class="sd">            A glob pattern.</span>
@@ -1256,9 +1191,7 @@
             <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;GlobFile&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a file from an open commit. This leaves a tombstone in the</span>
 <span class="sd">        commit, assuming the file isn&#39;t written to later while the commit is</span>
 <span class="sd">        still open. Attempting to get the file from the finished commit will</span>
@@ -1267,7 +1200,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The open subcommit (commit at the repo-level) to delete a file</span>
 <span class="sd">            from.</span>
 <span class="sd">        path : str</span>
@@ -1309,9 +1242,9 @@
 
 <div class="viewcode-block" id="PFSMixin.diff_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.diff_file">[docs]</a>    <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">new_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">new_commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">new_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">old_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">old_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">old_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">shallow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">DiffFileResponse</span><span class="p">]:</span>
@@ -1324,11 +1257,11 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        new_commit : SubcommitType</span>
 <span class="sd">            The newer subcommit (commit at the repo-level).</span>
 <span class="sd">        new_path : str</span>
 <span class="sd">            The path in `new_commit` to compare with.</span>
-<span class="sd">        old_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional</span>
+<span class="sd">        old_commit : SubcommitType, optional</span>
 <span class="sd">            The older subcommit (commit at the repo-level).</span>
 <span class="sd">        old_path : str, optional</span>
 <span class="sd">            The path in `old_commit` to compare with.</span>
@@ -1376,15 +1309,13 @@
             <span class="n">shallow</span><span class="o">=</span><span class="n">shallow</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.path_exists"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">path_exists</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.path_exists"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">path_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Checks whether the path exists in the specified commit, agnostic to</span>
 <span class="sd">        whether `path` is a file or a directory.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : SubcommitType</span>
 <span class="sd">            The subcommit (commit at the repo-level) to check in.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            The file or directory path in `commit`.</span>
@@ -1411,11 +1342,11 @@
 
 
 <div class="viewcode-block" id="ModifyFileClient"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.ModifyFileClient">[docs]</a><span class="k">class</span> <span class="nc">ModifyFileClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;``ModifyFileClient`` puts or deletes PFS files atomically. Replaces</span>
-<span class="sd">    ``PutFileClient`` from python_pachyderm 6.x.</span>
+    <span class="sd">&quot;&quot;&quot;:class:`.ModifyFileClient` puts or deletes PFS files atomically.</span>
+<span class="sd">    Replaces :class:`.PutFileClient` from python_pachyderm 6.x.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
 
@@ -1449,7 +1380,7 @@
 <span class="sd">            `pfs_path`, if it already exists. Otherwise, overwrites the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFilepathOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFilepathOp</span><span class="p">(</span>
                 <span class="n">pfs_path</span><span class="p">,</span>
                 <span class="n">local_path</span><span class="p">,</span>
                 <span class="n">datum</span><span class="p">,</span>
@@ -1479,7 +1410,7 @@
 <span class="sd">            if it already exists. Otherwise, overwrites the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFileobjOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFileobjOp</span><span class="p">(</span>
                 <span class="n">path</span><span class="p">,</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">datum</span><span class="p">,</span>
@@ -1542,7 +1473,7 @@
 <span class="sd">            example on s3:// URLs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicModifyFileURLOp</span><span class="p">(</span>
+            <span class="n">_AtomicModifyFileURLOp</span><span class="p">(</span>
                 <span class="n">path</span><span class="p">,</span>
                 <span class="n">url</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span>
@@ -1561,11 +1492,11 @@
 <span class="sd">        datum : str, optional</span>
 <span class="sd">            A tag that filters the files.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AtomicDeleteFileOp</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_AtomicDeleteFileOp</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ModifyFileClient.copy_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.ModifyFileClient.copy_file">[docs]</a>    <span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">source_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">source_commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1575,7 +1506,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        source_commit : SubcommitType</span>
 <span class="sd">            The commit the source file is in.</span>
 <span class="sd">        source_path : str</span>
 <span class="sd">            The path to the source file.</span>
@@ -1589,7 +1520,7 @@
 <span class="sd">            the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">AtomicCopyFileOp</span><span class="p">(</span>
+            <span class="n">_AtomicCopyFileOp</span><span class="p">(</span>
                 <span class="n">source_commit</span><span class="p">,</span>
                 <span class="n">source_path</span><span class="p">,</span>
                 <span class="n">dest_path</span><span class="p">,</span>
@@ -1599,7 +1530,7 @@
         <span class="p">)</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">AtomicOp</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_AtomicOp</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Represents an operation in a `ModifyFile` call.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1613,7 +1544,7 @@
         <span class="k">pass</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFilepathOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFilepathOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file locally stored at a given path.</span>
 <span class="sd">    This file is opened on-demand, which helps with minimizing the number of</span>
 <span class="sd">    open files.</span>
@@ -1635,7 +1566,7 @@
                 <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFileobjOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFileobjOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file from a file-like object.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1656,7 +1587,7 @@
             <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicModifyFileURLOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicModifyFileURLOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to put a file from a URL.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1687,12 +1618,12 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicCopyFileOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicCopyFileOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to copy a file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">source_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">],</span>
+        <span class="n">source_commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dest_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1715,7 +1646,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtomicDeleteFileOp</span><span class="p">(</span><span class="n">AtomicOp</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_AtomicDeleteFileOp</span><span class="p">(</span><span class="n">_AtomicOp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A `ModifyFile` operation to delete a file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pfs_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -1740,46 +1671,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Joe Doliner.
-
-    </p>
+    <p>&#169; Copyright 2021, Joe Doliner.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -2,6 +2,7 @@ from typing import List
 
 import grpc
 
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.proto.v2.identity import identity_pb2, identity_pb2_grpc
 
 
@@ -179,6 +180,14 @@ class IdentityMixin:
         return self.__stub.ListOIDCClients(message).clients
 
     def delete_all_identity(self) -> None:
-        """Delete all identity service information."""
+        """Delete all identity service information.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
         message = identity_pb2.DeleteAllRequest()
-        self.__stub.DeleteAll(message)
+        try:
+            self.__stub.DeleteAll(message)
+        except grpc.RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)

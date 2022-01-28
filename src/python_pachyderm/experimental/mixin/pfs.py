@@ -4,15 +4,19 @@ import os
 import time
 import itertools
 import tarfile
-from contextlib import contextmanager
-from typing import Iterator, Union, List, BinaryIO
 import subprocess
 from pathlib import Path
+from contextlib import contextmanager
+from typing import Iterator, Union, List, BinaryIO
 
-from python_pachyderm.pfs import commit_from, Commit, uuid_re
-from python_pachyderm.proto.v2 import pfs
-from python_pachyderm.service import pfs_proto, Service
+from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
+from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
+from python_pachyderm.experimental.service import pfs_proto
 from google.protobuf import empty_pb2, wrappers_pb2
+import betterproto.lib.google.protobuf as bp_proto
+
+# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
+# bp_to_pb: url -> URL (get_file_tar())
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -205,7 +209,7 @@ class PFSMixin:
 
     def delete_all_repos(self) -> None:
         """Deletes all repos."""
-        self._req(Service.PFS, "DeleteAll", req=empty_pb2.Empty())
+        self._req(Service.PFS, "DeleteAll", req=bp_proto.Empty())
 
     def start_commit(
         self,
@@ -469,9 +473,9 @@ class PFSMixin:
                 origin_kind=origin_kind,
             )
             if to_commit is not None:
-                req.to.CopyFrom(commit_from(to_commit))
+                req.to = commit_from(to_commit)
             if from_commit is not None:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
+                req.from_ = commit_from(from_commit)
             return self._req(Service.PFS, "ListCommit", req=req)
         else:
             return self._req(Service.PFS, "ListCommitSet")
@@ -589,11 +593,9 @@ class PFSMixin:
         )
         if from_commit is not None:
             if isinstance(from_commit, str):
-                getattr(req, "from").CopyFrom(
-                    pfs_proto.Commit(repo=repo, id=from_commit)
-                )
+                req.from_ = pfs_proto.Commit(repo=repo, id=from_commit)
             else:
-                getattr(req, "from").CopyFrom(commit_from(from_commit))
+                req.from_ = commit_from(from_commit)
         return self._req(Service.PFS, "SubscribeCommit", req=req)
 
     def create_branch(
@@ -739,7 +741,10 @@ class PFSMixin:
         Parameters
         ----------
         commit : Union[tuple, dict, Commit, pfs_proto.Commit]
-            An open subcommit (commit at the repo-level) to modify.
+            A subcommit (commit at the repo-level) to modify. If this subcommit
+            is opened before ``modify_file_client()`` is called, it will remain
+            open after. If ``modify_file_client()`` opens the subcommit, it
+            will close when exiting the ``with`` scope.
 
         Yields
         -------
@@ -748,11 +753,20 @@ class PFSMixin:
 
         Examples
         --------
-        Commit needs to be open still, either from the result of
-        ``start_commit()`` or within scope of ``commit()``
+        On an open subcommit:
 
         >>> c = client.start_commit("foo", "master")
         >>> with client.modify_file_client(c) as mfc:
+        >>>     mfc.delete_file("/delete_me.txt")
+        >>>     mfc.put_file_from_url(
+        ...         "/new_file.txt",
+        ...         "https://example.com/data/train/input.txt"
+        ...     )
+        >>> client.finish_commit(c)
+
+        Opening a subcommit:
+
+        >>> with client.modify_file_client(("foo", "master")) as mfc:
         >>>     mfc.delete_file("/delete_me.txt")
         >>>     mfc.put_file_from_url(
         ...         "/new_file.txt",
@@ -979,7 +993,7 @@ class PFSMixin:
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
                 file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-                URL=URL,
+                url=URL,
                 offset=offset,
             ),
         )
@@ -1353,10 +1367,10 @@ class ModifyFileClient:
 
     def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
         self._ops = []
-        self.commit = commit_from(commit)
+        self.commit = Commit.from_bp(commit_from(commit)).to_pb()
 
-    def _reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(set_commit=self.commit)
+    def _reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+        yield pfs_proto_pb.ModifyFileRequest(set_commit=self.commit)
         for op in self._ops:
             yield from op.reqs()
 
@@ -1562,7 +1576,7 @@ class _AtomicModifyFilepathOp(_AtomicOp):
         self.local_path = local_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
@@ -1581,7 +1595,7 @@ class _AtomicModifyFileobjOp(_AtomicOp):
         self.fobj = fobj
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         yield _add_file_req(path=self.path, datum=self.datum)
@@ -1608,14 +1622,14 @@ class _AtomicModifyFileURLOp(_AtomicOp):
         self.recursive = recursive
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
-        yield pfs_proto.ModifyFileRequest(
-            add_file=pfs_proto.AddFile(
+        yield pfs_proto_pb.ModifyFileRequest(
+            add_file=pfs_proto_pb.AddFile(
                 path=self.path,
                 datum=self.datum,
-                url=pfs_proto.AddFile.URLSource(
+                url=pfs_proto_pb.AddFile.URLSource(
                     URL=self.url,
                     recursive=self.recursive,
                 ),
@@ -1635,18 +1649,18 @@ class _AtomicCopyFileOp(_AtomicOp):
         append: bool = False,
     ):
         super().__init__(dest_path, datum)
-        self.source_commit = commit_from(source_commit)
+        self.source_commit = Commit.from_bp(commit_from(source_commit)).to_pb()
         self.source_path = source_path
         self.dest_path = dest_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto.ModifyFileRequest]:
-        yield pfs_proto.ModifyFileRequest(
-            copy_file=pfs_proto.CopyFile(
+    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+        yield pfs_proto_pb.ModifyFileRequest(
+            copy_file=pfs_proto_pb.CopyFile(
                 append=self.append,
                 datum=self.datum,
                 dst=self.dest_path,
-                src=pfs_proto.File(commit=self.source_commit, path=self.source_path),
+                src=pfs_proto_pb.File(commit=self.source_commit, path=self.source_path),
             ),
         )
 
@@ -1662,14 +1676,16 @@ class _AtomicDeleteFileOp(_AtomicOp):
 
 
 def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
-    return pfs_proto.ModifyFileRequest(
-        add_file=pfs_proto.AddFile(
-            path=path, datum=datum, raw=wrappers_pb2.BytesValue(value=chunk)
+    return pfs_proto_pb.ModifyFileRequest(
+        add_file=pfs_proto_pb.AddFile(
+            path=path,
+            datum=datum,
+            raw=wrappers_pb2.BytesValue(value=chunk),
         ),
     )
 
 
 def _delete_file_req(path: str, datum: str = None):
-    return pfs_proto.ModifyFileRequest(
-        delete_file=pfs_proto.DeleteFile(path=path, datum=datum)
+    return pfs_proto_pb.ModifyFileRequest(
+        delete_file=pfs_proto_pb.DeleteFile(path=path, datum=datum)
     )

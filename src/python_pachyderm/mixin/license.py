@@ -3,6 +3,7 @@ from typing import List
 import grpc
 from google.protobuf import timestamp_pb2
 
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.proto.v2.enterprise import enterprise_pb2
 from python_pachyderm.proto.v2.license import license_pb2, license_pb2_grpc
 
@@ -147,9 +148,17 @@ class LicenseMixin:
         return self.__stub.GetActivationCode(message)
 
     def delete_all_license(self) -> None:
-        """Remove all clusters and deactivate the license service."""
+        """Remove all clusters and deactivate the license service.
+
+        Raises
+        ------
+        AuthServiceNotActivated
+        """
         message = license_pb2.DeleteAllRequest()
-        self.__stub.DeleteAll(message)
+        try:
+            self.__stub.DeleteAll(message)
+        except grpc.RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)
 
     def list_user_clusters(self) -> List[license_pb2.UserClusterInfo]:
         """Lists all clusters available to user.

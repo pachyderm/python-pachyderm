@@ -1,7 +1,8 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import grpc
 
+from python_pachyderm.errors import AuthServiceNotActivated
 from python_pachyderm.proto.v2.auth import auth_pb2, auth_pb2_grpc
 
 
@@ -35,9 +36,16 @@ class AuthMixin:
     def deactivate_auth(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
+
+        Raises
+        ------
+        AuthServiceNotActivated
         """
         message = auth_pb2.DeactivateRequest()
-        self.__stub.Deactivate(message)
+        try:
+            self.__stub.Deactivate(message)
+        except grpc.RpcError as err:
+            raise AuthServiceNotActivated.try_from(err)
 
     def get_auth_configuration(self) -> auth_pb2.OIDCConfig:
         """Gets the auth configuration.

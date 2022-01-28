@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="python_pachyderm" href="python_pachyderm.html" /> 
+    <link rel="next" title="Information" href="python_pachyderm.experimental.html" />
+    <link rel="prev" title="Mixins" href="python_pachyderm.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,8 +40,8 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="python_pachyderm.html">python_pachyderm</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html#mixins">Mixins</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python_pachyderm</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python_pachyderm.html">Mixins</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.admin">python_pachyderm.mixin.admin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-python_pachyderm.mixin.auth">python_pachyderm.mixin.auth</a></li>
@@ -58,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.client">Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.pfs">PFS Helper</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#module-python_pachyderm.util">Util Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_pachyderm.html#experimental-module">Experimental Module</a></li>
 </ul>
 </li>
 </ul>
@@ -76,8 +78,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="python_pachyderm.html">python_pachyderm</a> &raquo;</li>
+          <li><a href="modules.html">python_pachyderm</a> &raquo;</li>
+          <li><a href="python_pachyderm.html">Mixins</a> &raquo;</li>
       <li>Information</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/python_pachyderm.mixin.rst.txt" rel="nofollow"> View page source</a>
@@ -99,7 +101,7 @@ several mixins, rather than one giant <a class="reference internal" href="python
 <span id="python-pachyderm-mixin-admin"></span><h1>python_pachyderm.mixin.admin<a class="headerlink" href="#module-python_pachyderm.mixin.admin" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.admin.AdminMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.admin.</span></span><span class="sig-name descname"><span class="pre">AdminMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/admin.html#AdminMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.admin.AdminMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AdminMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/admin.html#AdminMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.admin.AdminMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for admin-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -134,7 +136,7 @@ several mixins, rather than one giant <a class="reference internal" href="python
 <span id="python-pachyderm-mixin-auth"></span><h1>python_pachyderm.mixin.auth<a class="headerlink" href="#module-python_pachyderm.mixin.auth" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.auth.AuthMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.auth.</span></span><span class="sig-name descname"><span class="pre">AuthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AuthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for auth-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -309,6 +311,13 @@ principal.</p>
 <span class="sig-name descname"><span class="pre">deactivate_auth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/auth.html#AuthMixin.deactivate_auth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.auth.AuthMixin.deactivate_auth" title="Permalink to this definition"></a></dt>
 <dd><p>Deactivates auth, removing all ACLs, tokens, and admins from the
 Pachyderm cluster and making all data publicly accessible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -631,7 +640,7 @@ token used.</p>
 <span id="python-pachyderm-mixin-debug"></span><h1>python_pachyderm.mixin.debug<a class="headerlink" href="#module-python_pachyderm.mixin.debug" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.debug.DebugMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.debug.</span></span><span class="sig-name descname"><span class="pre">DebugMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/debug.html#DebugMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.debug.DebugMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DebugMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/debug.html#DebugMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.debug.DebugMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for debug-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -742,7 +751,7 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <span id="python-pachyderm-mixin-enterprise"></span><h1>python_pachyderm.mixin.enterprise<a class="headerlink" href="#module-python_pachyderm.mixin.enterprise" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.enterprise.EnterpriseMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.enterprise.</span></span><span class="sig-name descname"><span class="pre">EnterpriseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/enterprise.html#EnterpriseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnterpriseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/enterprise.html#EnterpriseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for enterprise-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -827,7 +836,7 @@ and an empty activation code.</p>
 <span id="python-pachyderm-mixin-health"></span><h1>python_pachyderm.mixin.health<a class="headerlink" href="#module-python_pachyderm.mixin.health" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.health.HealthMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.health.</span></span><span class="sig-name descname"><span class="pre">HealthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/health.html#HealthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.health.HealthMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HealthMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/health.html#HealthMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.health.HealthMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for health-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -863,7 +872,7 @@ RPCs.</p>
 <span id="python-pachyderm-mixin-identity"></span><h1>python_pachyderm.mixin.identity<a class="headerlink" href="#module-python_pachyderm.mixin.identity" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.identity.IdentityMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.identity.</span></span><span class="sig-name descname"><span class="pre">IdentityMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IdentityMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for identity-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -953,6 +962,13 @@ name, secret, and lists of redirect URIs and trusted peers.</p>
 <dt class="sig sig-object py" id="python_pachyderm.mixin.identity.IdentityMixin.delete_all_identity">
 <span class="sig-name descname"><span class="pre">delete_all_identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/identity.html#IdentityMixin.delete_all_identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.identity.IdentityMixin.delete_all_identity" title="Permalink to this definition"></a></dt>
 <dd><p>Delete all identity service information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1124,7 +1140,7 @@ provider.</p>
 <span id="python-pachyderm-mixin-license"></span><h1>python_pachyderm.mixin.license<a class="headerlink" href="#module-python_pachyderm.mixin.license" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.license.LicenseMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.license.</span></span><span class="sig-name descname"><span class="pre">LicenseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LicenseMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for license-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -1220,6 +1236,13 @@ specified, a random secret will be generated and returned.</p>
 <dt class="sig sig-object py" id="python_pachyderm.mixin.license.LicenseMixin.delete_all_license">
 <span class="sig-name descname"><span class="pre">delete_all_license</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/license.html#LicenseMixin.delete_all_license"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.license.LicenseMixin.delete_all_license" title="Permalink to this definition"></a></dt>
 <dd><p>Remove all clusters and deactivate the license service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>AuthServiceNotActivated</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1307,7 +1330,7 @@ available to the users.</p>
 <span id="python-pachyderm-mixin-pfs"></span><h1>python_pachyderm.mixin.pfs<a class="headerlink" href="#module-python_pachyderm.mixin.pfs" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.ModifyFileClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">ModifyFileClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#ModifyFileClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModifyFileClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#ModifyFileClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> puts or deletes PFS files atomically.
 Replaces <code class="xref py py-class docutils literal notranslate"><span class="pre">PutFileClient</span></code> from python_pachyderm 6.x.</p>
 <p class="rubric">Methods</p>
@@ -1344,7 +1367,7 @@ Replaces <code class="xref py py-class docutils literal notranslate"><span class
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>source_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The commit the source file is in.</p>
+<dt><strong>source_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The commit the source file is in.</p>
 </dd>
 <dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The path to the source file.</p>
 </dd>
@@ -1472,7 +1495,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
 <dd><p>File-like objects containing content of a file stored in PFS.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># client.get_file() returns a PFSFile</span>
@@ -1529,7 +1552,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pfs.</span></span><span class="sig-name descname"><span class="pre">PFSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin with pfs-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -1647,7 +1670,7 @@ example on s3:// URLs</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
 </dd>
-<dt><strong>parent</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
+<dt><strong>parent</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
 creation, before data is modified, the new commit will appear
 identical to the parent.</p>
 </dd>
@@ -1679,12 +1702,12 @@ fail.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>source_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) which holds the source
+<dt><strong>source_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) which holds the source
 file.</p>
 </dd>
 <dt><strong>source_path</strong><span class="classifier">str</span></dt><dd><p>The path of the source file.</p>
 </dd>
-<dt><strong>dest_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The open subcommit (commit at the repo-level) to which to add the
+<dt><strong>dest_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The open subcommit (commit at the repo-level) to which to add the
 file.</p>
 </dd>
 <dt><strong>dest_path</strong><span class="classifier">str</span></dt><dd><p>The path of the destination file.</p>
@@ -1717,7 +1740,7 @@ file.</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>The name of the new branch.</p>
 </dd>
-<dt><strong>head_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) indicating the head of the
+<dt><strong>head_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) indicating the head of the
 new branch.</p>
 </dd>
 <dt><strong>provenance</strong><span class="classifier">List[pfs_proto.Branch], optional</span></dt><dd><p>A list of branches to establish provenance with this newly created
@@ -1804,7 +1827,7 @@ the commit’s parent.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The open subcommit (commit at the repo-level) to delete a file
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The open subcommit (commit at the repo-level) to delete a file
 from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the file.</p>
@@ -1849,11 +1872,11 @@ set to the parent of <cite>new_commit</cite> and <cite>old_path</cite> will be s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>new_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The newer subcommit (commit at the repo-level).</p>
+<dt><strong>new_commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The newer subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>new_path</strong><span class="classifier">str</span></dt><dd><p>The path in <cite>new_commit</cite> to compare with.</p>
 </dd>
-<dt><strong>old_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>The older subcommit (commit at the repo-level).</p>
+<dt><strong>old_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>The older subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>old_path</strong><span class="classifier">str, optional</span></dt><dd><p>The path in <cite>old_commit</cite> to compare with.</p>
 </dd>
@@ -1916,7 +1939,7 @@ future attempts to write to it with ModifyFile will error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) object to close.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) object to close.</p>
 </dd>
 <dt><strong>description</strong><span class="classifier">str, optional</span></dt><dd><p>A description of the commit. It will overwrite the description set
 in <code class="docutils literal notranslate"><span class="pre">start_commit()</span></code>.</p>
@@ -1979,7 +2002,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2007,7 +2030,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to get the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2035,7 +2058,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to query against.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to query against.</p>
 </dd>
 <dt><strong>pattern</strong><span class="classifier">str</span></dt><dd><p>A glob pattern.</p>
 </dd>
@@ -2083,7 +2106,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The commit to inspect. Can either be a commit ID or a commit object
+<dt><strong>commit</strong><span class="classifier">Union[str, SubcommitType]</span></dt><dd><p>The commit to inspect. Can either be a commit ID or a commit object
 that represents a subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>commit_state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>An enum that causes the method to block until the commit is in the
@@ -2117,7 +2140,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to inspect the file from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to inspect the file from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path of the file.</p>
 </dd>
@@ -2190,11 +2213,11 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 <dt><strong>repo_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of a repo. If set, returns subcommits (commit at
 repo-level) only in this repo.</p>
 </dd>
-<dt><strong>to_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
+<dt><strong>to_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
 <cite>repo_name</cite> is specified. If set, only the ancestors of
 <cite>to_commit</cite>, including <cite>to_commit</cite>, are returned.</p>
 </dd>
-<dt><strong>from_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
+<dt><strong>from_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) that only impacts results if
 <cite>repo_name</cite> is specified. If set, only the descendants of
 <cite>from_commit</cite>, including <cite>from_commit</cite>, are returned.</p>
 </dd>
@@ -2242,7 +2265,7 @@ or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to list files from.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to list files from.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the directory.</p>
 </dd>
@@ -2296,7 +2319,10 @@ ModifyFile gRPC call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>A subcommit (commit at the repo-level) to modify. If this subcommit
+is opened before <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> is called, it will remain
+open after. If <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> opens the subcommit, it
+will close when exiting the <code class="docutils literal notranslate"><span class="pre">with</span></code> scope.</p>
 </dd>
 </dl>
 </dd>
@@ -2308,10 +2334,19 @@ ModifyFile gRPC call.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Commit needs to be open still, either from the result of
-<code class="docutils literal notranslate"><span class="pre">start_commit()</span></code> or within scope of <code class="docutils literal notranslate"><span class="pre">commit()</span></code></p>
+<p>On an open subcommit:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s2">&quot;/delete_me.txt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">put_file_from_url</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="s2">&quot;/new_file.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;https://example.com/data/train/input.txt&quot;</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">finish_commit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Opening a subcommit:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">((</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s2">&quot;/delete_me.txt&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">mfc</span><span class="o">.</span><span class="n">put_file_from_url</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="s2">&quot;/new_file.txt&quot;</span><span class="p">,</span>
@@ -2329,7 +2364,7 @@ whether <cite>path</cite> is a file or a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to check in.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to check in.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The file or directory path in <cite>commit</cite>.</p>
 </dd>
@@ -2353,7 +2388,7 @@ of bytestrings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path in the repo the file(s) will be written to.</p>
 </dd>
@@ -2385,7 +2420,7 @@ to the server which performs the request.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>An open subcommit (commit at the repo-level) to modify.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path in the repo the file(s) will be written to.</p>
 </dd>
@@ -2443,7 +2478,7 @@ not persisted until FinishCommit is called.</p>
 </dd>
 <dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
 </dd>
-<dt><strong>parent</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
+<dt><strong>parent</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
 creation, before data is modified, the new commit will appear
 identical to the parent.</p>
 </dd>
@@ -2477,7 +2512,7 @@ that are created.</p>
 </dd>
 <dt><strong>branch</strong><span class="classifier">str</span></dt><dd><p>The name of the branch.</p>
 </dd>
-<dt><strong>from_commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit], optional</span></dt><dd><p>Return commits only from this commit and onwards. Can either be an
+<dt><strong>from_commit</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>Return commits only from this commit and onwards. Can either be an
 entire commit or a subcommit (commit at the repo-level).</p>
 </dd>
 <dt><strong>state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>Return commits only when they’re at least in the specifed enum
@@ -2515,7 +2550,7 @@ otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[str, tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>A commit object to wait on. Can either be an entire commit or a
+<dt><strong>commit</strong><span class="classifier">Union[str, SubcommitType]</span></dt><dd><p>A commit object to wait on. Can either be an entire commit or a
 subcommit (commit at the repo-level).</p>
 </dd>
 </dl>
@@ -2546,7 +2581,7 @@ function waited on.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>The subcommit (commit at the repo-level) to walk files in.</p>
+<dt><strong>commit</strong><span class="classifier">SubcommitType</span></dt><dd><p>The subcommit (commit at the repo-level) to walk files in.</p>
 </dd>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the directory.</p>
 </dd>
@@ -2574,7 +2609,7 @@ function waited on.</p>
 <span id="python-pachyderm-mixin-pps"></span><h1>python_pachyderm.mixin.pps<a class="headerlink" href="#module-python_pachyderm.mixin.pps" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pps.PPSMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.pps.</span></span><span class="sig-name descname"><span class="pre">PPSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pps.html#PPSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pps.PPSMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PPSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/pps.html#PPSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pps.PPSMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for pps-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -2727,7 +2762,7 @@ it has to process.</p>
 <p class="rubric">Notes</p>
 <p>If creating a Spout pipeline, when committing data to the repo, use
 commit methods (<code class="docutils literal notranslate"><span class="pre">client.commit()</span></code>, <code class="docutils literal notranslate"><span class="pre">client.start_commit()</span></code>, etc.)
-or <a class="reference internal" href="#python_pachyderm.mixin.pfs.ModifyFileClient" title="python_pachyderm.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
+or <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.ModifyFileClient" title="python_pachyderm.experimental.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a> methods (<code class="docutils literal notranslate"><span class="pre">mfc.put_file_from_bytes</span></code>,
 <code class="docutils literal notranslate"><span class="pre">mfc.delete_file()</span></code>, etc.)</p>
 <p>For other pipelines, when committing data to the repo, write out to
 <code class="docutils literal notranslate"><span class="pre">/pfs/out/</span></code>.</p>
@@ -3092,7 +3127,7 @@ the provided input.</p>
 <dt><strong>pipeline_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of a pipeline. If set, returns subjobs (job at the
 pipeline-level) only from this pipeline.</p>
 </dd>
-<dt><strong>input_commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit, List], optional</span></dt><dd><p>A commit or list of commits from the input repo to filter jobs on.
+<dt><strong>input_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A commit or list of commits from the input repo to filter jobs on.
 Only impacts returned results if <cite>pipeline_name</cite> is specified.</p>
 </dd>
 <dt><strong>history</strong><span class="classifier">int, optional</span></dt><dd><p>Indicates to return jobs from historical versions of
@@ -3270,7 +3305,7 @@ restarted.</p>
 <span id="python-pachyderm-mixin-transaction"></span><h1>python_pachyderm.mixin.transaction<a class="headerlink" href="#module-python_pachyderm.mixin.transaction" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.transaction.TransactionMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.transaction.</span></span><span class="sig-name descname"><span class="pre">TransactionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/transaction.html#TransactionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.transaction.TransactionMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TransactionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/transaction.html#TransactionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.transaction.TransactionMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for transaction-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -3487,7 +3522,7 @@ even once.</p>
 <span id="python-pachyderm-mixin-version"></span><h1>python_pachyderm.mixin.version<a class="headerlink" href="#module-python_pachyderm.mixin.version" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.version.VersionMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pachyderm.mixin.version.</span></span><span class="sig-name descname"><span class="pre">VersionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/version.html#VersionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.version.VersionMixin" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VersionMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/mixin/version.html#VersionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.version.VersionMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin for version-related functionality.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -3523,7 +3558,8 @@ even once.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_pachyderm.html" class="btn btn-neutral float-left" title="python_pachyderm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pachyderm.html" class="btn btn-neutral float-left" title="Mixins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pachyderm.experimental.html" class="btn btn-neutral float-right" title="Information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

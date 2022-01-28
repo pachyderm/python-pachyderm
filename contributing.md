@@ -55,7 +55,7 @@ Code layout, as of 7/2020:
 │   │   └── version.py - Auto-generated module to expose the version of this library
 ├── tests/ - Pytests
 ├── tox.ini - Config for running tox tests (locally or in CI)
-└── version.json - Spec for the version of this library, as well as its pachyderm dependency
+└── version.json - Spec for the version of its pachyderm and kubernetes dependencies
 ```
 
 ### Style
@@ -117,20 +117,38 @@ make lint
 
 ## Rebuilding API docs
 
-We use [pdoc3](https://github.com/pdoc3/pdoc) to generate our API docs site.
-To rebuild the docs, run
+We use Sphinx to generate our API docs site.
+
+**If you added any new files or modules** that you want included in the docs
+site, you must first create the RST files for them so Sphinx can reference and
+include them. To create these RST files, run:
+
+```bash
+sphinx-apidoc -o source ../src/
+```
+
+You'll see the new RST file(s) in `docs/source`. Make sure to add the reference
+to these new file(s) in the other RST files.
+
+Additionally, add any new libraries to `docs/requirements.txt` that are
+needed to build the docs.
+
+To rebuild the docs, run:
 
 ```bash
 make docs
 ```
+
+This is a great way to check locally that the docs look as you expect them
+before you make a commit or release.
 
 ## Releasing
 
 Our current process for publishing a release of python-pachyderm consists of the following steps:
 
 #### Validate the release
-- [ ] Ensure that `version.json` contains the `python-pachyderm` version to be released
-  - If `version.json` contains an already-released version of python-pachyderm, update it in a PR.
+- [ ] Ensure that `pyproject.toml` contains the version to be released under the `version` attribute.
+  - If the `version` attribute contains an already-released version of python-pachyderm, update it in a PR.
 - [ ] Ensure the protobufs are up-to-date
   - Make sure `version.json` references the most recent compatible release of Pachyderm
   - Run `make src/python_pachyderm/proto/v2`, and make sure that the generated code is unchanged
@@ -161,8 +179,12 @@ This is mostly necessary for major releases, but it always reduces risk.
   - [ ] &#40;Only when releasing from `master`&#41; Create a new branch for patch releases called `vA.B.x`. For example, if releasing 1.0.0, create a new `v1.0.x` branch to hold future patch-sized changes made to 1.0.0.
 
 #### Update versions for next release
-  - [ ] In the patch release branch (e.g. `v1.0.x`), create a PR to update the python-pachyderm version in `version.json` to contain the next _patch_ release (e.g. 1.0.1)
+  - [ ] In the patch release branch (e.g. `v1.0.x`), create a PR to update the python-pachyderm version in `pyrpoject.toml` to contain the next _patch_ release (e.g. 1.0.1)
     - This is the python-pachyderm version that is currently in development in that branch.
-  - [ ] &#40;Only when releasing from `master`&#41; In `master`, create a PR to update the python-pachyderm version in `version.json` to contain the next _minor_ release (e.g. 1.1.0)
+  - [ ] &#40;Only when releasing from `master`&#41; In `master`, create a PR to update the python-pachyderm version in `pyrpoject.toml` to contain the next _minor_ release (e.g. 1.1.0)
     - This is the python-pachyderm version that is currently in development in `master`.
-  - [ ] &#40;Only when releasing from `master`&#41; In the new patch release branch (e.g. `v1.0.x`), create a PR (or add to the above PR) to update `make release` so that it checks out `v1.0.x` instead of `master` when releasing from this branch.
+  - [ ] &#40;Only when releasing from `master`&#41; In the new patch release branch (e.g. `v1.0.x`):
+    - Create a PR (or add to the above PR) to update `make release` and `make-test-release` so that it checks out `v1.0.x` instead of `master` when releasing from this branch.
+    - Go to the python-pachyderm Read the Docs (RTD) page and activate the [newly created patch release branch](https://readthedocs.org/projects/python-pachyderm/versions/). This will serve up that branch's docs on RTD.
+    - Update the docs link in `README.md` to point to the branch's RTD page.
+    - Update the examples directory link to point to the `examples/` directory of that Github branch.

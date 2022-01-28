@@ -428,7 +428,11 @@ def lint_method(mixin_cls, proto_module, grpc_method_name, mixin_method_name):
 
     # find which arguments differ between the python and gRPC implementation
     request_args = set(
-        [n for n in attrs(request_cls) if n not in PROTO_OBJECT_BUILTINS]
+        [
+            n
+            for n in attrs(request_cls)
+            if n not in PROTO_OBJECT_BUILTINS and "FIELD_NUMBER" not in n
+        ]
     )
     missing_args = request_args - mixin_method_args
     extra_args = mixin_method_args - request_args

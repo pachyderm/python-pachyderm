@@ -6,10 +6,9 @@ from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
 import grpc
-from python_pachyderm.service import pfs_proto, Service
 from google.protobuf import empty_pb2, wrappers_pb2
 
-from python_pachyderm.pfs import commit_from, uuid_re, COMMIT_LIKE
+from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
 
 BUFFER_SIZE = 19 * 1024 * 1024
@@ -215,7 +214,7 @@ class PFSMixin:
         self,
         repo_name: str,
         branch: str,
-        parent: COMMIT_LIKE = None,
+        parent: Union[str, SubcommitType] = None,
         description: str = None,
     ) -> pfs_pb2.Commit:
         """Begins the process of committing data to a repo. Once started you
@@ -229,7 +228,7 @@ class PFSMixin:
             The name of the repo.
         branch_name : str
             A string specifying the branch.
-        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
+        parent : Union[str, SubcommitType], optional
             A commit specifying the parent of the newly created commit. Upon
             creation, before data is modified, the new commit will appear
             identical to the parent.
@@ -261,7 +260,7 @@ class PFSMixin:
 
     def finish_commit(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         description: str = None,
         error: str = None,
         force: bool = False,
@@ -272,7 +271,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) object to close.
         description : str, optional
             A description of the commit. It will overwrite the description set
@@ -310,7 +309,7 @@ class PFSMixin:
         self,
         repo_name: str,
         branch: str,
-        parent: COMMIT_LIKE = None,
+        parent: Union[str, SubcommitType] = None,
         description: str = None,
     ) -> Iterator[pfs_pb2.Commit]:
         """A context manager for running operations within a commit.
@@ -321,7 +320,7 @@ class PFSMixin:
             The name of the repo.
         branch : str
             A string specifying the branch.
-        parent : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
+        parent : Union[str, SubcommitType], optional
             A commit specifying the parent of the newly created commit. Upon
             creation, before data is modified, the new commit will appear
             identical to the parent.
@@ -347,14 +346,14 @@ class PFSMixin:
 
     def inspect_commit(
         self,
-        commit: COMMIT_LIKE,
+        commit: Union[str, SubcommitType],
         commit_state: pfs_pb2.CommitState = pfs_pb2.CommitState.STARTED,
     ) -> Iterator[pfs_pb2.CommitInfo]:
         """Inspects a commit.
 
         Parameters
         ----------
-        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]
+        commit : Union[str, SubcommitType]
             The commit to inspect. Can either be a commit ID or a commit object
             that represents a subcommit (commit at the repo-level).
         commit_state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
@@ -396,8 +395,8 @@ class PFSMixin:
     def list_commit(
         self,
         repo_name: str = None,
-        to_commit: COMMIT_LIKE = None,
-        from_commit: COMMIT_LIKE = None,
+        to_commit: SubcommitType = None,
+        from_commit: SubcommitType = None,
         number: int = None,
         reverse: bool = False,
         all: bool = False,
@@ -410,11 +409,11 @@ class PFSMixin:
         repo_name : str, optional
             The name of a repo. If set, returns subcommits (commit at
             repo-level) only in this repo.
-        to_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+        to_commit : SubcommitType, optional
             A subcommit (commit at repo-level) that only impacts results if
             `repo_name` is specified. If set, only the ancestors of
             `to_commit`, including `to_commit`, are returned.
-        from_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+        from_commit : SubcommitType, optional
             A subcommit (commit at repo-level) that only impacts results if
             `repo_name` is specified. If set, only the descendants of
             `from_commit`, including `from_commit`, are returned.
@@ -496,12 +495,14 @@ class PFSMixin:
         )
         self.__stub.DropCommitSet(message)
 
-    def wait_commit(self, commit: COMMIT_LIKE) -> List[pfs_pb2.CommitInfo]:
+    def wait_commit(
+        self, commit: Union[str, SubcommitType]
+    ) -> List[pfs_pb2.CommitInfo]:
         """Waits for the specified commit to finish.
 
         Parameters
         ----------
-        commit : Union[str, tuple, dict, Commit, pfs_proto.Commit]
+        commit : Union[str, SubcommitType]
             A commit object to wait on. Can either be an entire commit or a
             subcommit (commit at the repo-level).
 
@@ -526,7 +527,7 @@ class PFSMixin:
         self,
         repo_name: str,
         branch: str,
-        from_commit: COMMIT_LIKE = None,
+        from_commit: Union[str, SubcommitType] = None,
         state: pfs_pb2.CommitState = pfs_pb2.CommitState.STARTED,
         all: bool = False,
         origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
@@ -540,7 +541,7 @@ class PFSMixin:
             The name of the repo.
         branch : str
             The name of the branch.
-        from_commit : Union[str, tuple, dict, Commit, pfs_proto.Commit], optional
+        from_commit : Union[str, SubcommitType], optional
             Return commits only from this commit and onwards. Can either be an
             entire commit or a subcommit (commit at the repo-level).
         state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
@@ -589,7 +590,7 @@ class PFSMixin:
         self,
         repo_name: str,
         branch_name: str,
-        head_commit: COMMIT_LIKE = None,
+        head_commit: SubcommitType = None,
         provenance: List[pfs_pb2.Branch] = None,
         trigger: pfs_pb2.Trigger = None,
         new_commit: bool = False,
@@ -602,7 +603,7 @@ class PFSMixin:
             The name of the repo.
         branch_name : str
             The name of the new branch.
-        head_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+        head_commit : SubcommitType, optional
             A subcommit (commit at repo-level) indicating the head of the
             new branch.
         provenance : List[pfs_proto.Branch], optional
@@ -715,7 +716,7 @@ class PFSMixin:
         self.__stub.DeleteBranch(message)
 
     @contextmanager
-    def modify_file_client(self, commit: COMMIT_LIKE) -> Iterator["ModifyFileClient"]:
+    def modify_file_client(self, commit: SubcommitType) -> Iterator["ModifyFileClient"]:
         """A context manager that gives a :class:`.ModifyFileClient`. When the
         context manager exits, any operations enqueued from the
         :class:`.ModifyFileClient` are executed in a single, atomic
@@ -724,7 +725,10 @@ class PFSMixin:
         Parameters
         ----------
         commit : Union[tuple, dict, Commit, pfs_proto.Commit]
-            An open subcommit (commit at the repo-level) to modify.
+            A subcommit (commit at the repo-level) to modify. If this subcommit
+            is opened before ``modify_file_client()`` is called, it will remain
+            open after. If ``modify_file_client()`` opens the subcommit, it
+            will close when exiting the ``with`` scope.
 
         Yields
         -------
@@ -733,11 +737,20 @@ class PFSMixin:
 
         Examples
         --------
-        Commit needs to be open still, either from the result of
-        ``start_commit()`` or within scope of ``commit()``
+        On an open subcommit:
 
         >>> c = client.start_commit("foo", "master")
         >>> with client.modify_file_client(c) as mfc:
+        >>>     mfc.delete_file("/delete_me.txt")
+        >>>     mfc.put_file_from_url(
+        ...         "/new_file.txt",
+        ...         "https://example.com/data/train/input.txt"
+        ...     )
+        >>> client.finish_commit(c)
+
+        Opening a subcommit:
+
+        >>> with client.modify_file_client(("foo", "master")) as mfc:
         >>>     mfc.delete_file("/delete_me.txt")
         >>>     mfc.put_file_from_url(
         ...         "/new_file.txt",
@@ -751,7 +764,7 @@ class PFSMixin:
 
     def put_file_bytes(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         value: Union[bytes, BinaryIO],
         datum: str = None,
@@ -762,7 +775,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             An open subcommit (commit at the repo-level) to modify.
         path : str
             The path in the repo the file(s) will be written to.
@@ -801,7 +814,7 @@ class PFSMixin:
 
     def put_file_url(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         url: str,
         recursive: bool = False,
@@ -813,7 +826,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             An open subcommit (commit at the repo-level) to modify.
         path : str
             The path in the repo the file(s) will be written to.
@@ -851,9 +864,9 @@ class PFSMixin:
 
     def copy_file(
         self,
-        source_commit: COMMIT_LIKE,
+        source_commit: SubcommitType,
         source_path: str,
-        dest_commit: COMMIT_LIKE,
+        dest_commit: SubcommitType,
         dest_path: str,
         datum: str = None,
         append: bool = False,
@@ -864,12 +877,12 @@ class PFSMixin:
 
         Parameters
         ----------
-        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        source_commit : SubcommitType
             The subcommit (commit at the repo-level) which holds the source
             file.
         source_path : str
             The path of the source file.
-        dest_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        dest_commit : SubcommitType
             The open subcommit (commit at the repo-level) to which to add the
             file.
         dest_path : str
@@ -897,7 +910,7 @@ class PFSMixin:
 
     def get_file(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -907,7 +920,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to get the file from.
         path : str
             The path of the file.
@@ -934,7 +947,7 @@ class PFSMixin:
 
     def get_file_tar(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -944,7 +957,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to get the file from.
         path : str
             The path of the file.
@@ -971,7 +984,7 @@ class PFSMixin:
 
     def inspect_file(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         datum: str = None,
     ) -> pfs_pb2.FileInfo:
@@ -979,7 +992,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to inspect the file from.
         path : str
             The path of the file.
@@ -998,7 +1011,7 @@ class PFSMixin:
 
     def list_file(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         details: bool = False,
@@ -1007,7 +1020,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to list files from.
         path : str
             The path to the directory.
@@ -1033,7 +1046,7 @@ class PFSMixin:
 
     def walk_file(
         self,
-        commit: COMMIT_LIKE,
+        commit: SubcommitType,
         path: str,
         datum: str = None,
     ) -> Iterator[pfs_pb2.FileInfo]:
@@ -1041,7 +1054,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to walk files in.
         path : str
             The path to the directory.
@@ -1063,13 +1076,13 @@ class PFSMixin:
         return self.__stub.WalkFile(message)
 
     def glob_file(
-        self, commit: COMMIT_LIKE, pattern: str
+        self, commit: SubcommitType, pattern: str
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists files that match a glob pattern.
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to query against.
         pattern : str
             A glob pattern.
@@ -1089,7 +1102,7 @@ class PFSMixin:
         )
         return self.__stub.GlobFile(message)
 
-    def delete_file(self, commit: COMMIT_LIKE, path: str) -> None:
+    def delete_file(self, commit: SubcommitType, path: str) -> None:
         """Deletes a file from an open commit. This leaves a tombstone in the
         commit, assuming the file isn't written to later while the commit is
         still open. Attempting to get the file from the finished commit will
@@ -1098,7 +1111,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The open subcommit (commit at the repo-level) to delete a file
             from.
         path : str
@@ -1141,9 +1154,9 @@ class PFSMixin:
 
     def diff_file(
         self,
-        new_commit: COMMIT_LIKE,
+        new_commit: SubcommitType,
         new_path: str,
-        old_commit: COMMIT_LIKE = None,
+        old_commit: SubcommitType = None,
         old_path: str = None,
         shallow: bool = False,
     ) -> Iterator[pfs_pb2.DiffFileResponse]:
@@ -1156,11 +1169,11 @@ class PFSMixin:
 
         Parameters
         ----------
-        new_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        new_commit : SubcommitType
             The newer subcommit (commit at the repo-level).
         new_path : str
             The path in `new_commit` to compare with.
-        old_commit : Union[tuple, dict, Commit, pfs_proto.Commit], optional
+        old_commit : SubcommitType, optional
             The older subcommit (commit at the repo-level).
         old_path : str, optional
             The path in `old_commit` to compare with.
@@ -1207,13 +1220,13 @@ class PFSMixin:
         )
         return self.__stub.DiffFile(message)
 
-    def path_exists(self, commit: COMMIT_LIKE, path: str) -> bool:
+    def path_exists(self, commit: SubcommitType, path: str) -> bool:
         """Checks whether the path exists in the specified commit, agnostic to
         whether `path` is a file or a directory.
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to check in.
         path : str
             The file or directory path in `commit`.
@@ -1244,7 +1257,7 @@ class ModifyFileClient:
     Replaces :class:`.PutFileClient` from python_pachyderm 6.x.
     """
 
-    def __init__(self, commit: COMMIT_LIKE):
+    def __init__(self, commit: SubcommitType):
         self._ops = []
         self.commit = commit_from(commit)
 
@@ -1394,7 +1407,7 @@ class ModifyFileClient:
 
     def copy_file(
         self,
-        source_commit: COMMIT_LIKE,
+        source_commit: SubcommitType,
         source_path: str,
         dest_path: str,
         datum: str = None,
@@ -1404,7 +1417,7 @@ class ModifyFileClient:
 
         Parameters
         ----------
-        source_commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        source_commit : SubcommitType
             The commit the source file is in.
         source_path : str
             The path to the source file.
@@ -1521,7 +1534,7 @@ class _AtomicCopyFileOp(_AtomicOp):
 
     def __init__(
         self,
-        source_commit: COMMIT_LIKE,
+        source_commit: SubcommitType,
         source_path: str,
         dest_path: str,
         datum: str = None,
