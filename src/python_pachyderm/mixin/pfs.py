@@ -24,7 +24,7 @@ class PfsTarFile(tarfile.TarFile):
                 tarinfo.path = tarinfo.path[1:]
             if tarinfo.mode == 0:
                 # Hack to prevent writing files with no permissions.
-                tarinfo.mode = 0o600
+                tarinfo.mode = 0o700
             yield tarinfo
 
 
