@@ -529,7 +529,12 @@ def test_list_commit():
     with client.commit(repo_name2, "master"):
         pass
 
-    commits = list(client.list_commit())
+    commits = list(
+        *client.list_commit("list_commit1"),
+        *client.list_commit("list_commit2"),
+    )
+    for commit in commits:
+        print(commit)
     assert len(commits) == 3
 
 

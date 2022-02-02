@@ -21,7 +21,6 @@ def test_create_spout():
     )
 
     assert len(list(client.list_pipeline())) == 1
-    client.delete_all()
 
 
 @pytest.mark.timeout(45)
@@ -51,4 +50,3 @@ def test_spout_commit():
 
     commit_infos = list(client.list_commit("pipeline-spout-commit"))
     assert len(commit_infos) == 1
-    client.delete_all()
