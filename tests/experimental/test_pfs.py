@@ -1,15 +1,20 @@
 #!/usr/bin/env python
 
 """Tests PFS-related functionality"""
-
 import os
-from pathlib import Path
-import pytest
 import tempfile
 from io import BytesIO
+from pathlib import Path
+from typing import NamedTuple
+
+import pytest
+from betterproto import BytesValue
 
 import python_pachyderm
+from python_pachyderm import PFSFile
+from python_pachyderm.experimental import Client
 from python_pachyderm.experimental.service import pfs_proto
+from python_pachyderm.service import MAX_RECEIVE_MESSAGE_SIZE
 from tests.experimental import util
 
 
@@ -314,50 +319,6 @@ def test_put_file_atomic():
     files = list(client.list_file(commit, ""))
     assert len(files) == 1
     assert files[0].file.path == "/index.html"
-
-
-def test_get_file():
-    client, repo_name = sandbox("get_file")
-    commit = (repo_name, "master")
-
-    with client.modify_file_client(commit) as mfc:
-        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-
-    assert client.get_file(commit, "file1.dat").read() == b"DATA1"
-
-
-def test_get_file_tar():
-    client, repo_name = sandbox("get_file_tar")
-    commit = (repo_name, "master")
-
-    with client.modify_file_client(commit) as mfc:
-        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-
-    assert client.get_file_tar(commit, "file1.dat").read() == b"DATA1"
-
-
-def test_PFSFile_with():
-    client, repo_name = sandbox("PFSFile_with")
-    commit = (repo_name, "master")
-
-    with client.modify_file_client(commit) as mfc:
-        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-
-    with client.get_file_tar(commit, "file1.dat") as f:
-        assert f.read() == b"DATA1"
-
-    with pytest.raises(ValueError, match="read of closed file"):
-        f.read()
-
-
-def test_PFSFile_iter():
-    client, repo_name = sandbox("PFSFile_iter")
-    commit = (repo_name, "master")
-
-    with client.modify_file_client(commit) as mfc:
-        mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-
-    assert list(client.get_file(commit, "file1.dat"))[0] == b"DATA1"
 
 
 def test_copy_file():
@@ -773,3 +734,115 @@ def test_mount():
     Path("mount_d/file.txt").touch()
     with pytest.raises(RuntimeError, match="must be empty to mount"):
         client.mount("mount_d")
+
+
+@pytest.fixture(name="repo")
+def _repo_fixture(request) -> str:
+    return request.node.nodeid.replace(":", "-").replace(".py", "")
+
+
+@pytest.fixture(name="client")
+def _client_fixture(repo):
+    client = Client()
+    client.delete_repo(repo, force=True)
+    client.create_repo(repo, "test repo for python_pachyderm")
+    yield client
+    client.delete_repo(repo, force=True)
+
+
+class TestPFSFile:
+    @staticmethod
+    def test_get_large_file(client: Client, repo: str):
+        """Test that a large file (requires >1 gRPC message to stream)
+        is successfully streamed in it's entirety
+        """
+        # Arrange
+        data = os.urandom(int(MAX_RECEIVE_MESSAGE_SIZE * 1.1))
+        pfs_file = "/large_file.dat"
+
+        with client.commit(repo, "large_file_commit") as commit:
+            client.put_file_bytes(commit, pfs_file, data)
+
+        # Act
+        with client.get_file(commit, pfs_file) as file:
+            assert len(file._buffer) < len(data), (
+                "PFSFile initialization streams the first message. "
+                "This asserts that the test file must be streamed over multiple messages. "
+            )
+            streamed_data = file.read()
+
+        # Assert
+        assert streamed_data[:10] == data[:10]
+        assert streamed_data[-10:] == data[-10:]
+        assert len(streamed_data) == len(data)
+
+    @staticmethod
+    def test_buffered_data(client: Client, repo: str):
+        """Test that data gets buffered as expected."""
+        # Arrange
+        stream_items = [b"a", b"bc", b"def", b"ghij", b"klmno"]
+        stream = (BytesValue(value=item) for item in stream_items)
+
+        # Act
+        file = PFSFile(stream)
+
+        # Assert
+        assert file._buffer == b"a"
+        assert file.read(0) == b""
+        assert file._buffer == b"a"
+        assert file.read(2) == b"ab"
+        assert file._buffer == b"c"
+        assert file.read(5) == b"cdefg"
+        assert file._buffer == b"hij"
+
+    @staticmethod
+    def test_fail_early(client: Client, repo: str):
+        """Test that gRPC errors are caught and thrown early."""
+        # Arrange
+        commit = (repo, "master")
+
+        # Act & Assert
+        with pytest.raises(ConnectionError):
+            client.get_file(commit, "there is no file")
+
+    @staticmethod
+    def test_context_manager(client: Client, repo: str):
+        """Test that the PFSFile context manager cleans up as expected."""
+        # Arrange
+        data = os.urandom(int(MAX_RECEIVE_MESSAGE_SIZE * 1.1))
+        pfs_file = "/test_file.dat"
+
+        with client.commit(repo, "master") as commit:
+            client.put_file_bytes(commit, pfs_file, data)
+
+        # Act & Assert
+        with client.get_file(commit, pfs_file) as file:
+            assert file._stream.stream.is_active()
+
+        # Assert
+        assert not file._stream.stream.is_active()
+
+    @staticmethod
+    def test_get_file_tar(client: Client, repo: str, tmp_path: Path):
+        """Test that retrieving a TAR of a PFS directory works as expected."""
+        # Arrange
+        TestPfsFile = NamedTuple("TestPfsFile", (("data", bytes), ("path", str)))
+        test_files = [
+            TestPfsFile(os.urandom(1024), "/a.dat"),
+            TestPfsFile(os.urandom(2048), "/child/b.dat"),
+            TestPfsFile(os.urandom(5000), "/child/grandchild/c.dat"),
+        ]
+
+        with client.commit(repo, "master") as commit:
+            for test_file in test_files:
+                client.put_file_bytes(commit, test_file.path, test_file.data)
+
+        # Act
+        with client.get_file_tar(commit, "/") as tar:
+            tar.extractall(tmp_path)
+
+        # Assert
+        for test_file in test_files:
+            local_file = tmp_path.joinpath(test_file.path[1:])
+            assert local_file.exists()
+            assert local_file.read_bytes() == test_file.data

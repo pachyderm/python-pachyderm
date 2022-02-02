@@ -3,16 +3,16 @@ import re
 import os
 import time
 import itertools
-import tarfile
 import subprocess
 from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
+from python_pachyderm.mixin.pfs import PFSFile, PfsTarFile
 from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
 from python_pachyderm.experimental.service import pfs_proto
-from google.protobuf import empty_pb2, wrappers_pb2
+from google.protobuf import wrappers_pb2
 import betterproto.lib.google.protobuf as bp_proto
 
 # bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
@@ -20,111 +20,6 @@ import betterproto.lib.google.protobuf as bp_proto
 
 
 BUFFER_SIZE = 19 * 1024 * 1024
-
-
-class FileTarstream:
-    """Implements a file-like interface over a GRPC byte stream,
-    so we can use tarfile to decode the file contents.
-    """
-
-    def __init__(self, res):
-        self.res = res
-        self.buf = []
-
-    def __next__(self):
-        return next(self.res).value
-
-    def close(self):
-        self.res.cancel()
-
-    def read(self, size=-1):
-        if self.res.cancelled():
-            return b""
-
-        buf = []
-        remaining = size if size >= 0 else 2 ** 32
-
-        if self.buf:
-            buf.append(self.buf[:remaining])
-            self.buf = self.buf[remaining:]
-            remaining -= len(buf[-1])
-
-        try:
-            while remaining > 0:
-                b = next(self)
-
-                if len(b) > remaining:
-                    buf.append(b[:remaining])
-                    self.buf = b[remaining:]
-                else:
-                    buf.append(b)
-
-                remaining -= len(buf[-1])
-        except StopIteration:
-            pass
-
-        return b"".join(buf)
-
-
-class PFSFile:
-    """File-like objects containing content of a file stored in PFS.
-
-    Examples
-    --------
-    >>> # client.get_file() returns a PFSFile
-    >>> source_file = client.get_file(("montage", "master"), "/montage.png")
-    >>> with open("montage.png", "wb") as dest_file:
-    >>>     shutil.copyfileobj(source_file, dest_file)
-    ...
-    >>> with client.get_file(("montage", "master"), "/montage2.png") as f:
-    >>>     content = f.read()
-    """
-
-    def __init__(self, stream, is_tar=False):
-        if is_tar:
-            # Pachyderm's GetFileTar API returns its result (which may include
-            # several files, e.g. when getting a directory) as a tar
-            # stream--untar the response byte stream as we receive it from
-            # GetFileTar.
-            # TODO how to handle multiple files in the tar stream?
-            f = tarfile.open(fileobj=stream, mode="r|*")
-            self._file = f.extractfile(f.next())
-        else:
-            self._file = stream
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, type, val, tb):
-        self.close()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        x = self.read()
-        if not x:
-            raise StopIteration
-        return x
-
-    def read(self, size: int = -1) -> bytes:
-        """Reads from the :class:`.PFSFile` buffer.
-
-        Parameters
-        ----------
-        size : int, optional
-            If set, the number of bytes to read from the buffer.
-
-        Returns
-        -------
-        bytes
-            Content from the stream.
-        """
-        return self._file.read(size)
-
-    def close(self) -> None:
-        """Closes the :class:`.PFSFile`."""
-        self._file.close()
 
 
 class PFSMixin:
@@ -951,14 +846,14 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
+        stream = self._req(
             Service.PFS,
             "GetFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
             offset=offset,
         )
-        return PFSFile(io.BytesIO(next(res).value))
+        return PFSFile(stream)
 
     def get_file_tar(
         self,
@@ -967,7 +862,7 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-    ) -> PFSFile:
+    ) -> PfsTarFile:
         """Gets a file from PFS.
 
         Parameters
@@ -988,7 +883,7 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
+        stream = self._req(
             Service.PFS,
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
@@ -997,7 +892,7 @@ class PFSMixin:
                 offset=offset,
             ),
         )
-        return PFSFile(io.BytesIO(next(res).value), is_tar=True)
+        return PfsTarFile.open(fileobj=PFSFile(stream), mode="r|*")
 
     def inspect_file(
         self,
