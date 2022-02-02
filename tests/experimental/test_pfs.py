@@ -530,6 +530,9 @@ def test_list_commit():
         pass
 
     commits = list(client.list_commit())
+    print()
+    for commit in commits:
+        print(commit)
     assert len(commits) == 3
 
 
