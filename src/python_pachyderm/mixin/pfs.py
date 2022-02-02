@@ -1,4 +1,5 @@
 import io
+import os
 import re
 import itertools
 import tarfile
@@ -18,7 +19,7 @@ BUFFER_SIZE = 19 * 1024 * 1024
 class PfsTarFile(tarfile.TarFile):
     def __iter__(self):
         for tarinfo in super().__iter__():
-            if tarinfo.path.startswith("/"):
+            if os.path.isabs(tarinfo.path):
                 # Hack to prevent extraction to absolute paths.
                 tarinfo.path = tarinfo.path[1:]
             if tarinfo.mode == 0:

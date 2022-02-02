@@ -753,7 +753,7 @@ class TestPFSFile:
     @staticmethod
     def test_get_large_file(client: Client, repo: str):
         """Test that a large file (requires >1 gRPC message to stream)
-        is successfully streamed in it's entirety
+        is successfully streamed in it's entirety.
         """
         # Arrange
         data = os.urandom(int(MAX_RECEIVE_MESSAGE_SIZE * 1.1))
@@ -806,7 +806,14 @@ class TestPFSFile:
 
     @staticmethod
     def test_context_manager(client: Client, repo: str):
-        """Test that the PFSFile context manager cleans up as expected."""
+        """Test that the PFSFile context manager cleans up as expected.
+
+        Note: The test file needs to be large in order to span multiple
+          gRPC messages. If the file only requires a single message to stream
+          then the stream will be terminated and the assertion within the
+          `client.get_file` context will fail.
+          Maybe this should be rethought or mocked in the future.
+        """
         # Arrange
         data = os.urandom(int(MAX_RECEIVE_MESSAGE_SIZE * 1.1))
         pfs_file = "/test_file.dat"
@@ -817,9 +824,24 @@ class TestPFSFile:
         # Act & Assert
         with client.get_file(commit, pfs_file) as file:
             assert file._stream.is_active()
-
-        # Assert
         assert not file._stream.is_active()
+
+    @staticmethod
+    def test_cancelled_stream(client: Client, repo: str):
+        """Test that a cancelled stream maintains the integrity of the
+        already-streamed data.
+        """
+        # Arrange
+        data = os.urandom(200)
+        pfs_file = "/test_file.dat"
+
+        with client.commit(repo, "master") as commit:
+            client.put_file_bytes(commit, pfs_file, data)
+
+        # Act & Assert
+        with client.get_file(commit, pfs_file) as file:
+            assert file.read(100) == data[:100]
+        assert file.read(100) == data[100:]
 
     @staticmethod
     def test_get_file_tar(client: Client, repo: str, tmp_path: Path):
