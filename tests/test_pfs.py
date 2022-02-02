@@ -736,7 +736,8 @@ def test_modify_file_client():
 
 @pytest.fixture(name="repo")
 def _repo_fixture(request) -> str:
-    return request.node.nodeid.replace(":", "-").replace(".py", "")
+    """Create a repository name from the test function name."""
+    return request.node.nodeid.replace("/", "-").replace(":", "-").replace(".py", "")
 
 
 @pytest.fixture(name="client")
