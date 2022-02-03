@@ -8,7 +8,7 @@ from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
-from python_pachyderm.mixin.pfs import PFSFile, PfsTarFile
+from python_pachyderm.mixin.pfs import PFSFile, PFSTarFile
 from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
 from python_pachyderm.experimental.service import pfs_proto
@@ -862,7 +862,7 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-    ) -> PfsTarFile:
+    ) -> PFSTarFile:
         """Gets a file from PFS.
 
         Parameters
@@ -892,7 +892,7 @@ class PFSMixin:
                 offset=offset,
             ),
         )
-        return PfsTarFile.open(fileobj=PFSFile(stream), mode="r|*")
+        return PFSTarFile.open(fileobj=PFSFile(stream), mode="r|*")
 
     def inspect_file(
         self,

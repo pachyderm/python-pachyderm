@@ -16,7 +16,7 @@ from google.protobuf import empty_pb2, wrappers_pb2
 BUFFER_SIZE = 19 * 1024 * 1024
 
 
-class PfsTarFile(tarfile.TarFile):
+class PFSTarFile(tarfile.TarFile):
     def __iter__(self):
         for tarinfo in super().__iter__():
             if os.path.isabs(tarinfo.path):
@@ -935,7 +935,7 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-    ) -> PfsTarFile:
+    ) -> PFSTarFile:
         """Gets a file from PFS.
 
         Parameters
@@ -965,7 +965,7 @@ class PFSMixin:
                 offset=offset,
             ),
         )
-        return PfsTarFile.open(fileobj=PFSFile(stream), mode="r|*")
+        return PFSTarFile.open(fileobj=PFSFile(stream), mode="r|*")
 
     def inspect_file(
         self,
