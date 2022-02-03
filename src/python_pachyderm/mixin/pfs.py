@@ -1,60 +1,31 @@
 import io
+import os
 import re
 import itertools
 import tarfile
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
+import grpc
+from betterproto import BytesValue
+
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.service import pfs_proto, Service
 from google.protobuf import empty_pb2, wrappers_pb2
 
-
 BUFFER_SIZE = 19 * 1024 * 1024
 
 
-class FileTarstream:
-    """Implements a file-like interface over a GRPC byte stream,
-    so we can use tarfile to decode the file contents.
-    """
-
-    def __init__(self, res):
-        self.res = res
-        self.buf = []
-
-    def __next__(self):
-        return next(self.res).value
-
-    def close(self):
-        self.res.cancel()
-
-    def read(self, size=-1):
-        if self.res.cancelled():
-            return b""
-
-        buf = []
-        remaining = size if size >= 0 else 2 ** 32
-
-        if self.buf:
-            buf.append(self.buf[:remaining])
-            self.buf = self.buf[remaining:]
-            remaining -= len(buf[-1])
-
-        try:
-            while remaining > 0:
-                b = next(self)
-
-                if len(b) > remaining:
-                    buf.append(b[:remaining])
-                    self.buf = b[remaining:]
-                else:
-                    buf.append(b)
-
-                remaining -= len(buf[-1])
-        except StopIteration:
-            pass
-
-        return b"".join(buf)
+class PFSTarFile(tarfile.TarFile):
+    def __iter__(self):
+        for tarinfo in super().__iter__():
+            if os.path.isabs(tarinfo.path):
+                # Hack to prevent extraction to absolute paths.
+                tarinfo.path = tarinfo.path[1:]
+            if tarinfo.mode == 0:
+                # Hack to prevent writing files with no permissions.
+                tarinfo.mode = 0o700
+            yield tarinfo
 
 
 class PFSFile:
@@ -71,32 +42,21 @@ class PFSFile:
     >>>     content = f.read()
     """
 
-    def __init__(self, stream, is_tar=False):
-        if is_tar:
-            # Pachyderm's GetFileTar API returns its result (which may include
-            # several files, e.g. when getting a directory) as a tar
-            # stream--untar the response byte stream as we receive it from
-            # GetFileTar.
-            # TODO how to handle multiple files in the tar stream?
-            f = tarfile.open(fileobj=stream, mode="r|*")
-            self._file = f.extractfile(f.next())
-        else:
-            self._file = stream
+    def __init__(self, stream: Iterator[BytesValue]):
+        self._stream = stream
+        self._buffer = bytearray()
+
+        try:
+            first_message = next(self._stream)
+        except grpc.RpcError as err:
+            raise ConnectionError("Error creating the PFSFile") from err
+        self._buffer.extend(first_message.value)
 
     def __enter__(self):
         return self
 
     def __exit__(self, type, val, tb):
         self.close()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        x = self.read()
-        if not x:
-            raise StopIteration
-        return x
 
     def read(self, size: int = -1) -> bytes:
         """Reads from the :class:`.PFSFile` buffer.
@@ -111,11 +71,28 @@ class PFSFile:
         bytes
             Content from the stream.
         """
-        return self._file.read(size)
+        try:
+            if size == -1:
+                # Consume the entire stream.
+                for message in self._stream:
+                    self._buffer.extend(message.value)
+                result, self._buffer[:] = self._buffer[:], b""
+                return bytes(result)
+            elif len(self._buffer) < size:
+                for message in self._stream:
+                    self._buffer.extend(message.value)
+                    if len(self._buffer) >= size:
+                        break
+        except grpc.RpcError:
+            pass
+
+        size = min(size, len(self._buffer))
+        result, self._buffer[:size] = self._buffer[:size], b""
+        return bytes(result)
 
     def close(self) -> None:
         """Closes the :class:`.PFSFile`."""
-        self._file.close()
+        self._stream.cancel()
 
 
 class PFSMixin:
@@ -942,14 +919,14 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
+        stream = self._req(
             Service.PFS,
             "GetFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
             offset=offset,
         )
-        return PFSFile(io.BytesIO(next(res).value))
+        return PFSFile(stream)
 
     def get_file_tar(
         self,
@@ -958,7 +935,7 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-    ) -> PFSFile:
+    ) -> PFSTarFile:
         """Gets a file from PFS.
 
         Parameters
@@ -979,7 +956,7 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        res = self._req(
+        stream = self._req(
             Service.PFS,
             "GetFileTAR",
             req=pfs_proto.GetFileRequest(
@@ -988,7 +965,7 @@ class PFSMixin:
                 offset=offset,
             ),
         )
-        return PFSFile(io.BytesIO(next(res).value), is_tar=True)
+        return PFSTarFile.open(fileobj=PFSFile(stream), mode="r|*")
 
     def inspect_file(
         self,
