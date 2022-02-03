@@ -22,7 +22,7 @@ class DebugMixin:
 
         Parameters
         ----------
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
         limit : int, optional
@@ -36,7 +36,7 @@ class DebugMixin:
 
         Examples
         --------
-        >>> for b in client.dump(debug_proto.Filter(pipeline=pps_proto.Pipeline(name="foo"))):
+        >>> for b in client.dump(debug_pb2.Filter(pipeline=pps_pb2.Pipeline(name="foo"))):
         >>>     print(b)
 
         .. # noqa: W505
@@ -55,7 +55,7 @@ class DebugMixin:
         duration : duration_pb2.Duration
             A google protobuf duration object indicating how long the profile
             should run for.
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
 
@@ -81,7 +81,7 @@ class DebugMixin:
 
         Parameters
         ----------
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
 

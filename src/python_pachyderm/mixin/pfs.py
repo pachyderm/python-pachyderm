@@ -139,7 +139,7 @@ class PFSMixin:
 
         Returns
         -------
-        pfs_proto.RepoInfo
+        pfs_pb2.RepoInfo
             A protobuf object with info on the repo.
         """
         message = pfs_pb2.InspectRepoRequest(
@@ -158,7 +158,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.RepoInfo]
+        Iterator[pfs_pb2.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
         message = pfs_pb2.ListRepoRequest(type=type)
@@ -213,7 +213,7 @@ class PFSMixin:
 
         Returns
         -------
-        pfs_proto.Commit
+        pfs_pb2.Commit
             A protobuf object that represents an open subcommit (commit at the
             repo-level).
 
@@ -305,7 +305,7 @@ class PFSMixin:
 
         Yields
         -------
-        pfs_proto.Commit
+        pfs_pb2.Commit
             A protobuf object that represents a commit.
 
         Examples
@@ -332,13 +332,13 @@ class PFSMixin:
         commit : Union[str, SubcommitType]
             The commit to inspect. Can either be a commit ID or a commit object
             that represents a subcommit (commit at the repo-level).
-        commit_state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
+        commit_state : {pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional
             An enum that causes the method to block until the commit is in the
-            specified state. (Default value = ``pfs_proto.CommitState.STARTED``)
+            specified state. (Default value = ``pfs_pb2.CommitState.STARTED``)
 
         Returns
         -------
-        Iterator[pfs_proto.CommitInfo]
+        Iterator[pfs_pb2.CommitInfo]
             An iterator of protobuf objects that contain info on a subcommit
             (commit at the repo-level).
 
@@ -348,7 +348,7 @@ class PFSMixin:
         >>> list(client.inspect_commit(("foo", "master~2")))
         ...
         >>> # an entire commit
-        >>> for commit in client.inspect_commit("467c580611234cdb8cc9758c7aa96087", pfs_proto.CommitState.FINISHED)
+        >>> for commit in client.inspect_commit("467c580611234cdb8cc9758c7aa96087", pfs_pb2.CommitState.FINISHED)
         >>>     print(commit)
 
         .. # noqa: W505
@@ -404,14 +404,14 @@ class PFSMixin:
             If true, returns all types of subcommits. Otherwise, alias
             subcommits are excluded. Only impacts results if `repo_name` is
             specified.
-        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional
+        origin_kind : {pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional
             An enum that specifies how a subcommit originated. Returns only
             subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
 
         Returns
         -------
-        Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]
+        Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]
             An iterator of protobuf objects that either contain info on a
             subcommit (commit at the repo-level), if `repo_name` was specified,
             or a commit, if `repo_name` wasn't specified.
@@ -484,7 +484,7 @@ class PFSMixin:
 
         Returns
         -------
-        List[pfs_proto.CommitInfo]
+        List[pfs_pb2.CommitInfo]
             A list of protobuf objects that contain info on subcommits (commit
             at the repo-level). These are the individual subcommits this
             function waited on.
@@ -520,19 +520,19 @@ class PFSMixin:
         from_commit : Union[str, SubcommitType], optional
             Return commits only from this commit and onwards. Can either be an
             entire commit or a subcommit (commit at the repo-level).
-        state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional
+        state : {pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional
             Return commits only when they're at least in the specifed enum
-            state. (Default value = ``pfs_proto.CommitState.STARTED``)
+            state. (Default value = ``pfs_pb2.CommitState.STARTED``)
         all : bool, optional
             If true, returns all types of commits. Otherwise, alias commits are
             excluded.
-        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional
+        origin_kind : {pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional
             An enum that specifies how a commit originated. Returns only
-            commits of this enum type. (Default value = ``pfs_proto.OriginKind.USER``)
+            commits of this enum type. (Default value = ``pfs_pb2.OriginKind.USER``)
 
         Returns
         -------
-        Iterator[pfs_proto.CommitInfo]
+        Iterator[pfs_pb2.CommitInfo]
             An iterator of protobuf objects that contain info on subcommits
             (commits at the repo-level). Use ``next()`` to iterate through as
             the returned stream is potentially endless. Might block your code
@@ -540,7 +540,7 @@ class PFSMixin:
 
         Examples
         --------
-        >>> commits = client.subscribe_commit("foo", "master", state=pfs_proto.CommitState.FINISHED)
+        >>> commits = client.subscribe_commit("foo", "master", state=pfs_pb2.CommitState.FINISHED)
         >>> c = next(commits)
 
         .. # noqa: W505
@@ -582,10 +582,10 @@ class PFSMixin:
         head_commit : SubcommitType, optional
             A subcommit (commit at repo-level) indicating the head of the
             new branch.
-        provenance : List[pfs_proto.Branch], optional
+        provenance : List[pfs_pb2.Branch], optional
             A list of branches to establish provenance with this newly created
             branch.
-        trigger : pfs_proto.Trigger, optional
+        trigger : pfs_pb2.Trigger, optional
             Sets the conditions under which the head of this branch moves.
         new_commit : bool, optional
             If true and `head_commit` is specified, uses a different commit ID
@@ -597,8 +597,8 @@ class PFSMixin:
         ...     "bar",
         ...     "master",
         ...     provenance=[
-        ...         pfs_proto.Branch(
-        ...             repo=pfs_proto.Repo(name="foo", type="user"), name="master"
+        ...         pfs_pb2.Branch(
+        ...             repo=pfs_pb2.Repo(name="foo", type="user"), name="master"
         ...         )
         ...     ]
         ... )
@@ -629,7 +629,7 @@ class PFSMixin:
 
         Returns
         -------
-        pfs_proto.BranchInfo
+        pfs_pb2.BranchInfo
             A protobuf object with info on a branch.
         """
         message = pfs_pb2.InspectBranchRequest(
@@ -653,7 +653,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.BranchInfo]
+        Iterator[pfs_pb2.BranchInfo]
             An iterator of protobuf objects that contain info on a branch.
 
         Examples
@@ -700,7 +700,7 @@ class PFSMixin:
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : Union[tuple, dict, Commit, pfs_pb2.Commit]
             A subcommit (commit at the repo-level) to modify. If this subcommit
             is opened before ``modify_file_client()`` is called, it will remain
             open after. If ``modify_file_client()`` opens the subcommit, it
@@ -973,7 +973,7 @@ class PFSMixin:
 
         Returns
         -------
-        pfs_proto.FileInfo
+        pfs_pb2.FileInfo
             A protobuf object that contains info on a file.
         """
         message = pfs_pb2.InspectFileRequest(
@@ -1003,7 +1003,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.FileInfo]
+        Iterator[pfs_pb2.FileInfo]
             An iterator of protobuf objects that contain info on files.
 
         Examples
@@ -1035,7 +1035,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.FileInfo]
+        Iterator[pfs_pb2.FileInfo]
             An iterator of protobuf objects that contain info on files.
 
         Examples
@@ -1061,7 +1061,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.FileInfo]
+        Iterator[pfs_pb2.FileInfo]
             An iterator of protobuf objects that contain info on files.
 
         Examples
@@ -1111,7 +1111,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.FsckResponse]
+        Iterator[pfs_pb2.FsckResponse]
             An iterator of protobuf objects that contain info on either what
             error was encountered (and was unable to be fixed, if `fix` is set
             to ``True``) or a fix message (if `fix` is set to ``True``).
@@ -1154,7 +1154,7 @@ class PFSMixin:
 
         Returns
         -------
-        Iterator[pfs_proto.DiffFileResponse]
+        Iterator[pfs_pb2.DiffFileResponse]
             An iterator of protobuf objects that contain info on files whose
             content has changed between commits. If a file under one of the
             paths is only in one commit, than the ``DiffFileResponse`` for it

@@ -1,5 +1,5 @@
 import re
-from typing import NamedTuple, Optional, Union
+from typing import NamedTuple, Union
 
 from python_pachyderm.proto.v2.pfs import pfs_pb2
 
@@ -17,7 +17,7 @@ class Commit(NamedTuple):
     repo_type: str = "user"
 
     def to_pb(self) -> pfs_pb2.Commit:
-        """Converts itself into a ``pfs_proto.Commit``."""
+        """Converts itself into a ``pfs_pb2.Commit``."""
         return pfs_pb2.Commit(
             id=self.id,
             branch=pfs_pb2.Branch(
@@ -28,7 +28,7 @@ class Commit(NamedTuple):
 
     @staticmethod
     def from_pb(commit: pfs_pb2.Commit) -> "Commit":
-        """Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`
+        """Converts a ``pfs_pb2.Commit`` object into a :class:`.Commit`
         object.
         """
         return Commit(
@@ -58,12 +58,12 @@ Commit:
 >>> from python_pachyderm.pfs import Commit
 >>> sc = Commit(repo="foo", branch="master")
 
-pfs_proto.Commit:
+pfs_pb2.Commit:
 
 >>> from python_pachyderm.service import pfs_proto
->>> sc = pfs_proto.Commit(
-...     branch=pfs_proto.Branch(
-...         repo=pfs_proto.Repo(name="foo", type="user"),
+>>> sc = pfs_pb2.Commit(
+...     branch=pfs_pb2.Branch(
+...         repo=pfs_pb2.Repo(name="foo", type="user"),
 ...         name="master",
 ...     )
 ... )
@@ -85,7 +85,7 @@ def commit_from(
 
     Returns
     -------
-    pfs_proto.Commit
+    pfs_pb2.Commit
         A protobuf object that represents a commit.
     """
     if isinstance(commit, pfs_pb2.Commit):

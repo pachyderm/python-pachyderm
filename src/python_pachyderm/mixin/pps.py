@@ -41,7 +41,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.JobInfo]
+        Iterator[pps_pb2.JobInfo]
             An iterator of protobuf objects that contain info on a subjob
             (jobs at the pipeline-level).
 
@@ -110,7 +110,7 @@ class PPSMixin:
 
         Returns
         -------
-        Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]
+        Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]
             An iterator of protobuf objects that either contain info on a
             subjob (job at the pipeline-level), if `pipeline_name` was
             specified, or a job, if `pipeline_name` wasn't specified.
@@ -197,7 +197,7 @@ class PPSMixin:
 
         Returns
         -------
-        pps_proto.DatumInfo
+        pps_pb2.DatumInfo
             A protobuf object with info on the datum.
         """
         message = pps_pb2.InspectDatumRequest(
@@ -226,24 +226,24 @@ class PPSMixin:
             The name of the pipeline.
         job_id : str, optional
             The ID of a job.
-        input : pps_proto.Input, optional
+        input : pps_pb2.Input, optional
             A protobuf object that filters the datums returned. The datums
             listed are ones that would be run if a pipeline was created with
             the provided input.
 
         Returns
         -------
-        Iterator[pps_proto.DatumInfo]
+        Iterator[pps_pb2.DatumInfo]
             An iterator of protobuf objects that contain info on a datum.
 
         Examples
         --------
         >>> # See hypothetical datums with specified input cross
-        >>> datums = list(client.list_datum(input=pps_proto.Input(
-        ...     pfs=pps_proto.PFSInput(repo="foo", branch="master", glob="/*"),
+        >>> datums = list(client.list_datum(input=pps_pb2.Input(
+        ...     pfs=pps_pb2.PFSInput(repo="foo", branch="master", glob="/*"),
         ...     cross=[
-        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="bar", branch="master", glob="/")),
-        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="baz", branch="master", glob="/*/*")),
+        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo="bar", branch="master", glob="/")),
+        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo="baz", branch="master", glob="/*/*")),
         ...     ]
         ... )))
 
@@ -317,11 +317,11 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The pipeline name.
-        transform : pps_proto.Transform
+        transform : pps_pb2.Transform
             The image and commands run during pipeline execution.
-        parallelism_spec : pps_proto.ParallelismSpec, optional
+        parallelism_spec : pps_pb2.ParallelismSpec, optional
             Specifies how the pipeline is parallelized.
-        egress : pps_proto.Egress, optional
+        egress : pps_pb2.Egress, optional
             An external data store to publish the results of the pipeline to.
         reprocess_spec : str, optional
             Specifies how to handle already-processed datums.
@@ -331,15 +331,15 @@ class PPSMixin:
             The branch name to output results on.
         s3_out : bool, optional
             If true, the output repo is exposed as an S3 gateway bucket.
-        resource_requests : pps_proto.ResourceSpec, optional
+        resource_requests : pps_pb2.ResourceSpec, optional
             The amount of resources that the pipeline workers will consume.
-        resource_limits: pps_proto.ResourceSpec, optional
+        resource_limits: pps_pb2.ResourceSpec, optional
             The upper threshold of allowed resources a given worker can
             consume. If a worker exceeds this value, it will be evicted.
-        sidecar_resource_limits : pps_proto.ResourceSpec, optional
+        sidecar_resource_limits : pps_pb2.ResourceSpec, optional
             The upper threshold of resources allocated to the sidecar
             containers.
-        input : pps_proto.Input, optional
+        input : pps_pb2.Input, optional
             The input repos to the pipeline. Commits to these repos will
             automatically trigger the pipeline to create new jobs to
             process them.
@@ -348,9 +348,9 @@ class PPSMixin:
         reprocess : bool, optional
             If true, forces the pipeline to reprocess all datums. Only has
             meaning if `update` is ``True``.
-        service : pps_proto.Service, optional
+        service : pps_pb2.Service, optional
             Creates a Service pipeline instead of a normal pipeline.
-        datum_set_spec : pps_proto.DatumSetSpec, optional
+        datum_set_spec : pps_pb2.DatumSetSpec, optional
             Specifies how a pipeline should split its datums into datum sets.
         datum_timeout : duration_pb2.Duration, optional
             The maximum execution time allowed for each datum.
@@ -361,16 +361,16 @@ class PPSMixin:
         datum_tries : int, optional
             The number of times a job attempts to run on a datum when a failure
             occurs.
-        scheduling_spec : pps_proto.SchedulingSpec, optional
+        scheduling_spec : pps_pb2.SchedulingSpec, optional
             Specifies how the pods for a pipeline should be scheduled.
         pod_patch : str, optional
             Allows one to set fields in the pod spec that haven't been
             explicitly exposed in the rest of the pipeline spec.
-        spout : pps_proto.Spout, optional
+        spout : pps_pb2.Spout, optional
             Creates a Spout pipeline instead of a normal pipeline.
-        spec_commit : pfs_proto.Commit, optional
+        spec_commit : pfs_pb2.Commit, optional
             A spec commit to base the pipeline spec from.
-        metadata : pps_proto.Metadata, optional
+        metadata : pps_pb2.Metadata, optional
             Kubernetes labels and annotations to add as metadata to the
             pipeline pods.
         autoscaling : bool, optional
@@ -391,11 +391,11 @@ class PPSMixin:
         --------
         >>> client.create_pipeline(
         ...     "foo",
-        ...     transform=pps_proto.Transform(
+        ...     transform=pps_pb2.Transform(
         ...         cmd=["python3", "main.py"],
         ...         image="example/image",
         ...     ),
-        ...     input=pps_proto.Input(pfs=pps_proto.PFSInput(
+        ...     input=pps_pb2.Input(pfs=pps_pb2.PFSInput(
         ...         repo="foo",
         ...         branch="master",
         ...         glob="/*"
@@ -439,7 +439,7 @@ class PPSMixin:
 
         Parameters
         ----------
-        req : pps_proto.CreatePipelineRequest
+        req : pps_pb2.CreatePipelineRequest
             The ``CreatePipelineRequest`` object.
         """
         self.__stub.CreatePipeline(req)
@@ -469,7 +469,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.PipelineInfo]
+        Iterator[pps_pb2.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
 
         Examples
@@ -520,7 +520,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.PipelineInfo]
+        Iterator[pps_pb2.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
 
         Examples
@@ -664,7 +664,7 @@ class PPSMixin:
 
         Returns
         -------
-        List[pps_proto.SecretInfo]
+        List[pps_pb2.SecretInfo]
             A list of protobuf objects that contain info on a secret.
         """
         message = empty_pb2.Empty()
@@ -680,7 +680,7 @@ class PPSMixin:
 
         Returns
         -------
-        pps_proto.SecretInfo
+        pps_pb2.SecretInfo
             A protobuf object with info on the secret.
         """
         message = pps_pb2.InspectSecretRequest(
@@ -713,7 +713,7 @@ class PPSMixin:
             for files at specific versions).
         master : bool, optional
             If true, includes logs from the master
-        datum : pps_proto.Datum, optional
+        datum : pps_pb2.Datum, optional
             Filters log lines for the specified datum.
         follow : bool, optional
             If true, continue to follow new logs as they appear.
@@ -729,7 +729,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.LogMessage]
+        Iterator[pps_pb2.LogMessage]
             An iterator of protobuf objects that contain info on a log from a
             PPS worker. If `follow` is set to ``True``, use ``next()`` to
             iterate through as the returned stream is potentially endless.
@@ -772,7 +772,7 @@ class PPSMixin:
             contains multiple inputs. Each filter may be an absolute path of a
             file within a repo, or it may be a hash for that file (to search
             for files at specific versions).
-        datum : pps_proto.Datum, optional
+        datum : pps_pb2.Datum, optional
             Filters log lines for the specified datum.
         follow : bool, optional
             If true, continue to follow new logs as they appear.
@@ -788,7 +788,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.LogMessage]
+        Iterator[pps_pb2.LogMessage]
             An iterator of protobuf objects that contain info on a log from a
             PPS worker. If `follow` is set to ``True``, use ``next()`` to
             iterate through as the returned stream is potentially endless.

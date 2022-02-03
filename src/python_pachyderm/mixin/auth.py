@@ -52,7 +52,7 @@ class AuthMixin:
 
         Returns
         -------
-        auth_proto.OIDCConfig
+        auth_pb2.OIDCConfig
             A protobuf object with auth configuration information.
         """
         message = auth_pb2.GetConfigurationRequest()
@@ -63,12 +63,12 @@ class AuthMixin:
 
         Parameters
         ----------
-        configuration : auth_proto.OIDCConfig
+        configuration : auth_pb2.OIDCConfig
             A protobuf object with auth configuration information.
 
         Examples
         --------
-        >>> client.set_auth_configuration(auth_proto.OIDCConfig(
+        >>> client.set_auth_configuration(auth_pb2.OIDCConfig(
         ...     issuer="http://localhost:1658",
         ...     client_id="client",
         ...     client_secret="secret",
@@ -85,17 +85,17 @@ class AuthMixin:
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             A protobuf object representing the resource being checked.
 
         Returns
         -------
-        Dict[str, auth_proto.Roles]
+        Dict[str, auth_pb2.Roles]
             A dictionary mapping the principals to the roles they have.
 
         Examples
         --------
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.CLUSTER))
+        >>> client.get_role_binding(auth_pb2.Resource(type=auth_pb2.CLUSTER))
         {
             'robot:someuser': roles {
                 key: "clusterAdmin"
@@ -107,7 +107,7 @@ class AuthMixin:
             }
         }
         ...
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.REPO, name="foobar"))
+        >>> client.get_role_binding(auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"))
         {
             'user:person_a': roles {
                 key: "repoWriter"
@@ -131,7 +131,7 @@ class AuthMixin:
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             A protobuf object representing the resource to grant the roles on.
         principal : str
             The principal to grant the roles for.
@@ -145,12 +145,12 @@ class AuthMixin:
         https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27
 
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.CLUSTER),
+        ...     auth_pb2.Resource(type=auth_pb2.CLUSTER),
         ...     "user:someuser",
         ...     roles=["clusterAdmin"]
         ... )
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        ...     auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
         ...     "user:someuser",
         ...     roles=["repoWriter"]
         ... )
@@ -167,7 +167,7 @@ class AuthMixin:
 
         Returns
         -------
-        auth_proto.GetOIDCLoginResponse
+        auth_pb2.GetOIDCLoginResponse
             A protobuf object with the login configuration information.
         """
         message = auth_pb2.GetOIDCLoginRequest()
@@ -187,7 +187,7 @@ class AuthMixin:
             A token that can be used for making authenticate requests.
         """
         message = auth_pb2.AuthenticateRequest(oidc_state=oidc_state)
-        return self.__stub.Authorize(message).pach_token
+        return self.__stub.Authenticate(message).pach_token
 
     def authenticate_id_token(self, id_token: str) -> str:
         """Authenticates a user to the Pachyderm cluster using an ID token
@@ -205,7 +205,7 @@ class AuthMixin:
             A token that can be used for making authenticate requests.
         """
         message = auth_pb2.AuthenticateRequest(id_token=id_token)
-        return self.__stub.Authorize(message).pach_token
+        return self.__stub.Authenticate(message).pach_token
 
     def authorize(
         self,
@@ -216,14 +216,14 @@ class AuthMixin:
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             The resource the user wants to test on.
-        permissions : List[auth_proto.Permission], optional
+        permissions : List[auth_pb2.Permission], optional
             The list of permissions the users wants to test.
 
         Returns
         -------
-        auth_proto.AuthorizeResponse
+        auth_pb2.AuthorizeResponse
             A protobuf object that indicates whether the user/principal had all
             the inputted permissions on the resource, which permissions the
             user had, which permissions the user lacked, and the name of the
@@ -232,8 +232,8 @@ class AuthMixin:
         Examples
         --------
         >>> client.authorize(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
-        ...     [auth_proto.Permission.REPO_READ]
+        ...     auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
+        ...     [auth_pb2.Permission.REPO_READ]
         ... )
         authorized: true
         satisfied: REPO_READ
@@ -247,7 +247,7 @@ class AuthMixin:
 
         Returns
         -------
-        auth_proto.WhoAmIResponse
+        auth_pb2.WhoAmIResponse
             A protobuf object that returns the username and expiration for the
             token used.
         """
@@ -261,12 +261,12 @@ class AuthMixin:
 
         Parameters
         ----------
-        permission : auth_proto.Permission
+        permission : auth_pb2.Permission
             The Permission enum to check for.
 
         Returns
         -------
-        List[auth_proto.Role]
+        List[auth_pb2.Role]
             A list of Role protobuf objects that all have the specified
             permission.
 
@@ -274,7 +274,7 @@ class AuthMixin:
         --------
         All available permissions can be found in auth proto Permissions enum
 
-        >>> roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+        >>> roles = client.get_roles_for_permission(auth_pb2.Permission.REPO_READ)
 
         .. # noqa: W505
         """

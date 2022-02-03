@@ -34,7 +34,7 @@ class LicenseMixin:
 
         Returns
         -------
-        enterprise_proto.TokenInfo
+        enterprise_pb2.TokenInfo
             A protobuf object that has the expiration for the current token.
             Field will be unset if there is no current token.
         """
@@ -72,7 +72,7 @@ class LicenseMixin:
 
         Returns
         -------
-        license_proto.AddClusterResponse
+        license_pb2.AddClusterResponse
             A protobuf object that returns the `secret`.
         """
         message = license_pb2.AddClusterRequest(
@@ -129,7 +129,7 @@ class LicenseMixin:
 
         Returns
         -------
-        List[license_proto.ClusterStatus]
+        List[license_pb2.ClusterStatus]
             A list of protobuf objects that return info on a cluster.
         """
         message = license_pb2.ListClustersRequest()
@@ -140,7 +140,7 @@ class LicenseMixin:
 
         Returns
         -------
-        license_proto.GetActivationCodeResponse
+        license_pb2.GetActivationCodeResponse
             A protobuf object that returns a state enum, info on the token,
             and the activation code.
         """
@@ -165,7 +165,7 @@ class LicenseMixin:
 
         Returns
         -------
-        List[license_proto.UserClusterInfo]
+        List[license_pb2.UserClusterInfo]
             A list of protobuf objects that return info on clusters
             available to the users.
         """

@@ -29,22 +29,22 @@ class TransactionMixin:
 
         Parameters
         ----------
-        requests : List[transaction_proto.TransactionRequest]
+        requests : List[transaction_pb2.TransactionRequest]
             A list of ``TransactionRequest`` protobufs. Each protobuf must
             only have one field set.
 
         Returns
         -------
-        transaction_proto.TransactionInfo
+        transaction_pb2.TransactionInfo
             A protobuf object with info on the transaction.
 
         Examples
         --------
         >>> # Deletes one repo and creates a branch in another repo atomically
         >>> client.batch_transaction([
-            transaction_proto.TransactionRequest(delete_repo=pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name="foo"))),
-            transaction_proto.TransactionRequest(create_branch=pfs_proto.CreateBranchRequest(branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name="bar", type="user"), name="staging"
+            transaction_pb2.TransactionRequest(delete_repo=pfs_pb2.DeleteRepoRequest(repo=pfs_pb2.Repo(name="foo"))),
+            transaction_pb2.TransactionRequest(create_branch=pfs_pb2.CreateBranchRequest(branch=pfs_pb2.Branch(
+                repo=pfs_pb2.Repo(name="bar", type="user"), name="staging"
             )))
         ])
         """
@@ -56,7 +56,7 @@ class TransactionMixin:
 
         Returns
         -------
-        transaction_proto.Transaction
+        transaction_pb2.Transaction
             A protobuf object that represents the transaction.
 
         Examples
@@ -75,12 +75,12 @@ class TransactionMixin:
 
         Parameters
         ----------
-        transaction : Union[str, transaction_proto.Transaction]
+        transaction : Union[str, transaction_pb2.Transaction]
             The ID or protobuf object representing the transaction.
 
         Returns
         -------
-        transaction_proto.TransactionInfo
+        transaction_pb2.TransactionInfo
             A protobuf object with info on the transaction.
 
         Examples
@@ -103,7 +103,7 @@ class TransactionMixin:
 
         Parameters
         ----------
-        transaction : Union[str, transaction_proto.Transaction]
+        transaction : Union[str, transaction_pb2.Transaction]
             The ID or protobuf object representing the transaction.
 
         Examples
@@ -130,7 +130,7 @@ class TransactionMixin:
 
         Returns
         -------
-        List[transaction_proto.TransactionInfo]
+        List[transaction_pb2.TransactionInfo]
             A list of protobuf objects that contain info on a transaction.
         """
         message = transaction_pb2.ListTransactionRequest()
@@ -143,12 +143,12 @@ class TransactionMixin:
 
         Parameters
         ----------
-        transaction : Union[str, transaction_proto.Transaction]
+        transaction : Union[str, transaction_pb2.Transaction]
             The ID or protobuf object representing the transaction.
 
         Returns
         -------
-        transaction_proto.TransactionInfo
+        transaction_pb2.TransactionInfo
             A protobuf object with info on the transaction.
 
         Examples
@@ -170,7 +170,7 @@ class TransactionMixin:
 
         Yields
         -------
-        transaction_proto.Transaction
+        transaction_pb2.Transaction
             A protobuf object that represents a transaction.
 
         Examples

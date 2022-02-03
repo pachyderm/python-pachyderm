@@ -18,7 +18,7 @@ class VersionMixin:
 
         Returns
         -------
-        version_proto.Version
+        version_pb2.Version
             A protobuf object with info on the pachd version.
         """
         message = empty_pb2.Empty()

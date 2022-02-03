@@ -22,7 +22,7 @@ class IdentityMixin:
 
         Parameters
         ----------
-        config : identity_proto.IdentityServerConfig
+        config : identity_pb2.IdentityServerConfig
             A protobuf object that is the configuration for the identity web
             server.
         """
@@ -34,7 +34,7 @@ class IdentityMixin:
 
         Returns
         -------
-        identity_proto.IdentityServerConfig
+        identity_pb2.IdentityServerConfig
             A protobuf object that holds configuration info (issuer and ID
             token expiry) for the identity web server.
         """
@@ -46,7 +46,7 @@ class IdentityMixin:
 
         Parameters
         ----------
-        connector : identity_proto.IDPConnector
+        connector : identity_pb2.IDPConnector
             A protobuf object that represents a connection to an identity
             provider.
         """
@@ -58,7 +58,7 @@ class IdentityMixin:
 
         Returns
         -------
-        List[identity_proto.IDPConnector]
+        List[identity_pb2.IDPConnector]
             A list of probotuf objects that return info on the connector ID,
             name, type, config version, and configuration of the upstream IDP
             connector.
@@ -71,7 +71,7 @@ class IdentityMixin:
 
         Parameters
         ----------
-        connector : identity_proto.IDPConnector
+        connector : identity_pb2.IDPConnector
             A protobuf object that represents a connection to an identity
             provider.
         """
@@ -88,7 +88,7 @@ class IdentityMixin:
 
         Returns
         -------
-        identity_proto.IDPConnector
+        identity_pb2.IDPConnector
             A protobuf object that returns info on the connector ID, name,
             type, config version, and configuration of the upstream IDP
             connector.
@@ -114,12 +114,12 @@ class IdentityMixin:
 
         Parameters
         ----------
-        client : identity_proto.OIDCClient
+        client : identity_pb2.OIDCClient
             A protobuf object representing an OIDC client.
 
         Returns
         -------
-        identity_proto.OIDCClient
+        identity_pb2.OIDCClient
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
@@ -131,7 +131,7 @@ class IdentityMixin:
 
         Parameters
         ----------
-        client : identity_proto.OIDCClient
+        client : identity_pb2.OIDCClient
             A protobuf object representing an OIDC client.
 
         """
@@ -148,7 +148,7 @@ class IdentityMixin:
 
         Returns
         -------
-        identity_proto.OIDCClient
+        identity_pb2.OIDCClient
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
@@ -171,7 +171,7 @@ class IdentityMixin:
 
         Returns
         -------
-        List[identity_proto.OIDCClient]
+        List[identity_pb2.OIDCClient]
             A list of protobuf objects that return a client with info on the
             client ID, name, secret, and lists of redirect URIs and trusted
             peers.

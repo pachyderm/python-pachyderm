@@ -36,7 +36,7 @@ class EnterpriseMixin:
 
         Returns
         -------
-        enterprise_proto.GetStateResponse
+        enterprise_pb2.GetStateResponse
             A protobuf object that returns a state enum, info on the token,
             and an empty activation code.
         """
@@ -54,7 +54,7 @@ class EnterpriseMixin:
 
         Returns
         -------
-        enterprise_proto.GetActivationCodeResponse
+        enterprise_pb2.GetActivationCodeResponse
             A protobuf object that returns a state enum, info on the token,
             and the activation code.
         """

@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 import grpc
 from google.protobuf import empty_pb2
 
@@ -20,7 +18,7 @@ class AdminMixin:
 
         Returns
         -------
-        admin_proto.ClusterInfo
+        admin_pb2.ClusterInfo
             A protobuf object with info on the cluster.
         """
         message = empty_pb2.Empty()
