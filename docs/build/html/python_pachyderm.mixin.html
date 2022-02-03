@@ -1495,7 +1495,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
 <dd><p>File-like objects containing content of a file stored in PFS.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># client.get_file() returns a PFSFile</span>
@@ -2602,6 +2602,119 @@ function waited on.</p>
 </div>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSTarFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSTarFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileobj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tarinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dereference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_zeros</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'surrogateescape'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pax_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorlevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copybufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSTarFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSTarFile" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>errors</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code>(name[, arcname, recursive, filter])</p></td>
+<td><p>Add the file <a href="#id1"><span class="problematic" id="id2">`</span></a>name' to the archive. <a href="#id3"><span class="problematic" id="id4">`</span></a>name' may be any type of file (directory, fifo, symbolic link, etc.). If given, <a href="#id5"><span class="problematic" id="id6">`</span></a>arcname' specifies an alternative name for the file in the archive. Directories are added recursively by default. This can be avoided by setting <a href="#id7"><span class="problematic" id="id8">`</span></a>recursive' to False. <a href="#id9"><span class="problematic" id="id10">`</span></a>filter' is a function that expects a TarInfo object argument and returns the changed TarInfo object, if it returns None the TarInfo object will be excluded from the archive.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">addfile</span></code>(tarinfo[, fileobj])</p></td>
+<td><p>Add the TarInfo object <a href="#id11"><span class="problematic" id="id12">`</span></a>tarinfo' to the archive. If <a href="#id13"><span class="problematic" id="id14">`</span></a>fileobj' is given, it should be a binary file, and tarinfo.size bytes are read from it and added to the archive. You can create TarInfo objects directly, or by using gettarinfo().</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bz2open</span></code>(name[, mode, fileobj, compresslevel])</p></td>
+<td><p>Open bzip2 compressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chmod</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Set file permissions of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chown</span></code>(tarinfo, targetpath, numeric_owner)</p></td>
+<td><p>Set owner of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Close the TarFile.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract</span></code>(member[, path, set_attrs, numeric_owner])</p></td>
+<td><p>Extract a member from the archive to the current working directory, using its full name.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractall</span></code>([path, members, numeric_owner])</p></td>
+<td><p>Extract all members from the archive to the current working directory and set owner, modification time and permissions on directories afterwards.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractfile</span></code>(member)</p></td>
+<td><p>Extract a member from the archive as a file object. <a href="#id15"><span class="problematic" id="id16">`</span></a>member' may be a filename or a TarInfo object. If <a href="#id17"><span class="problematic" id="id18">`</span></a>member' is a regular file or a link, an io.BufferedReader object is returned. For all other existing members, None is returned. If <a href="#id19"><span class="problematic" id="id20">`</span></a>member' does not appear in the archive, KeyError is raised.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getmember</span></code>(name)</p></td>
+<td><p>Return a TarInfo object for member <a href="#id21"><span class="problematic" id="id22">`</span></a>name'. If <a href="#id23"><span class="problematic" id="id24">`</span></a>name' can not be found in the archive, KeyError is raised. If a member occurs more than once in the archive, its last occurrence is assumed to be the most up-to-date version.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getmembers</span></code>()</p></td>
+<td><p>Return the members of the archive as a list of TarInfo objects.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getnames</span></code>()</p></td>
+<td><p>Return the members of the archive as a list of their names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gettarinfo</span></code>([name, arcname, fileobj])</p></td>
+<td><p>Create a TarInfo object from the result of os.stat or equivalent on an existing file. The file is either named by <a href="#id25"><span class="problematic" id="id26">`</span></a>name', or specified as a file object <a href="#id27"><span class="problematic" id="id28">`</span></a>fileobj' with a file descriptor. If given, <a href="#id29"><span class="problematic" id="id30">`</span></a>arcname' specifies an alternative name for the file in the archive, otherwise, the name is taken from the 'name' attribute of 'fileobj', or the 'name' argument. The name should be a text string.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gzopen</span></code>(name[, mode, fileobj, compresslevel])</p></td>
+<td><p>Open gzip compressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>([verbose, members])</p></td>
+<td><p>Print a table of contents to sys.stdout. If <a href="#id31"><span class="problematic" id="id32">`</span></a>verbose' is False, only the names of the members are printed. If it is True, an <a href="#id33"><span class="problematic" id="id34">`</span></a>ls -l'-like output is produced. <a href="#id35"><span class="problematic" id="id36">`</span></a>members' is optional and must be a subset of the list returned by getmembers().</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makedev</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a character or block device called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makedir</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a directory called targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makefifo</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a fifo called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makefile</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a file called targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makelink</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a (symbolic) link called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeunknown</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a file from a TarInfo object with an unknown type at targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">next</span></code>()</p></td>
+<td><p>Return the next member of the archive as a TarInfo object, when TarFile is opened for reading.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open</span></code>([name, mode, fileobj, bufsize])</p></td>
+<td><p>Open a tar archive for reading, writing or appending.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tarinfo</span></code></p></td>
+<td><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">tarfile.TarInfo</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">taropen</span></code>(name[, mode, fileobj])</p></td>
+<td><p>Open uncompressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">utime</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Set modification time of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xzopen</span></code>(name[, mode, fileobj, preset])</p></td>
+<td><p>Open lzma compressed tar archive name for reading or writing.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>fileobject</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </section>
