@@ -28,9 +28,15 @@ done
 
 # generate protobuf and gRPC code from proto files
 # should result in {}_pb2.py and {}_pb2_grpc.py per proto
-find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_betterproto_out=${BETTERPROTO_OUTDIR} --python_out=. --grpc_python_out=.
-find ${OUTDIR} -name '*.proto' | xargs rm
+find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
 
+# Refactor IDP -> Idp, OIDC -> Oidc (for BetterProto)
+sed -i 's/IDP/Idp/g' ${OUTDIR}/identity/identity.proto
+sed -i 's/OIDC/Oidc/g' ${OUTDIR}/identity/identity.proto
+find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_betterproto_out=${BETTERPROTO_OUTDIR}
+
+# Clean up
+find ${OUTDIR} -name '*.proto' | xargs rm
 find ${OUTDIR} -type d -exec touch {}/__init__.py \;
 
 tar cf - ${OUTDIR} ${BETTERPROTO_OUTDIR}

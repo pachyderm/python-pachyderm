@@ -25,7 +25,7 @@ from python_pachyderm.proto.v2.transaction import (
 from python_pachyderm.proto.v2.version.versionpb import version_pb2 as version_proto
 from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as version_grpc
 
-MB = 1024 ** 2
+MB = 1024**2
 MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
 GRPC_CHANNEL_OPTIONS = [
     ("grpc.max_receive_message_length", MAX_RECEIVE_MESSAGE_SIZE),

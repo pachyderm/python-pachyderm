@@ -37,6 +37,9 @@ class ProtoIterator:
     def __iter__(self):
         return self
 
+    def cancel(self) -> None:
+        self.stream.cancel()
+
 
 # converts enum values (ints) to their actual enum objects
 def _show_enums(bp_obj: betterproto.Message):
