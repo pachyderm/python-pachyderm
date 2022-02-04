@@ -89,11 +89,11 @@ def test_stop_job():
     job_id = sandbox.wait()
 
     sandbox.client.stop_job(job_id, pipeline_name)
-    # # This is necessary because `StopJob` does not wait for the job to be
-    # # killed before returning a result.
-    # # TODO: remove once this is fixed:
-    # # https://github.com/pachyderm/pachyderm/issues/3856
-    # time.sleep(1)
+    # This is necessary because `StopJob` does not wait for the job to be
+    # killed before returning a result.
+    # TODO: remove once this is fixed:
+    # https://github.com/pachyderm/pachyderm/issues/3856
+    time.sleep(1)
     job_info = list(sandbox.client.inspect_job(job_id, pipeline_name))
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
