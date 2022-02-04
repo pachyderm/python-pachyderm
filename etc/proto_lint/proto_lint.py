@@ -91,6 +91,7 @@ BLACKLISTED_METHODS = {
         "list_commit_set",
         "inspect_commit_set",
         "run_load_test_default",
+        "check_storage",
     ],
     Service.PPS: [
         # ignore these
