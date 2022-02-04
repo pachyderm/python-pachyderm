@@ -1,10 +1,12 @@
 # Changelog
 
-## 7.1.1 (2022-02-03)
-- Fix bug where only 20MiB of data could be retrieved with `client.get_file`
+## 7.2.0 (2022-02-03)
 - Update protobuf files to v2.0.5
 - The experimental module now uses `betterproto`
 - `python_pachyderm.ExperimentalClient()` is now `python_pachyderm.experimental.Client()`
+
+## 7.1.1 (2022-02-03)
+- Fix bug where only 20MiB of data could be retrieved with `client.get_file`
 
 ## 7.1.0 (2021-11-18)
 
