@@ -8,15 +8,18 @@ from pathlib import Path
 from typing import NamedTuple
 
 import pytest
+from betterproto import BytesValue
 
 import python_pachyderm
-from python_pachyderm import Client, PFSFile
-from python_pachyderm.service import pfs_proto, MAX_RECEIVE_MESSAGE_SIZE
-from tests import util
+from python_pachyderm import PFSFile
+from python_pachyderm.experimental import Client
+from python_pachyderm.experimental.service import pfs_proto
+from python_pachyderm.service import MAX_RECEIVE_MESSAGE_SIZE
+from tests.experimental import util
 
 
 def sandbox(test_name):
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     repo_name = util.create_test_repo(client, test_name)
     return client, repo_name
 
@@ -38,14 +41,14 @@ def test_delete_repo():
 
 
 def test_delete_non_existent_repo():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     orig_repo_count = len(list(client.list_repo()))
     client.delete_repo("BOGUS_NAME")
     assert len(list(client.list_repo())) == orig_repo_count
 
 
 def test_delete_all_repos():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
 
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
     util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
@@ -136,15 +139,11 @@ def test_finish_commit(commit_arg):
     assert commit_infos[0].commit.id == commit.id
 
     commit_match_count = len(
-        [
-            c
-            for c in commit_infos
-            if c.commit.id == commit.id and c.finished.seconds != 0
-        ]
+        [c for c in commit_infos if c.commit.id == commit.id and c.finished]
     )
     assert commit_match_count == 1
-    assert commit_infos[0].finished.seconds != 0
-    assert commit_infos[0].finished.nanos != 0
+    assert commit_infos[0].finished > commit_infos[0].started
+    assert commit_infos[0].finished > commit_infos[0].finishing
 
 
 def test_commit_context_mgr():
@@ -516,7 +515,7 @@ def test_subscribe_commit():
 
 
 def test_list_commit():
-    python_pachyderm.Client().delete_all_repos()
+    python_pachyderm.experimental.Client().delete_all_repos()
 
     client, repo_name1 = sandbox("list_commit1")
 
@@ -660,7 +659,7 @@ def test_inspect_branch():
 
 
 def test_fsck():
-    client = python_pachyderm.Client()
+    client = python_pachyderm.experimental.Client()
     assert len(list(client.fsck())) == 0
 
 
@@ -698,34 +697,43 @@ def test_path_exists():
         assert not client.path_exists(("fake_repo", "master"), "dir")
 
 
-def test_modify_file_client():
-    client, repo_name = sandbox("modify_file_client")
+def test_mount():
+    client, repo_name = sandbox("mount")
+    repo2_name = util.create_test_repo(client, "mount2")
 
-    # test on open commit
-    c = client.start_commit(repo_name, "master")
-    with client.modify_file_client(c) as mfc:
-        mfc.put_file_from_bytes("/file1.txt", b"DATA1")
-        mfc.put_file_from_fileobj("/file2.txt", BytesIO(b"DATA2"))
+    with client.commit(repo_name, "master") as c:
+        client.put_file_bytes(c, "/file1.txt", b"DATA1")
+    with client.commit(repo2_name, "master") as c2:
+        client.put_file_bytes(c2, "/file2.txt", b"DATA2")
 
-    client.finish_commit(c)
-    client.wait_commit(c)
+    # Mount all repos
+    client.mount("mount_a")
+    assert open(f"mount_a/{repo_name}/file1.txt").read() == "DATA1"
+    assert open(f"mount_a/{repo2_name}/file2.txt").read() == "DATA2"
 
-    assert len(list(client.list_commit(repo_name))) == 1
-    assert len(list(client.list_file(c, "/"))) == 2
+    # Mount one repo
+    client.mount("mount_b", [repo2_name])
+    assert open(f"mount_b/{repo2_name}/file2.txt").read() == "DATA2"
 
-    # test on unopened commit
-    c2 = (repo_name, "master")
-    with client.modify_file_client(c2) as mfc:
-        mfc.delete_file("/file2.txt")
-        mfc.copy_file(c, "/file1.txt", "/file3.txt")
+    client.unmount(all_mounts=True)
+    assert not os.path.exists(f"mount_a/{repo2_name}/file2.txt")
+    assert not os.path.exists(f"mount_b/{repo2_name}/file2.txt")
 
-    client.wait_commit(c2)
+    with client.commit(repo_name, "dev") as c3:
+        client.put_file_bytes(c3, "/file3.txt", b"DATA3")
 
-    assert len(list(client.list_commit(repo_name))) == 2
+    # Mount one repo
+    client.mount("mount_c", [f"{repo_name}@dev"])
+    assert open(f"mount_c/{repo_name}/file3.txt").read() == "DATA3"
 
-    files = list(client.list_file(c2, "/"))
-    assert len(files) == 2
-    assert "/file3.txt" in [f.file.path for f in files]
+    client.unmount("mount_c")
+    assert not os.path.exists(f"mount_c/{repo_name}/file3.txt")
+
+    # Test runtime error
+    Path("mount_d").mkdir()
+    Path("mount_d/file.txt").touch()
+    with pytest.raises(RuntimeError, match="must be empty to mount"):
+        client.mount("mount_d")
 
 
 @pytest.fixture(name="repo")
@@ -747,7 +755,7 @@ class TestPFSFile:
     @staticmethod
     def test_get_large_file(client: Client, repo: str):
         """Test that a large file (requires >1 gRPC message to stream)
-        is successfully streamed in it's entirety.
+        is successfully streamed in it's entirety
         """
         # Arrange
         data = os.urandom(int(MAX_RECEIVE_MESSAGE_SIZE * 1.1))
@@ -773,7 +781,6 @@ class TestPFSFile:
     def test_buffered_data(client: Client, repo: str):
         """Test that data gets buffered as expected."""
         # Arrange
-        BytesValue = NamedTuple("BytesValue", [("value", bytes)])
         stream_items = [b"a", b"bc", b"def", b"ghij", b"klmno"]
         stream = (BytesValue(value=item) for item in stream_items)
 
@@ -818,8 +825,8 @@ class TestPFSFile:
 
         # Act & Assert
         with client.get_file(commit, pfs_file) as file:
-            assert file._stream.is_active()
-        assert not file._stream.is_active()
+            assert file._stream.stream.is_active()
+        assert not file._stream.stream.is_active()
 
     @staticmethod
     def test_cancelled_stream(client: Client, repo: str):
