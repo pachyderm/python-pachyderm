@@ -1,13 +1,19 @@
 from typing import Dict, List
 
-from grpc import RpcError
+import grpc
 
 from python_pachyderm.errors import AuthServiceNotActivated
-from python_pachyderm.service import Service, auth_proto
+from python_pachyderm.proto.v2.auth import auth_pb2, auth_pb2_grpc
 
 
 class AuthMixin:
     """A mixin for auth-related functionality."""
+
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = auth_pb2_grpc.APIStub(self._channel)
+        super().__init__()
 
     def activate_auth(self, root_token: str = None) -> str:
         """Activates auth on the cluster. Returns the root token, an
@@ -24,7 +30,8 @@ class AuthMixin:
         str
             A token used as the root user login token.
         """
-        return self._req(Service.AUTH, "Activate", root_token=root_token).pach_token
+        message = auth_pb2.ActivateRequest(root_token=root_token)
+        return self.__stub.Activate(message).pach_token
 
     def deactivate_auth(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
@@ -34,58 +41,61 @@ class AuthMixin:
         ------
         AuthServiceNotActivated
         """
+        message = auth_pb2.DeactivateRequest()
         try:
-            self._req(Service.AUTH, "Deactivate")
-        except RpcError as err:
+            self.__stub.Deactivate(message)
+        except grpc.RpcError as err:
             raise AuthServiceNotActivated.try_from(err)
 
-    def get_auth_configuration(self) -> auth_proto.OIDCConfig:
+    def get_auth_configuration(self) -> auth_pb2.OIDCConfig:
         """Gets the auth configuration.
 
         Returns
         -------
-        auth_proto.OIDCConfig
+        auth_pb2.OIDCConfig
             A protobuf object with auth configuration information.
         """
-        return self._req(Service.AUTH, "GetConfiguration").configuration
+        message = auth_pb2.GetConfigurationRequest()
+        return self.__stub.GetConfiguration(message).configuration
 
-    def set_auth_configuration(self, configuration: auth_proto.OIDCConfig) -> None:
+    def set_auth_configuration(self, configuration: auth_pb2.OIDCConfig) -> None:
         """Sets the auth configuration.
 
         Parameters
         ----------
-        configuration : auth_proto.OIDCConfig
+        configuration : auth_pb2.OIDCConfig
             A protobuf object with auth configuration information.
 
         Examples
         --------
-        >>> client.set_auth_configuration(auth_proto.OIDCConfig(
+        >>> client.set_auth_configuration(auth_pb2.OIDCConfig(
         ...     issuer="http://localhost:1658",
         ...     client_id="client",
         ...     client_secret="secret",
         ...     redirect_uri="http://test.example.com",
         ... ))
         """
-        self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
+        message = auth_pb2.SetConfigurationRequest(configuration=configuration)
+        self.__stub.SetConfiguration(message)
 
     def get_role_binding(
-        self, resource: auth_proto.Resource
-    ) -> Dict[str, auth_proto.Roles]:
+        self, resource: auth_pb2.Resource
+    ) -> Dict[str, auth_pb2.Roles]:
         """Returns the current set of role bindings to the resource specified.
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             A protobuf object representing the resource being checked.
 
         Returns
         -------
-        Dict[str, auth_proto.Roles]
+        Dict[str, auth_pb2.Roles]
             A dictionary mapping the principals to the roles they have.
 
         Examples
         --------
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.CLUSTER))
+        >>> client.get_role_binding(auth_pb2.Resource(type=auth_pb2.CLUSTER))
         {
             'robot:someuser': roles {
                 key: "clusterAdmin"
@@ -97,7 +107,7 @@ class AuthMixin:
             }
         }
         ...
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.REPO, name="foobar"))
+        >>> client.get_role_binding(auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"))
         {
             'user:person_a': roles {
                 key: "repoWriter"
@@ -111,18 +121,17 @@ class AuthMixin:
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.AUTH, "GetRoleBinding", resource=resource
-        ).binding.entries
+        message = auth_pb2.GetRoleBindingRequest(resource=resource)
+        return self.__stub.GetRoleBinding(message).binding.entries
 
     def modify_role_binding(
-        self, resource: auth_proto.Resource, principal: str, roles: List[str] = None
+        self, resource: auth_pb2.Resource, principal: str, roles: List[str] = None
     ) -> None:
         """Sets the roles for a given principal on a resource.
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             A protobuf object representing the resource to grant the roles on.
         principal : str
             The principal to grant the roles for.
@@ -136,33 +145,33 @@ class AuthMixin:
         https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27
 
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.CLUSTER),
+        ...     auth_pb2.Resource(type=auth_pb2.CLUSTER),
         ...     "user:someuser",
         ...     roles=["clusterAdmin"]
         ... )
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        ...     auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
         ...     "user:someuser",
         ...     roles=["repoWriter"]
         ... )
         """
-        self._req(
-            Service.AUTH,
-            "ModifyRoleBinding",
+        message = auth_pb2.ModifyRoleBindingRequest(
             resource=resource,
             principal=principal,
             roles=roles,
         )
+        self.__stub.ModifyRoleBinding(message)
 
-    def get_oidc_login(self) -> auth_proto.GetOIDCLoginResponse:
+    def get_oidc_login(self) -> auth_pb2.GetOIDCLoginResponse:
         """Gets the OIDC login configuration.
 
         Returns
         -------
-        auth_proto.GetOIDCLoginResponse
+        auth_pb2.GetOIDCLoginResponse
             A protobuf object with the login configuration information.
         """
-        return self._req(Service.AUTH, "GetOIDCLogin")
+        message = auth_pb2.GetOIDCLoginRequest()
+        return self.__stub.GetOIDCLogin(message)
 
     def authenticate_oidc(self, oidc_state: str) -> str:
         """Authenticates a user to the Pachyderm cluster via OIDC.
@@ -177,7 +186,8 @@ class AuthMixin:
         str
             A token that can be used for making authenticate requests.
         """
-        return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
+        message = auth_pb2.AuthenticateRequest(oidc_state=oidc_state)
+        return self.__stub.Authenticate(message).pach_token
 
     def authenticate_id_token(self, id_token: str) -> str:
         """Authenticates a user to the Pachyderm cluster using an ID token
@@ -194,25 +204,26 @@ class AuthMixin:
         str
             A token that can be used for making authenticate requests.
         """
-        return self._req(Service.AUTH, "Authenticate", id_token=id_token).pach_token
+        message = auth_pb2.AuthenticateRequest(id_token=id_token)
+        return self.__stub.Authenticate(message).pach_token
 
     def authorize(
         self,
-        resource: auth_proto.Resource,
-        permissions: List["auth_proto.Permission"] = None,
-    ) -> auth_proto.AuthorizeResponse:
+        resource: auth_pb2.Resource,
+        permissions: List["auth_pb2.Permission"] = None,
+    ) -> auth_pb2.AuthorizeResponse:
         """Tests a list of permissions that the user might have on a resource.
 
         Parameters
         ----------
-        resource : auth_proto.Resource
+        resource : auth_pb2.Resource
             The resource the user wants to test on.
-        permissions : List[auth_proto.Permission], optional
+        permissions : List[auth_pb2.Permission], optional
             The list of permissions the users wants to test.
 
         Returns
         -------
-        auth_proto.AuthorizeResponse
+        auth_pb2.AuthorizeResponse
             A protobuf object that indicates whether the user/principal had all
             the inputted permissions on the resource, which permissions the
             user had, which permissions the user lacked, and the name of the
@@ -221,41 +232,41 @@ class AuthMixin:
         Examples
         --------
         >>> client.authorize(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
-        ...     [auth_proto.Permission.REPO_READ]
+        ...     auth_pb2.Resource(type=auth_pb2.REPO, name="foobar"),
+        ...     [auth_pb2.Permission.REPO_READ]
         ... )
         authorized: true
         satisfied: REPO_READ
         principal: "pach:root"
         """
-        return self._req(
-            Service.AUTH, "Authorize", resource=resource, permissions=permissions
-        )
+        message = auth_pb2.AuthorizeRequest(resource=resource, permissions=permissions)
+        return self.__stub.Authorize(message)
 
-    def who_am_i(self) -> auth_proto.WhoAmIResponse:
+    def who_am_i(self) -> auth_pb2.WhoAmIResponse:
         """Returns info about the user tied to this `Client`.
 
         Returns
         -------
-        auth_proto.WhoAmIResponse
+        auth_pb2.WhoAmIResponse
             A protobuf object that returns the username and expiration for the
             token used.
         """
-        return self._req(Service.AUTH, "WhoAmI")
+        message = auth_pb2.WhoAmIRequest()
+        return self.__stub.WhoAmI(message)
 
     def get_roles_for_permission(
-        self, permission: auth_proto.Permission
-    ) -> List[auth_proto.Role]:
+        self, permission: auth_pb2.Permission
+    ) -> List[auth_pb2.Role]:
         """Returns a list of all roles that have the specified permission.
 
         Parameters
         ----------
-        permission : auth_proto.Permission
+        permission : auth_pb2.Permission
             The Permission enum to check for.
 
         Returns
         -------
-        List[auth_proto.Role]
+        List[auth_pb2.Role]
             A list of Role protobuf objects that all have the specified
             permission.
 
@@ -263,13 +274,12 @@ class AuthMixin:
         --------
         All available permissions can be found in auth proto Permissions enum
 
-        >>> roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+        >>> roles = client.get_roles_for_permission(auth_pb2.Permission.REPO_READ)
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.AUTH, "GetRolesForPermission", permission=permission
-        ).roles
+        message = auth_pb2.GetRolesForPermissionRequest(permission=permission)
+        return self.__stub.GetRolesForPermission(message).roles
 
     def get_robot_token(self, robot: str, ttl: int = None) -> str:
         """Gets a new auth token for a robot user.
@@ -287,7 +297,8 @@ class AuthMixin:
         str
             The new auth token.
         """
-        return self._req(Service.AUTH, "GetRobotToken", robot=robot, ttl=ttl).token
+        message = auth_pb2.GetRobotTokenRequest(robot=robot, ttl=ttl)
+        return self.__stub.GetRobotToken(message).token
 
     def revoke_auth_token(self, token: str) -> None:
         """Revokes an auth token.
@@ -297,7 +308,8 @@ class AuthMixin:
         token : str
             The Pachyderm token being revoked.
         """
-        self._req(Service.AUTH, "RevokeAuthToken", token=token)
+        message = auth_pb2.RevokeAuthTokenRequest(token=token)
+        self.__stub.RevokeAuthToken(message)
 
     def set_groups_for_user(self, username: str, groups: List[str]) -> None:
         """Sets the group membership for a user.
@@ -315,7 +327,8 @@ class AuthMixin:
 
         .. # noqa: W505
         """
-        self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
+        message = auth_pb2.SetGroupsForUserRequest(username=username, groups=groups)
+        self.__stub.SetGroupsForUser(message)
 
     def modify_members(
         self, group: str, add: List[str] = None, remove: List[str] = None
@@ -339,13 +352,8 @@ class AuthMixin:
         ...     remove=["user:someuser"]
         ... )
         """
-        self._req(
-            Service.AUTH,
-            "ModifyMembers",
-            group=group,
-            add=add,
-            remove=remove,
-        )
+        message = auth_pb2.ModifyMembersRequest(group=group, add=add, remove=remove)
+        self.__stub.ModifyMembers(message)
 
     def get_groups(self) -> List[str]:
         """Gets a list of groups this user belongs to.
@@ -355,7 +363,8 @@ class AuthMixin:
         List[str]
             List of groups the user belongs to.
         """
-        return self._req(Service.AUTH, "GetGroups").groups
+        message = auth_pb2.GetGroupsRequest()
+        return self.__stub.GetGroups(message).groups
 
     def get_users(self, group: str) -> List[str]:
         """Gets users in a group.
@@ -370,7 +379,8 @@ class AuthMixin:
         List[str]
             All the users in the specified group.
         """
-        return self._req(Service.AUTH, "GetUsers", group=group).usernames
+        message = auth_pb2.GetUsersRequest(group=group)
+        return self.__stub.GetUsers(message).usernames
 
     def extract_auth_tokens(self):
         """This maps to an internal function that is only used for migration.

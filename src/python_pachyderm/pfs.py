@@ -1,8 +1,7 @@
 import re
 from typing import NamedTuple, Union
 
-from python_pachyderm.service import pfs_proto
-
+from python_pachyderm.proto.v2.pfs import pfs_pb2
 
 # copied from pachyderm/pachyderm
 valid_branch_re = re.compile(r"^[a-zA-Z0-9_-]+$")
@@ -17,19 +16,19 @@ class Commit(NamedTuple):
     id: str = None
     repo_type: str = "user"
 
-    def to_pb(self) -> pfs_proto.Commit:
-        """Converts itself into a ``pfs_proto.Commit``."""
-        return pfs_proto.Commit(
+    def to_pb(self) -> pfs_pb2.Commit:
+        """Converts itself into a ``pfs_pb2.Commit``."""
+        return pfs_pb2.Commit(
             id=self.id,
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=self.repo, type=self.repo_type),
+            branch=pfs_pb2.Branch(
+                repo=pfs_pb2.Repo(name=self.repo, type=self.repo_type),
                 name=self.branch,
             ),
         )
 
     @staticmethod
-    def from_pb(commit: pfs_proto.Commit) -> "Commit":
-        """Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`
+    def from_pb(commit: pfs_pb2.Commit) -> "Commit":
+        """Converts a ``pfs_pb2.Commit`` object into a :class:`.Commit`
         object.
         """
         return Commit(
@@ -40,7 +39,7 @@ class Commit(NamedTuple):
         )
 
 
-SubcommitType = Union[tuple, dict, Commit, pfs_proto.Commit]
+SubcommitType = Union[tuple, dict, Commit, pfs_pb2.Commit]
 """Composite type for a subcommit, a commit at the repo-level.
 
 Examples
@@ -59,12 +58,12 @@ Commit:
 >>> from python_pachyderm.pfs import Commit
 >>> sc = Commit(repo="foo", branch="master")
 
-pfs_proto.Commit:
+pfs_pb2.Commit:
 
 >>> from python_pachyderm.service import pfs_proto
->>> sc = pfs_proto.Commit(
-...     branch=pfs_proto.Branch(
-...         repo=pfs_proto.Repo(name="foo", type="user"),
+>>> sc = pfs_pb2.Commit(
+...     branch=pfs_pb2.Branch(
+...         repo=pfs_pb2.Repo(name="foo", type="user"),
 ...         name="master",
 ...     )
 ... )
@@ -73,7 +72,7 @@ pfs_proto.Commit:
 
 def commit_from(
     commit: SubcommitType = None,
-) -> pfs_proto.Commit:
+) -> pfs_pb2.Commit:
     """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a
@@ -86,10 +85,10 @@ def commit_from(
 
     Returns
     -------
-    pfs_proto.Commit
+    pfs_pb2.Commit
         A protobuf object that represents a commit.
     """
-    if isinstance(commit, pfs_proto.Commit):
+    if isinstance(commit, pfs_pb2.Commit):
         return commit
     if isinstance(commit, Commit):
         return commit.to_pb()

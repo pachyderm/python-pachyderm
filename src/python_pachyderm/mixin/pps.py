@@ -2,13 +2,22 @@ import json
 import base64
 from typing import Dict, Iterator, List, Union
 
-from python_pachyderm.pfs import commit_from, SubcommitType
-from python_pachyderm.service import Service, pps_proto, pfs_proto
+import grpc
 from google.protobuf import empty_pb2, duration_pb2
+
+from python_pachyderm.pfs import commit_from, SubcommitType
+from python_pachyderm.proto.v2.pfs import pfs_pb2
+from python_pachyderm.proto.v2.pps import pps_pb2, pps_pb2_grpc
 
 
 class PPSMixin:
     """A mixin for pps-related functionality."""
+
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = pps_pb2_grpc.APIStub(self._channel)
+        super().__init__()
 
     def inspect_job(
         self,
@@ -16,7 +25,7 @@ class PPSMixin:
         pipeline_name: str = None,
         wait: bool = False,
         details: bool = False,
-    ) -> Iterator[pps_proto.JobInfo]:
+    ) -> Iterator[pps_pb2.JobInfo]:
         """Inspects a job.
 
         Parameters
@@ -32,7 +41,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.JobInfo]
+        Iterator[pps_pb2.JobInfo]
             An iterator of protobuf objects that contain info on a subjob
             (jobs at the pipeline-level).
 
@@ -47,27 +56,21 @@ class PPSMixin:
         .. # noqa: W505
         """
         if pipeline_name is not None:
-            return iter(
-                [
-                    self._req(
-                        Service.PPS,
-                        "InspectJob",
-                        job=pps_proto.Job(
-                            pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-                        ),
-                        wait=wait,
-                        details=details,
-                    )
-                ]
-            )
-        else:
-            return self._req(
-                Service.PPS,
-                "InspectJobSet",
-                job_set=pps_proto.JobSet(id=job_id),
-                wait=wait,
+            message = pps_pb2.InspectJobRequest(
                 details=details,
+                job=pps_pb2.Job(
+                    pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id
+                ),
+                wait=wait,
             )
+            return iter([self.__stub.InspectJob(message)])
+        else:
+            message = pps_pb2.InspectJobSetRequest(
+                details=details,
+                job_set=pps_pb2.JobSet(id=job_id),
+                wait=wait,
+            )
+            return self.__stub.InspectJobSet(message)
 
     def list_job(
         self,
@@ -76,7 +79,7 @@ class PPSMixin:
         history: int = 0,
         details: bool = False,
         jqFilter: str = None,
-    ) -> Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]:
+    ) -> Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]:
         """Lists jobs.
 
         Parameters
@@ -107,7 +110,7 @@ class PPSMixin:
 
         Returns
         -------
-        Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]
+        Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]
             An iterator of protobuf objects that either contain info on a
             subjob (job at the pipeline-level), if `pipeline_name` was
             specified, or a job, if `pipeline_name` wasn't specified.
@@ -127,22 +130,17 @@ class PPSMixin:
                 input_commit = [commit_from(ic) for ic in input_commit]
             elif input_commit is not None:
                 input_commit = [commit_from(input_commit)]
-
-            return self._req(
-                Service.PPS,
-                "ListJob",
-                pipeline=pps_proto.Pipeline(name=pipeline_name),
-                input_commit=input_commit,
+            message = pps_pb2.ListJobRequest(
+                details=details,
                 history=history,
-                details=details,
+                input_commit=input_commit,
                 jqFilter=jqFilter,
+                pipeline=pps_pb2.Pipeline(name=pipeline_name),
             )
+            return self.__stub.ListJob(message)
         else:
-            return self._req(
-                Service.PPS,
-                "ListJobSet",
-                details=details,
-            )
+            message = pps_pb2.ListJobSetRequest(details=details)
+            return self.__stub.ListJobSet(message)
 
     def delete_job(self, job_id: str, pipeline_name: str) -> None:
         """Deletes a subjob (job at the pipeline-level).
@@ -154,13 +152,13 @@ class PPSMixin:
         pipeline_name : str
             The name of the pipeline.
         """
-        self._req(
-            Service.PPS,
-            "DeleteJob",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-            ),
+        message = pps_pb2.DeleteJobRequest(
+            job=pps_pb2.Job(
+                id=job_id,
+                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            )
         )
+        self.__stub.DeleteJob(message)
 
     def stop_job(self, job_id: str, pipeline_name: str, reason: str = None) -> None:
         """Stops a subjob (job at the pipeline-level).
@@ -174,18 +172,18 @@ class PPSMixin:
         reason : str, optional
             A reason for stopping the job.
         """
-        self._req(
-            Service.PPS,
-            "StopJob",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+        message = pps_pb2.StopJobRequest(
+            job=pps_pb2.Job(
+                id=job_id,
+                pipeline=pps_pb2.Pipeline(name=pipeline_name),
             ),
             reason=reason,
         )
+        self.__stub.StopJob(message)
 
     def inspect_datum(
         self, pipeline_name: str, job_id: str, datum_id: str
-    ) -> pps_proto.DatumInfo:
+    ) -> pps_pb2.DatumInfo:
         """Inspects a datum.
 
         Parameters
@@ -199,26 +197,26 @@ class PPSMixin:
 
         Returns
         -------
-        pps_proto.DatumInfo
+        pps_pb2.DatumInfo
             A protobuf object with info on the datum.
         """
-        return self._req(
-            Service.PPS,
-            "InspectDatum",
-            datum=pps_proto.Datum(
+        message = pps_pb2.InspectDatumRequest(
+            datum=pps_pb2.Datum(
                 id=datum_id,
-                job=pps_proto.Job(
-                    pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
+                job=pps_pb2.Job(
+                    id=job_id,
+                    pipeline=pps_pb2.Pipeline(name=pipeline_name),
                 ),
             ),
         )
+        return self.__stub.InspectDatum(message)
 
     def list_datum(
         self,
         pipeline_name: str = None,
         job_id: str = None,
-        input: pps_proto.Input = None,
-    ) -> Iterator[pps_proto.DatumInfo]:
+        input: pps_pb2.Input = None,
+    ) -> Iterator[pps_pb2.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
 
@@ -228,39 +226,37 @@ class PPSMixin:
             The name of the pipeline.
         job_id : str, optional
             The ID of a job.
-        input : pps_proto.Input, optional
+        input : pps_pb2.Input, optional
             A protobuf object that filters the datums returned. The datums
             listed are ones that would be run if a pipeline was created with
             the provided input.
 
         Returns
         -------
-        Iterator[pps_proto.DatumInfo]
+        Iterator[pps_pb2.DatumInfo]
             An iterator of protobuf objects that contain info on a datum.
 
         Examples
         --------
         >>> # See hypothetical datums with specified input cross
-        >>> datums = list(client.list_datum(input=pps_proto.Input(
-        ...     pfs=pps_proto.PFSInput(repo="foo", branch="master", glob="/*"),
+        >>> datums = list(client.list_datum(input=pps_pb2.Input(
+        ...     pfs=pps_pb2.PFSInput(repo="foo", branch="master", glob="/*"),
         ...     cross=[
-        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="bar", branch="master", glob="/")),
-        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo="baz", branch="master", glob="/*/*")),
+        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo="bar", branch="master", glob="/")),
+        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo="baz", branch="master", glob="/*/*")),
         ...     ]
         ... )))
 
         .. # noqa: W505
         """
-        req = pps_proto.ListDatumRequest()
+        message = pps_pb2.ListDatumRequest()
         if pipeline_name is not None and job_id is not None:
-            req.job.CopyFrom(
-                pps_proto.Job(
-                    pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-                )
+            message.job.CopyFrom(
+                pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id)
             )
         else:
-            req.input.CopyFrom(input)
-        return self._req(Service.PPS, "ListDatum", req=req)
+            message.input.CopyFrom(input)
+        return self.__stub.ListDatum(message)
 
     def restart_datum(
         self, pipeline_name: str, job_id: str, data_filters: List[str] = None
@@ -277,42 +273,39 @@ class PPSMixin:
             A list of paths or hashes of datums that filter which datums are
             restarted.
         """
-        self._req(
-            Service.PPS,
-            "RestartDatum",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-            ),
+        message = pps_pb2.RestartDatumRequest(
             data_filters=data_filters,
+            job=pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id),
         )
+        self.__stub.RestartDatum(message)
 
     def create_pipeline(
         self,
         pipeline_name: str,
-        transform: pps_proto.Transform,
-        parallelism_spec: pps_proto.ParallelismSpec = None,
-        egress: pps_proto.Egress = None,
+        transform: pps_pb2.Transform,
+        parallelism_spec: pps_pb2.ParallelismSpec = None,
+        egress: pps_pb2.Egress = None,
         reprocess_spec: str = None,
         update: bool = False,
         output_branch_name: str = None,
         s3_out: bool = False,
-        resource_requests: pps_proto.ResourceSpec = None,
-        resource_limits: pps_proto.ResourceSpec = None,
-        sidecar_resource_limits: pps_proto.ResourceSpec = None,
-        input: pps_proto.Input = None,
+        resource_requests: pps_pb2.ResourceSpec = None,
+        resource_limits: pps_pb2.ResourceSpec = None,
+        sidecar_resource_limits: pps_pb2.ResourceSpec = None,
+        input: pps_pb2.Input = None,
         description: str = None,
         reprocess: bool = False,
-        service: pps_proto.Service = None,
-        datum_set_spec: pps_proto.DatumSetSpec = None,
+        service: pps_pb2.Service = None,
+        datum_set_spec: pps_pb2.DatumSetSpec = None,
         datum_timeout: duration_pb2.Duration = None,
         job_timeout: duration_pb2.Duration = None,
         salt: str = None,
         datum_tries: int = 3,
-        scheduling_spec: pps_proto.SchedulingSpec = None,
+        scheduling_spec: pps_pb2.SchedulingSpec = None,
         pod_patch: str = None,
-        spout: pps_proto.Spout = None,
-        spec_commit: pfs_proto.Commit = None,
-        metadata: pps_proto.Metadata = None,
+        spout: pps_pb2.Spout = None,
+        spec_commit: pfs_pb2.Commit = None,
+        metadata: pps_pb2.Metadata = None,
         autoscaling: bool = False,
     ) -> None:
         """Creates a pipeline.
@@ -324,11 +317,11 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The pipeline name.
-        transform : pps_proto.Transform
+        transform : pps_pb2.Transform
             The image and commands run during pipeline execution.
-        parallelism_spec : pps_proto.ParallelismSpec, optional
+        parallelism_spec : pps_pb2.ParallelismSpec, optional
             Specifies how the pipeline is parallelized.
-        egress : pps_proto.Egress, optional
+        egress : pps_pb2.Egress, optional
             An external data store to publish the results of the pipeline to.
         reprocess_spec : str, optional
             Specifies how to handle already-processed datums.
@@ -338,15 +331,15 @@ class PPSMixin:
             The branch name to output results on.
         s3_out : bool, optional
             If true, the output repo is exposed as an S3 gateway bucket.
-        resource_requests : pps_proto.ResourceSpec, optional
+        resource_requests : pps_pb2.ResourceSpec, optional
             The amount of resources that the pipeline workers will consume.
-        resource_limits: pps_proto.ResourceSpec, optional
+        resource_limits: pps_pb2.ResourceSpec, optional
             The upper threshold of allowed resources a given worker can
             consume. If a worker exceeds this value, it will be evicted.
-        sidecar_resource_limits : pps_proto.ResourceSpec, optional
+        sidecar_resource_limits : pps_pb2.ResourceSpec, optional
             The upper threshold of resources allocated to the sidecar
             containers.
-        input : pps_proto.Input, optional
+        input : pps_pb2.Input, optional
             The input repos to the pipeline. Commits to these repos will
             automatically trigger the pipeline to create new jobs to
             process them.
@@ -355,9 +348,9 @@ class PPSMixin:
         reprocess : bool, optional
             If true, forces the pipeline to reprocess all datums. Only has
             meaning if `update` is ``True``.
-        service : pps_proto.Service, optional
+        service : pps_pb2.Service, optional
             Creates a Service pipeline instead of a normal pipeline.
-        datum_set_spec : pps_proto.DatumSetSpec, optional
+        datum_set_spec : pps_pb2.DatumSetSpec, optional
             Specifies how a pipeline should split its datums into datum sets.
         datum_timeout : duration_pb2.Duration, optional
             The maximum execution time allowed for each datum.
@@ -368,16 +361,16 @@ class PPSMixin:
         datum_tries : int, optional
             The number of times a job attempts to run on a datum when a failure
             occurs.
-        scheduling_spec : pps_proto.SchedulingSpec, optional
+        scheduling_spec : pps_pb2.SchedulingSpec, optional
             Specifies how the pods for a pipeline should be scheduled.
         pod_patch : str, optional
             Allows one to set fields in the pod spec that haven't been
             explicitly exposed in the rest of the pipeline spec.
-        spout : pps_proto.Spout, optional
+        spout : pps_pb2.Spout, optional
             Creates a Spout pipeline instead of a normal pipeline.
-        spec_commit : pfs_proto.Commit, optional
+        spec_commit : pfs_pb2.Commit, optional
             A spec commit to base the pipeline spec from.
-        metadata : pps_proto.Metadata, optional
+        metadata : pps_pb2.Metadata, optional
             Kubernetes labels and annotations to add as metadata to the
             pipeline pods.
         autoscaling : bool, optional
@@ -398,21 +391,19 @@ class PPSMixin:
         --------
         >>> client.create_pipeline(
         ...     "foo",
-        ...     transform=pps_proto.Transform(
+        ...     transform=pps_pb2.Transform(
         ...         cmd=["python3", "main.py"],
         ...         image="example/image",
         ...     ),
-        ...     input=pps_proto.Input(pfs=pps_proto.PFSInput(
+        ...     input=pps_pb2.Input(pfs=pps_pb2.PFSInput(
         ...         repo="foo",
         ...         branch="master",
         ...         glob="/*"
         ...     ))
         ... )
         """
-        self._req(
-            Service.PPS,
-            "CreatePipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
+        message = pps_pb2.CreatePipelineRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
             transform=transform,
             parallelism_spec=parallelism_spec,
             egress=egress,
@@ -439,24 +430,23 @@ class PPSMixin:
             reprocess_spec=reprocess_spec,
             autoscaling=autoscaling,
         )
+        self.__stub.CreatePipeline(message)
 
-    def create_pipeline_from_request(
-        self, req: pps_proto.CreatePipelineRequest
-    ) -> None:
+    def create_pipeline_from_request(self, req: pps_pb2.CreatePipelineRequest) -> None:
         """Creates a pipeline from a ``CreatePipelineRequest`` object. Usually
         used in conjunction with ``util.parse_json_pipeline_spec()`` or
         ``util.parse_dict_pipeline_spec()``.
 
         Parameters
         ----------
-        req : pps_proto.CreatePipelineRequest
+        req : pps_pb2.CreatePipelineRequest
             The ``CreatePipelineRequest`` object.
         """
-        self._req(Service.PPS, "CreatePipeline", req=req)
+        self.__stub.CreatePipeline(req)
 
     def inspect_pipeline(
         self, pipeline_name: str, history: int = 0, details: bool = False
-    ) -> Iterator[pps_proto.PipelineInfo]:
+    ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
         Inspects a pipeline.
@@ -479,7 +469,7 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.PipelineInfo]
+        Iterator[pps_pb2.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
 
         Examples
@@ -490,30 +480,24 @@ class PPSMixin:
         >>>     print(p)
         """
         if history == 0:
-            return iter(
-                [
-                    self._req(
-                        Service.PPS,
-                        "InspectPipeline",
-                        pipeline=pps_proto.Pipeline(name=pipeline_name),
-                        details=details,
-                    )
-                ]
+            message = pps_pb2.InspectPipelineRequest(
+                details=details,
+                pipeline=pps_pb2.Pipeline(name=pipeline_name),
             )
+            return iter([self.__stub.InspectPipeline(message)])
         else:
             # `InspectPipeline` doesn't support history, but `ListPipeline`
             # with a pipeline filter does, so we use that here
-            return self._req(
-                Service.PPS,
-                "ListPipeline",
-                pipeline=pps_proto.Pipeline(name=pipeline_name),
-                history=history,
+            message = pps_pb2.ListPipelineRequest(
                 details=details,
+                history=history,
+                pipeline=pps_pb2.Pipeline(name=pipeline_name),
             )
+            return self.__stub.ListPipeline(message)
 
     def list_pipeline(
         self, history: int = 0, details: bool = False, jqFilter: str = None
-    ) -> Iterator[pps_proto.PipelineInfo]:
+    ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
         Lists pipelines.
@@ -536,20 +520,19 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.PipelineInfo]
+        Iterator[pps_pb2.PipelineInfo]
             An iterator of protobuf objects that contain info on a pipeline.
 
         Examples
         --------
         >>> pipelines = list(client.list_pipeline())
         """
-        return self._req(
-            Service.PPS,
-            "ListPipeline",
-            history=history,
+        message = pps_pb2.ListPipelineRequest(
             details=details,
+            history=history,
             jqFilter=jqFilter,
         )
+        return self.__stub.ListPipeline(message)
 
     def delete_pipeline(
         self, pipeline_name: str, force: bool = False, keep_repo: bool = False
@@ -565,21 +548,17 @@ class PPSMixin:
         keep_repo : bool, optional
             If true, keeps the output repo.
         """
-        self._req(
-            Service.PPS,
-            "DeletePipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
+        message = pps_pb2.DeletePipelineRequest(
             force=force,
             keep_repo=keep_repo,
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
         )
+        self.__stub.DeletePipeline(message)
 
     def delete_all_pipelines(self) -> None:
         """Deletes all pipelines."""
-        self._req(
-            Service.PPS,
-            "DeleteAll",
-            req=empty_pb2.Empty(),
-        )
+        message = empty_pb2.Empty()
+        self.__stub.DeleteAll(message)
 
     def start_pipeline(self, pipeline_name: str) -> None:
         """Starts a pipeline.
@@ -589,11 +568,10 @@ class PPSMixin:
         pipeline_name : str
             The name of the pipeline.
         """
-        self._req(
-            Service.PPS,
-            "StartPipeline",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
+        message = pps_pb2.StartPipelineRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
         )
+        self.__stub.StartPipeline(message)
 
     def stop_pipeline(self, pipeline_name: str) -> None:
         """Stops a pipeline.
@@ -603,9 +581,10 @@ class PPSMixin:
         pipeline_name : str
             The name of the pipeline.
         """
-        self._req(
-            Service.PPS, "StopPipeline", pipeline=pps_proto.Pipeline(name=pipeline_name)
+        message = pps_pb2.StopPipelineRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name)
         )
+        self.__stub.StopPipeline(message)
 
     def run_cron(self, pipeline_name: str) -> None:
         """Triggers a cron pipeline to run now.
@@ -618,11 +597,10 @@ class PPSMixin:
         pipeline_name : str
             The name of the pipeline.
         """
-        self._req(
-            Service.PPS,
-            "RunCron",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
+        message = pps_pb2.RunCronRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
         )
+        self.__stub.RunCron(message)
 
     def create_secret(
         self,
@@ -652,7 +630,7 @@ class PPSMixin:
                 v = v.encode("utf8")
             encoded_data[k] = base64.b64encode(v).decode("utf8")
 
-        f = json.dumps(
+        file = json.dumps(
             {
                 "kind": "Secret",
                 "apiVersion": "v1",
@@ -665,7 +643,8 @@ class PPSMixin:
             }
         ).encode("utf8")
 
-        self._req(Service.PPS, "CreateSecret", file=f)
+        message = pps_pb2.CreateSecretRequest(file=file)
+        self.__stub.CreateSecret(message)
 
     def delete_secret(self, secret_name: str) -> None:
         """Deletes a secret.
@@ -675,25 +654,23 @@ class PPSMixin:
         secret_name : str
             The name of the secret.
         """
-        secret = pps_proto.Secret(name=secret_name)
-        self._req(Service.PPS, "DeleteSecret", secret=secret)
+        message = pps_pb2.DeleteSecretRequest(
+            secret=pps_pb2.Secret(name=secret_name),
+        )
+        self.__stub.DeleteSecret(message)
 
-    def list_secret(self) -> List[pps_proto.SecretInfo]:
+    def list_secret(self) -> List[pps_pb2.SecretInfo]:
         """Lists secrets.
 
         Returns
         -------
-        List[pps_proto.SecretInfo]
+        List[pps_pb2.SecretInfo]
             A list of protobuf objects that contain info on a secret.
         """
+        message = empty_pb2.Empty()
+        return self.__stub.ListSecret(message).secret_info
 
-        return self._req(
-            Service.PPS,
-            "ListSecret",
-            req=empty_pb2.Empty(),
-        ).secret_info
-
-    def inspect_secret(self, secret_name: str) -> pps_proto.SecretInfo:
+    def inspect_secret(self, secret_name: str) -> pps_pb2.SecretInfo:
         """Inspects a secret.
 
         Parameters
@@ -703,23 +680,25 @@ class PPSMixin:
 
         Returns
         -------
-        pps_proto.SecretInfo
+        pps_pb2.SecretInfo
             A protobuf object with info on the secret.
         """
-        secret = pps_proto.Secret(name=secret_name)
-        return self._req(Service.PPS, "InspectSecret", secret=secret)
+        message = pps_pb2.InspectSecretRequest(
+            secret=pps_pb2.Secret(name=secret_name),
+        )
+        return self.__stub.InspectSecret(message)
 
     def get_pipeline_logs(
         self,
         pipeline_name: str,
         data_filters: List[str] = None,
         master: bool = False,
-        datum: pps_proto.Datum = None,
+        datum: pps_pb2.Datum = None,
         follow: bool = False,
         tail: int = 0,
         use_loki_backend: bool = False,
         since: duration_pb2.Duration = None,
-    ) -> Iterator[pps_proto.LogMessage]:
+    ) -> Iterator[pps_pb2.LogMessage]:
         """Gets logs for a pipeline.
 
         Parameters
@@ -734,7 +713,7 @@ class PPSMixin:
             for files at specific versions).
         master : bool, optional
             If true, includes logs from the master
-        datum : pps_proto.Datum, optional
+        datum : pps_pb2.Datum, optional
             Filters log lines for the specified datum.
         follow : bool, optional
             If true, continue to follow new logs as they appear.
@@ -750,16 +729,14 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.LogMessage]
+        Iterator[pps_pb2.LogMessage]
             An iterator of protobuf objects that contain info on a log from a
             PPS worker. If `follow` is set to ``True``, use ``next()`` to
             iterate through as the returned stream is potentially endless.
             Might block your code otherwise.
         """
-        return self._req(
-            Service.PPS,
-            "GetLogs",
-            pipeline=pps_proto.Pipeline(name=pipeline_name),
+        message = pps_pb2.GetLogsRequest(
+            pipeline=pps_pb2.Pipeline(name=pipeline_name),
             data_filters=data_filters,
             master=master,
             datum=datum,
@@ -768,18 +745,19 @@ class PPSMixin:
             use_loki_backend=use_loki_backend,
             since=since,
         )
+        return self.__stub.GetLogs(message)
 
     def get_job_logs(
         self,
         pipeline_name: str,
         job_id: str,
         data_filters: List[str] = None,
-        datum: pps_proto.Datum = None,
+        datum: pps_pb2.Datum = None,
         follow: bool = False,
         tail: int = 0,
         use_loki_backend: bool = False,
         since: duration_pb2.Duration = None,
-    ) -> Iterator[pps_proto.LogMessage]:
+    ) -> Iterator[pps_pb2.LogMessage]:
         """Gets logs for a job.
 
         Parameters
@@ -794,7 +772,7 @@ class PPSMixin:
             contains multiple inputs. Each filter may be an absolute path of a
             file within a repo, or it may be a hash for that file (to search
             for files at specific versions).
-        datum : pps_proto.Datum, optional
+        datum : pps_pb2.Datum, optional
             Filters log lines for the specified datum.
         follow : bool, optional
             If true, continue to follow new logs as they appear.
@@ -810,18 +788,14 @@ class PPSMixin:
 
         Returns
         -------
-        Iterator[pps_proto.LogMessage]
+        Iterator[pps_pb2.LogMessage]
             An iterator of protobuf objects that contain info on a log from a
             PPS worker. If `follow` is set to ``True``, use ``next()`` to
             iterate through as the returned stream is potentially endless.
             Might block your code otherwise.
         """
-        return self._req(
-            Service.PPS,
-            "GetLogs",
-            job=pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name), id=job_id
-            ),
+        message = pps_pb2.GetLogsRequest(
+            job=pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id),
             data_filters=data_filters,
             datum=datum,
             follow=follow,
@@ -829,3 +803,4 @@ class PPSMixin:
             use_loki_backend=use_loki_backend,
             since=since,
         )
+        return self.__stub.GetLogs(message)

@@ -1,19 +1,28 @@
 from typing import Iterator
-from python_pachyderm.service import Service, debug_proto
+
+import grpc
 from google.protobuf import duration_pb2
+
+from python_pachyderm.proto.v2.debug import debug_pb2, debug_pb2_grpc
 
 
 class DebugMixin:
     """A mixin for debug-related functionality."""
 
+    _channel: grpc.Channel
+
+    def __init__(self):
+        self.__stub = debug_pb2_grpc.DebugStub(self._channel)
+        super().__init__()
+
     def dump(
-        self, filter: debug_proto.Filter = None, limit: int = None
+        self, filter: debug_pb2.Filter = None, limit: int = None
     ) -> Iterator[bytes]:
         """Gets a debug dump.
 
         Parameters
         ----------
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
         limit : int, optional
@@ -27,17 +36,17 @@ class DebugMixin:
 
         Examples
         --------
-        >>> for b in client.dump(debug_proto.Filter(pipeline=pps_proto.Pipeline(name="foo"))):
+        >>> for b in client.dump(debug_pb2.Filter(pipeline=pps_pb2.Pipeline(name="foo"))):
         >>>     print(b)
 
         .. # noqa: W505
         """
-        res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
-        for item in res:
+        message = debug_pb2.DumpRequest(filter=filter, limit=limit)
+        for item in self.__stub.Dump(message):
             yield item.value
 
     def profile_cpu(
-        self, duration: duration_pb2.Duration, filter: debug_proto.Filter = None
+        self, duration: duration_pb2.Duration, filter: debug_pb2.Filter = None
     ) -> Iterator[bytes]:
         """Gets a CPU profile.
 
@@ -46,7 +55,7 @@ class DebugMixin:
         duration : duration_pb2.Duration
             A google protobuf duration object indicating how long the profile
             should run for.
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
 
@@ -60,17 +69,19 @@ class DebugMixin:
         >>> for b in client.profile_cpu(duration_pb2.Duration(seconds=1)):
         >>>     print(b)
         """
-        profile = debug_proto.Profile(name="cpu", duration=duration)
-        res = self._req(Service.DEBUG, "Profile", profile=profile, filter=filter)
-        for item in res:
+        message = debug_pb2.ProfileRequest(
+            filter=filter,
+            profile=debug_pb2.Profile(name="cpu", duration=duration),
+        )
+        for item in self.__stub.Profile(message):
             yield item.value
 
-    def binary(self, filter: debug_proto.Filter = None) -> Iterator[bytes]:
+    def binary(self, filter: debug_pb2.Filter = None) -> Iterator[bytes]:
         """Gets the pachd binary.
 
         Parameters
         ----------
-        filter : debug_proto.Filter, optional
+        filter : debug_pb2.Filter, optional
             A protobuf object that filters what info is returned. Is one of
             pachd bool, pipeline protobuf, or worker protobuf.
 
@@ -84,6 +95,6 @@ class DebugMixin:
         >>> for b in client.binary():
         >>>     print(b)
         """
-        res = self._req(Service.DEBUG, "Binary", filter=filter)
-        for item in res:
+        message = debug_pb2.BinaryRequest(filter=filter)
+        for item in self.__stub.Binary(message):
             yield item.value
