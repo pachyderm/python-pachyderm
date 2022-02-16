@@ -3,7 +3,7 @@
 """Tests admin-related functionality"""
 import os
 
-import grpc
+import grpclib
 import pytest
 
 from python_pachyderm.experimental import Client as ExperimentalClient
@@ -106,7 +106,7 @@ def test_robot_token(client):
     client.auth_token = auth_token
     assert client.auth.who_am_i().username == "robot:root"
     client.auth.revoke_auth_token(auth_token)
-    with pytest.raises(grpc.RpcError):
+    with pytest.raises(grpclib.GRPCError):
         client.auth.who_am_i()
 
 

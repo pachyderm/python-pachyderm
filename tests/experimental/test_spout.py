@@ -21,7 +21,7 @@ def test_create_spout():
     assert len(list(client.pps.list_pipeline())) == 1
 
 
-@pytest.mark.timeout(45)
+@pytest.mark.timeout(60)
 def test_spout_commit():
     client = ExperimentalClient()
     client.delete_all()

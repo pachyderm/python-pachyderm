@@ -127,7 +127,7 @@ class AuthApi(_synchronizer(_AuthApiStub)):
 
         .. # noqa: W505
         """
-        response = super().get_role_binding(resource=resource)
+        response = await super().get_role_binding(resource=resource)
         return response.binding.entries
 
     async def modify_role_binding(
