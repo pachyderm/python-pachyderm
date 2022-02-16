@@ -42,13 +42,15 @@ class PFSFile:
     >>>     content = f.read()
     """
 
+    _Error = grpc.RpcError
+
     def __init__(self, stream: Iterator[BytesValue]):
         self._stream = stream
         self._buffer = bytearray()
 
         try:
             first_message = next(self._stream)
-        except grpc.RpcError as err:
+        except self._Error as err:
             raise ConnectionError("Error creating the PFSFile") from err
         self._buffer.extend(first_message.value)
 
@@ -83,12 +85,15 @@ class PFSFile:
                     self._buffer.extend(message.value)
                     if len(self._buffer) >= size:
                         break
-        except grpc.RpcError:
+        except self._Error:
             pass
 
         size = min(size, len(self._buffer))
         result, self._buffer[:size] = self._buffer[:size], b""
         return bytes(result)
+
+    def is_active(self) -> bool:
+        return self._stream.is_active()
 
     def close(self) -> None:
         """Closes the :class:`.PFSFile`."""

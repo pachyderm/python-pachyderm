@@ -8,12 +8,14 @@ from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
+import grpclib
+from betterproto import BytesValue
 from grpclib.exceptions import GRPCError
 
 from python_pachyderm.mixin.pfs import (
     BUFFER_SIZE,
     PFSTarFile,
-    PFSFile,
+    PFSFile as _PFSFile,
     ModifyFileClient as _ModifyFileClientStable,
 )
 from ..pfs import SubcommitType, commit_from, uuid_re
@@ -46,6 +48,42 @@ from . import _synchronizer
 
 # bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
 # bp_to_pb: url -> URL (get_file_tar())
+
+
+class _CancellableStream:
+    """Wrap a grpclib stream to make it cancellable."""
+
+    def __init__(self, stream: Iterator[BytesValue]):
+        self._stream = stream
+        self._active = True
+
+    def __iter__(self) -> Iterator[BytesValue]:
+        return self
+
+    def __next__(self) -> BytesValue:
+        if not self._active:
+            raise StopIteration
+        try:
+            return next(self._stream)
+        except StopIteration as stop:
+            self._active = False
+            raise stop
+
+    def cancel(self) -> None:
+        del self._stream
+        self._stream = iter([])
+        self._active = False
+
+    def is_active(self) -> bool:
+        return self._active
+
+
+class ExperimentalPFSFile(_PFSFile):
+
+    _Error = grpclib.GRPCError
+
+    def __init__(self, stream: Iterator[BytesValue]):
+        super().__init__(_CancellableStream(stream))
 
 
 @_synchronizer
@@ -804,7 +842,7 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-    ) -> PFSFile:
+    ) -> ExperimentalPFSFile:
         """Gets a file from PFS.
 
         Parameters
@@ -827,7 +865,7 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         """
         file = _File(commit=commit_from(commit), path=path, datum=datum)
         stream = super().get_file(file=file, url=URL, offset=offset)
-        return PFSFile(stream)
+        return ExperimentalPFSFile(stream)
 
     def get_file_tar(
         self,
@@ -859,7 +897,7 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         """
         file = _File(commit=commit_from(commit), path=path, datum=datum)
         stream = super().get_file_tar(file=file, url=URL, offset=offset)
-        return PFSTarFile.open(fileobj=PFSFile(stream), mode="r|*")
+        return PFSTarFile.open(fileobj=ExperimentalPFSFile(stream), mode="r|*")
 
     async def inspect_file(
         self,

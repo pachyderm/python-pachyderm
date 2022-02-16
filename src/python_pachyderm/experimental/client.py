@@ -62,6 +62,8 @@ class Client:
         tls |= bool(root_certs)
         self._channel = Channel(host, port, ssl=tls)
         if root_certs:
+            if isinstance(root_certs, bytes):
+                root_certs = root_certs.decode()
             self._channel._ssl.load_verify_locations(cadata=root_certs)
 
         self._metadata = dict()

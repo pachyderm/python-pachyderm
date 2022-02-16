@@ -28,7 +28,7 @@ def put_files(
 
     Examples
     --------
-    >>> source_dir = "data/training/
+    >>> source_dir = "data/training/"
     >>> with client.commit("repo_name", "master") as commit:
     >>>     python_pachyderm.put_files(client, source_dir, commit, "/training_set/")
     ...

@@ -32,17 +32,17 @@ def put_files(
 
     Examples
     --------
-    >>> source_dir = "data/training/
-    >>> with client.commit("repo_name", "master") as commit:
-    >>>     python_pachyderm.put_files(client, source_dir, commit, "/training_set/")
+    >>> source_dir = "data/training/"
+    >>> with client.pfs.commit("repo_name", "master") as commit:
+    >>>     python_pachyderm.experimental.put_files(client, source_dir, commit, "/training_set/")
     ...
-    >>> with client.commit("repo_name", "master") as commit2:
-    >>>     python_pachyderm.put_files(client, "metadata/params.csv", commit2, "/hyperparams.csv")
-    >>>     python_pachyderm.put_files(client, "spec.json", commit2, "/")
+    >>> with client.pfs.commit("repo_name", "master") as commit2:
+    >>>     python_pachyderm.experimental.put_files(client, "metadata/params.csv", commit2, "/hyperparams.csv")
+    >>>     python_pachyderm.experimental.put_files(client, "spec.json", commit2, "/")
 
     .. # noqa: W505
     """
-    with client.modify_file_client(commit) as mfc:
+    with client.pfs.modify_file_client(commit) as mfc:
         if os.path.isfile(source_path):
             mfc.put_file_from_filepath(dest_path, source_path, **kwargs)
         elif os.path.isdir(source_path):

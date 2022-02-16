@@ -14,4 +14,4 @@ class VersionApi(_synchronizer(_VersionApiStub)):
         version_proto.Version
             A protobuf object with info on the pachd version.
         """
-        return await self.__stub.get_version()
+        return await self.get_version()

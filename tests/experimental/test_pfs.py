@@ -818,8 +818,8 @@ class TestPFSFile:
 
         # Act & Assert
         with client.pfs.get_file(commit, pfs_file) as file:
-            assert file._stream.is_active()
-        assert not file._stream.is_active()
+            assert file.is_active()
+        assert not file.is_active()
 
     @staticmethod
     def test_cancelled_stream(client: ExperimentalClient, repo: str):

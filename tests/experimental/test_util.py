@@ -6,9 +6,14 @@ import os
 import json
 import tempfile
 
-import python_pachyderm
+from python_pachyderm.experimental import Client as ExperimentalClient
+from python_pachyderm.experimental.util import (
+    parse_dict_pipeline_spec,
+    parse_json_pipeline_spec,
+    put_files,
+)
 from python_pachyderm.experimental.service import pps_proto
-from tests import util
+from tests.experimental import util as test_util
 
 # bp_to_pb: PfsInput -> PFSInput
 
@@ -60,8 +65,8 @@ TEST_PIPELINE_SPEC = """
 """
 
 
-def check_expected_files(client: python_pachyderm.Client, commit, expected):
-    for fi in client.walk_file(commit, "/"):
+def check_expected_files(client: ExperimentalClient, commit, expected):
+    for fi in client.pfs.walk_file(commit, "/"):
         path = fi.file.path
         assert path in expected, "unexpected path: {}".format(path)
         expected.remove(path)
@@ -71,9 +76,9 @@ def check_expected_files(client: python_pachyderm.Client, commit, expected):
 
 
 def test_put_files():
-    client = python_pachyderm.experimental.Client()
+    client = ExperimentalClient()
     client.delete_all()
-    repo_name = util.create_test_repo(client, "put_files")
+    repo_name = test_util.create_test_repo(client, "put_files")
 
     with tempfile.TemporaryDirectory(suffix="python_pachyderm") as d:
         # create a temporary directory with these files:
@@ -92,9 +97,9 @@ def test_put_files():
         # test both for correct path handling and the ability to put files
         # that already exist)
         commit = (repo_name, "master")
-        python_pachyderm.put_files(client, d, commit, "/")
-        python_pachyderm.put_files(client, d, commit, "/sub")
-        python_pachyderm.put_files(client, d, commit, "/sub/")
+        put_files(client, d, commit, "/")
+        put_files(client, d, commit, "/sub")
+        put_files(client, d, commit, "/sub/")
 
     expected = set(["/", "/sub/"])
     for i in range(5):
@@ -109,30 +114,28 @@ def test_put_files():
 
 
 def test_put_files_single_file():
-    client = python_pachyderm.experimental.Client()
+    client = ExperimentalClient()
     client.delete_all()
-    repo_name = util.create_test_repo(client, "put_files_single_file")
+    repo_name = test_util.create_test_repo(client, "put_files_single_file")
 
     with tempfile.NamedTemporaryFile() as f:
         f.write(b"abcd")
         f.flush()
         commit = (repo_name, "master")
-        python_pachyderm.put_files(client, f.name, commit, "/f1.txt")
-        python_pachyderm.put_files(client, f.name, commit, "/f/f1")
+        put_files(client, f.name, commit, "/f1.txt")
+        put_files(client, f.name, commit, "/f/f1")
 
     expected = set(["/", "/f1.txt", "/f/", "/f/f1"])
     check_expected_files(client, commit, expected)
 
 
 def test_parse_json_pipeline_spec():
-    req = python_pachyderm.experimental.parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
+    req = parse_json_pipeline_spec(TEST_PIPELINE_SPEC)
     check_pipeline_spec(req)
 
 
 def test_parse_dict_pipeline_spec():
-    req = python_pachyderm.experimental.parse_dict_pipeline_spec(
-        json.loads(TEST_PIPELINE_SPEC)
-    )
+    req = parse_dict_pipeline_spec(json.loads(TEST_PIPELINE_SPEC))
     check_pipeline_spec(req)
 
 
