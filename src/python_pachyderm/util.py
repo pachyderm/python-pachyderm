@@ -3,7 +3,7 @@ from google.protobuf import json_format
 
 from python_pachyderm import Client
 from python_pachyderm.pfs import SubcommitType
-from python_pachyderm.service import pps_proto
+from python_pachyderm.proto.v2.pps import pps_pb2
 
 
 def put_files(
@@ -53,7 +53,7 @@ def put_files(
             raise Exception("Please provide an existing directory or file")
 
 
-def parse_json_pipeline_spec(j: str) -> pps_proto.CreatePipelineRequest:
+def parse_json_pipeline_spec(j: str) -> pps_pb2.CreatePipelineRequest:
     """Parses a string of JSON into a `CreatePipelineRequest` protobuf.
 
     Parameters
@@ -64,7 +64,7 @@ def parse_json_pipeline_spec(j: str) -> pps_proto.CreatePipelineRequest:
 
     Returns
     -------
-    pps_proto.CreatePipelineRequest
+    pps_pb2.CreatePipelineRequest
         A protobuf object that contains the spec info necessary to create a
         pipeline.
 
@@ -94,10 +94,10 @@ def parse_json_pipeline_spec(j: str) -> pps_proto.CreatePipelineRequest:
 
     .. # noqa: W505
     """
-    return json_format.Parse(j, pps_proto.CreatePipelineRequest())
+    return json_format.Parse(j, pps_pb2.CreatePipelineRequest())
 
 
-def parse_dict_pipeline_spec(d: dict) -> pps_proto.CreatePipelineRequest:
+def parse_dict_pipeline_spec(d: dict) -> pps_pb2.CreatePipelineRequest:
     """Parses a dict of serialized JSON into a `CreatePipelineRequest` protobuf.
 
     Parameters
@@ -107,7 +107,7 @@ def parse_dict_pipeline_spec(d: dict) -> pps_proto.CreatePipelineRequest:
 
     Returns
     -------
-    pps_proto.CreatePipelineRequest
+    pps_pb2.CreatePipelineRequest
         A protobuf object that contains the spec info necessary to create a
         pipeline.
 
@@ -138,4 +138,4 @@ def parse_dict_pipeline_spec(d: dict) -> pps_proto.CreatePipelineRequest:
     .. # noqa: W505
     """
 
-    return json_format.ParseDict(d, pps_proto.CreatePipelineRequest())
+    return json_format.ParseDict(d, pps_pb2.CreatePipelineRequest())

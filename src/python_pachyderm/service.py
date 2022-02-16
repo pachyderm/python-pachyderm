@@ -27,6 +27,9 @@ from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as vers
 
 MB = 1024**2
 MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
+GRPC_CHANNEL_OPTIONS = [
+    ("grpc.max_receive_message_length", MAX_RECEIVE_MESSAGE_SIZE),
+]
 
 
 class Service(Enum):
