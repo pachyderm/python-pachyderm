@@ -84,11 +84,19 @@ class Client:
             auth_token = self.auth.authenticate_id_token(id_token)
 
         if auth_token:
-            self._metadata[AUTH_TOKEN_KEY] = auth_token
+            self.auth_token = auth_token
 
     @property
     def address(self) -> str:
         return f"{self._channel._host}:{self._channel._port}"
+
+    @property
+    def auth_token(self) -> str:
+        return self._metadata.get(AUTH_TOKEN_KEY, "")
+
+    @auth_token.setter
+    def auth_token(self, token: str) -> None:
+        self._metadata[AUTH_TOKEN_KEY] = token
 
     def delete_all(self) -> None:
         """Delete all repos, commits, files, pipelines, and jobs. This resets
