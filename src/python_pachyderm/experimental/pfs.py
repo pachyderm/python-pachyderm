@@ -62,9 +62,10 @@ class Commit(NamedTuple):
         )
 
 
-def commit_from(
-    commit: Union[tuple, dict, Commit, pfs_proto.Commit, pfs_proto_pb.Commit] = None,
-) -> pfs_proto.Commit:
+SubcommitType = Union[tuple, dict, Commit, pfs_proto.Commit, pfs_proto_pb.Commit]
+
+
+def commit_from(commit: SubcommitType = None) -> pfs_proto.Commit:
     """A commit can be identified by (repo, branch, commit_id, repo_type)
 
     Helper function to convert objects that represent a Commit query into a

@@ -1,23 +1,34 @@
 from contextlib import contextmanager
-from typing import Iterator, List, Union
+from typing import Iterator, List, Optional, Union
 
-from python_pachyderm.service import Service
-from python_pachyderm.experimental.service import transaction_proto
+from ..proto.v2.transaction_v2 import (
+    ApiStub as _TransactionApiStub,
+    Transaction,
+    TransactionInfo,
+    TransactionRequest,
+)
+from . import _synchronizer
+
+TRANSACTION_KEY = "pach-transaction"
+TransactionLike = Union[str, Transaction]
 
 
-def _transaction_from(transaction):
-    if isinstance(transaction, transaction_proto.Transaction):
+def _transaction_from(transaction: TransactionLike):
+    if isinstance(transaction, Transaction):
         return transaction
     else:
-        return transaction_proto.Transaction(id=transaction)
+        return Transaction(id=transaction)
 
 
-class TransactionMixin:
+@_synchronizer
+class TransactionApi(_synchronizer(_TransactionApiStub)):
     """A mixin for transaction-related functionality."""
 
-    def batch_transaction(
-        self, requests: List[transaction_proto.TransactionRequest]
-    ) -> transaction_proto.TransactionInfo:
+    @property
+    def id(self) -> Optional[str]:
+        return self.metadata.get(TRANSACTION_KEY)
+
+    async def batch(self, requests: List[TransactionRequest]) -> TransactionInfo:
         """Executes a batch transaction.
 
         Parameters
@@ -41,9 +52,9 @@ class TransactionMixin:
             )))
         ])
         """
-        return self._req(Service.TRANSACTION, "BatchTransaction", requests=requests)
+        return await super().batch_transaction(requests=requests)
 
-    def start_transaction(self) -> transaction_proto.Transaction:
+    async def start(self) -> Transaction:
         """Starts a transaction.
 
         Returns
@@ -57,11 +68,9 @@ class TransactionMixin:
         >>> # do stuff
         >>> client.finish_transaction(transaction)
         """
-        return self._req(Service.TRANSACTION, "StartTransaction")
+        return await super().start_transaction()
 
-    def inspect_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
-    ) -> transaction_proto.TransactionInfo:
+    async def inspect(self, transaction: TransactionLike) -> TransactionInfo:
         """Inspects a transaction.
 
         Parameters
@@ -82,15 +91,10 @@ class TransactionMixin:
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.TRANSACTION,
-            "InspectTransaction",
-            transaction=_transaction_from(transaction),
-        )
+        transaction = _transaction_from(transaction)
+        return await super().inspect_transaction(transaction=transaction)
 
-    def delete_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
-    ) -> None:
+    async def delete(self, transaction: TransactionLike) -> None:
         """Deletes a transaction.
 
         Parameters
@@ -107,17 +111,14 @@ class TransactionMixin:
 
         .. # noqa: W505
         """
-        self._req(
-            Service.TRANSACTION,
-            "DeleteTransaction",
-            transaction=_transaction_from(transaction),
-        )
+        transaction = _transaction_from(transaction)
+        await super().delete_transaction(transaction=transaction)
 
-    def delete_all_transactions(self) -> None:
+    async def delete_all(self) -> None:
         """Deletes all transactions."""
-        self._req(Service.TRANSACTION, "DeleteAll")
+        await super().delete_all()
 
-    def list_transaction(self) -> List[transaction_proto.TransactionInfo]:
+    async def list(self) -> List[TransactionInfo]:
         """Lists unfinished transactions.
 
         Returns
@@ -125,11 +126,10 @@ class TransactionMixin:
         List[transaction_proto.TransactionInfo]
             A list of protobuf objects that contain info on a transaction.
         """
-        return self._req(Service.TRANSACTION, "ListTransaction").transaction_info
+        response = await super().list_transaction()
+        return response.transaction_info
 
-    def finish_transaction(
-        self, transaction: Union[str, transaction_proto.Transaction]
-    ) -> transaction_proto.TransactionInfo:
+    async def finish(self, transaction: TransactionLike) -> TransactionInfo:
         """Finishes a transaction.
 
         Parameters
@@ -148,14 +148,11 @@ class TransactionMixin:
         >>> # do stuff
         >>> client.finish_transaction(transaction)
         """
-        return self._req(
-            Service.TRANSACTION,
-            "FinishTransaction",
-            transaction=_transaction_from(transaction),
-        )
+        transaction = _transaction_from(transaction)
+        return await super().finish_transaction(transaction=transaction)
 
     @contextmanager
-    def transaction(self) -> Iterator[transaction_proto.Transaction]:
+    def transaction(self) -> Iterator[Transaction]:
         """A context manager for running operations within a transaction. When
         the context manager completes, the transaction will be deleted if an
         error occurred, or otherwise finished.
@@ -181,17 +178,18 @@ class TransactionMixin:
         >>>     client.finish_commit(c1)
         >>>     client.finish_commit(c2)
         """
-
-        old_transaction_id = self.transaction_id
+        old_transaction_id = self.metadata.get(TRANSACTION_KEY)
         transaction = self.start_transaction()
-        self.transaction_id = transaction.id
+        self.metadata[TRANSACTION_KEY] = transaction.id
 
         try:
             yield transaction
         except Exception:
-            self.delete_transaction(transaction)
+            self.delete(transaction)
             raise
         else:
-            self.finish_transaction(transaction)
+            self.finish(transaction)
         finally:
-            self.transaction_id = old_transaction_id
+            del self.metadata[TRANSACTION_KEY]
+            if old_transaction_id:
+                self.metadata[TRANSACTION_KEY] = old_transaction_id

@@ -2,50 +2,52 @@
 
 """Spout tests"""
 import pytest
-import python_pachyderm
-from python_pachyderm.experimental.service import pps_proto, pfs_proto
+
+from python_pachyderm.experimental import Client as ExperimentalClient
+from python_pachyderm.experimental.mixin.pfs import CommitState, OriginKind
+from python_pachyderm.experimental.mixin.pps import Transform, Spout
 
 
 def test_create_spout():
-    client = python_pachyderm.experimental.Client()
+    client = ExperimentalClient()
     client.delete_all()
 
-    client.create_pipeline(
+    client.pps.create_pipeline(
         pipeline_name="pipeline-create-spout",
-        transform=pps_proto.Transform(
-            cmd=["sh"],
-            image="alpine",
-        ),
-        spout=pps_proto.Spout(),
+        transform=Transform(cmd=["sh"], image="alpine"),
+        spout=Spout(),
     )
 
-    assert len(list(client.list_pipeline())) == 1
+    assert len(list(client.pps.list_pipeline())) == 1
 
 
 @pytest.mark.timeout(45)
 def test_spout_commit():
-    client = python_pachyderm.experimental.Client()
+    client = ExperimentalClient()
     client.delete_all()
 
-    client.create_pipeline(
+    client.pps.create_pipeline(
         pipeline_name="pipeline-spout-commit",
-        transform=pps_proto.Transform(
+        transform=Transform(
             cmd=["bash"],
             stdin=[
                 "echo 'commit time' >> file.txt",
                 "pachctl put file pipeline-spout-commit@master:/file.txt -f file.txt",
             ],
         ),
-        spout=pps_proto.Spout(),
+        spout=Spout(),
     )
 
-    c = client.subscribe_commit(
+    # This leaves the stream opens and needs to be manually closed.
+    # Should probably be a context manager
+    c = client.pfs.subscribe_commit(
         repo_name="pipeline-spout-commit",
         branch="master",
-        state=pfs_proto.CommitState.FINISHED,
-        origin_kind=pfs_proto.OriginKind.USER,
+        state=CommitState.FINISHED,
+        origin_kind=OriginKind.USER,
     )
     next(c)
+    del c
 
-    commit_infos = list(client.list_commit("pipeline-spout-commit"))
+    commit_infos = list(client.pfs.list_commit("pipeline-spout-commit"))
     assert len(commit_infos) == 1

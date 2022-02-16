@@ -12,7 +12,7 @@ import grpclib
 
 @dataclass(eq=False, repr=False)
 class User(betterproto.Message):
-    """User represents an Idp user that has authenticated via Oidc"""
+    """User represents an IDP user that has authenticated via OIDC"""
 
     email: str = betterproto.string_field(1)
     last_authenticated: datetime = betterproto.message_field(2)
@@ -27,7 +27,6 @@ class IdentityServerConfig(betterproto.Message):
 
     issuer: str = betterproto.string_field(1)
     id_token_expiry: str = betterproto.string_field(2)
-    rotation_token_expiry: str = betterproto.string_field(3)
 
 
 @dataclass(eq=False, repr=False)
@@ -52,19 +51,19 @@ class GetIdentityServerConfigResponse(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class IdpConnector(betterproto.Message):
-    """IdpConnector represents a connection to an identity provider"""
+    """IDPConnector represents a connection to an identity provider"""
 
     # ID is the unique identifier for this connector.
     id: str = betterproto.string_field(1)
     # Name is the human-readable identifier for this connector, which will be
     # shown to end users when they're authenticating.
     name: str = betterproto.string_field(2)
-    # Type is the type of the Idp ex. `saml`, `oidc`, `github`.
+    # Type is the type of the IDP ex. `saml`, `oidc`, `github`.
     type: str = betterproto.string_field(3)
     # ConfigVersion must be incremented every time a connector is  updated, to
     # avoid concurrent updates conflicting.
     config_version: int = betterproto.int64_field(4)
-    # JsonConfig is the configuration for the upstream Idp, which varies based on
+    # JsonConfig is the configuration for the upstream IDP, which varies based on
     # the type.
     json_config: str = betterproto.string_field(5)
 
@@ -213,28 +212,20 @@ class ApiStub(betterproto.ServiceStub):
             GetIdentityServerConfigResponse,
         )
 
-    async def create_idp_connector(
-        self, *, connector: "IdpConnector" = None
-    ) -> "CreateIdpConnectorResponse":
+    async def create_idp_connector(self) -> "CreateIdpConnectorResponse":
 
         request = CreateIdpConnectorRequest()
-        if connector is not None:
-            request.connector = connector
 
         return await self._unary_unary(
-            "/identity_v2.API/CreateIdpConnector", request, CreateIdpConnectorResponse
+            "/identity_v2.API/CreateIDPConnector", request, CreateIdpConnectorResponse
         )
 
-    async def update_idp_connector(
-        self, *, connector: "IdpConnector" = None
-    ) -> "UpdateIdpConnectorResponse":
+    async def update_idp_connector(self) -> "UpdateIdpConnectorResponse":
 
         request = UpdateIdpConnectorRequest()
-        if connector is not None:
-            request.connector = connector
 
         return await self._unary_unary(
-            "/identity_v2.API/UpdateIdpConnector", request, UpdateIdpConnectorResponse
+            "/identity_v2.API/UpdateIDPConnector", request, UpdateIdpConnectorResponse
         )
 
     async def list_idp_connectors(self) -> "ListIdpConnectorsResponse":
@@ -242,60 +233,47 @@ class ApiStub(betterproto.ServiceStub):
         request = ListIdpConnectorsRequest()
 
         return await self._unary_unary(
-            "/identity_v2.API/ListIdpConnectors", request, ListIdpConnectorsResponse
+            "/identity_v2.API/ListIDPConnectors", request, ListIdpConnectorsResponse
         )
 
-    async def get_idp_connector(self, *, id: str = "") -> "GetIdpConnectorResponse":
+    async def get_idp_connector(self) -> "GetIdpConnectorResponse":
 
         request = GetIdpConnectorRequest()
-        request.id = id
 
         return await self._unary_unary(
-            "/identity_v2.API/GetIdpConnector", request, GetIdpConnectorResponse
+            "/identity_v2.API/GetIDPConnector", request, GetIdpConnectorResponse
         )
 
-    async def delete_idp_connector(
-        self, *, id: str = ""
-    ) -> "DeleteIdpConnectorResponse":
+    async def delete_idp_connector(self) -> "DeleteIdpConnectorResponse":
 
         request = DeleteIdpConnectorRequest()
-        request.id = id
 
         return await self._unary_unary(
-            "/identity_v2.API/DeleteIdpConnector", request, DeleteIdpConnectorResponse
+            "/identity_v2.API/DeleteIDPConnector", request, DeleteIdpConnectorResponse
         )
 
-    async def create_oidc_client(
-        self, *, client: "OidcClient" = None
-    ) -> "CreateOidcClientResponse":
+    async def create_oidc_client(self) -> "CreateOidcClientResponse":
 
         request = CreateOidcClientRequest()
-        if client is not None:
-            request.client = client
 
         return await self._unary_unary(
-            "/identity_v2.API/CreateOidcClient", request, CreateOidcClientResponse
+            "/identity_v2.API/CreateOIDCClient", request, CreateOidcClientResponse
         )
 
-    async def update_oidc_client(
-        self, *, client: "OidcClient" = None
-    ) -> "UpdateOidcClientResponse":
+    async def update_oidc_client(self) -> "UpdateOidcClientResponse":
 
         request = UpdateOidcClientRequest()
-        if client is not None:
-            request.client = client
 
         return await self._unary_unary(
-            "/identity_v2.API/UpdateOidcClient", request, UpdateOidcClientResponse
+            "/identity_v2.API/UpdateOIDCClient", request, UpdateOidcClientResponse
         )
 
-    async def get_oidc_client(self, *, id: str = "") -> "GetOidcClientResponse":
+    async def get_oidc_client(self) -> "GetOidcClientResponse":
 
         request = GetOidcClientRequest()
-        request.id = id
 
         return await self._unary_unary(
-            "/identity_v2.API/GetOidcClient", request, GetOidcClientResponse
+            "/identity_v2.API/GetOIDCClient", request, GetOidcClientResponse
         )
 
     async def list_oidc_clients(self) -> "ListOidcClientsResponse":
@@ -303,16 +281,15 @@ class ApiStub(betterproto.ServiceStub):
         request = ListOidcClientsRequest()
 
         return await self._unary_unary(
-            "/identity_v2.API/ListOidcClients", request, ListOidcClientsResponse
+            "/identity_v2.API/ListOIDCClients", request, ListOidcClientsResponse
         )
 
-    async def delete_oidc_client(self, *, id: str = "") -> "DeleteOidcClientResponse":
+    async def delete_oidc_client(self) -> "DeleteOidcClientResponse":
 
         request = DeleteOidcClientRequest()
-        request.id = id
 
         return await self._unary_unary(
-            "/identity_v2.API/DeleteOidcClient", request, DeleteOidcClientResponse
+            "/identity_v2.API/DeleteOIDCClient", request, DeleteOidcClientResponse
         )
 
     async def delete_all(self) -> "DeleteAllResponse":
@@ -333,42 +310,34 @@ class ApiBase(ServiceBase):
     async def get_identity_server_config(self) -> "GetIdentityServerConfigResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def create_idp_connector(
-        self, connector: "IdpConnector"
-    ) -> "CreateIdpConnectorResponse":
+    async def create_idp_connector(self) -> "CreateIdpConnectorResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def update_idp_connector(
-        self, connector: "IdpConnector"
-    ) -> "UpdateIdpConnectorResponse":
+    async def update_idp_connector(self) -> "UpdateIdpConnectorResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def list_idp_connectors(self) -> "ListIdpConnectorsResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def get_idp_connector(self, id: str) -> "GetIdpConnectorResponse":
+    async def get_idp_connector(self) -> "GetIdpConnectorResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def delete_idp_connector(self, id: str) -> "DeleteIdpConnectorResponse":
+    async def delete_idp_connector(self) -> "DeleteIdpConnectorResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def create_oidc_client(
-        self, client: "OidcClient"
-    ) -> "CreateOidcClientResponse":
+    async def create_oidc_client(self) -> "CreateOidcClientResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def update_oidc_client(
-        self, client: "OidcClient"
-    ) -> "UpdateOidcClientResponse":
+    async def update_oidc_client(self) -> "UpdateOidcClientResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def get_oidc_client(self, id: str) -> "GetOidcClientResponse":
+    async def get_oidc_client(self) -> "GetOidcClientResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def list_oidc_clients(self) -> "ListOidcClientsResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def delete_oidc_client(self, id: str) -> "DeleteOidcClientResponse":
+    async def delete_oidc_client(self) -> "DeleteOidcClientResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def delete_all(self) -> "DeleteAllResponse":
@@ -399,9 +368,7 @@ class ApiBase(ServiceBase):
     async def __rpc_create_idp_connector(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "connector": request.connector,
-        }
+        request_kwargs = {}
 
         response = await self.create_idp_connector(**request_kwargs)
         await stream.send_message(response)
@@ -409,9 +376,7 @@ class ApiBase(ServiceBase):
     async def __rpc_update_idp_connector(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "connector": request.connector,
-        }
+        request_kwargs = {}
 
         response = await self.update_idp_connector(**request_kwargs)
         await stream.send_message(response)
@@ -427,9 +392,7 @@ class ApiBase(ServiceBase):
     async def __rpc_get_idp_connector(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "id": request.id,
-        }
+        request_kwargs = {}
 
         response = await self.get_idp_connector(**request_kwargs)
         await stream.send_message(response)
@@ -437,9 +400,7 @@ class ApiBase(ServiceBase):
     async def __rpc_delete_idp_connector(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "id": request.id,
-        }
+        request_kwargs = {}
 
         response = await self.delete_idp_connector(**request_kwargs)
         await stream.send_message(response)
@@ -447,9 +408,7 @@ class ApiBase(ServiceBase):
     async def __rpc_create_oidc_client(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "client": request.client,
-        }
+        request_kwargs = {}
 
         response = await self.create_oidc_client(**request_kwargs)
         await stream.send_message(response)
@@ -457,9 +416,7 @@ class ApiBase(ServiceBase):
     async def __rpc_update_oidc_client(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "client": request.client,
-        }
+        request_kwargs = {}
 
         response = await self.update_oidc_client(**request_kwargs)
         await stream.send_message(response)
@@ -467,9 +424,7 @@ class ApiBase(ServiceBase):
     async def __rpc_get_oidc_client(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "id": request.id,
-        }
+        request_kwargs = {}
 
         response = await self.get_oidc_client(**request_kwargs)
         await stream.send_message(response)
@@ -485,9 +440,7 @@ class ApiBase(ServiceBase):
     async def __rpc_delete_oidc_client(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {
-            "id": request.id,
-        }
+        request_kwargs = {}
 
         response = await self.delete_oidc_client(**request_kwargs)
         await stream.send_message(response)
@@ -514,61 +467,61 @@ class ApiBase(ServiceBase):
                 GetIdentityServerConfigRequest,
                 GetIdentityServerConfigResponse,
             ),
-            "/identity_v2.API/CreateIdpConnector": grpclib.const.Handler(
+            "/identity_v2.API/CreateIDPConnector": grpclib.const.Handler(
                 self.__rpc_create_idp_connector,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 CreateIdpConnectorRequest,
                 CreateIdpConnectorResponse,
             ),
-            "/identity_v2.API/UpdateIdpConnector": grpclib.const.Handler(
+            "/identity_v2.API/UpdateIDPConnector": grpclib.const.Handler(
                 self.__rpc_update_idp_connector,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 UpdateIdpConnectorRequest,
                 UpdateIdpConnectorResponse,
             ),
-            "/identity_v2.API/ListIdpConnectors": grpclib.const.Handler(
+            "/identity_v2.API/ListIDPConnectors": grpclib.const.Handler(
                 self.__rpc_list_idp_connectors,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ListIdpConnectorsRequest,
                 ListIdpConnectorsResponse,
             ),
-            "/identity_v2.API/GetIdpConnector": grpclib.const.Handler(
+            "/identity_v2.API/GetIDPConnector": grpclib.const.Handler(
                 self.__rpc_get_idp_connector,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 GetIdpConnectorRequest,
                 GetIdpConnectorResponse,
             ),
-            "/identity_v2.API/DeleteIdpConnector": grpclib.const.Handler(
+            "/identity_v2.API/DeleteIDPConnector": grpclib.const.Handler(
                 self.__rpc_delete_idp_connector,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 DeleteIdpConnectorRequest,
                 DeleteIdpConnectorResponse,
             ),
-            "/identity_v2.API/CreateOidcClient": grpclib.const.Handler(
+            "/identity_v2.API/CreateOIDCClient": grpclib.const.Handler(
                 self.__rpc_create_oidc_client,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 CreateOidcClientRequest,
                 CreateOidcClientResponse,
             ),
-            "/identity_v2.API/UpdateOidcClient": grpclib.const.Handler(
+            "/identity_v2.API/UpdateOIDCClient": grpclib.const.Handler(
                 self.__rpc_update_oidc_client,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 UpdateOidcClientRequest,
                 UpdateOidcClientResponse,
             ),
-            "/identity_v2.API/GetOidcClient": grpclib.const.Handler(
+            "/identity_v2.API/GetOIDCClient": grpclib.const.Handler(
                 self.__rpc_get_oidc_client,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 GetOidcClientRequest,
                 GetOidcClientResponse,
             ),
-            "/identity_v2.API/ListOidcClients": grpclib.const.Handler(
+            "/identity_v2.API/ListOIDCClients": grpclib.const.Handler(
                 self.__rpc_list_oidc_clients,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ListOidcClientsRequest,
                 ListOidcClientsResponse,
             ),
-            "/identity_v2.API/DeleteOidcClient": grpclib.const.Handler(
+            "/identity_v2.API/DeleteOIDCClient": grpclib.const.Handler(
                 self.__rpc_delete_oidc_client,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 DeleteOidcClientRequest,

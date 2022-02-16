@@ -11,20 +11,20 @@ import datetime
 
 def test_dump():
     client = python_pachyderm.experimental.Client()
-    for b in client.dump():
+    for b in client.debug.dump():
         assert isinstance(b, bytes)
         assert len(b) > 0
 
 
 def test_profile_cpu():
     client = python_pachyderm.experimental.Client()
-    for b in client.profile_cpu(datetime.timedelta(seconds=1)):
+    for b in client.debug.profile_cpu(datetime.timedelta(seconds=1)):
         assert isinstance(b, bytes)
         assert len(b) > 0
 
 
 def test_binary():
     client = python_pachyderm.experimental.Client()
-    for b in client.binary():
+    for b in client.debug.binary():
         assert isinstance(b, bytes)
         assert len(b) > 0

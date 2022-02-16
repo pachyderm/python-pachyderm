@@ -8,24 +8,51 @@ from pathlib import Path
 from contextlib import contextmanager
 from typing import Iterator, Union, List, BinaryIO
 
-from python_pachyderm.mixin.pfs import PFSFile, PFSTarFile
-from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
-from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
-from python_pachyderm.experimental.service import pfs_proto
-from google.protobuf import wrappers_pb2
-import betterproto.lib.google.protobuf as bp_proto
+from grpclib.exceptions import GRPCError
+
+from python_pachyderm.mixin.pfs import (
+    BUFFER_SIZE,
+    PFSTarFile,
+    PFSFile,
+    ModifyFileClient as _ModifyFileClientStable,
+)
+from ..pfs import SubcommitType, commit_from, uuid_re
+from ..proto.v2.pfs_v2 import (
+    ApiStub as _PFSApiStub,
+    CreateRepoRequest,
+    ModifyFileRequest,
+    DiffFileResponse,
+    FsckResponse,
+    Branch,
+    BranchInfo,
+    Commit,
+    CommitInfo,
+    CommitSet,
+    CommitSetInfo,
+    CommitState,
+    FileInfo,
+    FileType,
+    OriginKind,
+    Repo,
+    RepoInfo,
+    Trigger,
+    AddFile as _AddFile,
+    AddFileUrlSource as _AddFileUrlSource,
+    CopyFile as _CopyFile,
+    DeleteFile as _DeleteFile,
+    File as _File,
+)
+from . import _synchronizer
 
 # bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
 # bp_to_pb: url -> URL (get_file_tar())
 
 
-BUFFER_SIZE = 19 * 1024 * 1024
-
-
-class PFSMixin:
+@_synchronizer
+class PFSApi(_synchronizer(_PFSApiStub)):
     """A mixin with pfs-related functionality."""
 
-    def create_repo(
+    async def create_repo(
         self, repo_name: str, description: str = None, update: bool = False
     ) -> None:
         """Creates a new repo object in PFS with the given name. Repos are the
@@ -43,15 +70,10 @@ class PFSMixin:
         update : bool, optional
             Whether to update if the repo already exists.
         """
-        self._req(
-            Service.PFS,
-            "CreateRepo",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
-            description=description,
-            update=update,
-        )
+        repo = Repo(name=repo_name, type="user")
+        await super().create_repo(repo=repo, description=description, update=update)
 
-    def inspect_repo(self, repo_name: str) -> pfs_proto.RepoInfo:
+    async def inspect_repo(self, repo_name: str) -> RepoInfo:
         """Inspects a repo.
 
         Parameters
@@ -64,11 +86,10 @@ class PFSMixin:
         pfs_proto.RepoInfo
             A protobuf object with info on the repo.
         """
-        return self._req(
-            Service.PFS, "InspectRepo", repo=pfs_proto.Repo(name=repo_name, type="user")
-        )
+        repo = Repo(name=repo_name, type="user")
+        return await super().inspect_repo(repo=repo)
 
-    def list_repo(self, type: str = "user") -> Iterator[pfs_proto.RepoInfo]:
+    async def list_repo(self, type: str = "user") -> Iterator[RepoInfo]:
         """Lists all repos in PFS.
 
         Parameters
@@ -82,9 +103,10 @@ class PFSMixin:
         Iterator[pfs_proto.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
-        return self._req(Service.PFS, "ListRepo", type=type)
+        async for repo in super().list_repo(type=type):
+            yield repo
 
-    def delete_repo(self, repo_name: str, force: bool = False) -> None:
+    async def delete_repo(self, repo_name: str, force: bool = False) -> None:
         """Deletes a repo and reclaims the storage space it was using.
 
         Parameters
@@ -95,24 +117,20 @@ class PFSMixin:
             If set to true, the repo will be removed regardless of errors.
             Use with care.
         """
-        self._req(
-            Service.PFS,
-            "DeleteRepo",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
-            force=force,
-        )
+        repo = Repo(name=repo_name, type="user")
+        await super().delete_repo(repo=repo, force=force)
 
-    def delete_all_repos(self) -> None:
+    async def delete_all_repos(self) -> None:
         """Deletes all repos."""
-        self._req(Service.PFS, "DeleteAll", req=bp_proto.Empty())
+        await super().delete_all()
 
-    def start_commit(
+    async def start_commit(
         self,
         repo_name: str,
         branch: str,
-        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        parent: Union[str, SubcommitType] = None,
         description: str = None,
-    ) -> pfs_proto.Commit:
+    ) -> Commit:
         """Begins the process of committing data to a repo. Once started you
         can write to the commit with ModifyFile. When all the data has been
         written, you must finish the commit with FinishCommit. NOTE: data is
@@ -141,26 +159,18 @@ class PFSMixin:
         --------
         >>> c = client.start_commit("foo", "master", ("foo", "staging"))
         """
+        repo = Repo(name=repo_name, type="user")
         if parent and isinstance(parent, str):
-            parent = pfs_proto.Commit(
-                id=parent,
-                branch=pfs_proto.Branch(
-                    repo=pfs_proto.Repo(name=repo_name, type="user"), name=None
-                ),
-            )
-        return self._req(
-            Service.PFS,
-            "StartCommit",
+            parent = Commit(id=parent, branch=Branch(repo=repo))
+        return await super().start_commit(
             parent=commit_from(parent),
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch
-            ),
+            branch=Branch(repo=repo, name=branch),
             description=description,
         )
 
-    def finish_commit(
+    async def finish_commit(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         description: str = None,
         error: str = None,
         force: bool = False,
@@ -189,16 +199,14 @@ class PFSMixin:
 
         >>> client.start_commit("foo", "master")
         >>> # modify open commit
-        >>> client.finish_commit(("foo", "master))
+        >>> client.finish_commit(("foo", "master"))
         ...
         >>> # same as above
         >>> c = client.start_commit("foo", "master")
         >>> # modify open commit
         >>> client.finish_commit(c)
         """
-        self._req(
-            Service.PFS,
-            "FinishCommit",
+        await super().finish_commit(
             commit=commit_from(commit),
             description=description,
             error=error,
@@ -210,9 +218,9 @@ class PFSMixin:
         self,
         repo_name: str,
         branch: str,
-        parent: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
+        parent: Union[str, SubcommitType] = None,
         description: str = None,
-    ) -> Iterator[pfs_proto.Commit]:
+    ) -> Iterator[Commit]:
         """A context manager for running operations within a commit.
 
         Parameters
@@ -245,11 +253,11 @@ class PFSMixin:
         finally:
             self.finish_commit(commit)
 
-    def inspect_commit(
+    async def inspect_commit(
         self,
-        commit: Union[str, tuple, dict, Commit, pfs_proto.Commit],
-        commit_state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
-    ) -> Iterator[pfs_proto.CommitInfo]:
+        commit: Union[str, SubcommitType],
+        commit_state: CommitState = CommitState.STARTED,
+    ) -> Iterator[CommitInfo]:
         """Inspects a commit.
 
         Parameters
@@ -273,43 +281,38 @@ class PFSMixin:
         >>> list(client.inspect_commit(("foo", "master~2")))
         ...
         >>> # an entire commit
-        >>> for commit in client.inspect_commit("467c580611234cdb8cc9758c7aa96087", pfs_proto.CommitState.FINISHED)
+        >>> for commit in client.inspect_commit("467c580611234cdb8cc9758c7aa96087", CommitState.FINISHED)
         >>>     print(commit)
 
         .. # noqa: W505
         """
         if not isinstance(commit, str):
-            return iter(
-                [
-                    self._req(
-                        Service.PFS,
-                        "InspectCommit",
-                        commit=commit_from(commit),
-                        wait=commit_state,
-                    )
-                ]
+            yield await super().inspect_commit(
+                commit=commit_from(commit), wait=commit_state
             )
-        elif uuid_re.match(commit):
-            return self._req(
-                Service.PFS,
-                "InspectCommitSet",
-                commit_set=pfs_proto.CommitSet(id=commit),
-                wait=commit_state == pfs_proto.CommitState.FINISHED,
-            )
-        raise ValueError(
-            "bad argument: commit should either be a commit ID (str) or a commit-like object"
-        )
 
-    def list_commit(
+        elif uuid_re.match(commit):
+            commit_set_response = super().inspect_commit_set(
+                commit_set=CommitSet(id=commit),
+                wait=(commit_state == CommitState.FINISHED),
+            )
+            async for commit_info in commit_set_response:
+                yield commit_info
+        else:
+            raise ValueError(
+                "bad argument: commit should either be a commit ID (str) or a commit-like object"
+            )
+
+    async def list_commit(
         self,
         repo_name: str = None,
-        to_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-        from_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+        to_commit: SubcommitType = None,
+        from_commit: SubcommitType = None,
         number: int = None,
         reverse: bool = False,
         all: bool = False,
-        origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
-    ) -> Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]:
+        origin_kind: OriginKind = OriginKind.USER,
+    ) -> Union[Iterator[CommitInfo], Iterator[CommitSetInfo]]:
         """Lists commits.
 
         Parameters
@@ -360,22 +363,22 @@ class PFSMixin:
         .. # noqa: W505
         """
         if repo_name is not None:
-            req = pfs_proto.ListCommitRequest(
-                repo=pfs_proto.Repo(name=repo_name, type="user"),
+            response = super().list_commit(
+                repo=Repo(name=repo_name, type="user"),
+                to=commit_from(to_commit),
+                from_=commit_from(from_commit),
                 number=number,
                 reverse=reverse,
                 all=all,
                 origin_kind=origin_kind,
             )
-            if to_commit is not None:
-                req.to = commit_from(to_commit)
-            if from_commit is not None:
-                req.from_ = commit_from(from_commit)
-            return self._req(Service.PFS, "ListCommit", req=req)
+            async for commit_info in response:
+                yield commit_info
         else:
-            return self._req(Service.PFS, "ListCommitSet")
+            async for commit_set_info in super().list_commit_set():
+                yield commit_set_info
 
-    def squash_commit(self, commit_id: str) -> None:
+    async def squash_commit(self, commit_id: str) -> None:
         """Squashes a commit into its parent.
 
         Parameters
@@ -383,13 +386,9 @@ class PFSMixin:
         commit_id : str
             The ID of the commit.
         """
-        self._req(
-            Service.PFS,
-            "SquashCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_id),
-        )
+        await super().squash_commit_set(commit_set=CommitSet(id=commit_id))
 
-    def drop_commit(self, commit_id: str) -> None:
+    async def drop_commit(self, commit_id: str) -> None:
         """
         Drops an entire commit.
 
@@ -398,15 +397,9 @@ class PFSMixin:
         commit_id : str
             The ID of the commit.
         """
-        self._req(
-            Service.PFS,
-            "DropCommitSet",
-            commit_set=pfs_proto.CommitSet(id=commit_id),
-        )
+        await super().drop_commit_set(commit_set=CommitSet(id=commit_id))
 
-    def wait_commit(
-        self, commit: Union[str, tuple, dict, Commit, pfs_proto.Commit]
-    ) -> List[pfs_proto.CommitInfo]:
+    async def wait_commit(self, commit: Union[str, SubcommitType]) -> List[CommitInfo]:
         """Waits for the specified commit to finish.
 
         Parameters
@@ -430,17 +423,18 @@ class PFSMixin:
         >>> # wait for a commit to finish at a certain repo
         >>> client.wait_commit(("foo", "master"))
         """
-        return list(self.inspect_commit(commit, pfs_proto.CommitState.FINISHED))
+        response = self.inspect_commit(commit, CommitState.FINISHED)
+        return [commit_info async for commit_info in response]
 
-    def subscribe_commit(
+    async def subscribe_commit(
         self,
         repo_name: str,
         branch: str,
-        from_commit: Union[str, tuple, dict, Commit, pfs_proto.Commit] = None,
-        state: pfs_proto.CommitState = pfs_proto.CommitState.STARTED,
+        from_commit: Union[str, SubcommitType] = None,
+        state: CommitState = CommitState.STARTED,
         all: bool = False,
-        origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
-    ) -> Iterator[pfs_proto.CommitInfo]:
+        origin_kind: OriginKind = OriginKind.USER,
+    ) -> Iterator[CommitInfo]:
         """Returns all commits on the branch and then listens for new commits
         that are created.
 
@@ -478,28 +472,32 @@ class PFSMixin:
 
         .. # noqa: W505
         """
-        repo = pfs_proto.Repo(name=repo_name, type="user")
-        req = pfs_proto.SubscribeCommitRequest(
+        repo = Repo(name=repo_name, type="user")
+        branch = Branch(repo=repo, name=branch)
+        from_commit = (
+            Commit(branch=branch, id=from_commit)
+            if isinstance(from_commit, str)
+            else commit_from(from_commit)
+        )
+
+        response = super().subscribe_commit(
             repo=repo,
-            branch=branch,
+            branch=branch.name,
+            from_=from_commit,
             state=state,
             all=all,
             origin_kind=origin_kind,
         )
-        if from_commit is not None:
-            if isinstance(from_commit, str):
-                req.from_ = pfs_proto.Commit(repo=repo, id=from_commit)
-            else:
-                req.from_ = commit_from(from_commit)
-        return self._req(Service.PFS, "SubscribeCommit", req=req)
+        async for commit_info in response:
+            yield commit_info
 
-    def create_branch(
+    async def create_branch(
         self,
         repo_name: str,
         branch_name: str,
-        head_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
-        provenance: List[pfs_proto.Branch] = None,
-        trigger: pfs_proto.Trigger = None,
+        head_commit: SubcommitType = None,
+        provenance: List[Branch] = None,
+        trigger: Trigger = None,
         new_commit: bool = False,
     ) -> None:
         """Creates a new branch.
@@ -528,27 +526,21 @@ class PFSMixin:
         ...     "bar",
         ...     "master",
         ...     provenance=[
-        ...         pfs_proto.Branch(
-        ...             repo=pfs_proto.Repo(name="foo", type="user"), name="master"
-        ...         )
+        ...         Branch(repo=Repo(name="foo", type="user"), name="master")
         ...     ]
         ... )
 
         .. # noqa: W505
         """
-        self._req(
-            Service.PFS,
-            "CreateBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
-            ),
+        await super().create_branch(
+            branch=Branch(repo=Repo(name=repo_name, type="user"), name=branch_name),
             head=commit_from(head_commit),
             provenance=provenance,
             trigger=trigger,
             new_commit_set=new_commit,
         )
 
-    def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_proto.BranchInfo:
+    async def inspect_branch(self, repo_name: str, branch_name: str) -> BranchInfo:
         """Inspects a branch.
 
         Parameters
@@ -563,17 +555,12 @@ class PFSMixin:
         pfs_proto.BranchInfo
             A protobuf object with info on a branch.
         """
-        return self._req(
-            Service.PFS,
-            "InspectBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
-            ),
-        )
+        branch = Branch(repo=Repo(name=repo_name, type="user"), name=branch_name)
+        return await super().inspect_branch(branch=branch)
 
-    def list_branch(
+    async def list_branch(
         self, repo_name: str, reverse: bool = False
-    ) -> Iterator[pfs_proto.BranchInfo]:
+    ) -> Iterator[BranchInfo]:
         """Lists the active branch objects in a repo.
 
         Parameters
@@ -592,14 +579,12 @@ class PFSMixin:
         --------
         >>> branches = list(client.list_branch("foo"))
         """
-        return self._req(
-            Service.PFS,
-            "ListBranch",
-            repo=pfs_proto.Repo(name=repo_name, type="user"),
-            reverse=reverse,
-        )
+        repo = Repo(name=repo_name, type="user")
+        response = super().list_branch(repo=repo, reverse=reverse)
+        async for branch_info in response:
+            yield branch_info
 
-    def delete_branch(
+    async def delete_branch(
         self, repo_name: str, branch_name: str, force: bool = False
     ) -> None:
         """Deletes a branch, but leaves the commits themselves intact. In other
@@ -615,18 +600,12 @@ class PFSMixin:
         force : bool, optional
             If true, forces the branch deletion.
         """
-        self._req(
-            Service.PFS,
-            "DeleteBranch",
-            branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=repo_name, type="user"), name=branch_name
-            ),
-            force=force,
-        )
+        branch = Branch(repo=Repo(name=repo_name, type="user"), name=branch_name)
+        await super().delete_branch(branch=branch, force=force)
 
-    @contextmanager
-    def modify_file_client(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]
+    @_synchronizer.asynccontextmanager
+    async def modify_file_client(
+        self, commit: SubcommitType
     ) -> Iterator["ModifyFileClient"]:
         """A context manager that gives a :class:`.ModifyFileClient`. When the
         context manager exits, any operations enqueued from the
@@ -670,11 +649,11 @@ class PFSMixin:
         """
         mfc = ModifyFileClient(commit)
         yield mfc
-        self._req(Service.PFS, "ModifyFile", req=mfc._reqs())
+        await super().modify_file(mfc._reqs())
 
     def put_file_bytes(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         value: Union[bytes, BinaryIO],
         datum: str = None,
@@ -724,7 +703,7 @@ class PFSMixin:
 
     def put_file_url(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         url: str,
         recursive: bool = False,
@@ -774,9 +753,9 @@ class PFSMixin:
 
     def copy_file(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: SubcommitType,
         source_path: str,
-        dest_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        dest_commit: SubcommitType,
         dest_path: str,
         datum: str = None,
         append: bool = False,
@@ -820,7 +799,7 @@ class PFSMixin:
 
     def get_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -846,18 +825,13 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        stream = self._req(
-            Service.PFS,
-            "GetFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-            URL=URL,
-            offset=offset,
-        )
+        file = _File(commit=commit_from(commit), path=path, datum=datum)
+        stream = super().get_file(file=file, url=URL, offset=offset)
         return PFSFile(stream)
 
     def get_file_tar(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         URL: str = None,
@@ -883,23 +857,16 @@ class PFSMixin:
         PFSFile
             The contents of the file in a file-like object.
         """
-        stream = self._req(
-            Service.PFS,
-            "GetFileTAR",
-            req=pfs_proto.GetFileRequest(
-                file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-                url=URL,
-                offset=offset,
-            ),
-        )
+        file = _File(commit=commit_from(commit), path=path, datum=datum)
+        stream = super().get_file_tar(file=file, url=URL, offset=offset)
         return PFSTarFile.open(fileobj=PFSFile(stream), mode="r|*")
 
-    def inspect_file(
+    async def inspect_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         datum: str = None,
-    ) -> pfs_proto.FileInfo:
+    ) -> FileInfo:
         """Inspects a file.
 
         Parameters
@@ -916,19 +883,16 @@ class PFSMixin:
         pfs_proto.FileInfo
             A protobuf object that contains info on a file.
         """
-        return self._req(
-            Service.PFS,
-            "InspectFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-        )
+        file = _File(commit=commit_from(commit), path=path, datum=datum)
+        return await super().inspect_file(file=file)
 
-    def list_file(
+    async def list_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         datum: str = None,
         details: bool = False,
-    ) -> Iterator[pfs_proto.FileInfo]:
+    ) -> Iterator[FileInfo]:
         """Lists the files in a directory.
 
         Parameters
@@ -951,18 +915,16 @@ class PFSMixin:
         --------
         >>> files = list(client.list_file(("foo", "master"), "/dir/subdir/"))
         """
-        return self._req(
-            Service.PFS,
-            "ListFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-        )
+        file = _File(commit=commit_from(commit), path=path, datum=datum)
+        async for file_info in super().list_file(file=file):
+            yield file_info
 
-    def walk_file(
+    async def walk_file(
         self,
-        commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        commit: SubcommitType,
         path: str,
         datum: str = None,
-    ) -> Iterator[pfs_proto.FileInfo]:
+    ) -> Iterator[FileInfo]:
         """Walks over all descendant files in a directory.
 
         Parameters
@@ -983,15 +945,13 @@ class PFSMixin:
         --------
         >>> files = list(client.walk_file(("foo", "master"), "/dir/subdir/"))
         """
-        return self._req(
-            Service.PFS,
-            "WalkFile",
-            file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-        )
+        file = _File(commit=commit_from(commit), path=path, datum=datum)
+        async for file_info in super().walk_file(file=file):
+            yield file_info
 
-    def glob_file(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], pattern: str
-    ) -> Iterator[pfs_proto.FileInfo]:
+    async def glob_file(
+        self, commit: SubcommitType, pattern: str
+    ) -> Iterator[FileInfo]:
         """Lists files that match a glob pattern.
 
         Parameters
@@ -1010,13 +970,11 @@ class PFSMixin:
         --------
         >>> files = list(client.glob_file(("foo", "master"), "/*.txt"))
         """
-        return self._req(
-            Service.PFS, "GlobFile", commit=commit_from(commit), pattern=pattern
-        )
+        response = super().glob_file(commit=commit_from(commit), pattern=pattern)
+        async for file_info in response:
+            yield file_info
 
-    def delete_file(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
-    ) -> None:
+    def delete_file(self, commit: SubcommitType, path: str) -> None:
         """Deletes a file from an open commit. This leaves a tombstone in the
         commit, assuming the file isn't written to later while the commit is
         still open. Attempting to get the file from the finished commit will
@@ -1042,7 +1000,7 @@ class PFSMixin:
         with self.modify_file_client(commit) as mfc:
             mfc.delete_file(path)
 
-    def fsck(self, fix: bool = False) -> Iterator[pfs_proto.FsckResponse]:
+    async def fsck(self, fix: bool = False) -> Iterator[FsckResponse]:
         """Performs a file system consistency check on PFS, ensuring the
         correct provenance relationships are satisfied.
 
@@ -1063,16 +1021,17 @@ class PFSMixin:
         >>> for action in client.fsck(True):
         >>>     print(action)
         """
-        return self._req(Service.PFS, "Fsck", fix=fix)
+        async for fsck in super().fsck(fix=fix):
+            yield fsck
 
-    def diff_file(
+    async def diff_file(
         self,
-        new_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        new_commit: SubcommitType,
         new_path: str,
-        old_commit: Union[tuple, dict, Commit, pfs_proto.Commit] = None,
+        old_commit: SubcommitType = None,
         old_path: str = None,
         shallow: bool = False,
-    ) -> Iterator[pfs_proto.DiffFileResponse]:
+    ) -> Iterator[DiffFileResponse]:
         """Diffs two PFS files (file = commit + path in Pachyderm) and returns
         files that are different. Similar to ``git diff``.
 
@@ -1121,28 +1080,25 @@ class PFSMixin:
         ... )
         >>> diff = next(res)
         """
+        new_file = _File(commit=commit_from(new_commit), path=new_path)
         if old_commit is not None and old_path is not None:
-            old_file = pfs_proto.File(commit=commit_from(old_commit), path=old_path)
+            old_file = _File(commit=commit_from(old_commit), path=old_path)
         else:
             old_file = None
 
-        return self._req(
-            Service.PFS,
-            "DiffFile",
-            new_file=pfs_proto.File(commit=commit_from(new_commit), path=new_path),
-            old_file=old_file,
-            shallow=shallow,
+        response = super().diff_file(
+            new_file=new_file, old_file=old_file, shallow=shallow
         )
+        async for diff_file in response:
+            yield diff_file
 
-    def path_exists(
-        self, commit: Union[tuple, dict, Commit, pfs_proto.Commit], path: str
-    ) -> bool:
+    def path_exists(self, commit: SubcommitType, path: str) -> bool:
         """Checks whether the path exists in the specified commit, agnostic to
         whether `path` is a file or a directory.
 
         Parameters
         ----------
-        commit : Union[tuple, dict, Commit, pfs_proto.Commit]
+        commit : SubcommitType
             The subcommit (commit at the repo-level) to check in.
         path : str
             The file or directory path in `commit`.
@@ -1155,19 +1111,19 @@ class PFSMixin:
         """
         try:
             self.inspect_file(commit, path)
-        except Exception as e:
+        except GRPCError as e:
             valid_commit_re = re.compile("^file .+ not found in repo .+ at commit .+$")
             invalid_commit_re = re.compile("^branch .+ not found in repo .+$")
 
-            if valid_commit_re.match(e.details()):
+            if valid_commit_re.match(e.message):
                 return False
-            elif invalid_commit_re.match(e.details()):
+            elif invalid_commit_re.match(e.message):
                 raise ValueError("bad argument: nonexistent commit provided")
             raise e
 
         return True
 
-    def mount(self, mount_dir: str, repos: List[str] = []) -> None:
+    def mount(self, mount_dir: str, repos: List[str] = None) -> None:
         """Mounts Pachyderm repos locally.
 
         Parameters
@@ -1191,10 +1147,12 @@ class PFSMixin:
         --------
         >>> client.mount("dir_a", ["repo1", "repo2@staging"])
         """
+        if repos is None:
+            repos = []
         Path(mount_dir).mkdir(parents=True, exist_ok=True)
 
         subprocess.run(
-            ["sudo", "pachctl", "unmount", mount_dir],
+            ["pachctl", "unmount", mount_dir],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.STDOUT,
         )
@@ -1248,24 +1206,24 @@ class PFSMixin:
         >>> client.unmount(all_mounts=True)
         """
         if mount_dir is not None:
-            subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
+            subprocess.run(["pachctl", "unmount", mount_dir])
         elif all_mounts:
-            subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
+            subprocess.run(["pachctl", "unmount", "-a"], input=b"y\n")
         else:
             print("no repos unmounted, pass arguments or see documentation")
 
 
-class ModifyFileClient:
+class ModifyFileClient(_ModifyFileClientStable):
     """:class:`.ModifyFileClient` puts or deletes PFS files atomically.
     Replaces :class:`.PutFileClient` from python_pachyderm 6.x.
     """
 
-    def __init__(self, commit: Union[tuple, dict, Commit, pfs_proto.Commit]):
+    def __init__(self, commit: SubcommitType):
         self._ops = []
-        self.commit = Commit.from_bp(commit_from(commit)).to_pb()
+        self.commit = commit_from(commit)
 
-    def _reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
-        yield pfs_proto_pb.ModifyFileRequest(set_commit=self.commit)
+    def _reqs(self) -> Iterator[ModifyFileRequest]:
+        yield ModifyFileRequest(set_commit=self.commit)
         for op in self._ops:
             yield from op.reqs()
 
@@ -1410,7 +1368,7 @@ class ModifyFileClient:
 
     def copy_file(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: SubcommitType,
         source_path: str,
         dest_path: str,
         datum: str = None,
@@ -1471,7 +1429,7 @@ class _AtomicModifyFilepathOp(_AtomicOp):
         self.local_path = local_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+    def reqs(self) -> Iterator[ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         with open(self.local_path, "rb") as f:
@@ -1490,7 +1448,7 @@ class _AtomicModifyFileobjOp(_AtomicOp):
         self.fobj = fobj
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+    def reqs(self) -> Iterator[ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
         yield _add_file_req(path=self.path, datum=self.datum)
@@ -1517,15 +1475,15 @@ class _AtomicModifyFileURLOp(_AtomicOp):
         self.recursive = recursive
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
+    def reqs(self) -> Iterator[ModifyFileRequest]:
         if not self.append:
             yield _delete_file_req(self.path, self.datum)
-        yield pfs_proto_pb.ModifyFileRequest(
-            add_file=pfs_proto_pb.AddFile(
+        yield ModifyFileRequest(
+            add_file=_AddFile(
                 path=self.path,
                 datum=self.datum,
-                url=pfs_proto_pb.AddFile.URLSource(
-                    URL=self.url,
+                url=_AddFileUrlSource(
+                    url=self.url,
                     recursive=self.recursive,
                 ),
             ),
@@ -1537,25 +1495,25 @@ class _AtomicCopyFileOp(_AtomicOp):
 
     def __init__(
         self,
-        source_commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+        source_commit: SubcommitType,
         source_path: str,
         dest_path: str,
         datum: str = None,
         append: bool = False,
     ):
         super().__init__(dest_path, datum)
-        self.source_commit = Commit.from_bp(commit_from(source_commit)).to_pb()
+        self.source_commit = commit_from(source_commit)
         self.source_path = source_path
         self.dest_path = dest_path
         self.append = append
 
-    def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
-        yield pfs_proto_pb.ModifyFileRequest(
-            copy_file=pfs_proto_pb.CopyFile(
+    def reqs(self) -> Iterator[ModifyFileRequest]:
+        yield ModifyFileRequest(
+            copy_file=_CopyFile(
                 append=self.append,
                 datum=self.datum,
                 dst=self.dest_path,
-                src=pfs_proto_pb.File(commit=self.source_commit, path=self.source_path),
+                src=_File(commit=self.source_commit, path=self.source_path),
             ),
         )
 
@@ -1571,16 +1529,14 @@ class _AtomicDeleteFileOp(_AtomicOp):
 
 
 def _add_file_req(path: str, datum: str = None, chunk: bytes = None):
-    return pfs_proto_pb.ModifyFileRequest(
-        add_file=pfs_proto_pb.AddFile(
+    return ModifyFileRequest(
+        add_file=_AddFile(
             path=path,
             datum=datum,
-            raw=wrappers_pb2.BytesValue(value=chunk),
+            raw=chunk,
         ),
     )
 
 
 def _delete_file_req(path: str, datum: str = None):
-    return pfs_proto_pb.ModifyFileRequest(
-        delete_file=pfs_proto_pb.DeleteFile(path=path, datum=datum)
-    )
+    return ModifyFileRequest(delete_file=_DeleteFile(path=path, datum=datum))

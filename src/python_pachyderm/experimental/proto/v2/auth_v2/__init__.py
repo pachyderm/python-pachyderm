@@ -146,11 +146,6 @@ class OidcConfig(betterproto.Message):
     # OIDC requests to the embedded OIDC provider. This is necessary to support
     # some network configurations like Minikube.
     localhost_issuer: bool = betterproto.bool_field(7)
-    # user_accessible_issuer_host can be set to override the host used  in the
-    # OAuth2 authorization URL in case the OIDC issuer isn't accessible outside
-    # the cluster. This is necessary to support  some configurations like
-    # Minikube.
-    user_accessible_issuer_host: str = betterproto.string_field(8)
 
 
 @dataclass(eq=False, repr=False)

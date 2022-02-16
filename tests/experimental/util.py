@@ -20,7 +20,7 @@ def test_pachyderm_version():
 
         if value is None:
             client = python_pachyderm.experimental.Client()
-            value = client.get_remote_version()
+            value = client.version.get_remote_version()
             _test_pachyderm_version = (value.major, value.minor, value.micro)
         else:
             _test_pachyderm_version = tuple(int(i) for i in value.split("."))
@@ -53,11 +53,13 @@ def test_repo_name(test_name, prefix=None, suffix=None):
 
 def create_test_repo(client, test_name, prefix=None, suffix=None):
     repo_name = test_repo_name(test_name, prefix=prefix, suffix=suffix)
-    client.create_repo(repo_name, "python_pachyderm test repo for {}".format(test_name))
+    client.pfs.create_repo(
+        repo_name, "python_pachyderm test repo for {}".format(test_name)
+    )
     return repo_name
 
 
-def create_test_pipeline(client: python_pachyderm.Client, test_name):
+def create_test_pipeline(client: python_pachyderm.experimental.Client, test_name):
     repo_name_suffix = random_string(6)
     input_repo_name = create_test_repo(
         client, test_name, prefix="input", suffix=repo_name_suffix
@@ -66,7 +68,7 @@ def create_test_pipeline(client: python_pachyderm.Client, test_name):
         test_name, prefix="pipeline", suffix=repo_name_suffix
     )
 
-    client.create_pipeline(
+    client.pps.create_pipeline(
         pipeline_repo_name,
         transform=pps_proto.Transform(
             cmd=["sh"],
@@ -77,13 +79,13 @@ def create_test_pipeline(client: python_pachyderm.Client, test_name):
     )
 
     # TODO figre out what is actually happening here
-    with client.commit(input_repo_name, "master") as commit:
-        client.put_file_bytes(commit, "file.dat", b"DATA")
+    with client.pfs.commit(input_repo_name, "master") as commit:
+        client.pfs.put_file_bytes(commit, "file.dat", b"DATA")
 
     return (commit, input_repo_name, pipeline_repo_name)
 
 
 def get_cluster_deployment_id():
     client = python_pachyderm.experimental.Client()
-    cluster_info = client.inspect_cluster()
+    cluster_info = client.auth.inspect_cluster()
     return cluster_info.deployment_id

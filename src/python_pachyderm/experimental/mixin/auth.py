@@ -1,18 +1,31 @@
 from typing import Dict, List
-from grpc import RpcError
+
+import grpc
 
 from python_pachyderm.errors import AuthServiceNotActivated
-from python_pachyderm.service import Service
-from python_pachyderm.experimental.service import auth_proto
+from ..proto.v2.auth_v2 import (
+    ApiStub as _AuthApiStub,
+    AuthorizeResponse,
+    GetOidcLoginResponse,
+    WhoAmIResponse,
+    OidcConfig,
+    Permission,
+    Resource,
+    ResourceType,
+    Role,
+    Roles,
+)
+from . import _synchronizer
 
 # bp_to_pb: OidcConfig -> OIDCConfig
 # bp_to_pb: GetOidcLoginResponse -> GetOIDCLoginResponse
 
 
-class AuthMixin:
+@_synchronizer
+class AuthApi(_synchronizer(_AuthApiStub)):
     """A mixin for auth-related functionality."""
 
-    def activate_auth(self, root_token: str = None) -> str:
+    async def activate(self, root_token: str = None) -> str:
         """Activates auth on the cluster. Returns the root token, an
         irrevocable superuser credential that should be stored securely.
 
@@ -27,9 +40,10 @@ class AuthMixin:
         str
             A token used as the root user login token.
         """
-        return self._req(Service.AUTH, "Activate", root_token=root_token).pach_token
+        response = await super().activate(root_token=root_token)
+        return response.pach_token
 
-    def deactivate_auth(self) -> None:
+    async def deactivate(self) -> None:
         """Deactivates auth, removing all ACLs, tokens, and admins from the
         Pachyderm cluster and making all data publicly accessible.
 
@@ -38,11 +52,11 @@ class AuthMixin:
         AuthServiceNotActivated
         """
         try:
-            self._req(Service.AUTH, "Deactivate")
-        except RpcError as err:
+            await super().deactivate()
+        except grpc.RpcError as err:
             raise AuthServiceNotActivated.try_from(err)
 
-    def get_auth_configuration(self) -> auth_proto.OidcConfig:
+    async def get_configuration(self) -> OidcConfig:
         """Gets the auth configuration.
 
         Returns
@@ -50,9 +64,10 @@ class AuthMixin:
         auth_proto.OidcConfig
             A protobuf object with auth configuration information.
         """
-        return self._req(Service.AUTH, "GetConfiguration").configuration
+        response = await super().get_configuration()
+        return response.configuration
 
-    def set_auth_configuration(self, configuration: auth_proto.OidcConfig) -> None:
+    async def set_configuration(self, configuration: OidcConfig) -> None:
         """Sets the auth configuration.
 
         Parameters
@@ -62,18 +77,16 @@ class AuthMixin:
 
         Examples
         --------
-        >>> client.set_auth_configuration(auth_proto.OidcConfig(
+        >>> client.set_auth_configuration(OidcConfig(
         ...     issuer="http://localhost:1658",
         ...     client_id="client",
         ...     client_secret="secret",
         ...     redirect_uri="http://test.example.com",
         ... ))
         """
-        self._req(Service.AUTH, "SetConfiguration", configuration=configuration)
+        await super().set_configuration(configuration=configuration)
 
-    def get_role_binding(
-        self, resource: auth_proto.Resource
-    ) -> Dict[str, auth_proto.Roles]:
+    async def get_role_binding(self, resource: Resource) -> Dict[str, Roles]:
         """Returns the current set of role bindings to the resource specified.
 
         Parameters
@@ -88,7 +101,7 @@ class AuthMixin:
 
         Examples
         --------
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.CLUSTER))
+        >>> client.get_role_binding(Resource(type=ResourceType.CLUSTER))
         {
             'robot:someuser': roles {
                 key: "clusterAdmin"
@@ -100,7 +113,7 @@ class AuthMixin:
             }
         }
         ...
-        >>> client.get_role_binding(auth_proto.Resource(type=auth_proto.REPO, name="foobar"))
+        >>> client.get_role_binding(Resource(type=ResourceType.REPO, name="foobar"))
         {
             'user:person_a': roles {
                 key: "repoWriter"
@@ -114,12 +127,11 @@ class AuthMixin:
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.AUTH, "GetRoleBinding", resource=resource
-        ).binding.entries
+        response = super().get_role_binding(resource=resource)
+        return response.binding.entries
 
-    def modify_role_binding(
-        self, resource: auth_proto.Resource, principal: str, roles: List[str] = None
+    async def modify_role_binding(
+        self, resource: Resource, principal: str, roles: List[str] = None
     ) -> None:
         """Sets the roles for a given principal on a resource.
 
@@ -139,25 +151,23 @@ class AuthMixin:
         https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27
 
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.CLUSTER),
+        ...     Resource(type=ResourceType.CLUSTER),
         ...     "user:someuser",
         ...     roles=["clusterAdmin"]
         ... )
         >>> client.modify_role_binding(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
+        ...     Resource(type=ResourceType.REPO, name="foobar"),
         ...     "user:someuser",
         ...     roles=["repoWriter"]
         ... )
         """
-        self._req(
-            Service.AUTH,
-            "ModifyRoleBinding",
+        await super().modify_role_binding(
             resource=resource,
             principal=principal,
             roles=roles,
         )
 
-    def get_oidc_login(self) -> auth_proto.GetOidcLoginResponse:
+    async def get_oidc_login(self) -> GetOidcLoginResponse:
         """Gets the OIDC login configuration.
 
         Returns
@@ -165,9 +175,9 @@ class AuthMixin:
         auth_proto.GetOidcLoginResponse
             A protobuf object with the login configuration information.
         """
-        return self._req(Service.AUTH, "GetOIDCLogin")
+        return await super().get_oidc_login()
 
-    def authenticate_oidc(self, oidc_state: str) -> str:
+    async def authenticate_oidc(self, oidc_state: str) -> str:
         """Authenticates a user to the Pachyderm cluster via OIDC.
 
         Parameters
@@ -180,9 +190,10 @@ class AuthMixin:
         str
             A token that can be used for making authenticate requests.
         """
-        return self._req(Service.AUTH, "Authenticate", oidc_state=oidc_state).pach_token
+        response = await super().authenticate(oidc_state=oidc_state)
+        return response.pach_token
 
-    def authenticate_id_token(self, id_token: str) -> str:
+    async def authenticate_id_token(self, id_token: str) -> str:
         """Authenticates a user to the Pachyderm cluster using an ID token
         issued by the OIDC provider. The token must include the Pachyderm
         client_id in the set of audiences to be valid.
@@ -197,13 +208,14 @@ class AuthMixin:
         str
             A token that can be used for making authenticate requests.
         """
-        return self._req(Service.AUTH, "Authenticate", id_token=id_token).pach_token
+        response = await super().authenticate(id_token=id_token)
+        return response.pach_token
 
-    def authorize(
+    async def authorize(
         self,
-        resource: auth_proto.Resource,
-        permissions: List["auth_proto.Permission"] = None,
-    ) -> auth_proto.AuthorizeResponse:
+        resource: Resource,
+        permissions: List[Permission] = None,
+    ) -> AuthorizeResponse:
         """Tests a list of permissions that the user might have on a resource.
 
         Parameters
@@ -224,18 +236,16 @@ class AuthMixin:
         Examples
         --------
         >>> client.authorize(
-        ...     auth_proto.Resource(type=auth_proto.REPO, name="foobar"),
-        ...     [auth_proto.Permission.REPO_READ]
+        ...     Resource(type=ResourceType.REPO, name="foobar"),
+        ...     [Permission.REPO_READ]
         ... )
         authorized: true
         satisfied: REPO_READ
         principal: "pach:root"
         """
-        return self._req(
-            Service.AUTH, "Authorize", resource=resource, permissions=permissions
-        )
+        return await super().authorize(resource=resource, permissions=permissions)
 
-    def who_am_i(self) -> auth_proto.WhoAmIResponse:
+    async def who_am_i(self) -> WhoAmIResponse:
         """Returns info about the user tied to this `Client`.
 
         Returns
@@ -244,11 +254,9 @@ class AuthMixin:
             A protobuf object that returns the username and expiration for the
             token used.
         """
-        return self._req(Service.AUTH, "WhoAmI")
+        return await super().who_am_i()
 
-    def get_roles_for_permission(
-        self, permission: auth_proto.Permission
-    ) -> List[auth_proto.Role]:
+    async def get_roles_for_permission(self, permission: Permission) -> List[Role]:
         """Returns a list of all roles that have the specified permission.
 
         Parameters
@@ -266,15 +274,14 @@ class AuthMixin:
         --------
         All available permissions can be found in auth proto Permissions enum
 
-        >>> roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+        >>> roles = client.get_roles_for_permission(Permission.REPO_READ)
 
         .. # noqa: W505
         """
-        return self._req(
-            Service.AUTH, "GetRolesForPermission", permission=permission
-        ).roles
+        response = await super().get_roles_for_permission(permission=permission)
+        return response.roles
 
-    def get_robot_token(self, robot: str, ttl: int = None) -> str:
+    async def get_robot_token(self, robot: str, ttl: int = None) -> str:
         """Gets a new auth token for a robot user.
 
         Parameters
@@ -290,9 +297,10 @@ class AuthMixin:
         str
             The new auth token.
         """
-        return self._req(Service.AUTH, "GetRobotToken", robot=robot, ttl=ttl).token
+        response = await super().get_robot_token(robot=robot, ttl=ttl)
+        return response.token
 
-    def revoke_auth_token(self, token: str) -> None:
+    async def revoke_auth_token(self, token: str) -> None:
         """Revokes an auth token.
 
         Parameters
@@ -300,9 +308,9 @@ class AuthMixin:
         token : str
             The Pachyderm token being revoked.
         """
-        self._req(Service.AUTH, "RevokeAuthToken", token=token)
+        await super().revoke_auth_token(token=token)
 
-    def set_groups_for_user(self, username: str, groups: List[str]) -> None:
+    async def set_groups_for_user(self, username: str, groups: List[str]) -> None:
         """Sets the group membership for a user.
 
         Parameters
@@ -318,9 +326,9 @@ class AuthMixin:
 
         .. # noqa: W505
         """
-        self._req(Service.AUTH, "SetGroupsForUser", username=username, groups=groups)
+        await super().set_groups_for_user(username=username, groups=groups)
 
-    def modify_members(
+    async def modify_members(
         self, group: str, add: List[str] = None, remove: List[str] = None
     ) -> None:
         """Adds and/or removes members of a group.
@@ -342,15 +350,9 @@ class AuthMixin:
         ...     remove=["user:someuser"]
         ... )
         """
-        self._req(
-            Service.AUTH,
-            "ModifyMembers",
-            group=group,
-            add=add,
-            remove=remove,
-        )
+        await super().modify_members(group=group, add=add, remove=remove)
 
-    def get_groups(self) -> List[str]:
+    async def get_groups(self) -> List[str]:
         """Gets a list of groups this user belongs to.
 
         Returns
@@ -358,9 +360,10 @@ class AuthMixin:
         List[str]
             List of groups the user belongs to.
         """
-        return self._req(Service.AUTH, "GetGroups").groups
+        response = await super().get_groups()
+        return response.groups
 
-    def get_users(self, group: str) -> List[str]:
+    async def get_users(self, group: str) -> List[str]:
         """Gets users in a group.
 
         Parameters
@@ -373,7 +376,8 @@ class AuthMixin:
         List[str]
             All the users in the specified group.
         """
-        return self._req(Service.AUTH, "GetUsers", group=group).usernames
+        response = await super().get_users(group=group)
+        return response.usernames
 
     def extract_auth_tokens(self):
         """This maps to an internal function that is only used for migration.

@@ -1,19 +1,24 @@
 from typing import List
-from grpc import RpcError
+
+import grpc
 
 from python_pachyderm.errors import AuthServiceNotActivated
-from python_pachyderm.service import Service
-from python_pachyderm.experimental.service import identity_proto
+from ..proto.v2.identity_v2 import (
+    ApiStub as _IdentityApiStub,
+    IdentityServerConfig,
+    IdpConnector,
+    OidcClient,
+)
+from . import _synchronizer
 
 # bp_to_pb: OidcClient -> OIDCClient, IdpConnector -> IDPConnector
 
 
-class IdentityMixin:
+@_synchronizer
+class IdentityApi(_synchronizer(_IdentityApiStub)):
     """A mixin for identity-related functionality."""
 
-    def set_identity_server_config(
-        self, config: identity_proto.IdentityServerConfig
-    ) -> None:
+    async def set_identity_server_config(self, config: IdentityServerConfig) -> None:
         """Configure the embedded identity server.
 
         Parameters
@@ -22,9 +27,9 @@ class IdentityMixin:
             A protobuf object that is the configuration for the identity web
             server.
         """
-        self._req(Service.IDENTITY, "SetIdentityServerConfig", config=config)
+        await super().set_identity_server_config(config=config)
 
-    def get_identity_server_config(self) -> identity_proto.IdentityServerConfig:
+    async def get_identity_server_config(self) -> IdentityServerConfig:
         """Get the embedded identity server configuration.
 
         Returns
@@ -33,9 +38,10 @@ class IdentityMixin:
             A protobuf object that holds configuration info (issuer and ID
             token expiry) for the identity web server.
         """
-        return self._req(Service.IDENTITY, "GetIdentityServerConfig").config
+        response = await super().get_identity_server_config()
+        return response.config
 
-    def create_idp_connector(self, connector: identity_proto.IdpConnector) -> None:
+    async def create_idp_connector(self, connector: IdpConnector) -> None:
         """Create an IDP connector in the identity server.
 
         Parameters
@@ -44,9 +50,10 @@ class IdentityMixin:
             A protobuf object that represents a connection to an identity
             provider.
         """
-        self._req(Service.IDENTITY, "CreateIDPConnector", connector=connector)
+        # TODO: This should take inputs
+        await super().create_idp_connector()
 
-    def list_idp_connectors(self) -> List[identity_proto.IdpConnector]:
+    async def list_idp_connectors(self) -> List[IdpConnector]:
         """List IDP connectors in the identity server.
 
         Returns
@@ -56,9 +63,10 @@ class IdentityMixin:
             name, type, config version, and configuration of the upstream IDP
             connector.
         """
-        return self._req(Service.IDENTITY, "ListIDPConnectors").connectors
+        response = await super().list_idp_connectors()
+        return response.connectors
 
-    def update_idp_connector(self, connector: identity_proto.IdpConnector) -> None:
+    async def update_idp_connector(self, connector: IdpConnector) -> None:
         """Update an IDP connector in the identity server.
 
         Parameters
@@ -67,9 +75,10 @@ class IdentityMixin:
             A protobuf object that represents a connection to an identity
             provider.
         """
-        self._req(Service.IDENTITY, "UpdateIDPConnector", connector=connector)
+        # TODO: This should take inputs
+        await super().update_idp_connector()
 
-    def get_idp_connector(self, id: str) -> identity_proto.IdpConnector:
+    async def get_idp_connector(self, id: str) -> IdpConnector:
         """Get an IDP connector in the identity server.
 
         Parameters
@@ -84,9 +93,11 @@ class IdentityMixin:
             type, config version, and configuration of the upstream IDP
             connector.
         """
-        return self._req(Service.IDENTITY, "GetIDPConnector", id=id).connector
+        # TODO: This should take inputs
+        response = await super().get_idp_connector()
+        return response.connector
 
-    def delete_idp_connector(self, id: str) -> None:
+    async def delete_idp_connector(self, id: str) -> None:
         """Delete an IDP connector in the identity server.
 
         Parameters
@@ -94,11 +105,10 @@ class IdentityMixin:
         id : str
             The connector ID.
         """
-        self._req(Service.IDENTITY, "DeleteIDPConnector", id=id)
+        # TODO: This should take inputs
+        await super().delete_idp_connector()
 
-    def create_oidc_client(
-        self, client: identity_proto.OidcClient
-    ) -> identity_proto.OidcClient:
+    async def create_oidc_client(self, client: OidcClient) -> OidcClient:
         """Create an OIDC client in the identity server.
 
         Parameters
@@ -112,9 +122,11 @@ class IdentityMixin:
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
-        return self._req(Service.IDENTITY, "CreateOIDCClient", client=client).client
+        # TODO: This should take inputs
+        response = await super().create_oidc_client()
+        return response.client
 
-    def update_oidc_client(self, client: identity_proto.OidcClient) -> None:
+    async def update_oidc_client(self, client: OidcClient) -> None:
         """Update an OIDC client in the identity server.
 
         Parameters
@@ -123,9 +135,10 @@ class IdentityMixin:
             A protobuf object representing an OIDC client.
 
         """
-        return self._req(Service.IDENTITY, "UpdateOIDCClient", client=client)
+        # TODO: This should take inputs
+        await super().update_oidc_client()
 
-    def get_oidc_client(self, id: str) -> identity_proto.OidcClient:
+    async def get_oidc_client(self, id: str) -> OidcClient:
         """Get an OIDC client in the identity server.
 
         Parameters
@@ -139,9 +152,11 @@ class IdentityMixin:
             A protobuf object that returns a client with info on the client ID,
             name, secret, and lists of redirect URIs and trusted peers.
         """
-        return self._req(Service.IDENTITY, "GetOIDCClient", id=id).client
+        # TODO: This should take inputs
+        response = await super().get_oidc_client()
+        return response.client
 
-    def delete_oidc_client(self, id: str) -> None:
+    async def delete_oidc_client(self, id: str) -> None:
         """Delete an OIDC client in the identity server.
 
         Parameters
@@ -149,9 +164,10 @@ class IdentityMixin:
         id : str
             The client ID.
         """
-        self._req(Service.IDENTITY, "DeleteOIDCClient", id=id)
+        # TODO: This should take inputs
+        await super().delete_oidc_client()
 
-    def list_oidc_clients(self) -> List[identity_proto.OidcClient]:
+    async def list_oidc_clients(self) -> List[OidcClient]:
         """List OIDC clients in the identity server.
 
         Returns
@@ -161,9 +177,10 @@ class IdentityMixin:
             client ID, name, secret, and lists of redirect URIs and trusted
             peers.
         """
-        return self._req(Service.IDENTITY, "ListOIDCClients").clients
+        response = await super().list_oidc_clients()
+        return response.clients
 
-    def delete_all_identity(self) -> None:
+    async def delete_all(self) -> None:
         """Delete all identity service information.
 
         Raises
@@ -171,6 +188,6 @@ class IdentityMixin:
         AuthServiceNotActivated
         """
         try:
-            self._req(Service.IDENTITY, "DeleteAll")
-        except RpcError as err:
+            await super().delete_all()
+        except grpc.RpcError as err:
             raise AuthServiceNotActivated.try_from(err)

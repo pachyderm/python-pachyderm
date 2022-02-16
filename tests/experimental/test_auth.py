@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 
 """Tests admin-related functionality"""
-
 import os
-from contextlib import contextmanager
-from time import sleep
 
+import grpc
 import pytest
 
-import python_pachyderm
-from python_pachyderm.experimental.service import auth_proto, identity_proto
+from python_pachyderm.experimental import Client as ExperimentalClient
+from python_pachyderm.experimental.mixin.auth import (
+    OidcConfig,
+    Permission,
+    Resource,
+    ResourceType,
+)
+from python_pachyderm.experimental.mixin.identity import IdentityServerConfig
 from tests import util
 
 # bp_to_pb: OidcConfig -> OIDCConfig
@@ -17,39 +21,39 @@ from tests import util
 
 @pytest.fixture
 def client():
-    pc = python_pachyderm.experimental.Client()
-    pc.activate_license(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
-    pc.add_cluster("localhost", "localhost:1650", secret="secret")
-    pc.activate_enterprise("localhost:1650", "localhost", "secret")
+    pc = ExperimentalClient()
+    pc.license.activate(os.environ["PACH_PYTHON_ENTERPRISE_CODE"])
+    pc.license.add_cluster("localhost", "localhost:1650", secret="secret")
+    pc.enterprise.activate("localhost:1650", "localhost", "secret")
 
     pc.auth_token = "iamroot"
-    pc.activate_auth(pc.auth_token)
-    pc.set_identity_server_config(
-        config=identity_proto.IdentityServerConfig(issuer="http://localhost:1658")
+    pc.auth.activate(pc.auth_token)
+    pc.identity.set_identity_server_config(
+        config=IdentityServerConfig(issuer="http://localhost:1658")
     )
     yield pc
     # not redundant because auth_token could be overriden by tests
     pc.auth_token = "iamroot"
     try:
-        pc.delete_all_identity()
+        pc.identity.delete_all()
     except Exception:
         pass
     try:
-        pc.delete_all_license()
+        pc.license.delete_all()
     except Exception:
         pass
     try:
-        pc.deactivate_auth()
+        pc.auth.deactivate()
     except Exception:
         pass
-    pc.deactivate_enterprise()
+    pc.enterprise.deactivate()
 
 
 @util.skip_if_no_enterprise()
 def test_auth_configuration(client):
-    client.get_auth_configuration()
-    client.set_auth_configuration(
-        auth_proto.OidcConfig(
+    client.auth.get_configuration()
+    client.auth.set_configuration(
+        OidcConfig(
             issuer="http://localhost:1658",
             client_id="client",
             client_secret="secret",
@@ -60,60 +64,58 @@ def test_auth_configuration(client):
 
 @util.skip_if_no_enterprise()
 def test_cluster_role_bindings(client):
-    cluster_resource = auth_proto.Resource(type=auth_proto.ResourceType.CLUSTER)
-    binding = client.get_role_binding(cluster_resource)
+    cluster_resource = Resource(type=ResourceType.CLUSTER)
+    binding = client.auth.get_role_binding(cluster_resource)
     assert binding["pach:root"].roles["clusterAdmin"]
-    client.modify_role_binding(
+    client.auth.modify_role_binding(
         cluster_resource, "robot:someuser", roles=["clusterAdmin"]
     )
 
-    binding = client.get_role_binding(cluster_resource)
+    binding = client.auth.get_role_binding(cluster_resource)
     assert binding["robot:someuser"].roles["clusterAdmin"]
 
 
 @util.skip_if_no_enterprise()
 def test_authorize(client):
-    client.authorize(
-        auth_proto.Resource(type=auth_proto.ResourceType.REPO, name="foobar"),
-        [auth_proto.Permission.REPO_READ],
+    client.auth.authorize(
+        Resource(type=ResourceType.REPO, name="foobar"),
+        [Permission.REPO_READ],
     )
 
 
 @util.skip_if_no_enterprise()
 def test_who_am_i(client):
-    assert client.who_am_i().username == "pach:root"
+    assert client.auth.who_am_i().username == "pach:root"
 
 
 @util.skip_if_no_enterprise()
 def test_get_roles_for_permission(client):
     # Checks built-in roles
-    roles = client.get_roles_for_permission(auth_proto.Permission.REPO_READ)
+    roles = client.auth.get_roles_for_permission(Permission.REPO_READ)
     for r in roles:
-        assert auth_proto.Permission.REPO_READ in r.permissions
+        assert Permission.REPO_READ in r.permissions
 
-    roles = client.get_roles_for_permission(
-        auth_proto.Permission.CLUSTER_GET_PACHD_LOGS
-    )
+    roles = client.auth.get_roles_for_permission(Permission.CLUSTER_GET_PACHD_LOGS)
     for r in roles:
-        assert auth_proto.Permission.CLUSTER_GET_PACHD_LOGS in r.permissions
+        assert Permission.CLUSTER_GET_PACHD_LOGS in r.permissions
 
 
 @util.skip_if_no_enterprise()
 def test_robot_token(client):
-    auth_token = client.get_robot_token("robot:root", ttl=30)
+    auth_token = client.auth.get_robot_token("robot:root", ttl=30)
     client.auth_token = auth_token
-    assert client.who_am_i().username == "robot:root"
-    client.revoke_auth_token(auth_token)
-    with pytest.raises(python_pachyderm.RpcError):
-        client.who_am_i()
+    assert client.auth.who_am_i().username == "robot:root"
+    client.auth.revoke_auth_token(auth_token)
+    with pytest.raises(grpc.RpcError):
+        client.auth.who_am_i()
 
 
 @util.skip_if_no_enterprise()
 def test_groups(client):
-    assert client.get_groups() == []
-    client.set_groups_for_user("pach:root", ["foogroup"])
-    assert client.get_groups() == ["foogroup"]
-    assert client.get_users("foogroup") == ["pach:root"]
-    client.modify_members("foogroup", remove=["pach:root"])
-    assert client.get_groups() == []
-    assert client.get_users("foogroup") == []
+    assert client.auth.get_groups() == []
+    client.auth.set_groups_for_user("pach:root", ["foogroup"])
+    assert client.auth.get_groups() == ["foogroup"]
+    assert client.auth.get_users("foogroup") == ["pach:root"]
+    client.auth.modify_members("foogroup", remove=["pach:root"])
+    assert client.auth.get_groups() == []
+    assert client.auth.get_users("foogroup") == []

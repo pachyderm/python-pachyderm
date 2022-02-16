@@ -1,108 +1,104 @@
 #!/usr/bin/env python
 
 """Tests PFS-related functionality"""
-
+from grpclib.exceptions import GRPCError
 import pytest
 
-import python_pachyderm
-from python_pachyderm.experimental.service import pfs_proto, transaction_proto
-from tests import util
+from python_pachyderm.experimental import Client as ExperimentalClient
+from python_pachyderm.experimental.mixin.pfs import CreateRepoRequest, Repo
+from python_pachyderm.experimental.mixin.transaction import TransactionRequest
+from . import util
 
 
 def test_batch_transaction():
-    client = python_pachyderm.experimental.Client()
-    expected_repo_count = len(list(client.list_repo())) + 3
+    client = ExperimentalClient()
+    expected_repo_count = len(list(client.pfs.list_repo())) + 3
 
     def create_repo_request():
-        return transaction_proto.TransactionRequest(
-            create_repo=pfs_proto.CreateRepoRequest(
-                repo=pfs_proto.Repo(name=util.test_repo_name("test_batch_transaction"))
-            )
-        )
+        repo = Repo(name=util.test_repo_name("test_batch_transaction"))
+        return TransactionRequest(create_repo=CreateRepoRequest(repo=repo))
 
-    client.batch_transaction(
-        [
+    client.transaction.batch(
+        requests=[
             create_repo_request(),
             create_repo_request(),
             create_repo_request(),
         ]
     )
 
-    assert len(client.list_transaction()) == 0
-    assert len(list(client.list_repo())) == expected_repo_count
+    assert len(client.transaction.list()) == 0
+    assert len(list(client.pfs.list_repo())) == expected_repo_count
 
 
 def test_transaction_context_mgr():
-    client = python_pachyderm.experimental.Client()
-    expected_repo_count = len(list(client.list_repo())) + 2
+    client = ExperimentalClient()
+    expected_repo_count = len(list(client.pfs.list_repo())) + 2
 
-    with client.transaction() as transaction:
+    with client.transaction.transaction() as tx:
         util.create_test_repo(client, "test_transaction_context_mgr")
         util.create_test_repo(client, "test_transaction_context_mgr")
 
-        transactions = client.list_transaction()
+        transactions = client.transaction.list()
         assert len(transactions) == 1
-        assert transactions[0].transaction.id == transaction.id
-        assert client.inspect_transaction(transaction).transaction.id == transaction.id
-        assert (
-            client.inspect_transaction(transaction.id).transaction.id == transaction.id
-        )
+        assert transactions[0].transaction.id == tx.id
+        assert client.transaction.inspect(tx).transaction.id == tx.id
+        assert client.transaction.inspect(tx.id).transaction.id == tx.id
 
-    assert len(client.list_transaction()) == 0
-    assert len(list(client.list_repo())) == expected_repo_count
+    assert len(client.transaction.list()) == 0
+    assert len(list(client.pfs.list_repo())) == expected_repo_count
 
 
 def test_transaction_context_mgr_nested():
-    client = python_pachyderm.experimental.Client()
+    client = ExperimentalClient()
 
-    with client.transaction():
-        assert client.transaction_id is not None
-        old_transaction_id = client.transaction_id
+    with client.transaction.transaction():
+        assert client.transaction.id is not None
+        old_transaction_id = client.transaction.id
 
-        with client.transaction():
-            assert client.transaction_id is not None
-            assert client.transaction_id != old_transaction_id
+        with client.transaction.transaction():
+            assert client.transaction.id is not None
+            assert client.transaction.id != old_transaction_id
 
-        assert client.transaction_id == old_transaction_id
+        assert client.transaction.id == old_transaction_id
 
 
 def test_transaction_context_mgr_exception():
-    client = python_pachyderm.experimental.Client()
-    expected_repo_count = len(list(client.list_repo()))
+    client = ExperimentalClient()
+    expected_repo_count = len(list(client.pfs.list_repo()))
 
     with pytest.raises(Exception):
-        with client.transaction():
+        with client.transaction.transaction():
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             util.create_test_repo(client, "test_transaction_context_mgr_exception")
             raise Exception("oops!")
 
-    assert len(client.list_transaction()) == 0
-    assert len(list(client.list_repo())) == expected_repo_count
+    assert len(client.transaction.list()) == 0
+    assert len(list(client.pfs.list_repo())) == expected_repo_count
 
 
 def test_delete_transaction():
-    client = python_pachyderm.experimental.Client()
-    expected_repo_count = len(list(client.list_repo()))
+    client = ExperimentalClient()
+    expected_repo_count = len(list(client.pfs.list_repo()))
 
-    transaction = client.start_transaction()
+    transaction = client.transaction.start()
     util.create_test_repo(client, "test_delete_transaction")
     util.create_test_repo(client, "test_delete_transaction")
-    client.delete_transaction(transaction)
+    client.transaction.delete(transaction)
 
-    assert len(client.list_transaction()) == 0
+    assert len(client.transaction.list()) == 0
     # even though the transaction was deleted, the repos were still created,
     # because the transaction wasn't tied to the client
-    assert len(list(client.list_repo())) == expected_repo_count + 2
+    assert len(list(client.pfs.list_repo())) == expected_repo_count + 2
 
-    with pytest.raises(python_pachyderm.RpcError):
+    with pytest.raises(GRPCError):
         # re-deleting should cause an error
-        client.delete_transaction(transaction)
+        client.transaction.delete(transaction)
 
 
 def test_delete_all_transactions():
-    client = python_pachyderm.experimental.Client()
-    client.start_transaction()
-    client.start_transaction()
-    assert len(client.list_transaction()) == 2
-    client.delete_all_transactions()
-    assert len(client.list_transaction()) == 0
+    client = ExperimentalClient()
+    client.transaction.start()
+    client.transaction.start()
+    assert len(client.transaction.list()) == 2
+    client.transaction.delete_all()
+    assert len(client.transaction.list()) == 0

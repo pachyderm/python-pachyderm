@@ -1,18 +1,22 @@
-from typing import Iterator
 import datetime
-from python_pachyderm.service import Service
-from python_pachyderm.experimental.service import debug_proto
-from google.protobuf import duration_pb2
+from typing import Iterator
+
+from ..proto.v2.debug_v2 import (
+    DebugStub as _DebugStub,
+    Filter,
+    Profile,
+)
+from ..proto.v2.pps_v2 import Pipeline
+from . import _synchronizer
 
 # bp_to_pb: datetime.deltatime -> duration_pb2.Duration
 
 
-class DebugMixin:
+@_synchronizer
+class DebugApi(_synchronizer(_DebugStub)):
     """A mixin for debug-related functionality."""
 
-    def dump(
-        self, filter: debug_proto.Filter = None, limit: int = None
-    ) -> Iterator[bytes]:
+    async def dump(self, filter: Filter = None, limit: int = None) -> Iterator[bytes]:
         """Gets a debug dump.
 
         Parameters
@@ -31,17 +35,16 @@ class DebugMixin:
 
         Examples
         --------
-        >>> for b in client.dump(debug_proto.Filter(pipeline=pps_proto.Pipeline(name="foo"))):
+        >>> for b in client.dump(Filter(pipeline=Pipeline(name="foo"))):
         >>>     print(b)
 
         .. # noqa: W505
         """
-        res = self._req(Service.DEBUG, "Dump", filter=filter, limit=limit)
-        for item in res:
+        async for item in super().dump(filter=filter, limit=limit):
             yield item.value
 
-    def profile_cpu(
-        self, duration: datetime.timedelta, filter: debug_proto.Filter = None
+    async def profile_cpu(
+        self, duration: datetime.timedelta, filter: Filter = None
     ) -> Iterator[bytes]:
         """Gets a CPU profile.
 
@@ -64,12 +67,12 @@ class DebugMixin:
         >>> for b in client.profile_cpu(datetime.timedelta(seconds=1)):
         >>>     print(b)
         """
-        profile = debug_proto.Profile(name="cpu", duration=duration)
-        res = self._req(Service.DEBUG, "Profile", profile=profile, filter=filter)
-        for item in res:
+
+        profile = Profile(name="cpu", duration=duration)
+        async for item in super().profile(profile=profile, filter=filter):
             yield item.value
 
-    def binary(self, filter: debug_proto.Filter = None) -> Iterator[bytes]:
+    async def binary(self, filter: Filter = None) -> Iterator[bytes]:
         """Gets the pachd binary.
 
         Parameters
@@ -88,6 +91,5 @@ class DebugMixin:
         >>> for b in client.binary():
         >>>     print(b)
         """
-        res = self._req(Service.DEBUG, "Binary", filter=filter)
-        for item in res:
+        async for item in super().binary(filter=filter):
             yield item.value

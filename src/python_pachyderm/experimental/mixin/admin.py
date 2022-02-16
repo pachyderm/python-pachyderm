@@ -1,15 +1,12 @@
-from python_pachyderm.service import Service
-from python_pachyderm.experimental.service import admin_proto
-from google.protobuf import empty_pb2
-import betterproto.lib.google.protobuf as bp_proto
-
-# bp_to_pb: bp_proto.Empty -> empty_pb2.Empty
+from ..proto.v2.admin_v2 import ClusterInfo, ApiStub as _AdminApiStub
+from . import _synchronizer
 
 
-class AdminMixin:
+@_synchronizer
+class AdminApi(_synchronizer(_AdminApiStub)):
     """A mixin for admin-related functionality."""
 
-    def inspect_cluster(self) -> admin_proto.ClusterInfo:
+    async def inspect_cluster(self) -> ClusterInfo:
         """Inspects a cluster.
 
         Returns
@@ -17,8 +14,4 @@ class AdminMixin:
         admin_proto.ClusterInfo
             A protobuf object with info on the cluster.
         """
-        return self._req(
-            Service.ADMIN,
-            "InspectCluster",
-            req=bp_proto.Empty(),
-        )
+        return await super().inspect_cluster()

@@ -1238,20 +1238,6 @@ class ApiStub(betterproto.ServiceStub):
             "/pps_v2.API/UpdateJobState", request, betterproto_lib_google_protobuf.Empty
         )
 
-    async def run_load_test(
-        self, *, spec: str = "", branch: "Branch" = None, seed: int = 0
-    ) -> "_pfs_v2__.RunLoadTestResponse":
-
-        request = _pfs_v2__.RunLoadTestRequest()
-        request.spec = spec
-        if branch is not None:
-            request.branch = branch
-        request.seed = seed
-
-        return await self._unary_unary(
-            "/pps_v2.API/RunLoadTest", request, _pfs_v2__.RunLoadTestResponse
-        )
-
     async def run_load_test_default(self) -> "_pfs_v2__.RunLoadTestResponse":
 
         request = betterproto_lib_google_protobuf.Empty()
@@ -1429,11 +1415,6 @@ class ApiBase(ServiceBase):
         data_total: int,
         stats: "ProcessStats",
     ) -> "betterproto_lib_google_protobuf.Empty":
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def run_load_test(
-        self, spec: str, branch: "Branch", seed: int
-    ) -> "_pfs_v2__.RunLoadTestResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test_default(self) -> "_pfs_v2__.RunLoadTestResponse":
@@ -1779,18 +1760,6 @@ class ApiBase(ServiceBase):
         response = await self.update_job_state(**request_kwargs)
         await stream.send_message(response)
 
-    async def __rpc_run_load_test(self, stream: grpclib.server.Stream) -> None:
-        request = await stream.recv_message()
-
-        request_kwargs = {
-            "spec": request.spec,
-            "branch": request.branch,
-            "seed": request.seed,
-        }
-
-        response = await self.run_load_test(**request_kwargs)
-        await stream.send_message(response)
-
     async def __rpc_run_load_test_default(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
@@ -1956,12 +1925,6 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 UpdateJobStateRequest,
                 betterproto_lib_google_protobuf.Empty,
-            ),
-            "/pps_v2.API/RunLoadTest": grpclib.const.Handler(
-                self.__rpc_run_load_test,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                _pfs_v2__.RunLoadTestRequest,
-                _pfs_v2__.RunLoadTestResponse,
             ),
             "/pps_v2.API/RunLoadTestDefault": grpclib.const.Handler(
                 self.__rpc_run_load_test_default,

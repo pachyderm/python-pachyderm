@@ -2,7 +2,7 @@
 # sources: python_pachyderm/proto/v2/pfs/pfs.proto
 # plugin: python-betterproto
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import AsyncIterable, AsyncIterator, Dict, Iterable, List, Optional, Union
 
 import betterproto
@@ -182,8 +182,6 @@ class CommitInfoDetails(betterproto.Message):
     """Details are only provided when explicitly requested"""
 
     size_bytes: int = betterproto.int64_field(1)
-    compacting_time: timedelta = betterproto.message_field(2)
-    validating_time: timedelta = betterproto.message_field(3)
 
 
 @dataclass(eq=False, repr=False)
@@ -455,12 +453,6 @@ class RenewFileSetRequest(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class ComposeFileSetRequest(betterproto.Message):
-    file_set_ids: List[str] = betterproto.string_field(1)
-    ttl_seconds: int = betterproto.int64_field(2)
-
-
-@dataclass(eq=False, repr=False)
 class ActivateAuthRequest(betterproto.Message):
     pass
 
@@ -483,7 +475,6 @@ class RunLoadTestResponse(betterproto.Message):
     branch: "Branch" = betterproto.message_field(2)
     seed: int = betterproto.int64_field(3)
     error: str = betterproto.string_field(4)
-    duration: timedelta = betterproto.message_field(5)
 
 
 class ApiStub(betterproto.ServiceStub):
@@ -961,19 +952,6 @@ class ApiStub(betterproto.ServiceStub):
             "/pfs_v2.API/RenewFileSet", request, betterproto_lib_google_protobuf.Empty
         )
 
-    async def compose_file_set(
-        self, *, file_set_ids: Optional[List[str]] = None, ttl_seconds: int = 0
-    ) -> "CreateFileSetResponse":
-        file_set_ids = file_set_ids or []
-
-        request = ComposeFileSetRequest()
-        request.file_set_ids = file_set_ids
-        request.ttl_seconds = ttl_seconds
-
-        return await self._unary_unary(
-            "/pfs_v2.API/ComposeFileSet", request, CreateFileSetResponse
-        )
-
     async def run_load_test(
         self, *, spec: str = "", branch: "Branch" = None, seed: int = 0
     ) -> "RunLoadTestResponse":
@@ -1157,11 +1135,6 @@ class ApiBase(ServiceBase):
     async def renew_file_set(
         self, file_set_id: str, ttl_seconds: int
     ) -> "betterproto_lib_google_protobuf.Empty":
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def compose_file_set(
-        self, file_set_ids: Optional[List[str]], ttl_seconds: int
-    ) -> "CreateFileSetResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test(
@@ -1564,17 +1537,6 @@ class ApiBase(ServiceBase):
         response = await self.renew_file_set(**request_kwargs)
         await stream.send_message(response)
 
-    async def __rpc_compose_file_set(self, stream: grpclib.server.Stream) -> None:
-        request = await stream.recv_message()
-
-        request_kwargs = {
-            "file_set_ids": request.file_set_ids,
-            "ttl_seconds": request.ttl_seconds,
-        }
-
-        response = await self.compose_file_set(**request_kwargs)
-        await stream.send_message(response)
-
     async def __rpc_run_load_test(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
@@ -1794,12 +1756,6 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 RenewFileSetRequest,
                 betterproto_lib_google_protobuf.Empty,
-            ),
-            "/pfs_v2.API/ComposeFileSet": grpclib.const.Handler(
-                self.__rpc_compose_file_set,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                ComposeFileSetRequest,
-                CreateFileSetResponse,
             ),
             "/pfs_v2.API/RunLoadTest": grpclib.const.Handler(
                 self.__rpc_run_load_test,
