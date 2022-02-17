@@ -1189,11 +1189,11 @@ class PFSApi(_synchronizer(_PFSApiStub)):
             repos = []
         Path(mount_dir).mkdir(parents=True, exist_ok=True)
 
-        subprocess.run(
-            ["pachctl", "unmount", mount_dir],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.STDOUT,
-        )
+        # subprocess.run(
+        #     ["pachctl", "unmount", mount_dir],
+        #     stdout=subprocess.DEVNULL,
+        #     stderr=subprocess.STDOUT,
+        # )
 
         # Check for non-empty mount dir
         mount_dir_contents = next(os.walk(mount_dir))
@@ -1244,9 +1244,9 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         >>> client.unmount(all_mounts=True)
         """
         if mount_dir is not None:
-            subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
+            subprocess.run(["pachctl", "unmount", mount_dir], check=True)
         elif all_mounts:
-            subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
+            subprocess.run(["pachctl", "unmount", "-a"], input=b"y\n", check=True)
         else:
             print("no repos unmounted, pass arguments or see documentation")
 

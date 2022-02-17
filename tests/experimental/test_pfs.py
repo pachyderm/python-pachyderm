@@ -458,10 +458,8 @@ def test_path_exists(client: ExperimentalClient, repo: str):
         assert not client.pfs.path_exists(("fake_repo", "master"), "dir")
 
 
-def test_mount(client: ExperimentalClient, repo: str, tmp_path: Path):
+def test_mount(client: ExperimentalClient, repo: str, repo2: str, tmp_path: Path):
     file1, file2, file3 = "file1.txt", "file2.txt", "file3.txt"
-    repo2 = repo + "2"
-    client.pfs.create_repo(repo2, "second repo")
 
     with client.pfs.commit(repo, "master") as commit1:
         client.pfs.put_file_bytes(commit1, file1, b"DATA1")

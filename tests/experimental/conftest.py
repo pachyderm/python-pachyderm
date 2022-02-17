@@ -25,6 +25,16 @@ def _repo_fixture(request, client: ExperimentalClient) -> str:
     client.pfs.delete_repo(repo, force=True)
 
 
+@pytest.fixture(name="repo2")
+def _repo2_fixture(client: ExperimentalClient, repo: str) -> str:
+    """Create a repository name from the test function name."""
+    repo2 = f"{repo}2"
+    client.pfs.delete_repo(repo2, force=True)
+    client.pfs.create_repo(repo2, "second test repo for python_pachyderm")
+    yield repo2
+    client.pfs.delete_repo(repo2, force=True)
+
+
 @pytest.fixture(name="pipeline")
 def _pipeline_fixture(client: ExperimentalClient, repo: str) -> str:
     """Create a pipeline."""
