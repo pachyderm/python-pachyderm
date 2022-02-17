@@ -437,7 +437,7 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         """
         await super().drop_commit_set(commit_set=CommitSet(id=commit_id))
 
-    async def wait_commit(self, commit: Union[str, SubcommitType]) -> List[CommitInfo]:
+    def wait_commit(self, commit: Union[str, SubcommitType]) -> List[CommitInfo]:
         """Waits for the specified commit to finish.
 
         Parameters
@@ -462,7 +462,7 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         >>> client.wait_commit(("foo", "master"))
         """
         response = self.inspect_commit(commit, CommitState.FINISHED)
-        return [commit_info async for commit_info in response]
+        return [commit_info for commit_info in response]
 
     async def subscribe_commit(
         self,

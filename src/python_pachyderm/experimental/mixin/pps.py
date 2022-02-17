@@ -403,6 +403,10 @@ class PPSApi(_synchronizer(_PPSApiStub)):
         ...     ))
         ... )
         """
+        if isinstance(spout, Spout):
+            # Ensure that an empty Spout message is serialized
+            spout._serialized_on_wire = True
+
         await super().create_pipeline(
             pipeline=Pipeline(name=pipeline_name),
             transform=transform,

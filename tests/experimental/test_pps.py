@@ -1,290 +1,124 @@
 #!/usr/bin/env python
 
 """Tests for PPS-related functionality."""
+import os
+from typing import Iterable, Optional
+from uuid import uuid4
 
-import time
-
-from grpclib.exceptions import GRPCError
+import grpclib
 import pytest
 
 from python_pachyderm.experimental import Client as ExperimentalClient
-from python_pachyderm.experimental.mixin.pps import (
-    CreatePipelineRequest,
-    DatumState,
-    Input,
-    JobState,
-    PfsInput,
-    Pipeline,
-    Transform,
-)
-from tests.experimental import util
-
-# bp_to_pb: PfsInput -> PFSInput
+from python_pachyderm.experimental.mixin.pps import DatumState, JobInfo, JobState
 
 
-class Sandbox:
-    def __init__(self, test_name):
-        client = ExperimentalClient()
-        client.delete_all()
-        commit, input_repo_name, pipeline_repo_name = util.create_test_pipeline(
-            client, test_name
-        )
-        self.client = client
-        self.commit = commit
-        self.input_repo_name = input_repo_name
-        self.pipeline_repo_name = pipeline_repo_name
+def test_pipelines(client: ExperimentalClient, pipeline: str, repo: str):
+    """Test the full functionality of pipelines."""
+    # Assert that the test pipeline is listed
+    pipeline_info = client.pps.list_pipeline()
+    assert any(info for info in pipeline_info if info.pipeline.name == pipeline)
 
-    def wait(self):
-        return self.client.pfs.wait_commit(self.commit.id)[0].commit.id
+    # Test inspecting pipelines.
+    pipeline_info = client.pps.inspect_pipeline(pipeline)
+    assert any(info for info in pipeline_info if info.pipeline.name == pipeline)
 
+    client.pps.stop_pipeline(pipeline)
+    assert next(client.pps.inspect_pipeline(pipeline)).stopped
 
-def test_list_subjob():
-    sandbox = Sandbox("list_subjob")
-    sandbox.wait()
+    client.pps.start_pipeline(pipeline)
+    assert not next(client.pps.inspect_pipeline(pipeline)).stopped
 
-    jobs = list(sandbox.client.pps.list_job())
-    assert len(jobs) >= 1
+    with pytest.raises(grpclib.GRPCError, match=r"pipeline.*have a cron input"):
+        client.pps.run_cron(pipeline)
 
-    jobs = list(sandbox.client.pps.list_job(pipeline_name=sandbox.pipeline_repo_name))
-    assert len(jobs) >= 1
+    # Just make sure these spit out some logs
+    assert client.pps.get_pipeline_logs(pipeline) is not None
+    assert client.pps.get_pipeline_logs(pipeline, master=True) is not None
 
-    jobs = list(
-        sandbox.client.pps.list_job(
-            pipeline_name=sandbox.pipeline_repo_name,
-            input_commit=(sandbox.input_repo_name, sandbox.commit.id),
-        )
-    )
-    assert len(jobs) >= 1
+    client.pps.delete_pipeline(pipeline)
+    pipeline_info = client.pps.list_pipeline()
+    assert not any(info for info in pipeline_info if info.pipeline.name == pipeline)
 
 
-def test_list_job():
-    sandbox = Sandbox("list_job1")
-    sandbox.wait()
-    client = sandbox.client
+def test_jobs(client: ExperimentalClient, pipeline: str, repo: str):
+    """Test the PPS functionality relating to jobs"""
 
-    commit, _, _ = util.create_test_pipeline(client, "list_job2")
-    client.pfs.wait_commit(commit.id)
+    def contains_pipeline_job(
+        job_info_iterable: Iterable[JobInfo],
+        pipeline_name: str,
+        job_commit: Optional[str] = None,
+    ) -> bool:
+        for _info in job_info_iterable:
+            if _info.job.pipeline.name == pipeline_name:
+                return True and (job_commit is None or _info.job.id == job_commit)
+        return False
 
-    jobs = list(client.pps.list_job())
-    assert len(jobs) == 4
+    # Assert that jobs are listed as expected.
+    #   Listing all jobs returns Iterable[JobSetInfo]
+    job_sets = client.pps.list_job()
+    assert any(js for js in job_sets if contains_pipeline_job(js.jobs, pipeline))
 
+    #   Listing all jobs filtered by pipeline name returns Iterable[JobInfo]
+    job_infos = list(client.pps.list_job(pipeline_name=pipeline))
+    assert contains_pipeline_job(job_infos, pipeline)
+    assert len(job_infos) == 1
+    commit = job_infos[0].output_commit
 
-def test_inspect_subjob():
-    sandbox = Sandbox("inspect_subjob")
-    job_id = sandbox.wait()
+    job_infos = list(client.pps.list_job(pipeline_name=pipeline, input_commit=commit))
+    assert contains_pipeline_job(job_infos, pipeline, commit.id)
 
-    job_info = list(sandbox.client.pps.inspect_job(job_id, sandbox.pipeline_repo_name))
-    assert job_info[0].job.id == job_id
+    # Assert that jobs can be inspected from commit id.
+    job_info = next(client.pps.inspect_job(commit.id, pipeline))
+    assert job_info.job.id == commit.id
+    assert job_info.job.pipeline.name == pipeline
 
+    # Test stopping a job.
+    reason = "stopped for testing"
+    client.pps.stop_job(commit.id, pipeline, reason=reason)
+    job_info = next(client.pps.inspect_job(commit.id, pipeline))
+    assert job_info.state == JobState.JOB_KILLED
+    assert job_info.reason == reason
 
-def test_inspect_job():
-    sandbox = Sandbox("inspect_job1")
-    sandbox.wait()
-    client = sandbox.client
-
-    commit, _, _ = util.create_test_pipeline(client, "inspect_job2")
-    client.pfs.wait_commit(commit.id)
-
-    jobs = list(client.pps.list_job())
-    job1 = list(client.pps.inspect_job(job_id=jobs[0].job_set.id))
-
-    assert job1[0].job.id == commit.id
-    assert len(jobs) == 4
-
-
-def test_stop_job():
-    sandbox = Sandbox("stop_job")
-    pipeline_name = sandbox.pipeline_repo_name
-    job_id = sandbox.wait()
-
-    sandbox.client.pps.stop_job(job_id, pipeline_name)
-    # This is necessary because `StopJob` does not wait for the job to be
-    # killed before returning a result.
-    # TODO: remove once this is fixed:
-    # https://github.com/pachyderm/pachyderm/issues/3856
-    time.sleep(1)
-    job_info = list(sandbox.client.pps.inspect_job(job_id, pipeline_name))
-    # We race to stop the job before it finishes - if we lose the race, it will
-    # be in state JOB_SUCCESS
-    assert job_info[0].state in (JobState.JOB_KILLED, JobState.JOB_SUCCESS)
+    # Test deleting a job.
+    client.pps.delete_job(commit.id, pipeline)
+    job_infos = list(client.pps.list_job(pipeline_name=pipeline, input_commit=commit))
+    assert not contains_pipeline_job(job_infos, pipeline, commit.id)
 
 
-def test_delete_job():
-    sandbox = Sandbox("delete_job")
-    job_id = sandbox.wait()
-    orig_job_count = len(list(sandbox.client.pps.list_job()))
-    sandbox.client.pps.delete_job(job_id, sandbox.pipeline_repo_name)
-    jobs = len(list(sandbox.client.pps.list_job()))
-    assert jobs == orig_job_count - 1
+def test_datums(client: ExperimentalClient, pipeline: str, repo: str):
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, f"/{commit.id}.dat", os.urandom(1024))
 
+    # We must wait for the commit to finish for the datum to be created.
+    pipeline_commit_info = client.pfs.wait_commit((pipeline, commit.id))[0]
+    job_id = pipeline_commit_info.commit.id
+    datum_info = next(client.pps.list_datum(pipeline, job_id))
+    assert datum_info.state == DatumState.SUCCESS
 
-def test_datums():
-    sandbox = Sandbox("datums")
-    pipeline_name = sandbox.pipeline_repo_name
-    job_id = sandbox.wait()
+    datum_info = client.pps.inspect_datum(pipeline, job_id, datum_info.datum.id)
+    assert datum_info.state == DatumState.SUCCESS
 
-    # flush the job so it fully finishes
-    list(sandbox.client.pfs.wait_commit(sandbox.commit.id))
-
-    datums = list(sandbox.client.pps.list_datum(pipeline_name, job_id))
-    assert len(datums) == 1
-    datum = sandbox.client.pps.inspect_datum(pipeline_name, job_id, datums[0].datum.id)
-    assert datum.state == DatumState.SUCCESS
+    assert next(client.pps.get_job_logs(pipeline, job_id)) is not None
 
     error_message_match = (
         rf"datum matching filter \[.*\] could not be found for job ID {job_id}"
     )
-    with pytest.raises(GRPCError, match=error_message_match):
-        sandbox.client.pps.restart_datum(pipeline_name, job_id)
+    with pytest.raises(grpclib.GRPCError, match=error_message_match):
+        client.pps.restart_datum(pipeline, job_id)
 
 
-def test_inspect_pipeline():
-    sandbox = Sandbox("inspect_pipeline")
-    pipeline = list(sandbox.client.pps.inspect_pipeline(sandbox.pipeline_repo_name))[0]
-    assert pipeline.pipeline.name == sandbox.pipeline_repo_name
-    pipelines = list(
-        sandbox.client.pps.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
+def test_secrets(client: ExperimentalClient):
+    secret_name = uuid4().hex
+    data = {"mykey": "my-value"}
+    client.pps.create_secret(secret_name, data)
+
+    secret_info = client.pps.inspect_secret(secret_name)
+    assert secret_info.secret.name == secret_name
+    assert any(
+        info for info in client.pps.list_secret() if info.secret.name == secret_name
     )
-    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
-
-
-def test_list_pipeline():
-    sandbox = Sandbox("list_pipeline")
-    pipelines = list(sandbox.client.pps.list_pipeline())
-    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
-    pipelines = list(sandbox.client.pps.list_pipeline(history=-1))
-    assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
-
-
-def test_delete_pipeline():
-    sandbox = Sandbox("delete_pipeline")
-    orig_pipeline_count = len(list(sandbox.client.pps.list_pipeline()))
-    sandbox.client.pps.delete_pipeline(sandbox.pipeline_repo_name)
-    assert len(list(sandbox.client.pps.list_pipeline())) == orig_pipeline_count - 1
-
-
-def test_delete_all_pipelines():
-    sandbox = Sandbox("delete_all_pipelines")
-    sandbox.client.pps.delete_all_pipelines()
-    pipelines = list(sandbox.client.pps.list_pipeline())
-    assert len(pipelines) == 0
-
-
-def test_restart_pipeline():
-    sandbox = Sandbox("restart_job")
-
-    sandbox.client.pps.stop_pipeline(sandbox.pipeline_repo_name)
-    pipeline = list(sandbox.client.pps.inspect_pipeline(sandbox.pipeline_repo_name))[0]
-    assert pipeline.stopped
-
-    sandbox.client.pps.start_pipeline(sandbox.pipeline_repo_name)
-    pipeline = list(sandbox.client.pps.inspect_pipeline(sandbox.pipeline_repo_name))[0]
-    assert not pipeline.stopped
-
-
-def test_run_cron():
-    sandbox = Sandbox("run_cron")
-
-    # flush the job so it fully finishes
-    list(sandbox.client.pfs.wait_commit(sandbox.commit.id))
-
-    # this should trigger an error because the sandbox pipeline doesn't have a
-    # cron input
-    # NOTE: `e` is used after the context
-    with pytest.raises(GRPCError, match=r"pipeline.*have a cron input"):
-        sandbox.client.pps.run_cron(sandbox.pipeline_repo_name)
-
-
-def test_secrets():
-    client = ExperimentalClient()
-    secret_name = util.test_repo_name("test-secrets")
-
-    client.pps.create_secret(secret_name, {"mykey": "my-value"})
-
-    secret = client.pps.inspect_secret(secret_name)
-    assert secret.secret.name == secret_name
-
-    secrets = client.pps.list_secret()
-    assert len(secrets) == 1
-    assert secrets[0].secret.name == secret_name
 
     client.pps.delete_secret(secret_name)
-
-    with pytest.raises(GRPCError):
+    with pytest.raises(grpclib.GRPCError):
         client.pps.inspect_secret(secret_name)
-
-    secrets = client.pps.list_secret()
-    assert len(secrets) == 0
-
-
-def test_get_pipeline_logs():
-    sandbox = Sandbox("get_pipeline_logs")
-    sandbox.wait()
-
-    # Just make sure these spit out some logs
-    logs = sandbox.client.pps.get_pipeline_logs(sandbox.pipeline_repo_name)
-    assert next(logs) is not None
-
-    logs = sandbox.client.pps.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
-    assert next(logs) is not None
-
-
-def test_get_job_logs():
-    sandbox = Sandbox("get_logs_logs")
-    job_id = sandbox.wait()
-    pipeline_name = sandbox.pipeline_repo_name
-
-    # Wait for the job to complete
-    commit = (pipeline_name, job_id)
-    sandbox.client.pfs.wait_commit(commit)
-
-    # Just make sure these spit out some logs
-    logs = sandbox.client.pps.get_job_logs(pipeline_name, job_id)
-    assert next(logs) is not None
-
-
-def test_create_pipeline():
-    client = ExperimentalClient()
-    client.delete_all()
-
-    input_repo_name = util.create_test_repo(client, "input_repo_test_create_pipeline")
-
-    client.pps.create_pipeline(
-        "pipeline_test_create_pipeline",
-        transform=Transform(
-            cmd=["sh"],
-            image="alpine",
-            stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
-        ),
-        input=Input(pfs=PfsInput(glob="/*", repo=input_repo_name)),
-    )
-    assert len(list(client.pps.list_pipeline())) == 1
-
-
-def test_create_pipeline_from_request():
-    client = ExperimentalClient()
-
-    repo_name = util.create_test_repo(client, "test_create_pipeline_from_request")
-    pipeline_name = util.test_repo_name("test_create_pipeline_from_request")
-
-    # more or less a copy of the opencv demo's edges pipeline spec
-    client.pps.create_pipeline_from_request(
-        CreatePipelineRequest(
-            pipeline=Pipeline(name=pipeline_name),
-            description="A pipeline that performs image edge detection by using the OpenCV library.",
-            input=Input(
-                pfs=PfsInput(
-                    glob="/*",
-                    repo=repo_name,
-                ),
-            ),
-            transform=Transform(
-                cmd=["echo", "hi"],
-                image="pachyderm/opencv",
-            ),
-        )
-    )
-
-    assert any(
-        p.pipeline.name == pipeline_name for p in list(client.pps.list_pipeline())
-    )
+    assert len(client.pps.list_secret()) == 0

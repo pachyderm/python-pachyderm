@@ -2,110 +2,78 @@
 
 """Tests PFS-related functionality"""
 import os
-import tempfile
 from io import BytesIO
 from pathlib import Path
 from typing import NamedTuple
 
+import grpclib
 import pytest
 from betterproto import BytesValue
-from grpclib.exceptions import GRPCError
 
 from python_pachyderm import PFSFile
 from python_pachyderm.service import MAX_RECEIVE_MESSAGE_SIZE
 from python_pachyderm.experimental import Client as ExperimentalClient
-from python_pachyderm.experimental.mixin.pfs import (
-    Branch,
-    CommitState,
-    FileType,
-    Repo,
-    OriginKind,
-)
-from tests.experimental import util
+from python_pachyderm.experimental.mixin.pfs import CommitState, FileType
+
+REMOTE_CONTENT_URL = "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html"
 
 
-def sandbox(test_name):
-    client = ExperimentalClient()
-    repo_name = util.create_test_repo(client, test_name)
-    return client, repo_name
+def test_inspect_repo(client: ExperimentalClient, repo: str):
+    client.pfs.inspect_repo(repo)
+    assert any(info for info in client.pfs.list_repo() if info.repo.name == repo)
 
 
-def test_inspect_repo():
-    client, repo_name = sandbox("inspect_repo")
-    client.pfs.inspect_repo(repo_name)
-    repos = list(client.pfs.list_repo())
-    assert len(repos) >= 1
-    assert repo_name in [r.repo.name for r in repos]
+def test_delete_repo(client: ExperimentalClient, repo: str):
+    assert any(info for info in client.pfs.list_repo() if info.repo.name == repo)
+    client.pfs.delete_repo(repo)
+    assert all(info for info in client.pfs.list_repo() if info.repo.name != repo)
 
 
-def test_delete_repo():
-    client, repo_name = sandbox("delete_repo")
-    orig_repo_count = len(list(client.pfs.list_repo()))
-    assert orig_repo_count >= 1
-    client.pfs.delete_repo(repo_name)
-    assert len(list(client.pfs.list_repo())) == orig_repo_count - 1
-
-
-def test_delete_non_existent_repo():
-    client = ExperimentalClient()
-    orig_repo_count = len(list(client.pfs.list_repo()))
+def test_delete_non_existent_repo(client: ExperimentalClient):
+    original_count = len(list(client.pfs.list_repo()))
     client.pfs.delete_repo("BOGUS_NAME")
-    assert len(list(client.pfs.list_repo())) == orig_repo_count
+    assert original_count == len(list(client.pfs.list_repo()))
 
 
-def test_delete_all_repos():
-    client = ExperimentalClient()
-
-    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-1")
-    util.create_test_repo(client, "test_delete_all_repos", prefix="extra-2")
-    assert len(list(client.pfs.list_repo())) >= 2
-
+def test_delete_all_repos(client: ExperimentalClient, repo: str):
+    assert len(list(client.pfs.list_repo())) > 0
     client.pfs.delete_all_repos()
     assert len(list(client.pfs.list_repo())) == 0
 
 
-def test_start_commit():
-    client, repo_name = sandbox("start_commit")
-
-    commit = client.pfs.start_commit(repo_name, "master")
-    assert commit.branch.repo.name == repo_name
+def test_start_commit(client: ExperimentalClient, repo: str):
+    commit = client.pfs.start_commit(repo, "master")
+    assert commit.branch.repo.name == repo
 
     # cannot start new commit before the previous one is finished
-    with pytest.raises(GRPCError, match=r"parent commit .* has not been finished"):
-        client.pfs.start_commit(repo_name, "master")
+    error_match = r"parent commit .* has not been finished"
+    with pytest.raises(grpclib.GRPCError, match=error_match):
+        client.pfs.start_commit(repo, "master")
 
     client.pfs.finish_commit(commit)
-    commit2 = client.pfs.start_commit(repo_name, "master")
-    assert commit2.branch.repo.name == repo_name
+    commit2 = client.pfs.start_commit(repo, "master")
+    assert commit2.branch.repo.name == repo
 
-    with pytest.raises(GRPCError, match=r"repo .* not found"):
+    with pytest.raises(grpclib.GRPCError, match=r"repo .* not found"):
         client.pfs.start_commit("some-fake-repo", "master")
 
 
-def test_start_commit_on_branch_with_parent():
-    client, repo_name = sandbox("start_commit_on_branch_with_parent")
-
-    commit1 = client.pfs.start_commit(repo_name, branch="master")
+def test_start_commit_on_branch_with_parent(client: ExperimentalClient, repo: str):
+    commit1 = client.pfs.start_commit(repo, branch="master")
     client.pfs.finish_commit(commit1)
 
-    commit2 = client.pfs.start_commit(repo_name, branch="master", parent=commit1.id)
-    assert commit2.branch.repo.name == repo_name
+    commit2 = client.pfs.start_commit(repo, branch="master", parent=commit1.id)
+    assert commit2.branch.repo.name == repo
 
 
-def test_start_commit_fork():
-    client, repo_name = sandbox("start_commit_fork")
+def test_start_commit_fork(client: ExperimentalClient, repo: str):
+    commit1 = client.pfs.start_commit(repo, branch="master")
+    client.pfs.finish_commit(commit1)
 
-    commit1 = client.pfs.start_commit(repo_name, branch="master")
-    client.pfs.finish_commit((repo_name, commit1.id))
+    commit2 = client.pfs.start_commit(repo, branch="patch", parent="master")
+    assert commit2.branch.repo.name == repo
 
-    commit2 = client.pfs.start_commit(repo_name, branch="patch", parent="master")
-
-    assert commit2.branch.repo.name == repo_name
-
-    branches = [
-        branch_info.branch.name
-        for branch_info in list(client.pfs.list_branch(repo_name))
-    ]
+    branches = [info.branch.name for info in client.pfs.list_branch(repo)]
     assert "master" in branches
     assert "patch" in branches
 
@@ -121,27 +89,24 @@ def test_start_commit_fork():
         "dictionary",
     ],
 )
-def test_finish_commit(commit_arg):
-    client, repo_name = sandbox("finish_commit")
-    commit = client.pfs.start_commit(repo_name, "master")
+def test_finish_commit(commit_arg, client: ExperimentalClient, repo: str):
+    commit = client.pfs.start_commit(repo, "master")
 
     if commit_arg == "commit_obj":
         client.pfs.finish_commit(commit)
     elif commit_arg == "(repo, commit_id)":
-        client.pfs.finish_commit((repo_name, commit.id))
+        client.pfs.finish_commit((repo, commit.id))
     elif commit_arg == "(repo, branch)":
-        client.pfs.finish_commit((repo_name, "master"))
+        client.pfs.finish_commit((repo, "master"))
     elif commit_arg == "(repo, branch, commit_id)":
-        client.pfs.finish_commit((repo_name, "master", commit.id))
+        client.pfs.finish_commit((repo, "master", commit.id))
     elif commit_arg == "(repo, branch, commit_id, type)":
-        client.pfs.finish_commit((repo_name, "master", commit.id, "user"))
+        client.pfs.finish_commit((repo, "master", commit.id, "user"))
     elif commit_arg == "dictionary":
-        client.pfs.finish_commit(
-            {"repo": repo_name, "id": commit.id, "branch": "master"}
-        )
+        client.pfs.finish_commit(dict(repo=repo, id=commit.id, branch="master"))
 
-    print(client.pfs.wait_commit(commit))
-    commit_infos = list(client.pfs.list_commit(repo_name))
+    client.pfs.wait_commit(commit)
+    commit_infos = list(client.pfs.list_commit(repo))
     assert len(commit_infos) == 1
     assert commit_infos[0].commit.id == commit.id
 
@@ -153,166 +118,112 @@ def test_finish_commit(commit_arg):
     assert commit_infos[0].finished > commit_infos[0].finishing
 
 
-def test_commit_context_mgr():
+def test_commit_context_mgr(client: ExperimentalClient, repo: str):
     """Start and finish a commit using a context manager."""
 
-    client, repo_name = sandbox("commit_context_mgr")
-
-    with client.pfs.commit(repo_name, "master") as c1:
+    with client.pfs.commit(repo, "master") as c1:
         pass
-    with client.pfs.commit(repo_name, "master") as c2:
+    with client.pfs.commit(repo, "master") as c2:
         pass
 
-    with pytest.raises(GRPCError):
+    with pytest.raises(grpclib.GRPCError):
         with client.pfs.commit("some-fake-repo", "master"):
             pass
 
-    commit_infos = list(client.pfs.list_commit(repo_name))
+    commit_infos = list(client.pfs.list_commit(repo))
     assert len(commit_infos) == 2
     assert sorted([c.commit.id for c in commit_infos]) == sorted([c1.id, c2.id])
 
 
-def test_put_file_bytes_bytestring():
+def test_put_file_bytes_bytestring(client: ExperimentalClient, repo: str):
     """
     Start and finish a commit using a context manager while putting a file
     from a bytesting.
     """
+    file_path = "/file.dat"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, file_path, b"DATA")
 
-    client, repo_name = sandbox("put_file_bytes_bytestring")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file.dat", b"DATA")
-
-    commit_infos = list(client.pfs.list_commit(repo_name))
-    assert len(commit_infos) == 1
-    assert commit_infos[0].commit.id == c.id
-    files = list(client.pfs.list_file((repo_name, c.id), ""))
-    assert len(files) == 1
+    assert any(
+        info for info in client.pfs.list_commit(repo) if info.commit.id == commit.id
+    )
+    assert any(
+        info
+        for info in client.pfs.list_file((repo, commit.id), "/")
+        if info.file.path == file_path
+    )
 
 
-def test_put_file_bytes_filelike():
+def test_put_file_bytes_filelike(client: ExperimentalClient, repo: str):
     """
     Start and finish a commit using a context manager while putting a file
     from a file-like object.
     """
+    file_path = "/file.dat"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, file_path, BytesIO(b"DATA"))
 
-    client, repo_name = sandbox("put_file_bytes_filelike")
-
-    with client.pfs.commit(repo_name, "master") as commit:
-        client.pfs.put_file_bytes(commit, "file.dat", BytesIO(b"DATA"))
-
-    files = list(client.pfs.list_file(commit, ""))
-    assert len(files) == 1
+    assert any(
+        info
+        for info in client.pfs.list_file((repo, commit.id), "/")
+        if info.file.path == file_path
+    )
 
 
-def test_put_file_zero_bytes_mfc():
+def test_put_file_zero_bytes_mfc(client: ExperimentalClient, repo: str):
     """
     Put a zero-byte file using PutFileClient
     """
+    file_path = "/file.dat"
+    with client.pfs.modify_file_client((repo, "master")) as mfc:
+        mfc.put_file_from_bytes(file_path, b"")
+        commit = mfc.commit
 
-    client, repo_name = sandbox("put_file_bytes_file_zero_byte")
-
-    commit = (repo_name, "master")
-    with client.pfs.modify_file_client(commit) as c:
-        c.put_file_from_bytes("file.dat", b"")
-    files = list(client.pfs.list_file(commit, "/"))
-    assert len(files) == 1
-    fi = client.pfs.inspect_file(commit, "file.dat")
-    assert fi.size_bytes == 0
+    assert any(
+        info
+        for info in client.pfs.list_file(commit, "/")
+        if info.file.path == file_path
+    )
+    assert client.pfs.inspect_file(commit, file_path).size_bytes == 0
 
 
-def test_put_file_bytes_zero_bytes_direct():
+def test_put_file_bytes_zero_bytes_direct(client: ExperimentalClient, repo: str):
     """
     Put a zero-byte file using a bytestring
     """
+    file_path = "/empty_bytestring.dat"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, file_path, b"")
 
-    client, repo_name = sandbox("put_file_bytes_zero_bytes")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "empty_bytestring.dat", b"")
-    commit_infos = list(client.pfs.list_commit(repo_name))
-    assert len(commit_infos) == 1
-    assert commit_infos[0].commit.id == c.id
-    fi = client.pfs.inspect_file(c, "empty_bytestring.dat")
-    assert fi.size_bytes == 0
+    assert any(
+        info for info in client.pfs.list_commit(repo) if info.commit.id == commit.id
+    )
+    assert client.pfs.inspect_file(commit, file_path).size_bytes == 0
 
 
-def test_put_file_bytes_large():
-    """
-    Put a file larger than the maximum message size.
-    """
+def test_put_file_url(client: ExperimentalClient, repo: str):
+    file_path = "/index.html"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_url(commit, file_path, REMOTE_CONTENT_URL)
 
-    client, repo_name = sandbox("put_file_bytes_large")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file.dat", b"#" * (21 * 1024 * 1024))
-
-    commit_infos = list(client.pfs.list_commit(repo_name))
-    assert len(commit_infos) == 1
-    assert commit_infos[0].commit.id == c.id
-    files = list(client.pfs.list_file(c, ""))
-    assert len(files) == 1
+    assert any(
+        info
+        for info in client.pfs.list_file(commit, "/")
+        if info.file.path == file_path
+    )
 
 
-def test_put_file_url():
-    client, repo_name = sandbox("put_file_url")
+def test_put_file_empty(client: ExperimentalClient, repo: str, tmp_path: Path):
+    file_path = tmp_path / "file3.dat"
+    file_path.write_bytes(b"DATA3")
+    with client.pfs.modify_file_client((repo, "master")) as mfc:
+        mfc.put_file_from_fileobj("/file1.dat", BytesIO(b""))
+        mfc.put_file_from_url("/index.html", REMOTE_CONTENT_URL)
+        mfc.put_file_from_bytes("/file2.dat", b"DATA2")
+        mfc.put_file_from_filepath("/file3.dat", file_path)
+        commit = mfc.commit
 
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_url(
-            c,
-            "index.html",
-            "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
-        )
-
-    files = list(client.pfs.list_file(c, ""))
-    assert len(files) == 1
-    assert files[0].file.path == "/index.html"
-
-
-def test_put_file_empty():
-    client, repo_name = sandbox("put_file_empty")
-    commit = (repo_name, "master")
-
-    with tempfile.NamedTemporaryFile() as f:
-        with client.pfs.modify_file_client(commit) as mfc:
-            mfc.put_file_from_fileobj("file1.dat", BytesIO(b""))
-            mfc.put_file_from_url(
-                "index.html",
-                "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
-            )
-            mfc.put_file_from_bytes("file2.dat", b"DATA2")
-
-            f.write(b"DATA3")
-            f.flush()
-            mfc.put_file_from_filepath("file3.dat", f.name)
-
-    files = list(client.pfs.list_file(commit, ""))
-    # assert len(files) == 4
-    assert files[0].file.path == "/file1.dat"
-    assert files[1].file.path == "/file2.dat"
-    assert files[2].file.path == "/file3.dat"
-    assert files[3].file.path == "/index.html"
-
-
-def test_put_file_atomic():
-    client, repo_name = sandbox("put_file_atomic")
-    commit = (repo_name, "master")
-
-    with tempfile.NamedTemporaryFile() as f:
-        with client.pfs.modify_file_client(commit) as mfc:
-            mfc.put_file_from_fileobj("file1.dat", BytesIO(b"DATA1"))
-            mfc.put_file_from_bytes("file2.dat", b"DATA2")
-            mfc.put_file_from_url(
-                "index.html",
-                "https://gist.githubusercontent.com/ysimonson/1986773831f6c4c292a7290c5a5d4405/raw/fb2b4d03d317816e36697a6864a9c27645baa6c0/wheel.html",
-            )
-
-            f.write(b"DATA3")
-            f.flush()
-            mfc.put_file_from_filepath("file3.dat", f.name)
-
-    files = list(client.pfs.list_file(commit, ""))
-    assert len(files) == 4
+    files = list(client.pfs.list_file(commit, "/"))
     assert files[0].file.path == "/file1.dat"
     assert files[1].file.path == "/file2.dat"
     assert files[2].file.path == "/file3.dat"
@@ -323,269 +234,137 @@ def test_put_file_atomic():
         mfc.delete_file("/file2.dat")
         mfc.delete_file("/file3.dat")
 
-    files = list(client.pfs.list_file(commit, ""))
+    files = list(client.pfs.list_file(commit, "/"))
     assert len(files) == 1
     assert files[0].file.path == "/index.html"
 
 
-def test_copy_file():
-    client, repo_name = sandbox("copy_file")
+def test_copy_file(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as src_commit:
+        client.pfs.put_file_bytes(src_commit, "/file1.dat", BytesIO(b"DATA1"))
+        client.pfs.put_file_bytes(src_commit, "/file2.dat", BytesIO(b"DATA2"))
 
-    with client.pfs.commit(repo_name, "master") as src_commit:
-        client.pfs.put_file_bytes(src_commit, "file1.dat", BytesIO(b"DATA1"))
-        client.pfs.put_file_bytes(src_commit, "file2.dat", BytesIO(b"DATA2"))
+    with client.pfs.commit(repo, "master") as dest_commit:
+        client.pfs.copy_file(src_commit, "/file1.dat", dest_commit, "/copy.dat")
 
-    with client.pfs.commit(repo_name, "master") as dest_commit:
-        client.pfs.copy_file(src_commit, "file1.dat", dest_commit, "copy.dat")
-
-    files = list(client.pfs.list_file(dest_commit, ""))
+    files = list(client.pfs.list_file(dest_commit, "/"))
     assert len(files) == 3
     assert files[0].file.path == "/copy.dat"
     assert files[1].file.path == "/file1.dat"
     assert files[2].file.path == "/file2.dat"
 
 
-def test_commit():
-    """
-    Ensure wait_commit works
-    """
-    client, repo_name = sandbox("wait_commit")
-    repo2_name = util.create_test_repo(client, "wait_commit2")
-
-    # Create provenance between repos (which creates a new commit)
-    client.pfs.create_branch(
-        repo2_name,
-        "master",
-        provenance=[Branch(repo=Repo(name=repo_name, type="user"), name="master")],
-    )
-    # Head commit is still open in repo2
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "input.json", b"hello world")
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    # Just block until all of the commits are yielded
-    commits = client.pfs.wait_commit(c.id)
-    assert len(commits) == 2
-    assert commits[1].finished
-
-    with client.pfs.commit(repo_name, "master") as c2:
-        client.pfs.put_file_bytes(c2, "input.json", b"bye world")
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    # Just block until the commit in repo1 is finished
-    commits = client.pfs.wait_commit(c2)
-    assert len(commits) == 1
-    assert commits[0].finished
-
-    files = list(client.pfs.list_file(c2, "/"))
-    assert len(files) == 1
-
-
-def test_inspect_commit():
-    client, repo_name = sandbox("inspect_commit")
-    repo2_name = util.create_test_repo(client, "inspect_commit2")
-
-    # Create provenance between repos (which creates a new commit)
-    client.pfs.create_branch(
-        repo2_name,
-        "master",
-        provenance=[Branch(repo=Repo(name=repo_name, type="user"), name="master")],
-    )
-    # Head commit is still open in repo2
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "input.json", b"hello world")
-    client.pfs.finish_commit((repo2_name, "master"))
+def test_inspect_commit(client: ExperimentalClient, repo: str):
+    branch = "master"
+    description = "test commit"
+    with client.pfs.commit(repo, branch, description=description) as commit:
+        client.pfs.put_file_bytes(commit, "/input.json", b"hello world")
 
     # Inspect commit at a specific repo
-    commits = list(client.pfs.inspect_commit(c, CommitState.FINISHED))
+    commits = list(client.pfs.inspect_commit(commit, CommitState.FINISHED))
     assert len(commits) == 1
 
-    commit = commits[0]
-    assert commit.commit.branch.name == "master"
-    assert commit.finished
-    assert commit.description == ""
-    # assert commit.size_bytes == 11
-    assert len(commit.commit.id) == 32
-    assert commit.commit.branch.repo.name == repo_name
-
-    # Inspect entire commit
-    commits = list(client.pfs.inspect_commit(c.id, CommitState.FINISHED))
-    assert len(commits) == 2
+    commit_info = commits[0]
+    assert commit_info.commit.branch.name == branch
+    assert commit_info.finished
+    assert commit_info.description == description
+    assert commit_info.commit.id == commit.id
+    assert commit_info.commit.branch.repo.name == repo
 
 
-def test_squash_commit():
-    client, repo_name = sandbox("squash_commit")
-    repo2_name = util.create_test_repo(client, "squash_commit2")
-
-    # Create provenance between repos (which creates an auto commit)
-    client.pfs.create_branch(
-        repo2_name,
-        "master",
-        provenance=[Branch(repo=Repo(name=repo_name, type="user"), name="master")],
-    )
-    # Head commit is still open in repo2
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    with client.pfs.commit(repo_name, "master") as commit1:
+def test_squash_commit(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as commit1:
         pass
-    client.pfs.finish_commit((repo2_name, "master"))
 
-    with client.pfs.commit(repo_name, "master") as commit2:
+    with client.pfs.commit(repo, "master") as commit2:
         pass
-    client.pfs.finish_commit((repo2_name, "master"))
 
-    client.pfs.wait_commit(commit2.id)
+    client.pfs.wait_commit(commit2)
 
-    commits = list(client.pfs.list_commit(repo_name))
-    assert len(commits) == 2
+    commit_ids = [info.commit.id for info in client.pfs.list_commit(repo)]
+    assert commit1.id in commit_ids
+    assert commit2.id in commit_ids
 
     client.pfs.squash_commit(commit1.id)
-    commits = list(client.pfs.list_commit(repo_name))
-    assert len(commits) == 1
-
-    commits = list(client.pfs.list_commit(repo2_name))
-    assert len(commits) == 0  # since list_commit defaults to user commits
-    commits = list(client.pfs.list_commit(repo2_name, origin_kind=OriginKind.AUTO))
-    assert len(commits) == 2
+    commit_ids = [info.commit.id for info in client.pfs.list_commit(repo)]
+    assert commit1.id not in commit_ids
+    assert commit2.id in commit_ids
 
 
-def test_drop_commit():
-    client, repo_name = sandbox("drop_commit")
-    repo2_name = util.create_test_repo(client, "drop_commit2")
-
-    # Create provenance between repos (which creates an auto commit)
-    client.pfs.create_branch(
-        repo2_name,
-        "master",
-        provenance=[Branch(repo=Repo(name=repo_name, type="user"), name="master")],
-    )
-    # Head commit is still open in repo2
-    client.pfs.finish_commit((repo2_name, "master"))
-
-    with client.pfs.commit(repo_name, "master"):
+def test_drop_commit(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as commit1:
         pass
-    client.pfs.finish_commit((repo2_name, "master"))
 
-    with client.pfs.commit(repo_name, "master") as commit2:
+    with client.pfs.commit(repo, "master") as commit2:
         pass
-    client.pfs.finish_commit((repo2_name, "master"))
 
-    client.pfs.wait_commit(commit2.id)
+    client.pfs.wait_commit(commit2)
 
-    commits = list(client.pfs.list_commit(repo_name))
-    assert len(commits) == 2
+    commit_ids = [info.commit.id for info in client.pfs.list_commit(repo)]
+    assert commit1.id in commit_ids
+    assert commit2.id in commit_ids
 
     client.pfs.drop_commit(commit2.id)
-    commits = list(client.pfs.list_commit(repo_name))
-    assert len(commits) == 1
-
-    commits = list(client.pfs.list_commit(repo2_name))
-    assert len(commits) == 0  # since list_commit defaults to user commits
-    commits = list(client.pfs.list_commit(repo2_name, origin_kind=OriginKind.AUTO))
-    assert len(commits) == 2
+    commit_ids = [info.commit.id for info in client.pfs.list_commit(repo)]
+    assert commit1.id in commit_ids
+    assert commit2.id not in commit_ids
 
 
-def test_subscribe_commit():
-    client, repo_name = sandbox("subscribe_commit")
-    commits = client.pfs.subscribe_commit(repo_name, "master")
+def test_subscribe_commit(client: ExperimentalClient, repo: str):
+    branch = "master"
+    subscription = client.pfs.subscribe_commit(repo, branch)
 
-    with client.pfs.commit(repo_name, "master"):
+    with client.pfs.commit(repo, branch):
         pass
 
-    commit = next(commits)
-    assert commit.commit.branch.repo.name == repo_name
-    assert commit.commit.branch.name == "master"
+    commit_info = next(subscription)
+    assert commit_info.commit.branch.repo.name == repo
+    assert commit_info.commit.branch.name == branch
 
 
-def test_list_commit():
-    ExperimentalClient().pfs.delete_all_repos()
-
-    client, repo_name1 = sandbox("list_commit1")
-
-    with client.pfs.commit(repo_name1, "master"):
+def test_list_branch(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master"):
         pass
-    with client.pfs.commit(repo_name1, "master"):
+    with client.pfs.commit(repo, "develop"):
         pass
 
-    repo_name2 = util.create_test_repo(client, "list_commit2")
+    branches = [info.branch.name for info in client.pfs.list_branch(repo)]
+    assert "develop" in branches
+    assert "master" in branches
 
-    with client.pfs.commit(repo_name2, "master"):
+
+def test_delete_branch(client: ExperimentalClient, repo: str):
+    branch = "develop"
+    with client.pfs.commit(repo, branch):
         pass
 
-    commits = list(client.pfs.list_commit())
-    assert len(commits) == 3
+    branches = [info.branch.name for info in client.pfs.list_branch(repo)]
+    assert branch in branches
+
+    client.pfs.delete_branch(repo, branch)
+
+    branches = [info.branch.name for info in client.pfs.list_branch(repo)]
+    assert branch not in branches
 
 
-def test_list_branch():
-    client, repo_name = sandbox("list_branch")
+def test_inspect_file(client: ExperimentalClient, repo: str):
+    file_path = "/file.dat"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, file_path, b"DATA")
 
-    with client.pfs.commit(repo_name, "master"):
-        pass
-    with client.pfs.commit(repo_name, "develop"):
-        pass
-
-    branches = list(client.pfs.list_branch(repo_name))
-    assert len(branches) == 2
-    assert branches[0].branch.name == "develop"
-    assert branches[1].branch.name == "master"
+    info = client.pfs.inspect_file(commit, file_path)
+    assert info.file.commit.id == commit.id
+    assert info.file.commit.branch.repo.name == repo
+    assert info.file.path == file_path
 
 
-def test_delete_branch():
-    client, repo_name = sandbox("delete_branch")
+def test_walk_file(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, "/file1.dat", b"DATA")
+        client.pfs.put_file_bytes(commit, "/a/file2.dat", b"DATA")
+        client.pfs.put_file_bytes(commit, "/a/b/file3.dat", b"DATA")
 
-    with client.pfs.commit(repo_name, "develop"):
-        pass
-
-    branches = list(client.pfs.list_branch(repo_name))
-    assert len(branches) == 1
-    client.pfs.delete_branch(repo_name, "develop")
-    branches = list(client.pfs.list_branch(repo_name))
-    assert len(branches) == 0
-
-
-def test_inspect_file():
-    client, repo_name = sandbox("inspect_file")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file.dat", b"DATA")
-
-    fi = client.pfs.inspect_file(c, "file.dat")
-    assert fi.file.commit.id == c.id
-    assert fi.file.commit.branch.repo.name == repo_name
-    assert fi.file.path == "/file.dat"
-    # assert fi.size_bytes == 4
-
-
-def test_list_file():
-    client, repo_name = sandbox("list_file")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file1.dat", b"DATA")
-        client.pfs.put_file_bytes(c, "file2.dat", b"DATA")
-
-    files = list(client.pfs.list_file((repo_name, c.id), "/"))
-    assert len(files) == 2
-    # assert files[0].size_bytes == 4
-    assert files[0].file_type == FileType.FILE
-    assert files[0].file.path == "/file1.dat"
-    # assert files[1].size_bytes == 4
-    assert files[1].file_type == FileType.FILE
-    assert files[1].file.path == "/file2.dat"
-
-
-def test_walk_file():
-    client, repo_name = sandbox("walk_file")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "/file1.dat", b"DATA")
-        client.pfs.put_file_bytes(c, "/a/file2.dat", b"DATA")
-        client.pfs.put_file_bytes(c, "/a/b/file3.dat", b"DATA")
-
-    files = list(client.pfs.walk_file(c, "/a"))
+    files = list(client.pfs.walk_file(commit, "/a"))
     assert len(files) == 4
     assert files[0].file.path == "/a/"
     assert files[1].file.path == "/a/b/"
@@ -593,133 +372,128 @@ def test_walk_file():
     assert files[3].file.path == "/a/file2.dat"
 
 
-def test_glob_file():
-    client, repo_name = sandbox("glob_file")
-
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file1.dat", b"DATA")
-        client.pfs.put_file_bytes(c, "file2.dat", b"DATA")
+def test_glob_file(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as c:
+        client.pfs.put_file_bytes(c, "/file1.dat", b"DATA")
+        client.pfs.put_file_bytes(c, "/file2.dat", b"DATA")
 
     files = list(client.pfs.glob_file(c, "/*.dat"))
     assert len(files) == 2
-    # assert files[0].size_bytes == 4
     assert files[0].file_type == FileType.FILE
     assert files[0].file.path == "/file1.dat"
-    # assert files[1].size_bytes == 4
     assert files[1].file_type == FileType.FILE
     assert files[1].file.path == "/file2.dat"
 
     files = list(client.pfs.glob_file(c, "/*1.dat"))
     assert len(files) == 1
-    # assert files[0].size_bytes == 4
     assert files[0].file_type == FileType.FILE
     assert files[0].file.path == "/file1.dat"
 
 
-def test_delete_file():
-    client, repo_name = sandbox("delete_file")
+def test_delete_file(client: ExperimentalClient, repo: str):
+    file_path = "/file.dat"
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, file_path, b"DATA")
 
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "file1.dat", b"DATA")
+    assert any(
+        info
+        for info in client.pfs.list_file((repo, commit.id), "/")
+        if info.file.path == file_path
+    )
 
-    assert len(list(client.pfs.list_file(c, "/"))) == 1
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.delete_file(commit, file_path)
 
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.delete_file(c, "file1.dat")
-
-    assert len(list(client.pfs.list_file(c, "/"))) == 0
-
-
-def test_create_branch():
-    client, repo_name = sandbox("create_branch")
-    client.pfs.create_branch(repo_name, "foobar")
-    branches = list(client.pfs.list_branch(repo_name))
-    assert len(branches) == 1
-    assert branches[0].branch.name == "foobar"
+    assert all(
+        info
+        for info in client.pfs.list_file((repo, commit.id), "/")
+        if info.file.path != file_path
+    )
 
 
-def test_inspect_branch():
-    client, repo_name = sandbox("inspect_branch")
-    client.pfs.create_branch(repo_name, "foobar")
-    branch = client.pfs.inspect_branch(repo_name, "foobar")
+def test_create_branch(client: ExperimentalClient, repo: str):
+    client.pfs.create_branch(repo, "foobar")
+    branches = [info.branch.name for info in client.pfs.list_branch(repo)]
+    assert "foobar" in branches
+
+
+def test_inspect_branch(client: ExperimentalClient, repo: str):
+    client.pfs.create_branch(repo, "foobar")
+    branch = client.pfs.inspect_branch(repo, "foobar")
     assert branch.branch.name == "foobar"
 
 
-def test_fsck():
-    client = ExperimentalClient()
+def test_fsck(client: ExperimentalClient):
     assert len(list(client.pfs.fsck())) == 0
 
 
-def test_diff_file():
-    client, repo_name = sandbox("diff_file")
+def test_diff_file(client: ExperimentalClient, repo: str):
+    file1, file2 = "/file1.dat", "/file2.dat"
+    with client.pfs.commit(repo, "master") as old_commit:
+        client.pfs.put_file_bytes(old_commit, file1, BytesIO(b"old data 1"))
+        client.pfs.put_file_bytes(old_commit, file2, BytesIO(b"old data 2"))
 
-    with client.pfs.commit(repo_name, "master") as old_commit:
-        client.pfs.put_file_bytes(old_commit, "file1.dat", BytesIO(b"old data 1"))
-        client.pfs.put_file_bytes(old_commit, "file2.dat", BytesIO(b"old data 2"))
+    with client.pfs.commit(repo, "master") as new_commit:
+        client.pfs.put_file_bytes(new_commit, file1, BytesIO(b"new data 1"))
 
-    with client.pfs.commit(repo_name, "master") as new_commit:
-        client.pfs.put_file_bytes(new_commit, "file1.dat", BytesIO(b"new data 1"))
-
-    diff = list(client.pfs.diff_file(new_commit, "file1.dat", old_commit, "file2.dat"))
-    assert diff[0].new_file.file.path == "/file1.dat"
-    assert diff[1].old_file.file.path == "/file2.dat"
+    diff = list(client.pfs.diff_file(new_commit, file1, old_commit, file2))
+    assert diff[0].new_file.file.path == file1
+    assert diff[1].old_file.file.path == file2
 
 
-def test_path_exists():
-    client, repo_name = sandbox("path_exists")
+def test_path_exists(client: ExperimentalClient, repo: str):
+    with client.pfs.commit(repo, "master") as commit:
+        client.pfs.put_file_bytes(commit, "/dir/file1", b"I'm a file in a dir.")
+        client.pfs.put_file_bytes(commit, "/file2", b"I'm a file.")
 
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "dir/file1", b"I'm a file in a dir.")
-        client.pfs.put_file_bytes(c, "file2", b"I'm a file.")
-
-    assert client.pfs.path_exists(c, "/")
-    assert client.pfs.path_exists(c, "dir/")
-    assert client.pfs.path_exists(c, "dir")
-    assert client.pfs.path_exists(c, "dir/file1")
-    assert client.pfs.path_exists(c, "dir/file1/")
-    assert client.pfs.path_exists(c, "file2")
-    assert not client.pfs.path_exists(c, "file1")
+    assert client.pfs.path_exists(commit, "/")
+    assert client.pfs.path_exists(commit, "/dir/")
+    assert client.pfs.path_exists(commit, "/dir")
+    assert client.pfs.path_exists(commit, "/dir/file1")
+    assert client.pfs.path_exists(commit, "/dir/file1/")
+    assert client.pfs.path_exists(commit, "/file2")
+    assert not client.pfs.path_exists(commit, "/file1")
 
     with pytest.raises(ValueError, match=r"nonexistent commit provided"):
         assert not client.pfs.path_exists(("fake_repo", "master"), "dir")
 
 
-@pytest.fixture
-def test_mount(tmp_path: Path):
-    client, repo_name = sandbox("mount")
-    repo2_name = util.create_test_repo(client, "mount2")
+def test_mount(client: ExperimentalClient, repo: str, tmp_path: Path):
+    file1, file2, file3 = "file1.txt", "file2.txt", "file3.txt"
+    repo2 = repo + "2"
+    client.pfs.create_repo(repo2, "second repo")
 
-    with client.pfs.commit(repo_name, "master") as c:
-        client.pfs.put_file_bytes(c, "/file1.txt", b"DATA1")
-    with client.pfs.commit(repo2_name, "master") as c2:
-        client.pfs.put_file_bytes(c2, "/file2.txt", b"DATA2")
+    with client.pfs.commit(repo, "master") as commit1:
+        client.pfs.put_file_bytes(commit1, file1, b"DATA1")
+    with client.pfs.commit(repo2, "master") as commit2:
+        client.pfs.put_file_bytes(commit2, file2, b"DATA2")
 
     # Mount all repos
     mount_a = tmp_path / "mount_a"
     client.pfs.mount(mount_a)
-    assert (mount_a / repo_name / "file1.txt").read_text() == "DATA1"
-    assert (mount_a / repo2_name / "file2.txt").read_text() == "DATA2"
+    assert (mount_a / repo / file1).read_text() == "DATA1"
+    assert (mount_a / repo2 / file2).read_text() == "DATA2"
 
     # Mount one repo
     mount_b = tmp_path / "mount_b"
-    client.pfs.mount(mount_b, [repo2_name])
-    assert (mount_b / repo2_name / "file2.txt").read_text() == "DATA2"
+    client.pfs.mount(mount_b, [repo2])
+    assert (mount_b / repo2 / file2).read_text() == "DATA2"
 
     client.pfs.unmount(mount_a)
-    assert not (mount_a / repo2_name / "file2.txt").exists()
+    assert not (mount_a / repo2 / file2).exists()
     client.pfs.unmount(mount_b)
-    assert not (mount_b / repo2_name / "file2.txt").exists()
+    assert not (mount_b / repo2 / file2).exists()
 
-    with client.pfs.commit(repo_name, "dev") as c3:
-        client.pfs.put_file_bytes(c3, "/file3.txt", b"DATA3")
+    with client.pfs.commit(repo, "dev") as commit3:
+        client.pfs.put_file_bytes(commit3, file3, b"DATA3")
 
     # Mount one repo
     mount_c = tmp_path / "mount_c"
-    client.pfs.mount(mount_c, [f"{repo_name}@dev"])
-    assert (mount_c / repo_name / "file3.txt").read_text() == "DATA3"
+    client.pfs.mount(mount_c, [f"{repo}@dev"])
+    assert (mount_c / repo / file3).read_text() == "DATA3"
 
     client.pfs.unmount(mount_c)
-    assert not (mount_c / repo_name / "file3.txt").exists()
+    assert not (mount_c / repo / file3).exists()
 
     # Test runtime error
     mount_d = tmp_path / "mount_d"
@@ -727,21 +501,6 @@ def test_mount(tmp_path: Path):
     (mount_d / "file.txt").touch()
     with pytest.raises(RuntimeError, match="must be empty to mount"):
         client.pfs.mount(mount_d)
-
-
-@pytest.fixture(name="repo")
-def _repo_fixture(request) -> str:
-    """Create a repository name from the test function name."""
-    return request.node.nodeid.replace("/", "-").replace(":", "-").replace(".py", "")
-
-
-@pytest.fixture(name="client")
-def _client_fixture(repo):
-    client = ExperimentalClient()
-    client.pfs.delete_repo(repo, force=True)
-    client.pfs.create_repo(repo, "test repo for python_pachyderm")
-    yield client
-    client.pfs.delete_repo(repo, force=True)
 
 
 class TestPFSFile:
