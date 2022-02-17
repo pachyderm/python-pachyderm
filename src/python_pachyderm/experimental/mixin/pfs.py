@@ -1244,9 +1244,9 @@ class PFSApi(_synchronizer(_PFSApiStub)):
         >>> client.unmount(all_mounts=True)
         """
         if mount_dir is not None:
-            subprocess.run(["pachctl", "unmount", mount_dir])
+            subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
         elif all_mounts:
-            subprocess.run(["pachctl", "unmount", "-a"], input=b"y\n")
+            subprocess.run(["sudo", "pachctl", "unmount", "-a"], input=b"y\n")
         else:
             print("no repos unmounted, pass arguments or see documentation")
 
