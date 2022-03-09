@@ -425,7 +425,6 @@ class Client(
         host = u.hostname
         port = u.port
         tls = u.scheme == "grpcs" or u.scheme == "https"
-        print(root_certs)
         root_certs = (
             b64decode(bytes(root_certs, "utf-8")) if root_certs is not None else None
         )
