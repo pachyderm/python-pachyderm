@@ -1,5 +1,6 @@
 import os
 import json
+from base64 import b64decode
 from pathlib import Path
 from typing import Optional, TextIO
 from urllib.parse import urlparse
@@ -424,7 +425,10 @@ class Client(
         host = u.hostname
         port = u.port
         tls = u.scheme == "grpcs" or u.scheme == "https"
-        root_certs = bytes(root_certs, "utf-8") if root_certs is not None else None
+        print(root_certs)
+        root_certs = (
+            b64decode(bytes(root_certs, "utf-8")) if root_certs is not None else None
+        )
 
         return host, port, pachd_address, auth_token, root_certs, transaction_id, tls
 
