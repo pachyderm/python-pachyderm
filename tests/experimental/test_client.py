@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 import python_pachyderm
+from base64 import b64encode
 from tests import util
 
 """Tests generic client functionality"""
@@ -97,6 +98,9 @@ def test_check_config_order(mocker):
 
 
 def test_parse_config():
+    server_cas = b"foo"
+    server_cas_base64 = b64encode(server_cas)
+
     (
         host,
         port,
@@ -114,7 +118,7 @@ def test_parse_config():
             "contexts": {
               "local": {
                 "pachd_address": "grpcs://172.17.0.6:30650",
-                "server_cas": "foo",
+                "server_cas": "%s",
                 "session_token": "bar",
                 "active_transaction": "baz"
               }
@@ -122,13 +126,14 @@ def test_parse_config():
           }
         }
         """
+            % server_cas_base64.decode()
         )
     )
     assert host == "172.17.0.6"
     assert port == 30650
     assert pachd_address == "grpcs://172.17.0.6:30650"
     assert auth_token == "bar"
-    assert root_certs == b"foo"
+    assert root_certs == server_cas
     assert transaction_id == "baz"
     assert tls is True
 
