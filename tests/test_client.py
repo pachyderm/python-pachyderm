@@ -1,49 +1,50 @@
 import io
 import os
 import json
+from base64 import b64encode
 from pathlib import Path
 
 import pytest
 import python_pachyderm
-from base64 import b64encode
 from tests import util
 
 """Tests generic client functionality"""
 
 
 def test_check_config_order(mocker):
+    server_cas = b64encode(b"foo").decode()
     env_config = json.loads(
-        """
-      {
-        "v2": {
+        f"""
+      {{
+        "v2": {{
           "active_context": "local",
-          "contexts": {
-            "local": {
+          "contexts": {{
+            "local": {{
               "pachd_address": "grpcs://172.17.0.6:30650",
-              "server_cas": "foo",
+              "server_cas": "{server_cas}",
               "session_token": "bar",
               "active_transaction": "baz"
-            }
-          }
-        }
-      }
+            }}
+          }}
+        }}
+      }}
     """
     )
     spout_config = json.loads(
-        """
-      {
-        "v2": {
+        f"""
+      {{
+        "v2": {{
           "active_context": "local",
-          "contexts": {
-            "local": {
+          "contexts": {{
+            "local": {{
               "pachd_address": "[::1]:80",
-              "server_cas": "foo",
+              "server_cas": "{server_cas}",
               "session_token": "bar",
               "active_transaction": "baz"
-            }
-          }
-        }
-      }
+            }}
+          }}
+        }}
+      }}
     """
     )
     local_config = json.loads(
@@ -276,22 +277,23 @@ def test_client_new_from_config():
         )
 
     # check that pachd address and other context fields are respected
+    server_cas = b64encode(b"foo").decode()
     client = python_pachyderm.Client.new_from_config(
         config_file=io.StringIO(
-            """
-        {
-          "v2": {
+            f"""
+        {{
+          "v2": {{
             "active_context": "local",
-            "contexts": {
-              "local": {
+            "contexts": {{
+              "local": {{
                 "pachd_address": "grpcs://172.17.0.6:30650",
-                "server_cas": "foo",
+                "server_cas": "{server_cas}",
                 "session_token": "bar",
                 "active_transaction": "baz"
-              }
-            }
-          }
-        }
+              }}
+            }}
+          }}
+        }}
     """
         )
     )
