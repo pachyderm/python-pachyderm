@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.1.2 (2022-03-16)
+- Fix bug where server CAs were not expected to be b64encoded within the pachctl config file.
+
 ## 7.1.1 (2022-02-04)
 - Update protobuf files to v2.0.5
 - Fix bug where only 20MiB of data could be retrieved with `client.get_file`
