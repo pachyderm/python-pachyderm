@@ -42,7 +42,7 @@ def _check_connection_error(grpc_future: grpc.Future):
             if "PACHD_PEER_SERVICE_HOST" in environ:
                 error_message += (
                     "\tPACHD_PEER_SERVICE_HOST is detected. "
-                    "Please use Client.new_in_cluster() when creating when using"
+                    "Please use Client.new_in_cluster() when using"
                     " python_pachyderm within the a pipeline. "
                 )
             raise ConnectionError(error_message) from error
