@@ -180,6 +180,12 @@ def test_client_init_with_args():
     assert client.address == "pachd.example.com:54321"
 
 
+def test_client_connection_error():
+    client = python_pachyderm.Client(host="localhost", port=54321)
+    with pytest.raises(ConnectionError):
+        client.get_remote_version()
+
+
 def test_client_new_in_cluster_missing_envs():
     with pytest.raises(Exception):
         python_pachyderm.Client.new_in_cluster()
