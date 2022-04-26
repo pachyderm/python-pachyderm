@@ -1,15 +1,20 @@
 import os
-from typing import Union
+from shutil import which
+from subprocess import run
+from typing import Union, TYPE_CHECKING
 
-from python_pachyderm.experimental import Client
-from python_pachyderm.experimental.pfs import Commit
 from python_pachyderm.experimental.service import pps_proto, pfs_proto
+
+if TYPE_CHECKING:
+    # Avoid circular import
+    from python_pachyderm.experimental import Client
+    from python_pachyderm.experimental.pfs import Commit
 
 
 def put_files(
-    client: Client,
+    client: "Client",
     source_path: str,
-    commit: Union[tuple, dict, Commit, pfs_proto.Commit],
+    commit: Union[tuple, dict, "Commit", pfs_proto.Commit],
     dest_path: str,
     **kwargs
 ) -> None:
@@ -32,7 +37,7 @@ def put_files(
 
     Examples
     --------
-    >>> source_dir = "data/training/
+    >>> source_dir = "data/training/"
     >>> with client.commit("repo_name", "master") as commit:
     >>>     python_pachyderm.put_files(client, source_dir, commit, "/training_set/")
     ...
@@ -143,3 +148,20 @@ def parse_dict_pipeline_spec(d: dict) -> pps_proto.CreatePipelineRequest:
     """
 
     return pps_proto.CreatePipelineRequest().from_dict(d)
+
+
+def check_pachctl() -> None:
+    """Ensures that pachctl is installed and is capable of running
+    mount operations.
+
+    Errors
+    ------
+    FileNotFoundError
+        No pachctl binary present
+    RuntimeError
+        pachctl binary present but cannot run mount operations
+    """
+    if which("pachctl") is None:
+        raise FileNotFoundError("pachctl")
+    if run(["pachctl", "mount", "-h"], capture_output=True).returncode != 0:
+        raise RuntimeError("incompatible pachctl detected")

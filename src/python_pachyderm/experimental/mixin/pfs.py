@@ -12,6 +12,7 @@ from python_pachyderm.mixin.pfs import PFSFile, PFSTarFile
 from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
 from python_pachyderm.service import Service, pfs_proto as pfs_proto_pb
 from python_pachyderm.experimental.service import pfs_proto
+from python_pachyderm.experimental.util import check_pachctl
 from google.protobuf import wrappers_pb2
 import betterproto.lib.google.protobuf as bp_proto
 
@@ -1191,6 +1192,7 @@ class PFSMixin:
         --------
         >>> client.mount("dir_a", ["repo1", "repo2@staging"])
         """
+        check_pachctl()
         Path(mount_dir).mkdir(parents=True, exist_ok=True)
 
         subprocess.run(
@@ -1247,6 +1249,7 @@ class PFSMixin:
         ...
         >>> client.unmount(all_mounts=True)
         """
+        check_pachctl()
         if mount_dir is not None:
             subprocess.run(["sudo", "pachctl", "unmount", mount_dir])
         elif all_mounts:

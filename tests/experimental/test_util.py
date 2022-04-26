@@ -5,9 +5,14 @@
 import os
 import json
 import tempfile
+from pathlib import Path
+from shutil import which
+
+import pytest
 
 import python_pachyderm
 from python_pachyderm.experimental.service import pps_proto
+from python_pachyderm.experimental.util import check_pachctl
 from tests import util
 
 # bp_to_pb: PfsInput -> PFSInput
@@ -148,3 +153,27 @@ def check_pipeline_spec(req):
             image="pachyderm/opencv",
         ),
     )
+
+
+def test_check_pachctl(tmp_path: Path):
+    # Sanity check that pachctl is detected.
+    assert check_pachctl() is None
+
+    path_env = os.environ["PATH"]
+    try:
+        false_executable = which("false")
+
+        # Temporary overwrite PATH (hiding pachctl)
+        # This should cause check_pachctl to error.
+        os.environ["PATH"] = str(tmp_path)
+        with pytest.raises(FileNotFoundError):
+            check_pachctl()
+
+        # Create a pachctl that errors (symlink to `false`)
+        # This should cause check_pachctl to error.
+        bad_pachctl = Path(tmp_path, "pachctl")
+        bad_pachctl.symlink_to(false_executable)
+        with pytest.raises(RuntimeError):
+            check_pachctl()
+    finally:
+        os.environ["PATH"] = path_env
