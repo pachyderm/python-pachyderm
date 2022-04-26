@@ -57,5 +57,5 @@ sudo dpkg -i /tmp/pachctl.deb
 pip3 install tox
 
 # Install poetry
-curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-python get-poetry.py -y
+curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
+python3 install-poetry.py -y
