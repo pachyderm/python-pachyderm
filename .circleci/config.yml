@@ -61,7 +61,7 @@ workflows:
           matrix:
             parameters:
               toxenv:
-                - py36
+                - py37
                 - py39
                 - lint
                 - examples

@@ -22,7 +22,7 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = ">=3.6.2,<4.0"
+python = ">=3.7,<4.0"
 grpcio = ">=1.38.0"
 grpcio-health-checking = ">=1.38.0"
 grpc-interceptor = "^0.13.0"
