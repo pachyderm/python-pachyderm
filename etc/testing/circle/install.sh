@@ -17,7 +17,7 @@ sudo apt-get install -y -qq \
   pv \
   jq \
   socat \
-  python3.6 \
+  python3.7 \
   python3.9
 
 # Install Helm
