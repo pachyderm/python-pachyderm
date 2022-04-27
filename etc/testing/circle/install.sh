@@ -58,5 +58,5 @@ pip3 install tox
 
 # Install poetry
 curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3 install-poetry.py -y
+python3 install-poetry.py -y --version 1.1.8
 rm install-poetry.py
