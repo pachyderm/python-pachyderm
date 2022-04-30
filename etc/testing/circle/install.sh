@@ -12,6 +12,7 @@ sudo apt-get install -y -qq \
   python3 \
   python3-pip \
   python3-setuptools \
+  python3.7-distutils \
   pkg-config \
   conntrack \
   pv \
