@@ -12,12 +12,13 @@ sudo apt-get install -y -qq \
   python3 \
   python3-pip \
   python3-setuptools \
+  python3.7-distutils \
   pkg-config \
   conntrack \
   pv \
   jq \
   socat \
-  python3.6 \
+  python3.7 \
   python3.9
 
 # Install Helm
@@ -57,5 +58,6 @@ sudo dpkg -i /tmp/pachctl.deb
 pip3 install tox
 
 # Install poetry
-curl -fsS -o get-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-python get-poetry.py -y
+curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
+python3 install-poetry.py -y --version 1.1.8
+rm install-poetry.py

@@ -28,7 +28,7 @@ jobs:
           name: TOXENV=<<parameters.toxenv>> tox
           command: |
             pachctl port-forward &
-            source $HOME/.poetry/env
+            export PATH="$HOME/.local/bin:$PATH"
             python3 -m tox
           environment:
             TOXENV: << parameters.toxenv >>
@@ -61,7 +61,7 @@ workflows:
           matrix:
             parameters:
               toxenv:
-                - py36
+                - py37
                 - py39
                 - lint
                 - examples
