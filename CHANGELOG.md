@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.2.0 (2022-05-02)
+
+- Better handling of gRPC Connection errors when unable to connect to a pachyderm instance.
+- Added checks for pachctl when using mount operations and exposed
+`python_pachyderm.experimental.util.check_pachctl` method.
+
+## 7.1.2 (2022-03-16)
+- Fix bug where server CAs were not expected to be b64encoded within the pachctl config file.
+
+## 7.1.1 (2022-02-04)
+- Update protobuf files to v2.0.5
+- Fix bug where only 20MiB of data could be retrieved with `client.get_file`
+
 ## 7.1.0 (2021-11-18)
 
 - New experimental client (available via `import python-pachyderm.experimental`, which will contain beta/unstable APIs and features (#352)
