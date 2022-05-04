@@ -11,7 +11,7 @@ sudo apt update -y
 sudo apt-get install -y -qq \
   python3.7 \
   python3.10 \
-  python3.10-pip \
+  python3.10-distutils \
   python3.7-distutils \
   pkg-config \
   conntrack \
@@ -53,7 +53,7 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 sudo dpkg -i /tmp/pachctl.deb
 
 # Install tox
-pip3 install tox
+python3 -m pip install tox
 
 # Install poetry
 curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
