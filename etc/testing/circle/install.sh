@@ -53,6 +53,7 @@ sudo dpkg -i /tmp/pachctl.deb
 cd /opt/circleci/.pyenv/plugins/python-build/../.. \
   && git pull -q \
   && cd - \
+  && echo pwd \
   && pyenv install 3.10.4 \
   && pyenv global 3.10.4
 
@@ -60,6 +61,6 @@ cd /opt/circleci/.pyenv/plugins/python-build/../.. \
 pip3 install tox
 
 # Install poetry
-curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3 install-poetry.py -y --version 1.1.8
+curl -fsS -o install-poetry.py https://install.python-poetry.org
+python3 install-poetry.py
 rm install-poetry.py
