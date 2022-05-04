@@ -53,9 +53,9 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 sudo dpkg -i /tmp/pachctl.deb
 
 # Install tox
-python3 -m pip install tox
+python3.10 -m pip install tox
 
 # Install poetry
 curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3 install-poetry.py -y --version 1.1.8
+python3.10 install-poetry.py -y --version 1.1.8
 rm install-poetry.py
