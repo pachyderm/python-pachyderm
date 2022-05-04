@@ -62,7 +62,7 @@ workflows:
             parameters:
               toxenv:
                 - py37
-                - py39
+                - py310
                 - lint
                 - examples
           filters:
