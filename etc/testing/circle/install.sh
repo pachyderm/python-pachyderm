@@ -12,7 +12,6 @@ sudo apt-get install -y -qq \
   python3.7 \
   python3.10 \
   python3.10-pip \
-  python3.10-setuptools \
   python3.7-distutils \
   pkg-config \
   conntrack \
