@@ -10,7 +10,6 @@ commands:
             name: Install python
             command: |
                 git -C "/opt/circleci/.pyenv/" pull -q
-                rm .python-version
                 pyenv install <<parameters.version>>
                 pyenv global <<parameters.version>>
 
@@ -43,7 +42,7 @@ jobs:
         python-version:
             type: string
     machine:
-      image: ubuntu-2004:202101-01
+      image: ubuntu-2004:202111-01
     steps:
       - checkout
       - deploy-pachyderm
