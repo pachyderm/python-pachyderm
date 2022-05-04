@@ -50,10 +50,7 @@ export PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
 curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v${PACHYDERM_VERSION}/pachctl_${PACHYDERM_VERSION}_amd64.deb
 sudo dpkg -i /tmp/pachctl.deb
 
-cd /opt/circleci/.pyenv/plugins/python-build/../.. \
-  && git pull -q \
-  && cd - \
-  && echo `pwd` \
+git -C "/opt/circleci/.pyenv/" pull -q \
   && pyenv install 3.10.4 \
   && pyenv global 3.10.4
 
