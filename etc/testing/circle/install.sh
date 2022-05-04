@@ -53,7 +53,7 @@ sudo dpkg -i /tmp/pachctl.deb
 cd /opt/circleci/.pyenv/plugins/python-build/../.. \
   && git pull -q \
   && cd - \
-  && echo pwd \
+  && echo `pwd` \
   && pyenv install 3.10.4 \
   && pyenv global 3.10.4
 
