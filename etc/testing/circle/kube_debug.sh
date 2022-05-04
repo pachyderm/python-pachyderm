@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cat /home/circleci/project/poetry-installer-error-*.log
+
 echo "=== TEST FAILED OR TIMED OUT, DUMPING DEBUG INFO ==="
 
 export PATH=$(pwd):$(pwd)/cached-deps:$GOPATH/bin:$PATH

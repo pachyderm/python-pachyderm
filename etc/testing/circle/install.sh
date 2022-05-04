@@ -52,6 +52,10 @@ export PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
 curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v${PACHYDERM_VERSION}/pachctl_${PACHYDERM_VERSION}_amd64.deb
 sudo dpkg -i /tmp/pachctl.deb
 
+echo `which python3`
+echo `which python3.7`
+echo `which python3.10`
+
 # Install tox
 export PATH="/home/circleci/.local/bin:$PATH"
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
