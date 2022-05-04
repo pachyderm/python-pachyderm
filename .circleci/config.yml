@@ -10,6 +10,7 @@ commands:
             name: Install python
             command: |
                 git -C "/opt/circleci/.pyenv/" pull -q
+                rm .python-version
                 pyenv install <<parameters.version>>
                 pyenv global <<parameters.version>>
 
