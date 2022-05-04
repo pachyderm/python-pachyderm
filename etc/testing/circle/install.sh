@@ -10,8 +10,6 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update -y
 sudo apt-get install -y -qq \
   python3.7 \
-  python3.10 \
-  python3.10-distutils \
   python3.7-distutils \
   pkg-config \
   conntrack \
@@ -19,8 +17,11 @@ sudo apt-get install -y -qq \
   jq \
   socat
 
-cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-pyenv install 3.10.4
+cd /opt/circleci/.pyenv/plugins/python-build/../.. \
+  && git pull \
+  && cd - \
+  && pyenv install 3.10.4 \
+  && pyenv global 3.10.4
 
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
@@ -58,11 +59,11 @@ sudo dpkg -i /tmp/pachctl.deb
 pyenv install 3.10.4
 
 # Install tox
-export PATH="/home/circleci/.local/bin:$PATH"
-curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
-python3.10 -m pip install tox
+#export PATH="/home/circleci/.local/bin:$PATH"
+#curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+pip3 install tox
 
 # Install poetry
 curl -fsS -o install-poetry.py https://install.python-poetry.org
-python3.10 install-poetry.py -y
+python3 install-poetry.py -y
 rm install-poetry.py
