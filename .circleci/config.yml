@@ -1,6 +1,63 @@
 version: 2.1
 
+commands:
+  install-python:
+    parameters:
+      version:
+        type: string
+    steps:
+        - run:
+            name: Install python
+            command: |
+                git -C "/opt/circleci/.pyenv/" pull -q
+                pyenv install <<parameters.version>>
+                pyenv global <<parameters.version>>
+
+  install-poetry:
+    steps:
+      - run:
+          name: Install poetry
+          command: |
+            curl -fsS -o install-poetry.py https://install.python-poetry.org
+            python3 install-poetry.py
+            echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
+            rm install-poetry.py
+
+  deploy-pachyderm:
+    steps:
+      - run:
+          name: Install dependencies
+          command: etc/testing/circle/install.sh
+      - run:
+          name: Start minikube
+          command: etc/testing/circle/start-minikube.sh
+      - run:
+          name: Deploy pachyderm
+          command: etc/testing/circle/deploy-pachyderm.sh
+
 jobs:
+  unit-tests:
+    resource_class: large
+    parameters:
+        python-version:
+            type: string
+    machine:
+      image: ubuntu-2004:202101-01
+    steps:
+      - checkout
+      - deploy-pachyderm
+      - install-python
+          version: <<parameters.python-version>>
+      - install-poetry
+      - run:
+          name: Run unit tests
+          command: |
+            pachctl port-forward &
+            poetry install -v
+            poetry run pytest tests
+      - run:
+          when: on_fail
+          command: etc/testing/circle/kube_debug.sh
   tox:
     resource_class: large
     parameters:
@@ -57,6 +114,15 @@ jobs:
 workflows:
   circleci:
     jobs:
+      - unit-tests
+          matrix:
+            parameters:
+              python-version:
+                - 3.7.10
+                - 3.10.4
+          filters:
+            tags:
+              only: /.*/
       - tox:
           matrix:
             parameters:
