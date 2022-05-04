@@ -9,17 +9,16 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 # Install deps
 sudo apt update -y
 sudo apt-get install -y -qq \
-  python3 \
-  python3-pip \
-  python3-setuptools \
+  python3.7 \
+  python3.10 \
+  python3.10-pip \
+  python3.10-setuptools \
   python3.7-distutils \
   pkg-config \
   conntrack \
   pv \
   jq \
-  socat \
-  python3.7 \
-  python3.10
+  socat
 
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
@@ -55,9 +54,9 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 sudo dpkg -i /tmp/pachctl.deb
 
 # Install tox
-pip3.10 install tox
+pip3 install tox
 
 # Install poetry
 curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3.10 install-poetry.py -y --version 1.1.8
+python3 install-poetry.py -y --version 1.1.8
 rm install-poetry.py
