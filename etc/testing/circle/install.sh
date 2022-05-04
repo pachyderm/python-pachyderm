@@ -24,8 +24,6 @@ cd /opt/circleci/.pyenv/plugins/python-build/../.. \
   && pyenv global 3.10.4
 
 # Install tox
-#export PATH="/home/circleci/.local/bin:$PATH"
-#curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
 pip3 install tox
 
 # Install poetry
