@@ -17,20 +17,6 @@ sudo apt-get install -y -qq \
   jq \
   socat
 
-cd /opt/circleci/.pyenv/plugins/python-build/../.. \
-  && git pull -q \
-  && cd - \
-  && pyenv install 3.10.4 \
-  && pyenv global 3.10.4
-
-# Install tox
-pip3 install tox
-
-# Install poetry
-curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3 install-poetry.py -y
-rm install-poetry.py
-
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 sudo apt-get install apt-transport-https --yes
@@ -63,3 +49,17 @@ export PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
 # Install Pachyderm
 curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v${PACHYDERM_VERSION}/pachctl_${PACHYDERM_VERSION}_amd64.deb
 sudo dpkg -i /tmp/pachctl.deb
+
+cd /opt/circleci/.pyenv/plugins/python-build/../.. \
+  && git pull -q \
+  && cd - \
+  && pyenv install 3.10.4 \
+  && pyenv global 3.10.4
+
+# Install tox
+pip3 install tox
+
+# Install poetry
+curl -fsS -o install-poetry.py https://install.python-poetry.org
+python3 install-poetry.py -y
+rm install-poetry.py
