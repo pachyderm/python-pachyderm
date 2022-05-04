@@ -19,6 +19,9 @@ sudo apt-get install -y -qq \
   jq \
   socat
 
+cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+pyenv install 3.10.4
+
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 sudo apt-get install apt-transport-https --yes
