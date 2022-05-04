@@ -53,6 +53,7 @@ curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/down
 sudo dpkg -i /tmp/pachctl.deb
 
 # Install tox
+export PATH="/home/circleci/.local/bin:$PATH"
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
 python3.10 -m pip install tox
 
