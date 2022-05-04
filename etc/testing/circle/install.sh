@@ -19,7 +19,7 @@ sudo apt-get install -y -qq \
   jq \
   socat \
   python3.7 \
-  python3.9
+  python3.10
 
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
