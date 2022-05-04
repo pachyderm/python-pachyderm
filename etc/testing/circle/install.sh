@@ -57,6 +57,6 @@ curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
 python3.10 -m pip install tox
 
 # Install poetry
-curl -fsS -o install-poetry.py https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py
-python3.10 install-poetry.py -y --version 1.1.8
+curl -fsS -o install-poetry.py https://install.python-poetry.org
+python3.10 install-poetry.py -y
 rm install-poetry.py
