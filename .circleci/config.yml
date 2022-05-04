@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - deploy-pachyderm
-      - install-python
+      - install-python:
           version: <<parameters.python-version>>
       - install-poetry
       - run:
@@ -114,7 +114,7 @@ jobs:
 workflows:
   circleci:
     jobs:
-      - unit-tests
+      - unit-tests:
           matrix:
             parameters:
               python-version:
