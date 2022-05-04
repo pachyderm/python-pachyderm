@@ -63,3 +63,5 @@ export PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
 # Install Pachyderm
 curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v${PACHYDERM_VERSION}/pachctl_${PACHYDERM_VERSION}_amd64.deb
 sudo dpkg -i /tmp/pachctl.deb
+
+cat /home/circleci/.bashrc
