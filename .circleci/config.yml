@@ -160,7 +160,8 @@ workflows:
               only: /.*/
       - examples:
           parameters:
-            python-version: 3.9.6
+            python-version:
+              - 3.9.6
           filters:
             tags:
               only: /.*/
