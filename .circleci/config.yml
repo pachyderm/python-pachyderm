@@ -180,8 +180,8 @@ workflows:
 #            tags:
 #              only: /.*/
       - test-publish:
-          requires:
-            - tox
+#          requires:
+#            - tox
           filters:
             tags:
               only: /^\d+\.\d+\.\d.*/
