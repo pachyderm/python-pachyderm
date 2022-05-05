@@ -4,13 +4,9 @@ set -ex
 
 mkdir -p cached-deps
 
-sudo add-apt-repository ppa:deadsnakes/ppa
-
 # Install deps
 sudo apt update -y
 sudo apt-get install -y -qq \
-  python3.7 \
-  python3.7-distutils \
   pkg-config \
   conntrack \
   pv \
@@ -49,15 +45,3 @@ export PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
 # Install Pachyderm
 curl -o /tmp/pachctl.deb -L https://github.com/pachyderm/pachyderm/releases/download/v${PACHYDERM_VERSION}/pachctl_${PACHYDERM_VERSION}_amd64.deb
 sudo dpkg -i /tmp/pachctl.deb
-
-#git -C "/opt/circleci/.pyenv/" pull -q \
-#  && pyenv install 3.10.4 \
-#  && pyenv global 3.10.4
-#
-## Install tox
-#pip3 install tox
-#
-## Install poetry
-#curl -fsS -o install-poetry.py https://install.python-poetry.org
-#python3 install-poetry.py
-#rm install-poetry.py
