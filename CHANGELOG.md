@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.2.1 (2022-06-01)
+
+- Pin protobuf dependency to >=3.17.1,<4.0.0
+
 ## 7.2.0 (2022-05-02)
 
 - Better handling of gRPC Connection errors when unable to connect to a pachyderm instance.
