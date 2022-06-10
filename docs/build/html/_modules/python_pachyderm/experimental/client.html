@@ -104,6 +104,9 @@
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
 
+    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
 
 <span class="c1"># converts enum values (ints) to their actual enum objects</span>
 <span class="k">def</span> <span class="nf">_show_enums</span><span class="p">(</span><span class="n">bp_obj</span><span class="p">:</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
