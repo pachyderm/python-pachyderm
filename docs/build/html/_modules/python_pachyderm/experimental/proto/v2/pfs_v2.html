@@ -69,7 +69,7 @@
 <span class="c1"># sources: python_pachyderm/proto/v2/pfs/pfs.proto</span>
 <span class="c1"># plugin: python-betterproto</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">betterproto</span>
@@ -248,7 +248,9 @@
 <span class="k">class</span> <span class="nc">CommitInfoDetails</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Details are only provided when explicitly requested&quot;&quot;&quot;</span>
 
-    <span class="n">size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+    <span class="n">size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">compacting_time</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">validating_time</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CommitSet"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitSet">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -519,6 +521,12 @@
     <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="ComposeFileSetRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ComposeFileSetRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ComposeFileSetRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="ActivateAuthRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ActivateAuthRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ActivateAuthRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
     <span class="k">pass</span></div>
@@ -541,7 +549,8 @@
     <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div>
+    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">duration</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ApiStub"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub">[docs]</a><span class="k">class</span> <span class="nc">ApiStub</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">ServiceStub</span><span class="p">):</span>
@@ -1019,6 +1028,19 @@
             <span class="s2">&quot;/pfs_v2.API/RenewFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
         <span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">compose_file_set</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
+        <span class="n">file_set_ids</span> <span class="o">=</span> <span class="n">file_set_ids</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">ComposeFileSetRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">file_set_ids</span> <span class="o">=</span> <span class="n">file_set_ids</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">ttl_seconds</span> <span class="o">=</span> <span class="n">ttl_seconds</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/ComposeFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CreateFileSetResponse</span>
+        <span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
@@ -1202,6 +1224,11 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">renew_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file_set_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">compose_file_set</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
@@ -1604,6 +1631,17 @@
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">renew_file_set</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_compose_file_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;file_set_ids&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">file_set_ids</span><span class="p">,</span>
+            <span class="s2">&quot;ttl_seconds&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">ttl_seconds</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_file_set</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_run_load_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
 
@@ -1823,6 +1861,12 @@
                 <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
                 <span class="n">RenewFileSetRequest</span><span class="p">,</span>
                 <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/ComposeFileSet&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_compose_file_set</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">ComposeFileSetRequest</span><span class="p">,</span>
+                <span class="n">CreateFileSetResponse</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTest&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_run_load_test</span><span class="p">,</span>

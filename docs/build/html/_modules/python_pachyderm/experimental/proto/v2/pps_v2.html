@@ -1305,6 +1305,20 @@
             <span class="s2">&quot;/pps_v2.API/UpdateJobState&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
         <span class="p">)</span></div>
 
+<div class="viewcode-block" id="ApiStub.run_load_test"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiStub.run_load_test">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_pfs_v2__.RunLoadTestResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">_pfs_v2__</span><span class="o">.</span><span class="n">RunLoadTestRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">spec</span> <span class="o">=</span> <span class="n">spec</span>
+        <span class="k">if</span> <span class="n">branch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">branch</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pps_v2.API/RunLoadTest&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">_pfs_v2__</span><span class="o">.</span><span class="n">RunLoadTestResponse</span>
+        <span class="p">)</span></div>
+
 <div class="viewcode-block" id="ApiStub.run_load_test_default"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiStub.run_load_test_default">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_pfs_v2__.RunLoadTestResponse&quot;</span><span class="p">:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
@@ -1482,6 +1496,11 @@
         <span class="n">data_total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">stats</span><span class="p">:</span> <span class="s2">&quot;ProcessStats&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiBase.run_load_test"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiBase.run_load_test">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_pfs_v2__.RunLoadTestResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ApiBase.run_load_test_default"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiBase.run_load_test_default">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_pfs_v2__.RunLoadTestResponse&quot;</span><span class="p">:</span>
@@ -1827,6 +1846,18 @@
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_job_state</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_run_load_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">spec</span><span class="p">,</span>
+            <span class="s2">&quot;branch&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_load_test</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
 
@@ -1992,6 +2023,12 @@
                 <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
                 <span class="n">UpdateJobStateRequest</span><span class="p">,</span>
                 <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pps_v2.API/RunLoadTest&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_run_load_test</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">_pfs_v2__</span><span class="o">.</span><span class="n">RunLoadTestRequest</span><span class="p">,</span>
+                <span class="n">_pfs_v2__</span><span class="o">.</span><span class="n">RunLoadTestResponse</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;/pps_v2.API/RunLoadTestDefault&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_run_load_test_default</span><span class="p">,</span>

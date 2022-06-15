@@ -212,7 +212,12 @@
     <span class="c1"># localhost_issuer ignores the contents of the issuer claim and makes all</span>
     <span class="c1"># OIDC requests to the embedded OIDC provider. This is necessary to support</span>
     <span class="c1"># some network configurations like Minikube.</span>
-    <span class="n">localhost_issuer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span></div>
+    <span class="n">localhost_issuer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="c1"># user_accessible_issuer_host can be set to override the host used  in the</span>
+    <span class="c1"># OAuth2 authorization URL in case the OIDC issuer isn&#39;t accessible outside</span>
+    <span class="c1"># the cluster. This is necessary to support  some configurations like</span>
+    <span class="c1"># Minikube.</span>
+    <span class="n">user_accessible_issuer_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="GetConfigurationRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.auth_v2.html#python_pachyderm.experimental.proto.v2.auth_v2.GetConfigurationRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

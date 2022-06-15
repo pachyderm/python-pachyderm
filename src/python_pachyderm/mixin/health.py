@@ -17,7 +17,7 @@ class HealthMixin:
 
         Returns
         -------
-        health_pb2HealthCheckResponse
+        health_pb2.HealthCheckResponse
             A protobuf object with a status enum indicating server health.
         """
         message = health_pb2.HealthCheckRequest()
