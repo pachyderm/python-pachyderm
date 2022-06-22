@@ -1,6 +1,7 @@
 import io
 import os
 import json
+import ssl
 from base64 import b64encode
 from pathlib import Path
 
@@ -213,13 +214,13 @@ def test_client_new_from_pachd_address():
     assert client.address == "pachyderm.com:80"
 
     client = python_pachyderm.Client.new_from_pachd_address(
-        "https://pachyderm.com:80", root_certs=b"foo"
+        "https://pachyderm.com:80", root_certs=f"{ssl.PEM_HEADER}foo".encode()
     )
     assert client.address == "pachyderm.com:80"
     assert client.root_certs is not None
 
     client = python_pachyderm.Client.new_from_pachd_address(
-        "https://pachyderm.com:80", root_certs=b"foo"
+        "https://pachyderm.com:80", root_certs=f"{ssl.PEM_HEADER}foo".encode()
     )
     assert client.address == "pachyderm.com:80"
     assert client.root_certs is not None
@@ -229,7 +230,7 @@ def test_client_new_from_pachd_address():
     assert client.root_certs is not None
 
     client = python_pachyderm.Client.new_from_pachd_address(
-        "grpcs://[::1]:80", root_certs=b"foo"
+        "grpcs://[::1]:80", root_certs=f"{ssl.PEM_HEADER}foo".encode()
     )
     assert client.address == "::1:80"
     assert client.root_certs is not None
@@ -283,7 +284,8 @@ def test_client_new_from_config():
         )
 
     # check that pachd address and other context fields are respected
-    server_cas = b64encode(b"foo").decode()
+    root_certs = f"{ssl.PEM_HEADER}foo".encode()
+    server_cas = b64encode(root_certs).decode()
     client = python_pachyderm.Client.new_from_config(
         config_file=io.StringIO(
             f"""
@@ -304,7 +306,7 @@ def test_client_new_from_config():
         )
     )
     assert client.address == "172.17.0.6:30650"
-    assert client.root_certs == b"foo"
+    assert client.root_certs == root_certs
     assert client.auth_token == "bar"
     assert client.transaction_id == "baz"
 
@@ -384,3 +386,19 @@ def test_client_new_from_config():
         )
     )
     assert client.address == "localhost:30650"
+
+
+def test_client_root_certs():
+    """Tests validation for user-provided root certs."""
+    host = "pachd.example.com"
+    port = 54321
+
+    with pytest.raises(TypeError):
+        python_pachyderm.Client(host, port, root_certs="I'm a string")
+
+    with pytest.raises(ValueError):
+        python_pachyderm.Client(host, port, root_certs=b"I'm not a PEM")
+
+    root_certs = f"{ssl.PEM_HEADER}\n I'm a certificate! \n{ssl.PEM_FOOTER}".encode()
+    client = python_pachyderm.Client(host, port, root_certs=root_certs)
+    assert client.root_certs == root_certs

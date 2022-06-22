@@ -1,5 +1,6 @@
 import os
 import json
+import ssl
 from base64 import b64decode
 from pathlib import Path
 from typing import Optional, TextIO
@@ -114,6 +115,16 @@ class Client(
         >>> # Manually set host and port
         >>> client = python_pachyderm.Client("pachd.example.com", 12345)
         """
+
+        if root_certs is not None:
+            if not isinstance(root_certs, bytes):
+                raise TypeError(
+                    f"expected root_certs as bytes, found: {type(root_certs)}"
+                )
+            if not root_certs.startswith(ssl.PEM_HEADER.encode()):
+                raise ValueError(
+                    "root_certs must be in PEM format -- PEM header not found."
+                )
 
         # replicate pachctl behavior to searching for config
         # if host and port are unset
