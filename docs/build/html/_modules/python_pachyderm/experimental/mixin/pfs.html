@@ -70,16 +70,17 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
+<span class="kn">from</span> <span class="nn">python_pachyderm.mixin.pfs</span> <span class="kn">import</span> <span class="n">PFSFile</span><span class="p">,</span> <span class="n">PFSTarFile</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.experimental.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">uuid_re</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">pfs_proto</span> <span class="k">as</span> <span class="n">pfs_proto_pb</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.experimental.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span>
-<span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.experimental.util</span> <span class="kn">import</span> <span class="n">check_pachctl</span>
+<span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">wrappers_pb2</span>
 <span class="kn">import</span> <span class="nn">betterproto.lib.google.protobuf</span> <span class="k">as</span> <span class="nn">bp_proto</span>
 
 <span class="c1"># bp_to_pb: bp_proto.Empty -&gt; empty_pb2.Empty</span>
@@ -87,111 +88,6 @@
 
 
 <span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
-
-
-<span class="k">class</span> <span class="nc">FileTarstream</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implements a file-like interface over a GRPC byte stream,</span>
-<span class="sd">    so we can use tarfile to decode the file contents.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">res</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancelled</span><span class="p">():</span>
-            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
-
-        <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">remaining</span> <span class="o">=</span> <span class="n">size</span> <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">:</span>
-            <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
-            <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">while</span> <span class="n">remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">remaining</span><span class="p">:</span>
-                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-
-                <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-        <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="PFSFile"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile">[docs]</a><span class="k">class</span> <span class="nc">PFSFile</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;File-like objects containing content of a file stored in PFS.</span>
-
-<span class="sd">    Examples</span>
-<span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; # client.get_file() returns a PFSFile</span>
-<span class="sd">    &gt;&gt;&gt; source_file = client.get_file((&quot;montage&quot;, &quot;master&quot;), &quot;/montage.png&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; with open(&quot;montage.png&quot;, &quot;wb&quot;) as dest_file:</span>
-<span class="sd">    &gt;&gt;&gt;     shutil.copyfileobj(source_file, dest_file)</span>
-<span class="sd">    ...</span>
-<span class="sd">    &gt;&gt;&gt; with client.get_file((&quot;montage&quot;, &quot;master&quot;), &quot;/montage2.png&quot;) as f:</span>
-<span class="sd">    &gt;&gt;&gt;     content = f.read()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">is_tar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_tar</span><span class="p">:</span>
-            <span class="c1"># Pachyderm&#39;s GetFileTar API returns its result (which may include</span>
-            <span class="c1"># several files, e.g. when getting a directory) as a tar</span>
-            <span class="c1"># stream--untar the response byte stream as we receive it from</span>
-            <span class="c1"># GetFileTar.</span>
-            <span class="c1"># TODO how to handle multiple files in the tar stream?</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r|*&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">stream</span>
-
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span>
-        <span class="k">return</span> <span class="n">x</span>
-
-<div class="viewcode-block" id="PFSFile.read"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reads from the :class:`.PFSFile` buffer.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        size : int, optional</span>
-<span class="sd">            If set, the number of bytes to read from the buffer.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        bytes</span>
-<span class="sd">            Content from the stream.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PFSFile.close"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Closes the :class:`.PFSFile`.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="PFSMixin"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin">[docs]</a><span class="k">class</span> <span class="nc">PFSMixin</span><span class="p">:</span>
@@ -1018,14 +914,14 @@
 <span class="sd">        PFSFile</span>
 <span class="sd">            The contents of the file in a file-like object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
             <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
             <span class="s2">&quot;GetFile&quot;</span><span class="p">,</span>
             <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
             <span class="n">URL</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span>
             <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.get_file_tar"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin.get_file_tar">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1034,7 +930,7 @@
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PFSFile</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PFSTarFile</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Gets a file from PFS.</span>
 
 <span class="sd">        Parameters</span>
@@ -1055,7 +951,7 @@
 <span class="sd">        PFSFile</span>
 <span class="sd">            The contents of the file in a file-like object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
             <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
             <span class="s2">&quot;GetFileTAR&quot;</span><span class="p">,</span>
             <span class="n">req</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">GetFileRequest</span><span class="p">(</span>
@@ -1064,7 +960,7 @@
                 <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">is_tar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">PFSTarFile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">PFSFile</span><span class="p">(</span><span class="n">stream</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r|*&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.inspect_file"><a class="viewcode-back" href="../../../../python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin.inspect_file">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1363,6 +1259,7 @@
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; client.mount(&quot;dir_a&quot;, [&quot;repo1&quot;, &quot;repo2@staging&quot;])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_pachctl</span><span class="p">()</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">mount_dir</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
@@ -1419,6 +1316,7 @@
 <span class="sd">        ...</span>
 <span class="sd">        &gt;&gt;&gt; client.unmount(all_mounts=True)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_pachctl</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">mount_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;pachctl&quot;</span><span class="p">,</span> <span class="s2">&quot;unmount&quot;</span><span class="p">,</span> <span class="n">mount_dir</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">all_mounts</span><span class="p">:</span>

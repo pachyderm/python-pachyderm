@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.1 (2022-07-01)
+
+- Fix stable docs (#403)
+
 ## 7.3.0 (2022-06-01)
 
 - Add support for python3.10

@@ -37,11 +37,7 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
-<<<<<<< HEAD
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">python_pachyderm</a></li>
-=======
-<li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
->>>>>>> master
 </ul>
 
         </div>
@@ -73,13 +69,22 @@
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">SubcommitType</span>
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">pps_proto</span><span class="p">,</span> <span class="n">pfs_proto</span>
+<span class="kn">import</span> <span class="nn">grpc</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">duration_pb2</span>
+
+<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">SubcommitType</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.pfs</span> <span class="kn">import</span> <span class="n">pfs_pb2</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.pps</span> <span class="kn">import</span> <span class="n">pps_pb2</span><span class="p">,</span> <span class="n">pps_pb2_grpc</span>
 
 
 <div class="viewcode-block" id="PPSMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin">[docs]</a><span class="k">class</span> <span class="nc">PPSMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A mixin for pps-related functionality.&quot;&quot;&quot;</span>
+
+    <span class="n">_channel</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span> <span class="o">=</span> <span class="n">pps_pb2_grpc</span><span class="o">.</span><span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="PPSMixin.inspect_job"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_job">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_job</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -87,7 +92,7 @@
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">wait</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">JobInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">JobInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a job.</span>
 
 <span class="sd">        Parameters</span>
@@ -103,7 +108,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.JobInfo]</span>
+<span class="sd">        Iterator[pps_pb2.JobInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a subjob</span>
 <span class="sd">            (jobs at the pipeline-level).</span>
 
@@ -118,27 +123,21 @@
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pipeline_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                        <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                        <span class="s2">&quot;InspectJob&quot;</span><span class="p">,</span>
-                        <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
-                        <span class="p">),</span>
-                        <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">,</span>
-                        <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">]</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                <span class="s2">&quot;InspectJobSet&quot;</span><span class="p">,</span>
-                <span class="n">job_set</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">JobSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">),</span>
-                <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">,</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">InspectJobRequest</span><span class="p">(</span>
                 <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
-            <span class="p">)</span></div>
+                <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
+                    <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
+                <span class="p">),</span>
+                <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectJob</span><span class="p">(</span><span class="n">message</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">InspectJobSetRequest</span><span class="p">(</span>
+                <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+                <span class="n">job_set</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">JobSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">),</span>
+                <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectJobSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.list_job"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_job">[docs]</a>    <span class="k">def</span> <span class="nf">list_job</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -147,7 +146,7 @@
         <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">jqFilter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">JobInfo</span><span class="p">],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">JobSetInfo</span><span class="p">]]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">JobInfo</span><span class="p">],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">JobSetInfo</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Lists jobs.</span>
 
 <span class="sd">        Parameters</span>
@@ -178,7 +177,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]</span>
+<span class="sd">        Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]</span>
 <span class="sd">            An iterator of protobuf objects that either contain info on a</span>
 <span class="sd">            subjob (job at the pipeline-level), if `pipeline_name` was</span>
 <span class="sd">            specified, or a job, if `pipeline_name` wasn&#39;t specified.</span>
@@ -198,22 +197,17 @@
                 <span class="n">input_commit</span> <span class="o">=</span> <span class="p">[</span><span class="n">commit_from</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span> <span class="k">for</span> <span class="n">ic</span> <span class="ow">in</span> <span class="n">input_commit</span><span class="p">]</span>
             <span class="k">elif</span> <span class="n">input_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">input_commit</span> <span class="o">=</span> <span class="p">[</span><span class="n">commit_from</span><span class="p">(</span><span class="n">input_commit</span><span class="p">)]</span>
-
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                <span class="s2">&quot;ListJob&quot;</span><span class="p">,</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
-                <span class="n">input_commit</span><span class="o">=</span><span class="n">input_commit</span><span class="p">,</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ListJobRequest</span><span class="p">(</span>
+                <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
                 <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
-                <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+                <span class="n">input_commit</span><span class="o">=</span><span class="n">input_commit</span><span class="p">,</span>
                 <span class="n">jqFilter</span><span class="o">=</span><span class="n">jqFilter</span><span class="p">,</span>
+                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
             <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListJob</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                <span class="s2">&quot;ListJobSet&quot;</span><span class="p">,</span>
-                <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
-            <span class="p">)</span></div>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ListJobSetRequest</span><span class="p">(</span><span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListJobSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.delete_job"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.delete_job">[docs]</a>    <span class="k">def</span> <span class="nf">delete_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a subjob (job at the pipeline-level).</span>
@@ -225,13 +219,13 @@
 <span class="sd">        pipeline_name : str</span>
 <span class="sd">            The name of the pipeline.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;DeleteJob&quot;</span><span class="p">,</span>
-            <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
-            <span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">DeleteJobRequest</span><span class="p">(</span>
+            <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">,</span>
+                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteJob</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.stop_job"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.stop_job">[docs]</a>    <span class="k">def</span> <span class="nf">stop_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Stops a subjob (job at the pipeline-level).</span>
@@ -245,18 +239,18 @@
 <span class="sd">        reason : str, optional</span>
 <span class="sd">            A reason for stopping the job.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;StopJob&quot;</span><span class="p">,</span>
-            <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">StopJobRequest</span><span class="p">(</span>
+            <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">,</span>
+                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
             <span class="p">),</span>
             <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">StopJob</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.inspect_datum"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_datum">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_datum</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">DatumInfo</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">DatumInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a datum.</span>
 
 <span class="sd">        Parameters</span>
@@ -270,26 +264,26 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pps_proto.DatumInfo</span>
+<span class="sd">        pps_pb2.DatumInfo</span>
 <span class="sd">            A protobuf object with info on the datum.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;InspectDatum&quot;</span><span class="p">,</span>
-            <span class="n">datum</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Datum</span><span class="p">(</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">InspectDatumRequest</span><span class="p">(</span>
+            <span class="n">datum</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Datum</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="n">datum_id</span><span class="p">,</span>
-                <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                    <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
+                <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">,</span>
+                    <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
                 <span class="p">),</span>
             <span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectDatum</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.list_datum"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_datum">[docs]</a>    <span class="k">def</span> <span class="nf">list_datum</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="nb">input</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">DatumInfo</span><span class="p">]:</span>
+        <span class="nb">input</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">DatumInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or</span>
 <span class="sd">        `input` (hypothetical) must be set.</span>
 
@@ -299,39 +293,37 @@
 <span class="sd">            The name of the pipeline.</span>
 <span class="sd">        job_id : str, optional</span>
 <span class="sd">            The ID of a job.</span>
-<span class="sd">        input : pps_proto.Input, optional</span>
+<span class="sd">        input : pps_pb2.Input, optional</span>
 <span class="sd">            A protobuf object that filters the datums returned. The datums</span>
 <span class="sd">            listed are ones that would be run if a pipeline was created with</span>
 <span class="sd">            the provided input.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.DatumInfo]</span>
+<span class="sd">        Iterator[pps_pb2.DatumInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a datum.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; # See hypothetical datums with specified input cross</span>
-<span class="sd">        &gt;&gt;&gt; datums = list(client.list_datum(input=pps_proto.Input(</span>
-<span class="sd">        ...     pfs=pps_proto.PFSInput(repo=&quot;foo&quot;, branch=&quot;master&quot;, glob=&quot;/*&quot;),</span>
+<span class="sd">        &gt;&gt;&gt; datums = list(client.list_datum(input=pps_pb2.Input(</span>
+<span class="sd">        ...     pfs=pps_pb2.PFSInput(repo=&quot;foo&quot;, branch=&quot;master&quot;, glob=&quot;/*&quot;),</span>
 <span class="sd">        ...     cross=[</span>
-<span class="sd">        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo=&quot;bar&quot;, branch=&quot;master&quot;, glob=&quot;/&quot;)),</span>
-<span class="sd">        ...         pps_proto.Input(pfs=pps_proto.PFSInput(repo=&quot;baz&quot;, branch=&quot;master&quot;, glob=&quot;/*/*&quot;)),</span>
+<span class="sd">        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo=&quot;bar&quot;, branch=&quot;master&quot;, glob=&quot;/&quot;)),</span>
+<span class="sd">        ...         pps_pb2.Input(pfs=pps_pb2.PFSInput(repo=&quot;baz&quot;, branch=&quot;master&quot;, glob=&quot;/*/*&quot;)),</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )))</span>
 
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">req</span> <span class="o">=</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">ListDatumRequest</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ListDatumRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">pipeline_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">job_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">req</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
-                <span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                    <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
-                <span class="p">)</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">req</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;ListDatum&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span></div>
+            <span class="n">message</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListDatum</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.restart_datum"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.restart_datum">[docs]</a>    <span class="k">def</span> <span class="nf">restart_datum</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_filters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -348,42 +340,39 @@
 <span class="sd">            A list of paths or hashes of datums that filter which datums are</span>
 <span class="sd">            restarted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;RestartDatum&quot;</span><span class="p">,</span>
-            <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
-            <span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">RestartDatumRequest</span><span class="p">(</span>
             <span class="n">data_filters</span><span class="o">=</span><span class="n">data_filters</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">RestartDatum</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.create_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">create_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">transform</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Transform</span><span class="p">,</span>
-        <span class="n">parallelism_spec</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">ParallelismSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">egress</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Egress</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Transform</span><span class="p">,</span>
+        <span class="n">parallelism_spec</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ParallelismSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">egress</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Egress</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">reprocess_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">output_branch_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">s3_out</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">resource_requests</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">resource_limits</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">sidecar_resource_limits</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="nb">input</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">resource_requests</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">resource_limits</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sidecar_resource_limits</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ResourceSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">input</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">reprocess</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">service</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Service</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">datum_set_spec</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">DatumSetSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">service</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Service</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">datum_set_spec</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">DatumSetSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">datum_timeout</span><span class="p">:</span> <span class="n">duration_pb2</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">job_timeout</span><span class="p">:</span> <span class="n">duration_pb2</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">salt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">datum_tries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="n">scheduling_spec</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">SchedulingSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scheduling_spec</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">SchedulingSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">pod_patch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">spout</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Spout</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">spec_commit</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">metadata</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Metadata</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">spout</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Spout</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">spec_commit</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Metadata</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">autoscaling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Creates a pipeline.</span>
@@ -395,11 +384,11 @@
 <span class="sd">        ----------</span>
 <span class="sd">        pipeline_name : str</span>
 <span class="sd">            The pipeline name.</span>
-<span class="sd">        transform : pps_proto.Transform</span>
+<span class="sd">        transform : pps_pb2.Transform</span>
 <span class="sd">            The image and commands run during pipeline execution.</span>
-<span class="sd">        parallelism_spec : pps_proto.ParallelismSpec, optional</span>
+<span class="sd">        parallelism_spec : pps_pb2.ParallelismSpec, optional</span>
 <span class="sd">            Specifies how the pipeline is parallelized.</span>
-<span class="sd">        egress : pps_proto.Egress, optional</span>
+<span class="sd">        egress : pps_pb2.Egress, optional</span>
 <span class="sd">            An external data store to publish the results of the pipeline to.</span>
 <span class="sd">        reprocess_spec : str, optional</span>
 <span class="sd">            Specifies how to handle already-processed datums.</span>
@@ -409,15 +398,15 @@
 <span class="sd">            The branch name to output results on.</span>
 <span class="sd">        s3_out : bool, optional</span>
 <span class="sd">            If true, the output repo is exposed as an S3 gateway bucket.</span>
-<span class="sd">        resource_requests : pps_proto.ResourceSpec, optional</span>
+<span class="sd">        resource_requests : pps_pb2.ResourceSpec, optional</span>
 <span class="sd">            The amount of resources that the pipeline workers will consume.</span>
-<span class="sd">        resource_limits: pps_proto.ResourceSpec, optional</span>
+<span class="sd">        resource_limits: pps_pb2.ResourceSpec, optional</span>
 <span class="sd">            The upper threshold of allowed resources a given worker can</span>
 <span class="sd">            consume. If a worker exceeds this value, it will be evicted.</span>
-<span class="sd">        sidecar_resource_limits : pps_proto.ResourceSpec, optional</span>
+<span class="sd">        sidecar_resource_limits : pps_pb2.ResourceSpec, optional</span>
 <span class="sd">            The upper threshold of resources allocated to the sidecar</span>
 <span class="sd">            containers.</span>
-<span class="sd">        input : pps_proto.Input, optional</span>
+<span class="sd">        input : pps_pb2.Input, optional</span>
 <span class="sd">            The input repos to the pipeline. Commits to these repos will</span>
 <span class="sd">            automatically trigger the pipeline to create new jobs to</span>
 <span class="sd">            process them.</span>
@@ -426,9 +415,9 @@
 <span class="sd">        reprocess : bool, optional</span>
 <span class="sd">            If true, forces the pipeline to reprocess all datums. Only has</span>
 <span class="sd">            meaning if `update` is ``True``.</span>
-<span class="sd">        service : pps_proto.Service, optional</span>
+<span class="sd">        service : pps_pb2.Service, optional</span>
 <span class="sd">            Creates a Service pipeline instead of a normal pipeline.</span>
-<span class="sd">        datum_set_spec : pps_proto.DatumSetSpec, optional</span>
+<span class="sd">        datum_set_spec : pps_pb2.DatumSetSpec, optional</span>
 <span class="sd">            Specifies how a pipeline should split its datums into datum sets.</span>
 <span class="sd">        datum_timeout : duration_pb2.Duration, optional</span>
 <span class="sd">            The maximum execution time allowed for each datum.</span>
@@ -439,16 +428,16 @@
 <span class="sd">        datum_tries : int, optional</span>
 <span class="sd">            The number of times a job attempts to run on a datum when a failure</span>
 <span class="sd">            occurs.</span>
-<span class="sd">        scheduling_spec : pps_proto.SchedulingSpec, optional</span>
+<span class="sd">        scheduling_spec : pps_pb2.SchedulingSpec, optional</span>
 <span class="sd">            Specifies how the pods for a pipeline should be scheduled.</span>
 <span class="sd">        pod_patch : str, optional</span>
 <span class="sd">            Allows one to set fields in the pod spec that haven&#39;t been</span>
 <span class="sd">            explicitly exposed in the rest of the pipeline spec.</span>
-<span class="sd">        spout : pps_proto.Spout, optional</span>
+<span class="sd">        spout : pps_pb2.Spout, optional</span>
 <span class="sd">            Creates a Spout pipeline instead of a normal pipeline.</span>
-<span class="sd">        spec_commit : pfs_proto.Commit, optional</span>
+<span class="sd">        spec_commit : pfs_pb2.Commit, optional</span>
 <span class="sd">            A spec commit to base the pipeline spec from.</span>
-<span class="sd">        metadata : pps_proto.Metadata, optional</span>
+<span class="sd">        metadata : pps_pb2.Metadata, optional</span>
 <span class="sd">            Kubernetes labels and annotations to add as metadata to the</span>
 <span class="sd">            pipeline pods.</span>
 <span class="sd">        autoscaling : bool, optional</span>
@@ -469,21 +458,19 @@
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; client.create_pipeline(</span>
 <span class="sd">        ...     &quot;foo&quot;,</span>
-<span class="sd">        ...     transform=pps_proto.Transform(</span>
+<span class="sd">        ...     transform=pps_pb2.Transform(</span>
 <span class="sd">        ...         cmd=[&quot;python3&quot;, &quot;main.py&quot;],</span>
 <span class="sd">        ...         image=&quot;example/image&quot;,</span>
 <span class="sd">        ...     ),</span>
-<span class="sd">        ...     input=pps_proto.Input(pfs=pps_proto.PFSInput(</span>
+<span class="sd">        ...     input=pps_pb2.Input(pfs=pps_pb2.PFSInput(</span>
 <span class="sd">        ...         repo=&quot;foo&quot;,</span>
 <span class="sd">        ...         branch=&quot;master&quot;,</span>
 <span class="sd">        ...         glob=&quot;/*&quot;</span>
 <span class="sd">        ...     ))</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;CreatePipeline&quot;</span><span class="p">,</span>
-            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">(</span>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
             <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
             <span class="n">parallelism_spec</span><span class="o">=</span><span class="n">parallelism_spec</span><span class="p">,</span>
             <span class="n">egress</span><span class="o">=</span><span class="n">egress</span><span class="p">,</span>
@@ -509,25 +496,24 @@
             <span class="n">spec_commit</span><span class="o">=</span><span class="n">spec_commit</span><span class="p">,</span>
             <span class="n">reprocess_spec</span><span class="o">=</span><span class="n">reprocess_spec</span><span class="p">,</span>
             <span class="n">autoscaling</span><span class="o">=</span><span class="n">autoscaling</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">CreatePipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PPSMixin.create_pipeline_from_request"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline_from_request">[docs]</a>    <span class="k">def</span> <span class="nf">create_pipeline_from_request</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">CreatePipelineRequest</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PPSMixin.create_pipeline_from_request"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.create_pipeline_from_request">[docs]</a>    <span class="k">def</span> <span class="nf">create_pipeline_from_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Creates a pipeline from a ``CreatePipelineRequest`` object. Usually</span>
 <span class="sd">        used in conjunction with ``util.parse_json_pipeline_spec()`` or</span>
 <span class="sd">        ``util.parse_dict_pipeline_spec()``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        req : pps_proto.CreatePipelineRequest</span>
+<span class="sd">        req : pps_pb2.CreatePipelineRequest</span>
 <span class="sd">            The ``CreatePipelineRequest`` object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;CreatePipeline&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">CreatePipeline</span><span class="p">(</span><span class="n">req</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.inspect_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;.. # noqa: W505</span>
 
 <span class="sd">        Inspects a pipeline.</span>
@@ -550,7 +536,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.PipelineInfo]</span>
+<span class="sd">        Iterator[pps_pb2.PipelineInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a pipeline.</span>
 
 <span class="sd">        Examples</span>
@@ -561,30 +547,24 @@
 <span class="sd">        &gt;&gt;&gt;     print(p)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">history</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                        <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                        <span class="s2">&quot;InspectPipeline&quot;</span><span class="p">,</span>
-                        <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
-                        <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">]</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">InspectPipelineRequest</span><span class="p">(</span>
+                <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
             <span class="p">)</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectPipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># `InspectPipeline` doesn&#39;t support history, but `ListPipeline`</span>
             <span class="c1"># with a pipeline filter does, so we use that here</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-                <span class="s2">&quot;ListPipeline&quot;</span><span class="p">,</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
-                <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ListPipelineRequest</span><span class="p">(</span>
                 <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
-            <span class="p">)</span></div>
+                <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListPipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.list_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">list_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">jqFilter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PipelineInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;.. # noqa: W505</span>
 
 <span class="sd">        Lists pipelines.</span>
@@ -607,20 +587,19 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.PipelineInfo]</span>
+<span class="sd">        Iterator[pps_pb2.PipelineInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a pipeline.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; pipelines = list(client.list_pipeline())</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;ListPipeline&quot;</span><span class="p">,</span>
-            <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">ListPipelineRequest</span><span class="p">(</span>
             <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+            <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
             <span class="n">jqFilter</span><span class="o">=</span><span class="n">jqFilter</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListPipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.delete_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.delete_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">delete_pipeline</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">keep_repo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -636,21 +615,17 @@
 <span class="sd">        keep_repo : bool, optional</span>
 <span class="sd">            If true, keeps the output repo.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;DeletePipeline&quot;</span><span class="p">,</span>
-            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">DeletePipelineRequest</span><span class="p">(</span>
             <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
             <span class="n">keep_repo</span><span class="o">=</span><span class="n">keep_repo</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeletePipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.delete_all_pipelines"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.delete_all_pipelines">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_pipelines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes all pipelines.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;DeleteAll&quot;</span><span class="p">,</span>
-            <span class="n">req</span><span class="o">=</span><span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">(),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteAll</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.start_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.start_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">start_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Starts a pipeline.</span>
@@ -660,11 +635,10 @@
 <span class="sd">        pipeline_name : str</span>
 <span class="sd">            The name of the pipeline.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;StartPipeline&quot;</span><span class="p">,</span>
-            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">StartPipelineRequest</span><span class="p">(</span>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">StartPipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.stop_pipeline"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.stop_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">stop_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Stops a pipeline.</span>
@@ -674,9 +648,10 @@
 <span class="sd">        pipeline_name : str</span>
 <span class="sd">            The name of the pipeline.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;StopPipeline&quot;</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">)</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">StopPipelineRequest</span><span class="p">(</span>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">StopPipeline</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.run_cron"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.run_cron">[docs]</a>    <span class="k">def</span> <span class="nf">run_cron</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Triggers a cron pipeline to run now.</span>
@@ -689,11 +664,10 @@
 <span class="sd">        pipeline_name : str</span>
 <span class="sd">            The name of the pipeline.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;RunCron&quot;</span><span class="p">,</span>
-            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">RunCronRequest</span><span class="p">(</span>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">RunCron</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.create_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.create_secret">[docs]</a>    <span class="k">def</span> <span class="nf">create_secret</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -723,7 +697,7 @@
                 <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
             <span class="n">encoded_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
 
-        <span class="n">f</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
             <span class="p">{</span>
                 <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;Secret&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;apiVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1&quot;</span><span class="p">,</span>
@@ -736,7 +710,8 @@
             <span class="p">}</span>
         <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;CreateSecret&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreateSecretRequest</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">CreateSecret</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.delete_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.delete_secret">[docs]</a>    <span class="k">def</span> <span class="nf">delete_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a secret.</span>
@@ -746,25 +721,23 @@
 <span class="sd">        secret_name : str</span>
 <span class="sd">            The name of the secret.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">secret</span> <span class="o">=</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Secret</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">secret_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;DeleteSecret&quot;</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">DeleteSecretRequest</span><span class="p">(</span>
+            <span class="n">secret</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Secret</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">secret_name</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteSecret</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PPSMixin.list_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_secret">[docs]</a>    <span class="k">def</span> <span class="nf">list_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">SecretInfo</span><span class="p">]:</span>
+<div class="viewcode-block" id="PPSMixin.list_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.list_secret">[docs]</a>    <span class="k">def</span> <span class="nf">list_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">SecretInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists secrets.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        List[pps_proto.SecretInfo]</span>
+<span class="sd">        List[pps_pb2.SecretInfo]</span>
 <span class="sd">            A list of protobuf objects that contain info on a secret.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListSecret</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">secret_info</span></div>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;ListSecret&quot;</span><span class="p">,</span>
-            <span class="n">req</span><span class="o">=</span><span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">(),</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">secret_info</span></div>
-
-<div class="viewcode-block" id="PPSMixin.inspect_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_secret">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">SecretInfo</span><span class="p">:</span>
+<div class="viewcode-block" id="PPSMixin.inspect_secret"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.inspect_secret">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">SecretInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a secret.</span>
 
 <span class="sd">        Parameters</span>
@@ -774,23 +747,25 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pps_proto.SecretInfo</span>
+<span class="sd">        pps_pb2.SecretInfo</span>
 <span class="sd">            A protobuf object with info on the secret.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">secret</span> <span class="o">=</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Secret</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">secret_name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span> <span class="s2">&quot;InspectSecret&quot;</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">InspectSecretRequest</span><span class="p">(</span>
+            <span class="n">secret</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Secret</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">secret_name</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectSecret</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.get_pipeline_logs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.get_pipeline_logs">[docs]</a>    <span class="k">def</span> <span class="nf">get_pipeline_logs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">data_filters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">master</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">datum</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Datum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">datum</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Datum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">follow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">tail</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">use_loki_backend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">since</span><span class="p">:</span> <span class="n">duration_pb2</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Gets logs for a pipeline.</span>
 
 <span class="sd">        Parameters</span>
@@ -805,7 +780,7 @@
 <span class="sd">            for files at specific versions).</span>
 <span class="sd">        master : bool, optional</span>
 <span class="sd">            If true, includes logs from the master</span>
-<span class="sd">        datum : pps_proto.Datum, optional</span>
+<span class="sd">        datum : pps_pb2.Datum, optional</span>
 <span class="sd">            Filters log lines for the specified datum.</span>
 <span class="sd">        follow : bool, optional</span>
 <span class="sd">            If true, continue to follow new logs as they appear.</span>
@@ -821,16 +796,14 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.LogMessage]</span>
+<span class="sd">        Iterator[pps_pb2.LogMessage]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a log from a</span>
 <span class="sd">            PPS worker. If `follow` is set to ``True``, use ``next()`` to</span>
 <span class="sd">            iterate through as the returned stream is potentially endless.</span>
 <span class="sd">            Might block your code otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;GetLogs&quot;</span><span class="p">,</span>
-            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">GetLogsRequest</span><span class="p">(</span>
+            <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span>
             <span class="n">data_filters</span><span class="o">=</span><span class="n">data_filters</span><span class="p">,</span>
             <span class="n">master</span><span class="o">=</span><span class="n">master</span><span class="p">,</span>
             <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span>
@@ -838,19 +811,20 @@
             <span class="n">tail</span><span class="o">=</span><span class="n">tail</span><span class="p">,</span>
             <span class="n">use_loki_backend</span><span class="o">=</span><span class="n">use_loki_backend</span><span class="p">,</span>
             <span class="n">since</span><span class="o">=</span><span class="n">since</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetLogs</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PPSMixin.get_job_logs"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.get_job_logs">[docs]</a>    <span class="k">def</span> <span class="nf">get_job_logs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">data_filters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">datum</span><span class="p">:</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">Datum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">datum</span><span class="p">:</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Datum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">follow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">tail</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">use_loki_backend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">since</span><span class="p">:</span> <span class="n">duration_pb2</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Gets logs for a job.</span>
 
 <span class="sd">        Parameters</span>
@@ -865,7 +839,7 @@
 <span class="sd">            contains multiple inputs. Each filter may be an absolute path of a</span>
 <span class="sd">            file within a repo, or it may be a hash for that file (to search</span>
 <span class="sd">            for files at specific versions).</span>
-<span class="sd">        datum : pps_proto.Datum, optional</span>
+<span class="sd">        datum : pps_pb2.Datum, optional</span>
 <span class="sd">            Filters log lines for the specified datum.</span>
 <span class="sd">        follow : bool, optional</span>
 <span class="sd">            If true, continue to follow new logs as they appear.</span>
@@ -881,25 +855,22 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pps_proto.LogMessage]</span>
+<span class="sd">        Iterator[pps_pb2.LogMessage]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a log from a</span>
 <span class="sd">            PPS worker. If `follow` is set to ``True``, use ``next()`` to</span>
 <span class="sd">            iterate through as the returned stream is potentially endless.</span>
 <span class="sd">            Might block your code otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PPS</span><span class="p">,</span>
-            <span class="s2">&quot;GetLogs&quot;</span><span class="p">,</span>
-            <span class="n">job</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span>
-                <span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span>
-            <span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">GetLogsRequest</span><span class="p">(</span>
+            <span class="n">job</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Job</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pipeline_name</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="n">job_id</span><span class="p">),</span>
             <span class="n">data_filters</span><span class="o">=</span><span class="n">data_filters</span><span class="p">,</span>
             <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span>
             <span class="n">follow</span><span class="o">=</span><span class="n">follow</span><span class="p">,</span>
             <span class="n">tail</span><span class="o">=</span><span class="n">tail</span><span class="p">,</span>
             <span class="n">use_loki_backend</span><span class="o">=</span><span class="n">use_loki_backend</span><span class="p">,</span>
             <span class="n">since</span><span class="o">=</span><span class="n">since</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetLogs</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

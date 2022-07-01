@@ -67,11 +67,15 @@
   <h1>Source code for python_pachyderm.client</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TextIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TextIO</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
+<span class="kn">import</span> <span class="nn">grpc</span>
+
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">AuthServiceNotActivated</span>
+<span class="kn">from</span> <span class="nn">.interceptor</span> <span class="kn">import</span> <span class="n">MetadataClientInterceptor</span><span class="p">,</span> <span class="n">MetadataType</span>
 <span class="kn">from</span> <span class="nn">.mixin.admin</span> <span class="kn">import</span> <span class="n">AdminMixin</span>
 <span class="kn">from</span> <span class="nn">.mixin.auth</span> <span class="kn">import</span> <span class="n">AuthMixin</span>
 <span class="kn">from</span> <span class="nn">.mixin.debug</span> <span class="kn">import</span> <span class="n">DebugMixin</span>
@@ -83,7 +87,7 @@
 <span class="kn">from</span> <span class="nn">.mixin.pps</span> <span class="kn">import</span> <span class="n">PPSMixin</span>
 <span class="kn">from</span> <span class="nn">.mixin.transaction</span> <span class="kn">import</span> <span class="n">TransactionMixin</span>
 <span class="kn">from</span> <span class="nn">.mixin.version</span> <span class="kn">import</span> <span class="n">VersionMixin</span>
-<span class="kn">from</span> <span class="nn">.service</span> <span class="kn">import</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">GRPC_CHANNEL_OPTIONS</span>
 
 
 <span class="k">class</span> <span class="nc">ConfigError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -211,14 +215,21 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span> <span class="o">=</span> <span class="n">root_certs</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">_create_channel</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">GRPC_CHANNEL_OPTIONS</span>
+        <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_stubs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">auth_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span> <span class="o">=</span> <span class="n">transaction_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="n">_apply_metadata_interceptor</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">auth_token</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_PYTHON_OIDC_TOKEN&quot;</span><span class="p">):</span>
             <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">authenticate_id_token</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PACH_PYTHON_OIDC_TOKEN&quot;</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">resp</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="n">_apply_metadata_interceptor</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  <span class="c1"># Initialize all the Mixin classes.</span></div>
 
 <div class="viewcode-block" id="Client.new_in_cluster"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.client.Client.new_in_cluster">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">new_in_cluster</span><span class="p">(</span>
@@ -481,7 +492,9 @@
         <span class="n">host</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">hostname</span>
         <span class="n">port</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">port</span>
         <span class="n">tls</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;grpcs&quot;</span> <span class="ow">or</span> <span class="n">u</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;https&quot;</span>
-        <span class="n">root_certs</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">root_certs</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">root_certs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">b64decode</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">root_certs</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pachd_address</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">,</span> <span class="n">root_certs</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">,</span> <span class="n">tls</span>
 
@@ -493,6 +506,13 @@
     <span class="k">def</span> <span class="nf">auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_auth_token</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="n">_apply_metadata_interceptor</span><span class="p">(</span>
+            <span class="n">channel</span><span class="o">=</span><span class="n">_create_channel</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">GRPC_CHANNEL_OPTIONS</span>
+            <span class="p">),</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">transaction_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -502,6 +522,13 @@
     <span class="k">def</span> <span class="nf">transaction_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_id</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_metadata</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="n">_apply_metadata_interceptor</span><span class="p">(</span>
+            <span class="n">channel</span><span class="o">=</span><span class="n">_create_channel</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_certs</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">GRPC_CHANNEL_OPTIONS</span>
+            <span class="p">),</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_build_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
@@ -571,6 +598,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_all_pipelines</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_all_repos</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_all_transactions</span><span class="p">()</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_apply_metadata_interceptor</span><span class="p">(</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="n">MetadataType</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span><span class="p">:</span>
+    <span class="n">metadata_interceptor</span> <span class="o">=</span> <span class="n">MetadataClientInterceptor</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grpc</span><span class="o">.</span><span class="n">intercept_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">metadata_interceptor</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_create_channel</span><span class="p">(</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">root_certs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span>
+    <span class="n">options</span><span class="p">:</span> <span class="n">MetadataType</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ssl</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">ssl_channel_credentials</span><span class="p">(</span><span class="n">root_certificates</span><span class="o">=</span><span class="n">root_certs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grpc</span><span class="o">.</span><span class="n">secure_channel</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
 </pre></div>
 
            </div>
