@@ -68,8 +68,7 @@
 <span></span><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span>
-
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.pfs</span> <span class="kn">import</span> <span class="n">pfs_pb2</span>
 
 <span class="c1"># copied from pachyderm/pachyderm</span>
 <span class="n">valid_branch_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z0-9_-]+$&quot;</span><span class="p">)</span>
@@ -84,19 +83,19 @@
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">repo_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 
-<div class="viewcode-block" id="Commit.to_pb"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.Commit.to_pb">[docs]</a>    <span class="k">def</span> <span class="nf">to_pb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts itself into a ``pfs_proto.Commit``.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
+<div class="viewcode-block" id="Commit.to_pb"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.Commit.to_pb">[docs]</a>    <span class="k">def</span> <span class="nf">to_pb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Converts itself into a ``pfs_pb2.Commit``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_type</span><span class="p">),</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_type</span><span class="p">),</span>
                 <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Commit.from_pb"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.Commit.from_pb">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_pb</span><span class="p">(</span><span class="n">commit</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Commit&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts a ``pfs_proto.Commit`` object into a :class:`.Commit`</span>
+    <span class="k">def</span> <span class="nf">from_pb</span><span class="p">(</span><span class="n">commit</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Commit&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Converts a ``pfs_pb2.Commit`` object into a :class:`.Commit`</span>
 <span class="sd">        object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Commit</span><span class="p">(</span>
@@ -107,7 +106,7 @@
         <span class="p">)</span></div></div>
 
 
-<span class="n">SubcommitType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
+<span class="n">SubcommitType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot;Composite type for a subcommit, a commit at the repo-level.</span>
 
 <span class="sd">Examples</span>
@@ -126,12 +125,12 @@
 <span class="sd">&gt;&gt;&gt; from python_pachyderm.pfs import Commit</span>
 <span class="sd">&gt;&gt;&gt; sc = Commit(repo=&quot;foo&quot;, branch=&quot;master&quot;)</span>
 
-<span class="sd">pfs_proto.Commit:</span>
+<span class="sd">pfs_pb2.Commit:</span>
 
 <span class="sd">&gt;&gt;&gt; from python_pachyderm.service import pfs_proto</span>
-<span class="sd">&gt;&gt;&gt; sc = pfs_proto.Commit(</span>
-<span class="sd">...     branch=pfs_proto.Branch(</span>
-<span class="sd">...         repo=pfs_proto.Repo(name=&quot;foo&quot;, type=&quot;user&quot;),</span>
+<span class="sd">&gt;&gt;&gt; sc = pfs_pb2.Commit(</span>
+<span class="sd">...     branch=pfs_pb2.Branch(</span>
+<span class="sd">...         repo=pfs_pb2.Repo(name=&quot;foo&quot;, type=&quot;user&quot;),</span>
 <span class="sd">...         name=&quot;master&quot;,</span>
 <span class="sd">...     )</span>
 <span class="sd">... )</span>
@@ -140,7 +139,7 @@
 
 <div class="viewcode-block" id="commit_from"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.pfs.commit_from">[docs]</a><span class="k">def</span> <span class="nf">commit_from</span><span class="p">(</span>
     <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A commit can be identified by (repo, branch, commit_id, repo_type)</span>
 
 <span class="sd">    Helper function to convert objects that represent a Commit query into a</span>
@@ -153,10 +152,10 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    pfs_proto.Commit</span>
+<span class="sd">    pfs_pb2.Commit</span>
 <span class="sd">        A protobuf object that represents a commit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">commit</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">Commit</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">commit</span><span class="o">.</span><span class="n">to_pb</span><span class="p">()</span>

@@ -186,6 +186,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
                 )
+        self.CheckStorage = channel.unary_unary(
+                '/pfs_v2.API/CheckStorage',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageResponse.FromString,
+                )
         self.RunLoadTest = channel.unary_unary(
                 '/pfs_v2.API/RunLoadTest',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
@@ -440,6 +445,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CheckStorage(self, request, context):
+        """CheckStorage runs integrity checks for the storage layer.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def RunLoadTest(self, request, context):
         """RunLoadTest runs a load test.
         """
@@ -626,6 +638,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.ComposeFileSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.SerializeToString,
+            ),
+            'CheckStorage': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckStorage,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageResponse.SerializeToString,
             ),
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTest,
@@ -1222,6 +1239,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ComposeFileSet',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckStorage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/CheckStorage',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

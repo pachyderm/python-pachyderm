@@ -70,7 +70,7 @@
 
 <span class="kn">from</span> <span class="nn">python_pachyderm</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">SubcommitType</span>
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pps_proto</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.pps</span> <span class="kn">import</span> <span class="n">pps_pb2</span>
 
 
 <div class="viewcode-block" id="put_files"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.put_files">[docs]</a><span class="k">def</span> <span class="nf">put_files</span><span class="p">(</span>
@@ -95,7 +95,7 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; source_dir = &quot;data/training/</span>
+<span class="sd">    &gt;&gt;&gt; source_dir = &quot;data/training/&quot;</span>
 <span class="sd">    &gt;&gt;&gt; with client.commit(&quot;repo_name&quot;, &quot;master&quot;) as commit:</span>
 <span class="sd">    &gt;&gt;&gt;     python_pachyderm.put_files(client, source_dir, commit, &quot;/training_set/&quot;)</span>
 <span class="sd">    ...</span>
@@ -120,7 +120,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Please provide an existing directory or file&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="parse_json_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_json_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_json_pipeline_spec</span><span class="p">(</span><span class="n">j</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">:</span>
+<div class="viewcode-block" id="parse_json_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_json_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_json_pipeline_spec</span><span class="p">(</span><span class="n">j</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Parses a string of JSON into a `CreatePipelineRequest` protobuf.</span>
 
 <span class="sd">    Parameters</span>
@@ -131,7 +131,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    pps_proto.CreatePipelineRequest</span>
+<span class="sd">    pps_pb2.CreatePipelineRequest</span>
 <span class="sd">        A protobuf object that contains the spec info necessary to create a</span>
 <span class="sd">        pipeline.</span>
 
@@ -161,10 +161,10 @@
 
 <span class="sd">    .. # noqa: W505</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="parse_dict_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_dict_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_dict_pipeline_spec</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">:</span>
+<div class="viewcode-block" id="parse_dict_pipeline_spec"><a class="viewcode-back" href="../../python_pachyderm.html#python_pachyderm.util.parse_dict_pipeline_spec">[docs]</a><span class="k">def</span> <span class="nf">parse_dict_pipeline_spec</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Parses a dict of serialized JSON into a `CreatePipelineRequest` protobuf.</span>
 
 <span class="sd">    Parameters</span>
@@ -174,7 +174,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    pps_proto.CreatePipelineRequest</span>
+<span class="sd">    pps_pb2.CreatePipelineRequest</span>
 <span class="sd">        A protobuf object that contains the spec info necessary to create a</span>
 <span class="sd">        pipeline.</span>
 
@@ -205,7 +205,7 @@
 <span class="sd">    .. # noqa: W505</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">ParseDict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pps_proto</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="n">json_format</span><span class="o">.</span><span class="n">ParseDict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pps_pb2</span><span class="o">.</span><span class="n">CreatePipelineRequest</span><span class="p">())</span></div>
 </pre></div>
 
            </div>
