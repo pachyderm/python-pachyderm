@@ -269,7 +269,7 @@ Initialize an instance with <code class="docutils literal notranslate"><span cla
 <td><p>Performs a file system consistency check on PFS, ensuring the correct provenance relationships are satisfied.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_activation_code</span></code>()</p></td>
-<td><p>Returns the enterprise code used to activate Pachdyerm Enterprise in this cluster.</p></td>
+<td><p>Returns the enterprise code used to activate Pachyderm Enterprise in this cluster.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_auth_configuration</span></code>()</p></td>
 <td><p>Gets the auth configuration.</p></td>
@@ -671,13 +671,13 @@ cluster.</p>
 <td><p>Return number of occurrences of value.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.pfs.Commit.from_pb" title="python_pachyderm.pfs.Commit.from_pb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_pb</span></code></a>(commit)</p></td>
-<td><p>Converts a <code class="docutils literal notranslate"><span class="pre">pfs_proto.Commit</span></code> object into a <a class="reference internal" href="#python_pachyderm.pfs.Commit" title="python_pachyderm.pfs.Commit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commit</span></code></a> object.</p></td>
+<td><p>Converts a <code class="docutils literal notranslate"><span class="pre">pfs_pb2.Commit</span></code> object into a <a class="reference internal" href="#python_pachyderm.pfs.Commit" title="python_pachyderm.pfs.Commit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commit</span></code></a> object.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code>(value[, start, stop])</p></td>
 <td><p>Return first index of value.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.pfs.Commit.to_pb" title="python_pachyderm.pfs.Commit.to_pb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pb</span></code></a>()</p></td>
-<td><p>Converts itself into a <code class="docutils literal notranslate"><span class="pre">pfs_proto.Commit</span></code>.</p></td>
+<td><p>Converts itself into a <code class="docutils literal notranslate"><span class="pre">pfs_pb2.Commit</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -690,7 +690,7 @@ cluster.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.Commit.from_pb">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#Commit.from_pb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.Commit.from_pb" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a <code class="docutils literal notranslate"><span class="pre">pfs_proto.Commit</span></code> object into a <a class="reference internal" href="#python_pachyderm.pfs.Commit" title="python_pachyderm.pfs.Commit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commit</span></code></a>
+<dd><p>Converts a <code class="docutils literal notranslate"><span class="pre">pfs_pb2.Commit</span></code> object into a <a class="reference internal" href="#python_pachyderm.pfs.Commit" title="python_pachyderm.pfs.Commit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Commit</span></code></a>
 object.</p>
 </dd></dl>
 
@@ -715,7 +715,7 @@ object.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.pfs.Commit.to_pb">
 <span class="sig-name descname"><span class="pre">to_pb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/pfs.html#Commit.to_pb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.pfs.Commit.to_pb" title="Permalink to this definition"></a></dt>
-<dd><p>Converts itself into a <code class="docutils literal notranslate"><span class="pre">pfs_proto.Commit</span></code>.</p>
+<dd><p>Converts itself into a <code class="docutils literal notranslate"><span class="pre">pfs_pb2.Commit</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -739,11 +739,11 @@ object.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>pfs_proto.Commit:</p>
+<p>pfs_pb2.Commit:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
 <span class="gp">... </span>        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span>
@@ -767,7 +767,7 @@ protobuf Commit object.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.Commit</dt><dd><p>A protobuf object that represents a commit.</p>
+<dt>pfs_pb2.Commit</dt><dd><p>A protobuf object that represents a commit.</p>
 </dd>
 </dl>
 </dd>
@@ -790,7 +790,7 @@ protobuf Commit object.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pps_proto.CreatePipelineRequest</dt><dd><p>A protobuf object that contains the spec info necessary to create a
+<dt>pps_pb2.CreatePipelineRequest</dt><dd><p>A protobuf object that contains the spec info necessary to create a
 pipeline.</p>
 </dd>
 </dl>
@@ -834,7 +834,7 @@ spec: <a class="reference external" href="https://docs.pachyderm.com/latest/refe
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pps_proto.CreatePipelineRequest</dt><dd><p>A protobuf object that contains the spec info necessary to create a
+<dt>pps_pb2.CreatePipelineRequest</dt><dd><p>A protobuf object that contains the spec info necessary to create a
 pipeline.</p>
 </dd>
 </dl>
@@ -888,7 +888,7 @@ into Pachyderm. Roughly equivalent to <code class="docutils literal notranslate"
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_dir</span> <span class="o">=</span> <span class="s2">&quot;data/training/</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_dir</span> <span class="o">=</span> <span class="s2">&quot;data/training/&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="s2">&quot;repo_name&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">commit</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">python_pachyderm</span><span class="o">.</span><span class="n">put_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="s2">&quot;/training_set/&quot;</span><span class="p">)</span>
 <span class="gp">...</span>

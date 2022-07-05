@@ -486,6 +486,18 @@ class RunLoadTestResponse(betterproto.Message):
     duration: timedelta = betterproto.message_field(5)
 
 
+@dataclass(eq=False, repr=False)
+class CheckStorageRequest(betterproto.Message):
+    read_chunk_data: bool = betterproto.bool_field(1)
+    chunk_begin: bytes = betterproto.bytes_field(2)
+    chunk_end: bytes = betterproto.bytes_field(3)
+
+
+@dataclass(eq=False, repr=False)
+class CheckStorageResponse(betterproto.Message):
+    chunk_object_count: int = betterproto.int64_field(1)
+
+
 class ApiStub(betterproto.ServiceStub):
     async def create_repo(
         self, *, repo: "Repo" = None, description: str = "", update: bool = False
@@ -974,6 +986,23 @@ class ApiStub(betterproto.ServiceStub):
             "/pfs_v2.API/ComposeFileSet", request, CreateFileSetResponse
         )
 
+    async def check_storage(
+        self,
+        *,
+        read_chunk_data: bool = False,
+        chunk_begin: bytes = b"",
+        chunk_end: bytes = b"",
+    ) -> "CheckStorageResponse":
+
+        request = CheckStorageRequest()
+        request.read_chunk_data = read_chunk_data
+        request.chunk_begin = chunk_begin
+        request.chunk_end = chunk_end
+
+        return await self._unary_unary(
+            "/pfs_v2.API/CheckStorage", request, CheckStorageResponse
+        )
+
     async def run_load_test(
         self, *, spec: str = "", branch: "Branch" = None, seed: int = 0
     ) -> "RunLoadTestResponse":
@@ -1162,6 +1191,11 @@ class ApiBase(ServiceBase):
     async def compose_file_set(
         self, file_set_ids: Optional[List[str]], ttl_seconds: int
     ) -> "CreateFileSetResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def check_storage(
+        self, read_chunk_data: bool, chunk_begin: bytes, chunk_end: bytes
+    ) -> "CheckStorageResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test(
@@ -1575,6 +1609,18 @@ class ApiBase(ServiceBase):
         response = await self.compose_file_set(**request_kwargs)
         await stream.send_message(response)
 
+    async def __rpc_check_storage(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "read_chunk_data": request.read_chunk_data,
+            "chunk_begin": request.chunk_begin,
+            "chunk_end": request.chunk_end,
+        }
+
+        response = await self.check_storage(**request_kwargs)
+        await stream.send_message(response)
+
     async def __rpc_run_load_test(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
@@ -1800,6 +1846,12 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ComposeFileSetRequest,
                 CreateFileSetResponse,
+            ),
+            "/pfs_v2.API/CheckStorage": grpclib.const.Handler(
+                self.__rpc_check_storage,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                CheckStorageRequest,
+                CheckStorageResponse,
             ),
             "/pfs_v2.API/RunLoadTest": grpclib.const.Handler(
                 self.__rpc_run_load_test,

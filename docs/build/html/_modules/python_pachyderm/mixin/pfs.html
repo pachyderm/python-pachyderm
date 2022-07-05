@@ -37,11 +37,7 @@
               <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
-<<<<<<< HEAD
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">python_pachyderm</a></li>
-=======
-<li class="toctree-l1"><a class="reference internal" href="../../../python_pachyderm.html">python_pachyderm</a></li>
->>>>>>> master
 </ul>
 
         </div>
@@ -70,66 +66,33 @@
              
   <h1>Source code for python_pachyderm.mixin.pfs</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
-<<<<<<< HEAD
-<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">uuid_re</span>
-=======
-<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">uuid_re</span><span class="p">,</span> <span class="n">SubcommitType</span>
->>>>>>> master
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">pfs_proto</span><span class="p">,</span> <span class="n">Service</span>
-<span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
+<span class="kn">import</span> <span class="nn">grpc</span>
+<span class="kn">from</span> <span class="nn">betterproto</span> <span class="kn">import</span> <span class="n">BytesValue</span>
 
+<span class="kn">from</span> <span class="nn">python_pachyderm.pfs</span> <span class="kn">import</span> <span class="n">commit_from</span><span class="p">,</span> <span class="n">uuid_re</span><span class="p">,</span> <span class="n">SubcommitType</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.pfs</span> <span class="kn">import</span> <span class="n">pfs_pb2</span><span class="p">,</span> <span class="n">pfs_pb2_grpc</span>
+<span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">empty_pb2</span><span class="p">,</span> <span class="n">wrappers_pb2</span>
 
 <span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
 
 
-<span class="k">class</span> <span class="nc">FileTarstream</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implements a file-like interface over a GRPC byte stream,</span>
-<span class="sd">    so we can use tarfile to decode the file contents.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">res</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">cancelled</span><span class="p">():</span>
-            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
-
-        <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">remaining</span> <span class="o">=</span> <span class="n">size</span> <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">32</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">:</span>
-            <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
-            <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">while</span> <span class="n">remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">remaining</span><span class="p">:</span>
-                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-
-                <span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-        <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+<div class="viewcode-block" id="PFSTarFile"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSTarFile">[docs]</a><span class="k">class</span> <span class="nc">PFSTarFile</span><span class="p">(</span><span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">tarinfo</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">tarinfo</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+                <span class="c1"># Hack to prevent extraction to absolute paths.</span>
+                <span class="n">tarinfo</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">tarinfo</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="n">tarinfo</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Hack to prevent writing files with no permissions.</span>
+                <span class="n">tarinfo</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="mo">0o700</span>
+            <span class="k">yield</span> <span class="n">tarinfo</span></div>
 
 
 <div class="viewcode-block" id="PFSFile"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile">[docs]</a><span class="k">class</span> <span class="nc">PFSFile</span><span class="p">:</span>
@@ -146,32 +109,21 @@
 <span class="sd">    &gt;&gt;&gt;     content = f.read()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">is_tar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_tar</span><span class="p">:</span>
-            <span class="c1"># Pachyderm&#39;s GetFileTar API returns its result (which may include</span>
-            <span class="c1"># several files, e.g. when getting a directory) as a tar</span>
-            <span class="c1"># stream--untar the response byte stream as we receive it from</span>
-            <span class="c1"># GetFileTar.</span>
-            <span class="c1"># TODO how to handle multiple files in the tar stream?</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r|*&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">stream</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">BytesValue</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span> <span class="o">=</span> <span class="n">stream</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">first_message</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">grpc</span><span class="o">.</span><span class="n">RpcError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">&quot;Error creating the PFSFile&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">first_message</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span>
-        <span class="k">return</span> <span class="n">x</span>
 
 <div class="viewcode-block" id="PFSFile.read"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Reads from the :class:`.PFSFile` buffer.</span>
@@ -186,15 +138,38 @@
 <span class="sd">        bytes</span>
 <span class="sd">            Content from the stream.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Consume the entire stream.</span>
+                <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:],</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+                <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">:</span>
+                        <span class="k">break</span>
+        <span class="k">except</span> <span class="n">grpc</span><span class="o">.</span><span class="n">RpcError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">))</span>
+        <span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSFile.close"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Closes the :class:`.PFSFile`.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="PFSMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin">[docs]</a><span class="k">class</span> <span class="nc">PFSMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A mixin with pfs-related functionality.&quot;&quot;&quot;</span>
+
+    <span class="n">_channel</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span> <span class="o">=</span> <span class="n">pfs_pb2_grpc</span><span class="o">.</span><span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="PFSMixin.create_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.create_repo">[docs]</a>    <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -214,15 +189,14 @@
 <span class="sd">        update : bool, optional</span>
 <span class="sd">            Whether to update if the repo already exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;CreateRepo&quot;</span><span class="p">,</span>
-            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CreateRepoRequest</span><span class="p">(</span>
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
             <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">CreateRepo</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.inspect_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_repo">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">RepoInfo</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.inspect_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_repo">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">RepoInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a repo.</span>
 
 <span class="sd">        Parameters</span>
@@ -232,14 +206,15 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pfs_proto.RepoInfo</span>
+<span class="sd">        pfs_pb2.RepoInfo</span>
 <span class="sd">            A protobuf object with info on the repo.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;InspectRepo&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">InspectRepoRequest</span><span class="p">(</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectRepo</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.list_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_repo">[docs]</a>    <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">RepoInfo</span><span class="p">]:</span>
+<div class="viewcode-block" id="PFSMixin.list_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_repo">[docs]</a>    <span class="k">def</span> <span class="nf">list_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">RepoInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists all repos in PFS.</span>
 
 <span class="sd">        Parameters</span>
@@ -250,10 +225,11 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.RepoInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.RepoInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a repo.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ListRepo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ListRepoRequest</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListRepo</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.delete_repo"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_repo">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a repo and reclaims the storage space it was using.</span>
@@ -266,16 +242,16 @@
 <span class="sd">            If set to true, the repo will be removed regardless of errors.</span>
 <span class="sd">            Use with care.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;DeleteRepo&quot;</span><span class="p">,</span>
-            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DeleteRepoRequest</span><span class="p">(</span>
             <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteRepo</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.delete_all_repos"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_all_repos">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes all repos.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">())</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">empty_pb2</span><span class="o">.</span><span class="n">Empty</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteAll</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.start_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.start_commit">[docs]</a>    <span class="k">def</span> <span class="nf">start_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -283,7 +259,7 @@
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Begins the process of committing data to a repo. Once started you</span>
 <span class="sd">        can write to the commit with ModifyFile. When all the data has been</span>
 <span class="sd">        written, you must finish the commit with FinishCommit. NOTE: data is</span>
@@ -304,7 +280,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pfs_proto.Commit</span>
+<span class="sd">        pfs_pb2.Commit</span>
 <span class="sd">            A protobuf object that represents an open subcommit (commit at the</span>
 <span class="sd">            repo-level).</span>
 
@@ -312,22 +288,18 @@
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; c = client.start_commit(&quot;foo&quot;, &quot;master&quot;, (&quot;foo&quot;, &quot;staging&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">parent</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span>
-                <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                    <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
-                <span class="p">),</span>
+                <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">),</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;StartCommit&quot;</span><span class="p">,</span>
-            <span class="n">parent</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
-            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch</span>
-            <span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">StartCommitRequest</span><span class="p">(</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">branch</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">),</span>
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="n">parent</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">StartCommit</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.finish_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">[docs]</a>    <span class="k">def</span> <span class="nf">finish_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -360,21 +332,20 @@
 
 <span class="sd">        &gt;&gt;&gt; client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; # modify open commit</span>
-<span class="sd">        &gt;&gt;&gt; client.finish_commit((&quot;foo&quot;, &quot;master))</span>
+<span class="sd">        &gt;&gt;&gt; client.finish_commit((&quot;foo&quot;, &quot;master&quot;))</span>
 <span class="sd">        ...</span>
 <span class="sd">        &gt;&gt;&gt; # same as above</span>
 <span class="sd">        &gt;&gt;&gt; c = client.start_commit(&quot;foo&quot;, &quot;master&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; # modify open commit</span>
 <span class="sd">        &gt;&gt;&gt; client.finish_commit(c)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;FinishCommit&quot;</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FinishCommitRequest</span><span class="p">(</span>
             <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
             <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">FinishCommit</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.commit">[docs]</a>    <span class="nd">@contextmanager</span>
     <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span>
@@ -383,14 +354,14 @@
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;A context manager for running operations within a commit.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        repo_name : str</span>
 <span class="sd">            The name of the repo.</span>
-<span class="sd">        branch_name : str</span>
+<span class="sd">        branch : str</span>
 <span class="sd">            A string specifying the branch.</span>
 <span class="sd">        parent : Union[str, SubcommitType], optional</span>
 <span class="sd">            A commit specifying the parent of the newly created commit. Upon</span>
@@ -401,7 +372,7 @@
 
 <span class="sd">        Yields</span>
 <span class="sd">        -------</span>
-<span class="sd">        pfs_proto.Commit</span>
+<span class="sd">        pfs_pb2.Commit</span>
 <span class="sd">            A protobuf object that represents a commit.</span>
 
 <span class="sd">        Examples</span>
@@ -419,8 +390,8 @@
 <div class="viewcode-block" id="PFSMixin.inspect_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_commit">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">],</span>
-        <span class="n">commit_state</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
+        <span class="n">commit_state</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a commit.</span>
 
 <span class="sd">        Parameters</span>
@@ -428,13 +399,13 @@
 <span class="sd">        commit : Union[str, SubcommitType]</span>
 <span class="sd">            The commit to inspect. Can either be a commit ID or a commit object</span>
 <span class="sd">            that represents a subcommit (commit at the repo-level).</span>
-<span class="sd">        commit_state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span>
+<span class="sd">        commit_state : {pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional</span>
 <span class="sd">            An enum that causes the method to block until the commit is in the</span>
-<span class="sd">            specified state. (Default value = ``pfs_proto.CommitState.STARTED``)</span>
+<span class="sd">            specified state. (Default value = ``pfs_pb2.CommitState.STARTED``)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.CommitInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.CommitInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a subcommit</span>
 <span class="sd">            (commit at the repo-level).</span>
 
@@ -444,29 +415,22 @@
 <span class="sd">        &gt;&gt;&gt; list(client.inspect_commit((&quot;foo&quot;, &quot;master~2&quot;)))</span>
 <span class="sd">        ...</span>
 <span class="sd">        &gt;&gt;&gt; # an entire commit</span>
-<span class="sd">        &gt;&gt;&gt; for commit in client.inspect_commit(&quot;467c580611234cdb8cc9758c7aa96087&quot;, pfs_proto.CommitState.FINISHED)</span>
+<span class="sd">        &gt;&gt;&gt; for commit in client.inspect_commit(&quot;467c580611234cdb8cc9758c7aa96087&quot;, pfs_pb2.CommitState.FINISHED)</span>
 <span class="sd">        &gt;&gt;&gt;     print(commit)</span>
 
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                        <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-                        <span class="s2">&quot;InspectCommit&quot;</span><span class="p">,</span>
-                        <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
-                        <span class="n">wait</span><span class="o">=</span><span class="n">commit_state</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">]</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">InspectCommitRequest</span><span class="p">(</span>
+                <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">wait</span><span class="o">=</span><span class="n">commit_state</span>
             <span class="p">)</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectCommit</span><span class="p">(</span><span class="n">message</span><span class="p">)])</span>
         <span class="k">elif</span> <span class="n">uuid_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">commit</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-                <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-                <span class="s2">&quot;InspectCommitSet&quot;</span><span class="p">,</span>
-                <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit</span><span class="p">),</span>
-                <span class="n">wait</span><span class="o">=</span><span class="n">commit_state</span> <span class="o">==</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">InspectCommitSetRequest</span><span class="p">(</span>
+                <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit</span><span class="p">),</span>
+                <span class="n">wait</span><span class="o">=</span><span class="n">commit_state</span> <span class="o">==</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectCommitSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;bad argument: commit should either be a commit ID (str) or a commit-like object&quot;</span>
         <span class="p">)</span></div>
@@ -479,8 +443,8 @@
         <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">origin_kind</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitSetInfo</span><span class="p">]]:</span>
+        <span class="n">origin_kind</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">OriginKind</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">OriginKind</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitSetInfo</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Lists commits.</span>
 
 <span class="sd">        Parameters</span>
@@ -507,14 +471,14 @@
 <span class="sd">            If true, returns all types of subcommits. Otherwise, alias</span>
 <span class="sd">            subcommits are excluded. Only impacts results if `repo_name` is</span>
 <span class="sd">            specified.</span>
-<span class="sd">        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional</span>
+<span class="sd">        origin_kind : {pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional</span>
 <span class="sd">            An enum that specifies how a subcommit originated. Returns only</span>
 <span class="sd">            subcommits of this enum type. Only impacts results if `repo_name`</span>
 <span class="sd">            is specified.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]</span>
+<span class="sd">        Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]</span>
 <span class="sd">            An iterator of protobuf objects that either contain info on a</span>
 <span class="sd">            subcommit (commit at the repo-level), if `repo_name` was specified,</span>
 <span class="sd">            or a commit, if `repo_name` wasn&#39;t specified.</span>
@@ -531,20 +495,21 @@
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">repo_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">req</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ListCommitRequest</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ListCommitRequest</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
                 <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
                 <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span>
                 <span class="nb">all</span><span class="o">=</span><span class="nb">all</span><span class="p">,</span>
                 <span class="n">origin_kind</span><span class="o">=</span><span class="n">origin_kind</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">to_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">req</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">to_commit</span><span class="p">))</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">to_commit</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">from_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">from_commit</span><span class="p">))</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ListCommit&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">from_commit</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListCommit</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ListCommitSet&quot;</span><span class="p">)</span></div>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ListCommitSetRequest</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListCommitSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.squash_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.squash_commit">[docs]</a>    <span class="k">def</span> <span class="nf">squash_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Squashes a commit into its parent.</span>
@@ -554,11 +519,10 @@
 <span class="sd">        commit_id : str</span>
 <span class="sd">            The ID of the commit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;SquashCommitSet&quot;</span><span class="p">,</span>
-            <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit_id</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">SquashCommitSetRequest</span><span class="p">(</span>
+            <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">SquashCommitSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.drop_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.drop_commit">[docs]</a>    <span class="k">def</span> <span class="nf">drop_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -569,15 +533,14 @@
 <span class="sd">        commit_id : str</span>
 <span class="sd">            The ID of the commit.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;DropCommitSet&quot;</span><span class="p">,</span>
-            <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit_id</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DropCommitSetRequest</span><span class="p">(</span>
+            <span class="n">commit_set</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitSet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">commit_id</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DropCommitSet</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.wait_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.wait_commit">[docs]</a>    <span class="k">def</span> <span class="nf">wait_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Waits for the specified commit to finish.</span>
 
 <span class="sd">        Parameters</span>
@@ -588,7 +551,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        List[pfs_proto.CommitInfo]</span>
+<span class="sd">        List[pfs_pb2.CommitInfo]</span>
 <span class="sd">            A list of protobuf objects that contain info on subcommits (commit</span>
 <span class="sd">            at the repo-level). These are the individual subcommits this</span>
 <span class="sd">            function waited on.</span>
@@ -601,17 +564,17 @@
 <span class="sd">        &gt;&gt;&gt; # wait for a commit to finish at a certain repo</span>
 <span class="sd">        &gt;&gt;&gt; client.wait_commit((&quot;foo&quot;, &quot;master&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inspect_commit</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inspect_commit</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PFSMixin.subscribe_commit"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.subscribe_commit">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe_commit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">from_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">SubcommitType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">state</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span>
         <span class="nb">all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">origin_kind</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">OriginKind</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
+        <span class="n">origin_kind</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">OriginKind</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">OriginKind</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Returns all commits on the branch and then listens for new commits</span>
 <span class="sd">        that are created.</span>
 
@@ -624,19 +587,19 @@
 <span class="sd">        from_commit : Union[str, SubcommitType], optional</span>
 <span class="sd">            Return commits only from this commit and onwards. Can either be an</span>
 <span class="sd">            entire commit or a subcommit (commit at the repo-level).</span>
-<span class="sd">        state : {pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span>
+<span class="sd">        state : {pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional</span>
 <span class="sd">            Return commits only when they&#39;re at least in the specifed enum</span>
-<span class="sd">            state. (Default value = ``pfs_proto.CommitState.STARTED``)</span>
+<span class="sd">            state. (Default value = ``pfs_pb2.CommitState.STARTED``)</span>
 <span class="sd">        all : bool, optional</span>
 <span class="sd">            If true, returns all types of commits. Otherwise, alias commits are</span>
 <span class="sd">            excluded.</span>
-<span class="sd">        origin_kind : {pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional</span>
+<span class="sd">        origin_kind : {pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional</span>
 <span class="sd">            An enum that specifies how a commit originated. Returns only</span>
-<span class="sd">            commits of this enum type. (Default value = ``pfs_proto.OriginKind.USER``)</span>
+<span class="sd">            commits of this enum type. (Default value = ``pfs_pb2.OriginKind.USER``)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.CommitInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.CommitInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on subcommits</span>
 <span class="sd">            (commits at the repo-level). Use ``next()`` to iterate through as</span>
 <span class="sd">            the returned stream is potentially endless. Might block your code</span>
@@ -644,13 +607,13 @@
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; commits = client.subscribe_commit(&quot;foo&quot;, &quot;master&quot;, state=pfs_proto.CommitState.FINISHED)</span>
+<span class="sd">        &gt;&gt;&gt; commits = client.subscribe_commit(&quot;foo&quot;, &quot;master&quot;, state=pfs_pb2.CommitState.FINISHED)</span>
 <span class="sd">        &gt;&gt;&gt; c = next(commits)</span>
 
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">repo</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
-        <span class="n">req</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">SubscribeCommitRequest</span><span class="p">(</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">SubscribeCommitRequest</span><span class="p">(</span>
             <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span>
             <span class="n">branch</span><span class="o">=</span><span class="n">branch</span><span class="p">,</span>
             <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
@@ -659,20 +622,20 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">from_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">from_commit</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
-                    <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">from_commit</span><span class="p">)</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                    <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">from_commit</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">from_commit</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;SubscribeCommit&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">)</span></div>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">commit_from</span><span class="p">(</span><span class="n">from_commit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">SubscribeCommit</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.create_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.create_branch">[docs]</a>    <span class="k">def</span> <span class="nf">create_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">branch_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">head_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">provenance</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">trigger</span><span class="p">:</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Trigger</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">provenance</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">trigger</span><span class="p">:</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Trigger</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">new_commit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Creates a new branch.</span>
@@ -686,10 +649,10 @@
 <span class="sd">        head_commit : SubcommitType, optional</span>
 <span class="sd">            A subcommit (commit at repo-level) indicating the head of the</span>
 <span class="sd">            new branch.</span>
-<span class="sd">        provenance : List[pfs_proto.Branch], optional</span>
+<span class="sd">        provenance : List[pfs_pb2.Branch], optional</span>
 <span class="sd">            A list of branches to establish provenance with this newly created</span>
 <span class="sd">            branch.</span>
-<span class="sd">        trigger : pfs_proto.Trigger, optional</span>
+<span class="sd">        trigger : pfs_pb2.Trigger, optional</span>
 <span class="sd">            Sets the conditions under which the head of this branch moves.</span>
 <span class="sd">        new_commit : bool, optional</span>
 <span class="sd">            If true and `head_commit` is specified, uses a different commit ID</span>
@@ -701,27 +664,27 @@
 <span class="sd">        ...     &quot;bar&quot;,</span>
 <span class="sd">        ...     &quot;master&quot;,</span>
 <span class="sd">        ...     provenance=[</span>
-<span class="sd">        ...         pfs_proto.Branch(</span>
-<span class="sd">        ...             repo=pfs_proto.Repo(name=&quot;foo&quot;, type=&quot;user&quot;), name=&quot;master&quot;</span>
+<span class="sd">        ...         pfs_pb2.Branch(</span>
+<span class="sd">        ...             repo=pfs_pb2.Repo(name=&quot;foo&quot;, type=&quot;user&quot;), name=&quot;master&quot;</span>
 <span class="sd">        ...         )</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 
 <span class="sd">        .. # noqa: W505</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;CreateBranch&quot;</span><span class="p">,</span>
-            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CreateBranchRequest</span><span class="p">(</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span><span class="p">,</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
             <span class="p">),</span>
             <span class="n">head</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">head_commit</span><span class="p">),</span>
+            <span class="n">new_commit_set</span><span class="o">=</span><span class="n">new_commit</span><span class="p">,</span>
             <span class="n">provenance</span><span class="o">=</span><span class="n">provenance</span><span class="p">,</span>
             <span class="n">trigger</span><span class="o">=</span><span class="n">trigger</span><span class="p">,</span>
-            <span class="n">new_commit_set</span><span class="o">=</span><span class="n">new_commit</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">CreateBranch</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.inspect_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_branch">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">BranchInfo</span><span class="p">:</span>
+<div class="viewcode-block" id="PFSMixin.inspect_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_branch">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">BranchInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a branch.</span>
 
 <span class="sd">        Parameters</span>
@@ -733,20 +696,19 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pfs_proto.BranchInfo</span>
+<span class="sd">        pfs_pb2.BranchInfo</span>
 <span class="sd">            A protobuf object with info on a branch.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;InspectBranch&quot;</span><span class="p">,</span>
-            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">InspectBranchRequest</span><span class="p">(</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
             <span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectBranch</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.list_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_branch">[docs]</a>    <span class="k">def</span> <span class="nf">list_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">BranchInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">BranchInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists the active branch objects in a repo.</span>
 
 <span class="sd">        Parameters</span>
@@ -758,19 +720,18 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.BranchInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.BranchInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on a branch.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; branches = list(client.list_branch(&quot;foo&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;ListBranch&quot;</span><span class="p">,</span>
-            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ListBranchRequest</span><span class="p">(</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
             <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListBranch</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.delete_branch"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_branch">[docs]</a>    <span class="k">def</span> <span class="nf">delete_branch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -788,23 +749,17 @@
 <span class="sd">        force : bool, optional</span>
 <span class="sd">            If true, forces the branch deletion.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;DeleteBranch&quot;</span><span class="p">,</span>
-            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DeleteBranchRequest</span><span class="p">(</span>
+            <span class="n">branch</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">branch_name</span><span class="p">,</span>
+                <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">repo_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span>
             <span class="p">),</span>
             <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteBranch</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.modify_file_client"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.modify_file_client">[docs]</a>    <span class="nd">@contextmanager</span>
-<<<<<<< HEAD
-    <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">Commit</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Commit</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
-=======
     <span class="k">def</span> <span class="nf">modify_file_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s2">&quot;ModifyFileClient&quot;</span><span class="p">]:</span>
->>>>>>> master
         <span class="sd">&quot;&quot;&quot;A context manager that gives a :class:`.ModifyFileClient`. When the</span>
 <span class="sd">        context manager exits, any operations enqueued from the</span>
 <span class="sd">        :class:`.ModifyFileClient` are executed in a single, atomic</span>
@@ -812,7 +767,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        commit : Union[tuple, dict, Commit, pfs_proto.Commit]</span>
+<span class="sd">        commit : Union[tuple, dict, Commit, pfs_pb2.Commit]</span>
 <span class="sd">            A subcommit (commit at the repo-level) to modify. If this subcommit</span>
 <span class="sd">            is opened before ``modify_file_client()`` is called, it will remain</span>
 <span class="sd">            open after. If ``modify_file_client()`` opens the subcommit, it</span>
@@ -847,7 +802,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mfc</span> <span class="o">=</span> <span class="n">ModifyFileClient</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">mfc</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;ModifyFile&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">=</span><span class="n">mfc</span><span class="o">.</span><span class="n">_reqs</span><span class="p">())</span></div>
+        <span class="n">messages</span> <span class="o">=</span> <span class="n">mfc</span><span class="o">.</span><span class="n">_reqs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ModifyFile</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.put_file_bytes"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.put_file_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">put_file_bytes</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1023,14 +979,11 @@
 <span class="sd">        PFSFile</span>
 <span class="sd">            The contents of the file in a file-like object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;GetFile&quot;</span><span class="p">,</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
-            <span class="n">URL</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span>
-            <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">GetFileRequest</span><span class="p">(</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
+        <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.get_file_tar"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.get_file_tar">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_tar</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1039,7 +992,7 @@
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PFSFile</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PFSTarFile</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Gets a file from PFS.</span>
 
 <span class="sd">        Parameters</span>
@@ -1060,23 +1013,20 @@
 <span class="sd">        PFSFile</span>
 <span class="sd">            The contents of the file in a file-like object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;GetFileTAR&quot;</span><span class="p">,</span>
-            <span class="n">req</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">GetFileRequest</span><span class="p">(</span>
-                <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
-                <span class="n">URL</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span>
-                <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
-            <span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">GetFileRequest</span><span class="p">(</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
+            <span class="n">URL</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PFSFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">is_tar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetFileTAR</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PFSTarFile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">PFSFile</span><span class="p">(</span><span class="n">stream</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r|*&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.inspect_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.inspect_file">[docs]</a>    <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Inspects a file.</span>
 
 <span class="sd">        Parameters</span>
@@ -1090,14 +1040,13 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pfs_proto.FileInfo</span>
+<span class="sd">        pfs_pb2.FileInfo</span>
 <span class="sd">            A protobuf object that contains info on a file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;InspectFile&quot;</span><span class="p">,</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">InspectFileRequest</span><span class="p">(</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">InspectFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.list_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.list_file">[docs]</a>    <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1105,7 +1054,7 @@
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists the files in a directory.</span>
 
 <span class="sd">        Parameters</span>
@@ -1121,25 +1070,25 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.FileInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.FileInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on files.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; files = list(client.list_file((&quot;foo&quot;, &quot;master&quot;), &quot;/dir/subdir/&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;ListFile&quot;</span><span class="p">,</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ListFileRequest</span><span class="p">(</span>
+            <span class="n">details</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.walk_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.walk_file">[docs]</a>    <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Walks over all descendant files in a directory.</span>
 
 <span class="sd">        Parameters</span>
@@ -1153,22 +1102,21 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.FileInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.FileInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on files.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; files = list(client.walk_file((&quot;foo&quot;, &quot;master&quot;), &quot;/dir/subdir/&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;WalkFile&quot;</span><span class="p">,</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">WalkFileRequest</span><span class="p">(</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">WalkFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.glob_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.glob_file">[docs]</a>    <span class="k">def</span> <span class="nf">glob_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists files that match a glob pattern.</span>
 
 <span class="sd">        Parameters</span>
@@ -1180,16 +1128,18 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.FileInfo]</span>
+<span class="sd">        Iterator[pfs_pb2.FileInfo]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on files.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; files = list(client.glob_file((&quot;foo&quot;, &quot;master&quot;), &quot;/*.txt&quot;))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;GlobFile&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span>
-        <span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">GlobFileRequest</span><span class="p">(</span>
+            <span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">),</span>
+            <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GlobFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.delete_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Deletes a file from an open commit. This leaves a tombstone in the</span>
@@ -1217,7 +1167,7 @@
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">modify_file_client</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span> <span class="k">as</span> <span class="n">mfc</span><span class="p">:</span>
             <span class="n">mfc</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PFSMixin.fsck"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.fsck">[docs]</a>    <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">FsckResponse</span><span class="p">]:</span>
+<div class="viewcode-block" id="PFSMixin.fsck"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.fsck">[docs]</a>    <span class="k">def</span> <span class="nf">fsck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FsckResponse</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Performs a file system consistency check on PFS, ensuring the</span>
 <span class="sd">        correct provenance relationships are satisfied.</span>
 
@@ -1228,7 +1178,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.FsckResponse]</span>
+<span class="sd">        Iterator[pfs_pb2.FsckResponse]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on either what</span>
 <span class="sd">            error was encountered (and was unable to be fixed, if `fix` is set</span>
 <span class="sd">            to ``True``) or a fix message (if `fix` is set to ``True``).</span>
@@ -1238,7 +1188,8 @@
 <span class="sd">        &gt;&gt;&gt; for action in client.fsck(True):</span>
 <span class="sd">        &gt;&gt;&gt;     print(action)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span> <span class="s2">&quot;Fsck&quot;</span><span class="p">,</span> <span class="n">fix</span><span class="o">=</span><span class="n">fix</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">FsckRequest</span><span class="p">(</span><span class="n">fix</span><span class="o">=</span><span class="n">fix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">Fsck</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.diff_file"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.diff_file">[docs]</a>    <span class="k">def</span> <span class="nf">diff_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1247,7 +1198,7 @@
         <span class="n">old_commit</span><span class="p">:</span> <span class="n">SubcommitType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">old_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">shallow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">DiffFileResponse</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DiffFileResponse</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Diffs two PFS files (file = commit + path in Pachyderm) and returns</span>
 <span class="sd">        files that are different. Similar to ``git diff``.</span>
 
@@ -1270,7 +1221,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Iterator[pfs_proto.DiffFileResponse]</span>
+<span class="sd">        Iterator[pfs_pb2.DiffFileResponse]</span>
 <span class="sd">            An iterator of protobuf objects that contain info on files whose</span>
 <span class="sd">            content has changed between commits. If a file under one of the</span>
 <span class="sd">            paths is only in one commit, than the ``DiffFileResponse`` for it</span>
@@ -1297,17 +1248,16 @@
 <span class="sd">        &gt;&gt;&gt; diff = next(res)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">old_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">old_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">old_file</span> <span class="o">=</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">old_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">old_path</span><span class="p">)</span>
+            <span class="n">old_file</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">old_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">old_path</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">old_file</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">PFS</span><span class="p">,</span>
-            <span class="s2">&quot;DiffFile&quot;</span><span class="p">,</span>
-            <span class="n">new_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">new_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">new_path</span><span class="p">),</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DiffFileRequest</span><span class="p">(</span>
+            <span class="n">new_file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="n">commit_from</span><span class="p">(</span><span class="n">new_commit</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">new_path</span><span class="p">),</span>
             <span class="n">old_file</span><span class="o">=</span><span class="n">old_file</span><span class="p">,</span>
             <span class="n">shallow</span><span class="o">=</span><span class="n">shallow</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DiffFile</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PFSMixin.path_exists"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">path_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="p">:</span> <span class="n">SubcommitType</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Checks whether the path exists in the specified commit, agnostic to</span>
@@ -1350,8 +1300,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">commit_from</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span><span class="n">set_commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+        <span class="k">yield</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span><span class="n">set_commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ops</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="n">op</span><span class="o">.</span><span class="n">reqs</span><span class="p">()</span>
 
@@ -1557,7 +1507,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">local_path</span> <span class="o">=</span> <span class="n">local_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1576,7 +1526,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fobj</span> <span class="o">=</span> <span class="n">fobj</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
@@ -1603,14 +1553,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">recursive</span> <span class="o">=</span> <span class="n">recursive</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">_delete_file_req</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-            <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
+        <span class="k">yield</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+            <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
                 <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span>
-                <span class="n">url</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFile</span><span class="o">.</span><span class="n">URLSource</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">AddFile</span><span class="o">.</span><span class="n">URLSource</span><span class="p">(</span>
                     <span class="n">URL</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
                     <span class="n">recursive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span>
                 <span class="p">),</span>
@@ -1635,13 +1585,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dest_path</span> <span class="o">=</span> <span class="n">dest_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="n">append</span>
 
-    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
-        <span class="k">yield</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-            <span class="n">copy_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">reqs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">]:</span>
+        <span class="k">yield</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+            <span class="n">copy_file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span>
                 <span class="n">append</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">,</span>
                 <span class="n">datum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datum</span><span class="p">,</span>
                 <span class="n">dst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dest_path</span><span class="p">,</span>
-                <span class="n">src</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_path</span><span class="p">),</span>
+                <span class="n">src</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_commit</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_path</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
 
@@ -1657,16 +1607,16 @@
 
 
 <span class="k">def</span> <span class="nf">_add_file_req</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-        <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+        <span class="n">add_file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span>
             <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">wrappers_pb2</span><span class="o">.</span><span class="n">BytesValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
         <span class="p">),</span>
     <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_delete_file_req</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
-        <span class="n">delete_file</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">DeleteFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">ModifyFileRequest</span><span class="p">(</span>
+        <span class="n">delete_file</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">DeleteFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">datum</span><span class="o">=</span><span class="n">datum</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 

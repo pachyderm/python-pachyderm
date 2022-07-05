@@ -122,7 +122,7 @@ several mixins, rather than one giant <a class="reference internal" href="python
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>admin_proto.ClusterInfo</dt><dd><p>A protobuf object with info on the cluster.</p>
+<dt>admin_pb2.ClusterInfo</dt><dd><p>A protobuf object with info on the cluster.</p>
 </dd>
 </dl>
 </dd>
@@ -278,15 +278,15 @@ client_id in the set of audiences to be valid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>resource</strong><span class="classifier">auth_proto.Resource</span></dt><dd><p>The resource the user wants to test on.</p>
+<dt><strong>resource</strong><span class="classifier">auth_pb2.Resource</span></dt><dd><p>The resource the user wants to test on.</p>
 </dd>
-<dt><strong>permissions</strong><span class="classifier">List[auth_proto.Permission], optional</span></dt><dd><p>The list of permissions the users wants to test.</p>
+<dt><strong>permissions</strong><span class="classifier">List[auth_pb2.Permission], optional</span></dt><dd><p>The list of permissions the users wants to test.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>auth_proto.AuthorizeResponse</dt><dd><p>A protobuf object that indicates whether the user/principal had all
+<dt>auth_pb2.AuthorizeResponse</dt><dd><p>A protobuf object that indicates whether the user/principal had all
 the inputted permissions on the resource, which permissions the
 user had, which permissions the user lacked, and the name of the
 principal.</p>
@@ -296,8 +296,8 @@ principal.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">auth_proto</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">Permission</span><span class="o">.</span><span class="n">REPO_READ</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">auth_pb2</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">Permission</span><span class="o">.</span><span class="n">REPO_READ</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="go">authorized: true</span>
 <span class="go">satisfied: REPO_READ</span>
@@ -339,7 +339,7 @@ issue in github.com/pachyderm/pachyderm).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>auth_proto.OIDCConfig</dt><dd><p>A protobuf object with auth configuration information.</p>
+<dt>auth_pb2.OIDCConfig</dt><dd><p>A protobuf object with auth configuration information.</p>
 </dd>
 </dl>
 </dd>
@@ -367,7 +367,7 @@ issue in github.com/pachyderm/pachyderm).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>auth_proto.GetOIDCLoginResponse</dt><dd><p>A protobuf object with the login configuration information.</p>
+<dt>auth_pb2.GetOIDCLoginResponse</dt><dd><p>A protobuf object with the login configuration information.</p>
 </dd>
 </dl>
 </dd>
@@ -404,19 +404,19 @@ token doesn’t expire.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>resource</strong><span class="classifier">auth_proto.Resource</span></dt><dd><p>A protobuf object representing the resource being checked.</p>
+<dt><strong>resource</strong><span class="classifier">auth_pb2.Resource</span></dt><dd><p>A protobuf object representing the resource being checked.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Dict[str, auth_proto.Roles]</dt><dd><p>A dictionary mapping the principals to the roles they have.</p>
+<dt>Dict[str, auth_pb2.Roles]</dt><dd><p>A dictionary mapping the principals to the roles they have.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">get_role_binding</span><span class="p">(</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">get_role_binding</span><span class="p">(</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">))</span>
 <span class="go">{</span>
 <span class="go">    &#39;robot:someuser&#39;: roles {</span>
 <span class="go">        key: &quot;clusterAdmin&quot;</span>
@@ -428,7 +428,7 @@ token doesn’t expire.</p>
 <span class="go">    }</span>
 <span class="go">}</span>
 <span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">get_role_binding</span><span class="p">(</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">get_role_binding</span><span class="p">(</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">))</span>
 <span class="go">{</span>
 <span class="go">    &#39;user:person_a&#39;: roles {</span>
 <span class="go">        key: &quot;repoWriter&quot;</span>
@@ -450,13 +450,13 @@ token doesn’t expire.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>permission</strong><span class="classifier">auth_proto.Permission</span></dt><dd><p>The Permission enum to check for.</p>
+<dt><strong>permission</strong><span class="classifier">auth_pb2.Permission</span></dt><dd><p>The Permission enum to check for.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>List[auth_proto.Role]</dt><dd><p>A list of Role protobuf objects that all have the specified
+<dt>List[auth_pb2.Role]</dt><dd><p>A list of Role protobuf objects that all have the specified
 permission.</p>
 </dd>
 </dl>
@@ -464,7 +464,7 @@ permission.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>All available permissions can be found in auth proto Permissions enum</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roles</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_roles_for_permission</span><span class="p">(</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">Permission</span><span class="o">.</span><span class="n">REPO_READ</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roles</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_roles_for_permission</span><span class="p">(</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">Permission</span><span class="o">.</span><span class="n">REPO_READ</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -522,7 +522,7 @@ permission.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>resource</strong><span class="classifier">auth_proto.Resource</span></dt><dd><p>A protobuf object representing the resource to grant the roles on.</p>
+<dt><strong>resource</strong><span class="classifier">auth_pb2.Resource</span></dt><dd><p>A protobuf object representing the resource to grant the roles on.</p>
 </dd>
 <dt><strong>principal</strong><span class="classifier">str</span></dt><dd><p>The principal to grant the roles for.</p>
 </dd>
@@ -536,12 +536,12 @@ unset, the principal will have no roles.</p>
 <p>You can find some of the built-in roles here:
 <a class="reference external" href="https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27">https://github.com/pachyderm/pachyderm/blob/master/src/auth/auth.go#L27</a></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">modify_role_binding</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">auth_proto</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">auth_pb2</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="s2">&quot;user:someuser&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;clusterAdmin&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">modify_role_binding</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">auth_proto</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">auth_pb2</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">REPO</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foobar&quot;</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="s2">&quot;user:someuser&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;repoWriter&quot;</span><span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
@@ -582,13 +582,13 @@ issue in github.com/pachyderm/pachyderm).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>configuration</strong><span class="classifier">auth_proto.OIDCConfig</span></dt><dd><p>A protobuf object with auth configuration information.</p>
+<dt><strong>configuration</strong><span class="classifier">auth_pb2.OIDCConfig</span></dt><dd><p>A protobuf object with auth configuration information.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">set_auth_configuration</span><span class="p">(</span><span class="n">auth_proto</span><span class="o">.</span><span class="n">OIDCConfig</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">set_auth_configuration</span><span class="p">(</span><span class="n">auth_pb2</span><span class="o">.</span><span class="n">OIDCConfig</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">issuer</span><span class="o">=</span><span class="s2">&quot;http://localhost:1658&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;client&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;secret&quot;</span><span class="p">,</span>
@@ -625,7 +625,7 @@ issue in github.com/pachyderm/pachyderm).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>auth_proto.WhoAmIResponse</dt><dd><p>A protobuf object that returns the username and expiration for the
+<dt>auth_pb2.WhoAmIResponse</dt><dd><p>A protobuf object that returns the username and expiration for the
 token used.</p>
 </dd>
 </dl>
@@ -667,7 +667,7 @@ token used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>filter</strong><span class="classifier">debug_proto.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
+<dt><strong>filter</strong><span class="classifier">debug_pb2.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
 pachd bool, pipeline protobuf, or worker protobuf.</p>
 </dd>
 </dl>
@@ -693,7 +693,7 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>filter</strong><span class="classifier">debug_proto.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
+<dt><strong>filter</strong><span class="classifier">debug_pb2.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
 pachd bool, pipeline protobuf, or worker protobuf.</p>
 </dd>
 <dt><strong>limit</strong><span class="classifier">int, optional</span></dt><dd><p>Sets a limit to how many commits, jobs, pipelines, etc. are
@@ -709,7 +709,7 @@ returned.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">debug_proto</span><span class="o">.</span><span class="n">Filter</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">))):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">debug_pb2</span><span class="o">.</span><span class="n">Filter</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">))):</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -725,7 +725,7 @@ returned.</p>
 <dt><strong>duration</strong><span class="classifier">duration_pb2.Duration</span></dt><dd><p>A google protobuf duration object indicating how long the profile
 should run for.</p>
 </dd>
-<dt><strong>filter</strong><span class="classifier">debug_proto.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
+<dt><strong>filter</strong><span class="classifier">debug_pb2.Filter, optional</span></dt><dd><p>A protobuf object that filters what info is returned. Is one of
 pachd bool, pipeline protobuf, or worker protobuf.</p>
 </dd>
 </dl>
@@ -767,7 +767,7 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <td><p>Deactivates enterprise.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin.get_activation_code" title="python_pachyderm.mixin.enterprise.EnterpriseMixin.get_activation_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_activation_code</span></code></a>()</p></td>
-<td><p>Returns the enterprise code used to activate Pachdyerm Enterprise in this cluster.</p></td>
+<td><p>Returns the enterprise code used to activate Pachyderm Enterprise in this cluster.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin.get_enterprise_state" title="python_pachyderm.mixin.enterprise.EnterpriseMixin.get_enterprise_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_enterprise_state</span></code></a>()</p></td>
 <td><p>Gets the current enterprise state of the cluster.</p></td>
@@ -801,12 +801,12 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.enterprise.EnterpriseMixin.get_activation_code">
 <span class="sig-name descname"><span class="pre">get_activation_code</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/enterprise.html#EnterpriseMixin.get_activation_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.enterprise.EnterpriseMixin.get_activation_code" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the enterprise code used to activate Pachdyerm Enterprise in
+<dd><p>Returns the enterprise code used to activate Pachyderm Enterprise in
 this cluster.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>enterprise_proto.GetActivationCodeResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
+<dt>enterprise_pb2.GetActivationCodeResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
 and the activation code.</p>
 </dd>
 </dl>
@@ -821,7 +821,7 @@ and the activation code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>enterprise_proto.GetStateResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
+<dt>enterprise_pb2.GetStateResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
 and an empty activation code.</p>
 </dd>
 </dl>
@@ -858,7 +858,7 @@ RPCs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>health_proto.HealthCheckResponse</dt><dd><p>A protobuf object with a status enum indicating server health.</p>
+<dt>health_pb2HealthCheckResponse</dt><dd><p>A protobuf object with a status enum indicating server health.</p>
 </dd>
 </dl>
 </dd>
@@ -929,7 +929,7 @@ RPCs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>connector</strong><span class="classifier">identity_proto.IDPConnector</span></dt><dd><p>A protobuf object that represents a connection to an identity
+<dt><strong>connector</strong><span class="classifier">identity_pb2.IDPConnector</span></dt><dd><p>A protobuf object that represents a connection to an identity
 provider.</p>
 </dd>
 </dl>
@@ -944,13 +944,13 @@ provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>client</strong><span class="classifier">identity_proto.OIDCClient</span></dt><dd><p>A protobuf object representing an OIDC client.</p>
+<dt><strong>client</strong><span class="classifier">identity_pb2.OIDCClient</span></dt><dd><p>A protobuf object representing an OIDC client.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>identity_proto.OIDCClient</dt><dd><p>A protobuf object that returns a client with info on the client ID,
+<dt>identity_pb2.OIDCClient</dt><dd><p>A protobuf object that returns a client with info on the client ID,
 name, secret, and lists of redirect URIs and trusted peers.</p>
 </dd>
 </dl>
@@ -1006,7 +1006,7 @@ name, secret, and lists of redirect URIs and trusted peers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>identity_proto.IdentityServerConfig</dt><dd><p>A protobuf object that holds configuration info (issuer and ID
+<dt>identity_pb2.IdentityServerConfig</dt><dd><p>A protobuf object that holds configuration info (issuer and ID
 token expiry) for the identity web server.</p>
 </dd>
 </dl>
@@ -1027,7 +1027,7 @@ token expiry) for the identity web server.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>identity_proto.IDPConnector</dt><dd><p>A protobuf object that returns info on the connector ID, name,
+<dt>identity_pb2.IDPConnector</dt><dd><p>A protobuf object that returns info on the connector ID, name,
 type, config version, and configuration of the upstream IDP
 connector.</p>
 </dd>
@@ -1049,7 +1049,7 @@ connector.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>identity_proto.OIDCClient</dt><dd><p>A protobuf object that returns a client with info on the client ID,
+<dt>identity_pb2.OIDCClient</dt><dd><p>A protobuf object that returns a client with info on the client ID,
 name, secret, and lists of redirect URIs and trusted peers.</p>
 </dd>
 </dl>
@@ -1064,7 +1064,7 @@ name, secret, and lists of redirect URIs and trusted peers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[identity_proto.IDPConnector]</dt><dd><p>A list of probotuf objects that return info on the connector ID,
+<dt>List[identity_pb2.IDPConnector]</dt><dd><p>A list of probotuf objects that return info on the connector ID,
 name, type, config version, and configuration of the upstream IDP
 connector.</p>
 </dd>
@@ -1080,7 +1080,7 @@ connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[identity_proto.OIDCClient]</dt><dd><p>A list of protobuf objects that return a client with info on the
+<dt>List[identity_pb2.OIDCClient]</dt><dd><p>A list of protobuf objects that return a client with info on the
 client ID, name, secret, and lists of redirect URIs and trusted
 peers.</p>
 </dd>
@@ -1096,7 +1096,7 @@ peers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>config</strong><span class="classifier">identity_proto.IdentityServerConfig</span></dt><dd><p>A protobuf object that is the configuration for the identity web
+<dt><strong>config</strong><span class="classifier">identity_pb2.IdentityServerConfig</span></dt><dd><p>A protobuf object that is the configuration for the identity web
 server.</p>
 </dd>
 </dl>
@@ -1111,7 +1111,7 @@ server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>connector</strong><span class="classifier">identity_proto.IDPConnector</span></dt><dd><p>A protobuf object that represents a connection to an identity
+<dt><strong>connector</strong><span class="classifier">identity_pb2.IDPConnector</span></dt><dd><p>A protobuf object that represents a connection to an identity
 provider.</p>
 </dd>
 </dl>
@@ -1126,7 +1126,7 @@ provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>client</strong><span class="classifier">identity_proto.OIDCClient</span></dt><dd><p>A protobuf object representing an OIDC client.</p>
+<dt><strong>client</strong><span class="classifier">identity_pb2.OIDCClient</span></dt><dd><p>A protobuf object representing an OIDC client.</p>
 </dd>
 </dl>
 </dd>
@@ -1193,7 +1193,7 @@ earlier than the signed expiration time of <cite>activation_code</cite>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>enterprise_proto.TokenInfo</dt><dd><p>A protobuf object that has the expiration for the current token.
+<dt>enterprise_pb2.TokenInfo</dt><dd><p>A protobuf object that has the expiration for the current token.
 Field will be unset if there is no current token.</p>
 </dd>
 </dl>
@@ -1225,7 +1225,7 @@ specified, a random secret will be generated and returned.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>license_proto.AddClusterResponse</dt><dd><p>A protobuf object that returns the <cite>secret</cite>.</p>
+<dt>license_pb2.AddClusterResponse</dt><dd><p>A protobuf object that returns the <cite>secret</cite>.</p>
 </dd>
 </dl>
 </dd>
@@ -1266,7 +1266,7 @@ specified, a random secret will be generated and returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>license_proto.GetActivationCodeResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
+<dt>license_pb2.GetActivationCodeResponse</dt><dd><p>A protobuf object that returns a state enum, info on the token,
 and the activation code.</p>
 </dd>
 </dl>
@@ -1281,7 +1281,7 @@ and the activation code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[license_proto.ClusterStatus]</dt><dd><p>A list of protobuf objects that return info on a cluster.</p>
+<dt>List[license_pb2.ClusterStatus]</dt><dd><p>A list of protobuf objects that return info on a cluster.</p>
 </dd>
 </dl>
 </dd>
@@ -1295,7 +1295,7 @@ and the activation code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[license_proto.UserClusterInfo]</dt><dd><p>A list of protobuf objects that return info on clusters
+<dt>List[license_pb2.UserClusterInfo]</dt><dd><p>A list of protobuf objects that return info on clusters
 available to the users.</p>
 </dd>
 </dl>
@@ -1495,7 +1495,7 @@ example on s3:// URLs</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
 <dd><p>File-like objects containing content of a file stored in PFS.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># client.get_file() returns a PFSFile</span>
@@ -1668,7 +1668,7 @@ example on s3:// URLs</p>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>repo_name</strong><span class="classifier">str</span></dt><dd><p>The name of the repo.</p>
 </dd>
-<dt><strong>branch_name</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
+<dt><strong>branch</strong><span class="classifier">str</span></dt><dd><p>A string specifying the branch.</p>
 </dd>
 <dt><strong>parent</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>A commit specifying the parent of the newly created commit. Upon
 creation, before data is modified, the new commit will appear
@@ -1680,7 +1680,7 @@ identical to the parent.</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.Commit</dt><dd><p>A protobuf object that represents a commit.</p>
+<dt>pfs_pb2.Commit</dt><dd><p>A protobuf object that represents a commit.</p>
 </dd>
 </dl>
 </dd>
@@ -1743,10 +1743,10 @@ file.</p>
 <dt><strong>head_commit</strong><span class="classifier">SubcommitType, optional</span></dt><dd><p>A subcommit (commit at repo-level) indicating the head of the
 new branch.</p>
 </dd>
-<dt><strong>provenance</strong><span class="classifier">List[pfs_proto.Branch], optional</span></dt><dd><p>A list of branches to establish provenance with this newly created
+<dt><strong>provenance</strong><span class="classifier">List[pfs_pb2.Branch], optional</span></dt><dd><p>A list of branches to establish provenance with this newly created
 branch.</p>
 </dd>
-<dt><strong>trigger</strong><span class="classifier">pfs_proto.Trigger, optional</span></dt><dd><p>Sets the conditions under which the head of this branch moves.</p>
+<dt><strong>trigger</strong><span class="classifier">pfs_pb2.Trigger, optional</span></dt><dd><p>Sets the conditions under which the head of this branch moves.</p>
 </dd>
 <dt><strong>new_commit</strong><span class="classifier">bool, optional</span></dt><dd><p>If true and <cite>head_commit</cite> is specified, uses a different commit ID
 for head than <cite>head_commit</cite>.</p>
@@ -1759,8 +1759,8 @@ for head than <cite>head_commit</cite>.</p>
 <span class="gp">... </span>    <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;master&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">provenance</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>        <span class="n">pfs_proto</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;master&quot;</span>
+<span class="gp">... </span>        <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">repo</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;master&quot;</span>
 <span class="gp">... </span>        <span class="p">)</span>
 <span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
@@ -1886,7 +1886,7 @@ set to the parent of <cite>new_commit</cite> and <cite>old_path</cite> will be s
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.DiffFileResponse]</dt><dd><p>An iterator of protobuf objects that contain info on files whose
+<dt>Iterator[pfs_pb2.DiffFileResponse]</dt><dd><p>An iterator of protobuf objects that contain info on files whose
 content has changed between commits. If a file under one of the
 paths is only in one commit, than the <code class="docutils literal notranslate"><span class="pre">DiffFileResponse</span></code> for it
 will only have one <code class="docutils literal notranslate"><span class="pre">FileInfo</span></code> set.</p>
@@ -1957,7 +1957,7 @@ want the finish commit request to fail.</p>
 <code class="docutils literal notranslate"><span class="pre">start_commit()</span></code> or within scope of <code class="docutils literal notranslate"><span class="pre">commit()</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">start_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># modify open commit</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">finish_commit</span><span class="p">((</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">finish_commit</span><span class="p">((</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">))</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># same as above</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">)</span>
@@ -1981,7 +1981,7 @@ correct provenance relationships are satisfied.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.FsckResponse]</dt><dd><p>An iterator of protobuf objects that contain info on either what
+<dt>Iterator[pfs_pb2.FsckResponse]</dt><dd><p>An iterator of protobuf objects that contain info on either what
 error was encountered (and was unable to be fixed, if <cite>fix</cite> is set
 to <code class="docutils literal notranslate"><span class="pre">True</span></code>) or a fix message (if <cite>fix</cite> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p>
 </dd>
@@ -2066,7 +2066,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
+<dt>Iterator[pfs_pb2.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
 </dd>
 </dl>
 </dd>
@@ -2092,7 +2092,7 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.BranchInfo</dt><dd><p>A protobuf object with info on a branch.</p>
+<dt>pfs_pb2.BranchInfo</dt><dd><p>A protobuf object with info on a branch.</p>
 </dd>
 </dl>
 </dd>
@@ -2109,14 +2109,14 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dt><strong>commit</strong><span class="classifier">Union[str, SubcommitType]</span></dt><dd><p>The commit to inspect. Can either be a commit ID or a commit object
 that represents a subcommit (commit at the repo-level).</p>
 </dd>
-<dt><strong>commit_state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>An enum that causes the method to block until the commit is in the
-specified state. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_proto.CommitState.STARTED</span></code>)</p>
+<dt><strong>commit_state</strong><span class="classifier">{pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional</span></dt><dd><p>An enum that causes the method to block until the commit is in the
+specified state. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_pb2.CommitState.STARTED</span></code>)</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.CommitInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a subcommit
+<dt>Iterator[pfs_pb2.CommitInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a subcommit
 (commit at the repo-level).</p>
 </dd>
 </dl>
@@ -2127,7 +2127,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">inspect_commit</span><span class="p">((</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master~2&quot;</span><span class="p">)))</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># an entire commit</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">commit</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">inspect_commit</span><span class="p">(</span><span class="s2">&quot;467c580611234cdb8cc9758c7aa96087&quot;</span><span class="p">,</span> <span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">commit</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">inspect_commit</span><span class="p">(</span><span class="s2">&quot;467c580611234cdb8cc9758c7aa96087&quot;</span><span class="p">,</span> <span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2150,7 +2150,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.FileInfo</dt><dd><p>A protobuf object that contains info on a file.</p>
+<dt>pfs_pb2.FileInfo</dt><dd><p>A protobuf object that contains info on a file.</p>
 </dd>
 </dl>
 </dd>
@@ -2170,7 +2170,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.RepoInfo</dt><dd><p>A protobuf object with info on the repo.</p>
+<dt>pfs_pb2.RepoInfo</dt><dd><p>A protobuf object with info on the repo.</p>
 </dd>
 </dl>
 </dd>
@@ -2192,7 +2192,7 @@ specified state. (Default value = <code class="docutils literal notranslate"><sp
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.BranchInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a branch.</p>
+<dt>Iterator[pfs_pb2.BranchInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a branch.</p>
 </dd>
 </dl>
 </dd>
@@ -2232,7 +2232,7 @@ results if <cite>repo_name</cite> is specified.</p>
 subcommits are excluded. Only impacts results if <cite>repo_name</cite> is
 specified.</p>
 </dd>
-<dt><strong>origin_kind</strong><span class="classifier">{pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional</span></dt><dd><p>An enum that specifies how a subcommit originated. Returns only
+<dt><strong>origin_kind</strong><span class="classifier">{pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional</span></dt><dd><p>An enum that specifies how a subcommit originated. Returns only
 subcommits of this enum type. Only impacts results if <cite>repo_name</cite>
 is specified.</p>
 </dd>
@@ -2240,7 +2240,7 @@ is specified.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]</dt><dd><p>An iterator of protobuf objects that either contain info on a
+<dt>Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]</dt><dd><p>An iterator of protobuf objects that either contain info on a
 subcommit (commit at the repo-level), if <cite>repo_name</cite> was specified,
 or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 </dd>
@@ -2277,7 +2277,7 @@ or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
+<dt>Iterator[pfs_pb2.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
 </dd>
 </dl>
 </dd>
@@ -2302,7 +2302,7 @@ If unset, returns all types of repos.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.RepoInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a repo.</p>
+<dt>Iterator[pfs_pb2.RepoInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a repo.</p>
 </dd>
 </dl>
 </dd>
@@ -2319,7 +2319,7 @@ ModifyFile gRPC call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_proto.Commit]</span></dt><dd><p>A subcommit (commit at the repo-level) to modify. If this subcommit
+<dt><strong>commit</strong><span class="classifier">Union[tuple, dict, Commit, pfs_pb2.Commit]</span></dt><dd><p>A subcommit (commit at the repo-level) to modify. If this subcommit
 is opened before <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> is called, it will remain
 open after. If <code class="docutils literal notranslate"><span class="pre">modify_file_client()</span></code> opens the subcommit, it
 will close when exiting the <code class="docutils literal notranslate"><span class="pre">with</span></code> scope.</p>
@@ -2488,7 +2488,7 @@ identical to the parent.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pfs_proto.Commit</dt><dd><p>A protobuf object that represents an open subcommit (commit at the
+<dt>pfs_pb2.Commit</dt><dd><p>A protobuf object that represents an open subcommit (commit at the
 repo-level).</p>
 </dd>
 </dl>
@@ -2515,20 +2515,20 @@ that are created.</p>
 <dt><strong>from_commit</strong><span class="classifier">Union[str, SubcommitType], optional</span></dt><dd><p>Return commits only from this commit and onwards. Can either be an
 entire commit or a subcommit (commit at the repo-level).</p>
 </dd>
-<dt><strong>state</strong><span class="classifier">{pfs_proto.CommitState.STARTED, pfs_proto.CommitState.READY, pfs_proto.CommitState.FINISHING, pfs_proto.CommitState.FINISHED}, optional</span></dt><dd><p>Return commits only when they’re at least in the specifed enum
-state. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_proto.CommitState.STARTED</span></code>)</p>
+<dt><strong>state</strong><span class="classifier">{pfs_pb2.CommitState.STARTED, pfs_pb2.CommitState.READY, pfs_pb2.CommitState.FINISHING, pfs_pb2.CommitState.FINISHED}, optional</span></dt><dd><p>Return commits only when they’re at least in the specifed enum
+state. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_pb2.CommitState.STARTED</span></code>)</p>
 </dd>
 <dt><strong>all</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, returns all types of commits. Otherwise, alias commits are
 excluded.</p>
 </dd>
-<dt><strong>origin_kind</strong><span class="classifier">{pfs_proto.OriginKind.USER, pfs_proto.OriginKind.AUTO, pfs_proto.OriginKind.FSCK, pfs_proto.OriginKind.ALIAS}, optional</span></dt><dd><p>An enum that specifies how a commit originated. Returns only
-commits of this enum type. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_proto.OriginKind.USER</span></code>)</p>
+<dt><strong>origin_kind</strong><span class="classifier">{pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional</span></dt><dd><p>An enum that specifies how a commit originated. Returns only
+commits of this enum type. (Default value = <code class="docutils literal notranslate"><span class="pre">pfs_pb2.OriginKind.USER</span></code>)</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.CommitInfo]</dt><dd><p>An iterator of protobuf objects that contain info on subcommits
+<dt>Iterator[pfs_pb2.CommitInfo]</dt><dd><p>An iterator of protobuf objects that contain info on subcommits
 (commits at the repo-level). Use <code class="docutils literal notranslate"><span class="pre">next()</span></code> to iterate through as
 the returned stream is potentially endless. Might block your code
 otherwise.</p>
@@ -2537,7 +2537,7 @@ otherwise.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">commits</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">subscribe_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">pfs_proto</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">commits</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">subscribe_commit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">pfs_pb2</span><span class="o">.</span><span class="n">CommitState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2557,7 +2557,7 @@ subcommit (commit at the repo-level).</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>List[pfs_proto.CommitInfo]</dt><dd><p>A list of protobuf objects that contain info on subcommits (commit
+<dt>List[pfs_pb2.CommitInfo]</dt><dd><p>A list of protobuf objects that contain info on subcommits (commit
 at the repo-level). These are the individual subcommits this
 function waited on.</p>
 </dd>
@@ -2591,7 +2591,7 @@ function waited on.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pfs_proto.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
+<dt>Iterator[pfs_pb2.FileInfo]</dt><dd><p>An iterator of protobuf objects that contain info on files.</p>
 </dd>
 </dl>
 </dd>
@@ -2602,6 +2602,119 @@ function waited on.</p>
 </div>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.mixin.pfs.PFSTarFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSTarFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileobj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tarinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dereference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_zeros</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'surrogateescape'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pax_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorlevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copybufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/mixin/pfs.html#PFSTarFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.mixin.pfs.PFSTarFile" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>errors</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code>(name[, arcname, recursive, filter])</p></td>
+<td><p>Add the file <a href="#id1"><span class="problematic" id="id2">`</span></a>name' to the archive. <a href="#id3"><span class="problematic" id="id4">`</span></a>name' may be any type of file (directory, fifo, symbolic link, etc.). If given, <a href="#id5"><span class="problematic" id="id6">`</span></a>arcname' specifies an alternative name for the file in the archive. Directories are added recursively by default. This can be avoided by setting <a href="#id7"><span class="problematic" id="id8">`</span></a>recursive' to False. <a href="#id9"><span class="problematic" id="id10">`</span></a>filter' is a function that expects a TarInfo object argument and returns the changed TarInfo object, if it returns None the TarInfo object will be excluded from the archive.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">addfile</span></code>(tarinfo[, fileobj])</p></td>
+<td><p>Add the TarInfo object <a href="#id11"><span class="problematic" id="id12">`</span></a>tarinfo' to the archive. If <a href="#id13"><span class="problematic" id="id14">`</span></a>fileobj' is given, it should be a binary file, and tarinfo.size bytes are read from it and added to the archive. You can create TarInfo objects directly, or by using gettarinfo().</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bz2open</span></code>(name[, mode, fileobj, compresslevel])</p></td>
+<td><p>Open bzip2 compressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chmod</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Set file permissions of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chown</span></code>(tarinfo, targetpath, numeric_owner)</p></td>
+<td><p>Set owner of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Close the TarFile.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract</span></code>(member[, path, set_attrs, numeric_owner])</p></td>
+<td><p>Extract a member from the archive to the current working directory, using its full name.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractall</span></code>([path, members, numeric_owner])</p></td>
+<td><p>Extract all members from the archive to the current working directory and set owner, modification time and permissions on directories afterwards.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractfile</span></code>(member)</p></td>
+<td><p>Extract a member from the archive as a file object. <a href="#id15"><span class="problematic" id="id16">`</span></a>member' may be a filename or a TarInfo object. If <a href="#id17"><span class="problematic" id="id18">`</span></a>member' is a regular file or a link, an io.BufferedReader object is returned. For all other existing members, None is returned. If <a href="#id19"><span class="problematic" id="id20">`</span></a>member' does not appear in the archive, KeyError is raised.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getmember</span></code>(name)</p></td>
+<td><p>Return a TarInfo object for member <a href="#id21"><span class="problematic" id="id22">`</span></a>name'. If <a href="#id23"><span class="problematic" id="id24">`</span></a>name' can not be found in the archive, KeyError is raised. If a member occurs more than once in the archive, its last occurrence is assumed to be the most up-to-date version.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getmembers</span></code>()</p></td>
+<td><p>Return the members of the archive as a list of TarInfo objects.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getnames</span></code>()</p></td>
+<td><p>Return the members of the archive as a list of their names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gettarinfo</span></code>([name, arcname, fileobj])</p></td>
+<td><p>Create a TarInfo object from the result of os.stat or equivalent on an existing file. The file is either named by <a href="#id25"><span class="problematic" id="id26">`</span></a>name', or specified as a file object <a href="#id27"><span class="problematic" id="id28">`</span></a>fileobj' with a file descriptor. If given, <a href="#id29"><span class="problematic" id="id30">`</span></a>arcname' specifies an alternative name for the file in the archive, otherwise, the name is taken from the 'name' attribute of 'fileobj', or the 'name' argument. The name should be a text string.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gzopen</span></code>(name[, mode, fileobj, compresslevel])</p></td>
+<td><p>Open gzip compressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>([verbose, members])</p></td>
+<td><p>Print a table of contents to sys.stdout. If <a href="#id31"><span class="problematic" id="id32">`</span></a>verbose' is False, only the names of the members are printed. If it is True, an <a href="#id33"><span class="problematic" id="id34">`</span></a>ls -l'-like output is produced. <a href="#id35"><span class="problematic" id="id36">`</span></a>members' is optional and must be a subset of the list returned by getmembers().</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makedev</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a character or block device called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makedir</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a directory called targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makefifo</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a fifo called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makefile</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a file called targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makelink</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a (symbolic) link called targetpath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeunknown</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Make a file from a TarInfo object with an unknown type at targetpath.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">next</span></code>()</p></td>
+<td><p>Return the next member of the archive as a TarInfo object, when TarFile is opened for reading.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open</span></code>([name, mode, fileobj, bufsize])</p></td>
+<td><p>Open a tar archive for reading, writing or appending.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tarinfo</span></code></p></td>
+<td><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">tarfile.TarInfo</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">taropen</span></code>(name[, mode, fileobj])</p></td>
+<td><p>Open uncompressed tar archive name for reading or writing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">utime</span></code>(tarinfo, targetpath)</p></td>
+<td><p>Set modification time of targetpath according to tarinfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xzopen</span></code>(name[, mode, fileobj, preset])</p></td>
+<td><p>Open lzma compressed tar archive name for reading or writing.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>fileobject</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </section>
@@ -2697,11 +2810,11 @@ function waited on.</p>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>pipeline_name</strong><span class="classifier">str</span></dt><dd><p>The pipeline name.</p>
 </dd>
-<dt><strong>transform</strong><span class="classifier">pps_proto.Transform</span></dt><dd><p>The image and commands run during pipeline execution.</p>
+<dt><strong>transform</strong><span class="classifier">pps_pb2.Transform</span></dt><dd><p>The image and commands run during pipeline execution.</p>
 </dd>
-<dt><strong>parallelism_spec</strong><span class="classifier">pps_proto.ParallelismSpec, optional</span></dt><dd><p>Specifies how the pipeline is parallelized.</p>
+<dt><strong>parallelism_spec</strong><span class="classifier">pps_pb2.ParallelismSpec, optional</span></dt><dd><p>Specifies how the pipeline is parallelized.</p>
 </dd>
-<dt><strong>egress</strong><span class="classifier">pps_proto.Egress, optional</span></dt><dd><p>An external data store to publish the results of the pipeline to.</p>
+<dt><strong>egress</strong><span class="classifier">pps_pb2.Egress, optional</span></dt><dd><p>An external data store to publish the results of the pipeline to.</p>
 </dd>
 <dt><strong>reprocess_spec</strong><span class="classifier">str, optional</span></dt><dd><p>Specifies how to handle already-processed datums.</p>
 </dd>
@@ -2711,15 +2824,15 @@ function waited on.</p>
 </dd>
 <dt><strong>s3_out</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, the output repo is exposed as an S3 gateway bucket.</p>
 </dd>
-<dt><strong>resource_requests</strong><span class="classifier">pps_proto.ResourceSpec, optional</span></dt><dd><p>The amount of resources that the pipeline workers will consume.</p>
+<dt><strong>resource_requests</strong><span class="classifier">pps_pb2.ResourceSpec, optional</span></dt><dd><p>The amount of resources that the pipeline workers will consume.</p>
 </dd>
-<dt><strong>resource_limits: pps_proto.ResourceSpec, optional</strong></dt><dd><p>The upper threshold of allowed resources a given worker can
+<dt><strong>resource_limits: pps_pb2.ResourceSpec, optional</strong></dt><dd><p>The upper threshold of allowed resources a given worker can
 consume. If a worker exceeds this value, it will be evicted.</p>
 </dd>
-<dt><strong>sidecar_resource_limits</strong><span class="classifier">pps_proto.ResourceSpec, optional</span></dt><dd><p>The upper threshold of resources allocated to the sidecar
+<dt><strong>sidecar_resource_limits</strong><span class="classifier">pps_pb2.ResourceSpec, optional</span></dt><dd><p>The upper threshold of resources allocated to the sidecar
 containers.</p>
 </dd>
-<dt><strong>input</strong><span class="classifier">pps_proto.Input, optional</span></dt><dd><p>The input repos to the pipeline. Commits to these repos will
+<dt><strong>input</strong><span class="classifier">pps_pb2.Input, optional</span></dt><dd><p>The input repos to the pipeline. Commits to these repos will
 automatically trigger the pipeline to create new jobs to
 process them.</p>
 </dd>
@@ -2728,9 +2841,9 @@ process them.</p>
 <dt><strong>reprocess</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, forces the pipeline to reprocess all datums. Only has
 meaning if <cite>update</cite> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
-<dt><strong>service</strong><span class="classifier">pps_proto.Service, optional</span></dt><dd><p>Creates a Service pipeline instead of a normal pipeline.</p>
+<dt><strong>service</strong><span class="classifier">pps_pb2.Service, optional</span></dt><dd><p>Creates a Service pipeline instead of a normal pipeline.</p>
 </dd>
-<dt><strong>datum_set_spec</strong><span class="classifier">pps_proto.DatumSetSpec, optional</span></dt><dd><p>Specifies how a pipeline should split its datums into datum sets.</p>
+<dt><strong>datum_set_spec</strong><span class="classifier">pps_pb2.DatumSetSpec, optional</span></dt><dd><p>Specifies how a pipeline should split its datums into datum sets.</p>
 </dd>
 <dt><strong>datum_timeout</strong><span class="classifier">duration_pb2.Duration, optional</span></dt><dd><p>The maximum execution time allowed for each datum.</p>
 </dd>
@@ -2741,16 +2854,16 @@ meaning if <cite>update</cite> is <code class="docutils literal notranslate"><sp
 <dt><strong>datum_tries</strong><span class="classifier">int, optional</span></dt><dd><p>The number of times a job attempts to run on a datum when a failure
 occurs.</p>
 </dd>
-<dt><strong>scheduling_spec</strong><span class="classifier">pps_proto.SchedulingSpec, optional</span></dt><dd><p>Specifies how the pods for a pipeline should be scheduled.</p>
+<dt><strong>scheduling_spec</strong><span class="classifier">pps_pb2.SchedulingSpec, optional</span></dt><dd><p>Specifies how the pods for a pipeline should be scheduled.</p>
 </dd>
 <dt><strong>pod_patch</strong><span class="classifier">str, optional</span></dt><dd><p>Allows one to set fields in the pod spec that haven’t been
 explicitly exposed in the rest of the pipeline spec.</p>
 </dd>
-<dt><strong>spout</strong><span class="classifier">pps_proto.Spout, optional</span></dt><dd><p>Creates a Spout pipeline instead of a normal pipeline.</p>
+<dt><strong>spout</strong><span class="classifier">pps_pb2.Spout, optional</span></dt><dd><p>Creates a Spout pipeline instead of a normal pipeline.</p>
 </dd>
-<dt><strong>spec_commit</strong><span class="classifier">pfs_proto.Commit, optional</span></dt><dd><p>A spec commit to base the pipeline spec from.</p>
+<dt><strong>spec_commit</strong><span class="classifier">pfs_pb2.Commit, optional</span></dt><dd><p>A spec commit to base the pipeline spec from.</p>
 </dd>
-<dt><strong>metadata</strong><span class="classifier">pps_proto.Metadata, optional</span></dt><dd><p>Kubernetes labels and annotations to add as metadata to the
+<dt><strong>metadata</strong><span class="classifier">pps_pb2.Metadata, optional</span></dt><dd><p>Kubernetes labels and annotations to add as metadata to the
 pipeline pods.</p>
 </dd>
 <dt><strong>autoscaling</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, automatically scales the worker pool based on the datums
@@ -2769,11 +2882,11 @@ or <a class="reference internal" href="python_pachyderm.experimental.mixin.html#
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">create_pipeline</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;foo&quot;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">transform</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">transform</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="n">cmd</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;main.py&quot;</span><span class="p">],</span>
 <span class="gp">... </span>        <span class="n">image</span><span class="o">=</span><span class="s2">&quot;example/image&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="p">),</span>
-<span class="gp">... </span>    <span class="nb">input</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="nb">input</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/*&quot;</span>
@@ -2792,7 +2905,7 @@ used in conjunction with <code class="docutils literal notranslate"><span class=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>req</strong><span class="classifier">pps_proto.CreatePipelineRequest</span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">CreatePipelineRequest</span></code> object.</p>
+<dt><strong>req</strong><span class="classifier">pps_pb2.CreatePipelineRequest</span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">CreatePipelineRequest</span></code> object.</p>
 </dd>
 </dl>
 </dd>
@@ -2891,7 +3004,7 @@ contains multiple inputs. Each filter may be an absolute path of a
 file within a repo, or it may be a hash for that file (to search
 for files at specific versions).</p>
 </dd>
-<dt><strong>datum</strong><span class="classifier">pps_proto.Datum, optional</span></dt><dd><p>Filters log lines for the specified datum.</p>
+<dt><strong>datum</strong><span class="classifier">pps_pb2.Datum, optional</span></dt><dd><p>Filters log lines for the specified datum.</p>
 </dd>
 <dt><strong>follow</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, continue to follow new logs as they appear.</p>
 </dd>
@@ -2908,7 +3021,7 @@ fetching logs. Requires a loki-enabled cluster.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.LogMessage]</dt><dd><p>An iterator of protobuf objects that contain info on a log from a
+<dt>Iterator[pps_pb2.LogMessage]</dt><dd><p>An iterator of protobuf objects that contain info on a log from a
 PPS worker. If <cite>follow</cite> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, use <code class="docutils literal notranslate"><span class="pre">next()</span></code> to
 iterate through as the returned stream is potentially endless.
 Might block your code otherwise.</p>
@@ -2935,7 +3048,7 @@ for files at specific versions).</p>
 </dd>
 <dt><strong>master</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, includes logs from the master</p>
 </dd>
-<dt><strong>datum</strong><span class="classifier">pps_proto.Datum, optional</span></dt><dd><p>Filters log lines for the specified datum.</p>
+<dt><strong>datum</strong><span class="classifier">pps_pb2.Datum, optional</span></dt><dd><p>Filters log lines for the specified datum.</p>
 </dd>
 <dt><strong>follow</strong><span class="classifier">bool, optional</span></dt><dd><p>If true, continue to follow new logs as they appear.</p>
 </dd>
@@ -2952,7 +3065,7 @@ fetching logs. Requires a loki-enabled cluster.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.LogMessage]</dt><dd><p>An iterator of protobuf objects that contain info on a log from a
+<dt>Iterator[pps_pb2.LogMessage]</dt><dd><p>An iterator of protobuf objects that contain info on a log from a
 PPS worker. If <cite>follow</cite> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, use <code class="docutils literal notranslate"><span class="pre">next()</span></code> to
 iterate through as the returned stream is potentially endless.
 Might block your code otherwise.</p>
@@ -2979,7 +3092,7 @@ Might block your code otherwise.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pps_proto.DatumInfo</dt><dd><p>A protobuf object with info on the datum.</p>
+<dt>pps_pb2.DatumInfo</dt><dd><p>A protobuf object with info on the datum.</p>
 </dd>
 </dl>
 </dd>
@@ -3005,7 +3118,7 @@ Might block your code otherwise.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.JobInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a subjob
+<dt>Iterator[pps_pb2.JobInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a subjob
 (jobs at the pipeline-level).</p>
 </dd>
 </dl>
@@ -3045,7 +3158,7 @@ Semantics are:</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.PipelineInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a pipeline.</p>
+<dt>Iterator[pps_pb2.PipelineInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a pipeline.</p>
 </dd>
 </dl>
 </dd>
@@ -3072,7 +3185,7 @@ Semantics are:</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>pps_proto.SecretInfo</dt><dd><p>A protobuf object with info on the secret.</p>
+<dt>pps_pb2.SecretInfo</dt><dd><p>A protobuf object with info on the secret.</p>
 </dd>
 </dl>
 </dd>
@@ -3091,7 +3204,7 @@ Semantics are:</p>
 </dd>
 <dt><strong>job_id</strong><span class="classifier">str, optional</span></dt><dd><p>The ID of a job.</p>
 </dd>
-<dt><strong>input</strong><span class="classifier">pps_proto.Input, optional</span></dt><dd><p>A protobuf object that filters the datums returned. The datums
+<dt><strong>input</strong><span class="classifier">pps_pb2.Input, optional</span></dt><dd><p>A protobuf object that filters the datums returned. The datums
 listed are ones that would be run if a pipeline was created with
 the provided input.</p>
 </dd>
@@ -3099,18 +3212,18 @@ the provided input.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.DatumInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a datum.</p>
+<dt>Iterator[pps_pb2.DatumInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a datum.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># See hypothetical datums with specified input cross</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datums</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">list_datum</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">pfs</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/*&quot;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datums</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">list_datum</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">pfs</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/*&quot;</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">cross</span><span class="o">=</span><span class="p">[</span>
-<span class="gp">... </span>        <span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">)),</span>
-<span class="gp">... </span>        <span class="n">pps_proto</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_proto</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/*/*&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="n">pps_pb2</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">pfs</span><span class="o">=</span><span class="n">pps_pb2</span><span class="o">.</span><span class="n">PFSInput</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">glob</span><span class="o">=</span><span class="s2">&quot;/*/*&quot;</span><span class="p">)),</span>
 <span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span><span class="p">)))</span>
 </pre></div>
@@ -3151,7 +3264,7 @@ clusters with a large number of pipelines and jobs. Note that if
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]</dt><dd><p>An iterator of protobuf objects that either contain info on a
+<dt>Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]</dt><dd><p>An iterator of protobuf objects that either contain info on a
 subjob (job at the pipeline-level), if <cite>pipeline_name</cite> was
 specified, or a job, if <cite>pipeline_name</cite> wasn’t specified.</p>
 </dd>
@@ -3192,7 +3305,7 @@ Semantics are:</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Iterator[pps_proto.PipelineInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a pipeline.</p>
+<dt>Iterator[pps_pb2.PipelineInfo]</dt><dd><p>An iterator of protobuf objects that contain info on a pipeline.</p>
 </dd>
 </dl>
 </dd>
@@ -3210,7 +3323,7 @@ Semantics are:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[pps_proto.SecretInfo]</dt><dd><p>A list of protobuf objects that contain info on a secret.</p>
+<dt>List[pps_pb2.SecretInfo]</dt><dd><p>A list of protobuf objects that contain info on a secret.</p>
 </dd>
 </dl>
 </dd>
@@ -3347,14 +3460,14 @@ restarted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>requests</strong><span class="classifier">List[transaction_proto.TransactionRequest]</span></dt><dd><p>A list of <code class="docutils literal notranslate"><span class="pre">TransactionRequest</span></code> protobufs. Each protobuf must
+<dt><strong>requests</strong><span class="classifier">List[transaction_pb2.TransactionRequest]</span></dt><dd><p>A list of <code class="docutils literal notranslate"><span class="pre">TransactionRequest</span></code> protobufs. Each protobuf must
 only have one field set.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>transaction_proto.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
+<dt>transaction_pb2.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3362,9 +3475,9 @@ only have one field set.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Deletes one repo and creates a branch in another repo atomically</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">batch_transaction</span><span class="p">([</span>
-<span class="go">    transaction_proto.TransactionRequest(delete_repo=pfs_proto.DeleteRepoRequest(repo=pfs_proto.Repo(name=&quot;foo&quot;))),</span>
-<span class="go">    transaction_proto.TransactionRequest(create_branch=pfs_proto.CreateBranchRequest(branch=pfs_proto.Branch(</span>
-<span class="go">        repo=pfs_proto.Repo(name=&quot;bar&quot;, type=&quot;user&quot;), name=&quot;staging&quot;</span>
+<span class="go">    transaction_pb2.TransactionRequest(delete_repo=pfs_pb2.DeleteRepoRequest(repo=pfs_pb2.Repo(name=&quot;foo&quot;))),</span>
+<span class="go">    transaction_pb2.TransactionRequest(create_branch=pfs_pb2.CreateBranchRequest(branch=pfs_pb2.Branch(</span>
+<span class="go">        repo=pfs_pb2.Repo(name=&quot;bar&quot;, type=&quot;user&quot;), name=&quot;staging&quot;</span>
 <span class="go">    )))</span>
 <span class="go">])</span>
 </pre></div>
@@ -3384,7 +3497,7 @@ only have one field set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_proto.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
+<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_pb2.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3405,13 +3518,13 @@ only have one field set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_proto.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
+<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_pb2.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>transaction_proto.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
+<dt>transaction_pb2.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3431,13 +3544,13 @@ only have one field set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_proto.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
+<dt><strong>transaction</strong><span class="classifier">Union[str, transaction_pb2.Transaction]</span></dt><dd><p>The ID or protobuf object representing the transaction.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>transaction_proto.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
+<dt>transaction_pb2.TransactionInfo</dt><dd><p>A protobuf object with info on the transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3457,7 +3570,7 @@ only have one field set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>List[transaction_proto.TransactionInfo]</dt><dd><p>A list of protobuf objects that contain info on a transaction.</p>
+<dt>List[transaction_pb2.TransactionInfo]</dt><dd><p>A list of protobuf objects that contain info on a transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3471,7 +3584,7 @@ only have one field set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>transaction_proto.Transaction</dt><dd><p>A protobuf object that represents the transaction.</p>
+<dt>transaction_pb2.Transaction</dt><dd><p>A protobuf object that represents the transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3493,7 +3606,7 @@ error occurred, or otherwise finished.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>transaction_proto.Transaction</dt><dd><p>A protobuf object that represents a transaction.</p>
+<dt>transaction_pb2.Transaction</dt><dd><p>A protobuf object that represents a transaction.</p>
 </dd>
 </dl>
 </dd>
@@ -3543,7 +3656,7 @@ even once.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>version_proto.Version</dt><dd><p>A protobuf object with info on the pachd version.</p>
+<dt>version_pb2.Version</dt><dd><p>A protobuf object with info on the pachd version.</p>
 </dd>
 </dl>
 </dd>

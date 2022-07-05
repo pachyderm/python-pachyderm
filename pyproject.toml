@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-pachyderm"
-version = "7.3.0"
+version = "7.3.1"
 description = "Python Pachyderm Client"
 authors = ["Pachyderm Integrations <integrations@pachyderm.io>"]
 include = ["version.json"]
@@ -31,7 +31,7 @@ protobuf = ">=3.17.1,<4.0.0"
 betterproto = "2.0.0b4"
 
 [tool.poetry.dev-dependencies]
-black = ">=21.5b0"
+black = ">=22.6.0"
 certifi = ">=2019.11.28"
 flake8 = ">=3.9.1"
 myst-parser = "0.15.2"
