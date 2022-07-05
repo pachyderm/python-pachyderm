@@ -67,19 +67,26 @@
   <h1>Source code for python_pachyderm.mixin.license</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
+<span class="kn">import</span> <span class="nn">grpc</span>
 <span class="kn">from</span> <span class="nn">google.protobuf</span> <span class="kn">import</span> <span class="n">timestamp_pb2</span>
-<span class="kn">from</span> <span class="nn">grpc</span> <span class="kn">import</span> <span class="n">RpcError</span>
 
 <span class="kn">from</span> <span class="nn">python_pachyderm.errors</span> <span class="kn">import</span> <span class="n">AuthServiceNotActivated</span>
-<span class="kn">from</span> <span class="nn">python_pachyderm.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">license_proto</span><span class="p">,</span> <span class="n">enterprise_proto</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.enterprise</span> <span class="kn">import</span> <span class="n">enterprise_pb2</span>
+<span class="kn">from</span> <span class="nn">python_pachyderm.proto.v2.license</span> <span class="kn">import</span> <span class="n">license_pb2</span><span class="p">,</span> <span class="n">license_pb2_grpc</span>
 
 
 <div class="viewcode-block" id="LicenseMixin"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin">[docs]</a><span class="k">class</span> <span class="nc">LicenseMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A mixin for license-related functionality.&quot;&quot;&quot;</span>
 
+    <span class="n">_channel</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Channel</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span> <span class="o">=</span> <span class="n">license_pb2_grpc</span><span class="o">.</span><span class="n">APIStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_channel</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
 <div class="viewcode-block" id="LicenseMixin.activate_license"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.activate_license">[docs]</a>    <span class="k">def</span> <span class="nf">activate_license</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">activation_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expires</span><span class="p">:</span> <span class="n">timestamp_pb2</span><span class="o">.</span><span class="n">Timestamp</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">enterprise_proto</span><span class="o">.</span><span class="n">TokenInfo</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">TokenInfo</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Activates the license service.</span>
 
 <span class="sd">        Parameters</span>
@@ -94,16 +101,14 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        enterprise_proto.TokenInfo</span>
+<span class="sd">        enterprise_pb2.TokenInfo</span>
 <span class="sd">            A protobuf object that has the expiration for the current token.</span>
 <span class="sd">            Field will be unset if there is no current token.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span>
-            <span class="s2">&quot;Activate&quot;</span><span class="p">,</span>
-            <span class="n">activation_code</span><span class="o">=</span><span class="n">activation_code</span><span class="p">,</span>
-            <span class="n">expires</span><span class="o">=</span><span class="n">expires</span><span class="p">,</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">info</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">ActivateRequest</span><span class="p">(</span>
+            <span class="n">activation_code</span><span class="o">=</span><span class="n">activation_code</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="n">expires</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">Activate</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">info</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.add_cluster"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.add_cluster">[docs]</a>    <span class="k">def</span> <span class="nf">add_cluster</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -113,7 +118,7 @@
         <span class="n">user_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">cluster_deployment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">enterprise_server</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">license_proto</span><span class="o">.</span><span class="n">AddClusterResponse</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">AddClusterResponse</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Register a cluster with the license service.</span>
 
 <span class="sd">        Parameters</span>
@@ -134,19 +139,18 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        license_proto.AddClusterResponse</span>
+<span class="sd">        license_pb2.AddClusterResponse</span>
 <span class="sd">            A protobuf object that returns the `secret`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span>
-            <span class="s2">&quot;AddCluster&quot;</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">AddClusterRequest</span><span class="p">(</span>
             <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span>
-            <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span>
-            <span class="n">user_address</span><span class="o">=</span><span class="n">user_address</span><span class="p">,</span>
             <span class="n">cluster_deployment_id</span><span class="o">=</span><span class="n">cluster_deployment_id</span><span class="p">,</span>
             <span class="n">enterprise_server</span><span class="o">=</span><span class="n">enterprise_server</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+            <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span>
+            <span class="n">user_address</span><span class="o">=</span><span class="n">user_address</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">AddCluster</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.update_cluster"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.update_cluster">[docs]</a>    <span class="k">def</span> <span class="nf">update_cluster</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -168,14 +172,13 @@
 <span class="sd">        cluster_deployment_id : str, optional</span>
 <span class="sd">            The deployment ID value generated by each cluster.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span>
-            <span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span>
-            <span class="s2">&quot;UpdateCluster&quot;</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">UpdateClusterRequest</span><span class="p">(</span>
             <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span>
-            <span class="n">user_address</span><span class="o">=</span><span class="n">user_address</span><span class="p">,</span>
             <span class="n">cluster_deployment_id</span><span class="o">=</span><span class="n">cluster_deployment_id</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+            <span class="n">user_address</span><span class="o">=</span><span class="n">user_address</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">UpdateCluster</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.delete_cluster"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.delete_cluster">[docs]</a>    <span class="k">def</span> <span class="nf">delete_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Delete a cluster registered with the license service.</span>
@@ -185,28 +188,31 @@
 <span class="sd">        id : str</span>
 <span class="sd">            The unique ID to identify the cluster.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;DeleteCluster&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">DeleteClusterRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteCluster</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LicenseMixin.list_clusters"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.list_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">list_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">license_proto</span><span class="o">.</span><span class="n">ClusterStatus</span><span class="p">]:</span>
+<div class="viewcode-block" id="LicenseMixin.list_clusters"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.list_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">list_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">license_pb2</span><span class="o">.</span><span class="n">ClusterStatus</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;List clusters registered with the license service.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        List[license_proto.ClusterStatus]</span>
+<span class="sd">        List[license_pb2.ClusterStatus]</span>
 <span class="sd">            A list of protobuf objects that return info on a cluster.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;ListClusters&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">clusters</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">ListClustersRequest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListClusters</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">clusters</span></div>
 
-<div class="viewcode-block" id="LicenseMixin.get_activation_code"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.get_activation_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_activation_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">license_proto</span><span class="o">.</span><span class="n">GetActivationCodeResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="LicenseMixin.get_activation_code"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.get_activation_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_activation_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">GetActivationCodeResponse</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Gets the enterprise code used to activate the server.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        license_proto.GetActivationCodeResponse</span>
+<span class="sd">        license_pb2.GetActivationCodeResponse</span>
 <span class="sd">            A protobuf object that returns a state enum, info on the token,</span>
 <span class="sd">            and the activation code.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;GetActivationCode&quot;</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">GetActivationCodeRequest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetActivationCode</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LicenseMixin.delete_all_license"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.delete_all_license">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all_license</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Remove all clusters and deactivate the license service.</span>
@@ -215,21 +221,23 @@
 <span class="sd">        ------</span>
 <span class="sd">        AuthServiceNotActivated</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">DeleteAllRequest</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;DeleteAll&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">RpcError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">DeleteAll</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">grpc</span><span class="o">.</span><span class="n">RpcError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">AuthServiceNotActivated</span><span class="o">.</span><span class="n">try_from</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LicenseMixin.list_user_clusters"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.list_user_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">list_user_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">license_proto</span><span class="o">.</span><span class="n">UserClusterInfo</span><span class="p">]:</span>
+<div class="viewcode-block" id="LicenseMixin.list_user_clusters"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.license.LicenseMixin.list_user_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">list_user_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">license_pb2</span><span class="o">.</span><span class="n">UserClusterInfo</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Lists all clusters available to user.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        List[license_proto.UserClusterInfo]</span>
+<span class="sd">        List[license_pb2.UserClusterInfo]</span>
 <span class="sd">            A list of protobuf objects that return info on clusters</span>
 <span class="sd">            available to the users.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_req</span><span class="p">(</span><span class="n">Service</span><span class="o">.</span><span class="n">LICENSE</span><span class="p">,</span> <span class="s2">&quot;ListUserClusters&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">clusters</span></div></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">license_pb2</span><span class="o">.</span><span class="n">ListUserClustersRequest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">ListUserClusters</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">clusters</span></div></div>
 </pre></div>
 
            </div>

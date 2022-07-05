@@ -553,6 +553,18 @@
     <span class="n">duration</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="CheckStorageRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckStorageRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">read_chunk_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">chunk_begin</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">chunk_end</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CheckStorageResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckStorageResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">chunk_object_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="ApiStub"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub">[docs]</a><span class="k">class</span> <span class="nc">ApiStub</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">ServiceStub</span><span class="p">):</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">create_repo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="s2">&quot;Repo&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1041,6 +1053,23 @@
             <span class="s2">&quot;/pfs_v2.API/ComposeFileSet&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CreateFileSetResponse</span>
         <span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">check_storage</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">read_chunk_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">chunk_begin</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">chunk_end</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CheckStorageResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">CheckStorageRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">read_chunk_data</span> <span class="o">=</span> <span class="n">read_chunk_data</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">chunk_begin</span> <span class="o">=</span> <span class="n">chunk_begin</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">chunk_end</span> <span class="o">=</span> <span class="n">chunk_end</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/CheckStorage&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CheckStorageResponse</span>
+        <span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
@@ -1229,6 +1258,11 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">compose_file_set</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CreateFileSetResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">check_storage</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">read_chunk_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">chunk_begin</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">chunk_end</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CheckStorageResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
@@ -1642,6 +1676,18 @@
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_file_set</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_check_storage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;read_chunk_data&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">read_chunk_data</span><span class="p">,</span>
+            <span class="s2">&quot;chunk_begin&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">chunk_begin</span><span class="p">,</span>
+            <span class="s2">&quot;chunk_end&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">chunk_end</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_storage</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_run_load_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
 
@@ -1867,6 +1913,12 @@
                 <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
                 <span class="n">ComposeFileSetRequest</span><span class="p">,</span>
                 <span class="n">CreateFileSetResponse</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/CheckStorage&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_check_storage</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">CheckStorageRequest</span><span class="p">,</span>
+                <span class="n">CheckStorageResponse</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTest&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_run_load_test</span><span class="p">,</span>
