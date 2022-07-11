@@ -301,119 +301,125 @@ Initialize an instance with <code class="docutils literal notranslate"><span cla
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_oidc_login</span></code>()</p></td>
 <td><p>Gets the OIDC login configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pipeline_logs</span></code>(pipeline_name[, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pause_status</span></code>()</p></td>
+<td><p>Gets the pause status of the cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pipeline_logs</span></code>(pipeline_name[, ...])</p></td>
 <td><p>Gets logs for a pipeline.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_remote_version</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_remote_version</span></code>()</p></td>
 <td><p>Gets version of Pachyderm server.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_robot_token</span></code>(robot[, ttl])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_robot_token</span></code>(robot[, ttl])</p></td>
 <td><p>Gets a new auth token for a robot user.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_role_binding</span></code>(resource)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_role_binding</span></code>(resource)</p></td>
 <td><p>Returns the current set of role bindings to the resource specified.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_roles_for_permission</span></code>(permission)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_roles_for_permission</span></code>(permission)</p></td>
 <td><p>Returns a list of all roles that have the specified permission.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_users</span></code>(group)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_users</span></code>(group)</p></td>
 <td><p>Gets users in a group.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">glob_file</span></code>(commit, pattern)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">glob_file</span></code>(commit, pattern)</p></td>
 <td><p>Lists files that match a glob pattern.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">health_check</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">health_check</span></code>()</p></td>
 <td><p>Returns a health check indicating if the server can handle RPCs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_branch</span></code>(repo_name, branch_name)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_branch</span></code>(repo_name, branch_name)</p></td>
 <td><p>Inspects a branch.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_cluster</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_cluster</span></code>()</p></td>
 <td><p>Inspects a cluster.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_commit</span></code>(commit[, commit_state])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_commit</span></code>(commit[, commit_state])</p></td>
 <td><p>Inspects a commit.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_datum</span></code>(pipeline_name, job_id, datum_id)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_datum</span></code>(pipeline_name, job_id, datum_id)</p></td>
 <td><p>Inspects a datum.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_file</span></code>(commit, path[, datum])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_file</span></code>(commit, path[, datum])</p></td>
 <td><p>Inspects a file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_job</span></code>(job_id[, pipeline_name, wait, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_job</span></code>(job_id[, pipeline_name, wait, ...])</p></td>
 <td><p>Inspects a job.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_pipeline</span></code>(pipeline_name[, history, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_pipeline</span></code>(pipeline_name[, history, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_repo</span></code>(repo_name)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_repo</span></code>(repo_name)</p></td>
 <td><p>Inspects a repo.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_secret</span></code>(secret_name)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_secret</span></code>(secret_name)</p></td>
 <td><p>Inspects a secret.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_transaction</span></code>(transaction)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_transaction</span></code>(transaction)</p></td>
 <td><p>Inspects a transaction.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_branch</span></code>(repo_name[, reverse])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_branch</span></code>(repo_name[, reverse])</p></td>
 <td><p>Lists the active branch objects in a repo.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_clusters</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_clusters</span></code>()</p></td>
 <td><p>List clusters registered with the license service.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_commit</span></code>([repo_name, to_commit, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_commit</span></code>([repo_name, to_commit, ...])</p></td>
 <td><p>Lists commits.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_datum</span></code>([pipeline_name, job_id, input])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_datum</span></code>([pipeline_name, job_id, input])</p></td>
 <td><p>Lists datums.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code>(commit, path[, datum, details])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code>(commit, path[, datum])</p></td>
 <td><p>Lists the files in a directory.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_idp_connectors</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_idp_connectors</span></code>()</p></td>
 <td><p>List IDP connectors in the identity server.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_job</span></code>([pipeline_name, input_commit, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_job</span></code>([pipeline_name, input_commit, ...])</p></td>
 <td><p>Lists jobs.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_oidc_clients</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_oidc_clients</span></code>()</p></td>
 <td><p>List OIDC clients in the identity server.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_pipeline</span></code>([history, details, jqFilter])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_pipeline</span></code>([history, details, jqFilter])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_repo</span></code>([type])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_repo</span></code>([type])</p></td>
 <td><p>Lists all repos in PFS.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_secret</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_secret</span></code>()</p></td>
 <td><p>Lists secrets.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_transaction</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_transaction</span></code>()</p></td>
 <td><p>Lists unfinished transactions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_user_clusters</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_user_clusters</span></code>()</p></td>
 <td><p>Lists all clusters available to user.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_file_client</span></code>(commit)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_file_client</span></code>(commit)</p></td>
 <td><p>A context manager that gives a <a class="reference internal" href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.ModifyFileClient" title="python_pachyderm.experimental.mixin.pfs.ModifyFileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModifyFileClient</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_members</span></code>(group[, add, remove])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_members</span></code>(group[, add, remove])</p></td>
 <td><p>Adds and/or removes members of a group.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_role_binding</span></code>(resource, principal[, roles])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_role_binding</span></code>(resource, principal[, roles])</p></td>
 <td><p>Sets the roles for a given principal on a resource.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_config" title="python_pachyderm.client.Client.new_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_config</span></code></a>(config_file)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_config" title="python_pachyderm.client.Client.new_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_config</span></code></a>(config_file)</p></td>
 <td><p>Creates a Pachyderm client from a config file-like object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_pachd_address" title="python_pachyderm.client.Client.new_from_pachd_address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_pachd_address</span></code></a>(pachd_address[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_from_pachd_address" title="python_pachyderm.client.Client.new_from_pachd_address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_from_pachd_address</span></code></a>(pachd_address[, ...])</p></td>
 <td><p>Creates a Pachyderm client from a given pachd address.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_in_cluster" title="python_pachyderm.client.Client.new_in_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_in_cluster</span></code></a>([auth_token, transaction_id])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.client.Client.new_in_cluster" title="python_pachyderm.client.Client.new_in_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_in_cluster</span></code></a>([auth_token, transaction_id])</p></td>
 <td><p>Creates a Pachyderm client that operates within a Pachyderm cluster.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">path_exists</span></code>(commit, path)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">path_exists</span></code>(commit, path)</p></td>
 <td><p>Checks whether the path exists in the specified commit, agnostic to whether <cite>path</cite> is a file or a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pause_enterprise</span></code>()</p></td>
+<td><p>Pauses the cluster.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">profile_cpu</span></code>(duration[, filter])</p></td>
 <td><p>Gets a CPU profile.</p></td>
@@ -469,22 +475,25 @@ Initialize an instance with <code class="docutils literal notranslate"><span cla
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transaction</span></code>()</p></td>
 <td><p>A context manager for running operations within a transaction.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cluster</span></code>(id, address[, user_address, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">unpause_enterprise</span></code>()</p></td>
+<td><p>Unpauses the cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cluster</span></code>(id, address[, user_address, ...])</p></td>
 <td><p>Update a cluster registered with the license service.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_idp_connector</span></code>(connector)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_idp_connector</span></code>(connector)</p></td>
 <td><p>Update an IDP connector in the identity server.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_oidc_client</span></code>(client)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_oidc_client</span></code>(client)</p></td>
 <td><p>Update an OIDC client in the identity server.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait_commit</span></code>(commit)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait_commit</span></code>(commit)</p></td>
 <td><p>Waits for the specified commit to finish.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">walk_file</span></code>(commit, path[, datum])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">walk_file</span></code>(commit, path[, datum])</p></td>
 <td><p>Walks over all descendant files in a directory.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">who_am_i</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">who_am_i</span></code>()</p></td>
 <td><p>Returns info about the user tied to this <cite>Client</cite>.</p></td>
 </tr>
 </tbody>

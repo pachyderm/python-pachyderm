@@ -115,6 +115,13 @@
     <span class="n">CSV</span> <span class="o">=</span> <span class="mi">4</span></div>
 
 
+<div class="viewcode-block" id="SqlDatabaseEgressFileFormatType"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.SqlDatabaseEgressFileFormatType">[docs]</a><span class="k">class</span> <span class="nc">SqlDatabaseEgressFileFormatType</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">CSV</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">JSON</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">PARQUET</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
 <div class="viewcode-block" id="Repo"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.Repo">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Repo</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -458,8 +465,7 @@
     <span class="c1"># repo, the commit/branch, and path prefix of files we&#39;re interested in If</span>
     <span class="c1"># the &quot;path&quot; field is omitted, a list of files at the top level of the repo</span>
     <span class="c1"># is returned</span>
-    <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+    <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="WalkFileRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.WalkFileRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -527,6 +533,41 @@
     <span class="n">ttl_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="CheckStorageRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckStorageRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">read_chunk_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">chunk_begin</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">chunk_end</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CheckStorageResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckStorageResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">chunk_object_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PutCacheRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.PutCacheRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PutCacheRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">value</span><span class="p">:</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Any&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GetCacheRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.GetCacheRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">GetCacheRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GetCacheResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.GetCacheResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">GetCacheResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">value</span><span class="p">:</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Any&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ClearCacheRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ClearCacheRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ClearCacheRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">tag_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="ActivateAuthRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ActivateAuthRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ActivateAuthRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
     <span class="k">pass</span></div>
@@ -553,16 +594,57 @@
     <span class="n">duration</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CheckStorageRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">CheckStorageRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
-    <span class="n">read_chunk_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bool_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">chunk_begin</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">chunk_end</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">bytes_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ObjectStorageEgress"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ObjectStorageEgress">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ObjectStorageEgress</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CheckStorageResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CheckStorageResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">CheckStorageResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
-    <span class="n">chunk_object_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SqlDatabaseEgress"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.SqlDatabaseEgress">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SqlDatabaseEgress</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">file_format</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgressFileFormat&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">secret</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgressSecret&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SqlDatabaseEgressFileFormat"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.SqlDatabaseEgressFileFormat">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SqlDatabaseEgressFileFormat</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgressFileFormatType&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">enum_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SqlDatabaseEgressSecret"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.SqlDatabaseEgressSecret">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SqlDatabaseEgressSecret</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">string_field</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EgressRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.EgressRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EgressRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">object_storage</span><span class="p">:</span> <span class="s2">&quot;ObjectStorageEgress&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>
+    <span class="n">sql_database</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgress&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EgressResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.EgressResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EgressResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">object_storage</span><span class="p">:</span> <span class="s2">&quot;EgressResponseObjectStorageResult&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;result&quot;</span>
+    <span class="p">)</span>
+    <span class="n">sql_database</span><span class="p">:</span> <span class="s2">&quot;EgressResponseSqlDatabaseResult&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">message_field</span><span class="p">(</span>
+        <span class="mi">2</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;result&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EgressResponseObjectStorageResult"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.EgressResponseObjectStorageResult">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EgressResponseObjectStorageResult</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">bytes_written</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">int64_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EgressResponseSqlDatabaseResult"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.EgressResponseSqlDatabaseResult">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EgressResponseSqlDatabaseResult</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">rows_written</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">map_field</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">TYPE_STRING</span><span class="p">,</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">TYPE_INT64</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ApiStub"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiStub">[docs]</a><span class="k">class</span> <span class="nc">ApiStub</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">ServiceStub</span><span class="p">):</span>
@@ -900,14 +982,11 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/InspectFile&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">FileInfo</span><span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
 
         <span class="n">request</span> <span class="o">=</span> <span class="n">ListFileRequest</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">details</span> <span class="o">=</span> <span class="n">details</span>
 
         <span class="k">async</span> <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_stream</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/ListFile&quot;</span><span class="p">,</span>
@@ -1070,6 +1149,47 @@
             <span class="s2">&quot;/pfs_v2.API/CheckStorage&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">CheckStorageResponse</span>
         <span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">put_cache</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Any&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="n">file_set_ids</span> <span class="o">=</span> <span class="n">file_set_ids</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">PutCacheRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">file_set_ids</span> <span class="o">=</span> <span class="n">file_set_ids</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/PutCache&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GetCacheResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">GetCacheRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/GetCache&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">GetCacheResponse</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">ClearCacheRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">tag_prefix</span> <span class="o">=</span> <span class="n">tag_prefix</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/ClearCache&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span>
+        <span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
@@ -1090,7 +1210,40 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTestDefault&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">RunLoadTestResponse</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_task</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;_taskapi__.TaskInfo&quot;</span><span class="p">]:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">_taskapi__</span><span class="o">.</span><span class="n">ListTaskRequest</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+
+        <span class="k">async</span> <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_stream</span><span class="p">(</span>
+            <span class="s2">&quot;/pfs_v2.API/ListTask&quot;</span><span class="p">,</span>
+            <span class="n">request</span><span class="p">,</span>
+            <span class="n">_taskapi__</span><span class="o">.</span><span class="n">TaskInfo</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">yield</span> <span class="n">response</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">egress</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">object_storage</span><span class="p">:</span> <span class="s2">&quot;ObjectStorageEgress&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sql_database</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgress&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EgressResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">EgressRequest</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">commit</span> <span class="o">=</span> <span class="n">commit</span>
+        <span class="k">if</span> <span class="n">object_storage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">object_storage</span> <span class="o">=</span> <span class="n">object_storage</span>
+        <span class="k">if</span> <span class="n">sql_database</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">sql_database</span> <span class="o">=</span> <span class="n">sql_database</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span><span class="s2">&quot;/pfs_v2.API/Egress&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">EgressResponse</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ApiBase"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ApiBase">[docs]</a><span class="k">class</span> <span class="nc">ApiBase</span><span class="p">(</span><span class="n">ServiceBase</span><span class="p">):</span>
@@ -1212,7 +1365,7 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FileInfo&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">walk_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;FileInfo&quot;</span><span class="p">]:</span>
@@ -1265,12 +1418,40 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CheckStorageResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">put_cache</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Any&quot;</span><span class="p">,</span>
+        <span class="n">file_set_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GetCacheResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tag_prefix</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;betterproto_lib_google_protobuf.Empty&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="s2">&quot;Branch&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">run_load_test_default</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RunLoadTestResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">list_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="s2">&quot;_taskapi__.TaskInfo&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">egress</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commit</span><span class="p">:</span> <span class="s2">&quot;Commit&quot;</span><span class="p">,</span>
+        <span class="n">object_storage</span><span class="p">:</span> <span class="s2">&quot;ObjectStorageEgress&quot;</span><span class="p">,</span>
+        <span class="n">sql_database</span><span class="p">:</span> <span class="s2">&quot;SqlDatabaseEgress&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EgressResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_create_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1547,7 +1728,6 @@
 
         <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
-            <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">details</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_rpc_handler_server_stream</span><span class="p">(</span>
@@ -1688,6 +1868,39 @@
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_storage</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_put_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">&quot;file_set_ids&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">file_set_ids</span><span class="p">,</span>
+            <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">put_cache</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_get_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cache</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;tag_prefix&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">tag_prefix</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear_cache</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_run_load_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
 
@@ -1706,6 +1919,31 @@
         <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_load_test_default</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_list_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">group</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_rpc_handler_server_stream</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list_task</span><span class="p">,</span>
+            <span class="n">stream</span><span class="p">,</span>
+            <span class="n">request_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_egress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;commit&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">commit</span><span class="p">,</span>
+            <span class="s2">&quot;object_storage&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">object_storage</span><span class="p">,</span>
+            <span class="s2">&quot;sql_database&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">sql_database</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">egress</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__mapping__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">]:</span>
@@ -1920,6 +2158,24 @@
                 <span class="n">CheckStorageRequest</span><span class="p">,</span>
                 <span class="n">CheckStorageResponse</span><span class="p">,</span>
             <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/PutCache&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_put_cache</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">PutCacheRequest</span><span class="p">,</span>
+                <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/GetCache&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_get_cache</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">GetCacheRequest</span><span class="p">,</span>
+                <span class="n">GetCacheResponse</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/ClearCache&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_clear_cache</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">ClearCacheRequest</span><span class="p">,</span>
+                <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
+            <span class="p">),</span>
             <span class="s2">&quot;/pfs_v2.API/RunLoadTest&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_run_load_test</span><span class="p">,</span>
                 <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
@@ -1932,10 +2188,23 @@
                 <span class="n">betterproto_lib_google_protobuf</span><span class="o">.</span><span class="n">Empty</span><span class="p">,</span>
                 <span class="n">RunLoadTestResponse</span><span class="p">,</span>
             <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/ListTask&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_list_task</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_STREAM</span><span class="p">,</span>
+                <span class="n">_taskapi__</span><span class="o">.</span><span class="n">ListTaskRequest</span><span class="p">,</span>
+                <span class="n">_taskapi__</span><span class="o">.</span><span class="n">TaskInfo</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/pfs_v2.API/Egress&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_egress</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">EgressRequest</span><span class="p">,</span>
+                <span class="n">EgressResponse</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">}</span></div>
 
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">auth_v2</span> <span class="k">as</span> <span class="n">_auth_v2__</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">taskapi</span> <span class="k">as</span> <span class="n">_taskapi__</span>
 <span class="kn">import</span> <span class="nn">betterproto.lib.google.protobuf</span> <span class="k">as</span> <span class="nn">betterproto_lib_google_protobuf</span>
 </pre></div>
 

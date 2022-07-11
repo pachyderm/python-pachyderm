@@ -71,7 +71,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-python_pachyderm.experimental.proto.v2.enterprise_v2" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ActivateRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ActivateRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">license_server:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ActivateRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ActivateRequest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ActivateRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">license_server:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ActivateRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ActivateRequest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -182,6 +182,15 @@
 <tr class="row-odd"><td><p><strong>heartbeat</strong></p></td>
 <td></td>
 </tr>
+<tr class="row-even"><td><p><strong>pause</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>pause_status</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>unpause</strong></p></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <dl class="py method">
@@ -207,6 +216,21 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.heartbeat">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">heartbeat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiBase.heartbeat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.heartbeat" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiBase.pause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause_status">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pause_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiBase.pause_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause_status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.unpause">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unpause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiBase.unpause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.unpause" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -237,6 +261,15 @@
 <tr class="row-odd"><td><p><strong>heartbeat</strong></p></td>
 <td></td>
 </tr>
+<tr class="row-even"><td><p><strong>pause</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>pause_status</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>unpause</strong></p></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <dl class="py method">
@@ -262,6 +295,21 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.heartbeat">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">heartbeat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiStub.heartbeat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.heartbeat" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiStub.pause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause_status">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pause_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiStub.pause_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause_status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.unpause">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unpause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#ApiStub.unpause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.unpause" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -482,7 +530,7 @@ status.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.GetActivationCodeResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetActivationCodeResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state:</span> <span class="pre">'State'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info:</span> <span class="pre">'TokenInfo'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_code:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#GetActivationCodeResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.GetActivationCodeResponse" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetActivationCodeResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state:</span> <span class="pre">'State'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info:</span> <span class="pre">'TokenInfo'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_code:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#GetActivationCodeResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.GetActivationCodeResponse" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -569,7 +617,7 @@ status.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.GetStateResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetStateResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state:</span> <span class="pre">'State'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info:</span> <span class="pre">'TokenInfo'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_code:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x1078ef0a0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#GetStateResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.GetStateResponse" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetStateResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state:</span> <span class="pre">'State'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info:</span> <span class="pre">'TokenInfo'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_code:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#GetStateResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.GetStateResponse" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -742,6 +790,177 @@ token that has been provided to a Pachyderm license server</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PauseRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#PauseRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PauseResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#PauseResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PauseStatusRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#PauseStatusRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PauseStatusResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status:</span> <span class="pre">'PauseStatusResponsePauseStatus'</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x105b5b0c0&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#PauseStatusResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponse.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponse.status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PauseStatusResponsePauseStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#PauseStatusResponsePauseStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.PARTIALLY_PAUSED">
+<span class="sig-name descname"><span class="pre">PARTIALLY_PAUSED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.PARTIALLY_PAUSED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.PAUSED">
+<span class="sig-name descname"><span class="pre">PAUSED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.PAUSED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.UNPAUSED">
+<span class="sig-name descname"><span class="pre">UNPAUSED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus.UNPAUSED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.State">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#State"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.State" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Enum</span></code></p>
@@ -808,6 +1027,78 @@ token that has been provided to a Pachyderm license server</p>
 <span class="sig-name descname"><span class="pre">expires</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;object</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.TokenInfo.expires" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnpauseRequest</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#UnpauseRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnpauseResponse</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/proto/v2/enterprise_v2.html#UnpauseResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">betterproto.Message</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromString</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SerializeToString</span></code>()</p></td>
+<td><p>Get the binary encoded Protobuf representation of this message instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(value)</p></td>
+<td><p>Parse the key/value pairs into the current message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(value)</p></td>
+<td><p>A helper function to return the message instance from its JSON representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code>(data)</p></td>
+<td><p>Parse the binary encoded Protobuf into this message instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([casing, include_default_values])</p></td>
+<td><p>Returns a JSON serializable dict representation of this object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([indent])</p></td>
+<td><p>A helper function to parse the message instance into its JSON representation.</p></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </section>
