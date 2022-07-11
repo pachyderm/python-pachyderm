@@ -5,6 +5,7 @@ import grpc
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2
 from python_pachyderm.proto.v2.pps import pps_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2
+from python_pachyderm.proto.v2.task import task_pb2 as python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2
 
 
 class APIStub(object):
@@ -155,6 +156,16 @@ class APIStub(object):
                 '/pps_v2.API/RunLoadTestDefault',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                )
+        self.RenderTemplate = channel.unary_unary(
+                '/pps_v2.API/RenderTemplate',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateResponse.FromString,
+                )
+        self.ListTask = channel.unary_stream(
+                '/pps_v2.API/ListTask',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
                 )
 
 
@@ -337,6 +348,20 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def RenderTemplate(self, request, context):
+        """RenderTemplate renders the provided template and arguments into a list of Pipeline specicifications
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListTask(self, request, context):
+        """ListTask lists PPS tasks
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -479,6 +504,16 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.RunLoadTestDefault,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
+            ),
+            'RenderTemplate': grpc.unary_unary_rpc_method_handler(
+                    servicer.RenderTemplate,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateResponse.SerializeToString,
+            ),
+            'ListTask': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListTask,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -963,5 +998,39 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunLoadTestDefault',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RenderTemplate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RenderTemplate',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RenderTemplateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListTask(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListTask',
+            python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

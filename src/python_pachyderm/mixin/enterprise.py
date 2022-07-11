@@ -60,3 +60,24 @@ class EnterpriseMixin:
         """
         message = enterprise_pb2.GetActivationCodeRequest()
         return self.__stub.GetActivationCode(message)
+
+    def pause_enterprise(self) -> None:
+        """Pauses the cluster."""
+        message = enterprise_pb2.PauseRequest()
+        self.__stub.Pause(message)
+
+    def unpause_enterprise(self) -> None:
+        """Unpauses the cluster."""
+        message = enterprise_pb2.UnpauseRequest()
+        self.__stub.Unpause(message)
+
+    def get_pause_status(self) -> enterprise_pb2.PauseStatusResponse:
+        """Gets the pause status of the cluster.
+
+        Returns
+        -------
+        enterprise_pb2.PauseStatusResponse
+            A protobuf object that returns a status enum.
+        """
+        message = enterprise_pb2.PauseStatusRequest()
+        return self.__stub.PauseStatus(message)

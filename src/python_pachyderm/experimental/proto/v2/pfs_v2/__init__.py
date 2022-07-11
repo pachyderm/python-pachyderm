@@ -48,6 +48,13 @@ class Delimiter(betterproto.Enum):
     CSV = 4
 
 
+class SqlDatabaseEgressFileFormatType(betterproto.Enum):
+    UNKNOWN = 0
+    CSV = 1
+    JSON = 2
+    PARQUET = 3
+
+
 @dataclass(eq=False, repr=False)
 class Repo(betterproto.Message):
     name: str = betterproto.string_field(1)
@@ -392,7 +399,6 @@ class ListFileRequest(betterproto.Message):
     # the "path" field is omitted, a list of files at the top level of the repo
     # is returned
     file: "File" = betterproto.message_field(1)
-    details: bool = betterproto.bool_field(2)
 
 
 @dataclass(eq=False, repr=False)
@@ -461,6 +467,41 @@ class ComposeFileSetRequest(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class CheckStorageRequest(betterproto.Message):
+    read_chunk_data: bool = betterproto.bool_field(1)
+    chunk_begin: bytes = betterproto.bytes_field(2)
+    chunk_end: bytes = betterproto.bytes_field(3)
+
+
+@dataclass(eq=False, repr=False)
+class CheckStorageResponse(betterproto.Message):
+    chunk_object_count: int = betterproto.int64_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class PutCacheRequest(betterproto.Message):
+    key: str = betterproto.string_field(1)
+    value: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(2)
+    file_set_ids: List[str] = betterproto.string_field(3)
+    tag: str = betterproto.string_field(4)
+
+
+@dataclass(eq=False, repr=False)
+class GetCacheRequest(betterproto.Message):
+    key: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class GetCacheResponse(betterproto.Message):
+    value: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class ClearCacheRequest(betterproto.Message):
+    tag_prefix: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
 class ActivateAuthRequest(betterproto.Message):
     pass
 
@@ -487,15 +528,56 @@ class RunLoadTestResponse(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class CheckStorageRequest(betterproto.Message):
-    read_chunk_data: bool = betterproto.bool_field(1)
-    chunk_begin: bytes = betterproto.bytes_field(2)
-    chunk_end: bytes = betterproto.bytes_field(3)
+class ObjectStorageEgress(betterproto.Message):
+    url: str = betterproto.string_field(1)
 
 
 @dataclass(eq=False, repr=False)
-class CheckStorageResponse(betterproto.Message):
-    chunk_object_count: int = betterproto.int64_field(1)
+class SqlDatabaseEgress(betterproto.Message):
+    url: str = betterproto.string_field(1)
+    file_format: "SqlDatabaseEgressFileFormat" = betterproto.message_field(2)
+    secret: "SqlDatabaseEgressSecret" = betterproto.message_field(3)
+
+
+@dataclass(eq=False, repr=False)
+class SqlDatabaseEgressFileFormat(betterproto.Message):
+    type: "SqlDatabaseEgressFileFormatType" = betterproto.enum_field(1)
+    columns: List[str] = betterproto.string_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class SqlDatabaseEgressSecret(betterproto.Message):
+    name: str = betterproto.string_field(1)
+    key: str = betterproto.string_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class EgressRequest(betterproto.Message):
+    commit: "Commit" = betterproto.message_field(1)
+    object_storage: "ObjectStorageEgress" = betterproto.message_field(2, group="target")
+    sql_database: "SqlDatabaseEgress" = betterproto.message_field(3, group="target")
+
+
+@dataclass(eq=False, repr=False)
+class EgressResponse(betterproto.Message):
+    object_storage: "EgressResponseObjectStorageResult" = betterproto.message_field(
+        1, group="result"
+    )
+    sql_database: "EgressResponseSqlDatabaseResult" = betterproto.message_field(
+        2, group="result"
+    )
+
+
+@dataclass(eq=False, repr=False)
+class EgressResponseObjectStorageResult(betterproto.Message):
+    bytes_written: int = betterproto.int64_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class EgressResponseSqlDatabaseResult(betterproto.Message):
+    rows_written: Dict[str, int] = betterproto.map_field(
+        1, betterproto.TYPE_STRING, betterproto.TYPE_INT64
+    )
 
 
 class ApiStub(betterproto.ServiceStub):
@@ -833,14 +915,11 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary("/pfs_v2.API/InspectFile", request, FileInfo)
 
-    async def list_file(
-        self, *, file: "File" = None, details: bool = False
-    ) -> AsyncIterator["FileInfo"]:
+    async def list_file(self, *, file: "File" = None) -> AsyncIterator["FileInfo"]:
 
         request = ListFileRequest()
         if file is not None:
             request.file = file
-        request.details = details
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListFile",
@@ -1003,6 +1082,47 @@ class ApiStub(betterproto.ServiceStub):
             "/pfs_v2.API/CheckStorage", request, CheckStorageResponse
         )
 
+    async def put_cache(
+        self,
+        *,
+        key: str = "",
+        value: "betterproto_lib_google_protobuf.Any" = None,
+        file_set_ids: Optional[List[str]] = None,
+        tag: str = "",
+    ) -> "betterproto_lib_google_protobuf.Empty":
+        file_set_ids = file_set_ids or []
+
+        request = PutCacheRequest()
+        request.key = key
+        if value is not None:
+            request.value = value
+        request.file_set_ids = file_set_ids
+        request.tag = tag
+
+        return await self._unary_unary(
+            "/pfs_v2.API/PutCache", request, betterproto_lib_google_protobuf.Empty
+        )
+
+    async def get_cache(self, *, key: str = "") -> "GetCacheResponse":
+
+        request = GetCacheRequest()
+        request.key = key
+
+        return await self._unary_unary(
+            "/pfs_v2.API/GetCache", request, GetCacheResponse
+        )
+
+    async def clear_cache(
+        self, *, tag_prefix: str = ""
+    ) -> "betterproto_lib_google_protobuf.Empty":
+
+        request = ClearCacheRequest()
+        request.tag_prefix = tag_prefix
+
+        return await self._unary_unary(
+            "/pfs_v2.API/ClearCache", request, betterproto_lib_google_protobuf.Empty
+        )
+
     async def run_load_test(
         self, *, spec: str = "", branch: "Branch" = None, seed: int = 0
     ) -> "RunLoadTestResponse":
@@ -1024,6 +1144,39 @@ class ApiStub(betterproto.ServiceStub):
         return await self._unary_unary(
             "/pfs_v2.API/RunLoadTestDefault", request, RunLoadTestResponse
         )
+
+    async def list_task(
+        self, *, group: "Group" = None
+    ) -> AsyncIterator["_taskapi__.TaskInfo"]:
+
+        request = _taskapi__.ListTaskRequest()
+        if group is not None:
+            request.group = group
+
+        async for response in self._unary_stream(
+            "/pfs_v2.API/ListTask",
+            request,
+            _taskapi__.TaskInfo,
+        ):
+            yield response
+
+    async def egress(
+        self,
+        *,
+        commit: "Commit" = None,
+        object_storage: "ObjectStorageEgress" = None,
+        sql_database: "SqlDatabaseEgress" = None,
+    ) -> "EgressResponse":
+
+        request = EgressRequest()
+        if commit is not None:
+            request.commit = commit
+        if object_storage is not None:
+            request.object_storage = object_storage
+        if sql_database is not None:
+            request.sql_database = sql_database
+
+        return await self._unary_unary("/pfs_v2.API/Egress", request, EgressResponse)
 
 
 class ApiBase(ServiceBase):
@@ -1145,7 +1298,7 @@ class ApiBase(ServiceBase):
     async def inspect_file(self, file: "File") -> "FileInfo":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_file(self, file: "File", details: bool) -> AsyncIterator["FileInfo"]:
+    async def list_file(self, file: "File") -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def walk_file(self, file: "File") -> AsyncIterator["FileInfo"]:
@@ -1198,12 +1351,40 @@ class ApiBase(ServiceBase):
     ) -> "CheckStorageResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
+    async def put_cache(
+        self,
+        key: str,
+        value: "betterproto_lib_google_protobuf.Any",
+        file_set_ids: Optional[List[str]],
+        tag: str,
+    ) -> "betterproto_lib_google_protobuf.Empty":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def get_cache(self, key: str) -> "GetCacheResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def clear_cache(
+        self, tag_prefix: str
+    ) -> "betterproto_lib_google_protobuf.Empty":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
     async def run_load_test(
         self, spec: str, branch: "Branch", seed: int
     ) -> "RunLoadTestResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test_default(self) -> "RunLoadTestResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def list_task(self, group: "Group") -> AsyncIterator["_taskapi__.TaskInfo"]:
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def egress(
+        self,
+        commit: "Commit",
+        object_storage: "ObjectStorageEgress",
+        sql_database: "SqlDatabaseEgress",
+    ) -> "EgressResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_create_repo(self, stream: grpclib.server.Stream) -> None:
@@ -1480,7 +1661,6 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "file": request.file,
-            "details": request.details,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1621,6 +1801,39 @@ class ApiBase(ServiceBase):
         response = await self.check_storage(**request_kwargs)
         await stream.send_message(response)
 
+    async def __rpc_put_cache(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "key": request.key,
+            "value": request.value,
+            "file_set_ids": request.file_set_ids,
+            "tag": request.tag,
+        }
+
+        response = await self.put_cache(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_get_cache(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "key": request.key,
+        }
+
+        response = await self.get_cache(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_clear_cache(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "tag_prefix": request.tag_prefix,
+        }
+
+        response = await self.clear_cache(**request_kwargs)
+        await stream.send_message(response)
+
     async def __rpc_run_load_test(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
@@ -1639,6 +1852,31 @@ class ApiBase(ServiceBase):
         request_kwargs = {}
 
         response = await self.run_load_test_default(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_list_task(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "group": request.group,
+        }
+
+        await self._call_rpc_handler_server_stream(
+            self.list_task,
+            stream,
+            request_kwargs,
+        )
+
+    async def __rpc_egress(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "commit": request.commit,
+            "object_storage": request.object_storage,
+            "sql_database": request.sql_database,
+        }
+
+        response = await self.egress(**request_kwargs)
         await stream.send_message(response)
 
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
@@ -1853,6 +2091,24 @@ class ApiBase(ServiceBase):
                 CheckStorageRequest,
                 CheckStorageResponse,
             ),
+            "/pfs_v2.API/PutCache": grpclib.const.Handler(
+                self.__rpc_put_cache,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                PutCacheRequest,
+                betterproto_lib_google_protobuf.Empty,
+            ),
+            "/pfs_v2.API/GetCache": grpclib.const.Handler(
+                self.__rpc_get_cache,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                GetCacheRequest,
+                GetCacheResponse,
+            ),
+            "/pfs_v2.API/ClearCache": grpclib.const.Handler(
+                self.__rpc_clear_cache,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ClearCacheRequest,
+                betterproto_lib_google_protobuf.Empty,
+            ),
             "/pfs_v2.API/RunLoadTest": grpclib.const.Handler(
                 self.__rpc_run_load_test,
                 grpclib.const.Cardinality.UNARY_UNARY,
@@ -1865,8 +2121,21 @@ class ApiBase(ServiceBase):
                 betterproto_lib_google_protobuf.Empty,
                 RunLoadTestResponse,
             ),
+            "/pfs_v2.API/ListTask": grpclib.const.Handler(
+                self.__rpc_list_task,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                _taskapi__.ListTaskRequest,
+                _taskapi__.TaskInfo,
+            ),
+            "/pfs_v2.API/Egress": grpclib.const.Handler(
+                self.__rpc_egress,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                EgressRequest,
+                EgressResponse,
+            ),
         }
 
 
 from .. import auth_v2 as _auth_v2__
+from .. import taskapi as _taskapi__
 import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf

@@ -5,6 +5,7 @@ import grpc
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from python_pachyderm.proto.v2.pfs import pfs_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2
+from python_pachyderm.proto.v2.task import task_pb2 as python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2
 
 
 class APIStub(object):
@@ -191,6 +192,21 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageResponse.FromString,
                 )
+        self.PutCache = channel.unary_unary(
+                '/pfs_v2.API/PutCache',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.PutCacheRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
+        self.GetCache = channel.unary_unary(
+                '/pfs_v2.API/GetCache',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheResponse.FromString,
+                )
+        self.ClearCache = channel.unary_unary(
+                '/pfs_v2.API/ClearCache',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCacheRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
         self.RunLoadTest = channel.unary_unary(
                 '/pfs_v2.API/RunLoadTest',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
@@ -200,6 +216,16 @@ class APIStub(object):
                 '/pfs_v2.API/RunLoadTestDefault',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                )
+        self.ListTask = channel.unary_stream(
+                '/pfs_v2.API/ListTask',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
+                )
+        self.Egress = channel.unary_unary(
+                '/pfs_v2.API/Egress',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.FromString,
                 )
 
 
@@ -452,6 +478,24 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PutCache(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetCache(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ClearCache(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def RunLoadTest(self, request, context):
         """RunLoadTest runs a load test.
         """
@@ -461,6 +505,20 @@ class APIServicer(object):
 
     def RunLoadTestDefault(self, request, context):
         """RunLoadTestDefault runs the default load tests.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListTask(self, request, context):
+        """ListTask lists PFS tasks
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Egress(self, request, context):
+        """Egress writes data from a commit to an external system
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -644,6 +702,21 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageResponse.SerializeToString,
             ),
+            'PutCache': grpc.unary_unary_rpc_method_handler(
+                    servicer.PutCache,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.PutCacheRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'GetCache': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCache,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheResponse.SerializeToString,
+            ),
+            'ClearCache': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClearCache,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCacheRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTest,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.FromString,
@@ -653,6 +726,16 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.RunLoadTestDefault,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
+            ),
+            'ListTask': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListTask,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.SerializeToString,
+            ),
+            'Egress': grpc.unary_unary_rpc_method_handler(
+                    servicer.Egress,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1260,6 +1343,57 @@ class API(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def PutCache(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/PutCache',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.PutCacheRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetCache(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/GetCache',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.GetCacheResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ClearCache(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ClearCache',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ClearCacheRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def RunLoadTest(request,
             target,
             options=(),
@@ -1290,5 +1424,39 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/RunLoadTestDefault',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListTask(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/ListTask',
+            python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Egress(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/Egress',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

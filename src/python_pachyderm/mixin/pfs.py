@@ -986,7 +986,6 @@ class PFSMixin:
         commit: SubcommitType,
         path: str,
         datum: str = None,
-        details: bool = False,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists the files in a directory.
 
@@ -998,8 +997,6 @@ class PFSMixin:
             The path to the directory.
         datum : str, optional
             A tag that filters the files.
-        details : bool, optional
-            Unused.
 
         Returns
         -------
@@ -1011,7 +1008,6 @@ class PFSMixin:
         >>> files = list(client.list_file(("foo", "master"), "/dir/subdir/"))
         """
         message = pfs_pb2.ListFileRequest(
-            details=details,
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
         )
         return self.__stub.ListFile(message)
