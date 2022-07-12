@@ -17,6 +17,12 @@ class State(betterproto.Enum):
     HEARTBEAT_FAILED = 3
 
 
+class PauseStatusResponsePauseStatus(betterproto.Enum):
+    UNPAUSED = 0
+    PARTIALLY_PAUSED = 1
+    PAUSED = 2
+
+
 @dataclass(eq=False, repr=False)
 class LicenseRecord(betterproto.Message):
     """
@@ -138,6 +144,36 @@ class DeactivateResponse(betterproto.Message):
     pass
 
 
+@dataclass(eq=False, repr=False)
+class PauseRequest(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class PauseResponse(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class UnpauseRequest(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class UnpauseResponse(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class PauseStatusRequest(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class PauseStatusResponse(betterproto.Message):
+    status: "PauseStatusResponsePauseStatus" = betterproto.enum_field(1)
+
+
 class ApiStub(betterproto.ServiceStub):
     async def activate(
         self, *, license_server: str = "", id: str = "", secret: str = ""
@@ -184,6 +220,30 @@ class ApiStub(betterproto.ServiceStub):
             "/enterprise_v2.API/Deactivate", request, DeactivateResponse
         )
 
+    async def pause(self) -> "PauseResponse":
+
+        request = PauseRequest()
+
+        return await self._unary_unary(
+            "/enterprise_v2.API/Pause", request, PauseResponse
+        )
+
+    async def unpause(self) -> "UnpauseResponse":
+
+        request = UnpauseRequest()
+
+        return await self._unary_unary(
+            "/enterprise_v2.API/Unpause", request, UnpauseResponse
+        )
+
+    async def pause_status(self) -> "PauseStatusResponse":
+
+        request = PauseStatusRequest()
+
+        return await self._unary_unary(
+            "/enterprise_v2.API/PauseStatus", request, PauseStatusResponse
+        )
+
 
 class ApiBase(ServiceBase):
     async def activate(
@@ -201,6 +261,15 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def deactivate(self) -> "DeactivateResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def pause(self) -> "PauseResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def unpause(self) -> "UnpauseResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def pause_status(self) -> "PauseStatusResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_activate(self, stream: grpclib.server.Stream) -> None:
@@ -247,6 +316,30 @@ class ApiBase(ServiceBase):
         response = await self.deactivate(**request_kwargs)
         await stream.send_message(response)
 
+    async def __rpc_pause(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {}
+
+        response = await self.pause(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_unpause(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {}
+
+        response = await self.unpause(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_pause_status(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {}
+
+        response = await self.pause_status(**request_kwargs)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/enterprise_v2.API/Activate": grpclib.const.Handler(
@@ -278,5 +371,23 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 DeactivateRequest,
                 DeactivateResponse,
+            ),
+            "/enterprise_v2.API/Pause": grpclib.const.Handler(
+                self.__rpc_pause,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                PauseRequest,
+                PauseResponse,
+            ),
+            "/enterprise_v2.API/Unpause": grpclib.const.Handler(
+                self.__rpc_unpause,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                UnpauseRequest,
+                UnpauseResponse,
+            ),
+            "/enterprise_v2.API/PauseStatus": grpclib.const.Handler(
+                self.__rpc_pause_status,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                PauseStatusRequest,
+                PauseStatusResponse,
             ),
         }

@@ -781,6 +781,15 @@ pachd bool, pipeline protobuf, or worker protobuf.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_enterprise_state" title="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_enterprise_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_enterprise_state</span></code></a>()</p></td>
 <td><p>Gets the current enterprise state of the cluster.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_pause_status" title="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_pause_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pause_status</span></code></a>()</p></td>
+<td><p>Gets the pause status of the cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.pause_enterprise" title="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.pause_enterprise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pause_enterprise</span></code></a>()</p></td>
+<td><p>Pauses the cluster.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.unpause_enterprise" title="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.unpause_enterprise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unpause_enterprise</span></code></a>()</p></td>
+<td><p>Unpauses the cluster.</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py method">
@@ -836,6 +845,32 @@ and an empty activation code.</p>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_pause_status">
+<span class="sig-name descname"><span class="pre">get_pause_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/enterprise.html#EnterpriseMixin.get_pause_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.get_pause_status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the pause status of the cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>enterprise_proto.PauseStatusResponse</dt><dd><p>A protobuf object that returns a status enum.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.pause_enterprise">
+<span class="sig-name descname"><span class="pre">pause_enterprise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/enterprise.html#EnterpriseMixin.pause_enterprise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.pause_enterprise" title="Permalink to this definition"></a></dt>
+<dd><p>Pauses the cluster.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.unpause_enterprise">
+<span class="sig-name descname"><span class="pre">unpause_enterprise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/enterprise.html#EnterpriseMixin.unpause_enterprise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.enterprise.EnterpriseMixin.unpause_enterprise" title="Permalink to this definition"></a></dt>
+<dd><p>Unpauses the cluster.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1576,7 +1611,7 @@ example on s3:// URLs</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_commit" title="python_pachyderm.experimental.mixin.pfs.PFSMixin.list_commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_commit</span></code></a>([repo_name, to_commit, ...])</p></td>
 <td><p>Lists commits.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file" title="python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code></a>(commit, path[, datum, details])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file" title="python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_file</span></code></a>(commit, path[, datum])</p></td>
 <td><p>Lists the files in a directory.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_repo" title="python_pachyderm.experimental.mixin.pfs.PFSMixin.list_repo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_repo</span></code></a>([type])</p></td>
@@ -2218,7 +2253,7 @@ or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file">
-<span class="sig-name descname"><span class="pre">list_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSMixin.list_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSMixin.list_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin.list_file" title="Permalink to this definition"></a></dt>
 <dd><p>Lists the files in a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2228,8 +2263,6 @@ or a commit, if <cite>repo_name</cite> wasn’t specified.</p>
 <dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to the directory.</p>
 </dd>
 <dt><strong>datum</strong><span class="classifier">str, optional</span></dt><dd><p>A tag that filters the files.</p>
-</dd>
-<dt><strong>details</strong><span class="classifier">bool, optional</span></dt><dd><p>Unused.</p>
 </dd>
 </dl>
 </dd>

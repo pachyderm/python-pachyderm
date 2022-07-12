@@ -67,6 +67,7 @@
   <h1>Source code for python_pachyderm.client</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
 <span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TextIO</span>
@@ -181,6 +182,16 @@
 <span class="sd">        &gt;&gt;&gt; # Manually set host and port</span>
 <span class="sd">        &gt;&gt;&gt; client = python_pachyderm.Client(&quot;pachd.example.com&quot;, 12345)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">root_certs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root_certs</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected root_certs as bytes, found: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">root_certs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">root_certs</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PEM_HEADER</span><span class="o">.</span><span class="n">encode</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;root_certs must be in PEM format -- PEM header not found.&quot;</span>
+                <span class="p">)</span>
 
         <span class="c1"># replicate pachctl behavior to searching for config</span>
         <span class="c1"># if host and port are unset</span>

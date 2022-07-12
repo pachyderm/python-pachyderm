@@ -25,7 +25,9 @@ class APIServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Listen(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Listen streams database events. 
+        It signals that it is internally set up by sending an initial empty ListenResponse.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')

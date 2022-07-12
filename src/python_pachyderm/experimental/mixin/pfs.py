@@ -928,7 +928,6 @@ class PFSMixin:
         commit: Union[tuple, dict, Commit, pfs_proto.Commit],
         path: str,
         datum: str = None,
-        details: bool = False,
     ) -> Iterator[pfs_proto.FileInfo]:
         """Lists the files in a directory.
 
@@ -940,8 +939,6 @@ class PFSMixin:
             The path to the directory.
         datum : str, optional
             A tag that filters the files.
-        details : bool, optional
-            Unused.
 
         Returns
         -------

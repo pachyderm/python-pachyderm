@@ -51,3 +51,21 @@ class EnterpriseMixin:
             and the activation code.
         """
         return self._req(Service.ENTERPRISE, "GetActivationCode")
+
+    def pause_enterprise(self) -> None:
+        """Pauses the cluster."""
+        self._req(Service.ENTERPRISE, "Pause")
+
+    def unpause_enterprise(self) -> None:
+        """Unpauses the cluster."""
+        self._req(Service.ENTERPRISE, "Unpause")
+
+    def get_pause_status(self) -> enterprise_proto.PauseStatusResponse:
+        """Gets the pause status of the cluster.
+
+        Returns
+        -------
+        enterprise_proto.PauseStatusResponse
+            A protobuf object that returns a status enum.
+        """
+        return self._req(Service.ENTERPRISE, "PauseStatus")

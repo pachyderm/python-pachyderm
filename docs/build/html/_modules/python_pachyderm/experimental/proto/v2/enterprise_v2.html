@@ -84,6 +84,12 @@
     <span class="n">HEARTBEAT_FAILED</span> <span class="o">=</span> <span class="mi">3</span></div>
 
 
+<div class="viewcode-block" id="PauseStatusResponsePauseStatus"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponsePauseStatus">[docs]</a><span class="k">class</span> <span class="nc">PauseStatusResponsePauseStatus</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">UNPAUSED</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">PARTIALLY_PAUSED</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PAUSED</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
 <div class="viewcode-block" id="LicenseRecord"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.LicenseRecord">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">LicenseRecord</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -205,6 +211,36 @@
     <span class="k">pass</span></div>
 
 
+<div class="viewcode-block" id="PauseRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PauseRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="PauseResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PauseResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="UnpauseRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">UnpauseRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="UnpauseResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.UnpauseResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">UnpauseResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="PauseStatusRequest"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusRequest">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PauseStatusRequest</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="PauseStatusResponse"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.PauseStatusResponse">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PauseStatusResponse</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">status</span><span class="p">:</span> <span class="s2">&quot;PauseStatusResponsePauseStatus&quot;</span> <span class="o">=</span> <span class="n">betterproto</span><span class="o">.</span><span class="n">enum_field</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="ApiStub"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub">[docs]</a><span class="k">class</span> <span class="nc">ApiStub</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">ServiceStub</span><span class="p">):</span>
 <div class="viewcode-block" id="ApiStub.activate"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.activate">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">license_server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -249,6 +285,30 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
             <span class="s2">&quot;/enterprise_v2.API/Deactivate&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">DeactivateResponse</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiStub.pause"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PauseResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">PauseRequest</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/enterprise_v2.API/Pause&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">PauseResponse</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiStub.unpause"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.unpause">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;UnpauseResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">UnpauseRequest</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/enterprise_v2.API/Unpause&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">UnpauseResponse</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiStub.pause_status"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiStub.pause_status">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">pause_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PauseStatusResponse&quot;</span><span class="p">:</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">PauseStatusRequest</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unary_unary</span><span class="p">(</span>
+            <span class="s2">&quot;/enterprise_v2.API/PauseStatus&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">PauseStatusResponse</span>
         <span class="p">)</span></div></div>
 
 
@@ -268,6 +328,15 @@
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ApiBase.deactivate"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.deactivate">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DeactivateResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiBase.pause"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PauseResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiBase.unpause"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.unpause">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;UnpauseResponse&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ApiBase.pause_status"><a class="viewcode-back" href="../../../../../python_pachyderm.experimental.proto.v2.enterprise_v2.html#python_pachyderm.experimental.proto.v2.enterprise_v2.ApiBase.pause_status">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">pause_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;PauseStatusResponse&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">GRPCError</span><span class="p">(</span><span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span></div>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -314,6 +383,30 @@
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
         <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">unpause</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__rpc_pause_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">recv_message</span><span class="p">()</span>
+
+        <span class="n">request_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">pause_status</span><span class="p">(</span><span class="o">**</span><span class="n">request_kwargs</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__mapping__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;/enterprise_v2.API/Activate&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
@@ -345,6 +438,24 @@
                 <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
                 <span class="n">DeactivateRequest</span><span class="p">,</span>
                 <span class="n">DeactivateResponse</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/enterprise_v2.API/Pause&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_pause</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">PauseRequest</span><span class="p">,</span>
+                <span class="n">PauseResponse</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/enterprise_v2.API/Unpause&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_unpause</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">UnpauseRequest</span><span class="p">,</span>
+                <span class="n">UnpauseResponse</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;/enterprise_v2.API/PauseStatus&quot;</span><span class="p">:</span> <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Handler</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rpc_pause_status</span><span class="p">,</span>
+                <span class="n">grpclib</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">Cardinality</span><span class="o">.</span><span class="n">UNARY_UNARY</span><span class="p">,</span>
+                <span class="n">PauseStatusRequest</span><span class="p">,</span>
+                <span class="n">PauseStatusResponse</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">}</span></div>
 </pre></div>
