@@ -421,7 +421,7 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse.clients">clients (ListOidcClientsResponse attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.identity_v2.html#python_pachyderm.experimental.proto.v2.identity_v2.ListOidcClientsResponse.clients">[1]</a>
 </li>
-      <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile.close">close() (PFSFile method)</a>, <a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">[1]</a>
+      <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.close">close() (PFSFile method)</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.auth_v2.ResourceType.CLUSTER">CLUSTER (ResourceType attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.auth_v2.html#python_pachyderm.experimental.proto.v2.auth_v2.ResourceType.CLUSTER">[1]</a>
 </li>
@@ -600,6 +600,10 @@
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitState">CommitState (class in python_pachyderm.experimental.proto.v2.pfs_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitState">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.FileInfo.committed">committed (FileInfo attribute)</a>
+</li>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitInfoDetails.compacting_time">compacting_time (CommitInfoDetails attribute)</a>
+</li>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ComposeFileSetRequest">ComposeFileSetRequest (class in python_pachyderm.experimental.proto.v2.pfs_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.ComposeFileSetRequest">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse.config">config (GetIdentityServerConfigResponse attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.identity_v2.html#python_pachyderm.experimental.proto.v2.identity_v2.GetIdentityServerConfigResponse.config">[1]</a>
 
@@ -1106,7 +1110,11 @@
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.debug_v2.DumpRequest">DumpRequest (class in python_pachyderm.experimental.proto.v2.debug_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.debug_v2.html#python_pachyderm.experimental.proto.v2.debug_v2.DumpRequest">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.debug_v2.Profile.duration">duration (Profile attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.debug_v2.html#python_pachyderm.experimental.proto.v2.debug_v2.Profile.duration">[1]</a>
+
+      <ul>
+        <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.RunLoadTestResponse.duration">(RunLoadTestResponse attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1239,6 +1247,8 @@
         <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.RenewFileSetRequest.file_set_id">(RenewFileSetRequest attribute)</a>
 </li>
       </ul></li>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ComposeFileSetRequest.file_set_ids">file_set_ids (ComposeFileSetRequest attribute)</a>
+</li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.FileInfo.file_type">file_type (FileInfo attribute)</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.FileInfo">FileInfo (class in python_pachyderm.experimental.proto.v2.pfs_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.FileInfo">[1]</a>
@@ -1259,6 +1269,8 @@
 </li>
       <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin.finish_commit">finish_commit() (PFSMixin method)</a>, <a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin.finish_commit">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_pachyderm.experimental.proto.v2.transaction_v2.html#python_pachyderm.experimental.proto.v2.transaction_v2.ApiBase.finish_transaction">finish_transaction() (ApiBase method)</a>
 
       <ul>
@@ -1267,8 +1279,6 @@
         <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.transaction.TransactionMixin.finish_transaction">(TransactionMixin method)</a>, <a href="python_pachyderm.mixin.html#python_pachyderm.mixin.transaction.TransactionMixin.finish_transaction">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.FinishCommitRequest">FinishCommitRequest (class in python_pachyderm.experimental.proto.v2.pfs_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pfs_v2.html#python_pachyderm.experimental.proto.v2.pfs_v2.FinishCommitRequest">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitInfo.finished">finished (CommitInfo attribute)</a>
@@ -2466,12 +2476,8 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.DatumInfo.pfs_state">pfs_state (DatumInfo attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.DatumInfo.pfs_state">[1]</a>
 </li>
-      <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile">PFSFile (class in python_pachyderm.experimental.mixin.pfs)</a>
-
-      <ul>
-        <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile">(class in python_pachyderm.mixin.pfs)</a>
+      <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile">PFSFile (class in python_pachyderm.mixin.pfs)</a>
 </li>
-      </ul></li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.PfsInput">PfsInput (class in python_pachyderm.experimental.proto.v2.pps_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.PfsInput">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSMixin">PFSMixin (class in python_pachyderm.experimental.mixin.pfs)</a>
@@ -2480,6 +2486,8 @@
         <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSMixin">(class in python_pachyderm.mixin.pfs)</a>
 </li>
       </ul></li>
+      <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSTarFile">PFSTarFile (class in python_pachyderm.mixin.pfs)</a>
+</li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.Pipeline">Pipeline (class in python_pachyderm.experimental.proto.v2.pps_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.Pipeline">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.CreatePipelineRequest.pipeline">pipeline (CreatePipelineRequest attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.CreatePipelineRequest.pipeline">[1]</a>
@@ -2944,7 +2952,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.AddFile.raw">raw (AddFile attribute)</a>
 </li>
-      <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pfs.PFSFile.read">read() (PFSFile method)</a>, <a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">[1]</a>
+      <li><a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pfs.PFSFile.read">read() (PFSFile method)</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitState.READY">READY (CommitState attribute)</a>
 </li>
@@ -3200,12 +3208,20 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.auth_v2.RotateRootTokenResponse">RotateRootTokenResponse (class in python_pachyderm.experimental.proto.v2.auth_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.auth_v2.html#python_pachyderm.experimental.proto.v2.auth_v2.RotateRootTokenResponse">[1]</a>
 </li>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.rotation_token_expiry">rotation_token_expiry (IdentityServerConfig attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.identity_v2.html#python_pachyderm.experimental.proto.v2.identity_v2.IdentityServerConfig.rotation_token_expiry">[1]</a>
+</li>
       <li><a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiBase.run_cron">run_cron() (ApiBase method)</a>
 
       <ul>
         <li><a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiStub.run_cron">(ApiStub method)</a>
 </li>
         <li><a href="python_pachyderm.experimental.mixin.html#python_pachyderm.experimental.mixin.pps.PPSMixin.run_cron">(PPSMixin method)</a>, <a href="python_pachyderm.mixin.html#python_pachyderm.mixin.pps.PPSMixin.run_cron">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiBase.run_load_test">run_load_test() (ApiBase method)</a>
+
+      <ul>
+        <li><a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiStub.run_load_test">(ApiStub method)</a>
 </li>
       </ul></li>
       <li><a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.ApiBase.run_load_test_default">run_load_test_default() (ApiBase method)</a>
@@ -3646,8 +3662,12 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.auth_v2.GetRobotTokenRequest.ttl">ttl (GetRobotTokenRequest attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.auth_v2.html#python_pachyderm.experimental.proto.v2.auth_v2.GetRobotTokenRequest.ttl">[1]</a>
 </li>
-      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.RenewFileSetRequest.ttl_seconds">ttl_seconds (RenewFileSetRequest attribute)</a>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.ComposeFileSetRequest.ttl_seconds">ttl_seconds (ComposeFileSetRequest attribute)</a>
+
+      <ul>
+        <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.RenewFileSetRequest.ttl_seconds">(RenewFileSetRequest attribute)</a>
 </li>
+      </ul></li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.GpuSpec.type">type (GpuSpec attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.GpuSpec.type">[1]</a>
 
       <ul>
@@ -3728,10 +3748,10 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.UpdateJobStateRequest">UpdateJobStateRequest (class in python_pachyderm.experimental.proto.v2.pps_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.UpdateJobStateRequest">[1]</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest">UpdateOidcClientRequest (class in python_pachyderm.experimental.proto.v2.identity_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.identity_v2.html#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientRequest">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientResponse">UpdateOidcClientResponse (class in python_pachyderm.experimental.proto.v2.identity_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.identity_v2.html#python_pachyderm.experimental.proto.v2.identity_v2.UpdateOidcClientResponse">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.AggregateProcessStats.upload_bytes">upload_bytes (AggregateProcessStats attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.AggregateProcessStats.upload_bytes">[1]</a>
@@ -3766,6 +3786,8 @@
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pps_v2.Transform.user">user (Transform attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.pps_v2.html#python_pachyderm.experimental.proto.v2.pps_v2.Transform.user">[1]</a>
 </li>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.auth_v2.OidcConfig.user_accessible_issuer_host">user_accessible_issuer_host (OidcConfig attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.auth_v2.html#python_pachyderm.experimental.proto.v2.auth_v2.OidcConfig.user_accessible_issuer_host">[1]</a>
+</li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.license_v2.AddClusterRequest.user_address">user_address (AddClusterRequest attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.license_v2.html#python_pachyderm.experimental.proto.v2.license_v2.AddClusterRequest.user_address">[1]</a>
 
       <ul>
@@ -3796,6 +3818,8 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.pfs_v2.CommitInfoDetails.validating_time">validating_time (CommitInfoDetails attribute)</a>
+</li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.versionpb_v2.Version">Version (class in python_pachyderm.experimental.proto.v2.versionpb_v2)</a>, <a href="python_pachyderm.experimental.proto.v2.versionpb_v2.html#python_pachyderm.experimental.proto.v2.versionpb_v2.Version">[1]</a>
 </li>
       <li><a href="python_pachyderm.experimental.proto.html#python_pachyderm.experimental.proto.v2.license_v2.ClusterStatus.version">version (ClusterStatus attribute)</a>, <a href="python_pachyderm.experimental.proto.v2.license_v2.html#python_pachyderm.experimental.proto.v2.license_v2.ClusterStatus.version">[1]</a>

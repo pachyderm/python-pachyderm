@@ -1503,63 +1503,6 @@ example on s3:// URLs</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.pfs.PFSFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSFile" title="Permalink to this definition"></a></dt>
-<dd><p>File-like objects containing content of a file stored in PFS.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># client.get_file() returns a PFSFile</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">source_file</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_file</span><span class="p">((</span><span class="s2">&quot;montage&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">),</span> <span class="s2">&quot;/montage.png&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;montage.png&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest_file</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="n">dest_file</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">get_file</span><span class="p">((</span><span class="s2">&quot;montage&quot;</span><span class="p">,</span> <span class="s2">&quot;master&quot;</span><span class="p">),</span> <span class="s2">&quot;/montage2.png&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</pre></div>
-</div>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile.close" title="python_pachyderm.experimental.mixin.pfs.PFSFile.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
-<td><p>Closes the <a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile" title="python_pachyderm.experimental.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile.read" title="python_pachyderm.experimental.mixin.pfs.PFSFile.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>([size])</p></td>
-<td><p>Reads from the <a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile" title="python_pachyderm.experimental.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a> buffer.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py method">
-<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.pfs.PFSFile.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSFile.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSFile.close" title="Permalink to this definition"></a></dt>
-<dd><p>Closes the <a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile" title="python_pachyderm.experimental.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.pfs.PFSFile.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSFile.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSFile.read" title="Permalink to this definition"></a></dt>
-<dd><p>Reads from the <a class="reference internal" href="#python_pachyderm.experimental.mixin.pfs.PFSFile" title="python_pachyderm.experimental.mixin.pfs.PFSFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">PFSFile</span></code></a> buffer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>size</strong><span class="classifier">int, optional</span></dt><dd><p>If set, the number of bytes to read from the buffer.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>bytes</dt><dd><p>Content from the stream.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="python_pachyderm.experimental.mixin.pfs.PFSMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PFSMixin</span></span><a class="reference internal" href="_modules/python_pachyderm/experimental/mixin/pfs.html#PFSMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#python_pachyderm.experimental.mixin.pfs.PFSMixin" title="Permalink to this definition"></a></dt>
 <dd><p>A mixin with pfs-related functionality.</p>
