@@ -39,6 +39,21 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.FromString,
                 )
+        self.Pause = channel.unary_unary(
+                '/enterprise_v2.API/Pause',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseResponse.FromString,
+                )
+        self.Unpause = channel.unary_unary(
+                '/enterprise_v2.API/Unpause',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseResponse.FromString,
+                )
+        self.PauseStatus = channel.unary_unary(
+                '/enterprise_v2.API/PauseStatus',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusResponse.FromString,
+                )
 
 
 class APIServicer(object):
@@ -80,6 +95,26 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Pause(self, request, context):
+        """Pause pauses the cluster.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Unpause(self, request, context):
+        """Unpause unpauses the cluser.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PauseStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -107,6 +142,21 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.Deactivate,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.SerializeToString,
+            ),
+            'Pause': grpc.unary_unary_rpc_method_handler(
+                    servicer.Pause,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseResponse.SerializeToString,
+            ),
+            'Unpause': grpc.unary_unary_rpc_method_handler(
+                    servicer.Unpause,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseResponse.SerializeToString,
+            ),
+            'PauseStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.PauseStatus,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -200,5 +250,56 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Deactivate',
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DeactivateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Pause(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Pause',
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Unpause(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/Unpause',
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.UnpauseResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PauseStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/enterprise_v2.API/PauseStatus',
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.PauseStatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -92,6 +92,11 @@ BLACKLISTED_METHODS = {
         "inspect_commit_set",
         "run_load_test_default",
         "check_storage",
+        "egress",
+        "get_cache",
+        "put_cache",
+        "clear_cache",
+        "list_task",
     ],
     Service.PPS: [
         # ignore these
@@ -105,6 +110,8 @@ BLACKLISTED_METHODS = {
         "inspect_job_set",
         "run_load_test",
         "run_load_test_default",
+        "list_task",
+        "render_template",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
@@ -137,6 +144,9 @@ RENAMED_METHODS = {
         "activate": ["activate_enterprise"],
         "get_state": ["get_enterprise_state"],
         "deactivate": ["deactivate_enterprise"],
+        "pause": ["pause_enterprise"],
+        "unpause": ["unpause_enterprise"],
+        "pause_status": ["get_pause_status"],
     },
     Service.LICENSE: {
         "activate": ["activate_license"],

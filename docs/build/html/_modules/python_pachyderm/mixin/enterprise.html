@@ -126,7 +126,28 @@
 <span class="sd">            and the activation code.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">GetActivationCodeRequest</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetActivationCode</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">GetActivationCode</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnterpriseMixin.pause_enterprise"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.pause_enterprise">[docs]</a>    <span class="k">def</span> <span class="nf">pause_enterprise</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Pauses the cluster.&quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">PauseRequest</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">Pause</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnterpriseMixin.unpause_enterprise"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.unpause_enterprise">[docs]</a>    <span class="k">def</span> <span class="nf">unpause_enterprise</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Unpauses the cluster.&quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">UnpauseRequest</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">Unpause</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnterpriseMixin.get_pause_status"><a class="viewcode-back" href="../../../python_pachyderm.mixin.html#python_pachyderm.mixin.enterprise.EnterpriseMixin.get_pause_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_pause_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">PauseStatusResponse</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Gets the pause status of the cluster.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        enterprise_pb2.PauseStatusResponse</span>
+<span class="sd">            A protobuf object that returns a status enum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">enterprise_pb2</span><span class="o">.</span><span class="n">PauseStatusRequest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stub</span><span class="o">.</span><span class="n">PauseStatus</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

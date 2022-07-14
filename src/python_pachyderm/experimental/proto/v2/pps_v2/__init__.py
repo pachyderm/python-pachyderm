@@ -112,6 +112,12 @@ class TfJob(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Egress(betterproto.Message):
     url: str = betterproto.string_field(1)
+    object_storage: "_pfs_v2__.ObjectStorageEgress" = betterproto.message_field(
+        2, group="target"
+    )
+    sql_database: "_pfs_v2__.SqlDatabaseEgress" = betterproto.message_field(
+        3, group="target"
+    )
 
 
 @dataclass(eq=False, repr=False)
@@ -231,6 +237,7 @@ class DatumInfo(betterproto.Message):
     stats: "ProcessStats" = betterproto.message_field(3)
     pfs_state: "_pfs_v2__.File" = betterproto.message_field(4)
     data: List["_pfs_v2__.FileInfo"] = betterproto.message_field(5)
+    image_id: str = betterproto.string_field(6)
 
 
 @dataclass(eq=False, repr=False)
@@ -390,12 +397,7 @@ class PipelineInfo(betterproto.Message):
     state: "PipelineState" = betterproto.enum_field(5)
     # reason includes any error messages associated with a failed pipeline
     reason: str = betterproto.string_field(6)
-    # job_counts and last_job_state indicates the number of jobs within this
-    # pipeline in a given state and the state of the most recently created job,
-    # respectively.
-    job_counts: Dict[int, int] = betterproto.map_field(
-        7, betterproto.TYPE_INT32, betterproto.TYPE_INT32
-    )
+    # last_job_state indicates the state of the most recently created job
     last_job_state: "JobState" = betterproto.enum_field(8)
     # parallelism tracks the literal number of workers that this pipeline should
     # run.
@@ -766,6 +768,20 @@ class ActivateAuthRequest(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class ActivateAuthResponse(betterproto.Message):
     pass
+
+
+@dataclass(eq=False, repr=False)
+class RenderTemplateRequest(betterproto.Message):
+    template: str = betterproto.string_field(1)
+    args: Dict[str, str] = betterproto.map_field(
+        2, betterproto.TYPE_STRING, betterproto.TYPE_STRING
+    )
+
+
+@dataclass(eq=False, repr=False)
+class RenderTemplateResponse(betterproto.Message):
+    json: str = betterproto.string_field(1)
+    specs: List["CreatePipelineRequest"] = betterproto.message_field(2)
 
 
 class ApiStub(betterproto.ServiceStub):
@@ -1260,6 +1276,33 @@ class ApiStub(betterproto.ServiceStub):
             "/pps_v2.API/RunLoadTestDefault", request, _pfs_v2__.RunLoadTestResponse
         )
 
+    async def render_template(
+        self, *, template: str = "", args: Dict[str, str] = None
+    ) -> "RenderTemplateResponse":
+
+        request = RenderTemplateRequest()
+        request.template = template
+        request.args = args
+
+        return await self._unary_unary(
+            "/pps_v2.API/RenderTemplate", request, RenderTemplateResponse
+        )
+
+    async def list_task(
+        self, *, group: "Group" = None
+    ) -> AsyncIterator["_taskapi__.TaskInfo"]:
+
+        request = _taskapi__.ListTaskRequest()
+        if group is not None:
+            request.group = group
+
+        async for response in self._unary_stream(
+            "/pps_v2.API/ListTask",
+            request,
+            _taskapi__.TaskInfo,
+        ):
+            yield response
+
 
 class ApiBase(ServiceBase):
     async def inspect_job(self, job: "Job", wait: bool, details: bool) -> "JobInfo":
@@ -1437,6 +1480,14 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test_default(self) -> "_pfs_v2__.RunLoadTestResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def render_template(
+        self, template: str, args: Dict[str, str]
+    ) -> "RenderTemplateResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def list_task(self, group: "Group") -> AsyncIterator["_taskapi__.TaskInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_inspect_job(self, stream: grpclib.server.Stream) -> None:
@@ -1799,6 +1850,30 @@ class ApiBase(ServiceBase):
         response = await self.run_load_test_default(**request_kwargs)
         await stream.send_message(response)
 
+    async def __rpc_render_template(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "template": request.template,
+            "args": request.args,
+        }
+
+        response = await self.render_template(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_list_task(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "group": request.group,
+        }
+
+        await self._call_rpc_handler_server_stream(
+            self.list_task,
+            stream,
+            request_kwargs,
+        )
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/pps_v2.API/InspectJob": grpclib.const.Handler(
@@ -1969,8 +2044,21 @@ class ApiBase(ServiceBase):
                 betterproto_lib_google_protobuf.Empty,
                 _pfs_v2__.RunLoadTestResponse,
             ),
+            "/pps_v2.API/RenderTemplate": grpclib.const.Handler(
+                self.__rpc_render_template,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                RenderTemplateRequest,
+                RenderTemplateResponse,
+            ),
+            "/pps_v2.API/ListTask": grpclib.const.Handler(
+                self.__rpc_list_task,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                _taskapi__.ListTaskRequest,
+                _taskapi__.TaskInfo,
+            ),
         }
 
 
 from .. import pfs_v2 as _pfs_v2__
+from .. import taskapi as _taskapi__
 import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf
