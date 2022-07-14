@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.2 (2022-07-14)
+
+- Parity with Pachyderm 2.2.5
+
 ## 7.3.1 (2022-07-01)
 
 - Fix stable docs (#403)
