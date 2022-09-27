@@ -914,6 +914,8 @@ class PFSMixin:
         """
         message = pfs_pb2.GetFileRequest(
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
+            URL=URL,
+            offset=offset,
         )
         stream = self.__stub.GetFile(message)
         return PFSFile(stream)
