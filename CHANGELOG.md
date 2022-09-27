@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.3 (2022-09-27)
+
+- Revert breaking change within Client.get_file
+
 ## 7.3.2 (2022-07-14)
 
 - Parity with Pachyderm 2.2.5
