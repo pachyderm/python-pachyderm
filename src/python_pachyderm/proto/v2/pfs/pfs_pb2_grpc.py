@@ -187,6 +187,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
                 )
+        self.ShardFileSet = channel.unary_unary(
+                '/pfs_v2.API/ShardFileSet',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetResponse.FromString,
+                )
         self.CheckStorage = channel.unary_unary(
                 '/pfs_v2.API/CheckStorage',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CheckStorageRequest.SerializeToString,
@@ -471,6 +476,12 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ShardFileSet(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def CheckStorage(self, request, context):
         """CheckStorage runs integrity checks for the storage layer.
         """
@@ -696,6 +707,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.ComposeFileSet,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.SerializeToString,
+            ),
+            'ShardFileSet': grpc.unary_unary_rpc_method_handler(
+                    servicer.ShardFileSet,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetResponse.SerializeToString,
             ),
             'CheckStorage': grpc.unary_unary_rpc_method_handler(
                     servicer.CheckStorage,
@@ -1322,6 +1338,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ComposeFileSet',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ComposeFileSetRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateFileSetResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ShardFileSet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/ShardFileSet',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ShardFileSetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+github.com/pachyderm/pachyderm/v2/src/debug',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"m\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\x32\xd1\x01\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
+  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x81\x01\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x12\x12\n\x08\x64\x61tabase\x18\x04 \x01(\x08H\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\x32\xd1\x01\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
@@ -136,6 +136,13 @@ _FILTER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='database', full_name='debug_v2.Filter.database', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -153,8 +160,8 @@ _FILTER = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=320,
-  serialized_end=429,
+  serialized_start=321,
+  serialized_end=450,
 )
 
 
@@ -192,8 +199,8 @@ _WORKER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=431,
-  serialized_end=472,
+  serialized_start=452,
+  serialized_end=493,
 )
 
 
@@ -224,8 +231,8 @@ _BINARYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=474,
-  serialized_end=523,
+  serialized_start=495,
+  serialized_end=544,
 )
 
 
@@ -263,8 +270,8 @@ _DUMPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=525,
-  serialized_end=587,
+  serialized_start=546,
+  serialized_end=608,
 )
 
 _PROFILEREQUEST.fields_by_name['profile'].message_type = _PROFILE
@@ -281,6 +288,9 @@ _FILTER.fields_by_name['pipeline'].containing_oneof = _FILTER.oneofs_by_name['fi
 _FILTER.oneofs_by_name['filter'].fields.append(
   _FILTER.fields_by_name['worker'])
 _FILTER.fields_by_name['worker'].containing_oneof = _FILTER.oneofs_by_name['filter']
+_FILTER.oneofs_by_name['filter'].fields.append(
+  _FILTER.fields_by_name['database'])
+_FILTER.fields_by_name['database'].containing_oneof = _FILTER.oneofs_by_name['filter']
 _BINARYREQUEST.fields_by_name['filter'].message_type = _FILTER
 _DUMPREQUEST.fields_by_name['filter'].message_type = _FILTER
 DESCRIPTOR.message_types_by_name['ProfileRequest'] = _PROFILEREQUEST
@@ -343,8 +353,8 @@ _DEBUG = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=590,
-  serialized_end=799,
+  serialized_start=611,
+  serialized_end=820,
   methods=[
   _descriptor.MethodDescriptor(
     name='Profile',

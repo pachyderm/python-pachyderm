@@ -496,7 +496,11 @@ class PPSMixin:
             return self.__stub.ListPipeline(message)
 
     def list_pipeline(
-        self, history: int = 0, details: bool = False, jqFilter: str = None
+        self,
+        history: int = 0,
+        details: bool = False,
+        jqFilter: str = None,
+        commit_set: pfs_pb2.CommitSet = None,
     ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
@@ -517,6 +521,8 @@ class PPSMixin:
             If true, return pipeline details.
         jqFilter : str, optional
             A ``jq`` filter that can filter the list of pipelines returned.
+        commit_set : pfs_pb2.CommitSet, optional
+            If non-nil, will return all the pipeline infos at this commit set
 
         Returns
         -------

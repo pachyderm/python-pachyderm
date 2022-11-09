@@ -64,9 +64,12 @@ class IdpConnector(betterproto.Message):
     # ConfigVersion must be incremented every time a connector is  updated, to
     # avoid concurrent updates conflicting.
     config_version: int = betterproto.int64_field(4)
-    # JsonConfig is the configuration for the upstream Idp, which varies based on
-    # the type.
+    # This is left for backwards compatibility, but we want users to use the
+    # config defined below.
     json_config: str = betterproto.string_field(5)
+    # Config is the configuration for the upstream Idp, which varies based on the
+    # type. We make the assumption that this is either yaml or JSON.
+    config: "betterproto_lib_google_protobuf.Struct" = betterproto.message_field(6)
 
 
 @dataclass(eq=False, repr=False)
@@ -581,3 +584,6 @@ class ApiBase(ServiceBase):
                 DeleteAllResponse,
             ),
         }
+
+
+import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf

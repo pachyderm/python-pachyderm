@@ -4,6 +4,7 @@ import re
 import itertools
 import tarfile
 from contextlib import contextmanager
+from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
 
 import grpc
@@ -11,7 +12,7 @@ from betterproto import BytesValue
 
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
-from google.protobuf import empty_pb2, wrappers_pb2
+from google.protobuf import empty_pb2, wrappers_pb2, timestamp_pb2
 
 BUFFER_SIZE = 19 * 1024 * 1024
 
@@ -377,6 +378,7 @@ class PFSMixin:
         reverse: bool = False,
         all: bool = False,
         origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
+        started_time: datetime = None,
     ) -> Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]:
         """Lists commits.
 
@@ -408,6 +410,7 @@ class PFSMixin:
             An enum that specifies how a subcommit originated. Returns only
             subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
+        started_time : datetime
 
         Returns
         -------
@@ -428,12 +431,15 @@ class PFSMixin:
         .. # noqa: W505
         """
         if repo_name is not None:
+            if started_time is not None:
+                started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             message = pfs_pb2.ListCommitRequest(
                 repo=pfs_pb2.Repo(name=repo_name, type="user"),
                 number=number,
                 reverse=reverse,
                 all=all,
                 origin_kind=origin_kind,
+                started_time=started_time,
             )
             if to_commit is not None:
                 message.to.CopyFrom(commit_from(to_commit))
@@ -891,6 +897,7 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
+        path_range: pfs_pb2.PathRange = None,
     ) -> PFSFile:
         """Gets a file from PFS.
 
@@ -916,6 +923,7 @@ class PFSMixin:
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
             offset=offset,
+            path_range=path_range,
         )
         stream = self.__stub.GetFile(message)
         return PFSFile(stream)
@@ -1046,7 +1054,10 @@ class PFSMixin:
         return self.__stub.WalkFile(message)
 
     def glob_file(
-        self, commit: SubcommitType, pattern: str
+        self,
+        commit: SubcommitType,
+        pattern: str,
+        path_range: pfs_pb2.PathRange,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists files that match a glob pattern.
 
@@ -1069,6 +1080,7 @@ class PFSMixin:
         message = pfs_pb2.GlobFileRequest(
             commit=commit_from(commit),
             pattern=pattern,
+            path_range=path_range,
         )
         return self.__stub.GlobFile(message)
 

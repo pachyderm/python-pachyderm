@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z7github.com/pachyderm/pachyderm/v2/src/version/versionpb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n9python_pachyderm/proto/v2/version/versionpb/version.proto\x12\x0cversionpb_v2\x1a\x1bgoogle/protobuf/empty.proto\"J\n\x07Version\x12\r\n\x05major\x18\x01 \x01(\r\x12\r\n\x05minor\x18\x02 \x01(\r\x12\r\n\x05micro\x18\x03 \x01(\r\x12\x12\n\nadditional\x18\x04 \x01(\t2D\n\x03\x41PI\x12=\n\nGetVersion\x12\x16.google.protobuf.Empty\x1a\x15.versionpb_v2.Version\"\x00\x42\x39Z7github.com/pachyderm/pachyderm/v2/src/version/versionpbb\x06proto3'
+  serialized_pb=b'\n9python_pachyderm/proto/v2/version/versionpb/version.proto\x12\x0cversionpb_v2\x1a\x1bgoogle/protobuf/empty.proto\"\xb3\x01\n\x07Version\x12\r\n\x05major\x18\x01 \x01(\r\x12\r\n\x05minor\x18\x02 \x01(\r\x12\r\n\x05micro\x18\x03 \x01(\r\x12\x12\n\nadditional\x18\x04 \x01(\t\x12\x12\n\ngit_commit\x18\x05 \x01(\t\x12\x19\n\x11git_tree_modified\x18\x06 \x01(\t\x12\x12\n\nbuild_date\x18\x07 \x01(\t\x12\x12\n\ngo_version\x18\x08 \x01(\t\x12\x10\n\x08platform\x18\t \x01(\t2D\n\x03\x41PI\x12=\n\nGetVersion\x12\x16.google.protobuf.Empty\x1a\x15.versionpb_v2.Version\"\x00\x42\x39Z7github.com/pachyderm/pachyderm/v2/src/version/versionpbb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -63,6 +63,41 @@ _VERSION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='git_commit', full_name='versionpb_v2.Version.git_commit', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='git_tree_modified', full_name='versionpb_v2.Version.git_tree_modified', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='build_date', full_name='versionpb_v2.Version.build_date', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='go_version', full_name='versionpb_v2.Version.go_version', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='platform', full_name='versionpb_v2.Version.platform', index=8,
+      number=9, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -75,8 +110,8 @@ _VERSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=104,
-  serialized_end=178,
+  serialized_start=105,
+  serialized_end=284,
 )
 
 DESCRIPTOR.message_types_by_name['Version'] = _VERSION
@@ -99,8 +134,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=180,
-  serialized_end=248,
+  serialized_start=286,
+  serialized_end=354,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetVersion',
