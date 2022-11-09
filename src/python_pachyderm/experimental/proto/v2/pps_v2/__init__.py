@@ -153,6 +153,7 @@ class Spout(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class PfsInput(betterproto.Message):
+    project: str = betterproto.string_field(14)
     name: str = betterproto.string_field(1)
     repo: str = betterproto.string_field(2)
     repo_type: str = betterproto.string_field(13)
@@ -181,6 +182,7 @@ class PfsInput(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class CronInput(betterproto.Message):
     name: str = betterproto.string_field(1)
+    project: str = betterproto.string_field(7)
     repo: str = betterproto.string_field(2)
     commit: str = betterproto.string_field(3)
     spec: str = betterproto.string_field(4)
@@ -377,6 +379,7 @@ class Worker(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Pipeline(betterproto.Message):
+    project: "_pfs_v2__.Project" = betterproto.message_field(2)
     name: str = betterproto.string_field(1)
 
 
@@ -570,6 +573,7 @@ class LogMessage(betterproto.Message):
 
     # The job and pipeline for which a PFS file is being processed (if the job is
     # an orphan job, pipeline name and ID will be unset)
+    project_name: str = betterproto.string_field(10)
     pipeline_name: str = betterproto.string_field(1)
     job_id: str = betterproto.string_field(2)
     worker_id: str = betterproto.string_field(3)

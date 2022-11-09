@@ -107,6 +107,37 @@ class PFSMixin:
         """Deletes all repos."""
         self._req(Service.PFS, "DeleteAll", req=bp_proto.Empty())
 
+    def create_project(
+        self, project_name: str, description: str = None, update: bool = False
+    ) -> None:
+        self.__req(
+            Service.PFS,
+            "CreateProject",
+            project=pfs_proto.Project(name=project_name),
+            description=description,
+            update=update,
+        )
+
+    def inspect_project(self, project_name: str) -> pfs_proto.ProjectInfo:
+        self.__req(
+            Service.PFS, "InspectProject", project=pfs_proto.Project(name=project_name)
+        )
+
+    def list_project(self) -> Iterator[pfs_proto.ProjectInfo]:
+        self.__req(
+            Service.PFS,
+            "ListProject",
+            req=bp_proto.Empty(),
+        )
+
+    def delete_project(self, project_name: str, force: bool = False) -> None:
+        self.__req(
+            Service.PFS,
+            "DeleteProject",
+            force=force,
+            project=pfs_proto.Project(name=project_name),
+        )
+
     def start_commit(
         self,
         repo_name: str,

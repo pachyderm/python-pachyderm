@@ -219,6 +219,9 @@ RENAMED_ARGS = {
         ("head", "head_commit"),
         ("new_commit_set", "new_commit"),
     ],
+    "create_project": [
+        ("project", "project_name"),
+    ],
     "create_secret": [
         ("file", ("secret_name", "data", "labels", "annotations")),
     ],
@@ -235,6 +238,9 @@ RENAMED_ARGS = {
     "delete_repo": [
         ("repo", "repo_name"),
         ("all", None),
+    ],
+    "delete_project": [
+        ("project", "project_name"),
     ],
     "diff_file": [
         ("old_file", ("old_commit", "old_path")),
@@ -273,6 +279,9 @@ RENAMED_ARGS = {
     ],
     "inspect_repo": [
         ("repo", "repo_name"),
+    ],
+    "inspect_project": [
+        ("project", "project_name"),
     ],
     "inspect_secret": [
         ("secret", "secret_name"),
@@ -316,20 +325,23 @@ RENAMED_ARGS = {
     # PPS
     "create_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("pod_spec", None),
         ("tf_job", None),
         ("output_branch", "output_branch_name"),
     ],
     "create_tf_job_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("pod_spec", None),
         ("transform", None),
     ],
     "delete_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "delete_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("all", None),
     ],
     "delete_secret": [
@@ -342,48 +354,60 @@ RENAMED_ARGS = {
         ("job", "job_id"),
         ("master", None),
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "get_pipeline_logs": [
         ("pipeline", ("pipeline_name")),
+        ("project", "project_name"),
         ("job", None),
     ],
     "inspect_datum": [
-        ("datum", ("pipeline_name", "job_id", "datum_id")),
+        ("datum", ("pipeline_name", "project_name", "job_id", "datum_id")),
     ],
     "inspect_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "inspect_job_set": [
         ("job_set", "job_set_id"),
     ],
     "inspect_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         (None, "history"),
     ],
     "list_datum": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "list_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "list_job": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "restart_datum": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
-    "run_pipeline": [("pipeline", "pipeline_name"), ("pipeline_job_id", "job_id")],
+    "run_pipeline": [
+        ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
+        ("pipeline_job_id", "job_id"),
+    ],
     "run_cron": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "start_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "stop_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "stop_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "squash_commit_set": [("commit_set", "commit_set_id")],
 }

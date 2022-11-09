@@ -187,6 +187,33 @@ class PFSMixin:
         message = empty_pb2.Empty()
         self.__stub.DeleteAll(message)
 
+    def create_project(
+        self, project_name: str, description: str = None, update: bool = False
+    ) -> None:
+        message = pfs_pb2.CreateProjectRequest(
+            project=pfs_pb2.Project(name=project_name),
+            description=description,
+            update=update,
+        )
+        self.__stub.CreateProject(message)
+
+    def inspect_project(self, project_name: str) -> pfs_pb2.ProjectInfo:
+        message = pfs_pb2.InspectProjectRequest(
+            project=pfs_pb2.Project(name=project_name)
+        )
+        return self.__stub.InspectProject(message)
+
+    def list_project(self) -> Iterator[pfs_pb2.ProjectInfo]:
+        message = pfs_pb2.ListProjectRequest()
+        return self.__stub.ListProject(message)
+
+    def delete_project(self, project_name: str, force: bool = False) -> None:
+        message = pfs_pb2.DeleteProjectRequest(
+            force=force,
+            project=pfs_pb2.Project(name=project_name),
+        )
+        self.__stub.DeleteProject(message)
+
     def start_commit(
         self,
         repo_name: str,

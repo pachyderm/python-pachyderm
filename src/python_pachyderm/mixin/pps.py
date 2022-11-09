@@ -23,6 +23,7 @@ class PPSMixin:
         self,
         job_id: str,
         pipeline_name: str = None,
+        project_name: str = None,
         wait: bool = False,
         details: bool = False,
     ) -> Iterator[pps_pb2.JobInfo]:
@@ -59,7 +60,8 @@ class PPSMixin:
             message = pps_pb2.InspectJobRequest(
                 details=details,
                 job=pps_pb2.Job(
-                    pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id
+                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                    id=job_id,
                 ),
                 wait=wait,
             )
@@ -75,6 +77,7 @@ class PPSMixin:
     def list_job(
         self,
         pipeline_name: str = None,
+        project_name: str = None,
         input_commit: SubcommitType = None,
         history: int = 0,
         details: bool = False,
@@ -135,14 +138,16 @@ class PPSMixin:
                 history=history,
                 input_commit=input_commit,
                 jqFilter=jqFilter,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             )
             return self.__stub.ListJob(message)
         else:
             message = pps_pb2.ListJobSetRequest(details=details)
             return self.__stub.ListJobSet(message)
 
-    def delete_job(self, job_id: str, pipeline_name: str) -> None:
+    def delete_job(
+        self, job_id: str, pipeline_name: str, project_name: str = None
+    ) -> None:
         """Deletes a subjob (job at the pipeline-level).
 
         Parameters
@@ -155,12 +160,18 @@ class PPSMixin:
         message = pps_pb2.DeleteJobRequest(
             job=pps_pb2.Job(
                 id=job_id,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             )
         )
         self.__stub.DeleteJob(message)
 
-    def stop_job(self, job_id: str, pipeline_name: str, reason: str = None) -> None:
+    def stop_job(
+        self,
+        job_id: str,
+        pipeline_name: str,
+        project_name: str = None,
+        reason: str = None,
+    ) -> None:
         """Stops a subjob (job at the pipeline-level).
 
         Parameters
@@ -175,14 +186,14 @@ class PPSMixin:
         message = pps_pb2.StopJobRequest(
             job=pps_pb2.Job(
                 id=job_id,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             ),
             reason=reason,
         )
         self.__stub.StopJob(message)
 
     def inspect_datum(
-        self, pipeline_name: str, job_id: str, datum_id: str
+        self, pipeline_name: str, job_id: str, datum_id: str, project_name: str = None
     ) -> pps_pb2.DatumInfo:
         """Inspects a datum.
 
@@ -205,7 +216,7 @@ class PPSMixin:
                 id=datum_id,
                 job=pps_pb2.Job(
                     id=job_id,
-                    pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
                 ),
             ),
         )
@@ -214,6 +225,7 @@ class PPSMixin:
     def list_datum(
         self,
         pipeline_name: str = None,
+        project_name: str = None,
         job_id: str = None,
         input: pps_pb2.Input = None,
     ) -> Iterator[pps_pb2.DatumInfo]:
@@ -252,14 +264,21 @@ class PPSMixin:
         message = pps_pb2.ListDatumRequest()
         if pipeline_name is not None and job_id is not None:
             message.job.CopyFrom(
-                pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id)
+                pps_pb2.Job(
+                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                    id=job_id,
+                )
             )
         else:
             message.input.CopyFrom(input)
         return self.__stub.ListDatum(message)
 
     def restart_datum(
-        self, pipeline_name: str, job_id: str, data_filters: List[str] = None
+        self,
+        pipeline_name: str,
+        job_id: str,
+        project_name: str = None,
+        data_filters: List[str] = None,
     ) -> None:
         """Restarts a datum.
 
@@ -275,7 +294,10 @@ class PPSMixin:
         """
         message = pps_pb2.RestartDatumRequest(
             data_filters=data_filters,
-            job=pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id),
+            job=pps_pb2.Job(
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                id=job_id,
+            ),
         )
         self.__stub.RestartDatum(message)
 
@@ -283,6 +305,7 @@ class PPSMixin:
         self,
         pipeline_name: str,
         transform: pps_pb2.Transform,
+        project_name: str = None,
         parallelism_spec: pps_pb2.ParallelismSpec = None,
         egress: pps_pb2.Egress = None,
         reprocess_spec: str = None,
@@ -403,7 +426,7 @@ class PPSMixin:
         ... )
         """
         message = pps_pb2.CreatePipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             transform=transform,
             parallelism_spec=parallelism_spec,
             egress=egress,
@@ -445,7 +468,11 @@ class PPSMixin:
         self.__stub.CreatePipeline(req)
 
     def inspect_pipeline(
-        self, pipeline_name: str, history: int = 0, details: bool = False
+        self,
+        pipeline_name: str,
+        project_name: str,
+        history: int = 0,
+        details: bool = False,
     ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
@@ -482,7 +509,7 @@ class PPSMixin:
         if history == 0:
             message = pps_pb2.InspectPipelineRequest(
                 details=details,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             )
             return iter([self.__stub.InspectPipeline(message)])
         else:
@@ -491,7 +518,7 @@ class PPSMixin:
             message = pps_pb2.ListPipelineRequest(
                 details=details,
                 history=history,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name),
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             )
             return self.__stub.ListPipeline(message)
 
@@ -537,11 +564,16 @@ class PPSMixin:
             details=details,
             history=history,
             jqFilter=jqFilter,
+            commit_set=commit_set,
         )
         return self.__stub.ListPipeline(message)
 
     def delete_pipeline(
-        self, pipeline_name: str, force: bool = False, keep_repo: bool = False
+        self,
+        pipeline_name: str,
+        project_name: str = None,
+        force: bool = False,
+        keep_repo: bool = False,
     ) -> None:
         """Deletes a pipeline.
 
@@ -557,7 +589,7 @@ class PPSMixin:
         message = pps_pb2.DeletePipelineRequest(
             force=force,
             keep_repo=keep_repo,
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
         )
         self.__stub.DeletePipeline(message)
 
@@ -566,7 +598,7 @@ class PPSMixin:
         message = empty_pb2.Empty()
         self.__stub.DeleteAll(message)
 
-    def start_pipeline(self, pipeline_name: str) -> None:
+    def start_pipeline(self, pipeline_name: str, project_name: str = None) -> None:
         """Starts a pipeline.
 
         Parameters
@@ -575,11 +607,11 @@ class PPSMixin:
             The name of the pipeline.
         """
         message = pps_pb2.StartPipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
         )
         self.__stub.StartPipeline(message)
 
-    def stop_pipeline(self, pipeline_name: str) -> None:
+    def stop_pipeline(self, pipeline_name: str, project_name: str = None) -> None:
         """Stops a pipeline.
 
         Parameters
@@ -588,11 +620,11 @@ class PPSMixin:
             The name of the pipeline.
         """
         message = pps_pb2.StopPipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name)
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name)
         )
         self.__stub.StopPipeline(message)
 
-    def run_cron(self, pipeline_name: str) -> None:
+    def run_cron(self, pipeline_name: str, project_name: str = None) -> None:
         """Triggers a cron pipeline to run now.
 
         For more info on cron pipelines:
@@ -604,7 +636,7 @@ class PPSMixin:
             The name of the pipeline.
         """
         message = pps_pb2.RunCronRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
         )
         self.__stub.RunCron(message)
 
@@ -697,6 +729,7 @@ class PPSMixin:
     def get_pipeline_logs(
         self,
         pipeline_name: str,
+        project_name: str = None,
         data_filters: List[str] = None,
         master: bool = False,
         datum: pps_pb2.Datum = None,
@@ -742,7 +775,7 @@ class PPSMixin:
             Might block your code otherwise.
         """
         message = pps_pb2.GetLogsRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name),
+            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
             data_filters=data_filters,
             master=master,
             datum=datum,
@@ -757,6 +790,7 @@ class PPSMixin:
         self,
         pipeline_name: str,
         job_id: str,
+        project_name: str = None,
         data_filters: List[str] = None,
         datum: pps_pb2.Datum = None,
         follow: bool = False,
@@ -801,7 +835,10 @@ class PPSMixin:
             Might block your code otherwise.
         """
         message = pps_pb2.GetLogsRequest(
-            job=pps_pb2.Job(pipeline=pps_pb2.Pipeline(name=pipeline_name), id=job_id),
+            job=pps_pb2.Job(
+                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                id=job_id,
+            ),
             data_filters=data_filters,
             datum=datum,
             follow=follow,

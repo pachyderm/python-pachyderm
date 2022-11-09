@@ -13,7 +13,7 @@ src/python_pachyderm/proto/v2: docker-build-proto
 		rm -rf src/python_pachyderm/experimental/proto/v2
 	cd proto/pachyderm && \
 		git fetch --all && \
-		git checkout v$(PACHYDERM_VERSION)
+		git checkout 0358c1f
 	find ./proto/pachyderm/src -regex ".*\.proto" \
 	| grep -v 'internal' \
 	| grep -v 'server' \

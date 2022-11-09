@@ -232,6 +232,26 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.FromString,
                 )
+        self.CreateProject = channel.unary_unary(
+                '/pfs_v2.API/CreateProject',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateProjectRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
+        self.InspectProject = channel.unary_unary(
+                '/pfs_v2.API/InspectProject',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectProjectRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.FromString,
+                )
+        self.ListProject = channel.unary_stream(
+                '/pfs_v2.API/ListProject',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListProjectRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.FromString,
+                )
+        self.DeleteProject = channel.unary_unary(
+                '/pfs_v2.API/DeleteProject',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteProjectRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
 
 
 class APIServicer(object):
@@ -535,6 +555,35 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CreateProject(self, request, context):
+        """Project API
+        CreateProject creates a new project.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def InspectProject(self, request, context):
+        """InspectProject returns info about a project.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListProject(self, request, context):
+        """ListProject returns info about all projects.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteProject(self, request, context):
+        """DeleteProject deletes a project.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -752,6 +801,26 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.Egress,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.SerializeToString,
+            ),
+            'CreateProject': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateProject,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateProjectRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'InspectProject': grpc.unary_unary_rpc_method_handler(
+                    servicer.InspectProject,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectProjectRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.SerializeToString,
+            ),
+            'ListProject': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListProject,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListProjectRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.SerializeToString,
+            ),
+            'DeleteProject': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteProject,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteProjectRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1491,5 +1560,73 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/Egress',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.EgressResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateProject(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/CreateProject',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.CreateProjectRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def InspectProject(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/InspectProject',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.InspectProjectRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListProject(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pfs_v2.API/ListProject',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ListProjectRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.ProjectInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteProject(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/DeleteProject',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteProjectRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
