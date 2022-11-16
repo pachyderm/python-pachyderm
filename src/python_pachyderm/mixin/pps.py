@@ -23,9 +23,9 @@ class PPSMixin:
         self,
         job_id: str,
         pipeline_name: str = None,
-        project_name: str = None,
         wait: bool = False,
         details: bool = False,
+        project_name: str = None,
     ) -> Iterator[pps_pb2.JobInfo]:
         """Inspects a job.
 
@@ -77,11 +77,11 @@ class PPSMixin:
     def list_job(
         self,
         pipeline_name: str = None,
-        project_name: str = None,
         input_commit: SubcommitType = None,
         history: int = 0,
         details: bool = False,
         jqFilter: str = None,
+        project_name: str = None,
     ) -> Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]:
         """Lists jobs.
 
@@ -138,7 +138,9 @@ class PPSMixin:
                 history=history,
                 input_commit=input_commit,
                 jqFilter=jqFilter,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
             )
             return self.__stub.ListJob(message)
         else:
@@ -169,8 +171,8 @@ class PPSMixin:
         self,
         job_id: str,
         pipeline_name: str,
-        project_name: str = None,
         reason: str = None,
+        project_name: str = None,
     ) -> None:
         """Stops a subjob (job at the pipeline-level).
 
@@ -225,9 +227,9 @@ class PPSMixin:
     def list_datum(
         self,
         pipeline_name: str = None,
-        project_name: str = None,
         job_id: str = None,
         input: pps_pb2.Input = None,
+        project_name: str = None,
     ) -> Iterator[pps_pb2.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
@@ -277,8 +279,8 @@ class PPSMixin:
         self,
         pipeline_name: str,
         job_id: str,
-        project_name: str = None,
         data_filters: List[str] = None,
+        project_name: str = None,
     ) -> None:
         """Restarts a datum.
 
@@ -426,7 +428,9 @@ class PPSMixin:
         ... )
         """
         message = pps_pb2.CreatePipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            ),
             transform=transform,
             parallelism_spec=parallelism_spec,
             egress=egress,
@@ -470,9 +474,9 @@ class PPSMixin:
     def inspect_pipeline(
         self,
         pipeline_name: str,
-        project_name: str,
         history: int = 0,
         details: bool = False,
+        project_name: str = None,
     ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
@@ -775,7 +779,9 @@ class PPSMixin:
             Might block your code otherwise.
         """
         message = pps_pb2.GetLogsRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            ),
             data_filters=data_filters,
             master=master,
             datum=datum,

@@ -1,5 +1,5 @@
 {
-    "pachyderm": "2.4.0-rc.1",
+    "pachyderm": "2.5.0-nightly.20221115",
     "kubernetes": "1.22.8",
     "minikube": "1.25.2"
 }

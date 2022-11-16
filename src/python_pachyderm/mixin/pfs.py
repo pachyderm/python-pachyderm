@@ -106,7 +106,11 @@ class PFSMixin:
         super().__init__()
 
     def create_repo(
-        self, repo_name: str, description: str = None, update: bool = False
+        self,
+        repo_name: str,
+        description: str = None,
+        update: bool = False,
+        project_name: str = None,
     ) -> None:
         """Creates a new repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
@@ -125,12 +129,18 @@ class PFSMixin:
         """
         message = pfs_pb2.CreateRepoRequest(
             description=description,
-            repo=pfs_pb2.Repo(name=repo_name, type="user"),
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
             update=update,
         )
         self.__stub.CreateRepo(message)
 
-    def inspect_repo(self, repo_name: str) -> pfs_pb2.RepoInfo:
+    def inspect_repo(
+        self, repo_name: str, project_name: str = None
+    ) -> pfs_pb2.RepoInfo:
         """Inspects a repo.
 
         Parameters
@@ -144,7 +154,11 @@ class PFSMixin:
             A protobuf object with info on the repo.
         """
         message = pfs_pb2.InspectRepoRequest(
-            repo=pfs_pb2.Repo(name=repo_name, type="user")
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
         )
         return self.__stub.InspectRepo(message)
 
@@ -165,7 +179,9 @@ class PFSMixin:
         message = pfs_pb2.ListRepoRequest(type=type)
         return self.__stub.ListRepo(message)
 
-    def delete_repo(self, repo_name: str, force: bool = False) -> None:
+    def delete_repo(
+        self, repo_name: str, force: bool = False, project_name: str = None
+    ) -> None:
         """Deletes a repo and reclaims the storage space it was using.
 
         Parameters
@@ -178,7 +194,11 @@ class PFSMixin:
         """
         message = pfs_pb2.DeleteRepoRequest(
             force=force,
-            repo=pfs_pb2.Repo(name=repo_name, type="user"),
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
         )
         self.__stub.DeleteRepo(message)
 
@@ -220,6 +240,7 @@ class PFSMixin:
         branch: str,
         parent: Union[str, SubcommitType] = None,
         description: str = None,
+        project_name: str = None,
     ) -> pfs_pb2.Commit:
         """Begins the process of committing data to a repo. Once started you
         can write to the commit with ModifyFile. When all the data has been
@@ -249,7 +270,9 @@ class PFSMixin:
         --------
         >>> c = client.start_commit("foo", "master", ("foo", "staging"))
         """
-        repo = pfs_pb2.Repo(name=repo_name, type="user")
+        repo = pfs_pb2.Repo(
+            name=repo_name, type="user", project=pfs_pb2.Project(name=project_name)
+        )
         if parent and isinstance(parent, str):
             parent = pfs_pb2.Commit(
                 id=parent,
@@ -315,6 +338,7 @@ class PFSMixin:
         branch: str,
         parent: Union[str, SubcommitType] = None,
         description: str = None,
+        project_name: str = None,
     ) -> Iterator[pfs_pb2.Commit]:
         """A context manager for running operations within a commit.
 
@@ -342,7 +366,7 @@ class PFSMixin:
         >>>     client.delete_file(c, "/dir/delete_me.txt")
         >>>     client.put_file_bytes(c, "/new_file.txt", b"DATA")
         """
-        commit = self.start_commit(repo_name, branch, parent, description)
+        commit = self.start_commit(repo_name, branch, parent, description, project_name)
         try:
             yield commit
         finally:
@@ -1084,7 +1108,7 @@ class PFSMixin:
         self,
         commit: SubcommitType,
         pattern: str,
-        path_range: pfs_pb2.PathRange,
+        path_range: pfs_pb2.PathRange = None,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists files that match a glob pattern.
 
