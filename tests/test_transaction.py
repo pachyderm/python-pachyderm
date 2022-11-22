@@ -10,7 +10,7 @@ from python_pachyderm.proto.v2.transaction import transaction_pb2
 from tests import util
 
 
-# TODO: Why does this break port forwarding
+# TODO: Bug with core. Bob will fix.
 def test_batch_transaction():
     client = python_pachyderm.Client()
     expected_repo_count = len(list(client.list_repo())) + 3
@@ -34,7 +34,6 @@ def test_batch_transaction():
     assert len(list(client.list_repo())) == expected_repo_count
 
 
-# TODO: Why does this break port forwarding
 def test_transaction_context_mgr():
     client = python_pachyderm.Client()
     expected_repo_count = len(list(client.list_repo())) + 2
