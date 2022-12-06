@@ -114,6 +114,7 @@ class LicenseMixin:
             cluster_deployment_id=cluster_deployment_id,
             id=id,
             user_address=user_address,
+            secret=secret,
         )
         self.__stub.UpdateCluster(message)
 

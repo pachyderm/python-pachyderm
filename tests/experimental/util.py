@@ -51,16 +51,26 @@ def test_repo_name(test_name, prefix=None, suffix=None):
     return "{}{}-{}".format(prefix, test_name, suffix)
 
 
-def create_test_repo(client, test_name, prefix=None, suffix=None):
+def create_test_repo(client, test_name, project_name=None, prefix=None, suffix=None):
     repo_name = test_repo_name(test_name, prefix=prefix, suffix=suffix)
-    client.create_repo(repo_name, "python_pachyderm test repo for {}".format(test_name))
+    client.create_repo(
+        repo_name,
+        project_name=project_name,
+        description="python_pachyderm test repo for {}".format(test_name),
+    )
     return repo_name
 
 
 def create_test_pipeline(client: python_pachyderm.Client, test_name):
     repo_name_suffix = random_string(6)
+    project_name = f"{test_name}-{repo_name_suffix}"
+    client.create_project(project_name)
     input_repo_name = create_test_repo(
-        client, test_name, prefix="input", suffix=repo_name_suffix
+        client,
+        test_name,
+        project_name=project_name,
+        prefix="input",
+        suffix=repo_name_suffix,
     )
     pipeline_repo_name = test_repo_name(
         test_name, prefix="pipeline", suffix=repo_name_suffix
@@ -73,14 +83,17 @@ def create_test_pipeline(client: python_pachyderm.Client, test_name):
             image="alpine",
             stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
         ),
-        input=pps_proto.Input(pfs=pps_proto.PfsInput(glob="/*", repo=input_repo_name)),
+        input=pps_proto.Input(
+            pfs=pps_proto.PfsInput(
+                glob="/*", repo=input_repo_name, project=project_name
+            )
+        ),
     )
 
-    # TODO figre out what is actually happening here
-    with client.commit(input_repo_name, "master") as commit:
+    with client.commit(input_repo_name, "master", project_name=project_name) as commit:
         client.put_file_bytes(commit, "file.dat", b"DATA")
 
-    return (commit, input_repo_name, pipeline_repo_name)
+    return (commit, input_repo_name, pipeline_repo_name, project_name)
 
 
 def get_cluster_deployment_id():

@@ -20,9 +20,9 @@ class PPSMixin:
         self,
         job_id: str,
         pipeline_name: str = None,
-        project_name: str = None,
         wait: bool = False,
         details: bool = False,
+        project_name: str = None,
     ) -> Iterator[pps_proto.JobInfo]:
         """Inspects a job.
 
@@ -36,6 +36,8 @@ class PPSMixin:
             If true, wait until the job completes.
         details : bool, optional
             If true, return worker details.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -82,11 +84,11 @@ class PPSMixin:
     def list_job(
         self,
         pipeline_name: str = None,
-        project_name: str = None,
         input_commit: Union[tuple, dict, Commit, pfs_proto.Commit, List] = None,
         history: int = 0,
         details: bool = False,
         jqFilter: str = None,
+        project_name: str = None,
     ) -> Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]:
         """Lists jobs.
 
@@ -115,6 +117,8 @@ class PPSMixin:
         jqFilter : str, optional
             A ``jq`` filter that can filter the list of jobs returned, only if
             `pipeline_name` is provided.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -166,6 +170,8 @@ class PPSMixin:
             The ID of the job.
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -180,8 +186,8 @@ class PPSMixin:
         self,
         job_id: str,
         pipeline_name: str,
-        project_name: str = None,
         reason: str = None,
+        project_name: str = None,
     ) -> None:
         """Stops a subjob (job at the pipeline-level).
 
@@ -191,6 +197,8 @@ class PPSMixin:
             The ID of the job.
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         reason : str, optional
             A reason for stopping the job.
         """
@@ -217,6 +225,8 @@ class PPSMixin:
             The ID of the job.
         datum_id : str
             The ID of the datum.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -240,9 +250,10 @@ class PPSMixin:
     def list_datum(
         self,
         pipeline_name: str = None,
-        project_name: str = None,
         job_id: str = None,
         input: pps_proto.Input = None,
+        project_name: str = None,
+        datum_filter: pps_proto.ListDatumRequestFilter = None,
     ) -> Iterator[pps_proto.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
@@ -257,6 +268,11 @@ class PPSMixin:
             A protobuf object that filters the datums returned. The datums
             listed are ones that would be run if a pipeline was created with
             the provided input.
+        project_name : str
+            The name of the project.
+        datum_filter: pps_proto.ListDatumRequestFilter
+            Filter restricts returned DatumInfo messages to those which match
+            all the filtered attributes.
 
         Returns
         -------
@@ -284,14 +300,15 @@ class PPSMixin:
             )
         else:
             req.input = input
+        req.filter = datum_filter
         return self._req(Service.PPS, "ListDatum", req=req)
 
     def restart_datum(
         self,
         pipeline_name: str,
         job_id: str,
-        project_name: str = None,
         data_filters: List[str] = None,
+        project_name: str = None,
     ) -> None:
         """Restarts a datum.
 
@@ -304,6 +321,8 @@ class PPSMixin:
         data_filters : List[str], optional
             A list of paths or hashes of datums that filter which datums are
             restarted.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -356,6 +375,8 @@ class PPSMixin:
             The pipeline name.
         transform : pps_proto.Transform
             The image and commands run during pipeline execution.
+        project_name : str
+            The name of the project.
         parallelism_spec : pps_proto.ParallelismSpec, optional
             Specifies how the pipeline is parallelized.
         egress : pps_proto.Egress, optional
@@ -487,9 +508,9 @@ class PPSMixin:
     def inspect_pipeline(
         self,
         pipeline_name: str,
-        project_name: str,
         history: int = 0,
         details: bool = False,
+        project_name: str = None,
     ) -> Iterator[pps_proto.PipelineInfo]:
         """.. # noqa: W505
 
@@ -510,6 +531,8 @@ class PPSMixin:
 
         details : bool, optional
             If true, return pipeline details.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -573,6 +596,8 @@ class PPSMixin:
             If true, return pipeline details.
         jqFilter : str, optional
             A ``jq`` filter that can filter the list of pipelines returned.
+        commit_set : pfs_pb2.CommitSet, optional
+            If non-nil, will return all the pipeline infos at this commit set
 
         Returns
         -------
@@ -595,9 +620,9 @@ class PPSMixin:
     def delete_pipeline(
         self,
         pipeline_name: str,
-        project_name: str = None,
         force: bool = False,
         keep_repo: bool = False,
+        project_name: str = None,
     ) -> None:
         """Deletes a pipeline.
 
@@ -609,6 +634,8 @@ class PPSMixin:
             If true, forces the pipeline deletion.
         keep_repo : bool, optional
             If true, keeps the output repo.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -633,6 +660,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -647,6 +676,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -664,6 +695,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         self._req(
             Service.PPS,
@@ -774,6 +807,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         data_filters : List[str], optional
             A list of the names of input files from which we want processing
             logs. This may contain multiple files, in case `pipeline_name`
@@ -837,6 +872,8 @@ class PPSMixin:
             The name of the pipeline.
         job_id : str
             The ID of the job.
+        project_name : str
+            The name of the project.
         data_filters : List[str], optional
             A list of the names of input files from which we want processing
             logs. This may contain multiple files, in case `pipeline_name`

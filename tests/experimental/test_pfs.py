@@ -746,7 +746,7 @@ def _repo_fixture(request) -> str:
 def _client_fixture(repo):
     client = Client()
     client.delete_repo(repo, force=True)
-    client.create_repo(repo, "test repo for python_pachyderm")
+    client.create_repo(repo, description="test repo for python_pachyderm")
     yield client
     client.delete_repo(repo, force=True)
 

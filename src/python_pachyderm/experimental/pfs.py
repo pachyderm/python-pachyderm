@@ -16,14 +16,19 @@ class Commit(NamedTuple):
     branch: str = None
     id: str = None
     repo_type: str = "user"
+    project: str = "default"
 
     def to_pb(self) -> pfs_proto_pb.Commit:
         """Converts itself into a Google protobuf ``Commit``."""
         return pfs_proto_pb.Commit(
             id=self.id,
             branch=pfs_proto_pb.Branch(
-                repo=pfs_proto_pb.Repo(name=self.repo, type=self.repo_type),
                 name=self.branch,
+                repo=pfs_proto_pb.Repo(
+                    name=self.repo,
+                    type=self.repo_type,
+                    project=pfs_proto_pb.Project(name=self.project),
+                ),
             ),
         )
 
@@ -32,8 +37,12 @@ class Commit(NamedTuple):
         return pfs_proto.Commit(
             id=self.id,
             branch=pfs_proto.Branch(
-                repo=pfs_proto.Repo(name=self.repo, type=self.repo_type),
                 name=self.branch,
+                repo=pfs_proto.Repo(
+                    name=self.repo,
+                    type=self.repo_type,
+                    project=pfs_proto.Project(name=self.project),
+                ),
             ),
         )
 
@@ -47,6 +56,7 @@ class Commit(NamedTuple):
             branch=commit.branch.name,
             id=commit.id,
             repo_type=commit.branch.repo.type,
+            project=commit.branch.repo.project.name,
         )
 
     @staticmethod
@@ -59,6 +69,7 @@ class Commit(NamedTuple):
             branch=commit.branch.name,
             id=commit.id,
             repo_type=commit.branch.repo.type,
+            project=commit.branch.repo.project.name,
         )
 
 

@@ -39,6 +39,8 @@ class PPSMixin:
             If true, wait until the job completes.
         details : bool, optional
             If true, return worker details.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -110,6 +112,8 @@ class PPSMixin:
         jqFilter : str, optional
             A ``jq`` filter that can filter the list of jobs returned, only if
             `pipeline_name` is provided.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -158,6 +162,8 @@ class PPSMixin:
             The ID of the job.
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.DeleteJobRequest(
             job=pps_pb2.Job(
@@ -184,6 +190,8 @@ class PPSMixin:
             The name of the pipeline.
         reason : str, optional
             A reason for stopping the job.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.StopJobRequest(
             job=pps_pb2.Job(
@@ -207,6 +215,8 @@ class PPSMixin:
             The ID of the job.
         datum_id : str
             The ID of the datum.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -230,6 +240,7 @@ class PPSMixin:
         job_id: str = None,
         input: pps_pb2.Input = None,
         project_name: str = None,
+        datum_filter: pps_pb2.ListDatumRequest.Filter = None,
     ) -> Iterator[pps_pb2.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
@@ -244,6 +255,11 @@ class PPSMixin:
             A protobuf object that filters the datums returned. The datums
             listed are ones that would be run if a pipeline was created with
             the provided input.
+        project_name : str
+            The name of the project.
+        datum_filter: pps_proto.ListDatumRequest.Filter
+            Filter restricts returned DatumInfo messages to those which match
+            all the filtered attributes.
 
         Returns
         -------
@@ -273,6 +289,7 @@ class PPSMixin:
             )
         else:
             message.input.CopyFrom(input)
+        message.filter = datum_filter
         return self.__stub.ListDatum(message)
 
     def restart_datum(
@@ -293,6 +310,8 @@ class PPSMixin:
         data_filters : List[str], optional
             A list of paths or hashes of datums that filter which datums are
             restarted.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.RestartDatumRequest(
             data_filters=data_filters,
@@ -344,6 +363,8 @@ class PPSMixin:
             The pipeline name.
         transform : pps_pb2.Transform
             The image and commands run during pipeline execution.
+        project_name : str
+            The name of the project.
         parallelism_spec : pps_pb2.ParallelismSpec, optional
             Specifies how the pipeline is parallelized.
         egress : pps_pb2.Egress, optional
@@ -497,6 +518,8 @@ class PPSMixin:
 
         details : bool, optional
             If true, return pipeline details.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -575,9 +598,9 @@ class PPSMixin:
     def delete_pipeline(
         self,
         pipeline_name: str,
-        project_name: str = None,
         force: bool = False,
         keep_repo: bool = False,
+        project_name: str = None,
     ) -> None:
         """Deletes a pipeline.
 
@@ -589,6 +612,8 @@ class PPSMixin:
             If true, forces the pipeline deletion.
         keep_repo : bool, optional
             If true, keeps the output repo.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.DeletePipelineRequest(
             force=force,
@@ -609,6 +634,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.StartPipelineRequest(
             pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
@@ -622,6 +649,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.StopPipelineRequest(
             pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name)
@@ -638,6 +667,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         """
         message = pps_pb2.RunCronRequest(
             pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
@@ -748,6 +779,8 @@ class PPSMixin:
         ----------
         pipeline_name : str
             The name of the pipeline.
+        project_name : str
+            The name of the project.
         data_filters : List[str], optional
             A list of the names of input files from which we want processing
             logs. This may contain multiple files, in case `pipeline_name`
@@ -812,6 +845,8 @@ class PPSMixin:
             The name of the pipeline.
         job_id : str
             The ID of the job.
+        project_name : str
+            The name of the project.
         data_filters : List[str], optional
             A list of the names of input files from which we want processing
             logs. This may contain multiple files, in case `pipeline_name`

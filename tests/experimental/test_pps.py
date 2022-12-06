@@ -17,13 +17,17 @@ class Sandbox:
     def __init__(self, test_name):
         client = python_pachyderm.experimental.Client()
         client.delete_all()
-        commit, input_repo_name, pipeline_repo_name = util.create_test_pipeline(
-            client, test_name
-        )
+        (
+            commit,
+            input_repo_name,
+            pipeline_repo_name,
+            project_name,
+        ) = util.create_test_pipeline(client, test_name)
         self.client = client
         self.commit = commit
         self.input_repo_name = input_repo_name
         self.pipeline_repo_name = pipeline_repo_name
+        self.project_name = project_name
 
     def wait(self):
         return self.client.wait_commit(self.commit.id)[0].commit.id
@@ -42,7 +46,11 @@ def test_list_subjob():
     jobs = list(
         sandbox.client.list_job(
             pipeline_name=sandbox.pipeline_repo_name,
-            input_commit=(sandbox.input_repo_name, sandbox.commit.id),
+            input_commit=dict(
+                repo=sandbox.input_repo_name,
+                id=sandbox.commit.id,
+                project=sandbox.project_name,
+            ),
         )
     )
     assert len(jobs) >= 1
@@ -53,7 +61,7 @@ def test_list_job():
     sandbox.wait()
     client = sandbox.client
 
-    commit, _, _ = util.create_test_pipeline(client, "list_job2")
+    commit, _, _, _project = util.create_test_pipeline(client, "list_job2")
     client.wait_commit(commit.id)
 
     jobs = list(client.list_job())
@@ -73,7 +81,7 @@ def test_inspect_job():
     sandbox.wait()
     client = sandbox.client
 
-    commit, _, _ = util.create_test_pipeline(client, "inspect_job2")
+    commit, _, _, _project = util.create_test_pipeline(client, "inspect_job2")
     client.wait_commit(commit.id)
 
     jobs = list(client.list_job())

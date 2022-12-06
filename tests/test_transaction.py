@@ -10,7 +10,6 @@ from python_pachyderm.proto.v2.transaction import transaction_pb2
 from tests import util
 
 
-# TODO: Bug with core. Bob will fix.
 def test_batch_transaction():
     client = python_pachyderm.Client()
     expected_repo_count = len(list(client.list_repo())) + 3

@@ -97,6 +97,7 @@ BLACKLISTED_METHODS = {
         "put_cache",
         "clear_cache",
         "list_task",
+        "shard_file_set",
     ],
     Service.PPS: [
         # ignore these
@@ -211,11 +212,9 @@ RENAMED_ARGS = {
         (None, "duration"),
     ],
     # PFS
-    "create_repo": [
-        ("repo", "repo_name"),
-    ],
+    "create_repo": [("repo", "repo_name"), ("project", "project_name")],
     "create_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
         ("head", "head_commit"),
         ("new_commit_set", "new_commit"),
     ],
@@ -230,13 +229,14 @@ RENAMED_ARGS = {
         ("dst", ("dest_commit", "dest_path")),
     ],
     "delete_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
     ],
     "delete_file": [
         ("file", ("commit", "path")),
     ],
     "delete_repo": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
         ("all", None),
     ],
     "delete_project": [
@@ -257,6 +257,10 @@ RENAMED_ARGS = {
     "flush_commit": [
         ("to_repos", "repos"),
     ],
+    "fsck": [
+        ("zombie_target", None),
+        ("zombie_all", None),
+    ],
     "get_file": [
         ("file", ("commit", "path", "datum")),
     ],
@@ -264,7 +268,7 @@ RENAMED_ARGS = {
         ("file", ("commit", "path", "datum")),
     ],
     "inspect_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
     ],
     "inspect_commit": [
         ("repo", "repo_name"),
@@ -279,6 +283,7 @@ RENAMED_ARGS = {
     ],
     "inspect_repo": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
     ],
     "inspect_project": [
         ("project", "project_name"),
@@ -288,13 +293,17 @@ RENAMED_ARGS = {
     ],
     "list_branch": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
     ],
     "list_commit": [
         ("from", "from_commit"),
         ("to", "to_commit"),
         ("repo", "repo_name"),
     ],
-    "list_file": [("file", ("commit", "path", "datum"))],
+    "list_file": [
+        ("file", ("commit", "path", "datum")),
+        ("paginationMarker", "pagination_marker"),
+    ],
     "put_file_bytes": [
         ("file", ("commit", "path")),
         ("url", None),
@@ -312,11 +321,13 @@ RENAMED_ARGS = {
     "start_commit": [
         ("parent", ("repo_name", "parent_commit")),
         ("branch", "branch_name"),
+        ("project", "project_name"),
     ],
     "subscribe_commit": [
         ("from", "from_commit"),
         ("repo", "repo_name"),
         ("branch", "branch_name"),
+        ("project", "project_name"),
         ("state", "commit_state"),
     ],
     "walk_file": [
@@ -377,6 +388,8 @@ RENAMED_ARGS = {
     ],
     "list_datum": [
         ("job", ("pipeline_name", "project_name", "job_id")),
+        ("filter", "datum_filter"),
+        ("Filter", None),
     ],
     "list_pipeline": [
         ("pipeline", "pipeline_name"),
