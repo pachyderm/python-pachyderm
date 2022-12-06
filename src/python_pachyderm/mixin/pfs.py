@@ -1175,7 +1175,7 @@ class PFSMixin:
         """
         message = pfs_pb2.ListFileRequest(
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
-            pagination_marker=pagination_marker,
+            paginationMarker=pagination_marker,
             number=number,
             reverse=reverse,
         )
