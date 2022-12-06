@@ -390,6 +390,7 @@ RENAMED_ARGS = {
         ("job", ("pipeline_name", "project_name", "job_id")),
         ("filter", "datum_filter"),
         ("Filter", None),
+        ("paginationMarker", "pagination_marker"),
     ],
     "list_pipeline": [
         ("pipeline", "pipeline_name"),
@@ -398,6 +399,7 @@ RENAMED_ARGS = {
     "list_job": [
         ("pipeline", "pipeline_name"),
         ("project", "project_name"),
+        ("projects", None),
     ],
     "restart_datum": [
         ("job", ("pipeline_name", "project_name", "job_id")),

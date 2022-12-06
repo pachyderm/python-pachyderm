@@ -241,6 +241,9 @@ class PPSMixin:
         input: pps_pb2.Input = None,
         project_name: str = None,
         datum_filter: pps_pb2.ListDatumRequest.Filter = None,
+        pagination_marker: pfs_pb2.File = None,
+        number: int = None,
+        reverse: bool = False,
     ) -> Iterator[pps_pb2.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
@@ -257,9 +260,18 @@ class PPSMixin:
             the provided input.
         project_name : str
             The name of the project.
-        datum_filter: pps_proto.ListDatumRequest.Filter
+        datum_filter: pps_proto.ListDatumRequest.adFilter
             Filter restricts returned DatumInfo messages to those which match
             all the filtered attributes.
+        pagination_marker:
+            Marker for pagination. If set, the files that come after the marker
+            in lexicographical order will be returned. If reverse is also set,
+            the files that come before the marker in lexicographical order will
+            be returned.
+        number : int, optional
+            Number of files to return
+        reverse : bool, optional
+            If true, return files in reverse order
 
         Returns
         -------
@@ -279,7 +291,12 @@ class PPSMixin:
 
         .. # noqa: W505
         """
-        message = pps_pb2.ListDatumRequest()
+        message = pps_pb2.ListDatumRequest(
+            filter=datum_filter,
+            paginationMarker=pagination_marker,
+            number=number,
+            reverse=reverse,
+        )
         if pipeline_name is not None and job_id is not None:
             message.job.CopyFrom(
                 pps_pb2.Job(
@@ -289,7 +306,6 @@ class PPSMixin:
             )
         else:
             message.input.CopyFrom(input)
-        message.filter = datum_filter
         return self.__stub.ListDatum(message)
 
     def restart_datum(

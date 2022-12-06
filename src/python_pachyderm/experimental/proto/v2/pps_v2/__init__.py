@@ -470,6 +470,8 @@ class InspectJobSetRequest(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class ListJobSetRequest(betterproto.Message):
     details: bool = betterproto.bool_field(1)
+    # A list of projects to filter jobs on, nil means don't filter.
+    projects: List[str] = betterproto.string_field(2)
 
 
 @dataclass(eq=False, repr=False)
@@ -482,6 +484,8 @@ class InspectJobRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class ListJobRequest(betterproto.Message):
+    # A list of projects to filter jobs on, nil means don't filter.
+    projects: List[str] = betterproto.string_field(7)
     pipeline: "Pipeline" = betterproto.message_field(1)
     input_commit: List["_pfs_v2__.Commit"] = betterproto.message_field(2)
     # History indicates return jobs from historical versions of pipelines
@@ -608,6 +612,12 @@ class ListDatumRequest(betterproto.Message):
     # would be run if a pipeline was created with the provided input.
     input: "Input" = betterproto.message_field(2)
     filter: "ListDatumRequestFilter" = betterproto.message_field(3)
+    # datum id to start from. we do not include this datum in the response
+    pagination_marker: str = betterproto.string_field(4)
+    # Number of datums to return
+    number: int = betterproto.int64_field(5)
+    # If true, return datums in reverse order
+    reverse: bool = betterproto.bool_field(6)
 
 
 @dataclass(eq=False, repr=False)
@@ -852,15 +862,18 @@ class ApiStub(betterproto.ServiceStub):
     async def list_job(
         self,
         *,
+        projects: Optional[List[str]] = None,
         pipeline: "Pipeline" = None,
         input_commit: Optional[List["_pfs_v2__.Commit"]] = None,
         history: int = 0,
         details: bool = False,
         jq_filter: str = "",
     ) -> AsyncIterator["JobInfo"]:
+        projects = projects or []
         input_commit = input_commit or []
 
         request = ListJobRequest()
+        request.projects = projects
         if pipeline is not None:
             request.pipeline = pipeline
         if input_commit is not None:
@@ -877,11 +890,13 @@ class ApiStub(betterproto.ServiceStub):
             yield response
 
     async def list_job_set(
-        self, *, details: bool = False
+        self, *, details: bool = False, projects: Optional[List[str]] = None
     ) -> AsyncIterator["JobSetInfo"]:
+        projects = projects or []
 
         request = ListJobSetRequest()
         request.details = details
+        request.projects = projects
 
         async for response in self._unary_stream(
             "/pps_v2.API/ListJobSet",
@@ -945,6 +960,9 @@ class ApiStub(betterproto.ServiceStub):
         job: "Job" = None,
         input: "Input" = None,
         filter: "ListDatumRequestFilter" = None,
+        pagination_marker: str = "",
+        number: int = 0,
+        reverse: bool = False,
     ) -> AsyncIterator["DatumInfo"]:
 
         request = ListDatumRequest()
@@ -954,6 +972,9 @@ class ApiStub(betterproto.ServiceStub):
             request.input = input
         if filter is not None:
             request.filter = filter
+        request.pagination_marker = pagination_marker
+        request.number = number
+        request.reverse = reverse
 
         async for response in self._unary_stream(
             "/pps_v2.API/ListDatum",
@@ -1368,6 +1389,7 @@ class ApiBase(ServiceBase):
 
     async def list_job(
         self,
+        projects: Optional[List[str]],
         pipeline: "Pipeline",
         input_commit: Optional[List["_pfs_v2__.Commit"]],
         history: int,
@@ -1376,7 +1398,9 @@ class ApiBase(ServiceBase):
     ) -> AsyncIterator["JobInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_job_set(self, details: bool) -> AsyncIterator["JobSetInfo"]:
+    async def list_job_set(
+        self, details: bool, projects: Optional[List[str]]
+    ) -> AsyncIterator["JobSetInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def subscribe_job(
@@ -1396,7 +1420,13 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def list_datum(
-        self, job: "Job", input: "Input", filter: "ListDatumRequestFilter"
+        self,
+        job: "Job",
+        input: "Input",
+        filter: "ListDatumRequestFilter",
+        pagination_marker: str,
+        number: int,
+        reverse: bool,
     ) -> AsyncIterator["DatumInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1585,6 +1615,7 @@ class ApiBase(ServiceBase):
         request = await stream.recv_message()
 
         request_kwargs = {
+            "projects": request.projects,
             "pipeline": request.pipeline,
             "input_commit": request.input_commit,
             "history": request.history,
@@ -1603,6 +1634,7 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "details": request.details,
+            "projects": request.projects,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1663,6 +1695,9 @@ class ApiBase(ServiceBase):
             "job": request.job,
             "input": request.input,
             "filter": request.filter,
+            "pagination_marker": request.pagination_marker,
+            "number": request.number,
+            "reverse": request.reverse,
         }
 
         await self._call_rpc_handler_server_stream(

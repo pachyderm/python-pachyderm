@@ -1122,7 +1122,7 @@ class PFSMixin:
             Service.PFS,
             "ListFile",
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
-            pagination_marker=pagination_marker,
+            paginationMarker=pagination_marker,
             number=number,
             reverse=reverse,
         )

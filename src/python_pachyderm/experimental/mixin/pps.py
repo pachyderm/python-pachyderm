@@ -89,6 +89,7 @@ class PPSMixin:
         details: bool = False,
         jqFilter: str = None,
         project_name: str = None,
+        project_filter: List[str] = None,
     ) -> Union[Iterator[pps_proto.JobInfo], Iterator[pps_proto.JobSetInfo]]:
         """Lists jobs.
 
@@ -118,7 +119,7 @@ class PPSMixin:
             A ``jq`` filter that can filter the list of jobs returned, only if
             `pipeline_name` is provided.
         project_name : str
-            The name of the project.
+            The name of the project containing the pipeline.
 
         Returns
         -------
@@ -254,6 +255,9 @@ class PPSMixin:
         input: pps_proto.Input = None,
         project_name: str = None,
         datum_filter: pps_proto.ListDatumRequestFilter = None,
+        pagination_marker: pfs_proto.File = None,
+        number: int = None,
+        reverse: bool = False,
     ) -> Iterator[pps_proto.DatumInfo]:
         """Lists datums. Exactly one of (`pipeline_name`, `job_id`) (real) or
         `input` (hypothetical) must be set.
@@ -273,6 +277,15 @@ class PPSMixin:
         datum_filter: pps_proto.ListDatumRequestFilter
             Filter restricts returned DatumInfo messages to those which match
             all the filtered attributes.
+        pagination_marker:
+            Marker for pagination. If set, the files that come after the marker
+            in lexicographical order will be returned. If reverse is also set,
+            the files that come before the marker in lexicographical order will
+            be returned.
+        number : int, optional
+            Number of files to return
+        reverse : bool, optional
+            If true, return files in reverse order
 
         Returns
         -------
@@ -292,16 +305,31 @@ class PPSMixin:
 
         .. # noqa: W505
         """
-        req = pps_proto.ListDatumRequest()
+        kwargs = dict(
+            filter=datum_filter,
+            paginationMarker=pagination_marker,
+            number=number,
+            reverse=reverse,
+        )
         if pipeline_name is not None and job_id is not None:
-            req.job = pps_proto.Job(
-                pipeline=pps_proto.Pipeline(name=pipeline_name, project=project_name),
-                id=job_id,
+            return self._req(
+                Service.PPS,
+                "ListDatum",
+                job=pps_proto.Job(
+                    pipeline=pps_proto.Pipeline(
+                        name=pipeline_name, project=project_name
+                    ),
+                    id=job_id,
+                ),
+                **kwargs,
             )
         else:
-            req.input = input
-        req.filter = datum_filter
-        return self._req(Service.PPS, "ListDatum", req=req)
+            return self._req(
+                Service.PPS,
+                "ListDatum",
+                input=input,
+                **kwargs,
+            )
 
     def restart_datum(
         self,

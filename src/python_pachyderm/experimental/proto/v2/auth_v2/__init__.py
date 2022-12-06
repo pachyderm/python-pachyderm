@@ -80,6 +80,11 @@ class Permission(betterproto.Enum):
     REPO_REMOVE_PIPELINE_READER = 213
     REPO_ADD_PIPELINE_WRITER = 214
     PIPELINE_LIST_JOB = 301
+    PROJECT_CREATE = 400
+    PROJECT_DELETE = 401
+    PROJECT_LIST_REPO = 402
+    PROJECT_CREATE_REPO = 403
+    PROJECT_MODIFY_BINDINGS = 404
 
 
 class ResourceType(betterproto.Enum):
@@ -89,6 +94,7 @@ class ResourceType(betterproto.Enum):
     CLUSTER = 1
     REPO = 2
     SPEC_REPO = 3
+    PROJECT = 4
 
 
 @dataclass(eq=False, repr=False)
