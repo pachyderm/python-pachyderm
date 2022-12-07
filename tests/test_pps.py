@@ -242,11 +242,15 @@ def test_get_pipeline_logs():
     sandbox.wait()
 
     # Just make sure these spit out some logs
-    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name)
-    # assert next(logs) is not None TODO: Why has this changed.
-
-    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, master=True)
+    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, follow=True)
     assert next(logs) is not None
+    del logs
+
+    logs = sandbox.client.get_pipeline_logs(
+        sandbox.pipeline_repo_name, master=True, follow=True
+    )
+    assert next(logs) is not None
+    del logs
 
 
 def test_get_job_logs():
@@ -259,8 +263,9 @@ def test_get_job_logs():
     sandbox.client.wait_commit(commit)
 
     # Just make sure these spit out some logs
-    logs = sandbox.client.get_job_logs(pipeline_name, job_id)
+    logs = sandbox.client.get_job_logs(pipeline_name, job_id, follow=True)
     assert next(logs) is not None
+    del logs
 
 
 def test_create_pipeline():
