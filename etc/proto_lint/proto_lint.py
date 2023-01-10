@@ -268,6 +268,7 @@ RENAMED_ARGS = {
     ],
     "get_file": [
         ("file", ("commit", "path", "datum")),
+        ("path_range", None),
     ],
     "get_file_tar": [
         ("file", ("commit", "path", "datum")),

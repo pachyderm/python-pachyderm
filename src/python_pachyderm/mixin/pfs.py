@@ -1049,7 +1049,6 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-        path_range: pfs_pb2.PathRange = None,
     ) -> PFSFile:
         """Gets a file from PFS.
 
@@ -1075,7 +1074,6 @@ class PFSMixin:
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
             offset=offset,
-            path_range=path_range,
         )
         stream = self.__stub.GetFile(message)
         return PFSFile(stream)

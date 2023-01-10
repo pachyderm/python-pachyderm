@@ -989,7 +989,6 @@ class PFSMixin:
         datum: str = None,
         URL: str = None,
         offset: int = 0,
-        path_range: pfs_proto.PathRange = None,
     ) -> PFSFile:
         """Gets a file from PFS.
 
@@ -1005,7 +1004,6 @@ class PFSMixin:
             Specifies an object storage URL that the file will be uploaded to.
         offset : int, optional
             Allows file read to begin at `offset` number of bytes.
-
         Returns
         -------
         PFSFile
@@ -1017,7 +1015,6 @@ class PFSMixin:
             file=pfs_proto.File(commit=commit_from(commit), path=path, datum=datum),
             URL=URL,
             offset=offset,
-            path_range=path_range,
         )
         return PFSFile(stream)
 
