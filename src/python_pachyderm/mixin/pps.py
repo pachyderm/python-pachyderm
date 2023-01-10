@@ -161,7 +161,7 @@ class PPSMixin:
                     name=pipeline_name, project=pfs_pb2.Project(name=project_name)
                 ),
                 projects=projects_filter,
-                pagination_marker=pagination_marker,
+                paginationMarker=pagination_marker,
                 number=number,
                 reverse=reverse,
             )
@@ -170,7 +170,7 @@ class PPSMixin:
             message = pps_pb2.ListJobSetRequest(
                 details=details,
                 projects=projects_filter,
-                pagination_marker=pagination_marker,
+                paginationMarker=pagination_marker,
                 number=number,
                 reverse=reverse,
             )
