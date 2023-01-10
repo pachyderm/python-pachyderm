@@ -471,7 +471,14 @@ class InspectJobSetRequest(betterproto.Message):
 class ListJobSetRequest(betterproto.Message):
     details: bool = betterproto.bool_field(1)
     # A list of projects to filter jobs on, nil means don't filter.
-    projects: List[str] = betterproto.string_field(2)
+    projects: List["_pfs_v2__.Project"] = betterproto.message_field(2)
+    # we return job sets created before or after this time based on the reverse
+    # flag
+    pagination_marker: datetime = betterproto.message_field(3)
+    # number of results to return
+    number: int = betterproto.int64_field(4)
+    # if true, return results in reverse order
+    reverse: bool = betterproto.bool_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -485,7 +492,7 @@ class InspectJobRequest(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class ListJobRequest(betterproto.Message):
     # A list of projects to filter jobs on, nil means don't filter.
-    projects: List[str] = betterproto.string_field(7)
+    projects: List["_pfs_v2__.Project"] = betterproto.message_field(7)
     pipeline: "Pipeline" = betterproto.message_field(1)
     input_commit: List["_pfs_v2__.Commit"] = betterproto.message_field(2)
     # History indicates return jobs from historical versions of pipelines
@@ -502,6 +509,12 @@ class ListJobRequest(betterproto.Message):
     details: bool = betterproto.bool_field(5)
     # A jq program string for additional result filtering
     jq_filter: str = betterproto.string_field(6)
+    # timestamp that is pagination marker
+    pagination_marker: datetime = betterproto.message_field(8)
+    # number of results to return
+    number: int = betterproto.int64_field(9)
+    # flag to indicated if results should be returned in reverse order
+    reverse: bool = betterproto.bool_field(10)
 
 
 @dataclass(eq=False, repr=False)
@@ -725,6 +738,8 @@ class ListPipelineRequest(betterproto.Message):
     jq_filter: str = betterproto.string_field(4)
     # If non-nil, will return all the pipeline infos at this commit set
     commit_set: "_pfs_v2__.CommitSet" = betterproto.message_field(5)
+    # Projects to filter on. Empty list means no filter, so return all pipelines.
+    projects: List["_pfs_v2__.Project"] = betterproto.message_field(6)
 
 
 @dataclass(eq=False, repr=False)
@@ -862,18 +877,22 @@ class ApiStub(betterproto.ServiceStub):
     async def list_job(
         self,
         *,
-        projects: Optional[List[str]] = None,
+        projects: Optional[List["_pfs_v2__.Project"]] = None,
         pipeline: "Pipeline" = None,
         input_commit: Optional[List["_pfs_v2__.Commit"]] = None,
         history: int = 0,
         details: bool = False,
         jq_filter: str = "",
+        pagination_marker: datetime = None,
+        number: int = 0,
+        reverse: bool = False,
     ) -> AsyncIterator["JobInfo"]:
         projects = projects or []
         input_commit = input_commit or []
 
         request = ListJobRequest()
-        request.projects = projects
+        if projects is not None:
+            request.projects = projects
         if pipeline is not None:
             request.pipeline = pipeline
         if input_commit is not None:
@@ -881,6 +900,10 @@ class ApiStub(betterproto.ServiceStub):
         request.history = history
         request.details = details
         request.jq_filter = jq_filter
+        if pagination_marker is not None:
+            request.pagination_marker = pagination_marker
+        request.number = number
+        request.reverse = reverse
 
         async for response in self._unary_stream(
             "/pps_v2.API/ListJob",
@@ -890,13 +913,24 @@ class ApiStub(betterproto.ServiceStub):
             yield response
 
     async def list_job_set(
-        self, *, details: bool = False, projects: Optional[List[str]] = None
+        self,
+        *,
+        details: bool = False,
+        projects: Optional[List["_pfs_v2__.Project"]] = None,
+        pagination_marker: datetime = None,
+        number: int = 0,
+        reverse: bool = False,
     ) -> AsyncIterator["JobSetInfo"]:
         projects = projects or []
 
         request = ListJobSetRequest()
         request.details = details
-        request.projects = projects
+        if projects is not None:
+            request.projects = projects
+        if pagination_marker is not None:
+            request.pagination_marker = pagination_marker
+        request.number = number
+        request.reverse = reverse
 
         async for response in self._unary_stream(
             "/pps_v2.API/ListJobSet",
@@ -1102,7 +1136,9 @@ class ApiStub(betterproto.ServiceStub):
         details: bool = False,
         jq_filter: str = "",
         commit_set: "_pfs_v2__.CommitSet" = None,
+        projects: Optional[List["_pfs_v2__.Project"]] = None,
     ) -> AsyncIterator["PipelineInfo"]:
+        projects = projects or []
 
         request = ListPipelineRequest()
         if pipeline is not None:
@@ -1112,6 +1148,8 @@ class ApiStub(betterproto.ServiceStub):
         request.jq_filter = jq_filter
         if commit_set is not None:
             request.commit_set = commit_set
+        if projects is not None:
+            request.projects = projects
 
         async for response in self._unary_stream(
             "/pps_v2.API/ListPipeline",
@@ -1389,17 +1427,25 @@ class ApiBase(ServiceBase):
 
     async def list_job(
         self,
-        projects: Optional[List[str]],
+        projects: Optional[List["_pfs_v2__.Project"]],
         pipeline: "Pipeline",
         input_commit: Optional[List["_pfs_v2__.Commit"]],
         history: int,
         details: bool,
         jq_filter: str,
+        pagination_marker: datetime,
+        number: int,
+        reverse: bool,
     ) -> AsyncIterator["JobInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def list_job_set(
-        self, details: bool, projects: Optional[List[str]]
+        self,
+        details: bool,
+        projects: Optional[List["_pfs_v2__.Project"]],
+        pagination_marker: datetime,
+        number: int,
+        reverse: bool,
     ) -> AsyncIterator["JobSetInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1480,6 +1526,7 @@ class ApiBase(ServiceBase):
         details: bool,
         jq_filter: str,
         commit_set: "_pfs_v2__.CommitSet",
+        projects: Optional[List["_pfs_v2__.Project"]],
     ) -> AsyncIterator["PipelineInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1621,6 +1668,9 @@ class ApiBase(ServiceBase):
             "history": request.history,
             "details": request.details,
             "jq_filter": request.jq_filter,
+            "pagination_marker": request.pagination_marker,
+            "number": request.number,
+            "reverse": request.reverse,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1635,6 +1685,9 @@ class ApiBase(ServiceBase):
         request_kwargs = {
             "details": request.details,
             "projects": request.projects,
+            "pagination_marker": request.pagination_marker,
+            "number": request.number,
+            "reverse": request.reverse,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1774,6 +1827,7 @@ class ApiBase(ServiceBase):
             "details": request.details,
             "jq_filter": request.jq_filter,
             "commit_set": request.commit_set,
+            "projects": request.projects,
         }
 
         await self._call_rpc_handler_server_stream(

@@ -80,6 +80,7 @@ BLACKLISTED_METHODS = {
         "activate_auth",
         "run_load_test",
         "get_file_t_a_r",
+        "delete_repos",
         # TODO: add these new API methods
         "add_file_set",
         "clear_commit",
@@ -200,6 +201,10 @@ RENAMED_METHODS = {
 # * We can also specify that a method has an argument that isn't in the
 #   protos: `(None, "ignored_arg_name")`
 RENAMED_ARGS = {
+    # admin
+    "inspect_cluster": [
+        ("client_version", None),
+    ],
     # auth
     "authenticate_oidc": [
         ("github_token", None),
@@ -299,11 +304,13 @@ RENAMED_ARGS = {
         ("from", "from_commit"),
         ("to", "to_commit"),
         ("repo", "repo_name"),
+        ("project", "project_name"),
     ],
     "list_file": [
         ("file", ("commit", "path", "datum")),
         ("paginationMarker", "pagination_marker"),
     ],
+    "list_repo": [("projects", "projects_filter")],
     "put_file_bytes": [
         ("file", ("commit", "path")),
         ("url", None),
@@ -395,11 +402,13 @@ RENAMED_ARGS = {
     "list_pipeline": [
         ("pipeline", "pipeline_name"),
         ("project", "project_name"),
+        ("projects", "projects_filter"),
     ],
     "list_job": [
         ("pipeline", "pipeline_name"),
         ("project", "project_name"),
-        ("projects", None),
+        ("projects", "projects_filter"),
+        ("paginationMarker", "pagination_marker"),
     ],
     "restart_datum": [
         ("job", ("pipeline_name", "project_name", "job_id")),

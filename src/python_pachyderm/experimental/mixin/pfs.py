@@ -90,7 +90,9 @@ class PFSMixin:
             ),
         )
 
-    def list_repo(self, type: str = "user") -> Iterator[pfs_proto.RepoInfo]:
+    def list_repo(
+        self, type: str = "user", projects_filter: List[pfs_proto.Project] = None
+    ) -> Iterator[pfs_proto.RepoInfo]:
         """Lists all repos in PFS.
 
         Parameters
@@ -98,13 +100,16 @@ class PFSMixin:
         type : str, optional
             The type of repos that should be returned ("user", "meta", "spec").
             If unset, returns all types of repos.
+        projects_filter : [Project], optional
+            Filters out repos that do not belong in the list,
+            while no projects means to list all repos
 
         Returns
         -------
         Iterator[pfs_proto.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
-        return self._req(Service.PFS, "ListRepo", type=type)
+        return self._req(Service.PFS, "ListRepo", type=type, projects=projects_filter)
 
     def delete_repo(
         self, repo_name: str, force: bool = False, project_name: str = None
@@ -416,6 +421,7 @@ class PFSMixin:
         all: bool = False,
         origin_kind: pfs_proto.OriginKind = pfs_proto.OriginKind.USER,
         started_time: datetime = None,
+        project_name: str = None,
     ) -> Union[Iterator[pfs_proto.CommitInfo], Iterator[pfs_proto.CommitSetInfo]]:
         """Lists commits.
 
@@ -448,6 +454,8 @@ class PFSMixin:
             subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
         started_time : datetime
+        project_name : str, optional
+            The name of the project containing the repo.
 
         Returns
         -------
@@ -471,7 +479,7 @@ class PFSMixin:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             req = pfs_proto.ListCommitRequest(
-                repo=pfs_proto.Repo(name=repo_name, type="user"),
+                repo=pfs_proto.Repo(name=repo_name, type="user", project=project_name),
                 number=number,
                 reverse=reverse,
                 all=all,
@@ -484,7 +492,7 @@ class PFSMixin:
                 req.from_ = commit_from(from_commit)
             return self._req(Service.PFS, "ListCommit", req=req)
         else:
-            return self._req(Service.PFS, "ListCommitSet")
+            return self._req(Service.PFS, "ListCommitSet", project=project_name)
 
     def squash_commit(self, commit_id: str) -> None:
         """Squashes a commit into its parent.

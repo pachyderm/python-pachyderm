@@ -84,6 +84,10 @@ class PPSMixin:
         details: bool = False,
         jqFilter: str = None,
         project_name: str = None,
+        projects_filter: List[str] = None,
+        pagination_marker: pfs_pb2.File = None,
+        number: int = None,
+        reverse: bool = False,
     ) -> Union[Iterator[pps_pb2.JobInfo], Iterator[pps_pb2.JobSetInfo]]:
         """Lists jobs.
 
@@ -112,8 +116,19 @@ class PPSMixin:
         jqFilter : str, optional
             A ``jq`` filter that can filter the list of jobs returned, only if
             `pipeline_name` is provided.
-        project_name : str
-            The name of the project.
+        project_name : str, optional
+            The name of the project containing the pipeline.
+        projects_filter: List[str], optional
+            A list of projects to filter jobs on, None means don't filter.
+        pagination_marker:
+            Marker for pagination. If set, the files that come after the marker
+            in lexicographical order will be returned. If reverse is also set,
+            the files that come before the marker in lexicographical order will
+            be returned.
+        number : int, optional
+            Number of files to return
+        reverse : bool, optional
+            If true, return files in reverse order
 
         Returns
         -------
@@ -145,10 +160,20 @@ class PPSMixin:
                 pipeline=pps_pb2.Pipeline(
                     name=pipeline_name, project=pfs_pb2.Project(name=project_name)
                 ),
+                projects=projects_filter,
+                pagination_marker=pagination_marker,
+                number=number,
+                reverse=reverse,
             )
             return self.__stub.ListJob(message)
         else:
-            message = pps_pb2.ListJobSetRequest(details=details)
+            message = pps_pb2.ListJobSetRequest(
+                details=details,
+                projects=projects_filter,
+                pagination_marker=pagination_marker,
+                number=number,
+                reverse=reverse,
+            )
             return self.__stub.ListJobSet(message)
 
     def delete_job(
@@ -571,6 +596,7 @@ class PPSMixin:
         details: bool = False,
         jqFilter: str = None,
         commit_set: pfs_pb2.CommitSet = None,
+        projects_filter: List[str] = None,
     ) -> Iterator[pps_pb2.PipelineInfo]:
         """.. # noqa: W505
 
@@ -593,6 +619,8 @@ class PPSMixin:
             A ``jq`` filter that can filter the list of pipelines returned.
         commit_set : pfs_pb2.CommitSet, optional
             If non-nil, will return all the pipeline infos at this commit set
+        projects_filter: List[str], optional
+            A list of projects to filter jobs on, None means don't filter.
 
         Returns
         -------
@@ -608,6 +636,7 @@ class PPSMixin:
             history=history,
             jqFilter=jqFilter,
             commit_set=commit_set,
+            projects=projects_filter,
         )
         return self.__stub.ListPipeline(message)
 

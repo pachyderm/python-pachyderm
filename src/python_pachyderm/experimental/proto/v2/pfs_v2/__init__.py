@@ -242,12 +242,29 @@ class ListRepoRequest(betterproto.Message):
     # type is the type of (system) repos that should be returned an empty string
     # requests all repos
     type: str = betterproto.string_field(1)
+    # projects filters out repos that do not belong in the list, while no
+    # projects means list all repos.
+    projects: List["Project"] = betterproto.message_field(2)
 
 
 @dataclass(eq=False, repr=False)
 class DeleteRepoRequest(betterproto.Message):
     repo: "Repo" = betterproto.message_field(1)
     force: bool = betterproto.bool_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class DeleteReposRequest(betterproto.Message):
+    """DeleteReposRequest is used to delete more than one repo at once."""
+
+    # All repos in each project will be deleted if the caller has permission.
+    projects: List["Project"] = betterproto.message_field(1)
+    force: bool = betterproto.bool_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class DeleteReposResponse(betterproto.Message):
+    repos: List["Repo"] = betterproto.message_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -299,7 +316,7 @@ class InspectCommitSetRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class ListCommitSetRequest(betterproto.Message):
-    pass
+    project: "Project" = betterproto.message_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -671,10 +688,15 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary("/pfs_v2.API/InspectRepo", request, RepoInfo)
 
-    async def list_repo(self, *, type: str = "") -> AsyncIterator["RepoInfo"]:
+    async def list_repo(
+        self, *, type: str = "", projects: Optional[List["Project"]] = None
+    ) -> AsyncIterator["RepoInfo"]:
+        projects = projects or []
 
         request = ListRepoRequest()
         request.type = type
+        if projects is not None:
+            request.projects = projects
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListRepo",
@@ -694,6 +716,20 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary(
             "/pfs_v2.API/DeleteRepo", request, betterproto_lib_google_protobuf.Empty
+        )
+
+    async def delete_repos(
+        self, *, projects: Optional[List["Project"]] = None, force: bool = False
+    ) -> "DeleteReposResponse":
+        projects = projects or []
+
+        request = DeleteReposRequest()
+        if projects is not None:
+            request.projects = projects
+        request.force = force
+
+        return await self._unary_unary(
+            "/pfs_v2.API/DeleteRepos", request, DeleteReposResponse
         )
 
     async def start_commit(
@@ -830,9 +866,13 @@ class ApiStub(betterproto.ServiceStub):
         ):
             yield response
 
-    async def list_commit_set(self) -> AsyncIterator["CommitSetInfo"]:
+    async def list_commit_set(
+        self, *, project: "Project" = None
+    ) -> AsyncIterator["CommitSetInfo"]:
 
         request = ListCommitSetRequest()
+        if project is not None:
+            request.project = project
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListCommitSet",
@@ -1367,12 +1407,19 @@ class ApiBase(ServiceBase):
     async def inspect_repo(self, repo: "Repo") -> "RepoInfo":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_repo(self, type: str) -> AsyncIterator["RepoInfo"]:
+    async def list_repo(
+        self, type: str, projects: Optional[List["Project"]]
+    ) -> AsyncIterator["RepoInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def delete_repo(
         self, repo: "Repo", force: bool
     ) -> "betterproto_lib_google_protobuf.Empty":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def delete_repos(
+        self, projects: Optional[List["Project"]], force: bool
+    ) -> "DeleteReposResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def start_commit(
@@ -1424,7 +1471,9 @@ class ApiBase(ServiceBase):
     ) -> AsyncIterator["CommitInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_commit_set(self) -> AsyncIterator["CommitSetInfo"]:
+    async def list_commit_set(
+        self, project: "Project"
+    ) -> AsyncIterator["CommitSetInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def squash_commit_set(
@@ -1617,6 +1666,7 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "type": request.type,
+            "projects": request.projects,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1634,6 +1684,17 @@ class ApiBase(ServiceBase):
         }
 
         response = await self.delete_repo(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_delete_repos(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "projects": request.projects,
+            "force": request.force,
+        }
+
+        response = await self.delete_repos(**request_kwargs)
         await stream.send_message(response)
 
     async def __rpc_start_commit(self, stream: grpclib.server.Stream) -> None:
@@ -1737,7 +1798,9 @@ class ApiBase(ServiceBase):
     async def __rpc_list_commit_set(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {}
+        request_kwargs = {
+            "project": request.project,
+        }
 
         await self._call_rpc_handler_server_stream(
             self.list_commit_set,
@@ -2172,6 +2235,12 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 DeleteRepoRequest,
                 betterproto_lib_google_protobuf.Empty,
+            ),
+            "/pfs_v2.API/DeleteRepos": grpclib.const.Handler(
+                self.__rpc_delete_repos,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                DeleteReposRequest,
+                DeleteReposResponse,
             ),
             "/pfs_v2.API/StartCommit": grpclib.const.Handler(
                 self.__rpc_start_commit,

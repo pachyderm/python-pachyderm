@@ -2,7 +2,6 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from python_pachyderm.proto.v2.admin import admin_pb2 as python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2
 
 
@@ -17,7 +16,7 @@ class APIStub(object):
         """
         self.InspectCluster = channel.unary_unary(
                 '/admin_v2.API/InspectCluster',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.InspectClusterRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.ClusterInfo.FromString,
                 )
 
@@ -36,7 +35,7 @@ def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'InspectCluster': grpc.unary_unary_rpc_method_handler(
                     servicer.InspectCluster,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.InspectClusterRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.ClusterInfo.SerializeToString,
             ),
     }
@@ -61,7 +60,7 @@ class API(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/admin_v2.API/InspectCluster',
-            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.InspectClusterRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_admin_dot_admin__pb2.ClusterInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

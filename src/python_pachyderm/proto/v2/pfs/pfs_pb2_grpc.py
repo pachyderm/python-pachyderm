@@ -37,6 +37,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.DeleteRepos = channel.unary_unary(
+                '/pfs_v2.API/DeleteRepos',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposResponse.FromString,
+                )
         self.StartCommit = channel.unary_unary(
                 '/pfs_v2.API/StartCommit',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.StartCommitRequest.SerializeToString,
@@ -280,6 +285,18 @@ class APIServicer(object):
 
     def DeleteRepo(self, request, context):
         """DeleteRepo deletes a repo.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteRepos(self, request, context):
+        """DeleteRepos deletes more than one repo at once.  It attempts to
+        delete every repo matching the DeleteReposRequest.  When deleting
+        all repos matching a project, any repos not deletable by the
+        caller will remain, and the project will not be empty; this is
+        not an error.  The returned DeleteReposResponse will contain a
+        list of all actually-deleted repos.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -607,6 +624,11 @@ def add_APIServicer_to_server(servicer, server):
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
+            'DeleteRepos': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteRepos,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposResponse.SerializeToString,
+            ),
             'StartCommit': grpc.unary_unary_rpc_method_handler(
                     servicer.StartCommit,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.StartCommitRequest.FromString,
@@ -897,6 +919,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/DeleteRepo',
             python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteRepoRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteRepos(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pfs_v2.API/DeleteRepos',
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DeleteReposResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

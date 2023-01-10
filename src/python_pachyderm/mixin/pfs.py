@@ -166,7 +166,9 @@ class PFSMixin:
         )
         return self.__stub.InspectRepo(message)
 
-    def list_repo(self, type: str = "user") -> Iterator[pfs_pb2.RepoInfo]:
+    def list_repo(
+        self, type: str = "user", projects_filter: List[pfs_pb2.Project] = None
+    ) -> Iterator[pfs_pb2.RepoInfo]:
         """Lists all repos in PFS.
 
         Parameters
@@ -174,13 +176,16 @@ class PFSMixin:
         type : str, optional
             The type of repos that should be returned ("user", "meta", "spec").
             If unset, returns all types of repos.
+        projects_filter : [Project], optional
+            Filters out repos that do not belong in the list,
+            while no projects means to list all repos
 
         Returns
         -------
         Iterator[pfs_pb2.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
-        message = pfs_pb2.ListRepoRequest(type=type)
+        message = pfs_pb2.ListRepoRequest(type=type, projects=projects_filter)
         return self.__stub.ListRepo(message)
 
     def delete_repo(
@@ -480,6 +485,7 @@ class PFSMixin:
         all: bool = False,
         origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
         started_time: datetime = None,
+        project_name: str = None,
     ) -> Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]:
         """Lists commits.
 
@@ -512,6 +518,8 @@ class PFSMixin:
             subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
         started_time : datetime
+        project_name : str, optional
+            The name of the project containing the repo.
 
         Returns
         -------
@@ -535,7 +543,7 @@ class PFSMixin:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             message = pfs_pb2.ListCommitRequest(
-                repo=pfs_pb2.Repo(name=repo_name, type="user"),
+                repo=pfs_pb2.Repo(name=repo_name, type="user", project=project_name),
                 number=number,
                 reverse=reverse,
                 all=all,
@@ -548,7 +556,7 @@ class PFSMixin:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
             return self.__stub.ListCommit(message)
         else:
-            message = pfs_pb2.ListCommitSetRequest()
+            message = pfs_pb2.ListCommitSetRequest(project=project_name)
             return self.__stub.ListCommitSet(message)
 
     def squash_commit(self, commit_id: str) -> None:

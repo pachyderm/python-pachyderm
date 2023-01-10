@@ -428,7 +428,7 @@ class RevokeAuthTokenRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class RevokeAuthTokenResponse(betterproto.Message):
-    pass
+    number: int = betterproto.int64_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -516,7 +516,7 @@ class RevokeAuthTokensForUserRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class RevokeAuthTokensForUserResponse(betterproto.Message):
-    pass
+    number: int = betterproto.int64_field(1)
 
 
 @dataclass(eq=False, repr=False)

@@ -11,7 +11,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from python_pachyderm.proto.v2.version.versionpb import version_pb2 as python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+github.com/pachyderm/pachyderm/v2/src/admin',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+python_pachyderm/proto/v2/admin/admin.proto\x12\x08\x61\x64min_v2\x1a\x1bgoogle/protobuf/empty.proto\"0\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rdeployment_id\x18\x02 \x01(\t2H\n\x03\x41PI\x12\x41\n\x0eInspectCluster\x12\x16.google.protobuf.Empty\x1a\x15.admin_v2.ClusterInfo\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/adminb\x06proto3'
+  serialized_pb=b'\n+python_pachyderm/proto/v2/admin/admin.proto\x12\x08\x61\x64min_v2\x1a\x39python_pachyderm/proto/v2/version/versionpb/version.proto\"g\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rdeployment_id\x18\x02 \x01(\t\x12\x1b\n\x13version_warnings_ok\x18\x03 \x01(\x08\x12\x18\n\x10version_warnings\x18\x04 \x03(\t\"F\n\x15InspectClusterRequest\x12-\n\x0e\x63lient_version\x18\x01 \x01(\x0b\x32\x15.versionpb_v2.Version2Q\n\x03\x41PI\x12J\n\x0eInspectCluster\x12\x1f.admin_v2.InspectClusterRequest\x1a\x15.admin_v2.ClusterInfo\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/adminb\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
+  dependencies=[python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2.DESCRIPTOR,])
 
 
 
@@ -49,6 +49,20 @@ _CLUSTERINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version_warnings_ok', full_name='admin_v2.ClusterInfo.version_warnings_ok', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version_warnings', full_name='admin_v2.ClusterInfo.version_warnings', index=3,
+      number=4, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -61,11 +75,45 @@ _CLUSTERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=86,
-  serialized_end=134,
+  serialized_start=116,
+  serialized_end=219,
 )
 
+
+_INSPECTCLUSTERREQUEST = _descriptor.Descriptor(
+  name='InspectClusterRequest',
+  full_name='admin_v2.InspectClusterRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='client_version', full_name='admin_v2.InspectClusterRequest.client_version', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=221,
+  serialized_end=291,
+)
+
+_INSPECTCLUSTERREQUEST.fields_by_name['client_version'].message_type = python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2._VERSION
 DESCRIPTOR.message_types_by_name['ClusterInfo'] = _CLUSTERINFO
+DESCRIPTOR.message_types_by_name['InspectClusterRequest'] = _INSPECTCLUSTERREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ClusterInfo = _reflection.GeneratedProtocolMessageType('ClusterInfo', (_message.Message,), {
@@ -74,6 +122,13 @@ ClusterInfo = _reflection.GeneratedProtocolMessageType('ClusterInfo', (_message.
   # @@protoc_insertion_point(class_scope:admin_v2.ClusterInfo)
   })
 _sym_db.RegisterMessage(ClusterInfo)
+
+InspectClusterRequest = _reflection.GeneratedProtocolMessageType('InspectClusterRequest', (_message.Message,), {
+  'DESCRIPTOR' : _INSPECTCLUSTERREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.admin.admin_pb2'
+  # @@protoc_insertion_point(class_scope:admin_v2.InspectClusterRequest)
+  })
+_sym_db.RegisterMessage(InspectClusterRequest)
 
 
 DESCRIPTOR._options = None
@@ -85,15 +140,15 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=136,
-  serialized_end=208,
+  serialized_start=293,
+  serialized_end=374,
   methods=[
   _descriptor.MethodDescriptor(
     name='InspectCluster',
     full_name='admin_v2.API.InspectCluster',
     index=0,
     containing_service=None,
-    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    input_type=_INSPECTCLUSTERREQUEST,
     output_type=_CLUSTERINFO,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,

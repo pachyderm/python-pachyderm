@@ -2,7 +2,7 @@
 # sources: python_pachyderm/proto/v2/admin/admin.proto
 # plugin: python-betterproto
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, List
 
 import betterproto
 from betterproto.grpc.grpclib_server import ServiceBase
@@ -13,12 +13,23 @@ import grpclib
 class ClusterInfo(betterproto.Message):
     id: str = betterproto.string_field(1)
     deployment_id: str = betterproto.string_field(2)
+    version_warnings_ok: bool = betterproto.bool_field(3)
+    version_warnings: List[str] = betterproto.string_field(4)
+
+
+@dataclass(eq=False, repr=False)
+class InspectClusterRequest(betterproto.Message):
+    client_version: "_versionpb_v2__.Version" = betterproto.message_field(1)
 
 
 class ApiStub(betterproto.ServiceStub):
-    async def inspect_cluster(self) -> "ClusterInfo":
+    async def inspect_cluster(
+        self, *, client_version: "_versionpb_v2__.Version" = None
+    ) -> "ClusterInfo":
 
-        request = betterproto_lib_google_protobuf.Empty()
+        request = InspectClusterRequest()
+        if client_version is not None:
+            request.client_version = client_version
 
         return await self._unary_unary(
             "/admin_v2.API/InspectCluster", request, ClusterInfo
@@ -26,13 +37,17 @@ class ApiStub(betterproto.ServiceStub):
 
 
 class ApiBase(ServiceBase):
-    async def inspect_cluster(self) -> "ClusterInfo":
+    async def inspect_cluster(
+        self, client_version: "_versionpb_v2__.Version"
+    ) -> "ClusterInfo":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_inspect_cluster(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {}
+        request_kwargs = {
+            "client_version": request.client_version,
+        }
 
         response = await self.inspect_cluster(**request_kwargs)
         await stream.send_message(response)
@@ -42,10 +57,10 @@ class ApiBase(ServiceBase):
             "/admin_v2.API/InspectCluster": grpclib.const.Handler(
                 self.__rpc_inspect_cluster,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                betterproto_lib_google_protobuf.Empty,
+                InspectClusterRequest,
                 ClusterInfo,
             ),
         }
 
 
-import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf
+from .. import versionpb_v2 as _versionpb_v2__
