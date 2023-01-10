@@ -40,7 +40,7 @@ commands:
     steps:
       - run:
           name: Create virtual environment
-          command: poetry install -v
+          command: poetry install -vvv
 
 jobs:
   unit-tests:
