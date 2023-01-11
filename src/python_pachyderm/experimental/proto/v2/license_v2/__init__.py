@@ -104,6 +104,7 @@ class UpdateClusterRequest(betterproto.Message):
     address: str = betterproto.string_field(2)
     user_address: str = betterproto.string_field(3)
     cluster_deployment_id: str = betterproto.string_field(4)
+    secret: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -240,6 +241,7 @@ class ApiStub(betterproto.ServiceStub):
         address: str = "",
         user_address: str = "",
         cluster_deployment_id: str = "",
+        secret: str = "",
     ) -> "UpdateClusterResponse":
 
         request = UpdateClusterRequest()
@@ -247,6 +249,7 @@ class ApiStub(betterproto.ServiceStub):
         request.address = address
         request.user_address = user_address
         request.cluster_deployment_id = cluster_deployment_id
+        request.secret = secret
 
         return await self._unary_unary(
             "/license_v2.API/UpdateCluster", request, UpdateClusterResponse
@@ -312,7 +315,12 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def update_cluster(
-        self, id: str, address: str, user_address: str, cluster_deployment_id: str
+        self,
+        id: str,
+        address: str,
+        user_address: str,
+        cluster_deployment_id: str,
+        secret: str,
     ) -> "UpdateClusterResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -392,6 +400,7 @@ class ApiBase(ServiceBase):
             "address": request.address,
             "user_address": request.user_address,
             "cluster_deployment_id": request.cluster_deployment_id,
+            "secret": request.secret,
         }
 
         response = await self.update_cluster(**request_kwargs)

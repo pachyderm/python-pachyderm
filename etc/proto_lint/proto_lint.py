@@ -80,6 +80,7 @@ BLACKLISTED_METHODS = {
         "activate_auth",
         "run_load_test",
         "get_file_t_a_r",
+        "delete_repos",
         # TODO: add these new API methods
         "add_file_set",
         "clear_commit",
@@ -97,6 +98,7 @@ BLACKLISTED_METHODS = {
         "put_cache",
         "clear_cache",
         "list_task",
+        "shard_file_set",
     ],
     Service.PPS: [
         # ignore these
@@ -199,6 +201,10 @@ RENAMED_METHODS = {
 # * We can also specify that a method has an argument that isn't in the
 #   protos: `(None, "ignored_arg_name")`
 RENAMED_ARGS = {
+    # admin
+    "inspect_cluster": [
+        ("client_version", None),
+    ],
     # auth
     "authenticate_oidc": [
         ("github_token", None),
@@ -211,13 +217,14 @@ RENAMED_ARGS = {
         (None, "duration"),
     ],
     # PFS
-    "create_repo": [
-        ("repo", "repo_name"),
-    ],
+    "create_repo": [("repo", "repo_name"), ("project", "project_name")],
     "create_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
         ("head", "head_commit"),
         ("new_commit_set", "new_commit"),
+    ],
+    "create_project": [
+        ("project", "project_name"),
     ],
     "create_secret": [
         ("file", ("secret_name", "data", "labels", "annotations")),
@@ -227,14 +234,18 @@ RENAMED_ARGS = {
         ("dst", ("dest_commit", "dest_path")),
     ],
     "delete_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
     ],
     "delete_file": [
         ("file", ("commit", "path")),
     ],
     "delete_repo": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
         ("all", None),
+    ],
+    "delete_project": [
+        ("project", "project_name"),
     ],
     "diff_file": [
         ("old_file", ("old_commit", "old_path")),
@@ -251,14 +262,19 @@ RENAMED_ARGS = {
     "flush_commit": [
         ("to_repos", "repos"),
     ],
+    "fsck": [
+        ("zombie_target", None),
+        ("zombie_all", None),
+    ],
     "get_file": [
         ("file", ("commit", "path", "datum")),
+        ("path_range", None),
     ],
     "get_file_tar": [
         ("file", ("commit", "path", "datum")),
     ],
     "inspect_branch": [
-        ("branch", ("repo_name", "branch_name")),
+        ("branch", ("repo_name", "branch_name", "project_name")),
     ],
     "inspect_commit": [
         ("repo", "repo_name"),
@@ -273,19 +289,29 @@ RENAMED_ARGS = {
     ],
     "inspect_repo": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
+    ],
+    "inspect_project": [
+        ("project", "project_name"),
     ],
     "inspect_secret": [
         ("secret", "secret_name"),
     ],
     "list_branch": [
         ("repo", "repo_name"),
+        ("project", "project_name"),
     ],
     "list_commit": [
         ("from", "from_commit"),
         ("to", "to_commit"),
         ("repo", "repo_name"),
+        ("project", "project_name"),
     ],
-    "list_file": [("file", ("commit", "path", "datum"))],
+    "list_file": [
+        ("file", ("commit", "path", "datum")),
+        ("paginationMarker", "pagination_marker"),
+    ],
+    "list_repo": [("projects", "projects_filter")],
     "put_file_bytes": [
         ("file", ("commit", "path")),
         ("url", None),
@@ -303,11 +329,13 @@ RENAMED_ARGS = {
     "start_commit": [
         ("parent", ("repo_name", "parent_commit")),
         ("branch", "branch_name"),
+        ("project", "project_name"),
     ],
     "subscribe_commit": [
         ("from", "from_commit"),
         ("repo", "repo_name"),
         ("branch", "branch_name"),
+        ("project", "project_name"),
         ("state", "commit_state"),
     ],
     "walk_file": [
@@ -316,20 +344,23 @@ RENAMED_ARGS = {
     # PPS
     "create_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("pod_spec", None),
         ("tf_job", None),
         ("output_branch", "output_branch_name"),
     ],
     "create_tf_job_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("pod_spec", None),
         ("transform", None),
     ],
     "delete_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "delete_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         ("all", None),
     ],
     "delete_secret": [
@@ -342,48 +373,66 @@ RENAMED_ARGS = {
         ("job", "job_id"),
         ("master", None),
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "get_pipeline_logs": [
         ("pipeline", ("pipeline_name")),
+        ("project", "project_name"),
         ("job", None),
     ],
     "inspect_datum": [
-        ("datum", ("pipeline_name", "job_id", "datum_id")),
+        ("datum", ("pipeline_name", "project_name", "job_id", "datum_id")),
     ],
     "inspect_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "inspect_job_set": [
         ("job_set", "job_set_id"),
     ],
     "inspect_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
         (None, "history"),
     ],
     "list_datum": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
+        ("filter", "datum_filter"),
+        ("Filter", None),
+        ("paginationMarker", "pagination_marker"),
     ],
     "list_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
+        ("projects", "projects_filter"),
     ],
     "list_job": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
+        ("projects", "projects_filter"),
+        ("paginationMarker", "pagination_marker"),
     ],
     "restart_datum": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
-    "run_pipeline": [("pipeline", "pipeline_name"), ("pipeline_job_id", "job_id")],
+    "run_pipeline": [
+        ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
+        ("pipeline_job_id", "job_id"),
+    ],
     "run_cron": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "start_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "stop_job": [
-        ("job", ("pipeline_name", "job_id")),
+        ("job", ("pipeline_name", "project_name", "job_id")),
     ],
     "stop_pipeline": [
         ("pipeline", "pipeline_name"),
+        ("project", "project_name"),
     ],
     "squash_commit_set": [("commit_set", "commit_set_id")],
 }

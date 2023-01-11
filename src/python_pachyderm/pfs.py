@@ -15,13 +15,18 @@ class Commit(NamedTuple):
     branch: str = None
     id: str = None
     repo_type: str = "user"
+    project: str = "default"
 
     def to_pb(self) -> pfs_pb2.Commit:
         """Converts itself into a ``pfs_pb2.Commit``."""
         return pfs_pb2.Commit(
             id=self.id,
             branch=pfs_pb2.Branch(
-                repo=pfs_pb2.Repo(name=self.repo, type=self.repo_type),
+                repo=pfs_pb2.Repo(
+                    name=self.repo,
+                    type=self.repo_type,
+                    project=pfs_pb2.Project(name=self.project),
+                ),
                 name=self.branch,
             ),
         )
@@ -36,9 +41,11 @@ class Commit(NamedTuple):
             branch=commit.branch.name,
             id=commit.id,
             repo_type=commit.branch.repo.type,
+            project=commit.branch.repo.project.name,
         )
 
 
+# TODO: How to reconcile tuple commit format with projects.
 SubcommitType = Union[tuple, dict, Commit, pfs_pb2.Commit]
 """Composite type for a subcommit, a commit at the repo-level.
 

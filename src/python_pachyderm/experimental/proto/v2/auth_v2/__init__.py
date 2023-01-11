@@ -80,6 +80,11 @@ class Permission(betterproto.Enum):
     REPO_REMOVE_PIPELINE_READER = 213
     REPO_ADD_PIPELINE_WRITER = 214
     PIPELINE_LIST_JOB = 301
+    PROJECT_CREATE = 400
+    PROJECT_DELETE = 401
+    PROJECT_LIST_REPO = 402
+    PROJECT_CREATE_REPO = 403
+    PROJECT_MODIFY_BINDINGS = 404
 
 
 class ResourceType(betterproto.Enum):
@@ -89,6 +94,7 @@ class ResourceType(betterproto.Enum):
     CLUSTER = 1
     REPO = 2
     SPEC_REPO = 3
+    PROJECT = 4
 
 
 @dataclass(eq=False, repr=False)
@@ -147,10 +153,10 @@ class OidcConfig(betterproto.Message):
     # OIDC requests to the embedded OIDC provider. This is necessary to support
     # some network configurations like Minikube.
     localhost_issuer: bool = betterproto.bool_field(7)
-    # user_accessible_issuer_host can be set to override the host used  in the
+    # user_accessible_issuer_host can be set to override the host used in the
     # OAuth2 authorization URL in case the OIDC issuer isn't accessible outside
-    # the cluster. This is necessary to support  some configurations like
-    # Minikube.
+    # the cluster. This requires a fully formed URL with scheme of either http or
+    # https. This is necessary to support some configurations like Minikube.
     user_accessible_issuer_host: str = betterproto.string_field(8)
 
 
@@ -422,7 +428,7 @@ class RevokeAuthTokenRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class RevokeAuthTokenResponse(betterproto.Message):
-    pass
+    number: int = betterproto.int64_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -510,7 +516,7 @@ class RevokeAuthTokensForUserRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class RevokeAuthTokensForUserResponse(betterproto.Message):
-    pass
+    number: int = betterproto.int64_field(1)
 
 
 @dataclass(eq=False, repr=False)

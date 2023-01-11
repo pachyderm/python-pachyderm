@@ -525,6 +525,7 @@ def test_list_commit():
     python_pachyderm.Client().delete_all_repos()
 
     client, repo_name1 = sandbox("list_commit1")
+    project = "default"
 
     with client.commit(repo_name1, "master"):
         pass
@@ -536,7 +537,7 @@ def test_list_commit():
     with client.commit(repo_name2, "master"):
         pass
 
-    commits = list(client.list_commit())
+    commits = list(client.list_commit(project_name=project))
     assert len(commits) == 3
 
 
@@ -744,7 +745,7 @@ def _repo_fixture(request) -> str:
 def _client_fixture(repo):
     client = Client()
     client.delete_repo(repo, force=True)
-    client.create_repo(repo, "test repo for python_pachyderm")
+    client.create_repo(repo, description="test repo for python_pachyderm")
     yield client
     client.delete_repo(repo, force=True)
 

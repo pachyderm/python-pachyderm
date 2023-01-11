@@ -27,6 +27,7 @@ class Filter(betterproto.Message):
     pachd: bool = betterproto.bool_field(1, group="filter")
     pipeline: "_pps_v2__.Pipeline" = betterproto.message_field(2, group="filter")
     worker: "Worker" = betterproto.message_field(3, group="filter")
+    database: bool = betterproto.bool_field(4, group="filter")
 
 
 @dataclass(eq=False, repr=False)

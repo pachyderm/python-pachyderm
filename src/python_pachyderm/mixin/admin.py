@@ -13,6 +13,11 @@ class AdminMixin:
         self.__stub = admin_pb2_grpc.APIStub(self._channel)
         super().__init__()
 
+    # TODO: This method should auto-populate it's message with information about
+    #   the version of this package that is making the call. This is to allow
+    #   the cluster to emit warnings about incompatible versions.
+    #  This is not currently feasible to implement until we have better coupling
+    #    with the versions of the core product.
     def inspect_cluster(self) -> admin_pb2.ClusterInfo:
         """Inspects a cluster.
 

@@ -59,6 +59,7 @@ class SqlDatabaseEgressFileFormatType(betterproto.Enum):
 class Repo(betterproto.Message):
     name: str = betterproto.string_field(1)
     type: str = betterproto.string_field(2)
+    project: "Project" = betterproto.message_field(3)
 
 
 @dataclass(eq=False, repr=False)
@@ -214,6 +215,17 @@ class FileInfo(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class Project(betterproto.Message):
+    name: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class ProjectInfo(betterproto.Message):
+    project: "Project" = betterproto.message_field(1)
+    description: str = betterproto.string_field(2)
+
+
+@dataclass(eq=False, repr=False)
 class CreateRepoRequest(betterproto.Message):
     repo: "Repo" = betterproto.message_field(1)
     description: str = betterproto.string_field(2)
@@ -230,12 +242,29 @@ class ListRepoRequest(betterproto.Message):
     # type is the type of (system) repos that should be returned an empty string
     # requests all repos
     type: str = betterproto.string_field(1)
+    # projects filters out repos that do not belong in the list, while no
+    # projects means list all repos.
+    projects: List["Project"] = betterproto.message_field(2)
 
 
 @dataclass(eq=False, repr=False)
 class DeleteRepoRequest(betterproto.Message):
     repo: "Repo" = betterproto.message_field(1)
     force: bool = betterproto.bool_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class DeleteReposRequest(betterproto.Message):
+    """DeleteReposRequest is used to delete more than one repo at once."""
+
+    # All repos in each project will be deleted if the caller has permission.
+    projects: List["Project"] = betterproto.message_field(1)
+    force: bool = betterproto.bool_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class DeleteReposResponse(betterproto.Message):
+    repos: List["Repo"] = betterproto.message_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -276,6 +305,7 @@ class ListCommitRequest(betterproto.Message):
     reverse: bool = betterproto.bool_field(5)
     all: bool = betterproto.bool_field(6)
     origin_kind: "OriginKind" = betterproto.enum_field(7)
+    started_time: datetime = betterproto.message_field(8)
 
 
 @dataclass(eq=False, repr=False)
@@ -286,7 +316,7 @@ class InspectCommitSetRequest(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class ListCommitSetRequest(betterproto.Message):
-    pass
+    project: "Project" = betterproto.message_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -343,6 +373,29 @@ class DeleteBranchRequest(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class CreateProjectRequest(betterproto.Message):
+    project: "Project" = betterproto.message_field(1)
+    description: str = betterproto.string_field(2)
+    update: bool = betterproto.bool_field(3)
+
+
+@dataclass(eq=False, repr=False)
+class InspectProjectRequest(betterproto.Message):
+    project: "Project" = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class ListProjectRequest(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class DeleteProjectRequest(betterproto.Message):
+    project: "Project" = betterproto.message_field(1)
+    force: bool = betterproto.bool_field(2)
+
+
+@dataclass(eq=False, repr=False)
 class AddFile(betterproto.Message):
     path: str = betterproto.string_field(1)
     datum: str = betterproto.string_field(2)
@@ -385,6 +438,7 @@ class GetFileRequest(betterproto.Message):
     file: "File" = betterproto.message_field(1)
     url: str = betterproto.string_field(2)
     offset: int = betterproto.int64_field(3)
+    path_range: "PathRange" = betterproto.message_field(4)
 
 
 @dataclass(eq=False, repr=False)
@@ -399,6 +453,14 @@ class ListFileRequest(betterproto.Message):
     # the "path" field is omitted, a list of files at the top level of the repo
     # is returned
     file: "File" = betterproto.message_field(1)
+    # Marker for pagination. If set, the files that come after the marker in
+    # lexicographical order will be returned. If reverse is also set, the files
+    # that come before the marker in lexicographical order will be returned.
+    pagination_marker: "File" = betterproto.message_field(3)
+    # Number of files to return
+    number: int = betterproto.int64_field(4)
+    # If true, return files in reverse order
+    reverse: bool = betterproto.bool_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -410,6 +472,7 @@ class WalkFileRequest(betterproto.Message):
 class GlobFileRequest(betterproto.Message):
     commit: "Commit" = betterproto.message_field(1)
     pattern: str = betterproto.string_field(2)
+    path_range: "PathRange" = betterproto.message_field(3)
 
 
 @dataclass(eq=False, repr=False)
@@ -430,6 +493,9 @@ class DiffFileResponse(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class FsckRequest(betterproto.Message):
     fix: bool = betterproto.bool_field(1)
+    zombie_target: "Commit" = betterproto.message_field(2, group="zombie_check")
+    # run zombie data detection against all pipelines
+    zombie_all: bool = betterproto.bool_field(3, group="zombie_check")
 
 
 @dataclass(eq=False, repr=False)
@@ -464,6 +530,23 @@ class RenewFileSetRequest(betterproto.Message):
 class ComposeFileSetRequest(betterproto.Message):
     file_set_ids: List[str] = betterproto.string_field(1)
     ttl_seconds: int = betterproto.int64_field(2)
+    compact: bool = betterproto.bool_field(3)
+
+
+@dataclass(eq=False, repr=False)
+class ShardFileSetRequest(betterproto.Message):
+    file_set_id: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class PathRange(betterproto.Message):
+    lower: str = betterproto.string_field(1)
+    upper: str = betterproto.string_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class ShardFileSetResponse(betterproto.Message):
+    shards: List["PathRange"] = betterproto.message_field(1)
 
 
 @dataclass(eq=False, repr=False)
@@ -516,6 +599,7 @@ class RunLoadTestRequest(betterproto.Message):
     spec: str = betterproto.string_field(1)
     branch: "Branch" = betterproto.message_field(2)
     seed: int = betterproto.int64_field(3)
+    state_id: str = betterproto.string_field(4)
 
 
 @dataclass(eq=False, repr=False)
@@ -525,6 +609,7 @@ class RunLoadTestResponse(betterproto.Message):
     seed: int = betterproto.int64_field(3)
     error: str = betterproto.string_field(4)
     duration: timedelta = betterproto.message_field(5)
+    state_id: str = betterproto.string_field(6)
 
 
 @dataclass(eq=False, repr=False)
@@ -603,10 +688,15 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary("/pfs_v2.API/InspectRepo", request, RepoInfo)
 
-    async def list_repo(self, *, type: str = "") -> AsyncIterator["RepoInfo"]:
+    async def list_repo(
+        self, *, type: str = "", projects: Optional[List["Project"]] = None
+    ) -> AsyncIterator["RepoInfo"]:
+        projects = projects or []
 
         request = ListRepoRequest()
         request.type = type
+        if projects is not None:
+            request.projects = projects
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListRepo",
@@ -626,6 +716,20 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary(
             "/pfs_v2.API/DeleteRepo", request, betterproto_lib_google_protobuf.Empty
+        )
+
+    async def delete_repos(
+        self, *, projects: Optional[List["Project"]] = None, force: bool = False
+    ) -> "DeleteReposResponse":
+        projects = projects or []
+
+        request = DeleteReposRequest()
+        if projects is not None:
+            request.projects = projects
+        request.force = force
+
+        return await self._unary_unary(
+            "/pfs_v2.API/DeleteRepos", request, DeleteReposResponse
         )
 
     async def start_commit(
@@ -694,6 +798,7 @@ class ApiStub(betterproto.ServiceStub):
         reverse: bool = False,
         all: bool = False,
         origin_kind: "OriginKind" = None,
+        started_time: datetime = None,
     ) -> AsyncIterator["CommitInfo"]:
 
         request = ListCommitRequest()
@@ -707,6 +812,8 @@ class ApiStub(betterproto.ServiceStub):
         request.reverse = reverse
         request.all = all
         request.origin_kind = origin_kind
+        if started_time is not None:
+            request.started_time = started_time
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListCommit",
@@ -759,9 +866,13 @@ class ApiStub(betterproto.ServiceStub):
         ):
             yield response
 
-    async def list_commit_set(self) -> AsyncIterator["CommitSetInfo"]:
+    async def list_commit_set(
+        self, *, project: "Project" = None
+    ) -> AsyncIterator["CommitSetInfo"]:
 
         request = ListCommitSetRequest()
+        if project is not None:
+            request.project = project
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListCommitSet",
@@ -874,7 +985,12 @@ class ApiStub(betterproto.ServiceStub):
         )
 
     async def get_file(
-        self, *, file: "File" = None, url: str = "", offset: int = 0
+        self,
+        *,
+        file: "File" = None,
+        url: str = "",
+        offset: int = 0,
+        path_range: "PathRange" = None,
     ) -> AsyncIterator["betterproto_lib_google_protobuf.BytesValue"]:
 
         request = GetFileRequest()
@@ -882,6 +998,8 @@ class ApiStub(betterproto.ServiceStub):
             request.file = file
         request.url = url
         request.offset = offset
+        if path_range is not None:
+            request.path_range = path_range
 
         async for response in self._unary_stream(
             "/pfs_v2.API/GetFile",
@@ -891,7 +1009,12 @@ class ApiStub(betterproto.ServiceStub):
             yield response
 
     async def get_file_tar(
-        self, *, file: "File" = None, url: str = "", offset: int = 0
+        self,
+        *,
+        file: "File" = None,
+        url: str = "",
+        offset: int = 0,
+        path_range: "PathRange" = None,
     ) -> AsyncIterator["betterproto_lib_google_protobuf.BytesValue"]:
 
         request = GetFileRequest()
@@ -899,6 +1022,8 @@ class ApiStub(betterproto.ServiceStub):
             request.file = file
         request.url = url
         request.offset = offset
+        if path_range is not None:
+            request.path_range = path_range
 
         async for response in self._unary_stream(
             "/pfs_v2.API/GetFileTAR",
@@ -915,11 +1040,22 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary("/pfs_v2.API/InspectFile", request, FileInfo)
 
-    async def list_file(self, *, file: "File" = None) -> AsyncIterator["FileInfo"]:
+    async def list_file(
+        self,
+        *,
+        file: "File" = None,
+        pagination_marker: "File" = None,
+        number: int = 0,
+        reverse: bool = False,
+    ) -> AsyncIterator["FileInfo"]:
 
         request = ListFileRequest()
         if file is not None:
             request.file = file
+        if pagination_marker is not None:
+            request.pagination_marker = pagination_marker
+        request.number = number
+        request.reverse = reverse
 
         async for response in self._unary_stream(
             "/pfs_v2.API/ListFile",
@@ -942,13 +1078,19 @@ class ApiStub(betterproto.ServiceStub):
             yield response
 
     async def glob_file(
-        self, *, commit: "Commit" = None, pattern: str = ""
+        self,
+        *,
+        commit: "Commit" = None,
+        pattern: str = "",
+        path_range: "PathRange" = None,
     ) -> AsyncIterator["FileInfo"]:
 
         request = GlobFileRequest()
         if commit is not None:
             request.commit = commit
         request.pattern = pattern
+        if path_range is not None:
+            request.path_range = path_range
 
         async for response in self._unary_stream(
             "/pfs_v2.API/GlobFile",
@@ -991,10 +1133,19 @@ class ApiStub(betterproto.ServiceStub):
             "/pfs_v2.API/DeleteAll", request, betterproto_lib_google_protobuf.Empty
         )
 
-    async def fsck(self, *, fix: bool = False) -> AsyncIterator["FsckResponse"]:
+    async def fsck(
+        self,
+        *,
+        fix: bool = False,
+        zombie_target: "Commit" = None,
+        zombie_all: bool = False,
+    ) -> AsyncIterator["FsckResponse"]:
 
         request = FsckRequest()
         request.fix = fix
+        if zombie_target is not None:
+            request.zombie_target = zombie_target
+        request.zombie_all = zombie_all
 
         async for response in self._unary_stream(
             "/pfs_v2.API/Fsck",
@@ -1053,16 +1204,30 @@ class ApiStub(betterproto.ServiceStub):
         )
 
     async def compose_file_set(
-        self, *, file_set_ids: Optional[List[str]] = None, ttl_seconds: int = 0
+        self,
+        *,
+        file_set_ids: Optional[List[str]] = None,
+        ttl_seconds: int = 0,
+        compact: bool = False,
     ) -> "CreateFileSetResponse":
         file_set_ids = file_set_ids or []
 
         request = ComposeFileSetRequest()
         request.file_set_ids = file_set_ids
         request.ttl_seconds = ttl_seconds
+        request.compact = compact
 
         return await self._unary_unary(
             "/pfs_v2.API/ComposeFileSet", request, CreateFileSetResponse
+        )
+
+    async def shard_file_set(self, *, file_set_id: str = "") -> "ShardFileSetResponse":
+
+        request = ShardFileSetRequest()
+        request.file_set_id = file_set_id
+
+        return await self._unary_unary(
+            "/pfs_v2.API/ShardFileSet", request, ShardFileSetResponse
         )
 
     async def check_storage(
@@ -1124,7 +1289,12 @@ class ApiStub(betterproto.ServiceStub):
         )
 
     async def run_load_test(
-        self, *, spec: str = "", branch: "Branch" = None, seed: int = 0
+        self,
+        *,
+        spec: str = "",
+        branch: "Branch" = None,
+        seed: int = 0,
+        state_id: str = "",
     ) -> "RunLoadTestResponse":
 
         request = RunLoadTestRequest()
@@ -1132,6 +1302,7 @@ class ApiStub(betterproto.ServiceStub):
         if branch is not None:
             request.branch = branch
         request.seed = seed
+        request.state_id = state_id
 
         return await self._unary_unary(
             "/pfs_v2.API/RunLoadTest", request, RunLoadTestResponse
@@ -1178,6 +1349,54 @@ class ApiStub(betterproto.ServiceStub):
 
         return await self._unary_unary("/pfs_v2.API/Egress", request, EgressResponse)
 
+    async def create_project(
+        self, *, project: "Project" = None, description: str = "", update: bool = False
+    ) -> "betterproto_lib_google_protobuf.Empty":
+
+        request = CreateProjectRequest()
+        if project is not None:
+            request.project = project
+        request.description = description
+        request.update = update
+
+        return await self._unary_unary(
+            "/pfs_v2.API/CreateProject", request, betterproto_lib_google_protobuf.Empty
+        )
+
+    async def inspect_project(self, *, project: "Project" = None) -> "ProjectInfo":
+
+        request = InspectProjectRequest()
+        if project is not None:
+            request.project = project
+
+        return await self._unary_unary(
+            "/pfs_v2.API/InspectProject", request, ProjectInfo
+        )
+
+    async def list_project(self) -> AsyncIterator["ProjectInfo"]:
+
+        request = ListProjectRequest()
+
+        async for response in self._unary_stream(
+            "/pfs_v2.API/ListProject",
+            request,
+            ProjectInfo,
+        ):
+            yield response
+
+    async def delete_project(
+        self, *, project: "Project" = None, force: bool = False
+    ) -> "betterproto_lib_google_protobuf.Empty":
+
+        request = DeleteProjectRequest()
+        if project is not None:
+            request.project = project
+        request.force = force
+
+        return await self._unary_unary(
+            "/pfs_v2.API/DeleteProject", request, betterproto_lib_google_protobuf.Empty
+        )
+
 
 class ApiBase(ServiceBase):
     async def create_repo(
@@ -1188,12 +1407,19 @@ class ApiBase(ServiceBase):
     async def inspect_repo(self, repo: "Repo") -> "RepoInfo":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_repo(self, type: str) -> AsyncIterator["RepoInfo"]:
+    async def list_repo(
+        self, type: str, projects: Optional[List["Project"]]
+    ) -> AsyncIterator["RepoInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def delete_repo(
         self, repo: "Repo", force: bool
     ) -> "betterproto_lib_google_protobuf.Empty":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def delete_repos(
+        self, projects: Optional[List["Project"]], force: bool
+    ) -> "DeleteReposResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def start_commit(
@@ -1225,6 +1451,7 @@ class ApiBase(ServiceBase):
         reverse: bool,
         all: bool,
         origin_kind: "OriginKind",
+        started_time: datetime,
     ) -> AsyncIterator["CommitInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1244,7 +1471,9 @@ class ApiBase(ServiceBase):
     ) -> AsyncIterator["CommitInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_commit_set(self) -> AsyncIterator["CommitSetInfo"]:
+    async def list_commit_set(
+        self, project: "Project"
+    ) -> AsyncIterator["CommitSetInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def squash_commit_set(
@@ -1286,26 +1515,28 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def get_file(
-        self, file: "File", url: str, offset: int
+        self, file: "File", url: str, offset: int, path_range: "PathRange"
     ) -> AsyncIterator["betterproto_lib_google_protobuf.BytesValue"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def get_file_tar(
-        self, file: "File", url: str, offset: int
+        self, file: "File", url: str, offset: int, path_range: "PathRange"
     ) -> AsyncIterator["betterproto_lib_google_protobuf.BytesValue"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def inspect_file(self, file: "File") -> "FileInfo":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def list_file(self, file: "File") -> AsyncIterator["FileInfo"]:
+    async def list_file(
+        self, file: "File", pagination_marker: "File", number: int, reverse: bool
+    ) -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def walk_file(self, file: "File") -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def glob_file(
-        self, commit: "Commit", pattern: str
+        self, commit: "Commit", pattern: str, path_range: "PathRange"
     ) -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1320,7 +1551,9 @@ class ApiBase(ServiceBase):
     async def delete_all(self) -> "betterproto_lib_google_protobuf.Empty":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def fsck(self, fix: bool) -> AsyncIterator["FsckResponse"]:
+    async def fsck(
+        self, fix: bool, zombie_target: "Commit", zombie_all: bool
+    ) -> AsyncIterator["FsckResponse"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def create_file_set(
@@ -1342,8 +1575,11 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def compose_file_set(
-        self, file_set_ids: Optional[List[str]], ttl_seconds: int
+        self, file_set_ids: Optional[List[str]], ttl_seconds: int, compact: bool
     ) -> "CreateFileSetResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def shard_file_set(self, file_set_id: str) -> "ShardFileSetResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def check_storage(
@@ -1369,7 +1605,7 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def run_load_test(
-        self, spec: str, branch: "Branch", seed: int
+        self, spec: str, branch: "Branch", seed: int, state_id: str
     ) -> "RunLoadTestResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1385,6 +1621,22 @@ class ApiBase(ServiceBase):
         object_storage: "ObjectStorageEgress",
         sql_database: "SqlDatabaseEgress",
     ) -> "EgressResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def create_project(
+        self, project: "Project", description: str, update: bool
+    ) -> "betterproto_lib_google_protobuf.Empty":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def inspect_project(self, project: "Project") -> "ProjectInfo":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def list_project(self) -> AsyncIterator["ProjectInfo"]:
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def delete_project(
+        self, project: "Project", force: bool
+    ) -> "betterproto_lib_google_protobuf.Empty":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_create_repo(self, stream: grpclib.server.Stream) -> None:
@@ -1414,6 +1666,7 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "type": request.type,
+            "projects": request.projects,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1431,6 +1684,17 @@ class ApiBase(ServiceBase):
         }
 
         response = await self.delete_repo(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_delete_repos(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "projects": request.projects,
+            "force": request.force,
+        }
+
+        response = await self.delete_repos(**request_kwargs)
         await stream.send_message(response)
 
     async def __rpc_start_commit(self, stream: grpclib.server.Stream) -> None:
@@ -1490,6 +1754,7 @@ class ApiBase(ServiceBase):
             "reverse": request.reverse,
             "all": request.all,
             "origin_kind": request.origin_kind,
+            "started_time": request.started_time,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1533,7 +1798,9 @@ class ApiBase(ServiceBase):
     async def __rpc_list_commit_set(self, stream: grpclib.server.Stream) -> None:
         request = await stream.recv_message()
 
-        request_kwargs = {}
+        request_kwargs = {
+            "project": request.project,
+        }
 
         await self._call_rpc_handler_server_stream(
             self.list_commit_set,
@@ -1623,6 +1890,7 @@ class ApiBase(ServiceBase):
             "file": request.file,
             "url": request.url,
             "offset": request.offset,
+            "path_range": request.path_range,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1638,6 +1906,7 @@ class ApiBase(ServiceBase):
             "file": request.file,
             "url": request.url,
             "offset": request.offset,
+            "path_range": request.path_range,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1661,6 +1930,9 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "file": request.file,
+            "pagination_marker": request.pagination_marker,
+            "number": request.number,
+            "reverse": request.reverse,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1688,6 +1960,7 @@ class ApiBase(ServiceBase):
         request_kwargs = {
             "commit": request.commit,
             "pattern": request.pattern,
+            "path_range": request.path_range,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1732,6 +2005,8 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "fix": request.fix,
+            "zombie_target": request.zombie_target,
+            "zombie_all": request.zombie_all,
         }
 
         await self._call_rpc_handler_server_stream(
@@ -1784,9 +2059,20 @@ class ApiBase(ServiceBase):
         request_kwargs = {
             "file_set_ids": request.file_set_ids,
             "ttl_seconds": request.ttl_seconds,
+            "compact": request.compact,
         }
 
         response = await self.compose_file_set(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_shard_file_set(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "file_set_id": request.file_set_id,
+        }
+
+        response = await self.shard_file_set(**request_kwargs)
         await stream.send_message(response)
 
     async def __rpc_check_storage(self, stream: grpclib.server.Stream) -> None:
@@ -1841,6 +2127,7 @@ class ApiBase(ServiceBase):
             "spec": request.spec,
             "branch": request.branch,
             "seed": request.seed,
+            "state_id": request.state_id,
         }
 
         response = await self.run_load_test(**request_kwargs)
@@ -1879,6 +2166,50 @@ class ApiBase(ServiceBase):
         response = await self.egress(**request_kwargs)
         await stream.send_message(response)
 
+    async def __rpc_create_project(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "project": request.project,
+            "description": request.description,
+            "update": request.update,
+        }
+
+        response = await self.create_project(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_inspect_project(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "project": request.project,
+        }
+
+        response = await self.inspect_project(**request_kwargs)
+        await stream.send_message(response)
+
+    async def __rpc_list_project(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {}
+
+        await self._call_rpc_handler_server_stream(
+            self.list_project,
+            stream,
+            request_kwargs,
+        )
+
+    async def __rpc_delete_project(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "project": request.project,
+            "force": request.force,
+        }
+
+        response = await self.delete_project(**request_kwargs)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/pfs_v2.API/CreateRepo": grpclib.const.Handler(
@@ -1904,6 +2235,12 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 DeleteRepoRequest,
                 betterproto_lib_google_protobuf.Empty,
+            ),
+            "/pfs_v2.API/DeleteRepos": grpclib.const.Handler(
+                self.__rpc_delete_repos,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                DeleteReposRequest,
+                DeleteReposResponse,
             ),
             "/pfs_v2.API/StartCommit": grpclib.const.Handler(
                 self.__rpc_start_commit,
@@ -2085,6 +2422,12 @@ class ApiBase(ServiceBase):
                 ComposeFileSetRequest,
                 CreateFileSetResponse,
             ),
+            "/pfs_v2.API/ShardFileSet": grpclib.const.Handler(
+                self.__rpc_shard_file_set,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ShardFileSetRequest,
+                ShardFileSetResponse,
+            ),
             "/pfs_v2.API/CheckStorage": grpclib.const.Handler(
                 self.__rpc_check_storage,
                 grpclib.const.Cardinality.UNARY_UNARY,
@@ -2132,6 +2475,30 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 EgressRequest,
                 EgressResponse,
+            ),
+            "/pfs_v2.API/CreateProject": grpclib.const.Handler(
+                self.__rpc_create_project,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                CreateProjectRequest,
+                betterproto_lib_google_protobuf.Empty,
+            ),
+            "/pfs_v2.API/InspectProject": grpclib.const.Handler(
+                self.__rpc_inspect_project,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                InspectProjectRequest,
+                ProjectInfo,
+            ),
+            "/pfs_v2.API/ListProject": grpclib.const.Handler(
+                self.__rpc_list_project,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                ListProjectRequest,
+                ProjectInfo,
+            ),
+            "/pfs_v2.API/DeleteProject": grpclib.const.Handler(
+                self.__rpc_delete_project,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                DeleteProjectRequest,
+                betterproto_lib_google_protobuf.Empty,
             ),
         }
 

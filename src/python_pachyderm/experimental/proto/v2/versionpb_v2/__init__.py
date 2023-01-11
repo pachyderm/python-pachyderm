@@ -15,6 +15,11 @@ class Version(betterproto.Message):
     minor: int = betterproto.uint32_field(2)
     micro: int = betterproto.uint32_field(3)
     additional: str = betterproto.string_field(4)
+    git_commit: str = betterproto.string_field(5)
+    git_tree_modified: str = betterproto.string_field(6)
+    build_date: str = betterproto.string_field(7)
+    go_version: str = betterproto.string_field(8)
+    platform: str = betterproto.string_field(9)
 
 
 class ApiStub(betterproto.ServiceStub):

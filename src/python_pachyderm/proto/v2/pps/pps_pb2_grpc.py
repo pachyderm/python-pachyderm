@@ -3,7 +3,6 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from python_pachyderm.proto.v2.pfs import pfs_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2
 from python_pachyderm.proto.v2.pps import pps_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2
 from python_pachyderm.proto.v2.task import task_pb2 as python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2
 
@@ -149,13 +148,13 @@ class APIStub(object):
                 )
         self.RunLoadTest = channel.unary_unary(
                 '/pps_v2.API/RunLoadTest',
-                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.FromString,
                 )
         self.RunLoadTestDefault = channel.unary_unary(
                 '/pps_v2.API/RunLoadTestDefault',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.FromString,
                 )
         self.RenderTemplate = channel.unary_unary(
                 '/pps_v2.API/RenderTemplate',
@@ -497,13 +496,13 @@ def add_APIServicer_to_server(servicer, server):
             ),
             'RunLoadTest': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTest,
-                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.SerializeToString,
             ),
             'RunLoadTestDefault': grpc.unary_unary_rpc_method_handler(
                     servicer.RunLoadTestDefault,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.SerializeToString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.SerializeToString,
             ),
             'RenderTemplate': grpc.unary_unary_rpc_method_handler(
                     servicer.RenderTemplate,
@@ -979,8 +978,8 @@ class API(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunLoadTest',
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestRequest.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -997,7 +996,7 @@ class API(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/RunLoadTestDefault',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.RunLoadTestResponse.FromString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.RunLoadTestResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

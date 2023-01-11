@@ -4,14 +4,20 @@ import re
 import itertools
 import tarfile
 from contextlib import contextmanager
+from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 import grpc
 from betterproto import BytesValue
 
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
-from google.protobuf import empty_pb2, wrappers_pb2
+from google.protobuf import empty_pb2, wrappers_pb2, timestamp_pb2
 
 BUFFER_SIZE = 19 * 1024 * 1024
 
@@ -105,7 +111,11 @@ class PFSMixin:
         super().__init__()
 
     def create_repo(
-        self, repo_name: str, description: str = None, update: bool = False
+        self,
+        repo_name: str,
+        description: str = None,
+        update: bool = False,
+        project_name: str = None,
     ) -> None:
         """Creates a new repo object in PFS with the given name. Repos are the
         top level data object in PFS and should be used to store data of a
@@ -121,21 +131,31 @@ class PFSMixin:
             Description of the repo.
         update : bool, optional
             Whether to update if the repo already exists.
+        project_name : str
+            The name of the project.
         """
         message = pfs_pb2.CreateRepoRequest(
             description=description,
-            repo=pfs_pb2.Repo(name=repo_name, type="user"),
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
             update=update,
         )
         self.__stub.CreateRepo(message)
 
-    def inspect_repo(self, repo_name: str) -> pfs_pb2.RepoInfo:
+    def inspect_repo(
+        self, repo_name: str, project_name: str = None
+    ) -> pfs_pb2.RepoInfo:
         """Inspects a repo.
 
         Parameters
         ----------
         repo_name : str
             Name of the repo.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -143,11 +163,17 @@ class PFSMixin:
             A protobuf object with info on the repo.
         """
         message = pfs_pb2.InspectRepoRequest(
-            repo=pfs_pb2.Repo(name=repo_name, type="user")
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
         )
         return self.__stub.InspectRepo(message)
 
-    def list_repo(self, type: str = "user") -> Iterator[pfs_pb2.RepoInfo]:
+    def list_repo(
+        self, type: str = "user", projects_filter: List[pfs_pb2.Project] = None
+    ) -> Iterator[pfs_pb2.RepoInfo]:
         """Lists all repos in PFS.
 
         Parameters
@@ -155,16 +181,23 @@ class PFSMixin:
         type : str, optional
             The type of repos that should be returned ("user", "meta", "spec").
             If unset, returns all types of repos.
+        projects_filter : [Project], optional
+            Filters out repos that do not belong in the list,
+            while no projects means to list all repos
 
         Returns
         -------
         Iterator[pfs_pb2.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
-        message = pfs_pb2.ListRepoRequest(type=type)
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_pb2.Project(name=p.name) for p in projects_filter]
+        message = pfs_pb2.ListRepoRequest(type=type, projects=projects_filter)
         return self.__stub.ListRepo(message)
 
-    def delete_repo(self, repo_name: str, force: bool = False) -> None:
+    def delete_repo(
+        self, repo_name: str, force: bool = False, project_name: str = None
+    ) -> None:
         """Deletes a repo and reclaims the storage space it was using.
 
         Parameters
@@ -174,10 +207,16 @@ class PFSMixin:
         force : bool, optional
             If set to true, the repo will be removed regardless of errors.
             Use with care.
+        project_name : str
+            The name of the project.
         """
         message = pfs_pb2.DeleteRepoRequest(
             force=force,
-            repo=pfs_pb2.Repo(name=repo_name, type="user"),
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
         )
         self.__stub.DeleteRepo(message)
 
@@ -186,12 +225,80 @@ class PFSMixin:
         message = empty_pb2.Empty()
         self.__stub.DeleteAll(message)
 
+    def create_project(
+        self, project_name: str, description: str = None, update: bool = False
+    ) -> None:
+        """Creates a new project with the given name.
+
+        Parameters
+        ----------
+        project_name : str
+            Name of the project.
+        description : str, optional
+            Description of the project.
+        update : bool, optional
+            Whether to update if the project already exists.
+        """
+        message = pfs_pb2.CreateProjectRequest(
+            project=pfs_pb2.Project(name=project_name),
+            description=description,
+            update=update,
+        )
+        self.__stub.CreateProject(message)
+
+    def inspect_project(self, project_name: str) -> pfs_pb2.ProjectInfo:
+        """Inspects a project.
+
+        Parameters
+        ----------
+        project_name : str
+            Name of the project.
+
+        Returns
+        -------
+        pfs_proto.ProjectInfo
+            A protobuf object with info on the project.
+        """
+        message = pfs_pb2.InspectProjectRequest(
+            project=pfs_pb2.Project(name=project_name)
+        )
+        return self.__stub.InspectProject(message)
+
+    def list_project(self) -> Iterator[pfs_pb2.ProjectInfo]:
+        """Lists all projects in PFS.
+
+        Returns
+        -------
+        Iterator[pfs_proto.ProjectInfo]
+            An iterator of protobuf objects that contain info on a project.
+        """
+        message = pfs_pb2.ListProjectRequest()
+        return self.__stub.ListProject(message)
+
+    def delete_project(self, project_name: str, force: bool = False) -> None:
+        """Deletes a project and reclaims the storage space it was using.
+
+        Parameters
+        ----------
+        project_name : str
+            The name of the project.
+        force : bool, optional
+            If set to true, the repo will be removed regardless of errors.
+            Use with care.
+        """
+        message = pfs_pb2.DeleteProjectRequest(
+            force=force,
+            project=pfs_pb2.Project(name=project_name),
+        )
+        self.__stub.DeleteProject(message)
+
     def start_commit(
         self,
         repo_name: str,
         branch: str,
         parent: Union[str, SubcommitType] = None,
         description: str = None,
+        project_name: str = None,
     ) -> pfs_pb2.Commit:
         """Begins the process of committing data to a repo. Once started you
         can write to the commit with ModifyFile. When all the data has been
@@ -210,6 +317,8 @@ class PFSMixin:
             identical to the parent.
         description : str, optional
             A description of the commit.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -221,7 +330,9 @@ class PFSMixin:
         --------
         >>> c = client.start_commit("foo", "master", ("foo", "staging"))
         """
-        repo = pfs_pb2.Repo(name=repo_name, type="user")
+        repo = pfs_pb2.Repo(
+            name=repo_name, type="user", project=pfs_pb2.Project(name=project_name)
+        )
         if parent and isinstance(parent, str):
             parent = pfs_pb2.Commit(
                 id=parent,
@@ -287,6 +398,7 @@ class PFSMixin:
         branch: str,
         parent: Union[str, SubcommitType] = None,
         description: str = None,
+        project_name: str = None,
     ) -> Iterator[pfs_pb2.Commit]:
         """A context manager for running operations within a commit.
 
@@ -302,6 +414,8 @@ class PFSMixin:
             identical to the parent.
         description : str, optional
             A description of the commit.
+        project_name : str
+            The name of the project.
 
         Yields
         -------
@@ -314,7 +428,7 @@ class PFSMixin:
         >>>     client.delete_file(c, "/dir/delete_me.txt")
         >>>     client.put_file_bytes(c, "/new_file.txt", b"DATA")
         """
-        commit = self.start_commit(repo_name, branch, parent, description)
+        commit = self.start_commit(repo_name, branch, parent, description, project_name)
         try:
             yield commit
         finally:
@@ -377,6 +491,8 @@ class PFSMixin:
         reverse: bool = False,
         all: bool = False,
         origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
+        started_time: datetime = None,
+        project_name: str = None,
     ) -> Union[Iterator[pfs_pb2.CommitInfo], Iterator[pfs_pb2.CommitSetInfo]]:
         """Lists commits.
 
@@ -408,6 +524,9 @@ class PFSMixin:
             An enum that specifies how a subcommit originated. Returns only
             subcommits of this enum type. Only impacts results if `repo_name`
             is specified.
+        started_time : datetime
+        project_name : str, optional
+            The name of the project containing the repo.
 
         Returns
         -------
@@ -427,13 +546,21 @@ class PFSMixin:
 
         .. # noqa: W505
         """
+        project = pfs_pb2.Project(name=project_name) if project_name else None
         if repo_name is not None:
+            if started_time is not None:
+                started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             message = pfs_pb2.ListCommitRequest(
-                repo=pfs_pb2.Repo(name=repo_name, type="user"),
+                repo=pfs_pb2.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=project,
+                ),
                 number=number,
                 reverse=reverse,
                 all=all,
                 origin_kind=origin_kind,
+                started_time=started_time,
             )
             if to_commit is not None:
                 message.to.CopyFrom(commit_from(to_commit))
@@ -441,7 +568,7 @@ class PFSMixin:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
             return self.__stub.ListCommit(message)
         else:
-            message = pfs_pb2.ListCommitSetRequest()
+            message = pfs_pb2.ListCommitSetRequest(project=project)
             return self.__stub.ListCommitSet(message)
 
     def squash_commit(self, commit_id: str) -> None:
@@ -507,6 +634,7 @@ class PFSMixin:
         state: pfs_pb2.CommitState = pfs_pb2.CommitState.STARTED,
         all: bool = False,
         origin_kind: pfs_pb2.OriginKind = pfs_pb2.OriginKind.USER,
+        project_name: str = None,
     ) -> Iterator[pfs_pb2.CommitInfo]:
         """Returns all commits on the branch and then listens for new commits
         that are created.
@@ -529,6 +657,8 @@ class PFSMixin:
         origin_kind : {pfs_pb2.OriginKind.USER, pfs_pb2.OriginKind.AUTO, pfs_pb2.OriginKind.FSCK, pfs_pb2.OriginKind.ALIAS}, optional
             An enum that specifies how a commit originated. Returns only
             commits of this enum type. (Default value = ``pfs_pb2.OriginKind.USER``)
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -545,7 +675,9 @@ class PFSMixin:
 
         .. # noqa: W505
         """
-        repo = pfs_pb2.Repo(name=repo_name, type="user")
+        repo = pfs_pb2.Repo(
+            name=repo_name, type="user", project=pfs_pb2.Project(name=project_name)
+        )
         message = pfs_pb2.SubscribeCommitRequest(
             repo=repo,
             branch=branch,
@@ -570,6 +702,7 @@ class PFSMixin:
         provenance: List[pfs_pb2.Branch] = None,
         trigger: pfs_pb2.Trigger = None,
         new_commit: bool = False,
+        project_name: str = None,
     ) -> None:
         """Creates a new branch.
 
@@ -590,6 +723,8 @@ class PFSMixin:
         new_commit : bool, optional
             If true and `head_commit` is specified, uses a different commit ID
             for head than `head_commit`.
+        project_name : str
+            The name of the project.
 
         Examples
         --------
@@ -608,7 +743,11 @@ class PFSMixin:
         message = pfs_pb2.CreateBranchRequest(
             branch=pfs_pb2.Branch(
                 name=branch_name,
-                repo=pfs_pb2.Repo(name=repo_name, type="user"),
+                repo=pfs_pb2.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=pfs_pb2.Project(name=project_name),
+                ),
             ),
             head=commit_from(head_commit),
             new_commit_set=new_commit,
@@ -617,7 +756,12 @@ class PFSMixin:
         )
         self.__stub.CreateBranch(message)
 
-    def inspect_branch(self, repo_name: str, branch_name: str) -> pfs_pb2.BranchInfo:
+    def inspect_branch(
+        self,
+        repo_name: str,
+        branch_name: str,
+        project_name: str = None,
+    ) -> pfs_pb2.BranchInfo:
         """Inspects a branch.
 
         Parameters
@@ -626,6 +770,8 @@ class PFSMixin:
             The name of the repo.
         branch_name : str
             The name of the branch.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -634,13 +780,21 @@ class PFSMixin:
         """
         message = pfs_pb2.InspectBranchRequest(
             branch=pfs_pb2.Branch(
-                repo=pfs_pb2.Repo(name=repo_name, type="user"), name=branch_name
+                name=branch_name,
+                repo=pfs_pb2.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=pfs_pb2.Project(name=project_name),
+                ),
             ),
         )
         return self.__stub.InspectBranch(message)
 
     def list_branch(
-        self, repo_name: str, reverse: bool = False
+        self,
+        repo_name: str,
+        reverse: bool = False,
+        project_name: str = None,
     ) -> Iterator[pfs_pb2.BranchInfo]:
         """Lists the active branch objects in a repo.
 
@@ -650,6 +804,8 @@ class PFSMixin:
             The name of the repo.
         reverse : bool, optional
             If true, returns branches oldest to newest.
+        project_name : str
+            The name of the project.
 
         Returns
         -------
@@ -661,13 +817,21 @@ class PFSMixin:
         >>> branches = list(client.list_branch("foo"))
         """
         message = pfs_pb2.ListBranchRequest(
-            repo=pfs_pb2.Repo(name=repo_name, type="user"),
+            repo=pfs_pb2.Repo(
+                name=repo_name,
+                type="user",
+                project=pfs_pb2.Project(name=project_name),
+            ),
             reverse=reverse,
         )
         return self.__stub.ListBranch(message)
 
     def delete_branch(
-        self, repo_name: str, branch_name: str, force: bool = False
+        self,
+        repo_name: str,
+        branch_name: str,
+        force: bool = False,
+        project_name: str = None,
     ) -> None:
         """Deletes a branch, but leaves the commits themselves intact. In other
         words, those commits can still be accessed via commit IDs and other
@@ -681,11 +845,17 @@ class PFSMixin:
             The name of the branch.
         force : bool, optional
             If true, forces the branch deletion.
+        project_name : str
+            The name of the project.
         """
         message = pfs_pb2.DeleteBranchRequest(
             branch=pfs_pb2.Branch(
                 name=branch_name,
-                repo=pfs_pb2.Repo(name=repo_name, type="user"),
+                repo=pfs_pb2.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=pfs_pb2.Project(name=project_name),
+                ),
             ),
             force=force,
         )
@@ -988,6 +1158,9 @@ class PFSMixin:
         commit: SubcommitType,
         path: str,
         datum: str = None,
+        pagination_marker: pfs_pb2.File = None,
+        number: int = None,
+        reverse: bool = False,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists the files in a directory.
 
@@ -999,6 +1172,15 @@ class PFSMixin:
             The path to the directory.
         datum : str, optional
             A tag that filters the files.
+        pagination_marker:
+            Marker for pagination. If set, the files that come after the marker
+            in lexicographical order will be returned. If reverse is also set,
+            the files that come before the marker in lexicographical order will
+            be returned.
+        number : int, optional
+            Number of files to return
+        reverse : bool, optional
+            If true, return files in reverse order
 
         Returns
         -------
@@ -1011,6 +1193,9 @@ class PFSMixin:
         """
         message = pfs_pb2.ListFileRequest(
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
+            paginationMarker=pagination_marker,
+            number=number,
+            reverse=reverse,
         )
         return self.__stub.ListFile(message)
 
@@ -1046,7 +1231,10 @@ class PFSMixin:
         return self.__stub.WalkFile(message)
 
     def glob_file(
-        self, commit: SubcommitType, pattern: str
+        self,
+        commit: SubcommitType,
+        pattern: str,
+        path_range: pfs_pb2.PathRange = None,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Lists files that match a glob pattern.
 
@@ -1069,6 +1257,7 @@ class PFSMixin:
         message = pfs_pb2.GlobFileRequest(
             commit=commit_from(commit),
             pattern=pattern,
+            path_range=path_range,
         )
         return self.__stub.GlobFile(message)
 
