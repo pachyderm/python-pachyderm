@@ -1,7 +1,11 @@
 import json
 import base64
-from collections import Iterable
 from typing import Dict, Iterator, List, Union
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 import grpc
 from google.protobuf import empty_pb2, duration_pb2

@@ -518,6 +518,7 @@ def test_list_commit():
     python_pachyderm.experimental.Client().delete_all_repos()
 
     client, repo_name1 = sandbox("list_commit1")
+    project = "default"
 
     with client.commit(repo_name1, "master"):
         pass
@@ -529,7 +530,7 @@ def test_list_commit():
     with client.commit(repo_name2, "master"):
         pass
 
-    commits = list(client.list_commit())
+    commits = list(client.list_commit(project_name=project))
     assert len(commits) == 3
 
 

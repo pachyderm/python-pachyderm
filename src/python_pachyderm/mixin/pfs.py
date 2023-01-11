@@ -3,10 +3,14 @@ import os
 import re
 import itertools
 import tarfile
-from collections import Iterable
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 import grpc
 from betterproto import BytesValue
@@ -542,6 +546,7 @@ class PFSMixin:
 
         .. # noqa: W505
         """
+        project = pfs_pb2.Project(name=project_name) if project_name else None
         if repo_name is not None:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
@@ -549,7 +554,7 @@ class PFSMixin:
                 repo=pfs_pb2.Repo(
                     name=repo_name,
                     type="user",
-                    project=pfs_pb2.Project(name=project_name),
+                    project=project,
                 ),
                 number=number,
                 reverse=reverse,
@@ -563,9 +568,7 @@ class PFSMixin:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
             return self.__stub.ListCommit(message)
         else:
-            message = pfs_pb2.ListCommitSetRequest(
-                project=pfs_pb2.Project(name=project_name)
-            )
+            message = pfs_pb2.ListCommitSetRequest(project=project)
             return self.__stub.ListCommitSet(message)
 
     def squash_commit(self, commit_id: str) -> None:

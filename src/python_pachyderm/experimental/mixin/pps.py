@@ -1,8 +1,12 @@
 import json
 import base64
 import datetime
-from collections import Iterable
 from typing import Dict, Iterator, List, Union
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 from python_pachyderm.experimental.pfs import commit_from, Commit
 from python_pachyderm.service import Service

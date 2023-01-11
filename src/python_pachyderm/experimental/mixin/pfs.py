@@ -5,10 +5,14 @@ import time
 import itertools
 import subprocess
 from pathlib import Path
-from collections import Iterable
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
+
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 from python_pachyderm.mixin.pfs import PFSFile, PFSTarFile
 from python_pachyderm.experimental.pfs import commit_from, Commit, uuid_re
@@ -478,6 +482,7 @@ class PFSMixin:
 
         .. # noqa: W505
         """
+        project = pfs_proto.Project(name=project_name) if project_name else None
         if repo_name is not None:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
@@ -485,7 +490,7 @@ class PFSMixin:
                 repo=pfs_proto.Repo(
                     name=repo_name,
                     type="user",
-                    project=pfs_proto.Project(name=project_name),
+                    project=project,
                 ),
                 number=number,
                 reverse=reverse,
@@ -502,7 +507,7 @@ class PFSMixin:
             return self._req(
                 Service.PFS,
                 "ListCommitSet",
-                project=pfs_proto.Project(name=project_name),
+                project=project,
             )
 
     def squash_commit(self, commit_id: str) -> None:
