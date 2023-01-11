@@ -1,5 +1,6 @@
 import json
 import base64
+from collections import Iterable
 from typing import Dict, Iterator, List, Union
 
 import grpc
@@ -147,6 +148,8 @@ class PPSMixin:
 
         .. # noqa: W505
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_pb2.Project(name=p.name) for p in projects_filter]
         if pipeline_name is not None:
             if isinstance(input_commit, list):
                 input_commit = [commit_from(ic) for ic in input_commit]
@@ -631,6 +634,8 @@ class PPSMixin:
         --------
         >>> pipelines = list(client.list_pipeline())
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_pb2.Project(name=p.name) for p in projects_filter]
         message = pps_pb2.ListPipelineRequest(
             details=details,
             history=history,

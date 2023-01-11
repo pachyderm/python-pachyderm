@@ -3,6 +3,7 @@ import os
 import re
 import itertools
 import tarfile
+from collections import Iterable
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
@@ -185,6 +186,8 @@ class PFSMixin:
         Iterator[pfs_pb2.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_pb2.Project(name=p.name) for p in projects_filter]
         message = pfs_pb2.ListRepoRequest(type=type, projects=projects_filter)
         return self.__stub.ListRepo(message)
 
@@ -543,7 +546,11 @@ class PFSMixin:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             message = pfs_pb2.ListCommitRequest(
-                repo=pfs_pb2.Repo(name=repo_name, type="user", project=project_name),
+                repo=pfs_pb2.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=pfs_pb2.Project(name=project_name),
+                ),
                 number=number,
                 reverse=reverse,
                 all=all,
@@ -556,7 +563,9 @@ class PFSMixin:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
             return self.__stub.ListCommit(message)
         else:
-            message = pfs_pb2.ListCommitSetRequest(project=project_name)
+            message = pfs_pb2.ListCommitSetRequest(
+                project=pfs_pb2.Project(name=project_name)
+            )
             return self.__stub.ListCommitSet(message)
 
     def squash_commit(self, commit_id: str) -> None:

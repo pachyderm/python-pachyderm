@@ -1,6 +1,7 @@
 import json
 import base64
 import datetime
+from collections import Iterable
 from typing import Dict, Iterator, List, Union
 
 from python_pachyderm.experimental.pfs import commit_from, Commit
@@ -152,6 +153,8 @@ class PPSMixin:
 
         .. # noqa: W505
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_proto.Project(name=p.name) for p in projects_filter]
         if pipeline_name is not None:
             if isinstance(input_commit, list):
                 input_commit = [commit_from(ic) for ic in input_commit]
@@ -661,6 +664,8 @@ class PPSMixin:
         --------
         >>> pipelines = list(client.list_pipeline())
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_proto.Project(name=p.name) for p in projects_filter]
         return self._req(
             Service.PPS,
             "ListPipeline",

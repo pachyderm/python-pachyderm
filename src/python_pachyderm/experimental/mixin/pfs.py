@@ -5,6 +5,7 @@ import time
 import itertools
 import subprocess
 from pathlib import Path
+from collections import Iterable
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator, Union, List, BinaryIO
@@ -109,6 +110,8 @@ class PFSMixin:
         Iterator[pfs_proto.RepoInfo]
             An iterator of protobuf objects that contain info on a repo.
         """
+        if isinstance(projects_filter, Iterable):
+            projects_filter = [pfs_proto.Project(name=p.name) for p in projects_filter]
         return self._req(Service.PFS, "ListRepo", type=type, projects=projects_filter)
 
     def delete_repo(
@@ -479,7 +482,11 @@ class PFSMixin:
             if started_time is not None:
                 started_time = timestamp_pb2.Timestamp.FromDatetime(started_time)
             req = pfs_proto.ListCommitRequest(
-                repo=pfs_proto.Repo(name=repo_name, type="user", project=project_name),
+                repo=pfs_proto.Repo(
+                    name=repo_name,
+                    type="user",
+                    project=pfs_proto.Project(name=project_name),
+                ),
                 number=number,
                 reverse=reverse,
                 all=all,
@@ -492,7 +499,11 @@ class PFSMixin:
                 req.from_ = commit_from(from_commit)
             return self._req(Service.PFS, "ListCommit", req=req)
         else:
-            return self._req(Service.PFS, "ListCommitSet", project=project_name)
+            return self._req(
+                Service.PFS,
+                "ListCommitSet",
+                project=pfs_proto.Project(name=project_name),
+            )
 
     def squash_commit(self, commit_id: str) -> None:
         """Squashes a commit into its parent.
