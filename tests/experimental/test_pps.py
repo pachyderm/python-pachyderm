@@ -40,12 +40,17 @@ def test_list_subjob():
     jobs = list(sandbox.client.list_job())
     assert len(jobs) >= 1
 
-    jobs = list(sandbox.client.list_job(pipeline_name=sandbox.pipeline_repo_name))
+    jobs = list(
+        sandbox.client.list_job(
+            pipeline_name=sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    )
     assert len(jobs) >= 1
 
     jobs = list(
         sandbox.client.list_job(
             pipeline_name=sandbox.pipeline_repo_name,
+            project_name=sandbox.project_name,
             input_commit=dict(
                 repo=sandbox.input_repo_name,
                 id=sandbox.commit.id,
@@ -72,7 +77,11 @@ def test_inspect_subjob():
     sandbox = Sandbox("inspect_subjob")
     job_id = sandbox.wait()
 
-    job_info = list(sandbox.client.inspect_job(job_id, sandbox.pipeline_repo_name))
+    job_info = list(
+        sandbox.client.inspect_job(
+            job_id, sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    )
     assert job_info[0].job.id == job_id
 
 
@@ -96,13 +105,17 @@ def test_stop_job():
     pipeline_name = sandbox.pipeline_repo_name
     job_id = sandbox.wait()
 
-    sandbox.client.stop_job(job_id, pipeline_name)
+    sandbox.client.stop_job(job_id, pipeline_name, project_name=sandbox.project_name)
     # This is necessary because `StopJob` does not wait for the job to be
     # killed before returning a result.
     # TODO: remove once this is fixed:
     # https://github.com/pachyderm/pachyderm/issues/3856
     time.sleep(1)
-    job_info = list(sandbox.client.inspect_job(job_id, pipeline_name))
+    job_info = list(
+        sandbox.client.inspect_job(
+            job_id, pipeline_name, project_name=sandbox.project_name
+        )
+    )
     # We race to stop the job before it finishes - if we lose the race, it will
     # be in state JOB_SUCCESS
     assert job_info[0].state in [
@@ -115,7 +128,9 @@ def test_delete_job():
     sandbox = Sandbox("delete_job")
     job_id = sandbox.wait()
     orig_job_count = len(list(sandbox.client.list_job()))
-    sandbox.client.delete_job(job_id, sandbox.pipeline_repo_name)
+    sandbox.client.delete_job(
+        job_id, sandbox.pipeline_repo_name, project_name=sandbox.project_name
+    )
     jobs = len(list(sandbox.client.list_job()))
     assert jobs == orig_job_count - 1
 
@@ -128,9 +143,15 @@ def test_datums():
     # flush the job so it fully finishes
     list(sandbox.client.wait_commit(sandbox.commit.id))
 
-    datums = list(sandbox.client.list_datum(pipeline_name, job_id))
+    datums = list(
+        sandbox.client.list_datum(
+            pipeline_name, job_id, project_name=sandbox.project_name
+        )
+    )
     assert len(datums) == 1
-    datum = sandbox.client.inspect_datum(pipeline_name, job_id, datums[0].datum.id)
+    datum = sandbox.client.inspect_datum(
+        pipeline_name, job_id, datums[0].datum.id, project_name=sandbox.project_name
+    )
     assert datum.state == pps_proto.DatumState.SUCCESS
 
     with pytest.raises(
@@ -139,15 +160,23 @@ def test_datums():
             job_id
         ),
     ):
-        sandbox.client.restart_datum(pipeline_name, job_id)
+        sandbox.client.restart_datum(
+            pipeline_name, job_id, project_name=sandbox.project_name
+        )
 
 
 def test_inspect_pipeline():
     sandbox = Sandbox("inspect_pipeline")
-    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
+    pipeline = list(
+        sandbox.client.inspect_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    )[0]
     assert pipeline.pipeline.name == sandbox.pipeline_repo_name
     pipelines = list(
-        sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name, history=-1)
+        sandbox.client.inspect_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name, history=-1
+        )
     )
     assert sandbox.pipeline_repo_name in [p.pipeline.name for p in pipelines]
 
@@ -163,7 +192,9 @@ def test_list_pipeline():
 def test_delete_pipeline():
     sandbox = Sandbox("delete_pipeline")
     orig_pipeline_count = len(list(sandbox.client.list_pipeline()))
-    sandbox.client.delete_pipeline(sandbox.pipeline_repo_name)
+    sandbox.client.delete_pipeline(
+        sandbox.pipeline_repo_name, project_name=sandbox.project_name
+    )
     assert len(list(sandbox.client.list_pipeline())) == orig_pipeline_count - 1
 
 
@@ -177,12 +208,24 @@ def test_delete_all_pipelines():
 def test_restart_pipeline():
     sandbox = Sandbox("restart_job")
 
-    sandbox.client.stop_pipeline(sandbox.pipeline_repo_name)
-    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
+    sandbox.client.stop_pipeline(
+        sandbox.pipeline_repo_name, project_name=sandbox.project_name
+    )
+    pipeline = list(
+        sandbox.client.inspect_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    )[0]
     assert pipeline.stopped
 
-    sandbox.client.start_pipeline(sandbox.pipeline_repo_name)
-    pipeline = list(sandbox.client.inspect_pipeline(sandbox.pipeline_repo_name))[0]
+    sandbox.client.start_pipeline(
+        sandbox.pipeline_repo_name, project_name=sandbox.project_name
+    )
+    pipeline = list(
+        sandbox.client.inspect_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    )[0]
     assert not pipeline.stopped
 
 
@@ -196,7 +239,9 @@ def test_run_cron():
     # cron input
     # NOTE: `e` is used after the context
     with pytest.raises(python_pachyderm.RpcError, match=r"pipeline.*have a cron input"):
-        sandbox.client.run_cron(sandbox.pipeline_repo_name)
+        sandbox.client.run_cron(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
 
 
 def test_secrets():
@@ -232,12 +277,17 @@ def test_get_pipeline_logs():
 
     # Just make sure these spit out some logs
     print(f"pipeline: {sandbox.pipeline_repo_name}")
-    logs = sandbox.client.get_pipeline_logs(sandbox.pipeline_repo_name, follow=True)
+    logs = sandbox.client.get_pipeline_logs(
+        sandbox.pipeline_repo_name, project_name=sandbox.project_name, follow=True
+    )
     assert next(logs) is not None
     del logs
 
     logs = sandbox.client.get_pipeline_logs(
-        sandbox.pipeline_repo_name, master=True, follow=True
+        sandbox.pipeline_repo_name,
+        project_name=sandbox.project_name,
+        master=True,
+        follow=True,
     )
     assert next(logs) is not None
     del logs
@@ -253,7 +303,9 @@ def test_get_job_logs():
     sandbox.client.wait_commit(commit)
 
     # Just make sure these spit out some logs
-    logs = sandbox.client.get_job_logs(pipeline_name, job_id, follow=True)
+    logs = sandbox.client.get_job_logs(
+        pipeline_name, job_id, project_name=sandbox.project_name, follow=True
+    )
     assert next(logs) is not None
     del logs
 

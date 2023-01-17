@@ -67,7 +67,10 @@ class PPSMixin:
             message = pps_pb2.InspectJobRequest(
                 details=details,
                 job=pps_pb2.Job(
-                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                    pipeline=pps_pb2.Pipeline(
+                        name=pipeline_name,
+                        project=pfs_pb2.Project(name=project_name),
+                    ),
                     id=job_id,
                 ),
                 wait=wait,
@@ -200,7 +203,9 @@ class PPSMixin:
         message = pps_pb2.DeleteJobRequest(
             job=pps_pb2.Job(
                 id=job_id,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
             )
         )
         self.__stub.DeleteJob(message)
@@ -228,7 +233,10 @@ class PPSMixin:
         message = pps_pb2.StopJobRequest(
             job=pps_pb2.Job(
                 id=job_id,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name,
+                    project=pfs_pb2.Project(name=project_name),
+                ),
             ),
             reason=reason,
         )
@@ -260,7 +268,9 @@ class PPSMixin:
                 id=datum_id,
                 job=pps_pb2.Job(
                     id=job_id,
-                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                    pipeline=pps_pb2.Pipeline(
+                        name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                    ),
                 ),
             ),
         )
@@ -332,7 +342,9 @@ class PPSMixin:
         if pipeline_name is not None and job_id is not None:
             message.job.CopyFrom(
                 pps_pb2.Job(
-                    pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                    pipeline=pps_pb2.Pipeline(
+                        name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                    ),
                     id=job_id,
                 )
             )
@@ -364,7 +376,9 @@ class PPSMixin:
         message = pps_pb2.RestartDatumRequest(
             data_filters=data_filters,
             job=pps_pb2.Job(
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
                 id=job_id,
             ),
         )
@@ -584,7 +598,9 @@ class PPSMixin:
         if history == 0:
             message = pps_pb2.InspectPipelineRequest(
                 details=details,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
             )
             return iter([self.__stub.InspectPipeline(message)])
         else:
@@ -593,7 +609,9 @@ class PPSMixin:
             message = pps_pb2.ListPipelineRequest(
                 details=details,
                 history=history,
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
             )
             return self.__stub.ListPipeline(message)
 
@@ -672,7 +690,9 @@ class PPSMixin:
         message = pps_pb2.DeletePipelineRequest(
             force=force,
             keep_repo=keep_repo,
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            ),
         )
         self.__stub.DeletePipeline(message)
 
@@ -692,7 +712,9 @@ class PPSMixin:
             The name of the project.
         """
         message = pps_pb2.StartPipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            ),
         )
         self.__stub.StartPipeline(message)
 
@@ -707,7 +729,9 @@ class PPSMixin:
             The name of the project.
         """
         message = pps_pb2.StopPipelineRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name)
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            )
         )
         self.__stub.StopPipeline(message)
 
@@ -725,7 +749,9 @@ class PPSMixin:
             The name of the project.
         """
         message = pps_pb2.RunCronRequest(
-            pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+            pipeline=pps_pb2.Pipeline(
+                name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+            ),
         )
         self.__stub.RunCron(message)
 
@@ -931,7 +957,9 @@ class PPSMixin:
         """
         message = pps_pb2.GetLogsRequest(
             job=pps_pb2.Job(
-                pipeline=pps_pb2.Pipeline(name=pipeline_name, project=project_name),
+                pipeline=pps_pb2.Pipeline(
+                    name=pipeline_name, project=pfs_pb2.Project(name=project_name)
+                ),
                 id=job_id,
             ),
             data_filters=data_filters,

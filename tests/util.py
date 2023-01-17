@@ -77,16 +77,13 @@ def create_test_pipeline(client: python_pachyderm.Client, test_name):
 
     client.create_pipeline(
         pipeline_repo_name,
+        project_name=project_name,
         transform=pps_proto.Transform(
             cmd=["sh"],
             image="alpine",
             stdin=["cp /pfs/{}/*.dat /pfs/out/".format(input_repo_name)],
         ),
-        input=pps_proto.Input(
-            pfs=pps_proto.PFSInput(
-                glob="/*", repo=input_repo_name, project=project_name
-            )
-        ),
+        input=pps_proto.Input(pfs=pps_proto.PFSInput(glob="/*", repo=input_repo_name)),
     )
 
     with client.commit(input_repo_name, "master", project_name=project_name) as commit:

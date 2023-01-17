@@ -183,7 +183,7 @@ class PFSMixin:
         pfs_proto.ProjectInfo
             A protobuf object with info on the project.
         """
-        self._req(
+        return self._req(
             Service.PFS, "InspectProject", project=pfs_proto.Project(name=project_name)
         )
 
@@ -195,7 +195,7 @@ class PFSMixin:
         Iterator[pfs_proto.ProjectInfo]
             An iterator of protobuf objects that contain info on a project.
         """
-        self._req(
+        return self._req(
             Service.PFS,
             "ListProject",
             req=bp_proto.Empty(),

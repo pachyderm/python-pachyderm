@@ -50,6 +50,33 @@ def test_delete_non_existent_repo():
     assert len(list(client.list_repo())) == orig_repo_count
 
 
+def test_list_project():
+    client, repo_name = sandbox("list_project")
+    project_name = f"test_list_project-{repo_name}"
+    client.create_project(project_name)
+    projects = list(client.list_project())
+    assert len(projects) >= 1
+    assert project_name in [r.project.name for r in projects]
+
+
+def test_inspect_project():
+    client, repo_name = sandbox("inspect_repo")
+    project_name = f"test_inspect_project-{repo_name}"
+    client.create_project(project_name)
+    r = client.inspect_project(project_name)
+    assert r.project.name == project_name
+
+
+def test_delete_project():
+    client, repo_name = sandbox("delete_repo")
+    project_name = f"test_delete_project-{repo_name}"
+    client.create_project(project_name)
+    orig_project_count = len(list(client.list_project()))
+    assert orig_project_count >= 1
+    client.delete_project(project_name)
+    assert len(list(client.list_project())) == orig_project_count - 1
+
+
 def test_delete_all_repos():
     client = python_pachyderm.Client()
 
