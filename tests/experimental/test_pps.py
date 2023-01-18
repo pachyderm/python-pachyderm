@@ -193,14 +193,10 @@ def test_list_pipeline():
 def test_delete_pipeline():
     sandbox = Sandbox("delete_pipeline")
     orig_pipeline_count = len(list(sandbox.client.list_pipeline()))
-    try:
-        sandbox.client.delete_pipeline(
-            sandbox.pipeline_repo_name, project_name=sandbox.project_name
-        )
-    except grpc.RpcError:
-        sandbox.client.delete_pipeline(
-            sandbox.pipeline_repo_name, project_name=sandbox.project_name
-        )
+    time.sleep(1)
+    sandbox.client.delete_pipeline(
+        sandbox.pipeline_repo_name, project_name=sandbox.project_name
+    )
     assert len(list(sandbox.client.list_pipeline())) == orig_pipeline_count - 1
 
 
