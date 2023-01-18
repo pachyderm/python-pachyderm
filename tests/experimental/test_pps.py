@@ -272,11 +272,10 @@ def test_secrets():
 
 
 def test_get_pipeline_logs():
-    sandbox = Sandbox("get_pipeline_logs")
+    sandbox = Sandbox("pipeline_logs")
     sandbox.wait()
 
     # Just make sure these spit out some logs
-    print(f"pipeline: {sandbox.pipeline_repo_name}")
     logs = sandbox.client.get_pipeline_logs(
         sandbox.pipeline_repo_name, project_name=sandbox.project_name, follow=True
     )
@@ -294,12 +293,14 @@ def test_get_pipeline_logs():
 
 
 def test_get_job_logs():
-    sandbox = Sandbox("get_logs_logs")
+    sandbox = Sandbox("get_job_logs")
     job_id = sandbox.wait()
     pipeline_name = sandbox.pipeline_repo_name
 
     # Wait for the job to complete
-    commit = (pipeline_name, job_id)
+    commit = python_pachyderm.experimental.pfs.Commit(
+        repo=pipeline_name, id=job_id, project=sandbox.project_name
+    )
     sandbox.client.wait_commit(commit)
 
     # Just make sure these spit out some logs
