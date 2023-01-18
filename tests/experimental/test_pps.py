@@ -4,6 +4,7 @@
 
 import time
 
+import grpc
 import pytest
 
 import python_pachyderm
@@ -192,9 +193,14 @@ def test_list_pipeline():
 def test_delete_pipeline():
     sandbox = Sandbox("delete_pipeline")
     orig_pipeline_count = len(list(sandbox.client.list_pipeline()))
-    sandbox.client.delete_pipeline(
-        sandbox.pipeline_repo_name, project_name=sandbox.project_name
-    )
+    try:
+        sandbox.client.delete_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
+    except grpc.RpcError:
+        sandbox.client.delete_pipeline(
+            sandbox.pipeline_repo_name, project_name=sandbox.project_name
+        )
     assert len(list(sandbox.client.list_pipeline())) == orig_pipeline_count - 1
 
 
