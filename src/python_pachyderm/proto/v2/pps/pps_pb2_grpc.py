@@ -86,6 +86,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.DeletePipelines = channel.unary_unary(
+                '/pps_v2.API/DeletePipelines',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesResponse.FromString,
+                )
         self.StartPipeline = channel.unary_unary(
                 '/pps_v2.API/StartPipeline',
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.StartPipelineRequest.SerializeToString,
@@ -252,6 +257,12 @@ class APIServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def DeletePipeline(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeletePipelines(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -433,6 +444,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.DeletePipeline,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelineRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'DeletePipelines': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeletePipelines,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesResponse.SerializeToString,
             ),
             'StartPipeline': grpc.unary_unary_rpc_method_handler(
                     servicer.StartPipeline,
@@ -759,6 +775,23 @@ class API(object):
         return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeletePipeline',
             python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelineRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeletePipelines(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/pps_v2.API/DeletePipelines',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DeletePipelinesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

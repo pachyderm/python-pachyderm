@@ -260,6 +260,9 @@ class DeleteReposRequest(betterproto.Message):
     # All repos in each project will be deleted if the caller has permission.
     projects: List["Project"] = betterproto.message_field(1)
     force: bool = betterproto.bool_field(2)
+    # If all is set, then all repos in all projects will be deleted if the caller
+    # has permission.
+    all: bool = betterproto.bool_field(3)
 
 
 @dataclass(eq=False, repr=False)
@@ -466,6 +469,14 @@ class ListFileRequest(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class WalkFileRequest(betterproto.Message):
     file: "File" = betterproto.message_field(1)
+    # Marker for pagination. If set, the files that come after the marker in
+    # lexicographical order will be returned. If reverse is also set, the files
+    # that come before the marker in lexicographical order will be returned.
+    pagination_marker: "File" = betterproto.message_field(2)
+    # Number of files to return
+    number: int = betterproto.int64_field(3)
+    # If true, return files in reverse order
+    reverse: bool = betterproto.bool_field(4)
 
 
 @dataclass(eq=False, repr=False)
@@ -719,7 +730,11 @@ class ApiStub(betterproto.ServiceStub):
         )
 
     async def delete_repos(
-        self, *, projects: Optional[List["Project"]] = None, force: bool = False
+        self,
+        *,
+        projects: Optional[List["Project"]] = None,
+        force: bool = False,
+        all: bool = False,
     ) -> "DeleteReposResponse":
         projects = projects or []
 
@@ -727,6 +742,7 @@ class ApiStub(betterproto.ServiceStub):
         if projects is not None:
             request.projects = projects
         request.force = force
+        request.all = all
 
         return await self._unary_unary(
             "/pfs_v2.API/DeleteRepos", request, DeleteReposResponse
@@ -1064,11 +1080,22 @@ class ApiStub(betterproto.ServiceStub):
         ):
             yield response
 
-    async def walk_file(self, *, file: "File" = None) -> AsyncIterator["FileInfo"]:
+    async def walk_file(
+        self,
+        *,
+        file: "File" = None,
+        pagination_marker: "File" = None,
+        number: int = 0,
+        reverse: bool = False,
+    ) -> AsyncIterator["FileInfo"]:
 
         request = WalkFileRequest()
         if file is not None:
             request.file = file
+        if pagination_marker is not None:
+            request.pagination_marker = pagination_marker
+        request.number = number
+        request.reverse = reverse
 
         async for response in self._unary_stream(
             "/pfs_v2.API/WalkFile",
@@ -1418,7 +1445,7 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def delete_repos(
-        self, projects: Optional[List["Project"]], force: bool
+        self, projects: Optional[List["Project"]], force: bool, all: bool
     ) -> "DeleteReposResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1532,7 +1559,9 @@ class ApiBase(ServiceBase):
     ) -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def walk_file(self, file: "File") -> AsyncIterator["FileInfo"]:
+    async def walk_file(
+        self, file: "File", pagination_marker: "File", number: int, reverse: bool
+    ) -> AsyncIterator["FileInfo"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def glob_file(
@@ -1692,6 +1721,7 @@ class ApiBase(ServiceBase):
         request_kwargs = {
             "projects": request.projects,
             "force": request.force,
+            "all": request.all,
         }
 
         response = await self.delete_repos(**request_kwargs)
@@ -1946,6 +1976,9 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "file": request.file,
+            "pagination_marker": request.pagination_marker,
+            "number": request.number,
+            "reverse": request.reverse,
         }
 
         await self._call_rpc_handler_server_stream(
