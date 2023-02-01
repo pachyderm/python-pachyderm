@@ -1365,7 +1365,7 @@ class PFSMixin:
 
         return True
 
-    def mount(self, mount_dir: str, repos: List[str] = []) -> None:
+    def mount(self, mount_dir: str, repos: List[str] = None) -> None:
         """Mounts Pachyderm repos locally.
 
         Parameters
@@ -1389,6 +1389,7 @@ class PFSMixin:
         --------
         >>> client.mount("dir_a", ["repo1", "repo2@staging"])
         """
+        repos = repos or []
         check_pachctl()
         Path(mount_dir).mkdir(parents=True, exist_ok=True)
 
