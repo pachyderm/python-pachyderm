@@ -106,6 +106,7 @@ BLACKLISTED_METHODS = {
         # the following are ignored because they're for internal use only
         "activate_auth",
         "create_job",
+        "delete_pipelines",
         "update_job_state",
         "subscribe_job",
         "list_job_set",
@@ -340,6 +341,7 @@ RENAMED_ARGS = {
     ],
     "walk_file": [
         ("file", ("commit", "path", "datum")),
+        ("paginationMarker", "pagination_marker"),
     ],
     # PPS
     "create_pipeline": [

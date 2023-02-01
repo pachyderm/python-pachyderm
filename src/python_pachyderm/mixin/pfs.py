@@ -1204,6 +1204,9 @@ class PFSMixin:
         commit: SubcommitType,
         path: str,
         datum: str = None,
+        pagination_marker: pfs_pb2.File = None,
+        number: int = None,
+        reverse: bool = False,
     ) -> Iterator[pfs_pb2.FileInfo]:
         """Walks over all descendant files in a directory.
 
@@ -1215,7 +1218,15 @@ class PFSMixin:
             The path to the directory.
         datum : str, optional
             A tag that filters the files.
-
+        pagination_marker:
+            Marker for pagination. If set, the files that come after the marker
+            in lexicographical order will be returned. If reverse is also set,
+            the files that come before the marker in lexicographical order will
+            be returned.
+        number : int, optional
+            Number of files to return
+        reverse : bool, optional
+            If true, return files in reverse order
         Returns
         -------
         Iterator[pfs_pb2.FileInfo]
@@ -1227,6 +1238,9 @@ class PFSMixin:
         """
         message = pfs_pb2.WalkFileRequest(
             file=pfs_pb2.File(commit=commit_from(commit), path=path, datum=datum),
+            paginationMarker=pagination_marker,
+            number=number,
+            reverse=reverse,
         )
         return self.__stub.WalkFile(message)
 

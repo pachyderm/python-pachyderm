@@ -413,6 +413,7 @@ class PPSMixin:
         spec_commit: pfs_pb2.Commit = None,
         metadata: pps_pb2.Metadata = None,
         autoscaling: bool = False,
+        tolerations: List[pps_pb2.Toleration] = None,
     ) -> None:
         """Creates a pipeline.
 
@@ -484,6 +485,8 @@ class PPSMixin:
         autoscaling : bool, optional
             If true, automatically scales the worker pool based on the datums
             it has to process.
+        tolerations: List[pps_pb2.Toleration]
+            A list of Kubernetes tolerations to be applied to the worker pod.
 
         Notes
         -----
@@ -539,6 +542,7 @@ class PPSMixin:
             spec_commit=spec_commit,
             reprocess_spec=reprocess_spec,
             autoscaling=autoscaling,
+            tolerations=tolerations,
         )
         self.__stub.CreatePipeline(message)
 
