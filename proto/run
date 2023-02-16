@@ -12,20 +12,15 @@ mkdir -p ${OUTDIR}
 mkdir -p ${BETTERPROTO_OUTDIR}
 mv ./proto/pachyderm/src/* ${OUTDIR}
 
-# Make sure to remove the gogoproto line, as that is Go specific
-for i in $(find ${OUTDIR} -name "*.proto"); do
-    # remove the import
-    sed -i 's/import.*gogo.proto.*\;//' ${i}
-    # remove usages of gogoproto types
-    sed -i 's/\[.*gogoproto.*\]//' ${i}
-    sed -i 's/.*gogoproto.*//' ${i}
-done
+# Remove protobuf extensions, that are Go specific.
+for i in ${PROTO_FILES}; do
+    # remove gogoproto
+    sed -i 's/import.*gogo.proto.*\;//' "${i}"
+    sed -i 's/\[.*gogoproto.*\]//' "${i}"
+    sed -i 's/.*gogoproto.*//' "${i}"
 
-# Make sure to remove the gogoproto line, as that is Go specific
-for i in $(find ${OUTDIR} -name "*.proto"); do
-    # remove the import
+    # remove the protoextensions/log.proto
     sed -i 's/import.*protoextensions\/log.proto.*\;//' ${i}
-    # remove usages of gogoproto types
     sed -i 's/\[.*log.*\]//' ${i}
 done
 
