@@ -53,7 +53,7 @@ class EnterpriseConfig(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class EnterpriseRecord(betterproto.Message):
     """
-    EnterpriseRecord is a protobuf we cache in etcd to store the  enterprise
+    EnterpriseRecord is a protobuf we cache in etcd to store the enterprise
     status.
     """
 
@@ -122,7 +122,7 @@ class GetActivationCodeResponse(betterproto.Message):
 class HeartbeatRequest(betterproto.Message):
     """
     Heartbeat in the enterprise service just triggers a heartbeat for testing
-    purposes. The RPC used to communicate with the license  service is defined
+    purposes. The RPC used to communicate with the license service is defined
     in the license service.
     """
 

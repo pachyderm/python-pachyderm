@@ -115,6 +115,7 @@ BLACKLISTED_METHODS = {
         "run_load_test_default",
         "list_task",
         "render_template",
+        "get_kube_events",
     ],
     Service.ENTERPRISE: [
         # internal RPC only

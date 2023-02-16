@@ -13,6 +13,7 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from python_pachyderm.proto.v2.enterprise import enterprise_pb2 as python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2
+from python_pachyderm.proto.v2.protoextensions import log_pb2 as python__pachyderm_dot_proto_dot_v2_dot_protoextensions_dot_log__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -21,9 +22,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z-github.com/pachyderm/pachyderm/v2/src/license',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n/python_pachyderm/proto/v2/license/license.proto\x12\nlicense_v2\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x35python_pachyderm/proto/v2/enterprise/enterprise.proto\"W\n\x0f\x41\x63tivateRequest\x12\x17\n\x0f\x61\x63tivation_code\x18\x01 \x01(\t\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\":\n\x10\x41\x63tivateResponse\x12&\n\x04info\x18\x01 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\"\x1a\n\x18GetActivationCodeRequest\"\x81\x01\n\x19GetActivationCodeResponse\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.enterprise_v2.State\x12&\n\x04info\x18\x02 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\x12\x17\n\x0f\x61\x63tivation_code\x18\x03 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x90\x01\n\x11\x41\x64\x64\x43lusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0e\n\x06secret\x18\x03 \x01(\t\x12\x14\n\x0cuser_address\x18\x04 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x05 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x06 \x01(\x08\"$\n\x12\x41\x64\x64\x43lusterResponse\x12\x0e\n\x06secret\x18\x01 \x01(\t\"\"\n\x14\x44\x65leteClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x44\x65leteClusterResponse\"\xca\x01\n\rClusterStatus\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x07 \x01(\t\x12\x32\n\x0elast_heartbeat\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"x\n\x14UpdateClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x14\n\x0cuser_address\x18\x03 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x04 \x01(\t\x12\x0e\n\x06secret\x18\x05 \x01(\t\"\x17\n\x15UpdateClusterResponse\"\x15\n\x13ListClustersRequest\"C\n\x14ListClustersResponse\x12+\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x19.license_v2.ClusterStatus\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse\"h\n\x10HeartbeatRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06secret\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x05 \x01(\t\"B\n\x11HeartbeatResponse\x12-\n\x07license\x18\x01 \x01(\x0b\x32\x1c.enterprise_v2.LicenseRecord\"h\n\x0fUserClusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x04 \x01(\x08\"\x19\n\x17ListUserClustersRequest\"I\n\x18ListUserClustersResponse\x12-\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x1b.license_v2.UserClusterInfo2\xff\x05\n\x03\x41PI\x12G\n\x08\x41\x63tivate\x12\x1b.license_v2.ActivateRequest\x1a\x1c.license_v2.ActivateResponse\"\x00\x12\x62\n\x11GetActivationCode\x12$.license_v2.GetActivationCodeRequest\x1a%.license_v2.GetActivationCodeResponse\"\x00\x12J\n\tDeleteAll\x12\x1c.license_v2.DeleteAllRequest\x1a\x1d.license_v2.DeleteAllResponse\"\x00\x12M\n\nAddCluster\x12\x1d.license_v2.AddClusterRequest\x1a\x1e.license_v2.AddClusterResponse\"\x00\x12V\n\rDeleteCluster\x12 .license_v2.DeleteClusterRequest\x1a!.license_v2.DeleteClusterResponse\"\x00\x12S\n\x0cListClusters\x12\x1f.license_v2.ListClustersRequest\x1a .license_v2.ListClustersResponse\"\x00\x12V\n\rUpdateCluster\x12 .license_v2.UpdateClusterRequest\x1a!.license_v2.UpdateClusterResponse\"\x00\x12J\n\tHeartbeat\x12\x1c.license_v2.HeartbeatRequest\x1a\x1d.license_v2.HeartbeatResponse\"\x00\x12_\n\x10ListUserClusters\x12#.license_v2.ListUserClustersRequest\x1a$.license_v2.ListUserClustersResponse\"\x00\x42/Z-github.com/pachyderm/pachyderm/v2/src/licenseb\x06proto3'
+  serialized_pb=b'\n/python_pachyderm/proto/v2/license/license.proto\x12\nlicense_v2\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x35python_pachyderm/proto/v2/enterprise/enterprise.proto\x1a\x33python_pachyderm/proto/v2/protoextensions/log.proto\"]\n\x0f\x41\x63tivateRequest\x12\x1d\n\x0f\x61\x63tivation_code\x18\x01 \x01(\tB\x04\x90\xb5\x18\x01\x12+\n\x07\x65xpires\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\":\n\x10\x41\x63tivateResponse\x12&\n\x04info\x18\x01 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\"\x1a\n\x18GetActivationCodeRequest\"\x87\x01\n\x19GetActivationCodeResponse\x12#\n\x05state\x18\x01 \x01(\x0e\x32\x14.enterprise_v2.State\x12&\n\x04info\x18\x02 \x01(\x0b\x32\x18.enterprise_v2.TokenInfo\x12\x1d\n\x0f\x61\x63tivation_code\x18\x03 \x01(\tB\x04\x90\xb5\x18\x01\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\"\x96\x01\n\x11\x41\x64\x64\x43lusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x14\n\x06secret\x18\x03 \x01(\tB\x04\x90\xb5\x18\x01\x12\x14\n\x0cuser_address\x18\x04 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x05 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x06 \x01(\x08\"*\n\x12\x41\x64\x64\x43lusterResponse\x12\x14\n\x06secret\x18\x01 \x01(\tB\x04\x90\xb5\x18\x01\"\"\n\x14\x44\x65leteClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x44\x65leteClusterResponse\"\xca\x01\n\rClusterStatus\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x07 \x01(\t\x12\x32\n\x0elast_heartbeat\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"x\n\x14UpdateClusterRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x14\n\x0cuser_address\x18\x03 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x04 \x01(\t\x12\x0e\n\x06secret\x18\x05 \x01(\t\"\x17\n\x15UpdateClusterResponse\"\x15\n\x13ListClustersRequest\"C\n\x14ListClustersResponse\x12+\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x19.license_v2.ClusterStatus\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse\"n\n\x10HeartbeatRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x14\n\x06secret\x18\x02 \x01(\tB\x04\x90\xb5\x18\x01\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x14\n\x0c\x61uth_enabled\x18\x04 \x01(\x08\x12\x11\n\tclient_id\x18\x05 \x01(\t\"B\n\x11HeartbeatResponse\x12-\n\x07license\x18\x01 \x01(\x0b\x32\x1c.enterprise_v2.LicenseRecord\"h\n\x0fUserClusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x1d\n\x15\x63luster_deployment_id\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\x19\n\x11\x65nterprise_server\x18\x04 \x01(\x08\"\x19\n\x17ListUserClustersRequest\"I\n\x18ListUserClustersResponse\x12-\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\x1b.license_v2.UserClusterInfo2\xff\x05\n\x03\x41PI\x12G\n\x08\x41\x63tivate\x12\x1b.license_v2.ActivateRequest\x1a\x1c.license_v2.ActivateResponse\"\x00\x12\x62\n\x11GetActivationCode\x12$.license_v2.GetActivationCodeRequest\x1a%.license_v2.GetActivationCodeResponse\"\x00\x12J\n\tDeleteAll\x12\x1c.license_v2.DeleteAllRequest\x1a\x1d.license_v2.DeleteAllResponse\"\x00\x12M\n\nAddCluster\x12\x1d.license_v2.AddClusterRequest\x1a\x1e.license_v2.AddClusterResponse\"\x00\x12V\n\rDeleteCluster\x12 .license_v2.DeleteClusterRequest\x1a!.license_v2.DeleteClusterResponse\"\x00\x12S\n\x0cListClusters\x12\x1f.license_v2.ListClustersRequest\x1a .license_v2.ListClustersResponse\"\x00\x12V\n\rUpdateCluster\x12 .license_v2.UpdateClusterRequest\x1a!.license_v2.UpdateClusterResponse\"\x00\x12J\n\tHeartbeat\x12\x1c.license_v2.HeartbeatRequest\x1a\x1d.license_v2.HeartbeatResponse\"\x00\x12_\n\x10ListUserClusters\x12#.license_v2.ListUserClustersRequest\x1a$.license_v2.ListUserClustersResponse\"\x00\x42/Z-github.com/pachyderm/pachyderm/v2/src/licenseb\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_enterprise_dot_enterprise__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_protoextensions_dot_log__pb2.DESCRIPTOR,])
 
 
 
@@ -42,7 +43,7 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=b'\220\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='expires', full_name='license_v2.ActivateRequest.expires', index=1,
       number=2, type=11, cpp_type=10, label=1,
@@ -62,8 +63,8 @@ _ACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=151,
-  serialized_end=238,
+  serialized_start=204,
+  serialized_end=297,
 )
 
 
@@ -94,8 +95,8 @@ _ACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=240,
-  serialized_end=298,
+  serialized_start=299,
+  serialized_end=357,
 )
 
 
@@ -119,8 +120,8 @@ _GETACTIVATIONCODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=300,
-  serialized_end=326,
+  serialized_start=359,
+  serialized_end=385,
 )
 
 
@@ -152,7 +153,7 @@ _GETACTIVATIONCODERESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=b'\220\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -165,8 +166,8 @@ _GETACTIVATIONCODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=329,
-  serialized_end=458,
+  serialized_start=388,
+  serialized_end=523,
 )
 
 
@@ -190,8 +191,8 @@ _DEACTIVATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=460,
-  serialized_end=479,
+  serialized_start=525,
+  serialized_end=544,
 )
 
 
@@ -215,8 +216,8 @@ _DEACTIVATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=481,
-  serialized_end=501,
+  serialized_start=546,
+  serialized_end=566,
 )
 
 
@@ -248,7 +249,7 @@ _ADDCLUSTERREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=b'\220\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='user_address', full_name='license_v2.AddClusterRequest.user_address', index=3,
       number=4, type=9, cpp_type=9, label=1,
@@ -282,8 +283,8 @@ _ADDCLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=504,
-  serialized_end=648,
+  serialized_start=569,
+  serialized_end=719,
 )
 
 
@@ -301,7 +302,7 @@ _ADDCLUSTERRESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=b'\220\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -314,8 +315,8 @@ _ADDCLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=650,
-  serialized_end=686,
+  serialized_start=721,
+  serialized_end=763,
 )
 
 
@@ -346,8 +347,8 @@ _DELETECLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=688,
-  serialized_end=722,
+  serialized_start=765,
+  serialized_end=799,
 )
 
 
@@ -371,8 +372,8 @@ _DELETECLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=724,
-  serialized_end=747,
+  serialized_start=801,
+  serialized_end=824,
 )
 
 
@@ -445,8 +446,8 @@ _CLUSTERSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=750,
-  serialized_end=952,
+  serialized_start=827,
+  serialized_end=1029,
 )
 
 
@@ -505,8 +506,8 @@ _UPDATECLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=954,
-  serialized_end=1074,
+  serialized_start=1031,
+  serialized_end=1151,
 )
 
 
@@ -530,8 +531,8 @@ _UPDATECLUSTERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1076,
-  serialized_end=1099,
+  serialized_start=1153,
+  serialized_end=1176,
 )
 
 
@@ -555,8 +556,8 @@ _LISTCLUSTERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1101,
-  serialized_end=1122,
+  serialized_start=1178,
+  serialized_end=1199,
 )
 
 
@@ -587,8 +588,8 @@ _LISTCLUSTERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1124,
-  serialized_end=1191,
+  serialized_start=1201,
+  serialized_end=1268,
 )
 
 
@@ -612,8 +613,8 @@ _DELETEALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1193,
-  serialized_end=1211,
+  serialized_start=1270,
+  serialized_end=1288,
 )
 
 
@@ -637,8 +638,8 @@ _DELETEALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1213,
-  serialized_end=1232,
+  serialized_start=1290,
+  serialized_end=1309,
 )
 
 
@@ -663,7 +664,7 @@ _HEARTBEATREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=b'\220\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='version', full_name='license_v2.HeartbeatRequest.version', index=2,
       number=3, type=9, cpp_type=9, label=1,
@@ -697,8 +698,8 @@ _HEARTBEATREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1234,
-  serialized_end=1338,
+  serialized_start=1311,
+  serialized_end=1421,
 )
 
 
@@ -729,8 +730,8 @@ _HEARTBEATRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1340,
-  serialized_end=1406,
+  serialized_start=1423,
+  serialized_end=1489,
 )
 
 
@@ -782,8 +783,8 @@ _USERCLUSTERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1408,
-  serialized_end=1512,
+  serialized_start=1491,
+  serialized_end=1595,
 )
 
 
@@ -807,8 +808,8 @@ _LISTUSERCLUSTERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1514,
-  serialized_end=1539,
+  serialized_start=1597,
+  serialized_end=1622,
 )
 
 
@@ -839,8 +840,8 @@ _LISTUSERCLUSTERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1541,
-  serialized_end=1614,
+  serialized_start=1624,
+  serialized_end=1697,
 )
 
 _ACTIVATEREQUEST.fields_by_name['expires'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -1032,6 +1033,11 @@ _sym_db.RegisterMessage(ListUserClustersResponse)
 
 
 DESCRIPTOR._options = None
+_ACTIVATEREQUEST.fields_by_name['activation_code']._options = None
+_GETACTIVATIONCODERESPONSE.fields_by_name['activation_code']._options = None
+_ADDCLUSTERREQUEST.fields_by_name['secret']._options = None
+_ADDCLUSTERRESPONSE.fields_by_name['secret']._options = None
+_HEARTBEATREQUEST.fields_by_name['secret']._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
@@ -1040,8 +1046,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1617,
-  serialized_end=2384,
+  serialized_start=1700,
+  serialized_end=2467,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',

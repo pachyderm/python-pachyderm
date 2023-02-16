@@ -119,6 +119,7 @@ class Transform(betterproto.Message):
     working_dir: str = betterproto.string_field(12)
     dockerfile: str = betterproto.string_field(13)
     memory_volume: bool = betterproto.bool_field(14)
+    datum_batching: bool = betterproto.bool_field(15)
 
 
 @dataclass(eq=False, repr=False)
@@ -914,6 +915,16 @@ class RenderTemplateResponse(betterproto.Message):
     specs: List["CreatePipelineRequest"] = betterproto.message_field(2)
 
 
+@dataclass(eq=False, repr=False)
+class LokiRequest(betterproto.Message):
+    since: timedelta = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class LokiLogMessage(betterproto.Message):
+    message: str = betterproto.string_field(1)
+
+
 class ApiStub(betterproto.ServiceStub):
     async def inspect_job(
         self, *, job: "Job" = None, wait: bool = False, details: bool = False
@@ -1510,6 +1521,21 @@ class ApiStub(betterproto.ServiceStub):
         ):
             yield response
 
+    async def get_kube_events(
+        self, *, since: timedelta = None
+    ) -> AsyncIterator["LokiLogMessage"]:
+
+        request = LokiRequest()
+        if since is not None:
+            request.since = since
+
+        async for response in self._unary_stream(
+            "/pps_v2.API/GetKubeEvents",
+            request,
+            LokiLogMessage,
+        ):
+            yield response
+
 
 class ApiBase(ServiceBase):
     async def inspect_job(self, job: "Job", wait: bool, details: bool) -> "JobInfo":
@@ -1734,6 +1760,11 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def list_task(self, group: "Group") -> AsyncIterator["_taskapi__.TaskInfo"]:
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def get_kube_events(
+        self, since: timedelta
+    ) -> AsyncIterator["LokiLogMessage"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_inspect_job(self, stream: grpclib.server.Stream) -> None:
@@ -2151,6 +2182,19 @@ class ApiBase(ServiceBase):
             request_kwargs,
         )
 
+    async def __rpc_get_kube_events(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "since": request.since,
+        }
+
+        await self._call_rpc_handler_server_stream(
+            self.get_kube_events,
+            stream,
+            request_kwargs,
+        )
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/pps_v2.API/InspectJob": grpclib.const.Handler(
@@ -2338,6 +2382,12 @@ class ApiBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_STREAM,
                 _taskapi__.ListTaskRequest,
                 _taskapi__.TaskInfo,
+            ),
+            "/pps_v2.API/GetKubeEvents": grpclib.const.Handler(
+                self.__rpc_get_kube_events,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                LokiRequest,
+                LokiLogMessage,
             ),
         }
 

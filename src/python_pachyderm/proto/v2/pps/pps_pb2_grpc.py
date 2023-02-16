@@ -171,6 +171,11 @@ class APIStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
                 )
+        self.GetKubeEvents = channel.unary_stream(
+                '/pps_v2.API/GetKubeEvents',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiLogMessage.FromString,
+                )
 
 
 class APIServicer(object):
@@ -372,6 +377,13 @@ class APIServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetKubeEvents(self, request, context):
+        """GetKubeEvents returns a stream of kubernetes events
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_APIServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -529,6 +541,11 @@ def add_APIServicer_to_server(servicer, server):
                     servicer.ListTask,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.SerializeToString,
+            ),
+            'GetKubeEvents': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetKubeEvents,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiLogMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1064,5 +1081,22 @@ class API(object):
         return grpc.experimental.unary_stream(request, target, '/pps_v2.API/ListTask',
             python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.ListTaskRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.TaskInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetKubeEvents(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pps_v2.API/GetKubeEvents',
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.LokiLogMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
