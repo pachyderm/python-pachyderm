@@ -21,6 +21,14 @@ for i in $(find ${OUTDIR} -name "*.proto"); do
     sed -i 's/.*gogoproto.*//' ${i}
 done
 
+# Make sure to remove the gogoproto line, as that is Go specific
+for i in $(find ${OUTDIR} -name "*.proto"); do
+    # remove the import
+    sed -i 's/import.*protoextensions\/log.proto.*\;//' ${i}
+    # remove usages of gogoproto types
+    sed -i 's/\[.*log.*\]//' ${i}
+done
+
 # fix imports to be relative to OUTDIR
 for i in $(find ${OUTDIR} -name "*.proto"); do
     perl -pi -e "s/import \"((?!google).*)\"/import \"python_pachyderm\/proto\/v${VERSION}\/\$1\"/" ${i}

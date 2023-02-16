@@ -13,7 +13,6 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
-from python_pachyderm.proto.v2.protoextensions import log_pb2 as python__pachyderm_dot_proto_dot_v2_dot_protoextensions_dot_log__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -22,9 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z.github.com/pachyderm/pachyderm/v2/src/identity',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n1python_pachyderm/proto/v2/identity/identity.proto\x12\x0bidentity_v2\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x33python_pachyderm/proto/v2/protoextensions/log.proto\"M\n\x04User\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x36\n\x12last_authenticated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"^\n\x14IdentityServerConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x17\n\x0fid_token_expiry\x18\x02 \x01(\t\x12\x1d\n\x15rotation_token_expiry\x18\x03 \x01(\t\"S\n\x1eSetIdentityServerConfigRequest\x12\x31\n\x06\x63onfig\x18\x01 \x01(\x0b\x32!.identity_v2.IdentityServerConfig\"!\n\x1fSetIdentityServerConfigResponse\" \n\x1eGetIdentityServerConfigRequest\"T\n\x1fGetIdentityServerConfigResponse\x12\x31\n\x06\x63onfig\x18\x01 \x01(\x0b\x32!.identity_v2.IdentityServerConfig\"\x96\x01\n\x0cIDPConnector\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x15\n\rconfigVersion\x18\x04 \x01(\x03\x12\x18\n\njsonConfig\x18\x05 \x01(\tB\x04\x88\xb5\x18\x01\x12-\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.StructB\x04\x88\xb5\x18\x01\"I\n\x19\x43reateIDPConnectorRequest\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\x1c\n\x1a\x43reateIDPConnectorResponse\"I\n\x19UpdateIDPConnectorRequest\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\x1c\n\x1aUpdateIDPConnectorResponse\"\x1a\n\x18ListIDPConnectorsRequest\"J\n\x19ListIDPConnectorsResponse\x12-\n\nconnectors\x18\x01 \x03(\x0b\x32\x19.identity_v2.IDPConnector\"$\n\x16GetIDPConnectorRequest\x12\n\n\x02id\x18\x01 \x01(\t\"G\n\x17GetIDPConnectorResponse\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\'\n\x19\x44\x65leteIDPConnectorRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x1c\n\x1a\x44\x65leteIDPConnectorResponse\"j\n\nOIDCClient\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rredirect_uris\x18\x02 \x03(\t\x12\x15\n\rtrusted_peers\x18\x03 \x03(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x14\n\x06secret\x18\x05 \x01(\tB\x04\x88\xb5\x18\x01\"B\n\x17\x43reateOIDCClientRequest\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"C\n\x18\x43reateOIDCClientResponse\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\"\n\x14GetOIDCClientRequest\x12\n\n\x02id\x18\x01 \x01(\t\"@\n\x15GetOIDCClientResponse\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\x18\n\x16ListOIDCClientsRequest\"C\n\x17ListOIDCClientsResponse\x12(\n\x07\x63lients\x18\x01 \x03(\x0b\x32\x17.identity_v2.OIDCClient\"B\n\x17UpdateOIDCClientRequest\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\x1a\n\x18UpdateOIDCClientResponse\"%\n\x17\x44\x65leteOIDCClientRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x1a\n\x18\x44\x65leteOIDCClientResponse\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse2\xa7\n\n\x03\x41PI\x12v\n\x17SetIdentityServerConfig\x12+.identity_v2.SetIdentityServerConfigRequest\x1a,.identity_v2.SetIdentityServerConfigResponse\"\x00\x12v\n\x17GetIdentityServerConfig\x12+.identity_v2.GetIdentityServerConfigRequest\x1a,.identity_v2.GetIdentityServerConfigResponse\"\x00\x12g\n\x12\x43reateIDPConnector\x12&.identity_v2.CreateIDPConnectorRequest\x1a\'.identity_v2.CreateIDPConnectorResponse\"\x00\x12g\n\x12UpdateIDPConnector\x12&.identity_v2.UpdateIDPConnectorRequest\x1a\'.identity_v2.UpdateIDPConnectorResponse\"\x00\x12\x64\n\x11ListIDPConnectors\x12%.identity_v2.ListIDPConnectorsRequest\x1a&.identity_v2.ListIDPConnectorsResponse\"\x00\x12^\n\x0fGetIDPConnector\x12#.identity_v2.GetIDPConnectorRequest\x1a$.identity_v2.GetIDPConnectorResponse\"\x00\x12g\n\x12\x44\x65leteIDPConnector\x12&.identity_v2.DeleteIDPConnectorRequest\x1a\'.identity_v2.DeleteIDPConnectorResponse\"\x00\x12\x61\n\x10\x43reateOIDCClient\x12$.identity_v2.CreateOIDCClientRequest\x1a%.identity_v2.CreateOIDCClientResponse\"\x00\x12\x61\n\x10UpdateOIDCClient\x12$.identity_v2.UpdateOIDCClientRequest\x1a%.identity_v2.UpdateOIDCClientResponse\"\x00\x12X\n\rGetOIDCClient\x12!.identity_v2.GetOIDCClientRequest\x1a\".identity_v2.GetOIDCClientResponse\"\x00\x12^\n\x0fListOIDCClients\x12#.identity_v2.ListOIDCClientsRequest\x1a$.identity_v2.ListOIDCClientsResponse\"\x00\x12\x61\n\x10\x44\x65leteOIDCClient\x12$.identity_v2.DeleteOIDCClientRequest\x1a%.identity_v2.DeleteOIDCClientResponse\"\x00\x12L\n\tDeleteAll\x12\x1d.identity_v2.DeleteAllRequest\x1a\x1e.identity_v2.DeleteAllResponse\"\x00\x42\x30Z.github.com/pachyderm/pachyderm/v2/src/identityb\x06proto3'
+  serialized_pb=b'\n1python_pachyderm/proto/v2/identity/identity.proto\x12\x0bidentity_v2\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"M\n\x04User\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x36\n\x12last_authenticated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"^\n\x14IdentityServerConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x17\n\x0fid_token_expiry\x18\x02 \x01(\t\x12\x1d\n\x15rotation_token_expiry\x18\x03 \x01(\t\"S\n\x1eSetIdentityServerConfigRequest\x12\x31\n\x06\x63onfig\x18\x01 \x01(\x0b\x32!.identity_v2.IdentityServerConfig\"!\n\x1fSetIdentityServerConfigResponse\" \n\x1eGetIdentityServerConfigRequest\"T\n\x1fGetIdentityServerConfigResponse\x12\x31\n\x06\x63onfig\x18\x01 \x01(\x0b\x32!.identity_v2.IdentityServerConfig\"\x8a\x01\n\x0cIDPConnector\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x15\n\rconfigVersion\x18\x04 \x01(\x03\x12\x12\n\njsonConfig\x18\x05 \x01(\t\x12\'\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\"I\n\x19\x43reateIDPConnectorRequest\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\x1c\n\x1a\x43reateIDPConnectorResponse\"I\n\x19UpdateIDPConnectorRequest\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\x1c\n\x1aUpdateIDPConnectorResponse\"\x1a\n\x18ListIDPConnectorsRequest\"J\n\x19ListIDPConnectorsResponse\x12-\n\nconnectors\x18\x01 \x03(\x0b\x32\x19.identity_v2.IDPConnector\"$\n\x16GetIDPConnectorRequest\x12\n\n\x02id\x18\x01 \x01(\t\"G\n\x17GetIDPConnectorResponse\x12,\n\tconnector\x18\x01 \x01(\x0b\x32\x19.identity_v2.IDPConnector\"\'\n\x19\x44\x65leteIDPConnectorRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x1c\n\x1a\x44\x65leteIDPConnectorResponse\"d\n\nOIDCClient\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rredirect_uris\x18\x02 \x03(\t\x12\x15\n\rtrusted_peers\x18\x03 \x03(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x0e\n\x06secret\x18\x05 \x01(\t\"B\n\x17\x43reateOIDCClientRequest\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"C\n\x18\x43reateOIDCClientResponse\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\"\n\x14GetOIDCClientRequest\x12\n\n\x02id\x18\x01 \x01(\t\"@\n\x15GetOIDCClientResponse\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\x18\n\x16ListOIDCClientsRequest\"C\n\x17ListOIDCClientsResponse\x12(\n\x07\x63lients\x18\x01 \x03(\x0b\x32\x17.identity_v2.OIDCClient\"B\n\x17UpdateOIDCClientRequest\x12\'\n\x06\x63lient\x18\x01 \x01(\x0b\x32\x17.identity_v2.OIDCClient\"\x1a\n\x18UpdateOIDCClientResponse\"%\n\x17\x44\x65leteOIDCClientRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x1a\n\x18\x44\x65leteOIDCClientResponse\"\x12\n\x10\x44\x65leteAllRequest\"\x13\n\x11\x44\x65leteAllResponse2\xa7\n\n\x03\x41PI\x12v\n\x17SetIdentityServerConfig\x12+.identity_v2.SetIdentityServerConfigRequest\x1a,.identity_v2.SetIdentityServerConfigResponse\"\x00\x12v\n\x17GetIdentityServerConfig\x12+.identity_v2.GetIdentityServerConfigRequest\x1a,.identity_v2.GetIdentityServerConfigResponse\"\x00\x12g\n\x12\x43reateIDPConnector\x12&.identity_v2.CreateIDPConnectorRequest\x1a\'.identity_v2.CreateIDPConnectorResponse\"\x00\x12g\n\x12UpdateIDPConnector\x12&.identity_v2.UpdateIDPConnectorRequest\x1a\'.identity_v2.UpdateIDPConnectorResponse\"\x00\x12\x64\n\x11ListIDPConnectors\x12%.identity_v2.ListIDPConnectorsRequest\x1a&.identity_v2.ListIDPConnectorsResponse\"\x00\x12^\n\x0fGetIDPConnector\x12#.identity_v2.GetIDPConnectorRequest\x1a$.identity_v2.GetIDPConnectorResponse\"\x00\x12g\n\x12\x44\x65leteIDPConnector\x12&.identity_v2.DeleteIDPConnectorRequest\x1a\'.identity_v2.DeleteIDPConnectorResponse\"\x00\x12\x61\n\x10\x43reateOIDCClient\x12$.identity_v2.CreateOIDCClientRequest\x1a%.identity_v2.CreateOIDCClientResponse\"\x00\x12\x61\n\x10UpdateOIDCClient\x12$.identity_v2.UpdateOIDCClientRequest\x1a%.identity_v2.UpdateOIDCClientResponse\"\x00\x12X\n\rGetOIDCClient\x12!.identity_v2.GetOIDCClientRequest\x1a\".identity_v2.GetOIDCClientResponse\"\x00\x12^\n\x0fListOIDCClients\x12#.identity_v2.ListOIDCClientsRequest\x1a$.identity_v2.ListOIDCClientsResponse\"\x00\x12\x61\n\x10\x44\x65leteOIDCClient\x12$.identity_v2.DeleteOIDCClientRequest\x1a%.identity_v2.DeleteOIDCClientResponse\"\x00\x12L\n\tDeleteAll\x12\x1d.identity_v2.DeleteAllRequest\x1a\x1e.identity_v2.DeleteAllResponse\"\x00\x42\x30Z.github.com/pachyderm/pachyderm/v2/src/identityb\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_protoextensions_dot_log__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
 
 
@@ -63,8 +62,8 @@ _USER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=182,
-  serialized_end=259,
+  serialized_start=129,
+  serialized_end=206,
 )
 
 
@@ -109,8 +108,8 @@ _IDENTITYSERVERCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=261,
-  serialized_end=355,
+  serialized_start=208,
+  serialized_end=302,
 )
 
 
@@ -141,8 +140,8 @@ _SETIDENTITYSERVERCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=357,
-  serialized_end=440,
+  serialized_start=304,
+  serialized_end=387,
 )
 
 
@@ -166,8 +165,8 @@ _SETIDENTITYSERVERCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=442,
-  serialized_end=475,
+  serialized_start=389,
+  serialized_end=422,
 )
 
 
@@ -191,8 +190,8 @@ _GETIDENTITYSERVERCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=477,
-  serialized_end=509,
+  serialized_start=424,
+  serialized_end=456,
 )
 
 
@@ -223,8 +222,8 @@ _GETIDENTITYSERVERCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=511,
-  serialized_end=595,
+  serialized_start=458,
+  serialized_end=542,
 )
 
 
@@ -270,14 +269,14 @@ _IDPCONNECTOR = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=b'\210\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='config', full_name='identity_v2.IDPConnector.config', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=b'\210\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -290,8 +289,8 @@ _IDPCONNECTOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=598,
-  serialized_end=748,
+  serialized_start=545,
+  serialized_end=683,
 )
 
 
@@ -322,8 +321,8 @@ _CREATEIDPCONNECTORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=750,
-  serialized_end=823,
+  serialized_start=685,
+  serialized_end=758,
 )
 
 
@@ -347,8 +346,8 @@ _CREATEIDPCONNECTORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=825,
-  serialized_end=853,
+  serialized_start=760,
+  serialized_end=788,
 )
 
 
@@ -379,8 +378,8 @@ _UPDATEIDPCONNECTORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=855,
-  serialized_end=928,
+  serialized_start=790,
+  serialized_end=863,
 )
 
 
@@ -404,8 +403,8 @@ _UPDATEIDPCONNECTORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=930,
-  serialized_end=958,
+  serialized_start=865,
+  serialized_end=893,
 )
 
 
@@ -429,8 +428,8 @@ _LISTIDPCONNECTORSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=960,
-  serialized_end=986,
+  serialized_start=895,
+  serialized_end=921,
 )
 
 
@@ -461,8 +460,8 @@ _LISTIDPCONNECTORSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=988,
-  serialized_end=1062,
+  serialized_start=923,
+  serialized_end=997,
 )
 
 
@@ -493,8 +492,8 @@ _GETIDPCONNECTORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1064,
-  serialized_end=1100,
+  serialized_start=999,
+  serialized_end=1035,
 )
 
 
@@ -525,8 +524,8 @@ _GETIDPCONNECTORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1102,
-  serialized_end=1173,
+  serialized_start=1037,
+  serialized_end=1108,
 )
 
 
@@ -557,8 +556,8 @@ _DELETEIDPCONNECTORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1175,
-  serialized_end=1214,
+  serialized_start=1110,
+  serialized_end=1149,
 )
 
 
@@ -582,8 +581,8 @@ _DELETEIDPCONNECTORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1216,
-  serialized_end=1244,
+  serialized_start=1151,
+  serialized_end=1179,
 )
 
 
@@ -629,7 +628,7 @@ _OIDCCLIENT = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=b'\210\265\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -642,8 +641,8 @@ _OIDCCLIENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1246,
-  serialized_end=1352,
+  serialized_start=1181,
+  serialized_end=1281,
 )
 
 
@@ -674,8 +673,8 @@ _CREATEOIDCCLIENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1354,
-  serialized_end=1420,
+  serialized_start=1283,
+  serialized_end=1349,
 )
 
 
@@ -706,8 +705,8 @@ _CREATEOIDCCLIENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1422,
-  serialized_end=1489,
+  serialized_start=1351,
+  serialized_end=1418,
 )
 
 
@@ -738,8 +737,8 @@ _GETOIDCCLIENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1491,
-  serialized_end=1525,
+  serialized_start=1420,
+  serialized_end=1454,
 )
 
 
@@ -770,8 +769,8 @@ _GETOIDCCLIENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1527,
-  serialized_end=1591,
+  serialized_start=1456,
+  serialized_end=1520,
 )
 
 
@@ -795,8 +794,8 @@ _LISTOIDCCLIENTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1593,
-  serialized_end=1617,
+  serialized_start=1522,
+  serialized_end=1546,
 )
 
 
@@ -827,8 +826,8 @@ _LISTOIDCCLIENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1619,
-  serialized_end=1686,
+  serialized_start=1548,
+  serialized_end=1615,
 )
 
 
@@ -859,8 +858,8 @@ _UPDATEOIDCCLIENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1688,
-  serialized_end=1754,
+  serialized_start=1617,
+  serialized_end=1683,
 )
 
 
@@ -884,8 +883,8 @@ _UPDATEOIDCCLIENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1756,
-  serialized_end=1782,
+  serialized_start=1685,
+  serialized_end=1711,
 )
 
 
@@ -916,8 +915,8 @@ _DELETEOIDCCLIENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1784,
-  serialized_end=1821,
+  serialized_start=1713,
+  serialized_end=1750,
 )
 
 
@@ -941,8 +940,8 @@ _DELETEOIDCCLIENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1823,
-  serialized_end=1849,
+  serialized_start=1752,
+  serialized_end=1778,
 )
 
 
@@ -966,8 +965,8 @@ _DELETEALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1851,
-  serialized_end=1869,
+  serialized_start=1780,
+  serialized_end=1798,
 )
 
 
@@ -991,8 +990,8 @@ _DELETEALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1871,
-  serialized_end=1890,
+  serialized_start=1800,
+  serialized_end=1819,
 )
 
 _USER.fields_by_name['last_authenticated'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -1252,9 +1251,6 @@ _sym_db.RegisterMessage(DeleteAllResponse)
 
 
 DESCRIPTOR._options = None
-_IDPCONNECTOR.fields_by_name['jsonConfig']._options = None
-_IDPCONNECTOR.fields_by_name['config']._options = None
-_OIDCCLIENT.fields_by_name['secret']._options = None
 
 _API = _descriptor.ServiceDescriptor(
   name='API',
@@ -1263,8 +1259,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1893,
-  serialized_end=3212,
+  serialized_start=1822,
+  serialized_end=3141,
   methods=[
   _descriptor.MethodDescriptor(
     name='SetIdentityServerConfig',

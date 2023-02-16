@@ -17,6 +17,7 @@ src/python_pachyderm/proto/v2: docker-build-proto
 	find ./proto/pachyderm/src -regex ".*\.proto" \
 	| grep -v 'internal' \
 	| grep -v 'server' \
+	| grep -v 'protoextensions' \
 	| xargs tar cf - \
 	| docker run -e VERSION=2 -i pachyderm_python_proto \
 	| tar -C src -xf -
