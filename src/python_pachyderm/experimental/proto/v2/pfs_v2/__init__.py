@@ -412,6 +412,7 @@ class AddFile(betterproto.Message):
 class AddFileUrlSource(betterproto.Message):
     url: str = betterproto.string_field(1)
     recursive: bool = betterproto.bool_field(2)
+    concurrency: int = betterproto.uint32_field(3)
 
 
 @dataclass(eq=False, repr=False)

@@ -1,5 +1,6 @@
 import json
 import base64
+from datetime import timedelta
 from typing import Dict, Iterator, List, Union
 
 try:
@@ -974,3 +975,8 @@ class PPSMixin:
             since=since,
         )
         return self.__stub.GetLogs(message)
+
+    def get_kube_events(self, since: duration_pb2.Duration) -> pps_pb2.LokiLogMessage:
+        """Return a stream of Kubernetes events."""
+        message = pps_pb2.LokiRequest(since=since)
+        return self.__stub.GetKubeEvents(message)

@@ -910,6 +910,7 @@ class PFSMixin:
         recursive: bool = False,
         datum: str = None,
         append: bool = False,
+        concurrency: int = 0,
     ) -> None:
         """Uploads a PFS file using the content found at a URL. The URL is sent
         to the server which performs the request.
@@ -930,6 +931,9 @@ class PFSMixin:
         append : bool, optional
             If true, appends the data to the file(s) specified at `path`, if
             they already exist. Otherwise, overwrites them.
+        concurrency : int
+            The maximum number of threads used to complete the request.
+            Defaults to 50.
 
         Examples
         --------
@@ -950,6 +954,7 @@ class PFSMixin:
                 recursive=recursive,
                 datum=datum,
                 append=append,
+                concurrency=concurrency,
             )
 
     def copy_file(
@@ -1583,6 +1588,7 @@ class ModifyFileClient:
         datum: str = None,
         append: bool = False,
         recursive: bool = False,
+        concurrency: int = 0,
     ) -> None:
         """Uploads a PFS File from the content found at a URL. The URL is
         sent to the server which performs the request.
@@ -1601,6 +1607,9 @@ class ModifyFileClient:
         recursive : bool, optional
             If true, allows for recursive scraping on some types URLs, for
             example on s3:// URLs
+        concurrency : int
+            The maximum number of threads used to complete the request.
+            Defaults to 50.
         """
         self._ops.append(
             _AtomicModifyFileURLOp(
@@ -1609,6 +1618,7 @@ class ModifyFileClient:
                 datum=datum,
                 append=append,
                 recursive=recursive,
+                concurrency=concurrency,
             )
         )
 
@@ -1727,11 +1737,13 @@ class _AtomicModifyFileURLOp(_AtomicOp):
         datum: str = None,
         append: bool = False,
         recursive: bool = False,
+        concurrency: int = 0,
     ):
         super().__init__(path, datum)
         self.url = url
         self.recursive = recursive
         self.append = append
+        self.concurrency = concurrency
 
     def reqs(self) -> Iterator[pfs_proto_pb.ModifyFileRequest]:
         if not self.append:
@@ -1743,6 +1755,7 @@ class _AtomicModifyFileURLOp(_AtomicOp):
                 url=pfs_proto_pb.AddFile.URLSource(
                     URL=self.url,
                     recursive=self.recursive,
+                    concurrency=self.concurrency,
                 ),
             ),
         )

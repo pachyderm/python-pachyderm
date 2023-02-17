@@ -61,7 +61,7 @@ class IdpConnector(betterproto.Message):
     name: str = betterproto.string_field(2)
     # Type is the type of the Idp ex. `saml`, `oidc`, `github`.
     type: str = betterproto.string_field(3)
-    # ConfigVersion must be incremented every time a connector is  updated, to
+    # ConfigVersion must be incremented every time a connector is updated, to
     # avoid concurrent updates conflicting.
     config_version: int = betterproto.int64_field(4)
     # This is left for backwards compatibility, but we want users to use the
