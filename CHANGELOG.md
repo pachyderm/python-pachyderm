@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.4.0 (2023-02-23)
+
+- Support for Pachyderm v2.5.0 (Projects)
+- Add concurrency option for PutFileURL.
+
 ## 7.3.2 (2022-07-14)
 
 - Parity with Pachyderm 2.2.5
