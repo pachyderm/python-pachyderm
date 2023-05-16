@@ -122,7 +122,9 @@ jobs:
                   name: build + publish
                   command: |
                       poetry build
-
+            - persist_to_workspace:
+                  paths:
+                      - dist/*
     docker-build:
         docker:
             - image: circleci/python:3.9

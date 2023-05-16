@@ -2,5 +2,5 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1
 
-COPY dist/pachyderm_sdk-0.0.1-py3-none-any.whl  .
-RUN python3 -m pip install pachyderm_sdk-0.0.1-py3-none-any.whl
+COPY dist/python_pachyderm-7.4.0-py3-none-any.whl .
+RUN python3 -m pip install python_pachyderm-7.4.0-py3-none-any.whl
