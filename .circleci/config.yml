@@ -151,32 +151,31 @@ workflows:
             - docker-build:
                   requires:
                       - build
-    #    jobs:
-    #        - unit-tests:
-    #              matrix:
-    #                  parameters:
-    #                      python-version:
-    #                          - 3.7.10
-    #                          - 3.10.4
-    #              filters:
-    #                  tags:
-    #                      only: /.*/
-    #        - examples:
-    #              python-version: 3.9.6
-    #              filters:
-    #                  tags:
-    #                      only: /.*/
-    #        - linting:
-    #              filters:
-    #                  tags:
-    #                      only: /.*/
-    #        - test-publish:
-    #              requires:
-    #                  - unit-tests
-    #                  - examples
-    #                  - linting
-    #              filters:
-    #                  tags:
-    #                      only: /^\d+\.\d+\.\d.*/
-    #                  branches:
-    #                      ignore: /.*/
+            - unit-tests:
+                  matrix:
+                      parameters:
+                          python-version:
+                              - 3.7.10
+                              - 3.10.4
+                  filters:
+                      tags:
+                          only: /.*/
+            - examples:
+                  python-version: 3.9.6
+                  filters:
+                      tags:
+                          only: /.*/
+            - linting:
+                  filters:
+                      tags:
+                          only: /.*/
+            - test-publish:
+                  requires:
+                      - unit-tests
+                      - examples
+                      - linting
+                  filters:
+                      tags:
+                          only: /^\d+\.\d+\.\d.*/
+                      branches:
+                          ignore: /.*/
