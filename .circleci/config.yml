@@ -123,6 +123,7 @@ jobs:
                   command: |
                       poetry build
             - persist_to_workspace:
+                  root: .
                   paths:
                       - dist/*
     docker-build:
