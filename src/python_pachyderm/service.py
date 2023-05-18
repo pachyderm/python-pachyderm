@@ -27,8 +27,12 @@ from python_pachyderm.proto.v2.version.versionpb import version_pb2_grpc as vers
 
 MB = 1024**2
 MAX_RECEIVE_MESSAGE_SIZE = 20 * MB
+PRIMARY_USER_AGENT = "python-pachyderm"
+# SECONDARY_USER_AGENT = "v0.0.0"  # TODO: populate this programmatically
 GRPC_CHANNEL_OPTIONS = [
     ("grpc.max_receive_message_length", MAX_RECEIVE_MESSAGE_SIZE),
+    ("grpc.primary_user_agent", PRIMARY_USER_AGENT),
+    # ("grpc.secondary_user_agent", SECONDARY_USER_AGENT),
 ]
 
 
