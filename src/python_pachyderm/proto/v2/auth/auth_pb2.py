@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z*github.com/pachyderm/pachyderm/v2/src/auth',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n)python_pachyderm/proto/v2/auth/auth.proto\x12\x07\x61uth_v2\x1a\x1fgoogle/protobuf/timestamp.proto\"%\n\x0f\x41\x63tivateRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\",\n\x16RotateRootTokenRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"-\n\x17RotateRootTokenResponse\x12\x12\n\nroot_token\x18\x01 \x01(\t\"\xcb\x01\n\nOIDCConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x11\n\tclient_id\x18\x02 \x01(\t\x12\x15\n\rclient_secret\x18\x03 \x01(\t\x12\x14\n\x0credirect_uri\x18\x04 \x01(\t\x12\x0e\n\x06scopes\x18\x05 \x03(\t\x12\x1e\n\x16require_email_verified\x18\x06 \x01(\x08\x12\x18\n\x10localhost_issuer\x18\x07 \x01(\x08\x12#\n\x1buser_accessible_issuer_host\x18\x08 \x01(\t\"\x19\n\x17GetConfigurationRequest\"F\n\x18GetConfigurationResponse\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"E\n\x17SetConfigurationRequest\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"\x1a\n\x18SetConfigurationResponse\"b\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0chashed_token\x18\x03 \x01(\t\";\n\x13\x41uthenticateRequest\x12\x12\n\noidc_state\x18\x01 \x01(\t\x12\x10\n\x08id_token\x18\x02 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"R\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"G\n\x1cGetRolesForPermissionRequest\x12\'\n\npermission\x18\x01 \x01(\x0e\x32\x13.auth_v2.Permission\"=\n\x1dGetRolesForPermissionResponse\x12\x1c\n\x05roles\x18\x01 \x03(\x0b\x32\r.auth_v2.Role\"_\n\x05Roles\x12(\n\x05roles\x18\x01 \x03(\x0b\x32\x19.auth_v2.Roles.RolesEntry\x1a,\n\nRolesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"\x81\x01\n\x0bRoleBinding\x12\x32\n\x07\x65ntries\x18\x01 \x03(\x0b\x32!.auth_v2.RoleBinding.EntriesEntry\x1a>\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1d\n\x05value\x18\x02 \x01(\x0b\x32\x0e.auth_v2.Roles:\x02\x38\x01\"=\n\x08Resource\x12#\n\x04type\x18\x01 \x01(\x0e\x32\x15.auth_v2.ResourceType\x12\x0c\n\x04name\x18\x02 \x01(\t\"k\n\x05Users\x12\x30\n\tusernames\x18\x01 \x03(\x0b\x32\x1d.auth_v2.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"d\n\x06Groups\x12+\n\x06groups\x18\x01 \x03(\x0b\x32\x1b.auth_v2.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"m\n\x04Role\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x0bpermissions\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\x12-\n\x0eresource_types\x18\x03 \x03(\x0e\x32\x15.auth_v2.ResourceType\"a\n\x10\x41uthorizeRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12(\n\x0bpermissions\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\"\x88\x01\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\x12&\n\tsatisfied\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\x12$\n\x07missing\x18\x03 \x03(\x0e\x32\x13.auth_v2.Permission\x12\x11\n\tprincipal\x18\x04 \x01(\t\"<\n\x15GetPermissionsRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"[\n!GetPermissionsForPrincipalRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\"Q\n\x16GetPermissionsResponse\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"a\n\x18ModifyRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\x12\r\n\x05roles\x18\x03 \x03(\t\"\x1b\n\x19ModifyRoleBindingResponse\"<\n\x15GetRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"?\n\x16GetRoleBindingResponse\x12%\n\x07\x62inding\x18\x01 \x01(\x0b\x32\x14.auth_v2.RoleBinding\"C\n\x0bSessionInfo\x12\r\n\x05nonce\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x16\n\x0e\x63onversion_err\x18\x03 \x01(\x08\"\x15\n\x13GetOIDCLoginRequest\"8\n\x14GetOIDCLoginResponse\x12\x11\n\tlogin_url\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"2\n\x14GetRobotTokenRequest\x12\r\n\x05robot\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"&\n\x15GetRobotTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\")\n\x17RevokeAuthTokenResponse\x12\x0e\n\x06number\x18\x01 \x01(\x03\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"\x12\n\x10GetGroupsRequest\"1\n\x1cGetGroupsForPrincipalRequest\x12\x11\n\tprincipal\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\"\x1a\n\x18\x45xtractAuthTokensRequest\"?\n\x19\x45xtractAuthTokensResponse\x12\"\n\x06tokens\x18\x01 \x03(\x0b\x32\x12.auth_v2.TokenInfo\"<\n\x17RestoreAuthTokenRequest\x12!\n\x05token\x18\x01 \x01(\x0b\x32\x12.auth_v2.TokenInfo\"\x1a\n\x18RestoreAuthTokenResponse\"2\n\x1eRevokeAuthTokensForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"1\n\x1fRevokeAuthTokensForUserResponse\x12\x0e\n\x06number\x18\x01 \x01(\x03\" \n\x1e\x44\x65leteExpiredAuthTokensRequest\"!\n\x1f\x44\x65leteExpiredAuthTokensResponse*\x8d\x10\n\nPermission\x12\x16\n\x12PERMISSION_UNKNOWN\x10\x00\x12\x1b\n\x17\x43LUSTER_MODIFY_BINDINGS\x10\x64\x12\x18\n\x14\x43LUSTER_GET_BINDINGS\x10\x65\x12\x1b\n\x16\x43LUSTER_GET_PACHD_LOGS\x10\x94\x01\x12\x19\n\x15\x43LUSTER_AUTH_ACTIVATE\x10\x66\x12\x1b\n\x17\x43LUSTER_AUTH_DEACTIVATE\x10g\x12\x1b\n\x17\x43LUSTER_AUTH_GET_CONFIG\x10h\x12\x1b\n\x17\x43LUSTER_AUTH_SET_CONFIG\x10i\x12!\n\x1c\x43LUSTER_AUTH_GET_ROBOT_TOKEN\x10\x8b\x01\x12%\n!CLUSTER_AUTH_MODIFY_GROUP_MEMBERS\x10m\x12\x1b\n\x17\x43LUSTER_AUTH_GET_GROUPS\x10n\x12 \n\x1c\x43LUSTER_AUTH_GET_GROUP_USERS\x10o\x12\x1f\n\x1b\x43LUSTER_AUTH_EXTRACT_TOKENS\x10p\x12\x1e\n\x1a\x43LUSTER_AUTH_RESTORE_TOKEN\x10q\x12/\n*CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL\x10\x8d\x01\x12\'\n\"CLUSTER_AUTH_DELETE_EXPIRED_TOKENS\x10\x8c\x01\x12$\n\x1f\x43LUSTER_AUTH_REVOKE_USER_TOKENS\x10\x8e\x01\x12#\n\x1e\x43LUSTER_AUTH_ROTATE_ROOT_TOKEN\x10\x93\x01\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_ACTIVATE\x10r\x12 \n\x1c\x43LUSTER_ENTERPRISE_HEARTBEAT\x10s\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_GET_CODE\x10t\x12!\n\x1d\x43LUSTER_ENTERPRISE_DEACTIVATE\x10u\x12\x1d\n\x18\x43LUSTER_ENTERPRISE_PAUSE\x10\x95\x01\x12\x1f\n\x1b\x43LUSTER_IDENTITY_SET_CONFIG\x10v\x12\x1f\n\x1b\x43LUSTER_IDENTITY_GET_CONFIG\x10w\x12\x1f\n\x1b\x43LUSTER_IDENTITY_CREATE_IDP\x10x\x12\x1f\n\x1b\x43LUSTER_IDENTITY_UPDATE_IDP\x10y\x12\x1e\n\x1a\x43LUSTER_IDENTITY_LIST_IDPS\x10z\x12\x1c\n\x18\x43LUSTER_IDENTITY_GET_IDP\x10{\x12\x1f\n\x1b\x43LUSTER_IDENTITY_DELETE_IDP\x10|\x12\'\n#CLUSTER_IDENTITY_CREATE_OIDC_CLIENT\x10}\x12\'\n#CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT\x10~\x12&\n\"CLUSTER_IDENTITY_LIST_OIDC_CLIENTS\x10\x7f\x12%\n CLUSTER_IDENTITY_GET_OIDC_CLIENT\x10\x80\x01\x12(\n#CLUSTER_IDENTITY_DELETE_OIDC_CLIENT\x10\x81\x01\x12\x17\n\x12\x43LUSTER_DEBUG_DUMP\x10\x83\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_ACTIVATE\x10\x84\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_GET_CODE\x10\x85\x01\x12 \n\x1b\x43LUSTER_LICENSE_ADD_CLUSTER\x10\x86\x01\x12#\n\x1e\x43LUSTER_LICENSE_UPDATE_CLUSTER\x10\x87\x01\x12#\n\x1e\x43LUSTER_LICENSE_DELETE_CLUSTER\x10\x88\x01\x12\"\n\x1d\x43LUSTER_LICENSE_LIST_CLUSTERS\x10\x89\x01\x12\x1a\n\x15\x43LUSTER_CREATE_SECRET\x10\x8f\x01\x12\x19\n\x14\x43LUSTER_LIST_SECRETS\x10\x90\x01\x12\x12\n\rSECRET_DELETE\x10\x91\x01\x12\x13\n\x0eSECRET_INSPECT\x10\x92\x01\x12\x17\n\x12\x43LUSTER_DELETE_ALL\x10\x8a\x01\x12\x0e\n\tREPO_READ\x10\xc8\x01\x12\x0f\n\nREPO_WRITE\x10\xc9\x01\x12\x19\n\x14REPO_MODIFY_BINDINGS\x10\xca\x01\x12\x10\n\x0bREPO_DELETE\x10\xcb\x01\x12\x18\n\x13REPO_INSPECT_COMMIT\x10\xcc\x01\x12\x15\n\x10REPO_LIST_COMMIT\x10\xcd\x01\x12\x17\n\x12REPO_DELETE_COMMIT\x10\xce\x01\x12\x17\n\x12REPO_CREATE_BRANCH\x10\xcf\x01\x12\x15\n\x10REPO_LIST_BRANCH\x10\xd0\x01\x12\x17\n\x12REPO_DELETE_BRANCH\x10\xd1\x01\x12\x16\n\x11REPO_INSPECT_FILE\x10\xd2\x01\x12\x13\n\x0eREPO_LIST_FILE\x10\xd3\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_READER\x10\xd4\x01\x12 \n\x1bREPO_REMOVE_PIPELINE_READER\x10\xd5\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_WRITER\x10\xd6\x01\x12\x16\n\x11PIPELINE_LIST_JOB\x10\xad\x02\x12\x13\n\x0ePROJECT_CREATE\x10\x90\x03\x12\x13\n\x0ePROJECT_DELETE\x10\x91\x03\x12\x16\n\x11PROJECT_LIST_REPO\x10\x92\x03\x12\x18\n\x13PROJECT_CREATE_REPO\x10\x93\x03\x12\x1c\n\x17PROJECT_MODIFY_BINDINGS\x10\x94\x03*\\\n\x0cResourceType\x12\x19\n\x15RESOURCE_TYPE_UNKNOWN\x10\x00\x12\x0b\n\x07\x43LUSTER\x10\x01\x12\x08\n\x04REPO\x10\x02\x12\r\n\tSPEC_REPO\x10\x03\x12\x0b\n\x07PROJECT\x10\x04\x32\xf6\x10\n\x03\x41PI\x12\x41\n\x08\x41\x63tivate\x12\x18.auth_v2.ActivateRequest\x1a\x19.auth_v2.ActivateResponse\"\x00\x12G\n\nDeactivate\x12\x1a.auth_v2.DeactivateRequest\x1a\x1b.auth_v2.DeactivateResponse\"\x00\x12Y\n\x10GetConfiguration\x12 .auth_v2.GetConfigurationRequest\x1a!.auth_v2.GetConfigurationResponse\"\x00\x12Y\n\x10SetConfiguration\x12 .auth_v2.SetConfigurationRequest\x1a!.auth_v2.SetConfigurationResponse\"\x00\x12M\n\x0c\x41uthenticate\x12\x1c.auth_v2.AuthenticateRequest\x1a\x1d.auth_v2.AuthenticateResponse\"\x00\x12\x44\n\tAuthorize\x12\x19.auth_v2.AuthorizeRequest\x1a\x1a.auth_v2.AuthorizeResponse\"\x00\x12S\n\x0eGetPermissions\x12\x1e.auth_v2.GetPermissionsRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12k\n\x1aGetPermissionsForPrincipal\x12*.auth_v2.GetPermissionsForPrincipalRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12;\n\x06WhoAmI\x12\x16.auth_v2.WhoAmIRequest\x1a\x17.auth_v2.WhoAmIResponse\"\x00\x12h\n\x15GetRolesForPermission\x12%.auth_v2.GetRolesForPermissionRequest\x1a&.auth_v2.GetRolesForPermissionResponse\"\x00\x12\\\n\x11ModifyRoleBinding\x12!.auth_v2.ModifyRoleBindingRequest\x1a\".auth_v2.ModifyRoleBindingResponse\"\x00\x12S\n\x0eGetRoleBinding\x12\x1e.auth_v2.GetRoleBindingRequest\x1a\x1f.auth_v2.GetRoleBindingResponse\"\x00\x12M\n\x0cGetOIDCLogin\x12\x1c.auth_v2.GetOIDCLoginRequest\x1a\x1d.auth_v2.GetOIDCLoginResponse\"\x00\x12P\n\rGetRobotToken\x12\x1d.auth_v2.GetRobotTokenRequest\x1a\x1e.auth_v2.GetRobotTokenResponse\"\x00\x12V\n\x0fRevokeAuthToken\x12\x1f.auth_v2.RevokeAuthTokenRequest\x1a .auth_v2.RevokeAuthTokenResponse\"\x00\x12n\n\x17RevokeAuthTokensForUser\x12\'.auth_v2.RevokeAuthTokensForUserRequest\x1a(.auth_v2.RevokeAuthTokensForUserResponse\"\x00\x12Y\n\x10SetGroupsForUser\x12 .auth_v2.SetGroupsForUserRequest\x1a!.auth_v2.SetGroupsForUserResponse\"\x00\x12P\n\rModifyMembers\x12\x1d.auth_v2.ModifyMembersRequest\x1a\x1e.auth_v2.ModifyMembersResponse\"\x00\x12\x44\n\tGetGroups\x12\x19.auth_v2.GetGroupsRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\\\n\x15GetGroupsForPrincipal\x12%.auth_v2.GetGroupsForPrincipalRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\x41\n\x08GetUsers\x12\x18.auth_v2.GetUsersRequest\x1a\x19.auth_v2.GetUsersResponse\"\x00\x12\\\n\x11\x45xtractAuthTokens\x12!.auth_v2.ExtractAuthTokensRequest\x1a\".auth_v2.ExtractAuthTokensResponse\"\x00\x12Y\n\x10RestoreAuthToken\x12 .auth_v2.RestoreAuthTokenRequest\x1a!.auth_v2.RestoreAuthTokenResponse\"\x00\x12n\n\x17\x44\x65leteExpiredAuthTokens\x12\'.auth_v2.DeleteExpiredAuthTokensRequest\x1a(.auth_v2.DeleteExpiredAuthTokensResponse\"\x00\x12V\n\x0fRotateRootToken\x12\x1f.auth_v2.RotateRootTokenRequest\x1a .auth_v2.RotateRootTokenResponse\"\x00\x42,Z*github.com/pachyderm/pachyderm/v2/src/authb\x06proto3'
+  serialized_pb=b'\n)python_pachyderm/proto/v2/auth/auth.proto\x12\x07\x61uth_v2\x1a\x1fgoogle/protobuf/timestamp.proto\"%\n\x0f\x41\x63tivateRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"&\n\x10\x41\x63tivateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x13\n\x11\x44\x65\x61\x63tivateRequest\"\x14\n\x12\x44\x65\x61\x63tivateResponse\",\n\x16RotateRootTokenRequest\x12\x12\n\nroot_token\x18\x01 \x01(\t\"-\n\x17RotateRootTokenResponse\x12\x12\n\nroot_token\x18\x01 \x01(\t\"\xcb\x01\n\nOIDCConfig\x12\x0e\n\x06issuer\x18\x01 \x01(\t\x12\x11\n\tclient_id\x18\x02 \x01(\t\x12\x15\n\rclient_secret\x18\x03 \x01(\t\x12\x14\n\x0credirect_uri\x18\x04 \x01(\t\x12\x0e\n\x06scopes\x18\x05 \x03(\t\x12\x1e\n\x16require_email_verified\x18\x06 \x01(\x08\x12\x18\n\x10localhost_issuer\x18\x07 \x01(\x08\x12#\n\x1buser_accessible_issuer_host\x18\x08 \x01(\t\"\x19\n\x17GetConfigurationRequest\"F\n\x18GetConfigurationResponse\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"E\n\x17SetConfigurationRequest\x12*\n\rconfiguration\x18\x01 \x01(\x0b\x32\x13.auth_v2.OIDCConfig\"\x1a\n\x18SetConfigurationResponse\"b\n\tTokenInfo\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x14\n\x0chashed_token\x18\x03 \x01(\t\";\n\x13\x41uthenticateRequest\x12\x12\n\noidc_state\x18\x01 \x01(\t\x12\x10\n\x08id_token\x18\x02 \x01(\t\"*\n\x14\x41uthenticateResponse\x12\x12\n\npach_token\x18\x01 \x01(\t\"\x0f\n\rWhoAmIRequest\"R\n\x0eWhoAmIResponse\x12\x10\n\x08username\x18\x01 \x01(\t\x12.\n\nexpiration\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"G\n\x1cGetRolesForPermissionRequest\x12\'\n\npermission\x18\x01 \x01(\x0e\x32\x13.auth_v2.Permission\"=\n\x1dGetRolesForPermissionResponse\x12\x1c\n\x05roles\x18\x01 \x03(\x0b\x32\r.auth_v2.Role\"_\n\x05Roles\x12(\n\x05roles\x18\x01 \x03(\x0b\x32\x19.auth_v2.Roles.RolesEntry\x1a,\n\nRolesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"\x81\x01\n\x0bRoleBinding\x12\x32\n\x07\x65ntries\x18\x01 \x03(\x0b\x32!.auth_v2.RoleBinding.EntriesEntry\x1a>\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1d\n\x05value\x18\x02 \x01(\x0b\x32\x0e.auth_v2.Roles:\x02\x38\x01\"=\n\x08Resource\x12#\n\x04type\x18\x01 \x01(\x0e\x32\x15.auth_v2.ResourceType\x12\x0c\n\x04name\x18\x02 \x01(\t\"k\n\x05Users\x12\x30\n\tusernames\x18\x01 \x03(\x0b\x32\x1d.auth_v2.Users.UsernamesEntry\x1a\x30\n\x0eUsernamesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"d\n\x06Groups\x12+\n\x06groups\x18\x01 \x03(\x0b\x32\x1b.auth_v2.Groups.GroupsEntry\x1a-\n\x0bGroupsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"m\n\x04Role\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x0bpermissions\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\x12-\n\x0eresource_types\x18\x03 \x03(\x0e\x32\x15.auth_v2.ResourceType\"a\n\x10\x41uthorizeRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12(\n\x0bpermissions\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\"\x88\x01\n\x11\x41uthorizeResponse\x12\x12\n\nauthorized\x18\x01 \x01(\x08\x12&\n\tsatisfied\x18\x02 \x03(\x0e\x32\x13.auth_v2.Permission\x12$\n\x07missing\x18\x03 \x03(\x0e\x32\x13.auth_v2.Permission\x12\x11\n\tprincipal\x18\x04 \x01(\t\"<\n\x15GetPermissionsRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"[\n!GetPermissionsForPrincipalRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\"Q\n\x16GetPermissionsResponse\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"a\n\x18ModifyRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\x12\x11\n\tprincipal\x18\x02 \x01(\t\x12\r\n\x05roles\x18\x03 \x03(\t\"\x1b\n\x19ModifyRoleBindingResponse\"<\n\x15GetRoleBindingRequest\x12#\n\x08resource\x18\x01 \x01(\x0b\x32\x11.auth_v2.Resource\"?\n\x16GetRoleBindingResponse\x12%\n\x07\x62inding\x18\x01 \x01(\x0b\x32\x14.auth_v2.RoleBinding\"C\n\x0bSessionInfo\x12\r\n\x05nonce\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x16\n\x0e\x63onversion_err\x18\x03 \x01(\x08\"\x15\n\x13GetOIDCLoginRequest\"8\n\x14GetOIDCLoginResponse\x12\x11\n\tlogin_url\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"2\n\x14GetRobotTokenRequest\x12\r\n\x05robot\x18\x01 \x01(\t\x12\x0b\n\x03ttl\x18\x02 \x01(\x03\"&\n\x15GetRobotTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"\'\n\x16RevokeAuthTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\")\n\x17RevokeAuthTokenResponse\x12\x0e\n\x06number\x18\x01 \x01(\x03\";\n\x17SetGroupsForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0e\n\x06groups\x18\x02 \x03(\t\"\x1a\n\x18SetGroupsForUserResponse\"B\n\x14ModifyMembersRequest\x12\r\n\x05group\x18\x01 \x01(\t\x12\x0b\n\x03\x61\x64\x64\x18\x02 \x03(\t\x12\x0e\n\x06remove\x18\x03 \x03(\t\"\x17\n\x15ModifyMembersResponse\"\x12\n\x10GetGroupsRequest\"1\n\x1cGetGroupsForPrincipalRequest\x12\x11\n\tprincipal\x18\x01 \x01(\t\"#\n\x11GetGroupsResponse\x12\x0e\n\x06groups\x18\x01 \x03(\t\" \n\x0fGetUsersRequest\x12\r\n\x05group\x18\x01 \x01(\t\"%\n\x10GetUsersResponse\x12\x11\n\tusernames\x18\x01 \x03(\t\"\x1a\n\x18\x45xtractAuthTokensRequest\"?\n\x19\x45xtractAuthTokensResponse\x12\"\n\x06tokens\x18\x01 \x03(\x0b\x32\x12.auth_v2.TokenInfo\"<\n\x17RestoreAuthTokenRequest\x12!\n\x05token\x18\x01 \x01(\x0b\x32\x12.auth_v2.TokenInfo\"\x1a\n\x18RestoreAuthTokenResponse\"2\n\x1eRevokeAuthTokensForUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"1\n\x1fRevokeAuthTokensForUserResponse\x12\x0e\n\x06number\x18\x01 \x01(\x03\" \n\x1e\x44\x65leteExpiredAuthTokensRequest\"!\n\x1f\x44\x65leteExpiredAuthTokensResponse*\xa9\x10\n\nPermission\x12\x16\n\x12PERMISSION_UNKNOWN\x10\x00\x12\x1b\n\x17\x43LUSTER_MODIFY_BINDINGS\x10\x64\x12\x18\n\x14\x43LUSTER_GET_BINDINGS\x10\x65\x12\x1b\n\x16\x43LUSTER_GET_PACHD_LOGS\x10\x94\x01\x12\x1a\n\x15\x43LUSTER_GET_LOKI_LOGS\x10\x96\x01\x12\x19\n\x15\x43LUSTER_AUTH_ACTIVATE\x10\x66\x12\x1b\n\x17\x43LUSTER_AUTH_DEACTIVATE\x10g\x12\x1b\n\x17\x43LUSTER_AUTH_GET_CONFIG\x10h\x12\x1b\n\x17\x43LUSTER_AUTH_SET_CONFIG\x10i\x12!\n\x1c\x43LUSTER_AUTH_GET_ROBOT_TOKEN\x10\x8b\x01\x12%\n!CLUSTER_AUTH_MODIFY_GROUP_MEMBERS\x10m\x12\x1b\n\x17\x43LUSTER_AUTH_GET_GROUPS\x10n\x12 \n\x1c\x43LUSTER_AUTH_GET_GROUP_USERS\x10o\x12\x1f\n\x1b\x43LUSTER_AUTH_EXTRACT_TOKENS\x10p\x12\x1e\n\x1a\x43LUSTER_AUTH_RESTORE_TOKEN\x10q\x12/\n*CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL\x10\x8d\x01\x12\'\n\"CLUSTER_AUTH_DELETE_EXPIRED_TOKENS\x10\x8c\x01\x12$\n\x1f\x43LUSTER_AUTH_REVOKE_USER_TOKENS\x10\x8e\x01\x12#\n\x1e\x43LUSTER_AUTH_ROTATE_ROOT_TOKEN\x10\x93\x01\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_ACTIVATE\x10r\x12 \n\x1c\x43LUSTER_ENTERPRISE_HEARTBEAT\x10s\x12\x1f\n\x1b\x43LUSTER_ENTERPRISE_GET_CODE\x10t\x12!\n\x1d\x43LUSTER_ENTERPRISE_DEACTIVATE\x10u\x12\x1d\n\x18\x43LUSTER_ENTERPRISE_PAUSE\x10\x95\x01\x12\x1f\n\x1b\x43LUSTER_IDENTITY_SET_CONFIG\x10v\x12\x1f\n\x1b\x43LUSTER_IDENTITY_GET_CONFIG\x10w\x12\x1f\n\x1b\x43LUSTER_IDENTITY_CREATE_IDP\x10x\x12\x1f\n\x1b\x43LUSTER_IDENTITY_UPDATE_IDP\x10y\x12\x1e\n\x1a\x43LUSTER_IDENTITY_LIST_IDPS\x10z\x12\x1c\n\x18\x43LUSTER_IDENTITY_GET_IDP\x10{\x12\x1f\n\x1b\x43LUSTER_IDENTITY_DELETE_IDP\x10|\x12\'\n#CLUSTER_IDENTITY_CREATE_OIDC_CLIENT\x10}\x12\'\n#CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT\x10~\x12&\n\"CLUSTER_IDENTITY_LIST_OIDC_CLIENTS\x10\x7f\x12%\n CLUSTER_IDENTITY_GET_OIDC_CLIENT\x10\x80\x01\x12(\n#CLUSTER_IDENTITY_DELETE_OIDC_CLIENT\x10\x81\x01\x12\x17\n\x12\x43LUSTER_DEBUG_DUMP\x10\x83\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_ACTIVATE\x10\x84\x01\x12\x1d\n\x18\x43LUSTER_LICENSE_GET_CODE\x10\x85\x01\x12 \n\x1b\x43LUSTER_LICENSE_ADD_CLUSTER\x10\x86\x01\x12#\n\x1e\x43LUSTER_LICENSE_UPDATE_CLUSTER\x10\x87\x01\x12#\n\x1e\x43LUSTER_LICENSE_DELETE_CLUSTER\x10\x88\x01\x12\"\n\x1d\x43LUSTER_LICENSE_LIST_CLUSTERS\x10\x89\x01\x12\x1a\n\x15\x43LUSTER_CREATE_SECRET\x10\x8f\x01\x12\x19\n\x14\x43LUSTER_LIST_SECRETS\x10\x90\x01\x12\x12\n\rSECRET_DELETE\x10\x91\x01\x12\x13\n\x0eSECRET_INSPECT\x10\x92\x01\x12\x17\n\x12\x43LUSTER_DELETE_ALL\x10\x8a\x01\x12\x0e\n\tREPO_READ\x10\xc8\x01\x12\x0f\n\nREPO_WRITE\x10\xc9\x01\x12\x19\n\x14REPO_MODIFY_BINDINGS\x10\xca\x01\x12\x10\n\x0bREPO_DELETE\x10\xcb\x01\x12\x18\n\x13REPO_INSPECT_COMMIT\x10\xcc\x01\x12\x15\n\x10REPO_LIST_COMMIT\x10\xcd\x01\x12\x17\n\x12REPO_DELETE_COMMIT\x10\xce\x01\x12\x17\n\x12REPO_CREATE_BRANCH\x10\xcf\x01\x12\x15\n\x10REPO_LIST_BRANCH\x10\xd0\x01\x12\x17\n\x12REPO_DELETE_BRANCH\x10\xd1\x01\x12\x16\n\x11REPO_INSPECT_FILE\x10\xd2\x01\x12\x13\n\x0eREPO_LIST_FILE\x10\xd3\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_READER\x10\xd4\x01\x12 \n\x1bREPO_REMOVE_PIPELINE_READER\x10\xd5\x01\x12\x1d\n\x18REPO_ADD_PIPELINE_WRITER\x10\xd6\x01\x12\x16\n\x11PIPELINE_LIST_JOB\x10\xad\x02\x12\x13\n\x0ePROJECT_CREATE\x10\x90\x03\x12\x13\n\x0ePROJECT_DELETE\x10\x91\x03\x12\x16\n\x11PROJECT_LIST_REPO\x10\x92\x03\x12\x18\n\x13PROJECT_CREATE_REPO\x10\x93\x03\x12\x1c\n\x17PROJECT_MODIFY_BINDINGS\x10\x94\x03*\\\n\x0cResourceType\x12\x19\n\x15RESOURCE_TYPE_UNKNOWN\x10\x00\x12\x0b\n\x07\x43LUSTER\x10\x01\x12\x08\n\x04REPO\x10\x02\x12\r\n\tSPEC_REPO\x10\x03\x12\x0b\n\x07PROJECT\x10\x04\x32\xf6\x10\n\x03\x41PI\x12\x41\n\x08\x41\x63tivate\x12\x18.auth_v2.ActivateRequest\x1a\x19.auth_v2.ActivateResponse\"\x00\x12G\n\nDeactivate\x12\x1a.auth_v2.DeactivateRequest\x1a\x1b.auth_v2.DeactivateResponse\"\x00\x12Y\n\x10GetConfiguration\x12 .auth_v2.GetConfigurationRequest\x1a!.auth_v2.GetConfigurationResponse\"\x00\x12Y\n\x10SetConfiguration\x12 .auth_v2.SetConfigurationRequest\x1a!.auth_v2.SetConfigurationResponse\"\x00\x12M\n\x0c\x41uthenticate\x12\x1c.auth_v2.AuthenticateRequest\x1a\x1d.auth_v2.AuthenticateResponse\"\x00\x12\x44\n\tAuthorize\x12\x19.auth_v2.AuthorizeRequest\x1a\x1a.auth_v2.AuthorizeResponse\"\x00\x12S\n\x0eGetPermissions\x12\x1e.auth_v2.GetPermissionsRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12k\n\x1aGetPermissionsForPrincipal\x12*.auth_v2.GetPermissionsForPrincipalRequest\x1a\x1f.auth_v2.GetPermissionsResponse\"\x00\x12;\n\x06WhoAmI\x12\x16.auth_v2.WhoAmIRequest\x1a\x17.auth_v2.WhoAmIResponse\"\x00\x12h\n\x15GetRolesForPermission\x12%.auth_v2.GetRolesForPermissionRequest\x1a&.auth_v2.GetRolesForPermissionResponse\"\x00\x12\\\n\x11ModifyRoleBinding\x12!.auth_v2.ModifyRoleBindingRequest\x1a\".auth_v2.ModifyRoleBindingResponse\"\x00\x12S\n\x0eGetRoleBinding\x12\x1e.auth_v2.GetRoleBindingRequest\x1a\x1f.auth_v2.GetRoleBindingResponse\"\x00\x12M\n\x0cGetOIDCLogin\x12\x1c.auth_v2.GetOIDCLoginRequest\x1a\x1d.auth_v2.GetOIDCLoginResponse\"\x00\x12P\n\rGetRobotToken\x12\x1d.auth_v2.GetRobotTokenRequest\x1a\x1e.auth_v2.GetRobotTokenResponse\"\x00\x12V\n\x0fRevokeAuthToken\x12\x1f.auth_v2.RevokeAuthTokenRequest\x1a .auth_v2.RevokeAuthTokenResponse\"\x00\x12n\n\x17RevokeAuthTokensForUser\x12\'.auth_v2.RevokeAuthTokensForUserRequest\x1a(.auth_v2.RevokeAuthTokensForUserResponse\"\x00\x12Y\n\x10SetGroupsForUser\x12 .auth_v2.SetGroupsForUserRequest\x1a!.auth_v2.SetGroupsForUserResponse\"\x00\x12P\n\rModifyMembers\x12\x1d.auth_v2.ModifyMembersRequest\x1a\x1e.auth_v2.ModifyMembersResponse\"\x00\x12\x44\n\tGetGroups\x12\x19.auth_v2.GetGroupsRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\\\n\x15GetGroupsForPrincipal\x12%.auth_v2.GetGroupsForPrincipalRequest\x1a\x1a.auth_v2.GetGroupsResponse\"\x00\x12\x41\n\x08GetUsers\x12\x18.auth_v2.GetUsersRequest\x1a\x19.auth_v2.GetUsersResponse\"\x00\x12\\\n\x11\x45xtractAuthTokens\x12!.auth_v2.ExtractAuthTokensRequest\x1a\".auth_v2.ExtractAuthTokensResponse\"\x00\x12Y\n\x10RestoreAuthToken\x12 .auth_v2.RestoreAuthTokenRequest\x1a!.auth_v2.RestoreAuthTokenResponse\"\x00\x12n\n\x17\x44\x65leteExpiredAuthTokens\x12\'.auth_v2.DeleteExpiredAuthTokensRequest\x1a(.auth_v2.DeleteExpiredAuthTokensResponse\"\x00\x12V\n\x0fRotateRootToken\x12\x1f.auth_v2.RotateRootTokenRequest\x1a .auth_v2.RotateRootTokenResponse\"\x00\x42,Z*github.com/pachyderm/pachyderm/v2/src/authb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -53,322 +53,327 @@ _PERMISSION = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_ACTIVATE', index=4, number=102,
+      name='CLUSTER_GET_LOKI_LOGS', index=4, number=150,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_DEACTIVATE', index=5, number=103,
+      name='CLUSTER_AUTH_ACTIVATE', index=5, number=102,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_GET_CONFIG', index=6, number=104,
+      name='CLUSTER_AUTH_DEACTIVATE', index=6, number=103,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_SET_CONFIG', index=7, number=105,
+      name='CLUSTER_AUTH_GET_CONFIG', index=7, number=104,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_GET_ROBOT_TOKEN', index=8, number=139,
+      name='CLUSTER_AUTH_SET_CONFIG', index=8, number=105,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_MODIFY_GROUP_MEMBERS', index=9, number=109,
+      name='CLUSTER_AUTH_GET_ROBOT_TOKEN', index=9, number=139,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_GET_GROUPS', index=10, number=110,
+      name='CLUSTER_AUTH_MODIFY_GROUP_MEMBERS', index=10, number=109,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_GET_GROUP_USERS', index=11, number=111,
+      name='CLUSTER_AUTH_GET_GROUPS', index=11, number=110,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_EXTRACT_TOKENS', index=12, number=112,
+      name='CLUSTER_AUTH_GET_GROUP_USERS', index=12, number=111,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_RESTORE_TOKEN', index=13, number=113,
+      name='CLUSTER_AUTH_EXTRACT_TOKENS', index=13, number=112,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL', index=14, number=141,
+      name='CLUSTER_AUTH_RESTORE_TOKEN', index=14, number=113,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_DELETE_EXPIRED_TOKENS', index=15, number=140,
+      name='CLUSTER_AUTH_GET_PERMISSIONS_FOR_PRINCIPAL', index=15, number=141,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_REVOKE_USER_TOKENS', index=16, number=142,
+      name='CLUSTER_AUTH_DELETE_EXPIRED_TOKENS', index=16, number=140,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_AUTH_ROTATE_ROOT_TOKEN', index=17, number=147,
+      name='CLUSTER_AUTH_REVOKE_USER_TOKENS', index=17, number=142,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_ACTIVATE', index=18, number=114,
+      name='CLUSTER_AUTH_ROTATE_ROOT_TOKEN', index=18, number=147,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_HEARTBEAT', index=19, number=115,
+      name='CLUSTER_ENTERPRISE_ACTIVATE', index=19, number=114,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_GET_CODE', index=20, number=116,
+      name='CLUSTER_ENTERPRISE_HEARTBEAT', index=20, number=115,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_DEACTIVATE', index=21, number=117,
+      name='CLUSTER_ENTERPRISE_GET_CODE', index=21, number=116,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_ENTERPRISE_PAUSE', index=22, number=149,
+      name='CLUSTER_ENTERPRISE_DEACTIVATE', index=22, number=117,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_SET_CONFIG', index=23, number=118,
+      name='CLUSTER_ENTERPRISE_PAUSE', index=23, number=149,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_CONFIG', index=24, number=119,
+      name='CLUSTER_IDENTITY_SET_CONFIG', index=24, number=118,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_CREATE_IDP', index=25, number=120,
+      name='CLUSTER_IDENTITY_GET_CONFIG', index=25, number=119,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_UPDATE_IDP', index=26, number=121,
+      name='CLUSTER_IDENTITY_CREATE_IDP', index=26, number=120,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_LIST_IDPS', index=27, number=122,
+      name='CLUSTER_IDENTITY_UPDATE_IDP', index=27, number=121,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_IDP', index=28, number=123,
+      name='CLUSTER_IDENTITY_LIST_IDPS', index=28, number=122,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_DELETE_IDP', index=29, number=124,
+      name='CLUSTER_IDENTITY_GET_IDP', index=29, number=123,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_CREATE_OIDC_CLIENT', index=30, number=125,
+      name='CLUSTER_IDENTITY_DELETE_IDP', index=30, number=124,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT', index=31, number=126,
+      name='CLUSTER_IDENTITY_CREATE_OIDC_CLIENT', index=31, number=125,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_LIST_OIDC_CLIENTS', index=32, number=127,
+      name='CLUSTER_IDENTITY_UPDATE_OIDC_CLIENT', index=32, number=126,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_GET_OIDC_CLIENT', index=33, number=128,
+      name='CLUSTER_IDENTITY_LIST_OIDC_CLIENTS', index=33, number=127,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_IDENTITY_DELETE_OIDC_CLIENT', index=34, number=129,
+      name='CLUSTER_IDENTITY_GET_OIDC_CLIENT', index=34, number=128,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_DEBUG_DUMP', index=35, number=131,
+      name='CLUSTER_IDENTITY_DELETE_OIDC_CLIENT', index=35, number=129,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_ACTIVATE', index=36, number=132,
+      name='CLUSTER_DEBUG_DUMP', index=36, number=131,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_GET_CODE', index=37, number=133,
+      name='CLUSTER_LICENSE_ACTIVATE', index=37, number=132,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_ADD_CLUSTER', index=38, number=134,
+      name='CLUSTER_LICENSE_GET_CODE', index=38, number=133,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_UPDATE_CLUSTER', index=39, number=135,
+      name='CLUSTER_LICENSE_ADD_CLUSTER', index=39, number=134,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_DELETE_CLUSTER', index=40, number=136,
+      name='CLUSTER_LICENSE_UPDATE_CLUSTER', index=40, number=135,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LICENSE_LIST_CLUSTERS', index=41, number=137,
+      name='CLUSTER_LICENSE_DELETE_CLUSTER', index=41, number=136,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_CREATE_SECRET', index=42, number=143,
+      name='CLUSTER_LICENSE_LIST_CLUSTERS', index=42, number=137,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_LIST_SECRETS', index=43, number=144,
+      name='CLUSTER_CREATE_SECRET', index=43, number=143,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='SECRET_DELETE', index=44, number=145,
+      name='CLUSTER_LIST_SECRETS', index=44, number=144,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='SECRET_INSPECT', index=45, number=146,
+      name='SECRET_DELETE', index=45, number=145,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='CLUSTER_DELETE_ALL', index=46, number=138,
+      name='SECRET_INSPECT', index=46, number=146,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_READ', index=47, number=200,
+      name='CLUSTER_DELETE_ALL', index=47, number=138,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_WRITE', index=48, number=201,
+      name='REPO_READ', index=48, number=200,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_MODIFY_BINDINGS', index=49, number=202,
+      name='REPO_WRITE', index=49, number=201,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE', index=50, number=203,
+      name='REPO_MODIFY_BINDINGS', index=50, number=202,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_INSPECT_COMMIT', index=51, number=204,
+      name='REPO_DELETE', index=51, number=203,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_COMMIT', index=52, number=205,
+      name='REPO_INSPECT_COMMIT', index=52, number=204,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE_COMMIT', index=53, number=206,
+      name='REPO_LIST_COMMIT', index=53, number=205,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_CREATE_BRANCH', index=54, number=207,
+      name='REPO_DELETE_COMMIT', index=54, number=206,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_BRANCH', index=55, number=208,
+      name='REPO_CREATE_BRANCH', index=55, number=207,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_DELETE_BRANCH', index=56, number=209,
+      name='REPO_LIST_BRANCH', index=56, number=208,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_INSPECT_FILE', index=57, number=210,
+      name='REPO_DELETE_BRANCH', index=57, number=209,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_LIST_FILE', index=58, number=211,
+      name='REPO_INSPECT_FILE', index=58, number=210,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_ADD_PIPELINE_READER', index=59, number=212,
+      name='REPO_LIST_FILE', index=59, number=211,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_REMOVE_PIPELINE_READER', index=60, number=213,
+      name='REPO_ADD_PIPELINE_READER', index=60, number=212,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='REPO_ADD_PIPELINE_WRITER', index=61, number=214,
+      name='REPO_REMOVE_PIPELINE_READER', index=61, number=213,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PIPELINE_LIST_JOB', index=62, number=301,
+      name='REPO_ADD_PIPELINE_WRITER', index=62, number=214,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PROJECT_CREATE', index=63, number=400,
+      name='PIPELINE_LIST_JOB', index=63, number=301,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PROJECT_DELETE', index=64, number=401,
+      name='PROJECT_CREATE', index=64, number=400,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PROJECT_LIST_REPO', index=65, number=402,
+      name='PROJECT_DELETE', index=65, number=401,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PROJECT_CREATE_REPO', index=66, number=403,
+      name='PROJECT_LIST_REPO', index=66, number=402,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='PROJECT_MODIFY_BINDINGS', index=67, number=404,
+      name='PROJECT_CREATE_REPO', index=67, number=403,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PROJECT_MODIFY_BINDINGS', index=68, number=404,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -376,7 +381,7 @@ _PERMISSION = _descriptor.EnumDescriptor(
   containing_type=None,
   serialized_options=None,
   serialized_start=3538,
-  serialized_end=5599,
+  serialized_end=5627,
 )
 _sym_db.RegisterEnumDescriptor(_PERMISSION)
 
@@ -416,8 +421,8 @@ _RESOURCETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=5601,
-  serialized_end=5693,
+  serialized_start=5629,
+  serialized_end=5721,
 )
 _sym_db.RegisterEnumDescriptor(_RESOURCETYPE)
 
@@ -426,6 +431,7 @@ PERMISSION_UNKNOWN = 0
 CLUSTER_MODIFY_BINDINGS = 100
 CLUSTER_GET_BINDINGS = 101
 CLUSTER_GET_PACHD_LOGS = 148
+CLUSTER_GET_LOKI_LOGS = 150
 CLUSTER_AUTH_ACTIVATE = 102
 CLUSTER_AUTH_DEACTIVATE = 103
 CLUSTER_AUTH_GET_CONFIG = 104
@@ -3114,8 +3120,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=5696,
-  serialized_end=7862,
+  serialized_start=5724,
+  serialized_end=7890,
   methods=[
   _descriptor.MethodDescriptor(
     name='Activate',

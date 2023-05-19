@@ -388,6 +388,7 @@ class JobInfoDetails(betterproto.Message):
     scheduling_spec: "SchedulingSpec" = betterproto.message_field(16)
     pod_spec: str = betterproto.string_field(17)
     pod_patch: str = betterproto.string_field(18)
+    sidecar_resource_requests: "ResourceSpec" = betterproto.message_field(19)
 
 
 @dataclass(eq=False, repr=False)
@@ -490,6 +491,7 @@ class PipelineInfoDetails(betterproto.Message):
     worker_rc: str = betterproto.string_field(32)
     autoscaling: bool = betterproto.bool_field(33)
     tolerations: List["Toleration"] = betterproto.message_field(34)
+    sidecar_resource_requests: "ResourceSpec" = betterproto.message_field(35)
 
 
 @dataclass(eq=False, repr=False)
@@ -754,6 +756,7 @@ class CreatePipelineRequest(betterproto.Message):
     reprocess_spec: str = betterproto.string_field(29)
     autoscaling: bool = betterproto.bool_field(30)
     tolerations: List["Toleration"] = betterproto.message_field(34)
+    sidecar_resource_requests: "ResourceSpec" = betterproto.message_field(35)
 
 
 @dataclass(eq=False, repr=False)
@@ -918,6 +921,7 @@ class RenderTemplateResponse(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class LokiRequest(betterproto.Message):
     since: timedelta = betterproto.message_field(1)
+    query: str = betterproto.string_field(2)
 
 
 @dataclass(eq=False, repr=False)
@@ -1144,6 +1148,7 @@ class ApiStub(betterproto.ServiceStub):
         reprocess_spec: str = "",
         autoscaling: bool = False,
         tolerations: Optional[List["Toleration"]] = None,
+        sidecar_resource_requests: "ResourceSpec" = None,
     ) -> "betterproto_lib_google_protobuf.Empty":
         tolerations = tolerations or []
 
@@ -1195,6 +1200,8 @@ class ApiStub(betterproto.ServiceStub):
         request.autoscaling = autoscaling
         if tolerations is not None:
             request.tolerations = tolerations
+        if sidecar_resource_requests is not None:
+            request.sidecar_resource_requests = sidecar_resource_requests
 
         return await self._unary_unary(
             "/pps_v2.API/CreatePipeline", request, betterproto_lib_google_protobuf.Empty
@@ -1522,15 +1529,32 @@ class ApiStub(betterproto.ServiceStub):
             yield response
 
     async def get_kube_events(
-        self, *, since: timedelta = None
+        self, *, since: timedelta = None, query: str = ""
     ) -> AsyncIterator["LokiLogMessage"]:
 
         request = LokiRequest()
         if since is not None:
             request.since = since
+        request.query = query
 
         async for response in self._unary_stream(
             "/pps_v2.API/GetKubeEvents",
+            request,
+            LokiLogMessage,
+        ):
+            yield response
+
+    async def query_loki(
+        self, *, since: timedelta = None, query: str = ""
+    ) -> AsyncIterator["LokiLogMessage"]:
+
+        request = LokiRequest()
+        if since is not None:
+            request.since = since
+        request.query = query
+
+        async for response in self._unary_stream(
+            "/pps_v2.API/QueryLoki",
             request,
             LokiLogMessage,
         ):
@@ -1633,6 +1657,7 @@ class ApiBase(ServiceBase):
         reprocess_spec: str,
         autoscaling: bool,
         tolerations: Optional[List["Toleration"]],
+        sidecar_resource_requests: "ResourceSpec",
     ) -> "betterproto_lib_google_protobuf.Empty":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1763,7 +1788,12 @@ class ApiBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def get_kube_events(
-        self, since: timedelta
+        self, since: timedelta, query: str
+    ) -> AsyncIterator["LokiLogMessage"]:
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def query_loki(
+        self, since: timedelta, query: str
     ) -> AsyncIterator["LokiLogMessage"]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -1939,6 +1969,7 @@ class ApiBase(ServiceBase):
             "reprocess_spec": request.reprocess_spec,
             "autoscaling": request.autoscaling,
             "tolerations": request.tolerations,
+            "sidecar_resource_requests": request.sidecar_resource_requests,
         }
 
         response = await self.create_pipeline(**request_kwargs)
@@ -2187,10 +2218,25 @@ class ApiBase(ServiceBase):
 
         request_kwargs = {
             "since": request.since,
+            "query": request.query,
         }
 
         await self._call_rpc_handler_server_stream(
             self.get_kube_events,
+            stream,
+            request_kwargs,
+        )
+
+    async def __rpc_query_loki(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "since": request.since,
+            "query": request.query,
+        }
+
+        await self._call_rpc_handler_server_stream(
+            self.query_loki,
             stream,
             request_kwargs,
         )
@@ -2385,6 +2431,12 @@ class ApiBase(ServiceBase):
             ),
             "/pps_v2.API/GetKubeEvents": grpclib.const.Handler(
                 self.__rpc_get_kube_events,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                LokiRequest,
+                LokiLogMessage,
+            ),
+            "/pps_v2.API/QueryLoki": grpclib.const.Handler(
+                self.__rpc_query_loki,
                 grpclib.const.Cardinality.UNARY_STREAM,
                 LokiRequest,
                 LokiLogMessage,

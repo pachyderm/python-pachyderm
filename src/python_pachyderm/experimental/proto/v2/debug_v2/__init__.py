@@ -3,11 +3,19 @@
 # plugin: python-betterproto
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import AsyncIterator, Dict
+from typing import AsyncIterator, Dict, List
 
 import betterproto
 from betterproto.grpc.grpclib_server import ServiceBase
 import grpclib
+
+
+class SetLogLevelRequestLogLevel(betterproto.Enum):
+    UNKNOWN = 0
+    DEBUG = 1
+    INFO = 2
+    ERROR = 3
+    OFF = 4
 
 
 @dataclass(eq=False, repr=False)
@@ -47,6 +55,20 @@ class DumpRequest(betterproto.Message):
     # Limit sets the limit for the number of commits / jobs that are returned for
     # each repo / pipeline in the dump.
     limit: int = betterproto.int64_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class SetLogLevelRequest(betterproto.Message):
+    pachyderm: "SetLogLevelRequestLogLevel" = betterproto.enum_field(1, group="level")
+    grpc: "SetLogLevelRequestLogLevel" = betterproto.enum_field(2, group="level")
+    duration: timedelta = betterproto.message_field(3)
+    recurse: bool = betterproto.bool_field(4)
+
+
+@dataclass(eq=False, repr=False)
+class SetLogLevelResponse(betterproto.Message):
+    affected_pods: List[str] = betterproto.string_field(1)
+    errored_pods: List[str] = betterproto.string_field(2)
 
 
 class DebugStub(betterproto.ServiceStub):
@@ -98,6 +120,26 @@ class DebugStub(betterproto.ServiceStub):
         ):
             yield response
 
+    async def set_log_level(
+        self,
+        *,
+        pachyderm: "SetLogLevelRequestLogLevel" = None,
+        grpc: "SetLogLevelRequestLogLevel" = None,
+        duration: timedelta = None,
+        recurse: bool = False,
+    ) -> "SetLogLevelResponse":
+
+        request = SetLogLevelRequest()
+        request.pachyderm = pachyderm
+        request.grpc = grpc
+        if duration is not None:
+            request.duration = duration
+        request.recurse = recurse
+
+        return await self._unary_unary(
+            "/debug_v2.Debug/SetLogLevel", request, SetLogLevelResponse
+        )
+
 
 class DebugBase(ServiceBase):
     async def profile(
@@ -113,6 +155,15 @@ class DebugBase(ServiceBase):
     async def dump(
         self, filter: "Filter", limit: int
     ) -> AsyncIterator["betterproto_lib_google_protobuf.BytesValue"]:
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def set_log_level(
+        self,
+        pachyderm: "SetLogLevelRequestLogLevel",
+        grpc: "SetLogLevelRequestLogLevel",
+        duration: timedelta,
+        recurse: bool,
+    ) -> "SetLogLevelResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_profile(self, stream: grpclib.server.Stream) -> None:
@@ -156,6 +207,19 @@ class DebugBase(ServiceBase):
             request_kwargs,
         )
 
+    async def __rpc_set_log_level(self, stream: grpclib.server.Stream) -> None:
+        request = await stream.recv_message()
+
+        request_kwargs = {
+            "pachyderm": request.pachyderm,
+            "grpc": request.grpc,
+            "duration": request.duration,
+            "recurse": request.recurse,
+        }
+
+        response = await self.set_log_level(**request_kwargs)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/debug_v2.Debug/Profile": grpclib.const.Handler(
@@ -175,6 +239,12 @@ class DebugBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_STREAM,
                 DumpRequest,
                 betterproto_lib_google_protobuf.BytesValue,
+            ),
+            "/debug_v2.Debug/SetLogLevel": grpclib.const.Handler(
+                self.__rpc_set_log_level,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                SetLogLevelRequest,
+                SetLogLevelResponse,
             ),
         }
 

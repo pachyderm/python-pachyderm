@@ -13,7 +13,7 @@ mkdir -p ${BETTERPROTO_OUTDIR}
 mv ./proto/pachyderm/src/* ${OUTDIR}
 
 # Remove protobuf extensions, that are Go specific.
-for i in ${PROTO_FILES}; do
+for i in $(find ${OUTDIR} -name "*.proto"); do
     # remove gogoproto
     sed -i 's/import.*gogo.proto.*\;//' "${i}"
     sed -i 's/\[.*gogoproto.*\]//' "${i}"
@@ -37,6 +37,8 @@ find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python
 sed -i 's/IDP/Idp/g' ${OUTDIR}/identity/identity.proto
 sed -i 's/OIDC/Oidc/g' ${OUTDIR}/identity/identity.proto
 find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_betterproto_out=${BETTERPROTO_OUTDIR}
+mv ${BETTERPROTO_OUTDIR}/pachyderm/worker ${BETTERPROTO_OUTDIR}
+rm -r ${BETTERPROTO_OUTDIR}/pachyderm
 
 # Clean up
 find ${OUTDIR} -name '*.proto' | xargs rm
