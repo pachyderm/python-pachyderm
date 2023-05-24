@@ -6,10 +6,8 @@ tar xf /dev/stdin
 
 # VERSION matches the MajorVersion of pachyderm
 OUTDIR="python_pachyderm/proto/v${VERSION}"
-BETTERPROTO_OUTDIR="python_pachyderm/experimental/proto/v${VERSION}"
 
 mkdir -p ${OUTDIR}
-mkdir -p ${BETTERPROTO_OUTDIR}
 mv ./proto/pachyderm/src/* ${OUTDIR}
 
 # Remove protobuf extensions, that are Go specific.
@@ -33,15 +31,8 @@ done
 # should result in {}_pb2.py and {}_pb2_grpc.py per proto
 find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=.
 
-# Refactor IDP -> Idp, OIDC -> Oidc (for BetterProto)
-sed -i 's/IDP/Idp/g' ${OUTDIR}/identity/identity.proto
-sed -i 's/OIDC/Oidc/g' ${OUTDIR}/identity/identity.proto
-find ${OUTDIR} -name '*.proto' | xargs python3 -m grpc_tools.protoc -I. --python_betterproto_out=${BETTERPROTO_OUTDIR}
-mv ${BETTERPROTO_OUTDIR}/pachyderm/worker ${BETTERPROTO_OUTDIR}
-rm -r ${BETTERPROTO_OUTDIR}/pachyderm
-
 # Clean up
 find ${OUTDIR} -name '*.proto' | xargs rm
 find ${OUTDIR} -type d -exec touch {}/__init__.py \;
 
-tar cf - ${OUTDIR} ${BETTERPROTO_OUTDIR}
+tar cf - ${OUTDIR}

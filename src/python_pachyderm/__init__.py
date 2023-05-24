@@ -13,7 +13,6 @@ from .util import (
     parse_dict_pipeline_spec,
 )
 from grpc import RpcError
-from . import experimental
 
 # Python version compatibility.
 try:
