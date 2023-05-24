@@ -72,6 +72,9 @@ BLACKLISTED_METHODS = {
         "rotate_root_token",
         "get_groups_for_principal",
     ],
+    Service.DEBUG: [
+        "set_log_level",  # implemented, but linter script is confused by enum.
+    ],
     Service.PFS: [
         # the following are ignored because they're for internal use only
         "build_commit",
@@ -116,6 +119,7 @@ BLACKLISTED_METHODS = {
         "list_task",
         "render_template",
         "get_kube_events",
+        "query_loki",
     ],
     Service.ENTERPRISE: [
         # internal RPC only
