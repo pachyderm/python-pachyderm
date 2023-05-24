@@ -62,8 +62,8 @@ def create_test_repo(client, test_name, project_name=None, prefix=None, suffix=N
 
 def create_test_pipeline(client: python_pachyderm.Client, test_name):
     repo_name_suffix = random_string(6)
-    project_name = "default"  # f"{test_name}-{repo_name_suffix}"
-    # client.create_project(project_name)
+    project_name = f"{test_name}-{repo_name_suffix}"
+    client.create_project(project_name)
     input_repo_name = create_test_repo(
         client,
         test_name,
