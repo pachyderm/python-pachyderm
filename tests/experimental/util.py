@@ -55,7 +55,7 @@ def create_test_repo(client, test_name, project_name=None, prefix=None, suffix=N
     repo_name = test_repo_name(test_name, prefix=prefix, suffix=suffix)
     client.create_repo(
         repo_name,
-        project_name=project_name,
+        project_name='default',
         description="python_pachyderm test repo for {}".format(test_name),
     )
     return repo_name
