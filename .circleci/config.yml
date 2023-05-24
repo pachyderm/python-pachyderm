@@ -119,13 +119,13 @@ workflows:
           matrix:
             parameters:
               python-version:
-                - 3.7.10
-                - 3.10.4
+                - 3.8.16
+                - 3.11.3
           filters:
             tags:
               only: /.*/
       - examples:
-          python-version: 3.9.6
+          python-version: 3.10.11
           filters:
             tags:
               only: /.*/

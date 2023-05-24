@@ -56,8 +56,8 @@ def main():
             cmd=["sh"],
             image="v4tech/imagemagick",
             stdin=[
-                "montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs -type f | sort) /pfs/out/montage.png"
-            ],
+                "montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs ! -name .env -type f | sort) /pfs/out/montage.png"
+            ]
         ),
         input=pps_proto.Input(
             cross=[
@@ -74,8 +74,7 @@ def main():
         python_pachyderm.put_files(client, relpath("images"), commit, "/")
 
     # Wait for the commit (and its downstream commits) to finish
-    for _ in client.wait_commit(commit.id):
-        pass
+    client.wait_commit(("montage", "master"))
 
     # Get the montage
     source_file = client.get_file(("montage", "master"), "/montage.png")
