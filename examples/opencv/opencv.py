@@ -57,7 +57,7 @@ def main():
             image="v4tech/imagemagick",
             stdin=[
                 "montage -shadow -background SkyBlue -geometry 300x300+2+2 $(find /pfs ! -name .env -type f | sort) /pfs/out/montage.png"
-            ]
+            ],
         ),
         input=pps_proto.Input(
             cross=[
