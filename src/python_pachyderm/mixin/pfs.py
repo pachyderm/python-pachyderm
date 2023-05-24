@@ -694,6 +694,27 @@ class PFSMixin:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
         return self.__stub.SubscribeCommit(message)
 
+    def find_commits(
+        self, start: SubcommitType, file_path: str, limit: int = 0
+    ) -> Iterator[pfs_pb2.FindCommitsResponse]:
+        """Searches for commits that reference the specified file
+        being modified in a branch.
+
+        Parameters
+        ----------
+        start : SubcommitType
+            The commit where the search should begin.
+        file_path : str
+            The path to the file being queried.
+        limit: int, optional
+            The number of matching commits to return. (default no limit)
+        """
+        message = pfs_pb2.FindCommitsRequest(
+            start=start, file_path=file_path, limit=limit
+        )
+        for item in self.__stub.FinishCommit(message):
+            yield item
+
     def create_branch(
         self,
         repo_name: str,

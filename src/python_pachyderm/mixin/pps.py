@@ -415,6 +415,7 @@ class PPSMixin:
         metadata: pps_pb2.Metadata = None,
         autoscaling: bool = False,
         tolerations: List[pps_pb2.Toleration] = None,
+        sidecar_resource_requests: pps_pb2.ResourceSpec = None,
     ) -> None:
         """Creates a pipeline.
 
@@ -488,6 +489,8 @@ class PPSMixin:
             it has to process.
         tolerations: List[pps_pb2.Toleration]
             A list of Kubernetes tolerations to be applied to the worker pod.
+        sidecar_resource_requests : pps_pb2.ResourceSpec, optional
+            The amount of resources that the sidecar containers will consume.
 
         Notes
         -----
@@ -980,3 +983,19 @@ class PPSMixin:
         """Return a stream of Kubernetes events."""
         message = pps_pb2.LokiRequest(since=since)
         return self.__stub.GetKubeEvents(message)
+
+    def query_loki(
+        self, query: str, since: duration_pb2.Duration = None
+    ) -> Iterator[pps_pb2.LokiLogMessage]:
+        """Returns a stream of loki log messages given a query string.
+
+        Parameters
+        ----------
+        query : str
+            The Loki query.
+        since : duration_pb2.Duration, optional
+            Return log messages more recent than "since". (default now)
+        """
+        message = pps_pb2.LokiRequest(query=query, since=since)
+        for item in self.__stub.QueryLoki(message):
+            yield item
