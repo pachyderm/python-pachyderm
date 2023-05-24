@@ -13,7 +13,6 @@ except ImportError:
     from collections import Iterable
 
 import grpc
-from betterproto import BytesValue
 
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
@@ -48,7 +47,7 @@ class PFSFile:
     >>>     content = f.read()
     """
 
-    def __init__(self, stream: Iterator[BytesValue]):
+    def __init__(self, stream: Iterator[wrappers_pb2.BytesValue]):
         self._stream = stream
         self._buffer = bytearray()
 
