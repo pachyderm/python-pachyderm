@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 import pytest
-from betterproto import BytesValue
+from google.protobuf import wrappers_pb2
 
 import python_pachyderm
 from python_pachyderm import Client, PFSFile
@@ -808,7 +808,7 @@ class TestPFSFile:
         """Test that data gets buffered as expected."""
         # Arrange
         stream_items = [b"a", b"bc", b"def", b"ghij", b"klmno"]
-        stream = (BytesValue(value=item) for item in stream_items)
+        stream = (wrappers_pb2.BytesValue(value=item) for item in stream_items)
 
         # Act
         file = PFSFile(stream)
