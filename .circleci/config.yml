@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  machine_image:
+    type: string
+    default: ubuntu-2204:2023.04.2
+
 commands:
   deploy-pachyderm:
     steps:
@@ -49,7 +54,7 @@ jobs:
       python-version:
         type: string
     machine:
-      image: ubuntu-2004:202111-01
+      image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
       - deploy-pachyderm
@@ -77,7 +82,7 @@ jobs:
       python-version:
         type: string
     machine:
-      image: ubuntu-2004:202111-01
+      image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
       - deploy-pachyderm

@@ -4,15 +4,6 @@ set -ex
 
 mkdir -p cached-deps
 
-# Install deps
-sudo apt update -y
-sudo apt-get install -y -qq \
-  pkg-config \
-  conntrack \
-  pv \
-  jq \
-  socat
-
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 sudo apt-get install apt-transport-https --yes
