@@ -1,8 +1,9 @@
 #!/bin/bash
 
-set -ex
+set -euxo pipefail
 
-mkdir -p cached-deps
+ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi
 
 # Install helm
 if [ ! -f cached-deps/helm ]; then
