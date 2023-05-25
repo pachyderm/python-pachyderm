@@ -13,7 +13,6 @@ except ImportError:
     from collections import Iterable
 
 import grpc
-from betterproto import BytesValue
 
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
@@ -48,7 +47,7 @@ class PFSFile:
     >>>     content = f.read()
     """
 
-    def __init__(self, stream: Iterator[BytesValue]):
+    def __init__(self, stream: Iterator[wrappers_pb2.BytesValue]):
         self._stream = stream
         self._buffer = bytearray()
 
@@ -693,6 +692,27 @@ class PFSMixin:
             else:
                 getattr(message, "from").CopyFrom(commit_from(from_commit))
         return self.__stub.SubscribeCommit(message)
+
+    def find_commits(
+        self, start: SubcommitType, file_path: str, limit: int = 0
+    ) -> Iterator[pfs_pb2.FindCommitsResponse]:
+        """Searches for commits that reference the specified file
+        being modified in a branch.
+
+        Parameters
+        ----------
+        start : SubcommitType
+            The commit where the search should begin.
+        file_path : str
+            The path to the file being queried.
+        limit: int, optional
+            The number of matching commits to return. (default no limit)
+        """
+        message = pfs_pb2.FindCommitsRequest(
+            start=start, file_path=file_path, limit=limit
+        )
+        for item in self.__stub.FinishCommit(message):
+            yield item
 
     def create_branch(
         self,

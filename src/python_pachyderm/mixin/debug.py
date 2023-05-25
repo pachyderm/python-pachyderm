@@ -98,3 +98,31 @@ class DebugMixin:
         message = debug_pb2.BinaryRequest(filter=filter)
         for item in self.__stub.Binary(message):
             yield item.value
+
+    def set_log_level(
+        self,
+        pachyderm_level: debug_pb2.SetLogLevelRequest.LogLevel = None,
+        grpc_level: debug_pb2.SetLogLevelRequest.LogLevel = None,
+        duration: duration_pb2.Duration = None,
+        recurse: bool = True,
+    ) -> debug_pb2.SetLogLevelResponse:
+        """Sets the logging level of either pachyderm or grpc.
+        Note: Only one level can be set at a time. If you are attempting to set
+          multiple logging levels you must do so with multiple calls.
+
+        Parameters
+        ----------
+        pachyderm_level: debug_pb2.SetLogLevelRequest.LogLevel, oneof
+            The desired pachyderm logging level.
+        grpc_level: debug_pb2.SetLogLevelRequest.LogLevel, oneof
+            The desired grpc logging level.
+        duration: duration_pb2.Duration, optional
+            How long to log at the non-default level. (default 5m0s)
+        recurse: bool
+            Set the log level on all pachyderm pods; if false, only the pachd
+            that handles this RPC. (default true)
+        """
+        message = debug_pb2.SetLogLevelRequest(duration=duration, recurse=recurse)
+        message.pachyderm = pachyderm_level
+        message.grpc = grpc_level
+        return self.__stub.SetLogLevel(message)

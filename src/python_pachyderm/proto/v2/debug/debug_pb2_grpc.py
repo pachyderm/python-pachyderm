@@ -30,6 +30,11 @@ class DebugStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
                 )
+        self.SetLogLevel = channel.unary_unary(
+                '/debug_v2.Debug/SetLogLevel',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.FromString,
+                )
 
 
 class DebugServicer(object):
@@ -53,6 +58,12 @@ class DebugServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SetLogLevel(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DebugServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -70,6 +81,11 @@ def add_DebugServicer_to_server(servicer, server):
                     servicer.Dump,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_wrappers__pb2.BytesValue.SerializeToString,
+            ),
+            'SetLogLevel': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetLogLevel,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,5 +145,22 @@ class Debug(object):
         return grpc.experimental.unary_stream(request, target, '/debug_v2.Debug/Dump',
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpRequest.SerializeToString,
             google_dot_protobuf_dot_wrappers__pb2.BytesValue.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SetLogLevel(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/debug_v2.Debug/SetLogLevel',
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -22,11 +22,51 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+github.com/pachyderm/pachyderm/v2/src/debug',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x81\x01\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x12\x12\n\x08\x64\x61tabase\x18\x04 \x01(\x08H\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\x32\xd1\x01\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
+  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x81\x01\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x12\x12\n\x08\x64\x61tabase\x18\x04 \x01(\x08H\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\"\x90\x02\n\x12SetLogLevelRequest\x12:\n\tpachyderm\x18\x01 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12\x35\n\x04grpc\x18\x02 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12+\n\x08\x64uration\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0f\n\x07recurse\x18\x04 \x01(\x08\"@\n\x08LogLevel\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x44\x45\x42UG\x10\x01\x12\x08\n\x04INFO\x10\x02\x12\t\n\x05\x45RROR\x10\x03\x12\x07\n\x03OFF\x10\x04\x42\x07\n\x05level\"B\n\x13SetLogLevelResponse\x12\x15\n\raffected_pods\x18\x01 \x03(\t\x12\x14\n\x0c\x65rrored_pods\x18\x02 \x03(\t2\x9f\x02\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12L\n\x0bSetLogLevel\x12\x1c.debug_v2.SetLogLevelRequest\x1a\x1d.debug_v2.SetLogLevelResponse\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
 
+
+_SETLOGLEVELREQUEST_LOGLEVEL = _descriptor.EnumDescriptor(
+  name='LogLevel',
+  full_name='debug_v2.SetLogLevelRequest.LogLevel',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEBUG', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='INFO', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='ERROR', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OFF', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=810,
+  serialized_end=874,
+)
+_sym_db.RegisterEnumDescriptor(_SETLOGLEVELREQUEST_LOGLEVEL)
 
 
 _PROFILEREQUEST = _descriptor.Descriptor(
@@ -274,6 +314,104 @@ _DUMPREQUEST = _descriptor.Descriptor(
   serialized_end=608,
 )
 
+
+_SETLOGLEVELREQUEST = _descriptor.Descriptor(
+  name='SetLogLevelRequest',
+  full_name='debug_v2.SetLogLevelRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pachyderm', full_name='debug_v2.SetLogLevelRequest.pachyderm', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='grpc', full_name='debug_v2.SetLogLevelRequest.grpc', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='duration', full_name='debug_v2.SetLogLevelRequest.duration', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='recurse', full_name='debug_v2.SetLogLevelRequest.recurse', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _SETLOGLEVELREQUEST_LOGLEVEL,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='level', full_name='debug_v2.SetLogLevelRequest.level',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=611,
+  serialized_end=883,
+)
+
+
+_SETLOGLEVELRESPONSE = _descriptor.Descriptor(
+  name='SetLogLevelResponse',
+  full_name='debug_v2.SetLogLevelResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='affected_pods', full_name='debug_v2.SetLogLevelResponse.affected_pods', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='errored_pods', full_name='debug_v2.SetLogLevelResponse.errored_pods', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=885,
+  serialized_end=951,
+)
+
 _PROFILEREQUEST.fields_by_name['profile'].message_type = _PROFILE
 _PROFILEREQUEST.fields_by_name['filter'].message_type = _FILTER
 _PROFILE.fields_by_name['duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -293,12 +431,24 @@ _FILTER.oneofs_by_name['filter'].fields.append(
 _FILTER.fields_by_name['database'].containing_oneof = _FILTER.oneofs_by_name['filter']
 _BINARYREQUEST.fields_by_name['filter'].message_type = _FILTER
 _DUMPREQUEST.fields_by_name['filter'].message_type = _FILTER
+_SETLOGLEVELREQUEST.fields_by_name['pachyderm'].enum_type = _SETLOGLEVELREQUEST_LOGLEVEL
+_SETLOGLEVELREQUEST.fields_by_name['grpc'].enum_type = _SETLOGLEVELREQUEST_LOGLEVEL
+_SETLOGLEVELREQUEST.fields_by_name['duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_SETLOGLEVELREQUEST_LOGLEVEL.containing_type = _SETLOGLEVELREQUEST
+_SETLOGLEVELREQUEST.oneofs_by_name['level'].fields.append(
+  _SETLOGLEVELREQUEST.fields_by_name['pachyderm'])
+_SETLOGLEVELREQUEST.fields_by_name['pachyderm'].containing_oneof = _SETLOGLEVELREQUEST.oneofs_by_name['level']
+_SETLOGLEVELREQUEST.oneofs_by_name['level'].fields.append(
+  _SETLOGLEVELREQUEST.fields_by_name['grpc'])
+_SETLOGLEVELREQUEST.fields_by_name['grpc'].containing_oneof = _SETLOGLEVELREQUEST.oneofs_by_name['level']
 DESCRIPTOR.message_types_by_name['ProfileRequest'] = _PROFILEREQUEST
 DESCRIPTOR.message_types_by_name['Profile'] = _PROFILE
 DESCRIPTOR.message_types_by_name['Filter'] = _FILTER
 DESCRIPTOR.message_types_by_name['Worker'] = _WORKER
 DESCRIPTOR.message_types_by_name['BinaryRequest'] = _BINARYREQUEST
 DESCRIPTOR.message_types_by_name['DumpRequest'] = _DUMPREQUEST
+DESCRIPTOR.message_types_by_name['SetLogLevelRequest'] = _SETLOGLEVELREQUEST
+DESCRIPTOR.message_types_by_name['SetLogLevelResponse'] = _SETLOGLEVELRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ProfileRequest = _reflection.GeneratedProtocolMessageType('ProfileRequest', (_message.Message,), {
@@ -343,6 +493,20 @@ DumpRequest = _reflection.GeneratedProtocolMessageType('DumpRequest', (_message.
   })
 _sym_db.RegisterMessage(DumpRequest)
 
+SetLogLevelRequest = _reflection.GeneratedProtocolMessageType('SetLogLevelRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SETLOGLEVELREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.SetLogLevelRequest)
+  })
+_sym_db.RegisterMessage(SetLogLevelRequest)
+
+SetLogLevelResponse = _reflection.GeneratedProtocolMessageType('SetLogLevelResponse', (_message.Message,), {
+  'DESCRIPTOR' : _SETLOGLEVELRESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.SetLogLevelResponse)
+  })
+_sym_db.RegisterMessage(SetLogLevelResponse)
+
 
 DESCRIPTOR._options = None
 
@@ -353,8 +517,8 @@ _DEBUG = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=611,
-  serialized_end=820,
+  serialized_start=954,
+  serialized_end=1241,
   methods=[
   _descriptor.MethodDescriptor(
     name='Profile',
@@ -383,6 +547,16 @@ _DEBUG = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DUMPREQUEST,
     output_type=google_dot_protobuf_dot_wrappers__pb2._BYTESVALUE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SetLogLevel',
+    full_name='debug_v2.Debug.SetLogLevel',
+    index=3,
+    containing_service=None,
+    input_type=_SETLOGLEVELREQUEST,
+    output_type=_SETLOGLEVELRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
