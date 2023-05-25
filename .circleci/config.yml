@@ -12,6 +12,10 @@ commands:
           name: Install dependencies
           command: etc/testing/circle/install.sh
       - run:
+          name: Add deps to path
+          command: |
+            echo 'export PATH=/home/circleci/project/cached-deps:$PATH' >> $BASH_ENV
+      - run:
           name: Start minikube
           command: etc/testing/circle/start-minikube.sh
       - run:

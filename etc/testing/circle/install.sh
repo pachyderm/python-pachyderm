@@ -5,6 +5,8 @@ set -euxo pipefail
 ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi
 
+mkdir -p cached-deps
+
 # Install helm
 if [ ! -f cached-deps/helm ]; then
   HELM_VERSION=3.5.4
