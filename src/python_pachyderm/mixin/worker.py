@@ -9,6 +9,7 @@ from python_pachyderm.proto.v2.worker import worker_pb2, worker_pb2_grpc
 
 class WorkerMixin:
     """A mixin for worker binary-related functionality."""
+
     _dotenv_path = "/pfs/.env"
     __error: Optional[str] = None  # used by batch_datum
 

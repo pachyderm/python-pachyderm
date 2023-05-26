@@ -496,7 +496,7 @@ class Client(
             channel = _create_channel(
                 address=f"localhost:{port}",
                 root_certs=None,
-                options=GRPC_CHANNEL_OPTIONS
+                options=GRPC_CHANNEL_OPTIONS,
             )
             self._worker = _WorkerStub(channel)
         return self._worker

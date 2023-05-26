@@ -20,9 +20,9 @@ def generate_stdin(func: Callable[[], None]):
     from textwrap import dedent
 
     test_script = (
-        f'{dedent(getsource(func))}\n\n'
+        f"{dedent(getsource(func))}\n\n"
         'if __name__ == "__main__":\n'
-        f'    {func.__name__}()\n'
+        f"    {func.__name__}()\n"
     )
     return [
         f"echo '{test_script}' > main.py",
@@ -52,7 +52,11 @@ def test_datum_batching(client: Client, repo: str):
             datum_files = os.listdir("/pfs/batch_datums_input")
             print(datum_files)
             assert len(datum_files) == 1
-            shutil.copy(f"/pfs/batch_datums_input/{datum_files[0]}", f"/pfs/out/{datum_files[0]}")
+            shutil.copy(
+                f"/pfs/batch_datums_input/{datum_files[0]}",
+                f"/pfs/out/{datum_files[0]}",
+            )
+
         return main()
 
     input_files = [f"/file_{i:02d}.dat" for i in range(10)]
@@ -72,11 +76,13 @@ def test_datum_batching(client: Client, repo: str):
                 )
             ),
             transform=pps_pb2.Transform(
-                cmd=["bash", ],
+                cmd=[
+                    "bash",
+                ],
                 datum_batching=True,
                 image=IMAGE_NAME,
-                stdin=generate_stdin(user_code)
-            )
+                stdin=generate_stdin(user_code),
+            ),
         )
         job_info = next(client.list_job(pipeline_name))
         next(client.inspect_job(job_info.job.id, pipeline_name, wait=True))
@@ -96,6 +102,7 @@ def test_datum_batching_errors(client: Client, repo: str):
       the pipeline job should finish successfully and the output repo should
       be empty.
     """
+
     def user_code_errors():
         """Raises an Exception for every datum."""
         from python_pachyderm import Client
@@ -120,12 +127,16 @@ def test_datum_batching_errors(client: Client, repo: str):
                 )
             ),
             transform=pps_pb2.Transform(
-                cmd=["bash", ],
-                err_cmd=["true", ],  # Note err_cmd set.
+                cmd=[
+                    "bash",
+                ],
+                err_cmd=[
+                    "true",
+                ],  # Note err_cmd set.
                 datum_batching=True,
                 image=IMAGE_NAME,
-                stdin=generate_stdin(user_code_errors)
-            )
+                stdin=generate_stdin(user_code_errors),
+            ),
         )
         started_job = next(client.list_job(pipeline_name))
         completed_job = next(
