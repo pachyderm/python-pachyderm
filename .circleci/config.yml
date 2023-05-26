@@ -36,7 +36,11 @@ commands:
             PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
             helm repo add pachyderm https://pachyderm.github.io/helmchart
             helm repo update
-            helm install pachd pachyderm/pachyderm --set deployTarget=LOCAL --version ${PACHYDERM_VERSION}
+            helm install pachd pachyderm/pachyderm --set deployTarget=LOCAL,proxy.service.type=NodePort --version ${PACHYDERM_VERSION}
+      - run:
+          name: Login to Pach
+          command: |
+            pachctl connect grpc://$(minikube ip):30080
 
   install-python:
     parameters:
@@ -92,7 +96,6 @@ jobs:
       - run:
           name: Run unit tests
           command: |
-            pachctl port-forward &
             mkdir -p test-results
             poetry run pytest -v --junitxml=test-results/junit.xml tests
           no_output_timeout: 20m
@@ -122,7 +125,6 @@ jobs:
       - run:
           name: Run opencv example
           command: |
-            pachctl port-forward &
             poetry run python ./examples/opencv/opencv.py
           no_output_timeout: 20m
       - run:
