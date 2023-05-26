@@ -13,8 +13,7 @@ commands:
           command: |
             KUBE_VERSION="$(jq -r .kubernetes < version.json)"
             minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --wait=all
-          # TODO: Add back in minikube wait 
-          #background: true
+
   wait-for-pach:
     steps:
       - run:
@@ -64,8 +63,6 @@ commands:
           name: Install poetry
           command: |
             curl -fsS -o install-poetry.py https://install.python-poetry.org
-            which python
-            which python3
             python3 install-poetry.py --version 1.2.2
             echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
             rm install-poetry.py
