@@ -7,6 +7,7 @@ from google.protobuf.internal.enum_type_wrapper import (
 
 from .mixin.pfs import PFSFile, ModifyFileClient
 from .client import Client, ConfigError, BadClusterDeploymentID
+from .datum_batching import batch_all_datums
 from .util import (
     put_files,
     parse_json_pipeline_spec,
@@ -35,6 +36,7 @@ __all__ = [
     "parse_dict_pipeline_spec",
     "ConfigError",
     "BadClusterDeploymentID",
+    "batch_all_datums",
 ]
 
 __version__ = ""
