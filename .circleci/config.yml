@@ -12,7 +12,7 @@ commands:
           name: Start minikube
           command: |
             KUBE_VERSION="$(jq -r .kubernetes < version.json)"
-            minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --cpus=7 --memory=12Gi --wait=all
+            minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --cpus=4 --memory=8Gi --wait=all
           # TODO: Add back in minikube wait 
           #background: true
   deploy-pachyderm:
