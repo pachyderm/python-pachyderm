@@ -1,30 +1,61 @@
 version: 2.1
 
+parameters:
+  machine_image:
+    type: string
+    default: ubuntu-2204:2023.04.2
+
 commands:
+  start-minikube:
+    steps:
+      - run:
+          name: Start minikube
+          command: |
+            KUBE_VERSION="$(jq -r .kubernetes < version.json)"
+            minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --wait=all
+
+  wait-for-pach:
+    steps:
+      - run:
+          name: Wait for pachyderm
+          command: |
+            kubectl wait --for=condition=available deployment -l app=pachd --timeout=5m
   deploy-pachyderm:
     steps:
       - run:
           name: Install dependencies
           command: etc/testing/circle/install.sh
       - run:
-          name: Start minikube
-          command: etc/testing/circle/start-minikube.sh
+          name: Add deps to path
+          command: |
+            echo 'export PATH=/home/circleci/project/cached-deps:$PATH' >> $BASH_ENV
+      - start-minikube
       - run:
           name: Deploy pachyderm
-          command: etc/testing/circle/deploy-pachyderm.sh
+          command: |
+            PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
+            helm repo add pachyderm https://pachyderm.github.io/helmchart
+            helm repo update
+            helm install pachd pachyderm/pachyderm --set deployTarget=LOCAL --version ${PACHYDERM_VERSION}
 
   install-python:
     parameters:
       version:
         type: string
     steps:
+      - restore_cache:
+          key: python-pach-pyenv-v1-<< parameters.version >>
       - run:
           name: Install python
           command: |
             git -C "/opt/circleci/.pyenv/" checkout master -q
             git -C "/opt/circleci/.pyenv/" pull -q
-            pyenv install <<parameters.version>>
+            pyenv install -s <<parameters.version>>
             pyenv global <<parameters.version>>
+      - save_cache:
+          key: python-pach-pyenv-v1-<< parameters.version >>
+          paths:
+            - /opt/circleci/.pyenv/versions/<< parameters.version >>
 
   install-poetry:
     steps:
@@ -49,7 +80,7 @@ jobs:
       python-version:
         type: string
     machine:
-      image: ubuntu-2004:202111-01
+      image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
       - deploy-pachyderm
@@ -57,12 +88,14 @@ jobs:
           version: <<parameters.python-version>>
       - install-poetry
       - create-venv
+      - wait-for-pach
       - run:
           name: Run unit tests
           command: |
             pachctl port-forward &
             mkdir -p test-results
             poetry run pytest -v --junitxml=test-results/junit.xml tests
+          no_output_timeout: 20m
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -77,7 +110,7 @@ jobs:
       python-version:
         type: string
     machine:
-      image: ubuntu-2004:202111-01
+      image: << pipeline.parameters.machine_image >>
     steps:
       - checkout
       - deploy-pachyderm
@@ -85,11 +118,13 @@ jobs:
           version: <<parameters.python-version>>
       - install-poetry
       - create-venv
+      - wait-for-pach
       - run:
           name: Run opencv example
           command: |
             pachctl port-forward &
             poetry run python ./examples/opencv/opencv.py
+          no_output_timeout: 20m
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh

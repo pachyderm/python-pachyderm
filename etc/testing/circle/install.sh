@@ -1,24 +1,19 @@
 #!/bin/bash
 
-set -ex
+set -euxo pipefail
+
+ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi
 
 mkdir -p cached-deps
 
-# Install deps
-sudo apt update -y
-sudo apt-get install -y -qq \
-  pkg-config \
-  conntrack \
-  pv \
-  jq \
-  socat
-
-# Install Helm
-curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-sudo apt-get install apt-transport-https --yes
-echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-sudo apt-get update
-sudo apt-get install helm
+# Install helm
+if [ ! -f cached-deps/helm ]; then
+  HELM_VERSION=3.5.4
+  curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz \
+      | tar xzf - linux-${ARCH}/helm
+      mv ./linux-${ARCH}/helm cached-deps/helm
+fi
 
 # Install kubectl
 # To get the latest kubectl version:
