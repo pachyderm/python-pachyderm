@@ -51,7 +51,7 @@ commands:
           command: |
             git -C "/opt/circleci/.pyenv/" checkout master -q
             git -C "/opt/circleci/.pyenv/" pull -q
-            pyenv install <<parameters.version>>
+            pyenv install -s <<parameters.version>>
             pyenv global <<parameters.version>>
       - save_cache:
           key: python-pach-pyenv-v1-<< parameters.version >>
@@ -64,6 +64,8 @@ commands:
           name: Install poetry
           command: |
             curl -fsS -o install-poetry.py https://install.python-poetry.org
+            which python
+            which python3
             python3 install-poetry.py --version 1.2.2
             echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
             rm install-poetry.py
