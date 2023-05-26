@@ -90,6 +90,7 @@ jobs:
             pachctl port-forward &
             mkdir -p test-results
             poetry run pytest -v --junitxml=test-results/junit.xml tests
+          no_output_timeout: 20m
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -118,6 +119,7 @@ jobs:
           command: |
             pachctl port-forward &
             poetry run python ./examples/opencv/opencv.py
+          no_output_timeout: 20m
       - run:
           when: on_fail
           command: etc/testing/circle/kube_debug.sh
