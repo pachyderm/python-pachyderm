@@ -12,9 +12,15 @@ commands:
           name: Start minikube
           command: |
             KUBE_VERSION="$(jq -r .kubernetes < version.json)"
-            minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --cpus=4 --memory=8Gi --wait=all
+            minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --wait=all
           # TODO: Add back in minikube wait 
           #background: true
+  wait-for-pach:
+    steps:
+      - run:
+          name: Wait for pachyderm
+          command: |
+            kubectl wait --for=condition=available deployment -l app=pachd --timeout=5m
   deploy-pachyderm:
     steps:
       - run:
@@ -27,7 +33,11 @@ commands:
       - start-minikube
       - run:
           name: Deploy pachyderm
-          command: etc/testing/circle/deploy-pachyderm.sh
+          command: |
+            PACHYDERM_VERSION="$(jq -r .pachyderm version.json)"
+            helm repo add pachyderm https://pachyderm.github.io/helmchart
+            helm repo update
+            helm install pachd pachyderm/pachyderm --set deployTarget=LOCAL --version ${PACHYDERM_VERSION}
 
   install-python:
     parameters:
@@ -73,6 +83,7 @@ jobs:
           version: <<parameters.python-version>>
       - install-poetry
       - create-venv
+      - wait-for-pach
       - run:
           name: Run unit tests
           command: |
@@ -101,6 +112,7 @@ jobs:
           version: <<parameters.python-version>>
       - install-poetry
       - create-venv
+      - wait-for-pach
       - run:
           name: Run opencv example
           command: |
