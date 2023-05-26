@@ -44,6 +44,8 @@ commands:
       version:
         type: string
     steps:
+      - restore_cache:
+          key: python-pach-pyenv-v1-{{ parameters.version }}
       - run:
           name: Install python
           command: |
@@ -51,6 +53,10 @@ commands:
             git -C "/opt/circleci/.pyenv/" pull -q
             pyenv install <<parameters.version>>
             pyenv global <<parameters.version>>
+      - save_cache:
+          key: python-pach-pyenv-v1-{{ parameters.version }}
+          paths:
+            - /opt/circleci/.pyenv/versions/<<parameters.version>>
 
   install-poetry:
     steps:
