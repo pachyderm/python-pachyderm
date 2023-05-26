@@ -10,6 +10,8 @@ commands:
     steps:
       - restore_cache:
           key: minikube-cache-kic-v1
+      - restore_cache:
+          key: minikube-cache-preloaded-tarball-v1
       - run:
           name: Start minikube
           command: |
@@ -21,6 +23,10 @@ commands:
           key: minikube-cache-kic-v1
           paths:
             - /home/circleci/.minikube/cache/kic
+      - save_cache:
+          key: minikube-cache-preloaded-tarball-v1
+          paths:
+            - /home/circleci/.minikube/cache/preloaded-tarball
   wait-for-pach:
     steps:
       - run:
