@@ -8,6 +8,8 @@ parameters:
 commands:
   start-minikube:
     steps:
+      - restore_cache:
+          key: minikube-cache-kic-v1
       - run:
           name: Start minikube
           command: |
@@ -15,6 +17,10 @@ commands:
             minikube start --vm-driver=docker --kubernetes-version=${KUBE_VERSION} --wait=all
           # TODO: Add back in minikube wait 
           #background: true
+      - save_cache:
+          key: minikube-cache-kic-v1
+          paths:
+            - /home/circleci/.minikube/cache/kic
   wait-for-pach:
     steps:
       - run:
