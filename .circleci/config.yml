@@ -4,6 +4,9 @@ parameters:
   machine_image:
     type: string
     default: ubuntu-2204:2023.04.2
+  python_image:
+    type: string
+    default: circleci/python:3.9
 
 commands:
   start-minikube:
@@ -94,7 +97,7 @@ jobs:
           command: |
             pachctl port-forward &
             mkdir -p test-results
-            poetry run pytest -v --junitxml=test-results/junit.xml tests
+            DATUM_BATCHING_IMAGE=pachyderm/python-datum-batching-ci:$CIRCLE_SHA1 poetry run pytest -v --junitxml=test-results/junit.xml tests
           no_output_timeout: 20m
       - store_test_results:
           path: test-results
@@ -131,7 +134,7 @@ jobs:
 
   linting:
     docker:
-      - image: circleci/python:3.9
+      - image: << pipeline.parameters.python_image >>
     steps:
       - checkout
       - install-poetry
@@ -142,7 +145,7 @@ jobs:
 
   test-publish:
     docker:
-      - image: circleci/python:3.9
+      - image: << pipeline.parameters.python_image >>
     steps:
       - checkout
       - install-poetry
@@ -152,9 +155,51 @@ jobs:
           command: |
             poetry publish --build --repository testpypi --username $PYPI_USERNAME --password $PYPI_PASSWORD
 
+  build:
+    docker:
+      - image: << pipeline.parameters.python_image >>
+    steps:
+      - checkout
+      - install-poetry
+      - create-venv
+      - run:
+          name: build
+          command: poetry build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
+  docker-build:
+    docker:
+      - image: << pipeline.parameters.python_image >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: docker login
+          command: echo "$DOCKER_PWD" | docker login --username pachydermbuildbot --password-stdin
+      - run:
+          name: Build Docker image
+          command: docker build -t pachyderm/python-datum-batching-ci:$CIRCLE_SHA1 .
+      - run:
+          name: Docker push
+          command: docker push pachyderm/python-datum-batching-ci:$CIRCLE_SHA1
 workflows:
   circleci:
     jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - docker-build:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build
       - unit-tests:
           matrix:
             parameters:
@@ -164,6 +209,8 @@ workflows:
           filters:
             tags:
               only: /.*/
+          requires:
+            - docker-build
       - examples:
           python-version: 3.10.11
           filters:
