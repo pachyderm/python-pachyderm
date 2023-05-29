@@ -1,6 +1,6 @@
 from typing import Callable
 
-import os 
+import os
 
 from python_pachyderm import Client
 from python_pachyderm.proto.v2.pps import pps_pb2
