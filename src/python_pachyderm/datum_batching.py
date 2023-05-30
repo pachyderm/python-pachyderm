@@ -12,7 +12,7 @@ def batch_all_datums(user_code: PIPELINE_FUNC) -> PIPELINE_FUNC:
     this decorator will call the NextDatum endpoint within the worker
     and set any environment variables specified by the worker.
 
-    Any expeections raised during the execution of the wrapped function
+    Any expections raised during the execution of the wrapped function
     will be reported back to the worker. See the pachyderm documentation
     for more information on how the datum batching feature works.
 
@@ -26,6 +26,12 @@ def batch_all_datums(user_code: PIPELINE_FUNC) -> PIPELINE_FUNC:
     >>> def pipeline():
     >>>     # process datums
     >>>     pass
+    >>>
+    >>> if __name__ == '__main__':
+    >>>   # Perform an expensive computation here before
+    >>>   #   entering your datum processing function
+    >>>   #   i.e. initializing a model.
+    >>>   pipeline()
     """
 
     @wraps(user_code)
