@@ -21,6 +21,7 @@ from .mixin.pfs import PFSMixin
 from .mixin.pps import PPSMixin
 from .mixin.transaction import TransactionMixin
 from .mixin.version import VersionMixin
+from .mixin.worker import WorkerMixin as _WorkerStub
 from .service import Service, GRPC_CHANNEL_OPTIONS
 
 
@@ -174,6 +175,7 @@ class Client(
             self._metadata = self._build_metadata()
             self._channel = _apply_metadata_interceptor(channel, self._metadata)
         super().__init__()  # Initialize all the Mixin classes.
+        self._worker: Optional[_WorkerStub] = None
 
     @classmethod
     def new_in_cluster(
@@ -473,6 +475,31 @@ class Client(
             metadata=self._metadata,
         )
         super().__init__()
+
+    @property
+    def worker(self) -> _WorkerStub:
+        """Access the worker API stub.
+
+        This is dynamically loaded in order to provide a helpful error message
+        to the user if they try to interact with the worker API from outside
+        a worker.
+        """
+        worker_port_env = "PPS_WORKER_GRPC_PORT"
+        if self._worker is None:
+            port = os.environ.get(worker_port_env)
+            if port is None:
+                raise ConnectionError(
+                    f"Cannot connect to the worker since {worker_port_env} is not set. "
+                    "Are you running inside a pipeline?"
+                )
+            # Note: This channel doe not go through the metadata interceptor.
+            channel = _create_channel(
+                address=f"localhost:{port}",
+                root_certs=None,
+                options=GRPC_CHANNEL_OPTIONS,
+            )
+            self._worker = _WorkerStub(channel)
+        return self._worker
 
     def _build_metadata(self):
         metadata = []
