@@ -15,8 +15,9 @@ class WorkerMixin:
 
     def __init__(self, channel: grpc.Channel):
         """
-        Note: This API stub must have an open grpc channel work the worker binary.
-        The ``Client`` object should automatically do this for the user.
+        Note: This API stub must have an open grpc channel work the worker
+        binary. The ``Client`` object should automatically do this for
+        the user.
         """
         self.__stub = worker_pb2_grpc.WorkerStub(channel)
         super().__init__()
@@ -28,8 +29,8 @@ class WorkerMixin:
         Parameters
         ----------
         error : str, optional
-            An error message to report to the worker binary indicating the current
-            datum could not be processed.
+            An error message to report to the worker binary indicating the
+            current datum could not be processed.
         """
         message = worker_pb2.NextDatumRequest(error=error)
         return self.__stub.NextDatum(message)
