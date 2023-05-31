@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.5.0 (2023-05-31)
+
+- Support for Pachyderm v2.6.0.
+- Add datum-batching feature:
+  - `@python_pachyderm.batch_all_datums`
+  - `python_pachyderm.Client.worker.batch_datum`
+  - `python_pachyderm.Client.worker.next_datum`
+
 ## 7.4.0 (2023-02-23)
 
 - Support for Pachyderm v2.5.0 (Projects)
