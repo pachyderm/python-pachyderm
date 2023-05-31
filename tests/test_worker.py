@@ -8,7 +8,6 @@ from python_pachyderm.proto.v2.pps import pps_pb2
 from .test_pfs import _client_fixture, _repo_fixture
 
 IMAGE_NAME = os.environ.get("DATUM_BATCHING_IMAGE")
-# IMAGE_NAME = "bonenfan5ben/datum_batching:0037pp"  # TODO: Don't do this.
 
 
 def generate_stdin(func: Callable[[], None]):
