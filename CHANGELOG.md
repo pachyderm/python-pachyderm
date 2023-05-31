@@ -7,6 +7,8 @@
   - `@python_pachyderm.batch_all_datums`
   - `python_pachyderm.Client.worker.batch_datum`
   - `python_pachyderm.Client.worker.next_datum`
+- Remove experimental client
+  - Remove support for mounting using FUSE.
 
 ## 7.4.0 (2023-02-23)
 
