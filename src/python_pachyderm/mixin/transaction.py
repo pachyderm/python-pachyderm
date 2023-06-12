@@ -183,11 +183,13 @@ class TransactionMixin:
         >>>     c1 = client.start_commit("foo", "master")
         >>>     c2 = client.start_commit("bar", "master")
         >>>
-        >>>     client.put_file_bytes(c1, "/joint_data.txt", b"DATA1")
-        >>>     client.put_file_bytes(c2, "/joint_data.txt", b"DATA2")
+        >>> # File operations, such as put file, must occur outside
+        >>> #  the transaction block.
+        >>> client.put_file_bytes(c1, "/joint_data.txt", b"DATA1")
+        >>> client.put_file_bytes(c2, "/joint_data.txt", b"DATA2")
         >>>
-        >>>     client.finish_commit(c1)
-        >>>     client.finish_commit(c2)
+        >>> client.finish_commit(c1)
+        >>> client.finish_commit(c2)
         """
 
         old_transaction_id = self.transaction_id
