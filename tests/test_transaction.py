@@ -114,13 +114,13 @@ def test_file_operations_within_transaction():
     client = python_pachyderm.Client()
     repo = util.create_test_repo(client, "invalid_file_operations")
 
-    with client.transaction() as _txn:
+    with client.transaction():
         repo_txn = util.create_test_repo(client, "invalid_file_operations_dummy")
         with client.commit(repo, "master") as commit:
             with pytest.raises(InvalidTransactionOperation):
                 client.put_file_bytes(commit, "/file.dat", b"hello world")
             with pytest.raises(InvalidTransactionOperation):
-                client.copy_file(commit, "/file.dat", f"/new_file.dat")
+                client.copy_file(commit, "/file.dat", "/new_file.dat")
             with pytest.raises(InvalidTransactionOperation):
                 client.delete_file(commit, "/file.dat")
 
