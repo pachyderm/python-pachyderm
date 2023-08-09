@@ -170,6 +170,7 @@ jobs:
           paths:
             - dist/*
   docker-build:
+    resource_class: large
     docker:
       - image: << pipeline.parameters.python_image >>
     steps:
