@@ -5,7 +5,8 @@ import itertools
 import tarfile
 from contextlib import contextmanager
 from datetime import datetime
-from typing import Iterator, Union, List, BinaryIO
+from functools import wraps
+from typing import Callable, Iterator, Union, List, BinaryIO
 
 try:
     from collections.abc import Iterable
@@ -14,6 +15,7 @@ except ImportError:
 
 import grpc
 
+from python_pachyderm.errors import InvalidTransactionOperation
 from python_pachyderm.pfs import commit_from, uuid_re, SubcommitType
 from python_pachyderm.proto.v2.pfs import pfs_pb2, pfs_pb2_grpc
 from google.protobuf import empty_pb2, wrappers_pb2, timestamp_pb2
@@ -98,6 +100,19 @@ class PFSFile:
     def close(self) -> None:
         """Closes the :class:`.PFSFile`."""
         self._stream.cancel()
+
+
+def transaction_incompatible(pfs_method: Callable) -> Callable:
+    """Decorator for marking methods of the PFS aPI which are
+    not allowed to occur during a transaction."""
+
+    @wraps(pfs_method)
+    def wrapper(client, *args, **kwargs):
+        if bool(client.transaction_id):
+            raise InvalidTransactionOperation()
+        return pfs_method(client, *args, **kwargs)
+
+    return wrapper
 
 
 class PFSMixin:
@@ -928,6 +943,7 @@ class PFSMixin:
         messages = mfc._reqs()
         self.__stub.ModifyFile(messages)
 
+    @transaction_incompatible
     def put_file_bytes(
         self,
         commit: SubcommitType,
@@ -978,6 +994,7 @@ class PFSMixin:
                     append=append,
                 )
 
+    @transaction_incompatible
     def put_file_url(
         self,
         commit: SubcommitType,
@@ -1033,6 +1050,7 @@ class PFSMixin:
                 concurrency=concurrency,
             )
 
+    @transaction_incompatible
     def copy_file(
         self,
         source_commit: SubcommitType,
@@ -1300,6 +1318,7 @@ class PFSMixin:
         )
         return self.__stub.GlobFile(message)
 
+    @transaction_incompatible
     def delete_file(self, commit: SubcommitType, path: str) -> None:
         """Deletes a file from an open commit. This leaves a tombstone in the
         commit, assuming the file isn't written to later while the commit is
