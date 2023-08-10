@@ -1,9 +1,10 @@
-from typing import Iterator
+from typing import Iterator, List
 
 import grpc
 from google.protobuf import duration_pb2
 
 from python_pachyderm.proto.v2.debug import debug_pb2, debug_pb2_grpc
+from python_pachyderm.proto.v2.pps import pps_pb2
 
 
 class DebugMixin:
@@ -16,34 +17,80 @@ class DebugMixin:
         super().__init__()
 
     def dump(
-        self, filter: debug_pb2.Filter = None, limit: int = None
-    ) -> Iterator[bytes]:
-        """Gets a debug dump.
+        self,
+        system: debug_pb2.System = None,
+        pipelines: List[pps_pb2.Pipeline] = None,
+        input_repos: bool = False,
+        timeout: duration_pb2.Duration = None,
+    ) -> Iterator[debug_pb2.DumpChunk]:
+        """Collect a standard set of debugging information using the DumpV2 API
+          rather than the now deprecated Dump API.
+
+        This method is intended to be used in tandem with the
+          `debug.get_dump_v2_template` endpoint. However, if no system or pipelines
+          are specified then this call will automatically be performed for the user.
+
+        If no system or pipelines are specified, then debug information for all
+          systems and pipelines will be returned.
 
         Parameters
         ----------
-        filter : debug_pb2.Filter, optional
-            A protobuf object that filters what info is returned. Is one of
-            pachd bool, pipeline protobuf, or worker protobuf.
-        limit : int, optional
-            Sets a limit to how many commits, jobs, pipelines, etc. are
-            returned.
+        system : debug_pb2.System, optional
+            A protobuf object that filters what info is returned.
+        pipelines : List[pps_pb2.Pipeline], optional
+            A list of pipelines from which to collect debug information.
+        input_repos : bool
+            Whether to collect debug information for input repos. Default: False
+        timeout : duration_pb2.Duration, optional
+            Duration until timeout occurs. Default is no timeout.
 
         Yields
         -------
-        bytes
-            The debug dump as a sequence of bytearrays.
+        debug_pb2.DumpChunk
+            Chunks of the debug dump
 
         Examples
         --------
-        >>> for b in client.dump(debug_pb2.Filter(pipeline=pps_pb2.Pipeline(name="foo"))):
+        >>> for b in client.dump():
         >>>     print(b)
 
         .. # noqa: W505
         """
-        message = debug_pb2.DumpRequest(filter=filter, limit=limit)
-        for item in self.__stub.Dump(message):
-            yield item.value
+        message = debug_pb2.DumpV2Request(
+            system=system,
+            pipelines=pipelines or [],
+        )
+        if system is None and not pipelines:
+            message = self.get_dump_template()
+        if input_repos:
+            message.input_repos = input_repos
+        if timeout:
+            message.timeout = timeout
+        for item in self.__stub.DumpV2(message):
+            yield item
+
+    def get_dump_template(self, filters: List[str] = None) -> debug_pb2.DumpV2Request:
+        """Generate a template request to be used by the DumpV2 API.
+
+        Parameters
+        ----------
+        filters : List[str], optional
+            No supported filters - this argument has no effect.
+
+        Yields
+        -------
+        debug_pb2.DumpV2Request
+            The request to
+
+        Examples
+        --------
+        >>> for b in client.dump():
+        >>>     print(b)
+
+        .. # noqa: W505
+        """
+        message = debug_pb2.GetDumpV2TemplateRequest(filters=filters or [])
+        return self.__stub.GetDumpV2Template(message).request
 
     def profile_cpu(
         self, duration: duration_pb2.Duration, filter: debug_pb2.Filter = None

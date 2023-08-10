@@ -6,11 +6,11 @@ import python_pachyderm
 from google.protobuf import duration_pb2
 
 
-def test_dump():
+def test_dump_v2():
     client = python_pachyderm.Client()
-    for b in client.dump():
-        assert isinstance(b, bytes)
-        assert len(b) > 0
+    response = next(client.dump_v2())
+    assert isinstance(response.content.content, bytes)
+    assert response.progress.progress > 0
 
 
 def test_profile_cpu():
