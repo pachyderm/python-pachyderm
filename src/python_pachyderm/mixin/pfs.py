@@ -103,7 +103,7 @@ class PFSFile:
 
 
 def transaction_incompatible(pfs_method: Callable) -> Callable:
-    """Decorator for marking methods of the PFS aPI which are
+    """Decorator for marking methods of the PFS API which are
     not allowed to occur during a transaction."""
 
     @wraps(pfs_method)
