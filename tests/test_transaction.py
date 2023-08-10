@@ -5,6 +5,7 @@
 import pytest
 
 import python_pachyderm
+from python_pachyderm.errors import InvalidTransactionOperation
 from python_pachyderm.proto.v2.pfs import pfs_pb2
 from python_pachyderm.proto.v2.transaction import transaction_pb2
 from tests import util
@@ -107,3 +108,25 @@ def test_delete_all_transactions():
     assert len(client.list_transaction()) == 2
     client.delete_all_transactions()
     assert len(client.list_transaction()) == 0
+
+
+def test_file_operations_within_transaction():
+    client = python_pachyderm.Client()
+    repo = util.create_test_repo(client, "invalid_file_operations")
+
+    with client.transaction():
+        repo_txn = util.create_test_repo(client, "invalid_file_operations_dummy")
+        with client.commit(repo, "master") as commit:
+            with pytest.raises(InvalidTransactionOperation):
+                client.put_file_bytes(commit, "/file.dat", b"hello world")
+            with pytest.raises(InvalidTransactionOperation):
+                client.put_file_url(
+                    commit, "https://www.pachyderm.com/index.html", "/index.html"
+                )
+            with pytest.raises(InvalidTransactionOperation):
+                client.copy_file(commit, "/file.dat", "/new_file.dat")
+            with pytest.raises(InvalidTransactionOperation):
+                client.delete_file(commit, "/file.dat")
+
+    assert not client.path_exists(commit, "file.dat"), "file should not exist"
+    assert repo_txn in [info.repo.name for info in client.list_repo()]
