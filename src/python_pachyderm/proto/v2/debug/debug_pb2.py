@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+github.com/pachyderm/pachyderm/v2/src/debug',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x81\x01\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x12\x12\n\x08\x64\x61tabase\x18\x04 \x01(\x08H\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\"\x90\x02\n\x12SetLogLevelRequest\x12:\n\tpachyderm\x18\x01 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12\x35\n\x04grpc\x18\x02 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12+\n\x08\x64uration\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0f\n\x07recurse\x18\x04 \x01(\x08\"@\n\x08LogLevel\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x44\x45\x42UG\x10\x01\x12\x08\n\x04INFO\x10\x02\x12\t\n\x05\x45RROR\x10\x03\x12\x07\n\x03OFF\x10\x04\x42\x07\n\x05level\"B\n\x13SetLogLevelResponse\x12\x15\n\raffected_pods\x18\x01 \x03(\t\x12\x14\n\x0c\x65rrored_pods\x18\x02 \x03(\t2\x9f\x02\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12L\n\x0bSetLogLevel\x12\x1c.debug_v2.SetLogLevelRequest\x1a\x1d.debug_v2.SetLogLevelResponse\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
+  serialized_pb=b'\n+python_pachyderm/proto/v2/debug/debug.proto\x12\x08\x64\x65\x62ug_v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\'python_pachyderm/proto/v2/pps/pps.proto\"V\n\x0eProfileRequest\x12\"\n\x07profile\x18\x01 \x01(\x0b\x32\x11.debug_v2.Profile\x12 \n\x06\x66ilter\x18\x02 \x01(\x0b\x32\x10.debug_v2.Filter\"D\n\x07Profile\x12\x0c\n\x04name\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x81\x01\n\x06\x46ilter\x12\x0f\n\x05pachd\x18\x01 \x01(\x08H\x00\x12$\n\x08pipeline\x18\x02 \x01(\x0b\x32\x10.pps_v2.PipelineH\x00\x12\"\n\x06worker\x18\x03 \x01(\x0b\x32\x10.debug_v2.WorkerH\x00\x12\x12\n\x08\x64\x61tabase\x18\x04 \x01(\x08H\x00\x42\x08\n\x06\x66ilter\")\n\x06Worker\x12\x0b\n\x03pod\x18\x01 \x01(\t\x12\x12\n\nredirected\x18\x02 \x01(\x08\"1\n\rBinaryRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\">\n\x0b\x44umpRequest\x12 \n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x10.debug_v2.Filter\x12\r\n\x05limit\x18\x02 \x01(\x03\"\x90\x02\n\x12SetLogLevelRequest\x12:\n\tpachyderm\x18\x01 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12\x35\n\x04grpc\x18\x02 \x01(\x0e\x32%.debug_v2.SetLogLevelRequest.LogLevelH\x00\x12+\n\x08\x64uration\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x0f\n\x07recurse\x18\x04 \x01(\x08\"@\n\x08LogLevel\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05\x44\x45\x42UG\x10\x01\x12\x08\n\x04INFO\x10\x02\x12\t\n\x05\x45RROR\x10\x03\x12\x07\n\x03OFF\x10\x04\x42\x07\n\x05level\"B\n\x13SetLogLevelResponse\x12\x15\n\raffected_pods\x18\x01 \x03(\t\x12\x14\n\x0c\x65rrored_pods\x18\x02 \x03(\t\"+\n\x18GetDumpV2TemplateRequest\x12\x0f\n\x07\x66ilters\x18\x01 \x03(\t\"E\n\x19GetDumpV2TemplateResponse\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.debug_v2.DumpV2Request\")\n\x08Pipeline\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"3\n\x03Pod\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x12\n\ncontainers\x18\x03 \x03(\t\"\x82\x01\n\x03\x41pp\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1b\n\x04pods\x18\x02 \x03(\x0b\x32\r.debug_v2.Pod\x12*\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.Duration\x12$\n\x08pipeline\x18\x04 \x01(\x0b\x32\x12.debug_v2.Pipeline\"\xdc\x01\n\x06System\x12\x0c\n\x04helm\x18\x01 \x01(\x08\x12\x10\n\x08\x64\x61tabase\x18\x02 \x01(\x08\x12\x0f\n\x07version\x18\x03 \x01(\x08\x12 \n\tdescribes\x18\x04 \x03(\x0b\x32\r.debug_v2.App\x12\x1b\n\x04logs\x18\x05 \x03(\x0b\x32\r.debug_v2.App\x12 \n\tloki_logs\x18\x06 \x03(\x0b\x32\r.debug_v2.App\x12\x1f\n\x08\x62inaries\x18\x07 \x03(\x0b\x32\r.debug_v2.App\x12\x1f\n\x08profiles\x18\x08 \x03(\x0b\x32\r.debug_v2.App\"\x99\x01\n\rDumpV2Request\x12 \n\x06system\x18\x01 \x01(\x0b\x32\x10.debug_v2.System\x12%\n\tpipelines\x18\x02 \x03(\x0b\x32\x12.debug_v2.Pipeline\x12\x13\n\x0binput_repos\x18\x03 \x01(\x08\x12*\n\x07timeout\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\"\x1e\n\x0b\x44umpContent\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"=\n\x0c\x44umpProgress\x12\x0c\n\x04task\x18\x01 \x01(\t\x12\r\n\x05total\x18\x02 \x01(\x03\x12\x10\n\x08progress\x18\x03 \x01(\x03\"j\n\tDumpChunk\x12(\n\x07\x63ontent\x18\x01 \x01(\x0b\x32\x15.debug_v2.DumpContentH\x00\x12*\n\x08progress\x18\x02 \x01(\x0b\x32\x16.debug_v2.DumpProgressH\x00\x42\x07\n\x05\x63hunk2\xbb\x03\n\x05\x44\x65\x62ug\x12\x44\n\x07Profile\x12\x18.debug_v2.ProfileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x42\n\x06\x42inary\x12\x17.debug_v2.BinaryRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12>\n\x04\x44ump\x12\x15.debug_v2.DumpRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12L\n\x0bSetLogLevel\x12\x1c.debug_v2.SetLogLevelRequest\x1a\x1d.debug_v2.SetLogLevelResponse\"\x00\x12^\n\x11GetDumpV2Template\x12\".debug_v2.GetDumpV2TemplateRequest\x1a#.debug_v2.GetDumpV2TemplateResponse\"\x00\x12:\n\x06\x44umpV2\x12\x17.debug_v2.DumpV2Request\x1a\x13.debug_v2.DumpChunk\"\x00\x30\x01\x42-Z+github.com/pachyderm/pachyderm/v2/src/debugb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pps_dot_pps__pb2.DESCRIPTOR,])
 
@@ -412,6 +412,464 @@ _SETLOGLEVELRESPONSE = _descriptor.Descriptor(
   serialized_end=951,
 )
 
+
+_GETDUMPV2TEMPLATEREQUEST = _descriptor.Descriptor(
+  name='GetDumpV2TemplateRequest',
+  full_name='debug_v2.GetDumpV2TemplateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='filters', full_name='debug_v2.GetDumpV2TemplateRequest.filters', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=953,
+  serialized_end=996,
+)
+
+
+_GETDUMPV2TEMPLATERESPONSE = _descriptor.Descriptor(
+  name='GetDumpV2TemplateResponse',
+  full_name='debug_v2.GetDumpV2TemplateResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='request', full_name='debug_v2.GetDumpV2TemplateResponse.request', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=998,
+  serialized_end=1067,
+)
+
+
+_PIPELINE = _descriptor.Descriptor(
+  name='Pipeline',
+  full_name='debug_v2.Pipeline',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='project', full_name='debug_v2.Pipeline.project', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='debug_v2.Pipeline.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1069,
+  serialized_end=1110,
+)
+
+
+_POD = _descriptor.Descriptor(
+  name='Pod',
+  full_name='debug_v2.Pod',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='debug_v2.Pod.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='debug_v2.Pod.ip', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='containers', full_name='debug_v2.Pod.containers', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1112,
+  serialized_end=1163,
+)
+
+
+_APP = _descriptor.Descriptor(
+  name='App',
+  full_name='debug_v2.App',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='debug_v2.App.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pods', full_name='debug_v2.App.pods', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='timeout', full_name='debug_v2.App.timeout', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipeline', full_name='debug_v2.App.pipeline', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1166,
+  serialized_end=1296,
+)
+
+
+_SYSTEM = _descriptor.Descriptor(
+  name='System',
+  full_name='debug_v2.System',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='helm', full_name='debug_v2.System.helm', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='database', full_name='debug_v2.System.database', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='debug_v2.System.version', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='describes', full_name='debug_v2.System.describes', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='logs', full_name='debug_v2.System.logs', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='loki_logs', full_name='debug_v2.System.loki_logs', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='binaries', full_name='debug_v2.System.binaries', index=6,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='profiles', full_name='debug_v2.System.profiles', index=7,
+      number=8, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1299,
+  serialized_end=1519,
+)
+
+
+_DUMPV2REQUEST = _descriptor.Descriptor(
+  name='DumpV2Request',
+  full_name='debug_v2.DumpV2Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='system', full_name='debug_v2.DumpV2Request.system', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pipelines', full_name='debug_v2.DumpV2Request.pipelines', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input_repos', full_name='debug_v2.DumpV2Request.input_repos', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='timeout', full_name='debug_v2.DumpV2Request.timeout', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1522,
+  serialized_end=1675,
+)
+
+
+_DUMPCONTENT = _descriptor.Descriptor(
+  name='DumpContent',
+  full_name='debug_v2.DumpContent',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='content', full_name='debug_v2.DumpContent.content', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1677,
+  serialized_end=1707,
+)
+
+
+_DUMPPROGRESS = _descriptor.Descriptor(
+  name='DumpProgress',
+  full_name='debug_v2.DumpProgress',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='task', full_name='debug_v2.DumpProgress.task', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='total', full_name='debug_v2.DumpProgress.total', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='progress', full_name='debug_v2.DumpProgress.progress', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1709,
+  serialized_end=1770,
+)
+
+
+_DUMPCHUNK = _descriptor.Descriptor(
+  name='DumpChunk',
+  full_name='debug_v2.DumpChunk',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='content', full_name='debug_v2.DumpChunk.content', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='progress', full_name='debug_v2.DumpChunk.progress', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='chunk', full_name='debug_v2.DumpChunk.chunk',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=1772,
+  serialized_end=1878,
+)
+
 _PROFILEREQUEST.fields_by_name['profile'].message_type = _PROFILE
 _PROFILEREQUEST.fields_by_name['filter'].message_type = _FILTER
 _PROFILE.fields_by_name['duration'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -441,6 +899,26 @@ _SETLOGLEVELREQUEST.fields_by_name['pachyderm'].containing_oneof = _SETLOGLEVELR
 _SETLOGLEVELREQUEST.oneofs_by_name['level'].fields.append(
   _SETLOGLEVELREQUEST.fields_by_name['grpc'])
 _SETLOGLEVELREQUEST.fields_by_name['grpc'].containing_oneof = _SETLOGLEVELREQUEST.oneofs_by_name['level']
+_GETDUMPV2TEMPLATERESPONSE.fields_by_name['request'].message_type = _DUMPV2REQUEST
+_APP.fields_by_name['pods'].message_type = _POD
+_APP.fields_by_name['timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_APP.fields_by_name['pipeline'].message_type = _PIPELINE
+_SYSTEM.fields_by_name['describes'].message_type = _APP
+_SYSTEM.fields_by_name['logs'].message_type = _APP
+_SYSTEM.fields_by_name['loki_logs'].message_type = _APP
+_SYSTEM.fields_by_name['binaries'].message_type = _APP
+_SYSTEM.fields_by_name['profiles'].message_type = _APP
+_DUMPV2REQUEST.fields_by_name['system'].message_type = _SYSTEM
+_DUMPV2REQUEST.fields_by_name['pipelines'].message_type = _PIPELINE
+_DUMPV2REQUEST.fields_by_name['timeout'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
+_DUMPCHUNK.fields_by_name['content'].message_type = _DUMPCONTENT
+_DUMPCHUNK.fields_by_name['progress'].message_type = _DUMPPROGRESS
+_DUMPCHUNK.oneofs_by_name['chunk'].fields.append(
+  _DUMPCHUNK.fields_by_name['content'])
+_DUMPCHUNK.fields_by_name['content'].containing_oneof = _DUMPCHUNK.oneofs_by_name['chunk']
+_DUMPCHUNK.oneofs_by_name['chunk'].fields.append(
+  _DUMPCHUNK.fields_by_name['progress'])
+_DUMPCHUNK.fields_by_name['progress'].containing_oneof = _DUMPCHUNK.oneofs_by_name['chunk']
 DESCRIPTOR.message_types_by_name['ProfileRequest'] = _PROFILEREQUEST
 DESCRIPTOR.message_types_by_name['Profile'] = _PROFILE
 DESCRIPTOR.message_types_by_name['Filter'] = _FILTER
@@ -449,6 +927,16 @@ DESCRIPTOR.message_types_by_name['BinaryRequest'] = _BINARYREQUEST
 DESCRIPTOR.message_types_by_name['DumpRequest'] = _DUMPREQUEST
 DESCRIPTOR.message_types_by_name['SetLogLevelRequest'] = _SETLOGLEVELREQUEST
 DESCRIPTOR.message_types_by_name['SetLogLevelResponse'] = _SETLOGLEVELRESPONSE
+DESCRIPTOR.message_types_by_name['GetDumpV2TemplateRequest'] = _GETDUMPV2TEMPLATEREQUEST
+DESCRIPTOR.message_types_by_name['GetDumpV2TemplateResponse'] = _GETDUMPV2TEMPLATERESPONSE
+DESCRIPTOR.message_types_by_name['Pipeline'] = _PIPELINE
+DESCRIPTOR.message_types_by_name['Pod'] = _POD
+DESCRIPTOR.message_types_by_name['App'] = _APP
+DESCRIPTOR.message_types_by_name['System'] = _SYSTEM
+DESCRIPTOR.message_types_by_name['DumpV2Request'] = _DUMPV2REQUEST
+DESCRIPTOR.message_types_by_name['DumpContent'] = _DUMPCONTENT
+DESCRIPTOR.message_types_by_name['DumpProgress'] = _DUMPPROGRESS
+DESCRIPTOR.message_types_by_name['DumpChunk'] = _DUMPCHUNK
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ProfileRequest = _reflection.GeneratedProtocolMessageType('ProfileRequest', (_message.Message,), {
@@ -507,6 +995,76 @@ SetLogLevelResponse = _reflection.GeneratedProtocolMessageType('SetLogLevelRespo
   })
 _sym_db.RegisterMessage(SetLogLevelResponse)
 
+GetDumpV2TemplateRequest = _reflection.GeneratedProtocolMessageType('GetDumpV2TemplateRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETDUMPV2TEMPLATEREQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.GetDumpV2TemplateRequest)
+  })
+_sym_db.RegisterMessage(GetDumpV2TemplateRequest)
+
+GetDumpV2TemplateResponse = _reflection.GeneratedProtocolMessageType('GetDumpV2TemplateResponse', (_message.Message,), {
+  'DESCRIPTOR' : _GETDUMPV2TEMPLATERESPONSE,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.GetDumpV2TemplateResponse)
+  })
+_sym_db.RegisterMessage(GetDumpV2TemplateResponse)
+
+Pipeline = _reflection.GeneratedProtocolMessageType('Pipeline', (_message.Message,), {
+  'DESCRIPTOR' : _PIPELINE,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.Pipeline)
+  })
+_sym_db.RegisterMessage(Pipeline)
+
+Pod = _reflection.GeneratedProtocolMessageType('Pod', (_message.Message,), {
+  'DESCRIPTOR' : _POD,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.Pod)
+  })
+_sym_db.RegisterMessage(Pod)
+
+App = _reflection.GeneratedProtocolMessageType('App', (_message.Message,), {
+  'DESCRIPTOR' : _APP,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.App)
+  })
+_sym_db.RegisterMessage(App)
+
+System = _reflection.GeneratedProtocolMessageType('System', (_message.Message,), {
+  'DESCRIPTOR' : _SYSTEM,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.System)
+  })
+_sym_db.RegisterMessage(System)
+
+DumpV2Request = _reflection.GeneratedProtocolMessageType('DumpV2Request', (_message.Message,), {
+  'DESCRIPTOR' : _DUMPV2REQUEST,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.DumpV2Request)
+  })
+_sym_db.RegisterMessage(DumpV2Request)
+
+DumpContent = _reflection.GeneratedProtocolMessageType('DumpContent', (_message.Message,), {
+  'DESCRIPTOR' : _DUMPCONTENT,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.DumpContent)
+  })
+_sym_db.RegisterMessage(DumpContent)
+
+DumpProgress = _reflection.GeneratedProtocolMessageType('DumpProgress', (_message.Message,), {
+  'DESCRIPTOR' : _DUMPPROGRESS,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.DumpProgress)
+  })
+_sym_db.RegisterMessage(DumpProgress)
+
+DumpChunk = _reflection.GeneratedProtocolMessageType('DumpChunk', (_message.Message,), {
+  'DESCRIPTOR' : _DUMPCHUNK,
+  '__module__' : 'python_pachyderm.proto.v2.debug.debug_pb2'
+  # @@protoc_insertion_point(class_scope:debug_v2.DumpChunk)
+  })
+_sym_db.RegisterMessage(DumpChunk)
+
 
 DESCRIPTOR._options = None
 
@@ -517,8 +1075,8 @@ _DEBUG = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=954,
-  serialized_end=1241,
+  serialized_start=1881,
+  serialized_end=2324,
   methods=[
   _descriptor.MethodDescriptor(
     name='Profile',
@@ -557,6 +1115,26 @@ _DEBUG = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_SETLOGLEVELREQUEST,
     output_type=_SETLOGLEVELRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetDumpV2Template',
+    full_name='debug_v2.Debug.GetDumpV2Template',
+    index=4,
+    containing_service=None,
+    input_type=_GETDUMPV2TEMPLATEREQUEST,
+    output_type=_GETDUMPV2TEMPLATERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='DumpV2',
+    full_name='debug_v2.Debug.DumpV2',
+    index=5,
+    containing_service=None,
+    input_type=_DUMPV2REQUEST,
+    output_type=_DUMPCHUNK,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

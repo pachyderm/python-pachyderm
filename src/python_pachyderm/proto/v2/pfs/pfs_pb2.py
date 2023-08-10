@@ -27,7 +27,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z)github.com/pachyderm/pachyderm/v2/src/pfs',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\'python_pachyderm/proto/v2/pfs/pfs.proto\x12\x06pfs_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x19google/protobuf/any.proto\x1a)python_pachyderm/proto/v2/auth/auth.proto\x1a)python_pachyderm/proto/v2/task/task.proto\"D\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12 \n\x07project\x18\x03 \x01(\x0b\x32\x0f.pfs_v2.Project\"2\n\x06\x42ranch\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"C\n\x04\x46ile\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x03 \x01(\t\"\x99\x02\n\x08RepoInfo\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x16size_bytes_upper_bound\x18\x03 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12 \n\x08\x62ranches\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12#\n\tauth_info\x18\x06 \x01(\x0b\x32\x10.pfs_v2.AuthInfo\x12)\n\x07\x64\x65tails\x18\x07 \x01(\x0b\x32\x18.pfs_v2.RepoInfo.Details\x1a\x1d\n\x07\x44\x65tails\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\"C\n\x08\x41uthInfo\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"\xdf\x01\n\nBranchInfo\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x1c\n\x04head\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nsubvenance\x18\x04 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12)\n\x11\x64irect_provenance\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x06 \x01(\x0b\x32\x0f.pfs_v2.Trigger\"X\n\x07Trigger\x12\x0e\n\x06\x62ranch\x18\x01 \x01(\t\x12\x0b\n\x03\x61ll\x18\x02 \x01(\x08\x12\x11\n\tcron_spec\x18\x03 \x01(\t\x12\x0c\n\x04size\x18\x04 \x01(\t\x12\x0f\n\x07\x63ommits\x18\x05 \x01(\x03\"0\n\x0c\x43ommitOrigin\x12 \n\x04kind\x18\x01 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"P\n\x06\x43ommit\x12\x1a\n\x04repo\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"\xd4\x04\n\nCommitInfo\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12%\n\rparent_commit\x18\x04 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12%\n\rchild_commits\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12+\n\x07started\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12-\n\tfinishing\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\x11\x64irect_provenance\x18\r \x03(\x0b\x32\x0e.pfs_v2.Commit\x12\r\n\x05\x65rror\x18\n \x01(\t\x12\x1e\n\x16size_bytes_upper_bound\x18\x0b \x01(\x03\x12+\n\x07\x64\x65tails\x18\x0c \x01(\x0b\x32\x1a.pfs_v2.CommitInfo.Details\x1a\x85\x01\n\x07\x44\x65tails\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\x12\x32\n\x0f\x63ompacting_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x32\n\x0fvalidating_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationJ\x04\x08\t\x10\n\"\x17\n\tCommitSet\x12\n\n\x02id\x18\x01 \x01(\t\"[\n\rCommitSetInfo\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\x12#\n\x07\x63ommits\x18\x02 \x03(\x0b\x32\x12.pfs_v2.CommitInfo\"\x9c\x01\n\x08\x46ileInfo\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12#\n\tfile_type\x18\x02 \x01(\x0e\x32\x10.pfs_v2.FileType\x12-\n\tcommitted\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x04 \x01(\x03\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"\x17\n\x07Project\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x99\x01\n\x0bProjectInfo\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12#\n\tauth_info\x18\x03 \x01(\x0b\x32\x10.pfs_v2.AuthInfo\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"T\n\x11\x43reateRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"0\n\x12InspectRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\"B\n\x0fListRepoRequest\x12\x0c\n\x04type\x18\x01 \x01(\t\x12!\n\x08projects\x18\x02 \x03(\x0b\x32\x0f.pfs_v2.Project\">\n\x11\x44\x65leteRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"S\n\x12\x44\x65leteReposRequest\x12!\n\x08projects\x18\x01 \x03(\x0b\x32\x0f.pfs_v2.Project\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"2\n\x13\x44\x65leteReposResponse\x12\x1b\n\x05repos\x18\x01 \x03(\x0b\x32\x0c.pfs_v2.Repo\"i\n\x12StartCommitRequest\x12\x1e\n\x06parent\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Branch\"h\n\x13\x46inishCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\r\n\x05\x66orce\x18\x04 \x01(\x08\"Y\n\x14InspectCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12!\n\x04wait\x18\x02 \x01(\x0e\x32\x13.pfs_v2.CommitState\"\xf2\x01\n\x11ListCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x1c\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1a\n\x02to\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x03\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x06 \x01(\x08\x12\'\n\x0borigin_kind\x18\x07 \x01(\x0e\x32\x12.pfs_v2.OriginKind\x12\x30\n\x0cstarted_time\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"N\n\x17InspectCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\x12\x0c\n\x04wait\x18\x02 \x01(\x08\"8\n\x14ListCommitSetRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\"?\n\x16SquashCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\"=\n\x14\x44ropCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\"\xbc\x01\n\x16SubscribeCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12\x1c\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\x05state\x18\x04 \x01(\x0e\x32\x13.pfs_v2.CommitState\x12\x0b\n\x03\x61ll\x18\x05 \x01(\x08\x12\'\n\x0borigin_kind\x18\x06 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"4\n\x12\x43learCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\xb1\x01\n\x13\x43reateBranchRequest\x12\x1c\n\x04head\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x04 \x01(\x0b\x32\x0f.pfs_v2.Trigger\x12\x16\n\x0enew_commit_set\x18\x05 \x01(\x08\"U\n\x12\x46indCommitsRequest\x12\x1d\n\x05start\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x11\n\tfile_path\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\r\"\x91\x01\n\x13\x46indCommitsResponse\x12&\n\x0c\x66ound_commit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12.\n\x14last_searched_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12\x18\n\x10\x63ommits_searched\x18\x03 \x01(\rB\x08\n\x06result\"6\n\x14InspectBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"@\n\x11ListBranchRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"D\n\x13\x44\x65leteBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"]\n\x14\x43reateProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"9\n\x15InspectProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\"\x14\n\x12ListProjectRequest\"G\n\x14\x44\x65leteProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"\xc8\x01\n\x07\x41\x64\x64\x46ile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\x12*\n\x03raw\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.BytesValueH\x00\x12(\n\x03url\x18\x04 \x01(\x0b\x32\x19.pfs_v2.AddFile.URLSourceH\x00\x1a@\n\tURLSource\x12\x0b\n\x03URL\x18\x01 \x01(\t\x12\x11\n\trecursive\x18\x02 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x03 \x01(\rB\x08\n\x06source\")\n\nDeleteFile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\"Q\n\x08\x43opyFile\x12\x0b\n\x03\x64st\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\x12\x19\n\x03src\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06\x61ppend\x18\x04 \x01(\x08\"\xb8\x01\n\x11ModifyFileRequest\x12$\n\nset_commit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12#\n\x08\x61\x64\x64_file\x18\x02 \x01(\x0b\x32\x0f.pfs_v2.AddFileH\x00\x12)\n\x0b\x64\x65lete_file\x18\x03 \x01(\x0b\x32\x12.pfs_v2.DeleteFileH\x00\x12%\n\tcopy_file\x18\x04 \x01(\x0b\x32\x10.pfs_v2.CopyFileH\x00\x42\x06\n\x04\x62ody\"p\n\x0eGetFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0b\n\x03URL\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12%\n\npath_range\x18\x04 \x01(\x0b\x32\x11.pfs_v2.PathRange\"0\n\x12InspectFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\"|\n\x0fListFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12&\n\x10paginationMarker\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06number\x18\x04 \x01(\x03\x12\x0f\n\x07reverse\x18\x05 \x01(\x08J\x04\x08\x02\x10\x03\"v\n\x0fWalkFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12&\n\x10paginationMarker\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06number\x18\x03 \x01(\x03\x12\x0f\n\x07reverse\x18\x04 \x01(\x08\"i\n\x0fGlobFileRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\x12%\n\npath_range\x18\x03 \x01(\x0b\x32\x11.pfs_v2.PathRange\"b\n\x0f\x44iffFileRequest\x12\x1e\n\x08new_file\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x1e\n\x08old_file\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"Z\n\x10\x44iffFileResponse\x12\"\n\x08new_file\x18\x01 \x01(\x0b\x32\x10.pfs_v2.FileInfo\x12\"\n\x08old_file\x18\x02 \x01(\x0b\x32\x10.pfs_v2.FileInfo\"i\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\x12\'\n\rzombie_target\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12\x14\n\nzombie_all\x18\x03 \x01(\x08H\x00\x42\x0e\n\x0czombie_check\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\",\n\x15\x43reateFileSetResponse\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\"3\n\x11GetFileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"H\n\x11\x41\x64\x64\x46ileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x66ile_set_id\x18\x02 \x01(\t\"?\n\x13RenewFileSetRequest\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\"S\n\x15\x43omposeFileSetRequest\x12\x14\n\x0c\x66ile_set_ids\x18\x01 \x03(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\x12\x0f\n\x07\x63ompact\x18\x03 \x01(\x08\"*\n\x13ShardFileSetRequest\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\")\n\tPathRange\x12\r\n\x05lower\x18\x01 \x01(\t\x12\r\n\x05upper\x18\x02 \x01(\t\"9\n\x14ShardFileSetResponse\x12!\n\x06shards\x18\x01 \x03(\x0b\x32\x11.pfs_v2.PathRange\"V\n\x13\x43heckStorageRequest\x12\x17\n\x0fread_chunk_data\x18\x01 \x01(\x08\x12\x13\n\x0b\x63hunk_begin\x18\x02 \x01(\x0c\x12\x11\n\tchunk_end\x18\x03 \x01(\x0c\"2\n\x14\x43heckStorageResponse\x12\x1a\n\x12\x63hunk_object_count\x18\x01 \x01(\x03\"f\n\x0fPutCacheRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\x12\x14\n\x0c\x66ile_set_ids\x18\x03 \x03(\t\x12\x0b\n\x03tag\x18\x04 \x01(\t\"\x1e\n\x0fGetCacheRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\"7\n\x10GetCacheResponse\x12#\n\x05value\x18\x01 \x01(\x0b\x32\x14.google.protobuf.Any\"\'\n\x11\x43learCacheRequest\x12\x12\n\ntag_prefix\x18\x01 \x01(\t\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse\"b\n\x12RunLoadTestRequest\x12\x0c\n\x04spec\x18\x01 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x03 \x01(\x03\x12\x10\n\x08state_id\x18\x04 \x01(\t\"\x9f\x01\n\x13RunLoadTestResponse\x12\x0c\n\x04spec\x18\x01 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x03 \x01(\x03\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12+\n\x08\x64uration\x18\x05 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x10\n\x08state_id\x18\x06 \x01(\t\"\"\n\x13ObjectStorageEgress\x12\x0b\n\x03url\x18\x01 \x01(\t\"\xc0\x02\n\x11SQLDatabaseEgress\x12\x0b\n\x03url\x18\x01 \x01(\t\x12\x39\n\x0b\x66ile_format\x18\x02 \x01(\x0b\x32$.pfs_v2.SQLDatabaseEgress.FileFormat\x12\x30\n\x06secret\x18\x03 \x01(\x0b\x32 .pfs_v2.SQLDatabaseEgress.Secret\x1a\x8b\x01\n\nFileFormat\x12\x37\n\x04type\x18\x01 \x01(\x0e\x32).pfs_v2.SQLDatabaseEgress.FileFormat.Type\x12\x0f\n\x07\x63olumns\x18\x02 \x03(\t\"3\n\x04Type\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x07\n\x03\x43SV\x10\x01\x12\x08\n\x04JSON\x10\x02\x12\x0b\n\x07PARQUET\x10\x03\x1a#\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"\xa3\x01\n\rEgressRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x35\n\x0eobject_storage\x18\x02 \x01(\x0b\x32\x1b.pfs_v2.ObjectStorageEgressH\x00\x12\x31\n\x0csql_database\x18\x03 \x01(\x0b\x32\x19.pfs_v2.SQLDatabaseEgressH\x00\x42\x08\n\x06target\"\xeb\x02\n\x0e\x45gressResponse\x12\x44\n\x0eobject_storage\x18\x01 \x01(\x0b\x32*.pfs_v2.EgressResponse.ObjectStorageResultH\x00\x12@\n\x0csql_database\x18\x02 \x01(\x0b\x32(.pfs_v2.EgressResponse.SQLDatabaseResultH\x00\x1a,\n\x13ObjectStorageResult\x12\x15\n\rbytes_written\x18\x01 \x01(\x03\x1a\x98\x01\n\x11SQLDatabaseResult\x12O\n\x0crows_written\x18\x01 \x03(\x0b\x32\x39.pfs_v2.EgressResponse.SQLDatabaseResult.RowsWrittenEntry\x1a\x32\n\x10RowsWrittenEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x42\x08\n\x06result*C\n\nOriginKind\x12\x17\n\x13ORIGIN_KIND_UNKNOWN\x10\x00\x12\x08\n\x04USER\x10\x01\x12\x08\n\x04\x41UTO\x10\x02\x12\x08\n\x04\x46SCK\x10\x03*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*\\\n\x0b\x43ommitState\x12\x18\n\x14\x43OMMIT_STATE_UNKNOWN\x10\x00\x12\x0b\n\x07STARTED\x10\x01\x12\t\n\x05READY\x10\x02\x12\r\n\tFINISHING\x10\x03\x12\x0c\n\x08\x46INISHED\x10\x04*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\xbb\x1a\n\x03\x41PI\x12\x41\n\nCreateRepo\x12\x19.pfs_v2.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\x0bInspectRepo\x12\x1a.pfs_v2.InspectRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x12\x39\n\x08ListRepo\x12\x17.pfs_v2.ListRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x30\x01\x12\x41\n\nDeleteRepo\x12\x19.pfs_v2.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0b\x44\x65leteRepos\x12\x1a.pfs_v2.DeleteReposRequest\x1a\x1b.pfs_v2.DeleteReposResponse\"\x00\x12;\n\x0bStartCommit\x12\x1a.pfs_v2.StartCommitRequest\x1a\x0e.pfs_v2.Commit\"\x00\x12\x45\n\x0c\x46inishCommit\x12\x1b.pfs_v2.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0b\x43learCommit\x12\x1a.pfs_v2.ClearCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectCommit\x12\x1c.pfs_v2.InspectCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x12?\n\nListCommit\x12\x19.pfs_v2.ListCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12I\n\x0fSubscribeCommit\x12\x1e.pfs_v2.SubscribeCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12K\n\x10InspectCommitSet\x12\x1f.pfs_v2.InspectCommitSetRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12H\n\rListCommitSet\x12\x1c.pfs_v2.ListCommitSetRequest\x1a\x15.pfs_v2.CommitSetInfo\"\x00\x30\x01\x12K\n\x0fSquashCommitSet\x12\x1e.pfs_v2.SquashCommitSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12G\n\rDropCommitSet\x12\x1c.pfs_v2.DropCommitSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12J\n\x0b\x46indCommits\x12\x1a.pfs_v2.FindCommitsRequest\x1a\x1b.pfs_v2.FindCommitsResponse\"\x00\x30\x01\x12\x45\n\x0c\x43reateBranch\x12\x1b.pfs_v2.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectBranch\x12\x1c.pfs_v2.InspectBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x12?\n\nListBranch\x12\x19.pfs_v2.ListBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x30\x01\x12\x45\n\x0c\x44\x65leteBranch\x12\x1b.pfs_v2.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\nModifyFile\x12\x19.pfs_v2.ModifyFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x42\n\x07GetFile\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetFileTAR\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12=\n\x0bInspectFile\x12\x1a.pfs_v2.InspectFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x12\x39\n\x08ListFile\x12\x17.pfs_v2.ListFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08WalkFile\x12\x17.pfs_v2.WalkFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08GlobFile\x12\x17.pfs_v2.GlobFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x41\n\x08\x44iffFile\x12\x17.pfs_v2.DiffFileRequest\x1a\x18.pfs_v2.DiffFileResponse\"\x00\x30\x01\x12K\n\x0c\x41\x63tivateAuth\x12\x1b.pfs_v2.ActivateAuthRequest\x1a\x1c.pfs_v2.ActivateAuthResponse\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x04\x46sck\x12\x13.pfs_v2.FsckRequest\x1a\x14.pfs_v2.FsckResponse\"\x00\x30\x01\x12M\n\rCreateFileSet\x12\x19.pfs_v2.ModifyFileRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00(\x01\x12H\n\nGetFileSet\x12\x19.pfs_v2.GetFileSetRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00\x12\x41\n\nAddFileSet\x12\x19.pfs_v2.AddFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0cRenewFileSet\x12\x1b.pfs_v2.RenewFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12P\n\x0e\x43omposeFileSet\x12\x1d.pfs_v2.ComposeFileSetRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00\x12K\n\x0cShardFileSet\x12\x1b.pfs_v2.ShardFileSetRequest\x1a\x1c.pfs_v2.ShardFileSetResponse\"\x00\x12K\n\x0c\x43heckStorage\x12\x1b.pfs_v2.CheckStorageRequest\x1a\x1c.pfs_v2.CheckStorageResponse\"\x00\x12=\n\x08PutCache\x12\x17.pfs_v2.PutCacheRequest\x1a\x16.google.protobuf.Empty\"\x00\x12?\n\x08GetCache\x12\x17.pfs_v2.GetCacheRequest\x1a\x18.pfs_v2.GetCacheResponse\"\x00\x12\x41\n\nClearCache\x12\x19.pfs_v2.ClearCacheRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0bRunLoadTest\x12\x1a.pfs_v2.RunLoadTestRequest\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x12K\n\x12RunLoadTestDefault\x12\x16.google.protobuf.Empty\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x12;\n\x08ListTask\x12\x18.taskapi.ListTaskRequest\x1a\x11.taskapi.TaskInfo\"\x00\x30\x01\x12\x39\n\x06\x45gress\x12\x15.pfs_v2.EgressRequest\x1a\x16.pfs_v2.EgressResponse\"\x00\x12G\n\rCreateProject\x12\x1c.pfs_v2.CreateProjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x46\n\x0eInspectProject\x12\x1d.pfs_v2.InspectProjectRequest\x1a\x13.pfs_v2.ProjectInfo\"\x00\x12\x42\n\x0bListProject\x12\x1a.pfs_v2.ListProjectRequest\x1a\x13.pfs_v2.ProjectInfo\"\x00\x30\x01\x12G\n\rDeleteProject\x12\x1c.pfs_v2.DeleteProjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/pfsb\x06proto3'
+  serialized_pb=b'\n\'python_pachyderm/proto/v2/pfs/pfs.proto\x12\x06pfs_v2\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x19google/protobuf/any.proto\x1a)python_pachyderm/proto/v2/auth/auth.proto\x1a)python_pachyderm/proto/v2/task/task.proto\"D\n\x04Repo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12 \n\x07project\x18\x03 \x01(\x0b\x32\x0f.pfs_v2.Project\"2\n\x06\x42ranch\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0c\n\x04name\x18\x02 \x01(\t\"C\n\x04\x46ile\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0c\n\x04path\x18\x02 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x03 \x01(\t\"\x99\x02\n\x08RepoInfo\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12+\n\x07\x63reated\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1e\n\x16size_bytes_upper_bound\x18\x03 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12 \n\x08\x62ranches\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12#\n\tauth_info\x18\x06 \x01(\x0b\x32\x10.pfs_v2.AuthInfo\x12)\n\x07\x64\x65tails\x18\x07 \x01(\x0b\x32\x18.pfs_v2.RepoInfo.Details\x1a\x1d\n\x07\x44\x65tails\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\"C\n\x08\x41uthInfo\x12(\n\x0bpermissions\x18\x01 \x03(\x0e\x32\x13.auth_v2.Permission\x12\r\n\x05roles\x18\x02 \x03(\t\"\xdf\x01\n\nBranchInfo\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x1c\n\x04head\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nsubvenance\x18\x04 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12)\n\x11\x64irect_provenance\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x06 \x01(\x0b\x32\x0f.pfs_v2.Trigger\"q\n\x07Trigger\x12\x0e\n\x06\x62ranch\x18\x01 \x01(\t\x12\x0b\n\x03\x61ll\x18\x02 \x01(\x08\x12\x17\n\x0frate_limit_spec\x18\x03 \x01(\t\x12\x0c\n\x04size\x18\x04 \x01(\t\x12\x0f\n\x07\x63ommits\x18\x05 \x01(\x03\x12\x11\n\tcron_spec\x18\x06 \x01(\t\"0\n\x0c\x43ommitOrigin\x12 \n\x04kind\x18\x01 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"P\n\x06\x43ommit\x12\x1a\n\x04repo\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"\xd4\x04\n\nCommitInfo\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12$\n\x06origin\x18\x02 \x01(\x0b\x32\x14.pfs_v2.CommitOrigin\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12%\n\rparent_commit\x18\x04 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12%\n\rchild_commits\x18\x05 \x03(\x0b\x32\x0e.pfs_v2.Commit\x12+\n\x07started\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12-\n\tfinishing\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12,\n\x08\x66inished\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\x11\x64irect_provenance\x18\r \x03(\x0b\x32\x0e.pfs_v2.Commit\x12\r\n\x05\x65rror\x18\n \x01(\t\x12\x1e\n\x16size_bytes_upper_bound\x18\x0b \x01(\x03\x12+\n\x07\x64\x65tails\x18\x0c \x01(\x0b\x32\x1a.pfs_v2.CommitInfo.Details\x1a\x85\x01\n\x07\x44\x65tails\x12\x12\n\nsize_bytes\x18\x01 \x01(\x03\x12\x32\n\x0f\x63ompacting_time\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x32\n\x0fvalidating_time\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationJ\x04\x08\t\x10\n\"\x17\n\tCommitSet\x12\n\n\x02id\x18\x01 \x01(\t\"[\n\rCommitSetInfo\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\x12#\n\x07\x63ommits\x18\x02 \x03(\x0b\x32\x12.pfs_v2.CommitInfo\"\x9c\x01\n\x08\x46ileInfo\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12#\n\tfile_type\x18\x02 \x01(\x0e\x32\x10.pfs_v2.FileType\x12-\n\tcommitted\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nsize_bytes\x18\x04 \x01(\x03\x12\x0c\n\x04hash\x18\x05 \x01(\x0c\"\x17\n\x07Project\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x99\x01\n\x0bProjectInfo\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12#\n\tauth_info\x18\x03 \x01(\x0b\x32\x10.pfs_v2.AuthInfo\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"T\n\x11\x43reateRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"0\n\x12InspectRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\"B\n\x0fListRepoRequest\x12\x0c\n\x04type\x18\x01 \x01(\t\x12!\n\x08projects\x18\x02 \x03(\x0b\x32\x0f.pfs_v2.Project\">\n\x11\x44\x65leteRepoRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"S\n\x12\x44\x65leteReposRequest\x12!\n\x08projects\x18\x01 \x03(\x0b\x32\x0f.pfs_v2.Project\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x03 \x01(\x08\"2\n\x13\x44\x65leteReposResponse\x12\x1b\n\x05repos\x18\x01 \x03(\x0b\x32\x0c.pfs_v2.Repo\"i\n\x12StartCommitRequest\x12\x1e\n\x06parent\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Branch\"h\n\x13\x46inishCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\r\n\x05\x66orce\x18\x04 \x01(\x08\"Y\n\x14InspectCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12!\n\x04wait\x18\x02 \x01(\x0e\x32\x13.pfs_v2.CommitState\"\xf2\x01\n\x11ListCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x1c\n\x04\x66rom\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1a\n\x02to\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0e\n\x06number\x18\x04 \x01(\x03\x12\x0f\n\x07reverse\x18\x05 \x01(\x08\x12\x0b\n\x03\x61ll\x18\x06 \x01(\x08\x12\'\n\x0borigin_kind\x18\x07 \x01(\x0e\x32\x12.pfs_v2.OriginKind\x12\x30\n\x0cstarted_time\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"N\n\x17InspectCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\x12\x0c\n\x04wait\x18\x02 \x01(\x08\"8\n\x14ListCommitSetRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\"?\n\x16SquashCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\"=\n\x14\x44ropCommitSetRequest\x12%\n\ncommit_set\x18\x01 \x01(\x0b\x32\x11.pfs_v2.CommitSet\"\xbc\x01\n\x16SubscribeCommitRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0e\n\x06\x62ranch\x18\x02 \x01(\t\x12\x1c\n\x04\x66rom\x18\x03 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\"\n\x05state\x18\x04 \x01(\x0e\x32\x13.pfs_v2.CommitState\x12\x0b\n\x03\x61ll\x18\x05 \x01(\x08\x12\'\n\x0borigin_kind\x18\x06 \x01(\x0e\x32\x12.pfs_v2.OriginKind\"4\n\x12\x43learCommitRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"\xb1\x01\n\x13\x43reateBranchRequest\x12\x1c\n\x04head\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\"\n\nprovenance\x18\x03 \x03(\x0b\x32\x0e.pfs_v2.Branch\x12 \n\x07trigger\x18\x04 \x01(\x0b\x32\x0f.pfs_v2.Trigger\x12\x16\n\x0enew_commit_set\x18\x05 \x01(\x08\"U\n\x12\x46indCommitsRequest\x12\x1d\n\x05start\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x11\n\tfile_path\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\r\"\x91\x01\n\x13\x46indCommitsResponse\x12&\n\x0c\x66ound_commit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12.\n\x14last_searched_commit\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12\x18\n\x10\x63ommits_searched\x18\x03 \x01(\rB\x08\n\x06result\"6\n\x14InspectBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\"@\n\x11ListBranchRequest\x12\x1a\n\x04repo\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.Repo\x12\x0f\n\x07reverse\x18\x02 \x01(\x08\"D\n\x13\x44\x65leteBranchRequest\x12\x1e\n\x06\x62ranch\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"]\n\x14\x43reateProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x08\"9\n\x15InspectProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\"\x14\n\x12ListProjectRequest\"G\n\x14\x44\x65leteProjectRequest\x12 \n\x07project\x18\x01 \x01(\x0b\x32\x0f.pfs_v2.Project\x12\r\n\x05\x66orce\x18\x02 \x01(\x08\"\xc8\x01\n\x07\x41\x64\x64\x46ile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\x12*\n\x03raw\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.BytesValueH\x00\x12(\n\x03url\x18\x04 \x01(\x0b\x32\x19.pfs_v2.AddFile.URLSourceH\x00\x1a@\n\tURLSource\x12\x0b\n\x03URL\x18\x01 \x01(\t\x12\x11\n\trecursive\x18\x02 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x03 \x01(\rB\x08\n\x06source\")\n\nDeleteFile\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\"Q\n\x08\x43opyFile\x12\x0b\n\x03\x64st\x18\x01 \x01(\t\x12\r\n\x05\x64\x61tum\x18\x02 \x01(\t\x12\x19\n\x03src\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06\x61ppend\x18\x04 \x01(\x08\"\xb8\x01\n\x11ModifyFileRequest\x12$\n\nset_commit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12#\n\x08\x61\x64\x64_file\x18\x02 \x01(\x0b\x32\x0f.pfs_v2.AddFileH\x00\x12)\n\x0b\x64\x65lete_file\x18\x03 \x01(\x0b\x32\x12.pfs_v2.DeleteFileH\x00\x12%\n\tcopy_file\x18\x04 \x01(\x0b\x32\x10.pfs_v2.CopyFileH\x00\x42\x06\n\x04\x62ody\"p\n\x0eGetFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0b\n\x03URL\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12%\n\npath_range\x18\x04 \x01(\x0b\x32\x11.pfs_v2.PathRange\"0\n\x12InspectFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\"|\n\x0fListFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12&\n\x10paginationMarker\x18\x03 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06number\x18\x04 \x01(\x03\x12\x0f\n\x07reverse\x18\x05 \x01(\x08J\x04\x08\x02\x10\x03\"v\n\x0fWalkFileRequest\x12\x1a\n\x04\x66ile\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12&\n\x10paginationMarker\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0e\n\x06number\x18\x03 \x01(\x03\x12\x0f\n\x07reverse\x18\x04 \x01(\x08\"i\n\x0fGlobFileRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x0f\n\x07pattern\x18\x02 \x01(\t\x12%\n\npath_range\x18\x03 \x01(\x0b\x32\x11.pfs_v2.PathRange\"b\n\x0f\x44iffFileRequest\x12\x1e\n\x08new_file\x18\x01 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x1e\n\x08old_file\x18\x02 \x01(\x0b\x32\x0c.pfs_v2.File\x12\x0f\n\x07shallow\x18\x03 \x01(\x08\"Z\n\x10\x44iffFileResponse\x12\"\n\x08new_file\x18\x01 \x01(\x0b\x32\x10.pfs_v2.FileInfo\x12\"\n\x08old_file\x18\x02 \x01(\x0b\x32\x10.pfs_v2.FileInfo\"i\n\x0b\x46sckRequest\x12\x0b\n\x03\x66ix\x18\x01 \x01(\x08\x12\'\n\rzombie_target\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.CommitH\x00\x12\x14\n\nzombie_all\x18\x03 \x01(\x08H\x00\x42\x0e\n\x0czombie_check\"*\n\x0c\x46sckResponse\x12\x0b\n\x03\x66ix\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\",\n\x15\x43reateFileSetResponse\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\"3\n\x11GetFileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\"H\n\x11\x41\x64\x64\x46ileSetRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x13\n\x0b\x66ile_set_id\x18\x02 \x01(\t\"?\n\x13RenewFileSetRequest\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\"S\n\x15\x43omposeFileSetRequest\x12\x14\n\x0c\x66ile_set_ids\x18\x01 \x03(\t\x12\x13\n\x0bttl_seconds\x18\x02 \x01(\x03\x12\x0f\n\x07\x63ompact\x18\x03 \x01(\x08\"*\n\x13ShardFileSetRequest\x12\x13\n\x0b\x66ile_set_id\x18\x01 \x01(\t\")\n\tPathRange\x12\r\n\x05lower\x18\x01 \x01(\t\x12\r\n\x05upper\x18\x02 \x01(\t\"9\n\x14ShardFileSetResponse\x12!\n\x06shards\x18\x01 \x03(\x0b\x32\x11.pfs_v2.PathRange\"V\n\x13\x43heckStorageRequest\x12\x17\n\x0fread_chunk_data\x18\x01 \x01(\x08\x12\x13\n\x0b\x63hunk_begin\x18\x02 \x01(\x0c\x12\x11\n\tchunk_end\x18\x03 \x01(\x0c\"2\n\x14\x43heckStorageResponse\x12\x1a\n\x12\x63hunk_object_count\x18\x01 \x01(\x03\"f\n\x0fPutCacheRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\x12\x14\n\x0c\x66ile_set_ids\x18\x03 \x03(\t\x12\x0b\n\x03tag\x18\x04 \x01(\t\"\x1e\n\x0fGetCacheRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\"7\n\x10GetCacheResponse\x12#\n\x05value\x18\x01 \x01(\x0b\x32\x14.google.protobuf.Any\"\'\n\x11\x43learCacheRequest\x12\x12\n\ntag_prefix\x18\x01 \x01(\t\"\x15\n\x13\x41\x63tivateAuthRequest\"\x16\n\x14\x41\x63tivateAuthResponse\"b\n\x12RunLoadTestRequest\x12\x0c\n\x04spec\x18\x01 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x03 \x01(\x03\x12\x10\n\x08state_id\x18\x04 \x01(\t\"\x9f\x01\n\x13RunLoadTestResponse\x12\x0c\n\x04spec\x18\x01 \x01(\t\x12\x1e\n\x06\x62ranch\x18\x02 \x01(\x0b\x32\x0e.pfs_v2.Branch\x12\x0c\n\x04seed\x18\x03 \x01(\x03\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12+\n\x08\x64uration\x18\x05 \x01(\x0b\x32\x19.google.protobuf.Duration\x12\x10\n\x08state_id\x18\x06 \x01(\t\"\"\n\x13ObjectStorageEgress\x12\x0b\n\x03url\x18\x01 \x01(\t\"\xc0\x02\n\x11SQLDatabaseEgress\x12\x0b\n\x03url\x18\x01 \x01(\t\x12\x39\n\x0b\x66ile_format\x18\x02 \x01(\x0b\x32$.pfs_v2.SQLDatabaseEgress.FileFormat\x12\x30\n\x06secret\x18\x03 \x01(\x0b\x32 .pfs_v2.SQLDatabaseEgress.Secret\x1a\x8b\x01\n\nFileFormat\x12\x37\n\x04type\x18\x01 \x01(\x0e\x32).pfs_v2.SQLDatabaseEgress.FileFormat.Type\x12\x0f\n\x07\x63olumns\x18\x02 \x03(\t\"3\n\x04Type\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x07\n\x03\x43SV\x10\x01\x12\x08\n\x04JSON\x10\x02\x12\x0b\n\x07PARQUET\x10\x03\x1a#\n\x06Secret\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"\xa3\x01\n\rEgressRequest\x12\x1e\n\x06\x63ommit\x18\x01 \x01(\x0b\x32\x0e.pfs_v2.Commit\x12\x35\n\x0eobject_storage\x18\x02 \x01(\x0b\x32\x1b.pfs_v2.ObjectStorageEgressH\x00\x12\x31\n\x0csql_database\x18\x03 \x01(\x0b\x32\x19.pfs_v2.SQLDatabaseEgressH\x00\x42\x08\n\x06target\"\xeb\x02\n\x0e\x45gressResponse\x12\x44\n\x0eobject_storage\x18\x01 \x01(\x0b\x32*.pfs_v2.EgressResponse.ObjectStorageResultH\x00\x12@\n\x0csql_database\x18\x02 \x01(\x0b\x32(.pfs_v2.EgressResponse.SQLDatabaseResultH\x00\x1a,\n\x13ObjectStorageResult\x12\x15\n\rbytes_written\x18\x01 \x01(\x03\x1a\x98\x01\n\x11SQLDatabaseResult\x12O\n\x0crows_written\x18\x01 \x03(\x0b\x32\x39.pfs_v2.EgressResponse.SQLDatabaseResult.RowsWrittenEntry\x1a\x32\n\x10RowsWrittenEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x42\x08\n\x06result*I\n\nOriginKind\x12\x17\n\x13ORIGIN_KIND_UNKNOWN\x10\x00\x12\x08\n\x04USER\x10\x01\x12\x08\n\x04\x41UTO\x10\x02\x12\x08\n\x04\x46SCK\x10\x03\"\x04\x08\x04\x10\x04*+\n\x08\x46ileType\x12\x0c\n\x08RESERVED\x10\x00\x12\x08\n\x04\x46ILE\x10\x01\x12\x07\n\x03\x44IR\x10\x02*\\\n\x0b\x43ommitState\x12\x18\n\x14\x43OMMIT_STATE_UNKNOWN\x10\x00\x12\x0b\n\x07STARTED\x10\x01\x12\t\n\x05READY\x10\x02\x12\r\n\tFINISHING\x10\x03\x12\x0c\n\x08\x46INISHED\x10\x04*;\n\tDelimiter\x12\x08\n\x04NONE\x10\x00\x12\x08\n\x04JSON\x10\x01\x12\x08\n\x04LINE\x10\x02\x12\x07\n\x03SQL\x10\x03\x12\x07\n\x03\x43SV\x10\x04\x32\xbb\x1a\n\x03\x41PI\x12\x41\n\nCreateRepo\x12\x19.pfs_v2.CreateRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n\x0bInspectRepo\x12\x1a.pfs_v2.InspectRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x12\x39\n\x08ListRepo\x12\x17.pfs_v2.ListRepoRequest\x1a\x10.pfs_v2.RepoInfo\"\x00\x30\x01\x12\x41\n\nDeleteRepo\x12\x19.pfs_v2.DeleteRepoRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0b\x44\x65leteRepos\x12\x1a.pfs_v2.DeleteReposRequest\x1a\x1b.pfs_v2.DeleteReposResponse\"\x00\x12;\n\x0bStartCommit\x12\x1a.pfs_v2.StartCommitRequest\x1a\x0e.pfs_v2.Commit\"\x00\x12\x45\n\x0c\x46inishCommit\x12\x1b.pfs_v2.FinishCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\x0b\x43learCommit\x12\x1a.pfs_v2.ClearCommitRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectCommit\x12\x1c.pfs_v2.InspectCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x12?\n\nListCommit\x12\x19.pfs_v2.ListCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12I\n\x0fSubscribeCommit\x12\x1e.pfs_v2.SubscribeCommitRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12K\n\x10InspectCommitSet\x12\x1f.pfs_v2.InspectCommitSetRequest\x1a\x12.pfs_v2.CommitInfo\"\x00\x30\x01\x12H\n\rListCommitSet\x12\x1c.pfs_v2.ListCommitSetRequest\x1a\x15.pfs_v2.CommitSetInfo\"\x00\x30\x01\x12K\n\x0fSquashCommitSet\x12\x1e.pfs_v2.SquashCommitSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12G\n\rDropCommitSet\x12\x1c.pfs_v2.DropCommitSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12J\n\x0b\x46indCommits\x12\x1a.pfs_v2.FindCommitsRequest\x1a\x1b.pfs_v2.FindCommitsResponse\"\x00\x30\x01\x12\x45\n\x0c\x43reateBranch\x12\x1b.pfs_v2.CreateBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\rInspectBranch\x12\x1c.pfs_v2.InspectBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x12?\n\nListBranch\x12\x19.pfs_v2.ListBranchRequest\x1a\x12.pfs_v2.BranchInfo\"\x00\x30\x01\x12\x45\n\x0c\x44\x65leteBranch\x12\x1b.pfs_v2.DeleteBranchRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x43\n\nModifyFile\x12\x19.pfs_v2.ModifyFileRequest\x1a\x16.google.protobuf.Empty\"\x00(\x01\x12\x42\n\x07GetFile\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12\x45\n\nGetFileTAR\x12\x16.pfs_v2.GetFileRequest\x1a\x1b.google.protobuf.BytesValue\"\x00\x30\x01\x12=\n\x0bInspectFile\x12\x1a.pfs_v2.InspectFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x12\x39\n\x08ListFile\x12\x17.pfs_v2.ListFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08WalkFile\x12\x17.pfs_v2.WalkFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x39\n\x08GlobFile\x12\x17.pfs_v2.GlobFileRequest\x1a\x10.pfs_v2.FileInfo\"\x00\x30\x01\x12\x41\n\x08\x44iffFile\x12\x17.pfs_v2.DiffFileRequest\x1a\x18.pfs_v2.DiffFileResponse\"\x00\x30\x01\x12K\n\x0c\x41\x63tivateAuth\x12\x1b.pfs_v2.ActivateAuthRequest\x1a\x1c.pfs_v2.ActivateAuthResponse\"\x00\x12=\n\tDeleteAll\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\"\x00\x12\x35\n\x04\x46sck\x12\x13.pfs_v2.FsckRequest\x1a\x14.pfs_v2.FsckResponse\"\x00\x30\x01\x12M\n\rCreateFileSet\x12\x19.pfs_v2.ModifyFileRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00(\x01\x12H\n\nGetFileSet\x12\x19.pfs_v2.GetFileSetRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00\x12\x41\n\nAddFileSet\x12\x19.pfs_v2.AddFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x45\n\x0cRenewFileSet\x12\x1b.pfs_v2.RenewFileSetRequest\x1a\x16.google.protobuf.Empty\"\x00\x12P\n\x0e\x43omposeFileSet\x12\x1d.pfs_v2.ComposeFileSetRequest\x1a\x1d.pfs_v2.CreateFileSetResponse\"\x00\x12K\n\x0cShardFileSet\x12\x1b.pfs_v2.ShardFileSetRequest\x1a\x1c.pfs_v2.ShardFileSetResponse\"\x00\x12K\n\x0c\x43heckStorage\x12\x1b.pfs_v2.CheckStorageRequest\x1a\x1c.pfs_v2.CheckStorageResponse\"\x00\x12=\n\x08PutCache\x12\x17.pfs_v2.PutCacheRequest\x1a\x16.google.protobuf.Empty\"\x00\x12?\n\x08GetCache\x12\x17.pfs_v2.GetCacheRequest\x1a\x18.pfs_v2.GetCacheResponse\"\x00\x12\x41\n\nClearCache\x12\x19.pfs_v2.ClearCacheRequest\x1a\x16.google.protobuf.Empty\"\x00\x12H\n\x0bRunLoadTest\x12\x1a.pfs_v2.RunLoadTestRequest\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x12K\n\x12RunLoadTestDefault\x12\x16.google.protobuf.Empty\x1a\x1b.pfs_v2.RunLoadTestResponse\"\x00\x12;\n\x08ListTask\x12\x18.taskapi.ListTaskRequest\x1a\x11.taskapi.TaskInfo\"\x00\x30\x01\x12\x39\n\x06\x45gress\x12\x15.pfs_v2.EgressRequest\x1a\x16.pfs_v2.EgressResponse\"\x00\x12G\n\rCreateProject\x12\x1c.pfs_v2.CreateProjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x46\n\x0eInspectProject\x12\x1d.pfs_v2.InspectProjectRequest\x1a\x13.pfs_v2.ProjectInfo\"\x00\x12\x42\n\x0bListProject\x12\x1a.pfs_v2.ListProjectRequest\x1a\x13.pfs_v2.ProjectInfo\"\x00\x30\x01\x12G\n\rDeleteProject\x12\x1c.pfs_v2.DeleteProjectRequest\x1a\x16.google.protobuf.Empty\"\x00\x42+Z)github.com/pachyderm/pachyderm/v2/src/pfsb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_auth_dot_auth__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_task_dot_task__pb2.DESCRIPTOR,])
 
@@ -61,8 +61,8 @@ _ORIGINKIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=8079,
-  serialized_end=8146,
+  serialized_start=8104,
+  serialized_end=8177,
 )
 _sym_db.RegisterEnumDescriptor(_ORIGINKIND)
 
@@ -92,8 +92,8 @@ _FILETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=8148,
-  serialized_end=8191,
+  serialized_start=8179,
+  serialized_end=8222,
 )
 _sym_db.RegisterEnumDescriptor(_FILETYPE)
 
@@ -133,8 +133,8 @@ _COMMITSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=8193,
-  serialized_end=8285,
+  serialized_start=8224,
+  serialized_end=8316,
 )
 _sym_db.RegisterEnumDescriptor(_COMMITSTATE)
 
@@ -174,8 +174,8 @@ _DELIMITER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=8287,
-  serialized_end=8346,
+  serialized_start=8318,
+  serialized_end=8377,
 )
 _sym_db.RegisterEnumDescriptor(_DELIMITER)
 
@@ -229,8 +229,8 @@ _SQLDATABASEEGRESS_FILEFORMAT_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=7457,
-  serialized_end=7508,
+  serialized_start=7482,
+  serialized_end=7533,
 )
 _sym_db.RegisterEnumDescriptor(_SQLDATABASEEGRESS_FILEFORMAT_TYPE)
 
@@ -600,7 +600,7 @@ _TRIGGER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='cron_spec', full_name='pfs_v2.Trigger.cron_spec', index=2,
+      name='rate_limit_spec', full_name='pfs_v2.Trigger.rate_limit_spec', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -620,6 +620,13 @@ _TRIGGER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cron_spec', full_name='pfs_v2.Trigger.cron_spec', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -633,7 +640,7 @@ _TRIGGER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1060,
-  serialized_end=1148,
+  serialized_end=1173,
 )
 
 
@@ -664,8 +671,8 @@ _COMMITORIGIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1150,
-  serialized_end=1198,
+  serialized_start=1175,
+  serialized_end=1223,
 )
 
 
@@ -710,8 +717,8 @@ _COMMIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1200,
-  serialized_end=1280,
+  serialized_start=1225,
+  serialized_end=1305,
 )
 
 
@@ -756,8 +763,8 @@ _COMMITINFO_DETAILS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1740,
-  serialized_end=1873,
+  serialized_start=1765,
+  serialized_end=1898,
 )
 
 _COMMITINFO = _descriptor.Descriptor(
@@ -864,8 +871,8 @@ _COMMITINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1283,
-  serialized_end=1879,
+  serialized_start=1308,
+  serialized_end=1904,
 )
 
 
@@ -896,8 +903,8 @@ _COMMITSET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1881,
-  serialized_end=1904,
+  serialized_start=1906,
+  serialized_end=1929,
 )
 
 
@@ -935,8 +942,8 @@ _COMMITSETINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1906,
-  serialized_end=1997,
+  serialized_start=1931,
+  serialized_end=2022,
 )
 
 
@@ -995,8 +1002,8 @@ _FILEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2000,
-  serialized_end=2156,
+  serialized_start=2025,
+  serialized_end=2181,
 )
 
 
@@ -1027,8 +1034,8 @@ _PROJECT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2158,
-  serialized_end=2181,
+  serialized_start=2183,
+  serialized_end=2206,
 )
 
 
@@ -1080,8 +1087,8 @@ _PROJECTINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2184,
-  serialized_end=2337,
+  serialized_start=2209,
+  serialized_end=2362,
 )
 
 
@@ -1126,8 +1133,8 @@ _CREATEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2339,
-  serialized_end=2423,
+  serialized_start=2364,
+  serialized_end=2448,
 )
 
 
@@ -1158,8 +1165,8 @@ _INSPECTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2425,
-  serialized_end=2473,
+  serialized_start=2450,
+  serialized_end=2498,
 )
 
 
@@ -1197,8 +1204,8 @@ _LISTREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2475,
-  serialized_end=2541,
+  serialized_start=2500,
+  serialized_end=2566,
 )
 
 
@@ -1236,8 +1243,8 @@ _DELETEREPOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2543,
-  serialized_end=2605,
+  serialized_start=2568,
+  serialized_end=2630,
 )
 
 
@@ -1282,8 +1289,8 @@ _DELETEREPOSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2607,
-  serialized_end=2690,
+  serialized_start=2632,
+  serialized_end=2715,
 )
 
 
@@ -1314,8 +1321,8 @@ _DELETEREPOSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2692,
-  serialized_end=2742,
+  serialized_start=2717,
+  serialized_end=2767,
 )
 
 
@@ -1360,8 +1367,8 @@ _STARTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2744,
-  serialized_end=2849,
+  serialized_start=2769,
+  serialized_end=2874,
 )
 
 
@@ -1413,8 +1420,8 @@ _FINISHCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2851,
-  serialized_end=2955,
+  serialized_start=2876,
+  serialized_end=2980,
 )
 
 
@@ -1452,8 +1459,8 @@ _INSPECTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2957,
-  serialized_end=3046,
+  serialized_start=2982,
+  serialized_end=3071,
 )
 
 
@@ -1533,8 +1540,8 @@ _LISTCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3049,
-  serialized_end=3291,
+  serialized_start=3074,
+  serialized_end=3316,
 )
 
 
@@ -1572,8 +1579,8 @@ _INSPECTCOMMITSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3293,
-  serialized_end=3371,
+  serialized_start=3318,
+  serialized_end=3396,
 )
 
 
@@ -1604,8 +1611,8 @@ _LISTCOMMITSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3373,
-  serialized_end=3429,
+  serialized_start=3398,
+  serialized_end=3454,
 )
 
 
@@ -1636,8 +1643,8 @@ _SQUASHCOMMITSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3431,
-  serialized_end=3494,
+  serialized_start=3456,
+  serialized_end=3519,
 )
 
 
@@ -1668,8 +1675,8 @@ _DROPCOMMITSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3496,
-  serialized_end=3557,
+  serialized_start=3521,
+  serialized_end=3582,
 )
 
 
@@ -1735,8 +1742,8 @@ _SUBSCRIBECOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3560,
-  serialized_end=3748,
+  serialized_start=3585,
+  serialized_end=3773,
 )
 
 
@@ -1767,8 +1774,8 @@ _CLEARCOMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3750,
-  serialized_end=3802,
+  serialized_start=3775,
+  serialized_end=3827,
 )
 
 
@@ -1827,8 +1834,8 @@ _CREATEBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3805,
-  serialized_end=3982,
+  serialized_start=3830,
+  serialized_end=4007,
 )
 
 
@@ -1873,8 +1880,8 @@ _FINDCOMMITSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3984,
-  serialized_end=4069,
+  serialized_start=4009,
+  serialized_end=4094,
 )
 
 
@@ -1924,8 +1931,8 @@ _FINDCOMMITSRESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=4072,
-  serialized_end=4217,
+  serialized_start=4097,
+  serialized_end=4242,
 )
 
 
@@ -1956,8 +1963,8 @@ _INSPECTBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4219,
-  serialized_end=4273,
+  serialized_start=4244,
+  serialized_end=4298,
 )
 
 
@@ -1995,8 +2002,8 @@ _LISTBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4275,
-  serialized_end=4339,
+  serialized_start=4300,
+  serialized_end=4364,
 )
 
 
@@ -2034,8 +2041,8 @@ _DELETEBRANCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4341,
-  serialized_end=4409,
+  serialized_start=4366,
+  serialized_end=4434,
 )
 
 
@@ -2080,8 +2087,8 @@ _CREATEPROJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4411,
-  serialized_end=4504,
+  serialized_start=4436,
+  serialized_end=4529,
 )
 
 
@@ -2112,8 +2119,8 @@ _INSPECTPROJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4506,
-  serialized_end=4563,
+  serialized_start=4531,
+  serialized_end=4588,
 )
 
 
@@ -2137,8 +2144,8 @@ _LISTPROJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4565,
-  serialized_end=4585,
+  serialized_start=4590,
+  serialized_end=4610,
 )
 
 
@@ -2176,8 +2183,8 @@ _DELETEPROJECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4587,
-  serialized_end=4658,
+  serialized_start=4612,
+  serialized_end=4683,
 )
 
 
@@ -2222,8 +2229,8 @@ _ADDFILE_URLSOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4787,
-  serialized_end=4851,
+  serialized_start=4812,
+  serialized_end=4876,
 )
 
 _ADDFILE = _descriptor.Descriptor(
@@ -2279,8 +2286,8 @@ _ADDFILE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=4661,
-  serialized_end=4861,
+  serialized_start=4686,
+  serialized_end=4886,
 )
 
 
@@ -2318,8 +2325,8 @@ _DELETEFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4863,
-  serialized_end=4904,
+  serialized_start=4888,
+  serialized_end=4929,
 )
 
 
@@ -2371,8 +2378,8 @@ _COPYFILE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4906,
-  serialized_end=4987,
+  serialized_start=4931,
+  serialized_end=5012,
 )
 
 
@@ -2429,8 +2436,8 @@ _MODIFYFILEREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=4990,
-  serialized_end=5174,
+  serialized_start=5015,
+  serialized_end=5199,
 )
 
 
@@ -2482,8 +2489,8 @@ _GETFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5176,
-  serialized_end=5288,
+  serialized_start=5201,
+  serialized_end=5313,
 )
 
 
@@ -2514,8 +2521,8 @@ _INSPECTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5290,
-  serialized_end=5338,
+  serialized_start=5315,
+  serialized_end=5363,
 )
 
 
@@ -2567,8 +2574,8 @@ _LISTFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5340,
-  serialized_end=5464,
+  serialized_start=5365,
+  serialized_end=5489,
 )
 
 
@@ -2620,8 +2627,8 @@ _WALKFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5466,
-  serialized_end=5584,
+  serialized_start=5491,
+  serialized_end=5609,
 )
 
 
@@ -2666,8 +2673,8 @@ _GLOBFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5586,
-  serialized_end=5691,
+  serialized_start=5611,
+  serialized_end=5716,
 )
 
 
@@ -2712,8 +2719,8 @@ _DIFFFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5693,
-  serialized_end=5791,
+  serialized_start=5718,
+  serialized_end=5816,
 )
 
 
@@ -2751,8 +2758,8 @@ _DIFFFILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5793,
-  serialized_end=5883,
+  serialized_start=5818,
+  serialized_end=5908,
 )
 
 
@@ -2802,8 +2809,8 @@ _FSCKREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=5885,
-  serialized_end=5990,
+  serialized_start=5910,
+  serialized_end=6015,
 )
 
 
@@ -2841,8 +2848,8 @@ _FSCKRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5992,
-  serialized_end=6034,
+  serialized_start=6017,
+  serialized_end=6059,
 )
 
 
@@ -2873,8 +2880,8 @@ _CREATEFILESETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6036,
-  serialized_end=6080,
+  serialized_start=6061,
+  serialized_end=6105,
 )
 
 
@@ -2905,8 +2912,8 @@ _GETFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6082,
-  serialized_end=6133,
+  serialized_start=6107,
+  serialized_end=6158,
 )
 
 
@@ -2944,8 +2951,8 @@ _ADDFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6135,
-  serialized_end=6207,
+  serialized_start=6160,
+  serialized_end=6232,
 )
 
 
@@ -2983,8 +2990,8 @@ _RENEWFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6209,
-  serialized_end=6272,
+  serialized_start=6234,
+  serialized_end=6297,
 )
 
 
@@ -3029,8 +3036,8 @@ _COMPOSEFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6274,
-  serialized_end=6357,
+  serialized_start=6299,
+  serialized_end=6382,
 )
 
 
@@ -3061,8 +3068,8 @@ _SHARDFILESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6359,
-  serialized_end=6401,
+  serialized_start=6384,
+  serialized_end=6426,
 )
 
 
@@ -3100,8 +3107,8 @@ _PATHRANGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6403,
-  serialized_end=6444,
+  serialized_start=6428,
+  serialized_end=6469,
 )
 
 
@@ -3132,8 +3139,8 @@ _SHARDFILESETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6446,
-  serialized_end=6503,
+  serialized_start=6471,
+  serialized_end=6528,
 )
 
 
@@ -3178,8 +3185,8 @@ _CHECKSTORAGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6505,
-  serialized_end=6591,
+  serialized_start=6530,
+  serialized_end=6616,
 )
 
 
@@ -3210,8 +3217,8 @@ _CHECKSTORAGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6593,
-  serialized_end=6643,
+  serialized_start=6618,
+  serialized_end=6668,
 )
 
 
@@ -3263,8 +3270,8 @@ _PUTCACHEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6645,
-  serialized_end=6747,
+  serialized_start=6670,
+  serialized_end=6772,
 )
 
 
@@ -3295,8 +3302,8 @@ _GETCACHEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6749,
-  serialized_end=6779,
+  serialized_start=6774,
+  serialized_end=6804,
 )
 
 
@@ -3327,8 +3334,8 @@ _GETCACHERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6781,
-  serialized_end=6836,
+  serialized_start=6806,
+  serialized_end=6861,
 )
 
 
@@ -3359,8 +3366,8 @@ _CLEARCACHEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6838,
-  serialized_end=6877,
+  serialized_start=6863,
+  serialized_end=6902,
 )
 
 
@@ -3384,8 +3391,8 @@ _ACTIVATEAUTHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6879,
-  serialized_end=6900,
+  serialized_start=6904,
+  serialized_end=6925,
 )
 
 
@@ -3409,8 +3416,8 @@ _ACTIVATEAUTHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6902,
-  serialized_end=6924,
+  serialized_start=6927,
+  serialized_end=6949,
 )
 
 
@@ -3462,8 +3469,8 @@ _RUNLOADTESTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6926,
-  serialized_end=7024,
+  serialized_start=6951,
+  serialized_end=7049,
 )
 
 
@@ -3529,8 +3536,8 @@ _RUNLOADTESTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7027,
-  serialized_end=7186,
+  serialized_start=7052,
+  serialized_end=7211,
 )
 
 
@@ -3561,8 +3568,8 @@ _OBJECTSTORAGEEGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7188,
-  serialized_end=7222,
+  serialized_start=7213,
+  serialized_end=7247,
 )
 
 
@@ -3601,8 +3608,8 @@ _SQLDATABASEEGRESS_FILEFORMAT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7369,
-  serialized_end=7508,
+  serialized_start=7394,
+  serialized_end=7533,
 )
 
 _SQLDATABASEEGRESS_SECRET = _descriptor.Descriptor(
@@ -3639,8 +3646,8 @@ _SQLDATABASEEGRESS_SECRET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7510,
-  serialized_end=7545,
+  serialized_start=7535,
+  serialized_end=7570,
 )
 
 _SQLDATABASEEGRESS = _descriptor.Descriptor(
@@ -3684,8 +3691,8 @@ _SQLDATABASEEGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7225,
-  serialized_end=7545,
+  serialized_start=7250,
+  serialized_end=7570,
 )
 
 
@@ -3735,8 +3742,8 @@ _EGRESSREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=7548,
-  serialized_end=7711,
+  serialized_start=7573,
+  serialized_end=7736,
 )
 
 
@@ -3767,8 +3774,8 @@ _EGRESSRESPONSE_OBJECTSTORAGERESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7868,
-  serialized_end=7912,
+  serialized_start=7893,
+  serialized_end=7937,
 )
 
 _EGRESSRESPONSE_SQLDATABASERESULT_ROWSWRITTENENTRY = _descriptor.Descriptor(
@@ -3805,8 +3812,8 @@ _EGRESSRESPONSE_SQLDATABASERESULT_ROWSWRITTENENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8017,
-  serialized_end=8067,
+  serialized_start=8042,
+  serialized_end=8092,
 )
 
 _EGRESSRESPONSE_SQLDATABASERESULT = _descriptor.Descriptor(
@@ -3836,8 +3843,8 @@ _EGRESSRESPONSE_SQLDATABASERESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7915,
-  serialized_end=8067,
+  serialized_start=7940,
+  serialized_end=8092,
 )
 
 _EGRESSRESPONSE = _descriptor.Descriptor(
@@ -3879,8 +3886,8 @@ _EGRESSRESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=7714,
-  serialized_end=8077,
+  serialized_start=7739,
+  serialized_end=8102,
 )
 
 _REPO.fields_by_name['project'].message_type = _PROJECT
@@ -4736,8 +4743,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=8349,
-  serialized_end=11736,
+  serialized_start=8380,
+  serialized_end=11767,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateRepo',

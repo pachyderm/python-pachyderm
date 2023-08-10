@@ -12,6 +12,7 @@ _sym_db = _symbol_database.Default()
 
 
 from python_pachyderm.proto.v2.version.versionpb import version_pb2 as python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2
+from python_pachyderm.proto.v2.pfs import pfs_pb2 as python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z+github.com/pachyderm/pachyderm/v2/src/admin',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n+python_pachyderm/proto/v2/admin/admin.proto\x12\x08\x61\x64min_v2\x1a\x39python_pachyderm/proto/v2/version/versionpb/version.proto\"g\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rdeployment_id\x18\x02 \x01(\t\x12\x1b\n\x13version_warnings_ok\x18\x03 \x01(\x08\x12\x18\n\x10version_warnings\x18\x04 \x03(\t\"F\n\x15InspectClusterRequest\x12-\n\x0e\x63lient_version\x18\x01 \x01(\x0b\x32\x15.versionpb_v2.Version2Q\n\x03\x41PI\x12J\n\x0eInspectCluster\x12\x1f.admin_v2.InspectClusterRequest\x1a\x15.admin_v2.ClusterInfo\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/adminb\x06proto3'
+  serialized_pb=b'\n+python_pachyderm/proto/v2/admin/admin.proto\x12\x08\x61\x64min_v2\x1a\x39python_pachyderm/proto/v2/version/versionpb/version.proto\x1a\'python_pachyderm/proto/v2/pfs/pfs.proto\"\x8e\x01\n\x0b\x43lusterInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rdeployment_id\x18\x02 \x01(\t\x12\x1b\n\x13version_warnings_ok\x18\x03 \x01(\x08\x12\x18\n\x10version_warnings\x18\x04 \x03(\t\x12\x12\n\nproxy_host\x18\x05 \x01(\t\x12\x11\n\tproxy_tls\x18\x06 \x01(\x08\"p\n\x15InspectClusterRequest\x12-\n\x0e\x63lient_version\x18\x01 \x01(\x0b\x32\x15.versionpb_v2.Version\x12(\n\x0f\x63urrent_project\x18\x02 \x01(\x0b\x32\x0f.pfs_v2.Project2Q\n\x03\x41PI\x12J\n\x0eInspectCluster\x12\x1f.admin_v2.InspectClusterRequest\x1a\x15.admin_v2.ClusterInfo\"\x00\x42-Z+github.com/pachyderm/pachyderm/v2/src/adminb\x06proto3'
   ,
-  dependencies=[python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2.DESCRIPTOR,])
+  dependencies=[python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2.DESCRIPTOR,python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2.DESCRIPTOR,])
 
 
 
@@ -63,6 +64,20 @@ _CLUSTERINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='proxy_host', full_name='admin_v2.ClusterInfo.proxy_host', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='proxy_tls', full_name='admin_v2.ClusterInfo.proxy_tls', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -75,8 +90,8 @@ _CLUSTERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=116,
-  serialized_end=219,
+  serialized_start=158,
+  serialized_end=300,
 )
 
 
@@ -95,6 +110,13 @@ _INSPECTCLUSTERREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='current_project', full_name='admin_v2.InspectClusterRequest.current_project', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -107,11 +129,12 @@ _INSPECTCLUSTERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=291,
+  serialized_start=302,
+  serialized_end=414,
 )
 
 _INSPECTCLUSTERREQUEST.fields_by_name['client_version'].message_type = python__pachyderm_dot_proto_dot_v2_dot_version_dot_versionpb_dot_version__pb2._VERSION
+_INSPECTCLUSTERREQUEST.fields_by_name['current_project'].message_type = python__pachyderm_dot_proto_dot_v2_dot_pfs_dot_pfs__pb2._PROJECT
 DESCRIPTOR.message_types_by_name['ClusterInfo'] = _CLUSTERINFO
 DESCRIPTOR.message_types_by_name['InspectClusterRequest'] = _INSPECTCLUSTERREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -140,8 +163,8 @@ _API = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=293,
-  serialized_end=374,
+  serialized_start=416,
+  serialized_end=497,
   methods=[
   _descriptor.MethodDescriptor(
     name='InspectCluster',

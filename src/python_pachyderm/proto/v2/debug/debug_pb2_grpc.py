@@ -35,6 +35,16 @@ class DebugStub(object):
                 request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.SerializeToString,
                 response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.FromString,
                 )
+        self.GetDumpV2Template = channel.unary_unary(
+                '/debug_v2.Debug/GetDumpV2Template',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateRequest.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateResponse.FromString,
+                )
+        self.DumpV2 = channel.unary_stream(
+                '/debug_v2.Debug/DumpV2',
+                request_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpV2Request.SerializeToString,
+                response_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpChunk.FromString,
+                )
 
 
 class DebugServicer(object):
@@ -64,6 +74,18 @@ class DebugServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetDumpV2Template(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DumpV2(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DebugServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -86,6 +108,16 @@ def add_DebugServicer_to_server(servicer, server):
                     servicer.SetLogLevel,
                     request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.FromString,
                     response_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.SerializeToString,
+            ),
+            'GetDumpV2Template': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDumpV2Template,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateRequest.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateResponse.SerializeToString,
+            ),
+            'DumpV2': grpc.unary_stream_rpc_method_handler(
+                    servicer.DumpV2,
+                    request_deserializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpV2Request.FromString,
+                    response_serializer=python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpChunk.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -162,5 +194,39 @@ class Debug(object):
         return grpc.experimental.unary_unary(request, target, '/debug_v2.Debug/SetLogLevel',
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelRequest.SerializeToString,
             python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.SetLogLevelResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetDumpV2Template(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/debug_v2.Debug/GetDumpV2Template',
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateRequest.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.GetDumpV2TemplateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DumpV2(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/debug_v2.Debug/DumpV2',
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpV2Request.SerializeToString,
+            python__pachyderm_dot_proto_dot_v2_dot_debug_dot_debug__pb2.DumpChunk.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
