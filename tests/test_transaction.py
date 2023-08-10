@@ -120,7 +120,9 @@ def test_file_operations_within_transaction():
             with pytest.raises(InvalidTransactionOperation):
                 client.put_file_bytes(commit, "/file.dat", b"hello world")
             with pytest.raises(InvalidTransactionOperation):
-                client.put_file_url(commit, "https://www.pachyderm.com/index.html", "/index.html")
+                client.put_file_url(
+                    commit, "https://www.pachyderm.com/index.html", "/index.html"
+                )
             with pytest.raises(InvalidTransactionOperation):
                 client.copy_file(commit, "/file.dat", "/new_file.dat")
             with pytest.raises(InvalidTransactionOperation):
