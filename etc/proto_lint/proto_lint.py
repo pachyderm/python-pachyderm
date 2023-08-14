@@ -366,7 +366,7 @@ RENAMED_ARGS = {
         ("pod_spec", None),
         ("tf_job", None),
         ("output_branch", "output_branch_name"),
-        ("details_json", None)
+        ("details_json", None),
     ],
     "create_tf_job_pipeline": [
         ("pipeline", "pipeline_name"),
