@@ -77,15 +77,10 @@ class DebugMixin:
         filters : List[str], optional
             No supported filters - this argument has no effect.
 
-        Yields
+        Returns
         -------
         debug_pb2.DumpV2Request
-            The request to
-
-        Examples
-        --------
-        >>> for b in client.dump():
-        >>>     print(b)
+            The request that can be sent to the DumpV2 API.
 
         .. # noqa: W505
         """
