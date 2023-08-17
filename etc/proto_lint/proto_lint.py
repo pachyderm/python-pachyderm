@@ -147,6 +147,8 @@ RENAMED_METHODS = {
     },
     Service.DEBUG: {
         "profile": ["profile_cpu"],
+        "dump_v2": ["dump"],
+        "get_dump_v2_template": ["get_dump_template"],
     },
     Service.ENTERPRISE: {
         "activate": ["activate_enterprise"],
@@ -210,6 +212,7 @@ RENAMED_ARGS = {
     # admin
     "inspect_cluster": [
         ("client_version", None),
+        ("current_project", None),
     ],
     # auth
     "authenticate_oidc": [
@@ -221,6 +224,14 @@ RENAMED_ARGS = {
     "profile_cpu": [
         ("profile", None),
         (None, "duration"),
+    ],
+    "dump": [
+        ("limit", None),
+        ("filter", None),
+        (None, "system"),
+        (None, "pipelines"),
+        (None, "input_repos"),
+        (None, "timeout"),
     ],
     # PFS
     "create_repo": [("repo", "repo_name"), ("project", "project_name")],
@@ -355,6 +366,7 @@ RENAMED_ARGS = {
         ("pod_spec", None),
         ("tf_job", None),
         ("output_branch", "output_branch_name"),
+        ("details_json", None),
     ],
     "create_tf_job_pipeline": [
         ("pipeline", "pipeline_name"),

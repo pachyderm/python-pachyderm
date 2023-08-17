@@ -416,6 +416,8 @@ class PPSMixin:
         autoscaling: bool = False,
         tolerations: List[pps_pb2.Toleration] = None,
         sidecar_resource_requests: pps_pb2.ResourceSpec = None,
+        dry_run: bool = False,
+        determined: pps_pb2.Determined = None,
     ) -> None:
         """Creates a pipeline.
 
@@ -547,6 +549,9 @@ class PPSMixin:
             reprocess_spec=reprocess_spec,
             autoscaling=autoscaling,
             tolerations=tolerations,
+            sidecar_resource_requests=sidecar_resource_requests,
+            dry_run=dry_run,
+            determined=determined,
         )
         self.__stub.CreatePipeline(message)
 
