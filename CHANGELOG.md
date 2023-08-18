@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.6.0 (2023-09-18)
+- Support for Pachyderm v2.7.0.
+- Added check to prevent invalid file operations during transactions.
+
 ## 7.5.0 (2023-05-31)
 
 - Support for Pachyderm v2.6.0.

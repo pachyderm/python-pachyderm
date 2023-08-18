@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-pachyderm"
-version = "7.5.0"
+version = "7.6.0"
 description = "Python Pachyderm Client"
 authors = ["Pachyderm Integrations <integrations@pachyderm.io>"]
 include = ["version.json"]
