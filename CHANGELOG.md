@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.6.1 (2024-05-21)
+- remove pinned dependency on protobuf package
+
 ## 7.6.0 (2023-09-18)
 - Support for Pachyderm v2.7.0.
 - Added check to prevent invalid file operations during transactions.

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-pachyderm"
-version = "7.6.0"
+version = "7.6.1"
 description = "Python Pachyderm Client"
 authors = ["Pachyderm Integrations <integrations@pachyderm.io>"]
 include = ["version.json"]
@@ -27,7 +27,6 @@ grpcio = ">=1.54.2"
 grpcio-health-checking = ">=1.38.0"
 grpc-interceptor = "^0.13.0"
 importlib-metadata = { version = ">1.5.1", python = "<3.8" }
-protobuf = ">=3.17.1,<4.0.0"
 python-dotenv = ">=1.0.0"
 
 [tool.poetry.dev-dependencies]
